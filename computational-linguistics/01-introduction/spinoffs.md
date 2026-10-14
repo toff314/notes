@@ -8,10 +8,10 @@
 
 | # | 选题 | 送哪个技能 | 命中标准 | 优先级 | 可支撑体量 | 状态 | 链接 |
 |---|---|---|---|---|---|---|---|
-| 1 | 语言学 vs 统计法：Chomsky 与 Jelinek 的两句名言 | write-zhihu-tech (Mode B) | S1+S2+S4+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-nlp-chomsky-vs-jelinek) |
-| 2 | 汉语的"同音灾难"：402 个音节如何映射到数万汉字 | write-tech-tutorial (Mode A) | S3+S5+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-nlp-homophone-disambiguation) |
-| 3 | 知网 HowNet：中国学者最独特的一次贡献 | write-zhihu-tech (Mode A) | S1+S2+S4+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-hownet-dongzhendong) |
-| 4 | 中国机器翻译三人：刘涌泉、刘倬、董振东 | write-zhihu-tech (Mode A) | S1+S2+S6 | P1 | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-china-mt-pioneers) |
+| 1 | 语言学 vs 统计法：Chomsky 与 Jelinek 的两句名言 | write-zhihu-tech (Mode B) | S1+S2+S4+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-1791963795286) |
+| 2 | 汉语的"同音灾难"：402 个音节如何映射到数万汉字 | write-tech-tutorial (Mode A) | S3+S5+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-1791963794862) |
+| 3 | 知网 HowNet：中国学者最独特的一次贡献 | write-zhihu-tech (Mode A) | S1+S2+S4+S6 | **P0** | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-1791963795056) |
+| 4 | 中国机器翻译三人：刘涌泉、刘倬、董振东 | write-zhihu-tech (Mode A) | S1+S2+S6 | P1 | 标准长文 | ✅ 已发布 | [成文](https://www.askfount.com/articles/articles-20261014-1791963793988) |
 | 5 | ALPAC 报告：一份让机器翻译停摆十年的报告 | write-zhihu-tech (Mode B) | S2+S4+S6 | P1 | 短评–标准 | ⬜ 未发布 | — |
 | 6 | CRF 为什么曾经是序列标注的王者 | write-tech-tutorial (Mode A) | S3+S5+S6 | P1 | 标准长文 | ⬜ 未发布 | — |
 | 7 | 大模型的"三个规模"：为什么堆规模真的有效 | write-tech-tutorial (Mode A) | S3+S6 | P2 | 标准长文 | ⬜ 未发布 | — |
@@ -40,7 +40,7 @@
 - **缺口（下游必须自己搜）**：两句原话的**准确出处与完整语境**；ALPAC 报告原文与后续学界回应
 - **体量建议**：标准长文（3000–5000 字）
 - **待核**：讲座中该段人名 ASR 不稳（如"乔姆斯基"在转写里写作"乔姆斯基/Chomsky"混用）❓ 引用时勿照抄转写
-- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-nlp-chomsky-vs-jelinek) ｜ 审核：A4 两轮（R1 REVISE → 返修 → R2 **PASS 53/60**）
+- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-1791963795286) ｜ 审核：A4 两轮（R1 REVISE → 返修 → R2 **PASS 53/60**）
 
 ---
 
@@ -65,7 +65,7 @@
 - **缺口（下游必须自己搜）**：现代拼音输入法/ASR 的具体解码方案与开源实现；402 音节这一数字的权威出处
 - **体量建议**：标准长文（需含可跑代码）
 - **待核**：讲座里那串拼音与对应汉字的实际答案 ❓（转写未完整记录演示结果）
-- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-nlp-homophone-disambiguation) ｜ 审核：T4 三轮（R1 **REVISE 86.0** → R2 **REVISE 87.5** → R3 **PASS 90.0/100**）
+- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-1791963794862) ｜ 审核：T4 三轮（R1 **REVISE 86.0** → R2 **REVISE 87.5** → R3 **PASS 90.0/100**）
 
 ---
 
@@ -91,7 +91,7 @@
 - **缺口（下游必须自己搜）**：HowNet 核心论文与原话；OpenHowNet 当前维护状态；义原规模（2000+）的权威出处
 - **体量建议**：标准长文
 - **待核**：讲座中"2000 多个义原""十几万词"为 PPT 口径，需与原始文献核对 ❓
-- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-hownet-dongzhendong) ｜ 审核：A4 两轮（R1 **REVISE 51/60** → 返修补 5 个必备节点 → R2 **PASS 55/60**）
+- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-1791963795056) ｜ 审核：A4 两轮（R1 **REVISE 51/60** → 返修补 5 个必备节点 → R2 **PASS 55/60**）
 
 ---
 
@@ -116,7 +116,7 @@
 - **缺口（下游必须自己搜）**：三人的生平细节与采访；104 机/ECMT-78 的技术细节；"世界领先水平"这一评价的原始出处
 - **体量建议**：标准长文（人物群像）
 - **待核**：PPT 上的年份与说法需逐条与原始文献核对 ❓
-- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-china-mt-pioneers) ｜ 审核：A4 一轮 **PASS 53/60**（无 hard_failures）；7 项人物事实独立核验全过；主编按 advisory 降级 1 处拔高（译星「世界第一」改为课件口径）
+- **发布**：✅ 已发布 ｜ 链接：[成文](https://www.askfount.com/articles/articles-20261014-1791963793988) ｜ 审核：A4 一轮 **PASS 53/60**（无 hard_failures）；7 项人物事实独立核验全过；主编按 advisory 降级 1 处拔高（译星「世界第一」改为课件口径）
 
 ---
 
