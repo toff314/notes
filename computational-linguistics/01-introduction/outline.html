@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>听课笔记：第 1 课 绪论 · 思路大纲</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架</a><a href="../index.html">计算语言学基础</a><a href="./README.html">本讲索引</a></div>
+<h1>计算语言学基础 · 绪论 · 思路大纲</h1>
+<h2>主线（老师是怎么推下来的）</h2>
+<ol><li><strong>立规矩</strong>：先讲课程怎么上、怎么算分（平台、8 次阅读、报告、实践、11/30 截止）</li><li><strong>给定义</strong>：什么是 CL——计算视角 + 科学/工程双目标 + 计算与语言学的交叉</li><li><strong>理名字</strong>：CL（偏科学）/ NLP（偏工程）/ HLT（管载体转换）三名一物</li><li><strong>提问题</strong>：核心问题 = 计算机如何进行语言处理；三条借鉴路径（向人学 / 当对象 / 当数据）</li><li><strong>上例子</strong>：拿一条处理链现场走一遍——<code>音 → 字 → 词 → 词性 → 词义 → 句法 → 句义</code>，<strong>每一层都歧义</strong></li><li><strong>收结论</strong>：于是 CL 的核心任务落在 <strong>消歧（Ambiguity）</strong>，难点是<strong>语言内 + 语言外</strong>两类知识如何表示与选用</li><li><strong>讲来历</strong>：用 80 年技术简史说明&quot;这条路不是突然出现的&quot;</li><li><strong>落课程</strong>：课程按&quot;语言串 → 中间表示 → 输出串&quot;组织；给出参考资源与评分</li><li><strong>数家底</strong>：中国 CL 先驱（本讲仅列出，老师留到下节细讲）</li></ol>
+<h2>概念关系</h2>
+<p>``<code>mermaid flowchart TD L[&quot;人类自然语言&lt;br/&gt;(研究 对象)&quot;] --&gt; CL[&quot;计算语言学 CL&lt;br/&gt;(计算视角 + 计算模型)&quot;] CL --&gt; G1[&quot;科学目标&lt;br/&gt;揭示语言之奥秘&quot;] CL --&gt; G2[&quot;技术/工程目标&lt;br/&gt;让机器会用语言&quot;] NLP[&quot;NLP&lt;br/&gt;(偏工程)&quot;] -.常互换.-&gt; CL HLT[&quot;HLT&lt;br/&gt;(载体转换)&quot;] -- &quot;OCR/ASR 提供材料&quot; --&gt; CL CL --&gt; CORE[&quot;核心问题&lt;br/&gt;计算机如何进行语言处理&quot;] CORE --&gt; CHAIN[&quot;处理链&lt;br/&gt;音→字→词→词性→词义→句法→句义&quot;] CHAIN --&gt; AMB[&quot;每一层都产生&lt;br/&gt;歧义 Ambiguity&quot;] AMB --&gt; RES[&quot;核心任务：消歧&quot;] RES --&gt; K1[&quot;语言内知识&lt;br/&gt;(语音/词汇/结构)&quot;] RES --&gt; K2[&quot;语言外知识&lt;br/&gt;(常识/领域)&quot;] CORE --&gt; PATH[&quot;三条路径&lt;br/&gt;向人学 / 当对象 / 当数据&quot;] CL --&gt; HIST[&quot;技术简史&lt;br/&gt;1940s→2020s&quot;] </code>``</p>
+<h2>如果只记三件事</h2>
+<ul><li><strong>CL 是什么</strong>：用<strong>计算模型</strong>研究自然语言——既解释语言（科学），也让机器会用语言（工程）。</li><li><strong>核心难点</strong>：语言在<strong>每一层都歧义</strong>，CL 的核心任务就是<strong>消歧</strong>，而消歧要<strong>语言内 + 语言外</strong>的知识。</li><li><strong>课程骨架</strong>：一切语言计算 = <strong>语言串 → 中间表示 → 输出串</strong>；考核 = 48 + 10 + 2 + 40，<strong>11/30 24:00 截止</strong>。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="outline.md">outline.md</a></footer>
+</div></body></html>

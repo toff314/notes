@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 目录</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+</head><body><div class="wrap">
+<div class="nav"><a href="../index.html">笔记架</a><a href="./index.html">计算语言学基础</a><a href="./SUMMARY.html">目录</a></div>
+<h1>目录 · SUMMARY</h1>
+<p><strong>计算语言学基础</strong>（北京邮电大学 · 人工智能学院 · 智能科学与技术中心）— 教材 <em>Speech and Language Processing</em>（第三版）。</p>
+<blockquote><p><strong>课次结构</strong>：每次课 <strong>4 × 45 分钟</strong> —— 前 3 节讲授、<strong>第 4 节讨论</strong>。</p><p><strong>第 1 课（绪论）</strong> 的录音转写由 <strong>3 段课堂录音合并</strong>而成（本课即绪论全部内容）。</p></blockquote>
+<p>图例：✅ 已完成 · ⬜ 待整理　　<strong>进度：第 1 课已完成</strong></p>
+<h2>课次</h2>
+<table><tr><th>#</th><th>课</th><th>学时</th><th>笔记</th><th>大纲</th><th>自测</th><th>勘误</th><th>衍生选题</th></tr><tr><td>1</td><td>绪论（计算语言学基础绪论）</td><td>4 × 45′</td><td>✅ <a href="01-introduction/notes.html">notes</a></td><td>✅ <a href="01-introduction/outline.html">outline</a></td><td>✅ <a href="01-introduction/questions.html">questions</a></td><td>✅ <a href="01-introduction/corrections.html">corrections</a></td><td>✅ <a href="01-introduction/spinoffs.html">spinoffs</a></td></tr><tr><td>2</td><td>（待整理）</td><td>4 × 45′</td><td>⬜</td><td>⬜</td><td>⬜</td><td>⬜</td><td>⬜</td></tr></table>
+<blockquote><p>源 Markdown（<code>.md</code>）与渲染页（<code>.html</code>）同目录并存：阅读用 <code>.html</code>，编辑改 <code>.md</code>，改完跑 <code>scripts/build-html.sh</code> 重渲染。</p></blockquote>
+<h2>课件（PPT · Git LFS）</h2>
+<p>课件共 10 章 / 19 份 PPT，存放在 <a href="slides/"><code>slides/</code></a>（大二进制走 Git LFS）。</p>
+<table><tr><th>章</th><th>章节</th><th>份数</th></tr><tr><td>01</td><td>绪论</td><td>1</td></tr><tr><td>02</td><td>词形态分析（含最小编辑距离）</td><td>2</td></tr><tr><td>03</td><td>词语义表示（符号方法 / 向量方法 / 词向量发展）</td><td>3</td></tr><tr><td>04</td><td>语言模型（N-gram / 神经 / 预训练 / 大模型）</td><td>4</td></tr><tr><td>05</td><td>结构分析（成分句法 / 词性标注 / 依存 / 语言复杂性）</td><td>4</td></tr><tr><td>06</td><td>篇章分析（篇章结构 / 文本表示）</td><td>2</td></tr><tr><td>07</td><td>人机对话</td><td>1</td></tr><tr><td>08</td><td>视觉接地的自然语言处理</td><td>1</td></tr><tr><td>09</td><td>NLP 与伦理</td><td>1</td></tr></table>
+<blockquote><p>教材 <em>ed3book_aug26.pdf</em> 未随本仓收录 —— 已在 <a href="https://github.com/toff314/books"><code>books/</code></a> 项目中。</p></blockquote>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="SUMMARY.md">SUMMARY.md</a></footer>
+</div></body></html>
