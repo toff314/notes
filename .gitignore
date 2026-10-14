@@ -1,0 +1,13 @@
+# 运行时缓存
+.cache/
+__pycache__/
+*.py[cod]
+.venv/
+
+# 运行时
+nohup.out
+*.log
+
+# 临时文件
+*.tmp
+.DS_Store

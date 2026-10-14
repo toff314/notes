@@ -1,0 +1,11 @@
+:80 {
+	root * /srv
+
+	# Markdown 在线直读：交给浏览器（text/plain 由 Caddy 默认处理）
+	file_server browse {
+		hide .*
+		hide .git
+	}
+
+	encode zstd gzip
+}

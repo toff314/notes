@@ -1,0 +1,10 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: notes-caddy
+    restart: unless-stopped
+    ports:
+      - "17001:80"
+    volumes:
+      - ./:/srv:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
