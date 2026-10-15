@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第1讲（课程介绍 + 智能空口技术）· 思路大纲</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 1 讲（课程介绍 + 智能空口技术）</a></div>
+<h1>移动通信技术前沿 · 第1讲（课程介绍 + 智能空口技术）· 思路大纲</h1>
+<h2>主线（讲者是怎么推下来的）</h2>
+<ol><li><strong>问题</strong>：5G→6G 演进中，无线信道&quot;变且不知怎么变&quot;的根本难题在大规模 MIMO/高频段下被放大到传统方法失效，而 AI 与无线正在深度融合（90% 硕博论文与 AI 相关）——智能空口（AI for air interface）是什么、进展到哪、难在哪里？</li><li><strong>铺垫</strong>：课程框架与考核（8 次课、20/40/40）；行业演进线（5G-A 增强→太赫兹/语义通信/RIS/通感一体/天地一体）；ITU-R M.2160 六大场景中的&quot;通信AI一体化&quot;，拆成 Network for AI 与 AI for Network 两个 for。</li><li><strong>核心论证</strong>（AI for Network 空口侧三大用例，同构地&quot;加模块→换环节→端到端替代&quot;）：</li></ol>
+<ul><li><strong>CSI 压缩反馈</strong>：维度爆炸→传统四招（压缩感知/稀疏化/SVD/码本）有本质损失→三类 AI 增强（隐式单端细化/隐式双端/显式双端）→训练方式（单侧/双侧/全共享）→信道老化→反馈+预测三框架；</li><li><strong>波束管理</strong>：高频衰减↑→波束赋形补偿（追光灯）→宽窄波束矛盾→3GPP TR 38.843 P1/P2/P3 流程→三大类论文地图（低频助高频/高频省扫/环境信息）；</li><li><strong>定位</strong>：新场景分米级需求→传统 PRS/TDOA 不足→直接定位 vs 辅助定位→数据隐私瓶颈→WAIR-D 数据集；</li><li><strong>课题组示范</strong>：智能天线优化（数字孪生+RL 破 8^12 组合爆炸+潮汐效应）、流量预测（公开数据集+AI 业务建模无标准）。</li></ul>
+<ol><li><strong>结论</strong>：无线与 AI 深度融合是未来几年的确定趋势，标准（TR 37.817/38.843、M.2160）、数据平台（信通院/WAIR-D/ViWi）、竞赛三线并进；空口三大用例都有从&quot;可对比&quot;到&quot;端到端&quot;的清晰技术路线。</li><li><strong>转折/延伸</strong>：算法之外全是坑——数据（隐私/自我循环）、算力（时延吃掉收益）、业务模型（AI 流量无定论）、创新界定（换算法算不算创新）；&quot;2030 年 6G 部署没几年了，拭目以待&quot;。</li></ol>
+<h2>概念关系</h2>
+<pre class="mermaid">flowchart TD
+    A[&quot;通信AI一体化&lt;br/&gt;（ITU-R M.2160 场景）&quot;] --&gt; B[&quot;Network for AI&lt;br/&gt;网络为AI服务&quot;]
+    A --&gt; C[&quot;AI for Network&lt;br/&gt;AI为网络服务（本课主线）&quot;]
+    B --&gt; D[&quot;NET4AI：连接→算力/数据/算法&lt;br/&gt;内生AI · 华为架构&quot;]
+    C --&gt; E[&quot;无线接入网物理层&quot;]
+    E --&gt; F[&quot;CSI压缩反馈&lt;br/&gt;三类增强 + 预测联合&quot;]
+    E --&gt; G[&quot;波束管理&lt;br/&gt;低频助高频/高频省扫/环境信息&quot;]
+    E --&gt; H[&quot;定位&lt;br/&gt;直接 vs 辅助 · WAIR-D&quot;]
+    C --&gt; I[&quot;核心网/运维&lt;br/&gt;（NWDAF · 数据粒度瓶颈）&quot;]
+    F -. &quot;信道老化&quot; .-&gt; J[&quot;落地之难：数据/算力/标准/创新之问&quot;]
+    G -. &quot;环境数据敏感&quot; .-&gt; J
+    H -. &quot;位置隐私&quot; .-&gt; J</pre>
+<h2>如果只记三件事</h2>
+<ul><li><strong>两个 for</strong>：Network for AI 是让网络原生长出 AI 服务能力；AI for Network 是让 AI 接管空口物理层——本课只讲后者，三大用例 CSI 反馈/波束管理/定位。</li><li><strong>同构演进</strong>：三个用例都沿&quot;在现有流程里加 AI 模块（即插即用、可与传统对比）→双端替换环节（5G-A 引入）→端到端显式重构（6G、学术主流）&quot;三级爬升。</li><li><strong>真正的瓶颈不是算法</strong>：实测数据没有、位置与流量数据涉隐私、终端算力把复杂度变成时延、AI 业务流量模型尚无标准——博士选题的护城河在场景与闭环，不在换网络结构。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="outline.md">outline.md</a></footer>
+</div></body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第1讲 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 1 讲（课程介绍 + 智能空口技术）</a></div>
+<h1>移动通信技术前沿 · 第1讲 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>从本讲筛出 5 条可独立成文的点。锚点为待核线索（转写含 ASR 噪声），下游必须独立搜索核实。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>状态</th><th>链接</th><th>可支撑体量</th></tr><tr><td>1</td><td>大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构</td><td>write-tech-tutorial</td><td>S1+S3+S6</td><td>P0</td><td>⬜ 未发布</td><td>待填</td><td>专栏级</td></tr><tr><td>2</td><td>毫米波波束管理的深度学习地图：低频预言、省着扫、让摄像头看见</td><td>write-tech-tutorial</td><td>S1+S3+S6</td><td>P0</td><td>⬜ 未发布</td><td>待填</td><td>专栏级</td></tr><tr><td>3</td><td>AI业务流量建模：文生文流式、文生图突发，3GPP还没答案的问题</td><td>write-zhihu-tech（观点：）</td><td>S4+S5+S6</td><td>P1</td><td>⬜ 未发布</td><td>待填</td><td>标准长文</td></tr><tr><td>4</td><td>&quot;换了个AI算法算不算创新？&quot;——通信博士的选题困境</td><td>write-zhihu-tech（观点：）</td><td>S4+S5</td><td>P1</td><td>⬜ 未发布</td><td>待填</td><td>标准长文</td></tr><tr><td>5</td><td>位置数据隐私 vs AI高精度定位：运营商都拿不到的数据，模型怎么训</td><td>write-zhihu-tech（观点：）</td><td>S4+S5</td><td>P2</td><td>⬜ 未发布</td><td>待填</td><td>标准长文</td></tr></table>
+<hr>
+<h3>1. 大规模MIMO CSI压缩反馈：从 Type II 码本到端到端 AI 重构</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code></li><li><strong>主题串（可直接复制）</strong>：<code>大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构</code></li><li><strong>讲座锚点</strong>：PPT 第 20–28 页；转写第 2 段「三类增强模型」「信道老化」「单侧训练/双侧联合训练」</li><li><strong>为什么</strong>：命中 <strong>S1 讲而未透</strong>（老师明说&quot;不深入算法细节，不同文献可有自己的设计&quot;）+ <strong>S3 有技术纵深</strong>（压缩感知/SVD/码本→CSINet 系列→AutoEncoder 显式反馈→预测联合优化，技术链条完整）+ <strong>S6 权威外部源可查</strong>（Guo/Wen/Jin/Li arXiv:2206.15132、IEEE 9931713 综述、X. Lin arXiv:2308.05315、MathWorks 官方示例、3GPP TR 38.843）</li><li><strong>增益</strong>：</li><li>① 相对本讲：本讲只给了&quot;三级火箭&quot;的骨架与灰度图直观；文章可补齐每个环节的代表架构（CSINet/CRNet/CLNet/Attention-CSINet）、CR=1/16 复杂度-精度权衡表、量化 bit 数影响曲线</li><li>② 对读者：想进这个方向的研究生/工程师缺一篇&quot;从码本到端到端&quot;的连贯教程，现状是综述论文太长、博客太散；附 MathWorks 可运行示例=可操作性</li><li><strong>素材种子</strong>：历史溯源（Type I/II 码本标准化历程）｜原理（NMSE/余弦相似度指标、CQI 链路）｜源码（MathWorks CSI Feedback with Autoencoders 示例）｜争议（能否与 Type II 码本对比的判据）</li><li><strong>缺口（下游必须自己搜）</strong>：各模型在相同数据集上的最新 SOTA 对比；5G-A 标准引入进展（Rel-18/19 具体条款）</li><li><strong>体量建议</strong>：专栏级（5000–8000 字 + 图）</li><li><strong>待核</strong>：❓ 转写中 FLOPS/NMSE 表述已按 PPT 还原，具体数值引自 PPT 第 28 页</li></ul>
+<p><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</p>
+<hr>
+<h3>2. 毫米波波束管理的深度学习地图：低频预言、省着扫、让摄像头看见</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code></li><li><strong>主题串（可直接复制）</strong>：<code>毫米波波束管理AI方案全景：低频辅助、超分辨预测与视觉辅助三条路线</code></li><li><strong>讲座锚点</strong>：PPT 第 35–41 页；转写第 6–7 段「三大类」「摄像头大货车遮挡」「激光追水杯演示」</li><li><strong>为什么</strong>：命中 <strong>S1 讲而未透</strong>（老师明确&quot;论文特别多，只讲思路启发大家&quot;）+ <strong>S3 技术纵深</strong>（FC-DNN/FC-CNN/级联LSTM、固定角间距/宽窄混合/高SNR宽波束三方案、3D点云CNN、DRL 联合优化，每支都有可展开的原理与代码）+ <strong>S6 权威外部源</strong>（Alkhateeb 团队 ViWi 数据集系列论文、M. Alrabeiah、Qi/Wang/Li、Echigo、Ma/Hanzo、3GPP TR 38.843）</li><li><strong>增益</strong>：</li><li>① 相对本讲：本讲是&quot;论文地图&quot;式串讲；文章可逐条路线给出输入输出、网络结构、训练方式（监督/DRL）、开销-精度对比，形成可检索的选型决策表</li><li>② 对读者：做毫米波/通感方向的读者需要一张&quot;该从哪个方案入手&quot;的决策图（有没有低频链路？有没有摄像头？UE 动不动？）</li><li><strong>素材种子</strong>：原理（P1/P2/P3 波束流程、L1-RSRP 上报）｜源码（MATLAB 波束选择 NN/DQN 两个官方示例）｜争议（&quot;基站已知用户坐标&quot;假设的隐私问题——老师课堂质疑）｜演示（激光+旋转台+摄像头追踪水杯的可复现小实验）</li><li><strong>缺口（下游必须自己搜）</strong>：2025–2026 最新论文（老师明说&quot;今年的论文这里都没涉及&quot;）；ViWi/WAIR-D 数据集下载与使用</li><li><strong>体量建议</strong>：专栏级</li><li><strong>待核</strong>：❓ MWorks 开发商全称（转写&quot;同源/宏源&quot;不一致）；低频助高频三篇论文的具体引用以 PPT 第 36 页为准</li></ul>
+<p><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</p>
+<hr>
+<h3>3. AI 业务流量建模：文生文流式、文生图突发，3GPP 还没答案的问题</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点：）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：AI业务流量建模——大模型时代通信网络面对的无标准难题</code></li><li><strong>讲座锚点</strong>：PPT 第 56–58 页；转写第 7 段「文生文流式逐字蹦、文生图沉寂后突发」「AI类业务的模型还在讨论之中」「DeepSeek 高峰时段计费」</li><li><strong>为什么</strong>：命中 <strong>S4 争议/反差</strong>（&quot;传统业务有泊松模型、XR 业务有 3GPP 模型，AI 业务没有模型——没有业务就无从评估网络性能&quot;）+ <strong>S5 现实落点</strong>（运营商流量预测、载波关断节能、准入控制都依赖业务模型；AI 流量已占大头）+ <strong>S6 权威外部源</strong>（3GPP 业务模型系列、MAWI/Telecom Italia 公开数据集、LSTM-CVAE/ARIMA 预测文献）</li><li><strong>增益</strong>：</li><li>① 相对本讲：本讲只用五分钟带过；文章可把&quot;AI 业务流量特征&quot;（流式 token 输出 vs 突发图片传输 vs 视频生成）展开成有数据支撑的分析</li><li>② 对读者：网络规划/优化从业者正被 AI 流量冲击却没有建模抓手；文章给出已知特征+公开数据集+可行建模思路=认知+可操作</li><li><strong>素材种子</strong>：数据（MAWI 骨干网、米兰电信小区级数据）｜方法（ARIMA→LSTM→LSTM-CVAE 演进）｜争议（仿真数据自我循环之困——老师原话）｜人物/轶闻（老师 DeepSeek 高峰时段欠费 anecdote 可作引子）</li><li><strong>缺口（下游必须自己搜）</strong>：学界 2025–2026 对 LLM 流量建模的最新论文；运营商 AI 流量占比实测数据</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：⚠️ 转写&quot;云南电信&quot;与 PPT&quot;米兰电信&quot;差异（corrections.md #1）——引用时必须写准 Telecom Italia</li></ul>
+<p><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</p>
+<hr>
+<h3>4. &quot;换了个 AI 算法算不算创新？&quot;——通信博士的选题困境</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点：）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：把A算法换成B算法算不算创新？——无线AI时代的科研创新界定之问</code></li><li><strong>讲座锚点</strong>：转写第 2 段末「我把一个新的AI的算法应用在这个场景下，这个算不算创新……我也没有什么明确的结论……跟大家把这个事儿抛出来」</li><li><strong>为什么</strong>：命中 <strong>S4 争议反差</strong>（这是老师公开抛给 36 位在职博士的真问题，答辩评审现场就会发生）+ <strong>S5 现实落点</strong>（直接命中每个读者的论文送审、职称评审、专利审查——老师还提到与专利局朋友聊过同类问题）+ <strong>S6 权威外部源</strong>（可检索&quot;缝合怪&quot;&quot;A+B 式创新&quot;讨论、国家自然科学基金/专利审查指南对创新性的界定、AI for wireless 综述对&quot;重复性研究&quot;的批评）</li><li><strong>增益</strong>：</li><li>① 相对本讲：本讲只抛问不给答案；文章可以系统梳理&quot;应用创新&quot;在什么条件下成立（新场景洞察、数据闭环、系统工程、理论解释），给出可操作的自检清单</li><li>② 对读者：研究生与工程师都需要一张&quot;我的创新到底在哪一层&quot;的自检表（问题层/方法层/数据层/系统层）</li><li><strong>素材种子</strong>：争议（CNN→Transformer 替换潮在 CSI/波束/定位三个用例的重复出现——本讲 PPT 本身就是证据）｜人物（专利局审查视角 anecdote）｜案例（优秀口头报告的&quot;言之有物&quot;标准 vs 大模型生成报告的反差）</li><li><strong>缺口（下游必须自己搜）</strong>：学术圈关于 incremental work 的公开讨论文献；各校博士论文创新性要求的官方表述</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 老师观点为&quot;无明确结论&quot;，文章立场需谨慎，宜做成&quot;问题梳理+多视角&quot;而非给出武断答案</li></ul>
+<p><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</p>
+<hr>
+<h3>5. 位置数据隐私 vs AI 高精度定位：运营商都拿不到的数据，模型怎么训</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点：）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：AI定位的两难——分米级精度需求与位置数据隐私的正面碰撞</code></li><li><strong>讲座锚点</strong>：PPT 第 43–48 页；转写第 7 段「运营商聊过，用户位置数据他们自己都拿不着」「我是一概关闭位置权限」「金属货架园区定位难」</li><li><strong>为什么</strong>：命中 <strong>S4 争议反差</strong>（需求端：车道级导航/儿童手表/智慧仓储要求分米级且下沉到垂直维度；供给端：训练所需地面实况位置数据恰好是最敏感的数据）+ <strong>S5 现实落点</strong>（每个人手机里&quot;是否允许获取位置&quot;弹窗、商场导购/防走散产品、工业 AGV）+ <strong>S6 权威外部源</strong>（WAIR-D arXiv:2212.02159、3GPP 定位增强标准、隐私计算/联邦学习在定位中的应用的文献）</li><li><strong>增益</strong>：</li><li>① 相对本讲：本讲把挑战一段带过；文章可展开&quot;直接定位 vs 辅助定位&quot;的技术分叉+数据侧的解法谱系（仿真孪生、合成数据、联邦学习、差分隐私）</li><li>② 对读者：把&quot;AI 很强但数据拿不到&quot;这一普遍困境讲透，落到定位这个人人有感知的场景，传播性好</li><li><strong>素材种子</strong>：数据（WAIR-D 两个场景设定——1 万环境×5 基站 的生成式数据恰是&quot;数据困境&quot;的产物）｜争议（老师&quot;一概关闭位置权限&quot;与产业需求的反差）｜应用（金属货架仓库 AGV 定不准的实例）</li><li><strong>缺口（下游必须自己搜）</strong>：隐私计算+定位的最新交叉论文；各国位置数据法规（GDPR/个保法）具体条款</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ WAIR-D 具体数字以 PPT 第 47 页为准，引用前对照 arXiv 原文</li></ul>
+<p><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

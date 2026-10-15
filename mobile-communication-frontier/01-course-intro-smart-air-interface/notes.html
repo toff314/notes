@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第1讲（课程介绍 + 智能空口技术）· 听课笔记</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 1 讲（课程介绍 + 智能空口技术）</a></div>
+<h1>移动通信技术前沿 · 第1讲（课程介绍 + 智能空口技术）· 听课笔记</h1>
+<blockquote><p><strong>本讲一句话</strong>：5G 向 6G 过渡窗口期，无线与 AI 深度融合已不可逆——以&quot;Network for AI vs AI for Network&quot;为总纲，沿空口三大用例（CSI 压缩反馈、波束管理、定位）全景扫描，并以智能天线优化、流量预测示范&quot;AI for Network&quot;的落地路径。</p><p><strong>结构</strong>：行业演进与课程框架（铺垫）→ 通信AI一体化的两个 for（总纲）→ 空口三大用例分述（核心论证）→ 落地之难：数据、算力、创新之问（转折）。</p><p><strong>可疑处</strong>：转写 ASR 噪声较多，术语以 PPT 为准，见 corrections.md ❓/⚠️ 列表。</p><p><strong>与我何干</strong>：博士选题若涉及无线+AI，本讲给出用例地图（哪里有人做过、做到什么程度、卡在哪里）；考核要求直接决定课程产出形式。</p></blockquote>
+<hr>
+<h3>1. 课程概况与考核方式</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>这门课的时间、学分、教师结构如何安排？</li><li>考核由哪几部分构成，老师最强调的是什么？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】课程&quot;移动通信技术前沿&quot;，32 学时/2 学分，每周一次 4 学时、共 8 次课；高月红、张欣、尹良三位北邮信通院无线通信教研中心老师合授。不设教材，用自编讲义+前沿参考书；第 1 讲把原计划靠后的&quot;智能通信&quot;提前（今年选课 36 人创新高，考核耗时增加）。</li><li>【师】考核：考勤 20%（请假不影响）＋平时大作业 40%＋期末口头报告 40%（今年压缩为每人 7~8 分钟陈述＋2~3 分钟讨论）；主题开放：移动通信行业内、与工作或未来选题相关的技术内容。</li><li>【师】老师明确反感直接交未经修改的大模型生成报告（&quot;甚至对话记录还在里面&quot;），唯一硬要求是&quot;言之有物、有自己的思考&quot;；往届优秀口头报告=讲测试工作、无人机申报监管等&quot;自己干过的事&quot;。</li><li>【PPT】第 8 页考核表&quot;10 分钟陈述＋5 分钟讨论&quot;为 2024 秋示例，口头已更新为 7~8 分钟（转写覆盖此更新）。</li></ul>
+<p><strong>一句话总结</strong>：课是 8 次讲完的博士前沿课，成绩=出勤 20%+大作业 40%+口头报告 40%，真正的门槛是&quot;言之有物&quot;。</p>
+<hr>
+<h3>2. 从 5G 到 6G：演进脉络与技术热点</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>短短六年（2020→2026），移动通信研究重点经历了哪几次换挡？</li><li>为什么课程说&quot;大部分内容是地面移动通信&quot;？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】本课聚焦地面移动通信，少量涉及卫星；2020 年 5G 部署至今发展极快，2030 年预计 6G 部署（另提到 2029 年中国第一个 6G 标准）。演进：2020–2022 做 6G 基础研究（更高频段、通感一体初步探索）→ 2023–2025 面向 5G-Advanced 与未来核心应用 → 2025 起 6G 关键技术突破与通感一体化。</li><li>【PPT】第 4 页 5G 增强技术（5G-A/5.5G）：①网络智能化与 AI 融合（流量预测、智能调度、基站按需启停）②毫米波深化（24–100GHz，高密度城区与 FWA 试点）③URLLC 增强（TSN 与 5G 融合，面向工业物联网、远程手术、车联网）。</li><li>【PPT】第 5 页 6G 探索：太赫兹通信（Tbps、全息通信、沉浸式 XR）；语义通信（突破香农信息论框架：知识库构建、语义编码、联合源信道编码）；可重构智能表面（RIS）软件控制无线传播环境，增强覆盖、弥补盲区、提升能效。</li><li>【师】未来方向还包括空天地立体组网：地面＋无人机/高空平台＋卫星。</li></ul>
+<p><strong>一句话总结</strong>：6G 的技术底座=太赫兹、语义通信、RIS、通感一体、天地一体组网，本课选题随这条演进线展开。</p>
+<hr>
+<h3>3. 总纲：通信AI一体化的两个 for</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>&quot;AI 和通信（AI and Communication）&quot;这个词为什么太宽泛？老师如何把它拆成可操作的两个方向？</li><li>这两个方向各自的关注点是什么？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】智能空口的命名：AI+无线融合有很多名字，本课取&quot;智能空口&quot;，聚焦空口（air interface）这条关键链路上的 AI，不排除核心网/有线网应用。</li><li>【师】ITU-R M.2160 建议书（2023.11）在 5G 三大场景（eMBB、URLLC、mMTC）之上扩展出 6G 六大场景；其中&quot;通信AI一体化&quot;用的是宽泛连接词 and——拆解方法：把 and 换成 for。</li><li>【师】<strong>Network for AI</strong>：网络为 AI 服务——过去网络从无为 AI 应用做设计，现在要让架构适配 AI 采集、传递、利用数据的需求。</li><li>【师】<strong>AI for Network</strong>：AI 为网络服务——用 AI 改进移动通信系统性能（CSI 压缩反馈、波束管理、定位、资源分配、故障预测等）；未来的&quot;资源&quot;比传统（时频/功率/码）多得多：通感算智一体，还涉及算力与 AI 模型的分配。</li><li>【师】两者相辅相成：内生 AI 能力越强，AI 部署效果越好；AI 部署又反过来提升网络性能。</li><li>【师】教师经验数据：他评审的硕博论文 90% 以上与 AI 相关，一半以上以 AI 算法改进性能为题——本讲选题动因，也是后文&quot;创新之问&quot;的伏笔。</li></ul>
+<p><strong>一句话总结</strong>：一个 and 拆成两个 for，本课主体落在 AI for Network 的空口侧。</p>
+<hr>
+<h3>4. Network for AI：NET4AI 与内生 AI</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>NET4AI 把传统网络的边界扩展到了哪里？</li><li>老师批评现网运维数据的什么问题，这和 Network for AI 有什么关系？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【PPT】第 12 页定义：NET4AI 通过网络为 AI 提供多种支撑能力，使 AI 训练/推理更高效、更实时，提升数据安全与隐私保护；把传统网络从连接服务扩展到算力、数据、算法层面。</li><li>【PPT】现状：AI 移动应用靠终端本地化或集中式云 AI 提供服务，5GS 把 AI 训练与应用数据流都当普通业务数据传输；3GPP Rel-16 定义 NWDAF 网元，尝试网络内部智能化。</li><li>【PPT】挑战：云 AI 与下层网络管道无跨层深度融合；5GS 资源能力开放度不足；各网元的算力、算法、数据资源未被外部 AI 实体充分调度（基站大量基带算力与无线数据闲置）。</li><li>【师】标准化从 Rel-16 起已讨论多版本（口头提到&quot;已经到 19 了&quot;），新增网元需与既有模块逐一做接口匹配，推进不易。</li><li>【PPT】第 13 页价值场景：AR、移动机器人、智能工厂、感官互联（360° 沉浸式 XR）、车联网；标准化方向：SA1 Rel-18 研究 5GS 辅助 AI/ML 业务传输、模型分发/训练、QoS 与策略增强、辅助联邦学习。</li><li>【师】支柱思想&quot;内生 AI/原生 AI&quot;：6G 所有网元原生集成通信、计算、感知能力，云上集中智能向深度边缘泛在智能演进。</li><li>【PPT】第 15 页华为实验室 NET4AI 架构：控制平面（终端管理＋管理 AI 计算服务）＋计算平面（协调例程执行，密文不解密直接转发）＋服务流程（应用控制器→业务管理器→作业管理器）；案例：医疗机构血压模型部署，终端自愿参与隐私保护式底层学习，反复执行直至全局训练判定收敛。</li><li>【师】运维智能化（属 AI for Network）：AI 运维算法本身不难，<strong>瓶颈在现网数据统计粒度太长（分钟级甚至十几分钟级）</strong>——网络已出问题数据还没反馈回来；这反过来印证网络需内生地提供数据能力。</li></ul>
+<p><strong>一句话总结</strong>：Network for AI 是让 6G 网络原生长出算力/数据/AI 服务能力，但现网的数据粒度与网元开放度是现实瓶颈。</p>
+<hr>
+<h3>5. AI for Network：三层应用与标准化进展</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>AI for Network 在核心网、运维、接入网三层各解决什么？</li><li>3GPP 对无线 AI 的态度与对其他技术的态度有何本质不同？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】三层：①5GC——AI/ML 优化性能、智能流量分配与网络切片（宏观层）；②运营管理和维护——自动化管理、故障预测、服务质量保障；③无线接入网——信道反馈、UE 定位、波束管理、资源分配等物理层用例（<strong>本课重点</strong>）。</li><li>【PPT】第 17 页 3GPP TR 37.817 原理定义：3GPP <strong>不定义神经网络的实现，只定义模型接口与输入/输出类型</strong>；AI/ML 功能由数据收集、模型训练、模型推理、Actor 等组件构成；目标是预测未来变化并提出应对方案，制定全球协同的规范性标准。</li><li>【师】智能 RAN 功能框架四部分：数据收集→模型训练→模型推理→Actor 执行→性能反馈回训练，形成闭环；这是 3GPP 从&quot;基于规则&quot;到&quot;基于 AI&quot;的重大转变。</li><li>【PPT】第 18 页业界进展时间线（倒序）：2023.11 ITU 批准 M.2160 建议书 → 2023.9 3GPP TR 38.843（空口 AI 三大用例：CSI 反馈、定位增强、波束管理的实验配置与评估标准）→ 2023.5 3GPP RAN WG1 #113（华为、诺基亚、联想、中兴、vivo、OPPO、NTT DOCOMO、小米、CMCC 等汇报 CSI 压缩/预测评估）→ 2023.2 OPPO 6G 白皮书（空口 AI 替代化）→ 2022.12 信通院联合 vivo/OPPO/中信科/三星/中兴发布移动通信开放数据平台（mobileai-dataset.cn）→ 2022.9 IMT-2030 推进组无线 AI 技术研究报告（AI/ML 物理层九大关键领域）。</li><li>【师】课外观察：AI 已进入学科竞赛（无线 AI 大赛每年办、华为 ICT 大赛竞争激烈——老师带学生进决赛未获奖，亲眼见排名&quot;从个位数跌到十几名再刷回来&quot;）与基础课教学（通信原理 AI 助教）。</li></ul>
+<p><strong>一句话总结</strong>：3GPP 给无线 AI 定接口不定实现，标准、数据平台、竞赛三线并进，接入网物理层用例是本课主线。</p>
+<hr>
+<h3>6. CSI 压缩反馈：传统瓶颈与三类 AI 增强</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>大规模 MIMO 之后，CSI 反馈的瓶颈是什么？传统方法怎么压缩、损失在哪？</li><li>三类 AI 增强模型的演进逻辑是什么（改动从小到大）？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】动机：无线信道&quot;变且不知道怎么变&quot;，必须探测并反馈信道状态；大规模 MIMO 使 CSI 维度急剧变大、反馈与计算开销爆炸，而反馈本身纯粹是开销。</li><li>【PPT】第 20 页传统四招：压缩感知（利用稀疏性从少量测量恢复信号）／稀疏化（变换转稀疏域只传重要系数）／SVD 分解（只传最重要奇异值）／码本反馈（选最匹配项只反馈索引）。</li><li>【师】传统码本法的本质损失：从连续向量中挑&quot;长得最像&quot;的离散向量——离散化必有损失（老师指着灰度图指出原 V 与恢复 V 明暗不同）。</li><li>【PPT】第 21 页三类 AI 增强（改动从小到大）：①<strong>隐式 CSI 反馈单端细化</strong>——发端不变，收端加 AI 模块把码本索引更好地&quot;翻译&quot;回信道，<strong>不改标准、即插即用</strong>；②<strong>隐式 CSI 反馈双端增强</strong>——发端&quot;选码本&quot;换成 AI 编码器，可与 Type II 码本传统方式对比评估，<strong>将在 5G-Advanced 引入</strong>；③<strong>显式 CSI 反馈双端增强</strong>——AI 编码器直接从信道矩阵编码（连 SVD 都不用），<strong>不能与 Type II 码本对比，计划 6G 及以后部署，学术界研究最广泛</strong>（引 arXiv:2206.15132）。</li><li>【PPT】第 22–23 页学术模型与权衡：CSINet／CLNet／CRNet／Attention-CSINet 架构各异；室内场景 CR=1/16 下对比<strong>算法复杂度 vs NMSE</strong>——复杂度越高误差通常越小，但研究除性能外还必须考虑算力（终端算力受限，大算力算法时延大到&quot;算完几个子帧都过去了&quot;，结果无意义）。</li><li>【PPT】第 24–25 页 MathWorks 自动编码器示例：加预处理（DFT、按数据规律截断）模拟压缩反馈全流程，附量化 bit 数对性能的影响。</li></ul>
+<p><strong>一句话总结</strong>：AI 增强的三级火箭是&quot;收端加模块→双端换码本→端到端全替代&quot;，代价是不能再与 Type II 码本对比，收益天花板越来越高。---</p>
+<h3>7. 模型训练与 CSI 预测联合优化</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>为什么仿真训练是学术界的无奈？现网部署差在哪三步？</li><li>信道老化是什么？三种&quot;反馈+预测&quot;联合框架各把预测放在哪？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】学术界多在仿真环境按 3GPP 方法论生成大量信道训练模型——&quot;因为实测数据没有&quot;；现网部署必须面对数据来源问题。</li><li>【PPT】第 26 页三种模型训练方式（引 arXiv:2308.05315）：<strong>单侧训练</strong>（站侧/终端侧各自单独训练，无交互）；<strong>双侧联合训练</strong>（两侧通过前向/反向传播交互，回传梯度等参数而非原始数据）；<strong>理想全共享</strong>（数据集完全双向共享——&quot;最理想思路&quot;，但直接传 data 本身占用空口资源，现实暂不可行）。</li><li>【师】信道老化：UE 高速移动时信道变化极快，复杂算法的高精度算出来时信号已变，结果失去意义（MU-MIMO 场景尤其严重）。</li><li>【PPT】第 27 页三种反馈与预测联合优化框架（引 arXiv:2206.15132、arXiv:2202.02492）：①<strong>发端预测</strong>——先预测 t+Δt 时刻信道再编码，处理耗时恰好填平 Δt，输出时预测值正好可用；②<strong>收端预测</strong>——发端不变，收端解码后加预测模块输出 t+Δt；③<strong>端到端强编解码器</strong>——吃进 t 时刻信道、直接吐出 t+Δt 信道，压缩与预测融合为一体。</li><li>【PPT】第 28 页具体实现：文献中的基于 CNN 的 CSI 预测模型；老师项目组自做 LSTM+Transformer（12.75M+2.55M=15.3M 参数）与 Transformer+Transformer（15.41M）对比，MSE≈0.003、余弦相似度≈0.80 量级。</li></ul>
+<p><strong>一句话总结</strong>：训练侧从&quot;单侧仿真&quot;走向&quot;双侧交互&quot;再到&quot;数据全共享&quot;，推理侧从&quot;反馈当前&quot;走向&quot;预测未来&quot;，两线共同对冲信道老化。</p>
+<hr>
+<h3>8. 波束管理：动机、标准化流程与三大类方案</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>频率升高为什么必然逼出波束管理？波束赋形的物理本质是什么？</li><li>基于 AI 的波束管理论文那么多，老师按什么维度归为三大类？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】频段被迫走高（2G 八九百兆→3G 1.8G→4G 2.2–2.8G→5G 3.5G→毫米波/3–30GHz），衰减随频率加快（老师估算频率×4 衰减速度约×16，❓&quot;平方反比&quot;提法待核），小区半径从十几公里缩到几百米。</li><li>【师】FDD 上下行分工的直观答案：<strong>上行分低频段、下行分高频段</strong>——终端功率弱，低频衰减慢，保护终端。</li><li>【师】保持接收信噪比不变的三条补偿路径：提高发射功率（有上限）、更高效的编码调制（只提效率不提信噪比）、<strong>提高天线增益</strong>；波束赋形=舞台追光灯，&quot;想跟谁通信，波束就对准谁&quot;。宽波束覆盖大但增益小，窄波束增益高但覆盖小且必须对准——波束管理的全部难题由此生发。</li><li>【PPT】第 30–32 页传统方案三局限：扫描法（简单但开销大）、基于模型法（开销小但依赖先验、实际可行性差）、基于 ML 的传统方法（拟合能力有限）；AI/ML 三优势：学习信道非线性特征、端到端无需先验假设、拟合能力强（代价是计算复杂度高）。</li><li>【PPT】第 33 页 3GPP TR 38.843 流程（P1 初始波束对建立／P2 发射波束细化／P3 接收波束细化）：gNB 下行波束预测——扫描发射波束→UE 上报 L1-RSRP→gNB 用 AI/ML 预测 top-K 发射波束→只扫这 K 个确认→UE 反馈最佳波束 ID；上行对称（UE 侧模型预测集合 A 中 top-K）。</li><li>【PPT】第 34 页 MATLAB 两个示例：NN 波束选择（GPS 坐标→top-K 波束对，指标为平均 RSRP 与 top-K 准确度；老师指出&quot;基站已知用户坐标&quot;假设偏理想、涉隐私）＋DQN 波束训练（GPS 坐标+当前波束角为输入）。</li><li>【师】工具链插曲：北邮 MATLAB 被禁，但 MATLAB 工具包仍是通信专业好资源；国产替代可关注<strong>江苏同元（转写&quot;同源/宏源&quot;待核）的 MWorks</strong>，已可调用 Python 训练的 AI 模型文件。</li><li>【PPT】第 35–41 页三大类方案（论文地图）：①<strong>低频辅助高频</strong>（NSA 架构）：FC-DNN 用低频 CSI 预测毫米波最佳波束（输出转概率）；FC-CNN 提隐藏特征匹配候选波束数；级联 LSTM 在两个低频 CSI 估计之间均匀预测毫米波束（纳入时序）。②<strong>毫米波频段直接做</strong>（省扫描开销）：固定角间距 DNN+softmax（不全覆盖有损失但开销小）；宽窄波束混合 CNN 两级扫描（类超分辨率图像恢复）；高 SNR 宽波束集 LSTM 建模 AoA/AoD 时变，同时预测 t 与 t+1 时刻波束。③<strong>基于环境信息</strong>（近年热点）：毫米波链路近似视距，摄像头/点云可提供环境信息——大货车遮挡例子&quot;摄像头看见车就知道用户被挡，信道测量都不重要了&quot;；ResNet+VIWi 开源数据集；3D 点云 CNN；DRL（DQN 联合求解波束成形/功率控制/干扰协调最大化 SINR）。</li><li>【师】实验室演示：激光发射器绑旋转台+摄像头——识别&quot;这是个水杯&quot;、检测移动方向、控制旋转台让激光追水杯；说明波束追踪需视觉识别+运动预测+控制闭环，超出纯通信算法。</li><li>【师】离线 vs 在线学习：LSTM 方案可离线训练再部署（半在线）；强化学习必须边部署边学（持续在线）——选算法要想清工程形态。</li></ul>
+<p><strong>一句话总结</strong>：波束管理的核心矛盾是&quot;窄波束增益 vs 覆盖/对准开销&quot;，AI 用三条路线破局——低频预言高频、高频省着扫、让摄像头直接看见环境。</p>
+<hr>
+<h3>9. AI 定位：两类方法、挑战与数据集</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>传统 5G NR 定位靠什么？新场景的精度需求到了哪一级？</li><li>&quot;直接定位&quot;和&quot;辅助定位&quot;的本质区别是什么？最大的现实障碍在哪？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】应用驱动：车道级导航、儿童手表楼层级定位、金属货架工业园 AGV 定位难（信号特征与混凝土建筑完全不同）、采蘑菇机器人（定位+好坏识别+侧面遮挡一连串问题）——定位精度与速度的新需求。</li><li>【PPT】第 43 页传统 5G NR 定位：依赖定位参考信号（PRS）的到达时间差/角度——DL TDOA、DL AoD、UL TDOA、UL AoA、Multi-RTT、E-CID；新场景（商场导购、防走散、展厅导游、人流监控、智慧仓储、服务机器人）要求最高达<strong>分米级</strong>，传统方法很难达到。</li><li>【PPT】第 44 页两大类：<strong>AI/ML 直接定位</strong>（模型直接输出 UE 位置）vs <strong>AI/ML 辅助定位</strong>（模型输出中间测量统计量或细化测量值，再交给传统方法定位）。</li><li>【PPT】第 45 页挑战与对策：挑战（部署后性能随环境变化下降；多场景转换要求基础设施适配；地面实况数据难均匀获取）；对策（模型生命周期管理；用 IPD/ACS/地面实况标签度量数据集密度与质量）。</li><li>【师】最大现实障碍是<strong>数据敏感</strong>：运营商都拿不到用户位置数据（&quot;我是一概关闭位置权限&quot;）；技术都能实现，数据从哪来、准不准定效果。</li><li>【PPT】第 46 页《无线AI技术研究报告》实验：信道冲激响应+环境+设备位置为输入、接收位置为输出；有环境信息精度更高；天线数 32T4R 降为 8T2R 时，有环境信息的精度下降更少。</li><li>【PPT】第 47 页 WAIR-D 数据集（华为＋浙江大学联合开发，开源）：场景 1=10,000 个环境×每环境 5 个 BS×30 个稀疏 UE；场景 2=每环境 1 个 BS×10,000 个密集 UE；支持 2.6–100GHz 多载频；含地图、位置、路径延迟、AoA/AoD。</li><li>【PPT】第 48 页样例实现：4×Linear+ReLU 的 MLP，首轮误差大→末轮 loss 近 0；引入无标签数据时换结构或加半监督学习提升泛化。</li></ul>
+<p><strong>一句话总结</strong>：AI 定位=模型直接报坐标或辅助传统量测两条路，卡脖子的不是算法而是位置数据的获取与隐私。</p>
+<hr>
+<h3>10. 智能天线优化与流量预测（课题组工作示范）</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>为什么调一个基站的码本是&quot;牵一发而动全身&quot;？12 个基站×8 码本的组合空间有多大？</li><li>流量预测数据集从哪里来？AI 业务给流量建模出了什么新难题？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】智能天线优化动机：区域内多基站各有码本（指定天线朝向），调一个站的上下倾角/水平角会改变与邻站交界区的覆盖——出现弱覆盖或重叠覆盖；过去靠专家经验调，现用 AI 做 3D MIMO 天线参数配置；难点：码本空间大（8 波束近万种 pattern 组合）、空间复杂（高楼/低楼/道路/空旷）、潮汐效应与区域联合优化（插花部署→连续组网）。</li><li>【师】潮汐效应：周一早 9 点涌向教学楼、晚上回宿舍楼、中午去食堂；覆盖应朝人流动态调整。</li><li>【师】数字孪生仿真平台（北邮本部周边 1.5km×1.5km，把北师包进来才凑够）：模块 1 用户和业务行为仿真（水平+垂直两维移动）→模块 2 5G 系统级仿真平台→模块 3 智能天线优化（选码本→算覆盖→性能反馈→迭代）；另加用户位置/业务预测辅助码本选择。</li><li>【PPT】第 53–55 页实现要点：输入侧多粒度历史特征采集、分钟/小时/天级用户分布预测、随机桥+A* 寻路；输出侧毫秒级方案、优于专家经验、时间复杂度 O(logn)→O(1)；两阶段——阶段一撒 720,000 用户（水平 5m 栅格 300×300、垂直 8 层）遍历 28 码本生成 RSRP 库→阶段二深度学习模块与 baseline 专家码本对照仿真，最大 RSRP 反馈迭代。</li><li>【师/PPT】流量预测：数据集是最大困难——运营商流量数据不能公开；用过 ⚠️ 电信公开数据集（转写&quot;云南电信&quot;，PPT 第 56 页作&quot;米兰电信&quot;，无法调和，见 corrections.md #1）＋日本 MAWI 骨干网数据集；清洗后用不同算法预测（PPT 对比 ARIMA 等；骨干网用 LSTM-CVAE）；24 小时规律明显。</li><li>【师】流量预测的价值：拥塞预警、载波关断节能（老师调侃&quot;半夜不睡觉刷短视频，早上六七点业务量低才可关断&quot;）、动态资源划分、接入控制。</li><li>【师】新前沿——<strong>AI 业务流量建模</strong>：文生文是流式逐字输出，文生图是&quot;沉寂一段算图后突发一张大图&quot;，规律完全不同；传统数据业务与 VR/XR 类都有 3GPP 模型，<strong>但 AI 类业务的模型还在讨论、没有结论</strong>——没有业务模型就无从评估网络性能。</li><li>【师】仿真数据的自我循环之困：数据集是人按设定规律生成的，再让机器学习这个规律——&quot;这个环感觉破不开&quot;，老师也没有答案。</li></ul>
+<p><strong>一句话总结</strong>：课题组示范了两条 AI for Network 落地线——用数字孪生+RL 啃天线码本组合爆炸，用公开数据集做流量预测，但数据集与业务模型是共同的软肋。</p>
+<hr>
+<h3>11. 课堂思考：创新之问与落地之难</h3>
+<p><strong>线索</strong>：</p>
+<ul><li>老师抛出的&quot;创新之问&quot;是什么？为什么放在 CSI 部分讲完后提出？</li><li>本讲反复强调的落地障碍有哪几条？</li></ul>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】创新之问（原话核心）：&quot;我们把一个新的 AI 算法应用在这个场景下，这算不算创新？别人用 CNN，我换成别的，算不算？A 算法不是我提的，B 算法也不是我提的，我只是把它用在这儿，算不算？&quot;——老师无明确结论，但很多现有研究正是这种类型（层数不同、分支不同），论文送审时&quot;能不能说服专家打高分，需要一直思考&quot;。</li><li>【师】落地障碍清单（贯穿全讲）：①数据——实测数据没有、位置/流量数据敏感、仿真数据是&quot;自己设规律自己学&quot;的循环；②算力——终端算力受限且多任务共享，复杂度直接变成时延，超过信道相干时间结果作废；③模型标准——AI 业务流量模型、无线 AI 接口规范都在讨论未定；④时间窗口——2030 年 6G 部署（2029 年中国首个 6G 标准），没几年了。</li><li>【师】趋势判断：未来可预见的几年，无线与 AI 的深度融合肯定是大趋势；建议结合自己的行业工作选题，言之有物。</li></ul>
+<p><strong>一句话总结</strong>：算法不是瓶颈，数据、算力、标准、创新界定才是——这既是本讲的尾声，也是选课学生该带走的选题警醒。</p>
+<hr>
+<h2>全篇 takeaway（3–5 条）</h2>
+<ol><li><strong>一个 and 两个 for</strong>：通信AI一体化=Network for AI（网络为 AI 服务）＋AI for Network（AI 为空口服务），本课主线是后者在空口物理层的三大用例。</li><li><strong>三大用例一条主线</strong>：CSI 压缩反馈、波束管理、定位都因&quot;无线信道多变且未知&quot;而起，AI 用学习非线性规律替代显式建模；三者同构演化&quot;加模块→换环节→端到端替代&quot;。</li><li><strong>工程约束决定算法价值</strong>：复杂度=时延=必须在信道相干时间内算完；数据=隐私=运营商都拿不到的瓶颈；仿真=自我循环的权宜之计。</li><li><strong>标准时间线要背</strong>：Rel-16 NWDAF → TR 37.817（接口）→ 信通院数据平台 → TR 38.843（三大用例）→ M.2160 六大场景 → 5G-A 引入隐式双端增强 → 6G 部署显式方案。</li><li><strong>创新之问</strong>：换算法套场景算不算创新没有标准答案，博士论文的护城河在场景洞察与系统工程闭环。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="notes.md">notes.md</a></footer>
+</div></body></html>

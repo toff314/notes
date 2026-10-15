@@ -18,6 +18,7 @@
 
 | 课程 | 目录 | 课次 | 课件 | 进度 |
 |---|---|---|---|---|
+| 移动通信技术前沿（北京邮电大学 · 信息与通信工程学院） | [`mobile-communication-frontier/`](mobile-communication-frontier/) | 第 1 讲 课程介绍 + 智能空口技术 | 见 slides/ | 1 讲已完成 |
 | 计算语言学基础（北京邮电大学） | [`computational-linguistics/`](computational-linguistics/) | 第 1 课 绪论 | 10 章 / 19 份 PPT | 1 课已完成 |
 
 ## 目录约定

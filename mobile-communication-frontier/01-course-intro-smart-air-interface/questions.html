@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第1讲 · 疑问与自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 1 讲（课程介绍 + 智能空口技术）</a></div>
+<h1>移动通信技术前沿 · 第1讲 · 疑问与自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用这份自测）</strong>：</p><p>1. <strong>遮住</strong> <code>notes.md</code>，只看下面的问题；</p><p>2. 合上一切材料，口头或笔头作答（答案须自己组织，不得复述原文）；</p><p>3. 答不出的进&quot;我没掌握&quot;，回看对应小节后再测一次；</p><p>4. 能讲给别人听 = 真懂（费曼标准）；讲不出的地方就是薄弱点。</p></blockquote>
+<h2>自测（合上书回答）</h2>
+<ol><li>为什么把&quot;AI and Communication&quot;拆成 Network for AI 和 AI for Network 两个 for？for 后面的词代表什么？→ 见 notes §3</li><li>FDD 系统里为什么上行分低频、下行分高频？→ 见 notes §8</li><li>传统码本 CSI 反馈的损失从哪里来？老师用灰度图指出了什么现象？→ 见 notes §6</li><li>三类 AI CSI 增强模型中，哪一类能在 5G-Advanced 引入、哪一类只能 6G 部署？判据是什么？→ 见 notes §6</li><li>为什么说&quot;双侧全共享训练&quot;最理想却暂时不可行？→ 见 notes §7</li><li>信道老化是什么？三种&quot;反馈+预测&quot;联合框架分别把预测模块放在哪？→ 见 notes §7</li><li>波束管理三大类 AI 方案各自的划分依据是什么？各举一个代表模型。→ 见 notes §8</li><li>离线学习与在线学习（强化学习）在部署形态上有何本质差异？→ 见 notes §8</li><li>AI/ML 直接定位与辅助定位的区别是什么？定位落地最大的现实障碍是什么？→ 见 notes §9</li><li>智能天线优化中&quot;牵一发而动全身&quot;指什么？数字孪生平台为什么分两阶段？→ 见 notes §10</li><li>AI 业务（文生文/文生图）给流量建模出了什么新难题？→ 见 notes §10</li><li>老师提出的&quot;创新之问&quot;是什么？这与你的博士选题有什么关系？→ 见 notes §11</li></ol>
+<h2>我没懂的</h2>
+<ul><li>❓ 转写第 1 段：老师说衰减&quot;如果是跟频率的平方成反比的话，那就是十六倍&quot;——自由空间路径损耗通常表述为与频率平方<strong>成正比</strong>（损耗随频率升高而增大），转写方向存疑，需核对原音或补通信原理。（转写 §2 / notes §8）</li><li>❓ 转写第 6 段：&quot;随机桥+A*算法的多用户寻路仿真&quot;中&quot;随机桥&quot;疑为&quot;随机路径/随机游走&quot;类表述，PPT 第 53 页文字即作&quot;随机桥&quot;，两者一致但与惯用术语不符，待核。（corrections.md #9）</li><li>【PPT】第 14 页&quot;RAN 从&#x27;以下行为中心&#x27;向&#x27;以上行为中心&#x27;转变&quot;——转写只笼统讲过核心网向边缘转变，此具体表述未覆盖，需自己看课件。</li><li>【PPT】第 45 页 AI 定位数据收集三度量（IPD/ACS/地面实况标签）转写未展开，只覆盖了三条挑战的概括。</li><li>【PPT】第 59 页&quot;相关资源&quot;（数据集/白皮书/竞赛清单）转写未覆盖。</li></ul>
+<h2>待查（需要外部资料）</h2>
+<ul><li>M.2160 六大场景原文表述（沉浸式通信、超大规模连接、超高可靠低时延通信、通信AI一体化、通信感知一体化、泛在连接）——PPT 第 18 页与转写一致，建议对照 ITU-R M.2160 原文。</li><li>arXiv:2206.15132（Guo/Wen/Jin/Li, AI for CSI Feedback Enhancement in 5G-Advanced）——三类增强模型的出处。</li><li>3GPP TR 38.843 三大用例评估标准细节；TR 37.817 智能 RAN 框架原文。</li><li>WAIR-D 数据集（arXiv:2212.02159）与 mobileai-dataset.cn 数据集下载方式。</li><li>MWorks 国产 MATLAB 平替的开发商全称（转写&quot;同源/宏源软控&quot;不一致，待核）。</li><li>米兰电信（Telecom Italia）数据集与 MAWI 数据集的获取方式及字段含义。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="questions.md">questions.md</a></footer>
+</div></body></html>
