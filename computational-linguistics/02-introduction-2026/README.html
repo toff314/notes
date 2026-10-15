@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>听课笔记：计算语言学基础 · 第 1 课 绪论（2026 非全博士班）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 1 课 绪论（2026 非全博士班）</a></div>
+<h1>听课笔记：计算语言学基础 · 第 1 课 绪论（2026 非全博士班）</h1>
+<h2>讲座元信息</h2>
+<ul><li>课程：计算语言学基础（北京邮电大学 · 人工智能学院 · 智能科学与技术中心）；本次为 <strong>2026 秋非全（卓工）博士班</strong> 同名第一讲</li><li>讲师：<strong>李蕾</strong>（leili@bupt.edu.cn，PPT P1）；课程创建者：<strong>王小捷</strong>（PPT P1，转写&quot;王晓杰/王小杰&quot;已裁决）</li><li>课次结构：周末集中 4 节 × 8 次（32 学时）；<strong>前 3 节主讲、第 4 节留存</strong></li><li>来源：<strong>3 段录音转写 docx</strong>（文件名&quot;教育平台功能与使用体验*&quot;，实为同一堂课：开场/平台演示/正课）+ <strong>PPT 70 页</strong>（与项目 slides/01 同一份，sha256 一致）</li><li>交付模式：<strong>双源</strong>（转写 + PPT，差异检查已执行）</li><li>课型判定：<strong>学术内容课</strong>（可独立成条知识 ≫ 12 个）→ 大课尺度</li></ul>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>转写（必选）</td><td>raw/transcript.md</td><td>3 段合并（2.docx 开场+概念 → docx 平台演示 → 3.docx 技术脉络+收尾），共 46,353 字符</td></tr><tr><td>PPT 课件（必选）</td><td>raw/slides.pptx</td><td>01绪论2学时，<strong>70 页</strong>；已抽 raw/slides-outline.md；sha256 前 16 位 c67eae2084cf73c6 与 slides/01 一致</td></tr><tr><td>元信息</td><td>—</td><td>班级/学期转写自课堂内容（2026 秋非全博士班，约 27 人）</td></tr></table>
+<h2>产物清单</h2>
+<ul><li>notes.md（主笔记，<strong>10 节</strong>，双源融合：本次课堂骨架 + PPT 硬数据 + 先驱节）</li><li>outline.md（思路大纲，含 Mermaid）</li><li>questions.md（<strong>14 题</strong>提取自测 + 提取自测协议 + 本课行动）</li><li>corrections.md（<strong>4 条转写↔PPT 差异</strong> + 7 条 ASR 噪声裁决 + 7 组【PPT】补强 + 4 条存疑）</li><li>spinoffs.md（<strong>衍生选题 6 条</strong>，锚点含 PPT 页码，含发布回流位）</li><li>my-notes.md（未提供课上笔记，占位声明）</li></ul>
+<h2>与 01-introduction（2025 班）的关系</h2>
+<p>同课程同讲次的<strong>不同班次</strong>课堂。本版为双源融合版：本次课堂特有信息（平台实操/考核细则/27 人画像/未来学习大楼）+ PPT 校准的确定性知识（402 音节/ALPAC/两阶段映射/先驱）+ 真实差异表。详见会话对比评分报告。</p>
+<h2>标记说明</h2>
+<p><code>【师】</code> = 老师所讲；<code>【PPT】</code> = PPT 有、转写未覆盖；<code>❓ 存疑</code> = 无裁决源的剩余不确定项。</p>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>说明</th></tr><tr><td>① 脉络还原度</td><td>9/10</td><td>10 节贴本次讲授流（人→规矩→定义→载体→歧义→路线→简史→先驱→体系）</td></tr><tr><td>② 概括力</td><td>8/10</td><td>3,940 字装双源信息；每节一句话 + 5 条 takeaway</td></tr><tr><td>③ 差异检查有效性</td><td>9/10</td><td>4 条实质差异双侧可追溯；7 条 ASR 噪声以 PPT 裁决；7 组【PPT】补强；C 类无静默丢弃</td></tr><tr><td>④ 覆盖完整性</td><td>9/10</td><td>三段转写 + 70 页 PPT 全覆盖；先驱节按老师原话标注&quot;下节细讲&quot;</td></tr><tr><td>⑤ 可复习性</td><td>9/10</td><td>问题式线索 + 14 题提取自测 + 协议 + 本课行动</td></tr><tr><td>⑥ 忠实度</td><td>9/10</td><td>无臆造；标记仅【师】/【PPT】/❓；剩余 4 条存疑全部留痕</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>通过（单项均 ≥7）</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

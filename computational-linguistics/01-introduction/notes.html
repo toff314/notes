@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>听课笔记：第 1 课 绪论 · 主笔记</title>
+<title>计算语言学基础 · 绪论（2 学时）· 听课笔记</title>
 <style>
 :root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
 * { box-sizing: border-box; }
@@ -25,13 +25,18 @@ th { background:#f3f5f7; font-weight:600; }
 code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
 a { color:var(--accent); }
 hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
 .nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
 .nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
 footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
   font-size:13px; color:var(--muted); }
 </style>
+
 </head><body><div class="wrap">
-<div class="nav"><a href="../../index.html">笔记架</a><a href="../index.html">计算语言学基础</a><a href="./README.html">本讲索引</a></div>
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 1 课 绪论</a></div>
 <h1>计算语言学基础 · 绪论（2 学时）· 听课笔记</h1>
 <blockquote><p><strong>本讲一句话</strong>：绪论不教算法，它给整门课立坐标系——<strong>CL 研究什么、为什么难、几十年怎么走过来的</strong>，以及这门课怎么上。</p><p><strong>结构</strong>：课程安排 → 什么是 CL → CL/NLP/HLT 三名一物 → 核心问题（宏观）→ 一条处理链（音→字→词→句）上的歧义 → 消歧 → 技术简史 → 课程体系与评分 → 中国先驱</p><p><strong>可疑处</strong>：讲师名、课程创建者等专名以 PPT 为准（见 corrections.md）</p><p><strong>与我何干</strong>：理解了&quot;歧义无处不在 + 消歧靠语言内外知识&quot;，后面每章（词法/词义/语言模型/句法）都只是这条主线的一个切面。</p></blockquote>
 <hr>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 1 课 绪论（2026 非全博士班）· 听课笔记</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 1 课 绪论（2026 非全博士班）</a></div>
+<h1>计算语言学基础 · 第 1 课 绪论（2026 非全博士班）· 听课笔记</h1>
+<blockquote><p><strong>本讲一句话</strong>：计算语言学是&quot;从计算视角研究人类自然语言&quot;，根本难题是消歧；大模型用统计路线把工程推到科学认知前面——本讲带你走一遍 80 年脉络与中文的根。</p><p><strong>结构</strong>：人与课 → 平台与考核 → CL 定义 → 载体 → 歧义 → 两条路线 → 简史 → 先驱 → 体系与连接</p><p><strong>可疑处</strong>：无重大存疑（双源校验，见 corrections.md）</p><p><strong>与我何干</strong>：把 NLP 脉络套进自己行业找结合点；按 8 章阅读节奏排期</p></blockquote>
+<hr>
+<h3>1. 开场：一位&quot;冷门三十年&quot;的 NLP 老兵与这门课</h3>
+<p><strong>线索</strong>：老师凭什么讲这门课？/ 坚持偏门方向 30 年靠什么？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】讲师：老北邮（92 本科→96 硕→硕博连读 2000 答辩）；导师<strong>钟义信</strong>（前副校长、AI 学会理事长，2025 获全国特级教师[转写原文，PPT 未涉及]）</li><li>【师】工作线：首都信息（中文信息检索）→ <strong>奥运多语言智能服务系统</strong>（2001–2008 备战期，无大模型）→ ❓ Macquarie University 语言技术中心博后（信息抽取）→ 2004 回校（钟义信组建智能科学技术中心缺人）</li><li>【师】30 年方向不断线：本科毕设<strong>中文分词</strong> → 硕博<strong>自动文摘</strong> → 工作<strong>信息检索</strong> → 博后<strong>信息抽取</strong>——&quot;邮电院校都在做移动通信，NLP 非常偏门&quot;</li><li>【师】课程沿革：最早由<strong>王小捷</strong>老师建立主讲（PPT P1 确认）；非全博士单独排课故由李蕾老师（PPT P1）申请来上</li></ul>
+<p><strong>一句话总结</strong>：30 年亲历证明&quot;冷门方向等来大爆发&quot;，本课把亲历的技术脉络系统分享给在职者。</p>
+<hr>
+<h3>2. 教育平台与课程资源：这学期怎么上课</h3>
+<p><strong>线索</strong>：平台哪些功能真常用？/ 参考书为什么&quot;一直在更新&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】入口：通知页 → <strong>进入已有课程</strong>；常用功能：<strong>资源</strong>（各章 PPT）与<strong>作业</strong>（平台提交）；测验/讨论/问卷基本不用；成绩最终登研究生系统</li><li>【师】参考书【PPT】：<strong>Jurafsky &amp; Martin《Speech and Language Processing》3rd ed. draft（JMBook）</strong>，在线持续更新：web.stanford.edu/~jurafsky/slp3/（P63）——教室海报章节全是大语言模型</li><li>【师】教室：主楼翻修为<strong>未来学习大楼</strong>；签到：今年系统无签到码——<strong>不签到</strong>；沟通用面对面建微信群（1011，实名，首位同学任群主）+ 教师邮箱</li></ul>
+<p><strong>一句话总结</strong>：平台只常用&quot;资源+作业&quot;，参考书是 JMBook 在线版（持续更新），沟通靠课程微信群。</p>
+<hr>
+<h3>3. 考核与毕业：8×6+10+2+40 的账怎么算</h3>
+<p><strong>线索</strong>：总评分值在哪？/ 口头报告为什么人人要讲？/ CCF 分级和毕业什么关系？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】节奏：周末集中 4 节，<strong>前 3 节主讲、第 4 节留存</strong>（讨论/答疑/报告准备/补课）；算法细节主动&quot;屏蔽&quot;——&quot;知道怎么用就行&quot;</li><li>【师】评分【PPT】：<strong>教材阅读 8 次×6 分=48 分</strong>——读 JMBook <strong>chap 2/3/6/7/8/9/10/11</strong>，每章综述+<strong>至少提 1 个问题</strong>、至少 1 页 A4（5 号单倍行距）；<strong>口头报告 10 分</strong>——选一章读其 <strong>Bibliographical and Historical Notes</strong>，约 10 分钟【PPT】；<strong>课堂参与 2 分</strong>；<strong>课程实践 40 分</strong>（自选问题结合自身工作：需求分析+方案设计+实现细节+实验结果与分析）；<strong>截止 2026-11-30 24:00，迟交没分</strong>（P66）</li><li>【师】报告纪律：结课前每人至少讲一次，<strong>建议别拖太晚</strong>；一次报告两用（课上讲+交平台）</li><li>【师】毕业与投稿：学术型博士基本要求 CCF-A 一篇（B 两篇/C 三篇[以学院要求为准]）；ACL 收稿 4.6 万篇、ICLR 6 万+——策略是<strong>反复改反复投</strong>（ACL 未中也给详细 review）</li></ul>
+<p><strong>一句话总结</strong>：48（8 章阅读）+10（报告）+2（参与）+40（实践）=100，11.30 24:00 前交，报告尽早占位。</p>
+<hr>
+<h3>4. 计算语言学是什么：定义、双目标与一串名字</h3>
+<p><strong>线索</strong>：CL 和 NLP 差在哪？/ 为什么&quot;技术工程超前了科学认知&quot;？/ ACL 为什么有两个含义？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>CL</strong>：从<strong>计算视角</strong>研究自然语言，为语言/心理语言现象<strong>建立计算模型</strong>（P3/P4）</li><li>【师】<strong>两大目标</strong>：①科学——提供<strong>计算解释</strong>（揭示语言奥秘）②工程——<strong>赋予机器处理人类语言的能力</strong>（P4）</li><li>【师/PPT】<strong>定义出处</strong>：Manaris 1998&quot;以人-人和人-机通信的自然语言为研究对象…&quot;；Jurafsky 2009&quot;使计算机执行有价值的人类语言处理任务…&quot;（P5；转写&quot;2019&quot;系误听）</li><li>【师】<strong>ACL 双义</strong>：国际计算语言学学会 + CCF-A 年会；相关会议 EMNLP/COLING/<strong>NAACL</strong>（转写&quot;兰蔻&quot;=北美分会，P64 佐证）</li><li>【师】<strong>术语辨析</strong>：CL 偏科学（揭示性研究）、NLP 偏工程（处理技术）、HLT 管<strong>载体转换</strong>（P6）；三者常互换</li><li>【师】<strong>现状判断</strong>：大模型=大数据+深网络+大算力——<strong>技术工程超前科学认知</strong>：能力公认，&quot;真的理解语言吗&quot;还不够；幻觉与怪错并存</li></ul>
+<p><strong>一句话总结</strong>：CL 是科学视角（解释语言），NLP 是工程视角（处理语言），大模型把工程推到了科学解释前面。</p>
+<hr>
+<h3>5. 语言如何进入计算机：载体、OCR/ASR 与语料的先天优势</h3>
+<p><strong>线索</strong>：手语也算&quot;语言&quot;吗？/ 大模型为什么从语言起步？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】人类语言的<strong>物理载体</strong>：书面文字、话语声音、手势、体型（P6）</li><li>【师/PPT】进计算机都要<strong>转到文字</strong>：书面→<strong>OCR</strong>、语音→<strong>ASR</strong>；<strong>为 CL 提供材料，也可得到 CL 的帮助</strong>（P6）</li><li>【师】早期积累：先解决<strong>编码</strong>——中文汉字怎么进计算机是一代人的工作</li><li>【师】<strong>大模型从语言起步的必然性</strong>：互联网使<strong>文字语料最早富集</strong>；深度学习要海量数据时，语言<strong>不用标</strong>——&quot;抠掉一块让模型填&quot;（掩码式自监督的思路起点）</li><li>【师】延展链：语言大模型 → 视觉/语音 → 多模态——都从语言起点延展</li></ul>
+<p><strong>一句话总结</strong>：一切载体先转文字；文字语料最早富集又免标注，大模型必然从语言起步。</p>
+<hr>
+<h3>6. 核心难题——歧义：从&quot;施氏食狮史&quot;到拆迁条款</h3>
+<p><strong>线索</strong>：九个同音字怎么难倒大模型？/ 一个句子能有几种合法切分？/ 歧义难在哪层？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>从音到字</strong>：<code>yi(3) wei(4) he(2) dui(4) ba(1) ren(2) zhen(4) dong(4) shou(3)</code>（P11）——<strong>汉语普通话 402 个音节、约 1300 多个读音，汉字数万</strong>（P12）；《施氏食狮史》全篇同音 shi（P17）</li><li>【师】<strong>大模型实测</strong>（2023 vs 2024.9）：提示&quot;你是汉语专家/直接给结果&quot;，2023 年<strong>说法对、任务错</strong>；2024.9 直接做对——本质在海量组合上<strong>算概率</strong></li><li>【师/PPT】<strong>分词</strong>：&quot;以为何对巴人阵动手&quot;三种切分（P18）；<strong>词性</strong>：一字多词性（P19）；<strong>词义</strong>：&quot;动手&quot;多义、&quot;意思&quot;绕口令一段（P20；老师类比国庆档电影笑点 ❓ 片名未确指）</li><li>【师/PPT】<strong>句法结构</strong>：&quot;重要会议精神&quot;两种 NP 组合；<strong>现实代价</strong>：腾退办法&quot;<strong>被搬迁腾退院落内户口在册的产权人及其直系血亲(含配偶)</strong>&quot;——&quot;户口在册&quot;修饰谁？<strong>已引起纠纷</strong>（P21）</li><li>【师/PPT】<strong>语境歧义</strong>：&quot;如果你到了我还没到，你就等着吧 / 如果我到了你还没到，你就等着吧&quot;（P22）</li><li>【师/PPT】<strong>抽象</strong>：歧义（Ambiguity）<strong>无处不在</strong>——音/词/词性/词义/句法/句义层层叠加（P23）；<strong>核心任务=消歧（Ambiguity resolution）</strong>（P24）</li><li>【师/PPT】<strong>消歧难点</strong>：①语言内部知识（&quot;以/已&quot;同音、&quot;以后&quot;成词&quot;已后&quot;不成、&quot;看书&quot;合法&quot;他书&quot;不合法）②语言之外的知识（&quot;咬了猎人的狗&quot;两解，&quot;骂了猎人的狗&quot;一解——常识参与）→ <strong>语言计算模型如何表示/获取知识，并选择/使用知识？</strong>（P25）</li><li>【师】<strong>数据的决定性</strong>：算法差异归根结底来自数据——大小、规模、质量、格式构成模型知识准确性的支撑</li></ul>
+<p><strong>一句话总结</strong>：NLP 的根本难题是消歧——既要语言内部知识又要世界知识，两者最终都来自数据。</p>
+<hr>
+<h3>7. 两条技术路线：模拟人 vs 统计符号</h3>
+<p><strong>线索</strong>：attention 是从哪&quot;抄&quot;来的？/ 主流路线为什么选&quot;把语言当符号&quot;？/ LLM 成了研究对象意味着什么？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】<strong>路线一：智能模拟</strong>——&quot;人是 NLP 的最佳原型&quot;；借鉴社会/心理/<strong>神经</strong>语言学（此&quot;神经&quot;指生物神经）；例：Transformer 的 <strong>attention 借鉴人的注意力机制</strong>、CNN 卷积核借鉴脑认知视觉——但人的机制<strong>尚未完整揭示</strong>，可借鉴有限（P8/P9）</li><li>【师】<strong>路线二：语言即符号数据</strong>（主流）——把语言当客观存在的符号载体做大量统计分析；大模型训练走这条路（P8/P9）</li><li>【师】<strong>学习本质</strong>：语言内在规律<strong>以模型参数形式内嵌固化</strong>，再处理新语言；输出都是&quot;算的&quot;所以是概率——可解释性不强，已成研究热点</li><li>【师/PPT】<strong>大模型自身成为研究对象</strong>（P45）：LLM 学到了什么知识？知识如何存储/学习/运用/激发？如何为各任务给出结果？——可解释性的具体问题清单</li></ul>
+<p><strong>一句话总结</strong>：模拟人受限于&quot;人没搞清自己&quot;，统计符号路线胜出；LLM 自己成了待解释的对象。</p>
+<hr>
+<h3>8. 研究简史：从 Weaver 的密码破译到大模型的三个&quot;大&quot;</h3>
+<p><strong>线索</strong>：机器翻译最早为了什么？/ 乔姆斯基为什么说&quot;句子的概率没用&quot;？/ 大模型&quot;大&quot;在哪三处？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】时间轴（P27）：<code>40s 准备 → 50s 起动(MT) → 60s 冷静(CL 术语) → 70s 奠基 → 80s 理性主义 → 90s 经验主义 → 00s 机器学习 → 10s 深度学习 → 20s LLM</code></li><li>【师/PPT】<strong>1940s</strong>：Weaver 1946/7 提出 MT 想法；<strong>图灵机 1936</strong>、M&amp;P 神经元 1943、<strong>Kleene 有限状态自动机</strong>（转写&quot;移动机&quot;误听）、<strong>Shannon 1948 将 Markov 链用于字母(词)序列（N-gram）</strong>（P28）；动机=军事科技情报（美苏对抗）</li><li>【师/PPT】<strong>1950s</strong>：图灵测试（1950）；MT 由军事情报驱动（P29）</li><li>【师/PPT】<strong>1960s</strong>：<strong>1962 ACL 成立</strong>（时名 AMTCL）、<strong>1966 ALPAC 报告</strong>（P30-32）；乔姆斯基批判概率：&quot;句子的概率是完全没有用的概念&quot;</li><li>【师/PPT】<strong>1970s 奠基</strong>：Prolog（1972）、FST 拼写规则（1972）、Chart 剖析（1973）、SHRDLU（1972）（P33）</li><li>【师/PPT】<strong>1980s 理性主义</strong>：语言学理论繁荣——定子句语法、<strong>DRT 篇章表示理论</strong>、GPSG（P34-35）；转写：专家知识写进程序，量大难维护</li><li>【师/PPT】<strong>1990s 经验主义</strong>：语料库建设（COCA/BNC/人民日报/PTB/CTB）、IBM 统计 MT 系列（P36）；转写：HMM/向量机/❓最大熵/LSTM；<strong>Jelinek 名言：&quot;Every time I fire a linguist, the performance of the recognizer improves.&quot;</strong>（❓ 转写未提名，学界通归）</li><li>【师/PPT】<strong>2000s 机器学习</strong>：CRF（2001）、随机森林（2001）、LDA（2003）、<strong>NPLM（2003 Bengio）</strong>、DBN（2006）（P37）；平行语料豪言（仿 Haldane 句式）：&quot;Give me parallel data…&quot;</li><li>【师/PPT】<strong>2010s 深度学习</strong>：Word2Vec→ELMo→知识向量化（TransE 系）→序列模型→seq2seq→注意力→预训练（P39）</li><li>【师/PPT】<strong>2020s LLM</strong>：T5（2019, 10B）→GPT-3（2020, <strong>175B</strong>）→ChatGPT（2022.11）→GPT-4（2023.03）（P40）；三个&quot;规模大&quot;——<strong>模型大</strong>（容量）、<strong>数据大</strong>（知识来源）、<strong>计算大</strong>（学习精力）→ <strong>通用性显现</strong>；<strong>两个根本变化</strong>：表示（2013-，独立符号→上下文敏感向量）、范式（2018-，分任务→基础模型+自监督）（P41）</li></ul>
+<p><strong>一句话总结</strong>：80 年 = 军事翻译启动 → 规则与统计之争 → 机器学习/深度学习接力 → 大模型以三个&quot;规模大&quot;实现通用，背后是表示与范式两次根本变化。</p>
+<hr>
+<h3>9. 中国 CL 先驱【PPT 有、老师留到下节细讲】</h3>
+<p><strong>线索</strong>：中文 NLP 的根在哪？/ 谁做了第一台实用英汉 MT？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】老师原话：&quot;后面给了一些咱们国家最早的从事自然语言中文研究的这些老先生……我下节课再说几句也可以&quot;</li><li>【PPT P47-50】<strong>刘涌泉（1929-）</strong>：中国 MT 开拓者——1958 莫斯科 MT 会议发表<strong>中国第一篇 MT 论文</strong>；1959 俄汉 MT 在 104 机试验成功；中文信息学会副理事长；字母词倡导者</li><li>【PPT P51-55】<strong>刘倬（1933-2022）</strong>：主持 <strong>JFY 型英汉 MT</strong>（I–IV，1976–1997）；设计四原则（开放性：&quot;词典的规则化、规则的函数化&quot;等）；自研 JFY 语言</li><li>【PPT P56-58】<strong>董振东（1937-2019）</strong>：1987 &quot;<strong>科译 1 号</strong>&quot;（<strong>国际上第一个可商品化的英汉 MT</strong>，词典 25000/规则 5000）→ 商业化&quot;译星&quot;；90 年代设计<strong>知网 HowNet</strong>——<strong>2000 多个义原</strong>描述十几万词，2019 后 OpenHowNet 开源</li><li>【PPT P59】其他 1930s 前辈：刘开瑛、王开铸、高庆狮、姚天顺、黄昌宁、吴立德、俞士汶、冯志伟、马希文</li></ul>
+<p><strong>一句话总结</strong>：刘涌泉开 MT 先河、刘倬做 JFY、董振东做科译 1 号与知网——中文 NLP 的根（下节课展开）。</p>
+<hr>
+<h3>10. 课程体系与这张网：两阶段映射 + 27 人画像</h3>
+<p><strong>线索</strong>：整门课怎么组织？/ 教室里 27 人来自哪、为什么来？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>组织原则</strong>：任何语言计算任务 = <strong>语言串 → 语言串</strong>；模型两阶段——<strong>先映射到中间表示（理解），再映射到输出串（生成）</strong>：<code>X → R → Y</code>（P69）；课程内容：单元处理（词法/词义）→ 组合建模（语言模型：序列；结构模型：结构）→ 应用（对话/文摘）+ 伦理与多模态（P61）；基础要求：概率统计/信息论/最优化/形式语言与自动机/机器学习/深度学习/Python（P65）</li><li>【师/PPT】资源：<strong>NLP-progress</strong>（分任务论文列表）、<strong>Chinese NLP</strong>、CCF 会议清单（ACL/EMNLP/COLING…）、<strong>ACL Anthology</strong>（P64）</li><li>【师】本届约 27 人（去年 13）：中国通号（多人）、国家互联网应急中心、中国电信 AI、联通数智（文旅）、奇安信、中国电子云、电子六所（网络空间测绘）、中国中化、中央财经大学（思政骨干）、金融机构（约 4800 亿）、中国电科院、低空经济、芯片验证——共同动机：<strong>AI/大模型 × 自身行业</strong></li><li>【师】讲师：&quot;不同企业的人同时段选同一门课，很有缘分&quot;——鼓励报告结合自己工作场景（做了可当课程实践）；第 4 节就留给这类交流</li></ul>
+<p><strong>一句话总结</strong>：整门课是&quot;串→表示→串&quot;的两阶段映射，同学网是&quot;各行业 × AI&quot;——知识之外，场景本身就是资源。</p>
+<hr>
+<h2>全篇 takeaway（5 条）</h2>
+<ol><li><strong>消歧是 NLP 的根本问题</strong>：音/词/词性/词义/句法/句义层层歧义，解歧靠语言内部+世界两类知识，两者都来自数据。</li><li><strong>技术超前科学</strong>：大模型工程能打，但&quot;是否理解语言&quot;解释不足——LLM 自己成了研究对象（P45 六问）。</li><li><strong>大模型从语言起步有必然性</strong>：文字语料最早富集且免标注；三个&quot;规模大&quot;换来通用性，背后是表示（2013-）与范式（2018-）两次根本变化。</li><li><strong>80 年简史两次摆动</strong>：理性主义（专家写规则）↔ 经验主义（语料统计），1966 ALPAC 冷却、2003 NPLM 复燃；中文的根是刘涌泉—刘倬—董振东。</li><li><strong>课程方法论</strong>：8 章（chap 2/3/6/7/8/9/10/11）阅读 48 分 + 报告 10 + 参与 2 + 实践 40 = 100，11.30 24:00 截止迟交没分；一切任务 = 串→表示→串。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="notes.md">notes.md</a></footer>
+</div></body></html>

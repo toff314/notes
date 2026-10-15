@@ -1,33 +1,50 @@
 #!/usr/bin/env bash
-# 把全部笔记 Markdown 渲染成同名 HTML（供在线阅读）。
-# 改完 .md 后重跑本脚本即可。
+# 自动扫描渲染：仓库内全部 .md → 同名 .html（供在线阅读）。
+# 新增课次 / 产物后无需改本脚本，直接重跑：bash scripts/build-html.sh
+# 排除：scripts/、.git/、.cache/、以及各级 raw/（本地素材，不入站点）。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-NAV_ROOT='<div class="nav"><a href="./index.html">笔记架首页</a></div>'
-NAV_COURSE='<div class="nav"><a href="../index.html">笔记架</a><a href="./index.html">计算语言学基础</a><a href="./SUMMARY.html">目录</a></div>'
-NAV_LEC='<div class="nav"><a href="../../index.html">笔记架</a><a href="../index.html">计算语言学基础</a><a href="./README.html">本讲索引</a></div>'
-
-render() { # <md> <title> <nav>
-  local md="$1" title="$2" nav="$3"
-  local dir name
-  dir="$(dirname "$md")"
-  name="$(basename "$md" .md)"
-  python3 scripts/md2html.py "$md" -o "$dir" --name "$name" --title "$title" --nav "$nav"
+h1() { # <md> 取第一个 H1 做显示名，兜底文件名
+  local t
+  t=$(grep -m1 -s '^# ' "$1" | sed 's/^# \+//')
+  printf '%s' "${t:-$(basename "${1%.md}")}"
 }
 
-render README.md "Notes · 听课笔记" "$NAV_ROOT"
+rep() { # <n> 生成 n 层 ../ 回溯前缀（n=0 输出空）
+  local s="" i=0
+  while [ "$i" -lt "$1" ]; do s+="../"; i=$((i + 1)); done
+  printf '%s' "$s"
+}
 
-C=computational-linguistics
-render "$C/README.md" "计算语言学基础 · 听课笔记" "$NAV_COURSE"
-render "$C/SUMMARY.md" "计算语言学基础 · 目录" "$NAV_COURSE"
+crumb() { # <rel-dir> 生成面包屑导航（相对当前页目录回溯；每级显示名取该级 README.md 的 H1）
+  local d="$1" nav p cur="" disp link oldIFS=$IFS n=0
+  [ "$d" != "." ] && { IFS='/'; set -- $d; n=$#; }
+  IFS=$oldIFS
+  nav="<div class=\"nav\"><a href=\"$(rep "$n")index.html\">笔记架首页</a>"
+  if [ "$d" != "." ]; then
+    local j=0
+    IFS='/'
+    for p in $d; do
+      j=$((j + 1)); cur="${cur:+$cur/}$p"
+      if [ -f "$cur/README.md" ]; then disp=$(h1 "$cur/README.md"); else disp="$p"; fi
+      link="$(rep $((n - j)))index.html"; [ -f "$cur/index.md" ] || link="$(rep $((n - j)))README.html"
+      nav+="<a href=\"$link\">$disp</a>"
+    done
+  fi
+  IFS=$oldIFS
+  printf '%s</div>' "$nav"
+}
 
-L="$C/01-introduction"
-render "$L/README.md"      "听课笔记：第 1 课 绪论 · 索引"     "$NAV_LEC"
-render "$L/notes.md"       "听课笔记：第 1 课 绪论 · 主笔记"   "$NAV_LEC"
-render "$L/outline.md"     "听课笔记：第 1 课 绪论 · 思路大纲" "$NAV_LEC"
-render "$L/questions.md"   "听课笔记：第 1 课 绪论 · 自测"     "$NAV_LEC"
-render "$L/corrections.md" "听课笔记：第 1 课 绪论 · 勘误"     "$NAV_LEC"
-render "$L/spinoffs.md"    "听课笔记：第 1 课 绪论 · 衍生选题" "$NAV_LEC"
+n=0
+while IFS= read -r -d '' md; do
+  rel="${md#./}"
+  dir="$(dirname "$rel")"; name="$(basename "$rel" .md)"
+  title="$(h1 "$rel")"
+  nav="$(crumb "$dir")"
+  python3 scripts/md2html.py "$rel" -o "$dir" --name "$name" --title "$title" --nav "$nav"
+  n=$((n + 1))
+done < <(find . \( -name .git -o -name .cache -o -name scripts -o -name raw \) -prune \
+            -o -name '*.md' -print0 | sort -z)
 
-echo "== 完成 =="
+echo "== 完成：渲染 $n 个 .md =="

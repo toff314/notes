@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 1 课 绪论（2026 非全博士班）· 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 1 课 绪论（2026 非全博士班）</a></div>
+<h1>计算语言学基础 · 第 1 课 绪论（2026 非全博士班）· 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>从本讲提炼可独立成文的点。锚点 = 笔记小节 + PPT 页码（双源），下游仍须独立核实。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>乔姆斯基 vs Jelinek：NLP 八十年&quot;规则与统计&quot;之争</td><td>write-zhihu-tech (Mode A)</td><td>S2+S4</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>大模型为什么从语言起步：一份语料的先天优势</td><td>write-zhihu-tech (Mode A)</td><td>S1+S3</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>&quot;技术超前科学&quot;：大模型的幻觉与可解释性欠账</td><td>write-zhihu-tech (Mode A)</td><td>S4+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>施氏食狮史 ≠ 段子：同音文里的拼音转汉字难题</td><td>write-zhihu-tech (Mode A)</td><td>S2+S5</td><td>P1</td><td>短评~标准</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>一句拆迁条款教会你的句法歧义（真实纠纷案例）</td><td>write-zhihu-tech (Mode A)</td><td>S4+S5</td><td>P1</td><td>短评</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>6</td><td>80 年 NLP 名言考古：从 Weaver 的密码破译到 &quot;All the knowledge is in the connections&quot;</td><td>write-tech-tutorial (Mode A)</td><td>S2+S6</td><td>P2</td><td>专栏级</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<hr>
+<h3>1. 乔姆斯基 vs Jelinek：NLP 八十年&quot;规则与统计&quot;之争</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：NLP 规则与统计之争</code></li><li><strong>讲座锚点</strong>：§8 研究简史——乔姆斯基&quot;句子的概率是完全没有用的概念&quot; vs &quot;Every time I fire a linguist, the performance of the recognizer improves&quot;</li><li><strong>为什么</strong>：命中 <strong>S4</strong>（同一时代两种针锋相对的方法论；PPT P30-32 ALPAC/P36 IBM SMT 可锚定）+ <strong>S2</strong>（Weaver/乔姆斯基/Jelinek 人物史可溯源）；书内/讲内未展开人物背景与争论全貌</li><li><strong>增益</strong>：① 相对本讲：补齐争论的时代背景（ALPAC、语料库运动、经验主义会议系）② 对读者：理解今天&quot;预训练压倒规则&quot;不是突变而是 40 年拉锯的结果</li><li><strong>素材种子</strong>：人物（Chomsky / Jelinek / Weaver / Shannon）｜事件（ALPAC 报告、IBM 统计 MT）｜争议（可解释性 vs 性能）｜数据（ACL/ICLR 投稿量：4.6 万 / 6 万+）</li><li><strong>缺口（下游必须自己搜）</strong>：名言原文出处与年代、乔姆斯基原话的精确英文、ALPAC 报告细节</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ Jelinek 归属（转写未提名，学界通行说法）</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>2. 大模型为什么从语言起步：一份语料的先天优势</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：大模型为何始于语言</code></li><li><strong>讲座锚点</strong>：§5——互联网使文字语料最早富集；深度学习需要海量数据时&quot;别标注了，用语言本身，抠掉一块让模型填&quot;</li><li><strong>为什么</strong>：命中 <strong>S1</strong>（讲而未透：自监督机制史与多模态延展链；PPT P40 时间线可作锚点）+ <strong>S3</strong>（可纵深到 MLM/自监督/多模态的技术脉络）</li><li><strong>增益</strong>：① 相对本讲：把&quot;必然性&quot;论证展开为可查证的证据链 ② 对读者：理解预训练范式为何成立、为何多模态是它的延展而非并列</li><li><strong>素材种子</strong>：原理（自监督/MLM）｜数据（Common Crawl 等语料规模）｜延展（CLIP/Whisper 等多模态）</li><li><strong>缺口</strong>：各模态数据集规模对比、masked modeling 原始论文线索</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 无</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>3. &quot;技术超前科学&quot;：大模型的幻觉与可解释性欠账</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：大模型可解释性</code></li><li><strong>讲座锚点</strong>：§4/§7——&quot;技术工程的发展超前了科学认知&quot;&quot;它真的理解语言奥秘吗？目前觉得还不够&quot;&quot;输出都是算的，所以给的是概率&quot;</li><li><strong>为什么</strong>：命中 <strong>S4</strong>（工程能力 vs 科学解释的反差）+ <strong>S6</strong>（可解释性研究文献丰富可查）</li><li><strong>增益</strong>：① 相对本讲：给出可解释性的主要研究路径（机理分析/探针/归因）② 对读者：建立&quot;用大模型但不迷信大模型&quot;的判断框架</li><li><strong>素材种子</strong>：争议（幻觉案例）｜研究（mechanistic interpretability 一线工作）｜讲师观点（规律固化进参数）</li><li><strong>缺口</strong>：可解释性近年代表论文与评测</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 无</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>4. 施氏食狮史 ≠ 段子：同音文里的拼音转汉字难题</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>普通主题：施氏食狮史与拼音输入法</code></li><li><strong>讲座锚点</strong>：§6——现场朗读同音文 + 拼音转汉字 2023 vs 2024.9 大模型对比实验</li><li><strong>为什么</strong>：命中 <strong>S5</strong>（落到输入法/语音转写的日常体验）+ <strong>S2</strong>（赵元任写同音文的初衷——反拼音化运动，史料可查）</li><li><strong>增益</strong>：① 相对本讲：补赵元任写作背景与&quot;同音文不可读&quot;的语言学争论 ② 对读者：理解输入法引擎背后就是概率消歧</li><li><strong>素材种子</strong>：文本（施氏食狮史原文）｜应用（拼音输入法候选排序）｜实验（大模型逐年表现）</li><li><strong>缺口</strong>：赵元任原文与写作年份、输入法引擎公开资料</li><li><strong>体量建议</strong>：短评~标准</li><li><strong>待核</strong>：❓ 无</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>5. 一句拆迁条款教会你的句法歧义（真实纠纷案例）</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：句法歧义的现实代价</code></li><li><strong>讲座锚点</strong>：§6——腾退补偿办法&quot;户口在册的产权人及其直系血亲&quot;修饰范围歧义 → 法律纠纷；北邮沙河校区钉子户实例</li><li><strong>为什么</strong>：命中 <strong>S5</strong>（现实落点：合同/法条里的歧义人人都可能踩）+ <strong>S4</strong>（&quot;歧义只是语言学趣味&quot;的反差认知）</li><li><strong>增益</strong>：① 相对本讲：把课堂例子扩展到法律文本 NLP 应用 ② 对读者：学会用句法结构审视自己签署的条款</li><li><strong>素材种子</strong>：例句（&quot;咬了猎人的狗&quot;等经典）｜案例（合同歧义判例）｜应用（法律 NLP）</li><li><strong>缺口</strong>：条款原文核实、相关判例</li><li><strong>体量建议</strong>：短评</li><li><strong>待核</strong>：❓ 条款原文（转写有吞字）</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>6. 80 年 NLP 名言考古：从 Weaver 的密码破译到 &quot;All the knowledge is in the connections&quot;</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：NLP 发展史</code></li><li><strong>讲座锚点</strong>：§8——Weaver（1949）、乔姆斯基、Jelinek、&quot;Give me parallel data…&quot;、连接主义口号，一串名言串起方法论变迁</li><li><strong>为什么</strong>：命中 <strong>S2</strong>（名言皆可溯源一手文献）+ <strong>S3</strong>（每句名言背后是一条技术路线，可深挖）</li><li><strong>增益</strong>：① 相对本讲：给出每句名言的原文、出处与历史语境 ② 对读者：一条&quot;读名言读懂 NLP 史&quot;的线索</li><li><strong>素材种子</strong>：人物（Weaver/Shannon/Chomsky/Jelinek）｜文献（原始备忘录/论文）｜路线（规则→统计→连接主义）</li><li><strong>缺口</strong>：各名言一手出处核实（下游必须独立搜索）</li><li><strong>体量建议</strong>：专栏级</li><li><strong>待核</strong>：❓ 各引文精确原文与年份</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

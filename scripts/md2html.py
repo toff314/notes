@@ -4,7 +4,7 @@
 md2html.py — 把笔记 Markdown 转成可直接在线阅读的 HTML（零第三方依赖）。
 
 支持子集：标题 / 段落 / 无序列表 / 有序列表 / 表格 / 图片 / 链接 / 引用块 /
-粗体 / 斜体 / 行内代码 / 分隔线。
+粗体 / 斜体 / 行内代码 / 分隔线 / 围栏代码块（``` 与 ````，mermaid 语言自动接 CDN 渲染成图）。
 
 用法:
     python3 scripts/md2html.py <input.md> -o <输出目录> --name <文件名(不含扩展名)> --title "标题" --nav "<导航 HTML>"
@@ -40,6 +40,10 @@ th { background:#f3f5f7; font-weight:600; }
 code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
 a { color:var(--accent); }
 hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
 .nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
 .nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
 footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
@@ -47,6 +51,7 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 """
 
 IMG_PREFIX = ""
+USE_MERMAID = False   # 页面含 mermaid 代码块时置 True，注入 CDN 渲染脚本
 
 
 def inline(text: str) -> str:
@@ -104,6 +109,7 @@ def join_lines(lines: list[str]) -> str:
 
 
 def convert(md: str) -> str:
+    global USE_MERMAID
     lines = md.split("\n")
     out: list[str] = []
     i = 0
@@ -113,6 +119,23 @@ def convert(md: str) -> str:
 
         if not stripped:
             i += 1
+            continue
+
+        # 围栏代码块 ``` / ````（mermaid 语言自动接 CDN 渲染成图）
+        fence = re.match(r"^(`{3,})(\w*)\s*$", stripped)
+        if fence:
+            ticks, lang = fence.group(1), fence.group(2).lower()
+            i += 1
+            buf: list[str] = []
+            while i < len(lines) and not re.match(rf"^`{{{len(ticks)},}}\s*$", lines[i].strip()):
+                buf.append(lines[i])
+                i += 1
+            i += 1  # 跳过结束围栏
+            if lang == "mermaid":
+                USE_MERMAID = True
+                out.append(f'<pre class="mermaid">{H.escape(chr(10).join(buf))}</pre>')
+            else:
+                out.append(f"<pre><code>{H.escape(chr(10).join(buf))}</code></pre>")
             continue
 
         m = re.match(r"^(#{1,6})\s+(.*)$", stripped)
@@ -205,14 +228,19 @@ def main() -> int:
 
     title = args.title or name
     out_dir = Path(args.out)
+    body = convert(text)   # 先转换：才能知道页面是否含 mermaid
+    mermaid_js = ("<script src=\"https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js\">"
+                  "</script>\n<script>mermaid.initialize({startOnLoad:true});</script>"
+                  if USE_MERMAID else "")
     doc = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{H.escape(title)}</title>
 <style>{CSS}</style>
+{mermaid_js}
 </head><body><div class="wrap">
 {args.nav}
-{convert(text)}
+{body}
 <footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
 源文件：<a href="{name}.md">{name}.md</a></footer>
 </div></body></html>
