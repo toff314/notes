@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 2 讲 词形态分析 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a></div>
+<h1>计算语言学基础 · 第 2 讲 词形态分析 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>从本讲提炼 <strong>6</strong> 条可独立成文的点。锚点 = PPT 页码（双源），下游仍须<strong>独立核实</strong>；转写含 ASR 噪声，凡引讲座原话处均标 <code>❓ 待核</code>。</p><p><strong>发布回流</strong>：文章写完后<strong>两处</strong>都要更新——① 本索引表的「状态 / 链接」列；② 该条候选末尾的 <code><strong>发布</strong></code> 行。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送给</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>汉语到底有没有&quot;词&quot;？一场持续半个世纪的争论</td><td>write-zhihu-tech <code>观点：</code></td><td>S2+S4</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>2</td><td>汉语分词的两大拦路虎：交集歧义与组合歧义</td><td>write-zhihu-tech <code>观点：</code></td><td>S4+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>3</td><td>从 FSA 到 FST：词形态分析的有限状态方法</td><td>write-tech-tutorial Mode A</td><td>S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>4</td><td>BPE 子词分割：从 OOV 到 Subword 的一篇论文</td><td>write-tech-tutorial <code>论文：</code></td><td>S3+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>5</td><td>编辑距离（Levenshtein）与拼写纠错：一次讲透</td><td>write-tech-tutorial Mode A</td><td>S3+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>6</td><td>大模型时代还需要分词吗？</td><td>write-zhihu-tech <code>观点：</code></td><td>S4+S6</td><td>P2</td><td>短评~标准</td><td>⬜ 未发布</td><td>—</td></tr></table>
+<hr>
+<h3>1. 汉语到底有没有&quot;词&quot;？一场持续半个世纪的争论</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：汉语有没有&quot;词&quot;——赵元任、吕叔湘、王力、徐通锵的&quot;字&quot;之争</code></li><li><strong>讲座锚点</strong>：PPT P40（关于汉语的词的争论）／转写 §汉语切分（&quot;关于这个词，早期语言学家们都有比较多的争论，到今天也没有人说完全把这争论解决&quot;❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S2 + S4</strong> —— 四位可查证的语言学大家、四种针锋相对的观点；讲座只把引语当 PPT 条目念过，<strong>讲而未透（S1）</strong>，但它是&quot;汉语切分&quot;之所以成立的根。PPT P40 直接给了四段引语，是现成锚点。</li><li><strong>增益</strong>：</li><li>① 相对本讲：讲座给的是四条孤立引语（赵&quot;字&quot;、吕&quot;现成的是字&quot;、王&quot;以字为单位&quot;、徐&quot;字组&quot;），展开可给出<strong>争论的来龙去脉</strong>——从&quot;词&quot;这个印欧语言学范畴移植到汉语的困难、&quot;字本位 vs 词本位&quot;的理论分野、到为什么工程上干脆改用&quot;切分单元&quot;。</li><li>② 对读者：<strong>认知增益</strong>——纠正&quot;汉语当然有词、只是不好切&quot;的常识直觉，理解&quot;词&quot;在汉语里是分析概念而非现成单位。</li><li><strong>素材种子（对齐下游搜索维度）</strong>：</li><li>历史溯源：赵元任《汉语词的概念及其结构和节奏》、吕叔湘《语文常谈》、王力、徐通锵&quot;字本位&quot;</li><li>人物：赵元任 / 吕叔湘 / 王力 / 徐通锵</li><li>争议：字本位 vs 词本位；&quot;汉语切分&quot;而非&quot;汉语切词&quot;</li><li><strong>缺口（下游必须自己搜）</strong>：四段引语的<strong>原文与出处年份</strong>（PPT 只有转述）；&quot;字组&quot;概念的精确定义</li><li><strong>体量建议</strong>：标准长文（3000–5000 字）</li><li><strong>待核</strong>：❓ 转写对四人的转述是口播，勿照抄；引语以 PPT P40 为准，仍需回一手文献</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>2. 汉语分词的两大拦路虎：交集歧义与组合歧义</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：汉语分词为什么难——交集歧义与组合歧义</code></li><li><strong>讲座锚点</strong>：PPT P41–P50（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §汉语·边界歧义（&quot;能穿多少穿多少&quot;两解相反❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S4 + S5</strong> —— &quot;能穿多少穿多少&quot;&quot;武汉市/长江大桥&quot;&quot;本科/非本科&quot;都是反直觉的日常例子（S4 反差），又直接落到输入法/分词器/检索的工程痛点（S5 现实落点）；PPT 还给了 OA/CA 的<strong>统计结论与出处</strong>（P45 [ZhouQ2002]/[YanYT2000]、P48 [HouM2005]/[QinY2007]）。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把散点例子整理成<strong>可判别的分类框架</strong>（OA 定义 XJY / CA 定义 XY），并补上真实 vs 伪歧义的区分；给出&quot;哪些歧义 FMM/BMM 能自动侦测、哪些不能&quot;的结论（P45）。</li><li>② 对读者：<strong>信息增益 + 可操作性</strong>——读者能拿这套判据去审视自己遇到的切分错误，理解输入法候选为什么有时&quot;全都对/全都错&quot;。</li><li><strong>素材种子</strong>：定义（OA/CA/混合）、话料数据、例子（武昌、多少、难过、天真）、应用（分词评测）</li><li><strong>缺口（下游必须自己搜）</strong>：四篇中文文献（周强 2002、闫引堂 2000、侯敏 2005、秦颖 2007）的准确结论与百分比</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 转写&quot;能穿多少穿多少&quot;老师自评&quot;我说的不一定很好&quot;，两解语义勿照抄</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>3. 从 FSA 到 FST：词形态分析的有限状态方法</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A —— 默认深度教程）</li><li><strong>主题串（可直接复制）</strong>：<code>从 FSA 到 FST：用有限状态转录机做英语词形态分析（生成与剖析）</code></li><li><strong>讲座锚点</strong>：PPT P18–P35（三类知识、双层结构、FSA→FST、配列/正字法 FST、生成/剖析、RNN 抽取 FST）／转写 §英语·FST（老师现场一步步画 fox→foxes 的状态转移）</li><li><strong>为什么</strong>：命中 <strong>S3 + S6</strong> —— 有完整技术纵深（是什么→怎么用→原理→可复现示例），且外部源丰富（Omlin&amp;Giles 1996、Weiss et al. ICML2018、Michalenko ICLR2019，PPT P34 直接给了引用）。讲座只用两张状态图示意，<strong>没跑通代码</strong>（S1）。</li><li><strong>增益</strong>：</li><li>① 相对本讲：讲座给的是<strong>手工画的 FST 图</strong>，展开可给出<strong>可运行的 FST 示例</strong>（如 pynini/foma/NLTK 最小示例）+ 三类知识如何各建一个 FST 再串联。</li><li>② 对读者：<strong>可操作性</strong>——读者能照着搭一个&quot;名词复数&quot;的生成/剖析机，理解 seq2seq 之前的经典做法。</li><li><strong>素材种子</strong>：原理（FSA/FST 形式定义）、源码（foma/pynini/subword-nmt 生态）、历史（Koskenniemi 双层模型 DP）、论文（P34 四篇）</li><li><strong>缺口（下游必须自己搜）</strong>：双层形态学（two-level morphology）标准文献；FST 库的安装与 API</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 转写把 FSA/FST 读作&quot;finish state automator / SSA / SST&quot;，以 PPT P20/P21 为准</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>4. BPE 子词分割：从 OOV 到 Subword 的一篇论文</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode B —— 主题串加前缀 <code>论文：</code>，做论文精读）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：Sennrich et al. 2016 《Neural Machine Translation of Rare Words with Subword Units》——BPE 子词分割</code></li><li><strong>讲座锚点</strong>：PPT P146–P165（OOV 动机、Subwords、BPE token learner/parser、unigram LM、WordPiece、BPE 论文与实现）／转写未覆盖（转写讲到 OOV 即下课，见 corrections.md 四）</li><li><strong>为什么</strong>：命中 <strong>S3 + S6</strong> —— 有技术纵深（论文精读：算法→代码→原理→演进），外部源极权威（Sennrich 2016 ACL、Kudo 2018、Schuster 2012，PPT P149/P162 给了论文与 GitHub）。PPT 只给了&quot;合并最频繁邻接符号&quot;的概述，<strong>讲而未透（S1）</strong>。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把 PPT 的 BPE 表格示例（low/lowest/newer/wider 的合并次序）还原成<strong>可跑的 token learner/parser 代码</strong>，并说明它相对原始 BPE 的改动（在词内统计、可并行，P163）。</li><li>② 对读者：<strong>认知增益 + 可操作性</strong>——理解今天的 LLM 分词器（GPT/BERT 系）为何用 BPE/WordPiece，以及&quot;子词为什么能缓解 OOV&quot;。</li><li><strong>素材种子</strong>：论文（Sennrich 2016 / Kudo 2018 / Schuster 2012）、实现（subword-nmt、sentencepiece）、原理（BPE 与压缩算法 BPE 的异同）</li><li><strong>缺口（下游必须自己搜）</strong>：三篇论文原文与最新分词器对比数据；BPE 与 unigram LM 的取舍</li><li><strong>体量建议</strong>：标准长文 ~ 专栏级</li><li><strong>待核</strong>：❓ 讲座未展开此节，锚点全部来自 PPT 页</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>5. 编辑距离（Levenshtein）与拼写纠错：一次讲透</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A —— 默认深度教程）</li><li><strong>主题串（可直接复制）</strong>：<code>编辑距离（Levenshtein）与最小编辑距离：从定义到动态规划，再到拼写纠错</code></li><li><strong>讲座锚点</strong>：02-2 PPT P1–P29（非词错误检测/纠正、Levenshtein、三种操作与代价、execution→intention 矩阵、动态规划、汉语非字/非词错误、汉字形态距离 open question、Glyce）／转写未覆盖</li><li><strong>为什么</strong>：命中 <strong>S3 + S5</strong> —— 有技术纵深（定义→递推→矩阵→反向回溯），且现实落点强（拼写纠错、输入法、DNA 比对，S5）；PPT 给了 execution→intention 的完整矩阵示例与递推公式，是现成锚点。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把 PPT 的矩阵示例补成<strong>逐格填充 + 反向回溯的完整演示</strong>，并与 Python 实现（nltk.edit_distance / 自写 DP）对应。</li><li>② 对读者：<strong>可操作性</strong>——读者能自己写出编辑距离并接到一个拼写纠错器上；顺带理解&quot;替换代价取 2 还是 1&quot;的取舍。</li><li><strong>素材种子</strong>：原理（Levenshtein 1966 / 动态规划）、应用（拼写纠错、模糊匹配、语音识别）、延伸（汉字形态距离 open question、Glyce 田字格 CNN 02-2 P28）</li><li><strong>缺口（下游必须自己搜）</strong>：Levenshtein 原始文献；汉字&quot;形态学距离&quot;的研究现状</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 讲座未展开此节，锚点全部来自 02-2 PPT 页</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>6. 大模型时代还需要分词吗？</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：大模型时代还需要中文分词吗——&quot;切分是否必要&quot;的争论</code></li><li><strong>讲座锚点</strong>：PPT P145（[MengYX2019ACL] 认为直接基于字的模型在机器翻译等任务上优于切分后模型）／PPT P137–P138（深度学习把切分从特征工程转为自动表示）／转写 §第 2 章开场（&quot;现在你用大模型很容易，不用那么多剖析啊生成啊&quot;❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S4 + S6</strong> —— 有争议反差（&quot;分词无用论&quot; vs 业界的&quot;分词仍然必要/有用&quot;），且 [MengYX2019ACL] 与 SOTA 结果（P134/P136）可查（S6）。讲座只在 PPT 末尾列了一页结论，<strong>讲而未透（S1）</strong>。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把 PPT 一行结论展开为<strong>正反两方证据</strong>（切分 vs 字/子词建模的评测数据，SIGHAN/微博 P136）。</li><li>② 对读者：<strong>认知增益</strong>——纠正&quot;分词是过时技术&quot;与&quot;分词必不可少&quot;两种简单化判断，理解争论取决于任务、数据与表示方式。</li><li><strong>素材种子</strong>：论文（Meng et al. 2019 ACL）、数据（SIGHAN 2007/2010/2012/2016 评测）、争议（字 vs 词 vs 子词）</li><li><strong>缺口（下游必须自己搜）</strong>：MengYX2019 原文与结论适用范围；近年 LLM 分词器对中文的处理</li><li><strong>体量建议</strong>：短评 ~ 标准长文</li><li><strong>待核</strong>：❓ 讲座未展开此节，锚点来自 PPT 页</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

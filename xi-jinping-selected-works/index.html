@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>习近平著作选读 · 听课笔记</title>
+<style>
+  :root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#f6f7f9; color:var(--ink); line-height:1.8;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif; }
+  .wrap { max-width:980px; margin:0 auto; padding:56px 32px 100px; }
+  .back { font-size:14px; margin-bottom:1.6em; }
+  .back a { color:var(--accent); text-decoration:none; }
+  h1 { font-size:30px; margin:0 0 .15em; }
+  .en { color:var(--muted); font-size:15px; margin:0 0 1.2em; }
+  .lead { background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:20px 24px; margin:0 0 2em; font-size:15px; }
+  .lead a { color:var(--accent); }
+  h2 { font-size:20px; margin:2em 0 .6em; padding-bottom:.3em; border-bottom:1px solid var(--line); }
+  table { border-collapse:collapse; width:100%; background:#fff; font-size:14px;
+    border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  th,td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); }
+  th { background:#f3f5f7; font-weight:600; font-size:13px; color:#374151; }
+  tr:last-child td { border-bottom:none; }
+  td.no { color:var(--muted); width:44px; }
+  td.zh { white-space:nowrap; }
+  td.zh a { color:var(--accent); text-decoration:none; margin-right:8px; font-size:13px; }
+  td.zh a:hover { text-decoration:underline; }
+  .done { color:#047857; font-weight:600; }
+  .note { font-size:13px; color:var(--muted); margin:.8em 0 0; }
+  footer { margin-top:3em; font-size:13px; color:var(--muted); }
+  footer a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="back"><a href="../index.html">← 返回笔记架</a></div>
+  <h1>习近平著作选读</h1>
+  <p class="en">北京邮电大学 · 马克思主义学院　|　专题教学（一个导论 + 两个专题）</p>
+
+  <div class="lead">
+    课堂录音转写 → 结构化听课笔记。每讲含 <b>主笔记</b> / <b>思路大纲</b> / <b>自测</b> / <b>勘误</b> / <b>衍生选题</b>。<br>
+    课堂三环节：<b>文献精读</b> → <b>老师授课</b> → <b>分组研讨</b>。<br>
+    <b>本课无课件（PPT）</b>：笔记为单源（转写）降级版，专名/文献名不确定处一律标 <code>❓ 存疑</code>。<br>
+    整表见 <a href="SUMMARY.html">SUMMARY</a>（Markdown 版 <a href="SUMMARY.md">SUMMARY.md</a>）。
+  </div>
+
+  <h2>课次</h2>
+  <table>
+    <thead><tr><th>#</th><th>课</th><th>笔记</th><th>大纲</th><th>自测</th><th>勘误</th><th>衍生选题</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="no">1</td>
+        <td>导论（开课第一讲）</td>
+        <td class="zh"><span class="done">✅</span> <a href="01-introduction/notes.html">notes</a></td>
+        <td class="zh"><a href="01-introduction/outline.html">outline</a></td>
+        <td class="zh"><a href="01-introduction/questions.html">questions</a></td>
+        <td class="zh"><a href="01-introduction/corrections.html">corrections</a></td>
+        <td class="zh"><a href="01-introduction/spinoffs.html">spinoffs</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">每讲源 <code>.md</code> 与渲染页 <code>.html</code> 同目录并存：阅读用 <code>.html</code>，编辑改 <code>.md</code>。</p>
+
+  <h2>标记约定</h2>
+  <table>
+    <tbody>
+      <tr><td><code>【师】</code></td><td>老师所讲</td></tr>
+      <tr><td><code>【PPT】</code></td><td>PPT 有、转写未覆盖（本课无 PPT）</td></tr>
+      <tr><td><code>❓ 存疑</code></td><td>转写 / 识别不确定</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    笔记由 <code>write-lecture-notes</code> 技能产出 · 本页由 <code>scripts/md2html.py</code> 渲染 · 本站由 Caddy 静态托管
+  </footer>
+</div>
+</body>
+</html>

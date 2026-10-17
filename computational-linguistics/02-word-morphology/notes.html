@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 2 讲 词形态分析 · 听课笔记</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a></div>
+<h1>计算语言学基础 · 第 2 讲 词形态分析 · 听课笔记</h1>
+<blockquote><p><strong>本讲一句话</strong>：词是自然语言处理的基本单元；本讲从&quot;语料 → 单元识别 → 词的形态分析&quot;讲起——英语用词形还原 + 三层知识（词典/配列/正字法）+ FST 处理词形变化，汉语则因&quot;词无定界&quot;而独有切分任务，难点集中在边界歧义（OA/CA）与未登录词（OOV）。</p><p><strong>结构</strong>：绪论收尾（里程碑/体系/先驱）→ 第 2 章引言（语料/层次/单元）→ 英语词形态分析（断词/还原/FST）→ 汉语切分（字词之争/歧义/OOV）</p><p><strong>可疑处</strong>：多处人名 ASR 不稳（刘倬、黄昌宁、俞士汶等），见 corrections.md</p><p><strong>与我何干</strong>：分词/检索/输入法背后都是&quot;消歧&quot;；FST 与 seq2seq 是后续序列模型的历史底座</p></blockquote>
+<hr>
+<h3>1. 开场：校友返校日与第 2 讲前的课程事务</h3>
+<p><strong>线索</strong>：老师今天为什么来晚了？/ 这门课的分怎么算、什么时候交？/ 为什么把口头报告放到第 4 节？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】今天是本科毕业 <strong>30 周年</strong>校友返校日，老师早到是因为要接待同学（当年全班 41 人，来了约 10 人）；感慨当年北邮录取分极高，山东全省只招十几人</li><li>【师】作业已在云平台发布：<strong>8 次阅读</strong>（列表倒序，第一份作业排在最后，需先翻到第二页）；评分 = <strong>阅读 8×6 = 48 分 + 课堂参与 2 分 + 口头报告 10 分 + 课程实践 40 分 = 100 分</strong>，<strong>截止 2026-11-30 24:00</strong>，无闭卷考试</li><li>【师】节奏说明：上课采取&quot;<strong>前 3 节主讲、第 4 节留存</strong>&quot;；口头报告安排在后面，不必卡 10 分钟——多讲特别欢迎</li></ul>
+<p><strong>一句话总结</strong>：先立规矩再上正课；考核是过程累积（48+2+10+40），11.30 截止、无闭卷。</p>
+<hr>
+<h3>2. 绪论收尾（一）：研究史的&quot;涓涓细流&quot;与两个里程碑</h3>
+<p><strong>线索</strong>：为什么说今天的巨变&quot;绝不是突然发生的&quot;？/ 2013 与 2018 各发生了什么根本变化？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】老师自述：95 年本科毕设就做<strong>中文分词</strong>、96 年研究生做<strong>自动摘要</strong>，做到 2013 已近 20 年；当时国内做中文 NLP 的&quot;用手指头数得过来&quot;（哈工大/复旦/上交/北邮/北大/清华/微软亚研院…），北邮因通信热门而录取分极高</li><li>【师】<strong>2013 表示之变</strong>（里程碑）：从<strong>独立符号</strong>（字、字母）→ <strong>上下文敏感的向量</strong>（词向量化、知识向量化、句子向量化）——神经网络表征登场</li><li>【师】<strong>2018 范式之变</strong>（里程碑）：从<strong>分任务各做一套模型</strong>（文摘一套、翻译一套）→ <strong>一个基础大模型 + 预训练/微调</strong>的通用底座；此前大家觉得这些任务&quot;差太多，不可能用一个模型处理&quot;</li><li>【师】提醒&quot;发展传承、量变到质变&quot;：连 Transformer 也借鉴了 CNN 等大量前作，不是某个人凭空创新</li></ul>
+<p><strong>一句话总结</strong>：80 年积累到两个里程碑——2013 换&quot;表示&quot;、2018 换&quot;范式&quot;，今天的通用能力是量变到质变。</p>
+<hr>
+<h3>3. 绪论收尾（二）：知识体系、评测之力与&quot;大模型成为研究对象&quot;</h3>
+<p><strong>线索</strong>：自然语言为什么特别依赖&quot;公开评测&quot;？/ 本体（ontology）为什么又火了？/ 可解释性要回答哪些问题？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】知识体系（P5/P61）：基础 = 语言学 + 计算 + 认知（科学）；两大维度 = <strong>处理单元</strong>（词→句→篇章，下含字/子词、短语、段落）× <strong>处理维度</strong>（语法/语义/语用）；最右强调<strong>跨学科交叉</strong>，&quot;AI 的应用是无界的&quot;</li><li>【师】<strong>本体（ontology）</strong>：大模型&quot;什么都会一点&quot;，但在专业领域不够用；业内做法是把专业知识组织成<strong>本体图谱</strong>（结合知识图谱技术），做成可复用成果——老师举了蚂蚁集团做本体库的例子</li><li>【师】<strong>评测的力量</strong>：语言主观、难像通信那样用误码率/时延度量，&quot;公说公有理&quot;阻碍研究 → 官方推<strong>公开评测题</strong>与公开语料（训练集公开、测试集先扣住&quot;不漏题&quot;）；<strong>数据公开 + 代码公开</strong>后迭代陡快，英语先行、中文（中国中文信息学会）随后追赶</li><li>【师】<strong>可解释性（interpretability）</strong>：神经网络不可解释，大模型自己<strong>成了研究对象</strong>——它学到了什么知识？知识存在哪（哪个模块/块）？如何学习、如何运用、如何被激发？如何为各种任务给出结果？老师举例：其优秀学生正研究<strong>幻觉</strong>的成因与干预</li></ul>
+<p><strong>一句话总结</strong>：知识体系是&quot;单元×语法语义语用×跨学科&quot;；评测与开源数据/代码是领域加速器；不可解释性把大模型本身变成了研究对象。</p>
+<hr>
+<h3>4. 绪论收尾（三）：中国先驱（老师留到下节细讲）</h3>
+<p><strong>线索</strong>：早期国内做 NLP 的老先生，为什么&quot;一开口就在做语言学分析&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】老师接触过或听闻的老先生（名字为转写，PPT 第 2 章未覆盖，见 ❓）：<strong>刘倬</strong>❓（&quot;刘卓&quot;）、<strong>董振东</strong>（与儿子做出<strong>知网 HowNet</strong>，疫情期间去世，曾开放词义知识）、哈工大 <strong>王知津</strong>❓、东北大学 <strong>姚天顺</strong>、清华 <strong>黄昌宁</strong>❓（&quot;黄昌明&quot;，退休后被微软亚研院聘，曾任老师博士答辩专家）、北大 <strong>俞士汶</strong>❓（&quot;于世文&quot;）、社科院 <strong>冯志伟</strong>（偏语言学）</li><li>【师】早期论文多发表在《中国语文》、&quot;中国信息处理研讨会&quot;论文，没有如今的 CCL/ACL 级别</li><li>【师】老师博士答辩的组长是<strong>周院士</strong>（老师的师祖），校外专家有&quot;李成树&quot;❓、&quot;方传宁&quot;❓等</li><li>【师】原话：这些老先生&quot;下节课再说几句也可以&quot;——本讲只作绪论收尾的点到为止</li></ul>
+<p><strong>一句话总结</strong>：董振东（知网）、刘倬、俞士汶等一批先驱从零推起中文 NLP，老师留到下节课展开。</p>
+<hr>
+<h3>5. 第 2 章引言：语料、层次结构与&quot;方法三件事&quot;</h3>
+<p><strong>线索</strong>：corpus 的词根为什么是&quot;尸体&quot;？/ 理解与生成的方向有何不同？/ 处理一个语言任务，方法上要完成哪三件事？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】语言是人类交流工具，分<strong>横向</strong>（同期面对面）与<strong>纵向</strong>（跨时间——读书、看电影）；<strong>语料（corpus，复 corpora）</strong>承载纵向交流（P3）；老师点出 corpus 词根意为&quot;尸体&quot;——它&quot;活着的现场&quot;不在了，留下来的是定格的形态</li><li>【师/PPT】语料按载体（P3）：<strong>文本语料</strong>（手写/印刷，视觉）、<strong>语音语料</strong>（听觉，课上放了一段手机号标注的语音）、以及<strong>独立于载体、可直接计算机编码</strong>的语料——CL 主要处理第三类，扫描/印刷体的转换不展开</li><li>【师/PPT】语料呈<strong>层次结构</strong>（P4/P5）：篇章 → 段落 → 句子 → 短语 → 词 → 子词</li><li>【师/PPT】<strong>理解 vs 生成</strong>（P5）：理解是<strong>自下往上汇聚</strong>（词→句→段→篇的逐层抽象，像 CNN；大模型也按词序列读入）；生成是<strong>自上往下规划</strong>（先定整篇说什么、分几段）</li><li>【师/PPT】方法侧三条腿（P5/P6）：<strong>单元识别</strong>（先找到单元）、<strong>单元表示</strong>（如向量）、<strong>组合</strong>（单元如何组合）；识别按粒度（P6）：<strong>文本切割</strong>（按主题切篇章）→ <strong>句子分割</strong>（靠标点就足够好）→ <strong>短语识别</strong>（NER、事件/关系抽取）→ <strong>词形态分析</strong>（找出词）→ <strong>更小的子词切割</strong>（粒度更小、语言无关）——本章取&quot;词&quot;这一层</li><li>【师/PPT】组合的三种结构（P5）：<strong>线性</strong>（序列 → RNN）、<strong>树</strong>（句法/依存分析 → 树算法）、<strong>图</strong>（篇章图 → GCN）；例证：检索&quot;和服&quot;（&quot;鞋子和服装&quot; vs &quot;鞋子/和/服装&quot;）直接影响检索准确率（P9）</li></ul>
+<p><strong>一句话总结</strong>：语料是被&quot;定格&quot;的语言、按层级组织；理解自下往上汇聚、生成自上往下规划；任何任务都拆成&quot;找单元—表示单元—组合单元&quot;。</p>
+<hr>
+<h3>6. 英语词形态分析（一）：断词 Tokenization</h3>
+<p><strong>线索</strong>：为什么英语断词&quot;看起来平凡&quot;却麻烦？/ &quot;差点没上上上上海的车&quot;难在哪？/ 常用什么工具？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>断词（Tokenization）</strong>：在符号序列中找出词序列、确定词的<strong>外部边界</strong>（P8）；词是组成句子、也是后续 NLP 的基本单元（P9）</li><li>【师/PPT】英语：&quot;I&#x27;ve read the book&quot; → &quot;I have read the book&quot;；中文例：&quot;差点没上上上上海的车&quot; → 差点/没/上/上/上/上海的车（P8）——中文断词之难、且英汉断词规律不同，由此可见</li><li>【师/PPT】英语断词看似<strong>平凡任务</strong>（靠空格和标点），例外却多（P12）：缩写（I&#x27;m, i.e., Ph.D.）、本身带空格的词、数字字母大小写混排、含标点的串——&quot;规则总有例外&quot;</li><li>【师/PPT】常用<strong>正则表达式</strong>方法：NLTK 的 <code>nltk.regexp_tokenize</code>（P13）</li><li>【师】老师提醒：此处的 token（&quot;词&quot;）与今天的 token（子词）<strong>含义已不同</strong>，是一个值得思考的点</li></ul>
+<p><strong>一句话总结</strong>：断词 = 定词的外部边界；英语凭空格标点近乎&quot;平凡&quot;，但例外（缩写/混排）使它离不开正则工具。</p>
+<hr>
+<h3>7. 英语（二）：词形还原 Lemmatization、构词法与剖析/生成</h3>
+<p><strong>线索</strong>：词形还原除了&quot;少存词&quot;，还有哪些好处？/ 为什么穷举英文词形不可行？/ 剖析和生成是什么关系？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>词形还原（Lemmatization）</strong>：分析词的<strong>内部结构</strong>、还原 token 的词典原形（P8）；好处（P9）：① <strong>降低词典规模</strong>（dogs 与 dog 是一个词）② 把&quot;长得不一样&quot;的变形<strong>归到一起、意义可关联</strong>（利于相似度/检索）；中文此类任务少（城市化 → 城市+化；工业化/信息化/智能化）</li><li>【师/PPT】英文<strong>构词法</strong>两类三级：<code>{prefix} + {stem} + {suffix}</code>（P14）；例：im-port（前缀+词干）、tele-vis-ion（前缀+词干+后缀）、unprecedented</li><li>【师/PPT】穷举所有词形不可行（P15）：英语 prefix/stem/suffix 各 &gt;200/&gt;400/&gt;200，相乘上百万级；土耳其语（黏着语）一个词可串出很长一串（Uygarlastiramadiklarimizdanmissinizcasina），无法靠列表法</li><li>【师/PPT】<strong>剖析（Parsing）</strong>：串 → 内部结构（cats → cat+N+PL；caught → catch+V+Past）；<strong>生成（Generation）</strong>：结构 → 串（P16）——二者互为反向，本质是<strong>串到串</strong>的变换</li><li>【师/PPT】引入<strong>中间层</strong>的双层结构（P17）：词汇层 ↔ 中间层 ↔ 表层，把不同规则分步使用</li></ul>
+<p><strong>一句话总结</strong>：词形还原把变形归并到词典原形（省词典、聚语义）；剖析与生成是同一结构的两个方向，靠&quot;中间层&quot;分步用规则。</p>
+<hr>
+<h3>8. 英语（三）：三类知识与其建模——从 FSA 到 FST</h3>
+<p><strong>线索</strong>：词形态分析涉及哪三类知识？/ FST 比 FSA 多了什么？/ fox+N+PL 怎么一步步生成 foxes？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>三类知识</strong>（P18）：① <strong>Lexicon 词典</strong>（词/词根/词缀）；② <strong>Morphotactics 配列规则</strong>（词缀使用次序，如&quot;词缀+复数&quot;、动词 +tion+al 变形容词）；③ <strong>Orthographic(Phonological) Rules 正字法</strong>（拼写规则，如复数何时 +es、去 y 改 i+es）</li><li>【师/PPT】词典建模：字符串列表查找效率低 → 用 <strong>FSA 有限状态自动机</strong>只存单段字母与状态转移（P20）</li><li>【师/PPT】<strong>FST 有限状态转录机</strong>：在 FSA 基础上<strong>增加一条输出带子</strong>——输入带读、输出带写（P21）；例如正字法读入 &quot;cats&quot;、写出 &quot;cat^s#&quot;；FST 可<strong>对称复用</strong>——生成方向反向即得剖析</li><li>【师/PPT】<strong>完整生成</strong>（P25–P31）：先用<strong>配列规则 FST</strong>（名词+复数：fox+N+PL → fox^s#），再用<strong>正字法 FST</strong>（e-insertion：fox^s# → foxes）；剖析方向反着走（foxes → fox^s# → fox+N+PL）</li><li>【师/PPT】NLTK 有基于 <strong>WordNet 词典</strong>的 lemmatizer（P32）；手工设计 FST 工作量大，遂出现<strong>用 RNN 从状态中抽取 FST</strong> 的研究（Omlin&amp;Giles 1996、Weiss et al. ICML2018、Michalenko ICLR2019 等，P34）；本质是 <strong>seq2seq</strong>（翻译/对话/摘要同理，P35），后续章再展开</li><li>❓ 存疑：转写把 FSA/FST 听成&quot;finish state automator / SSA / SST / FSD&quot;、把 Parsing 拼作&quot;passing&quot;，已按 PPT 归一</li><li>【PPT】P146–P165 进一步讲<strong>子词分割（Subwords）</strong>（BPE、unigram language modeling、WordPiece），02-2 分册另讲<strong>最小编辑距离</strong>——<strong>转写未覆盖</strong>（见 corrections.md 四）</li></ul>
+<p><strong>一句话总结</strong>：三类知识分建两层——词典用 FSA、配列规则与正字法各用一个 FST 串联，即可&quot;生成&quot;或反向&quot;剖析&quot;词形。</p>
+<hr>
+<h3>9. 汉语（一）：切分任务与&quot;字/词&quot;之争</h3>
+<p><strong>线索</strong>：为什么汉语叫&quot;切分&quot;而不叫&quot;切词&quot;？/ &quot;词&quot;在汉语里为什么会有争论？/ 同一个串为什么能切出多种结果？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】汉语（独立语）主要任务在<strong>断词</strong>，即<strong>切分（Segmentation）</strong>，词形还原基本没有（现代+化、初一）（P38）；故称 <strong>Chinese Segmentation / 汉语切分 / 汉语分词</strong>——老师 95 年毕设做的就是它</li><li>【师/PPT】<strong>关于&quot;词&quot;的争论</strong>（P40）：赵元任&quot;说汉语的人说到的是<strong>字</strong>&quot;、吕叔湘&quot;汉语现成的是<strong>字</strong>&quot;、王力&quot;汉语以<strong>字</strong>为单位&quot;、徐通锵&quot;<strong>字组</strong>&quot;——于是由&quot;词&quot;转向&quot;<strong>切分单元</strong>&quot;，用切分不用切词</li><li>【师/PPT】切分标准不唯一（P40）：李焕英 → /李焕英/ 或 /李/焕英/；胜利化工厂 → 胜利化工厂 / 胜利/化工厂 / 胜利/化工/厂——&quot;看你的需要&quot;</li><li>【师/PPT】正是因为&quot;没有唯一标准、谁都说不服谁&quot;，评测才需要<strong>统一的公开标准</strong>（呼应 §3 评测之力）</li></ul>
+<p><strong>一句话总结</strong>：汉语没有现成的&quot;词&quot;，只有&quot;字&quot;，所以任务叫&quot;切分&quot;；切分标准因人而异，这正是歧义与评测的根源。</p>
+<hr>
+<h3>10. 汉语（二）：边界歧义（OA/CA）、真实/伪歧义与 OOV</h3>
+<p><strong>线索</strong>：交集歧义 OA 与组合歧义 CA 差别在哪？/ 真实歧义和伪歧义差在哪？/ 未登录词分几类？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】<strong>边界歧义（Boundary Ambiguity）</strong>（P41）：武汉市/长江大桥 vs 武汉市长/江大桥——边界有多种选法</li><li><strong>交集歧义（Overlap Ambiguity, OA）</strong>（P43）：串 &quot;XJY&quot; 中 XJ、JY 都是词 → 两种切分；例：的确、结合成分、为人民工作、中国产品质量、努力学习语法规则（串越长，组合爆炸越&quot;恐怖&quot;）</li><li><strong>组合歧义（Combination Ambiguity, CA）</strong>（P46）：串 XY 中 X、Y、XY 都是词 → 两种切分；例：本科（他|本科|毕业 vs 非|本|科|人员）、多少（能穿多少穿多少，两解相反）、难过、天真/天真热</li><li><strong>混合歧义</strong>（P49）：一个串同时含 OA 与 CA（&quot;有些人才能发挥…&quot; / &quot;这些人才…&quot;）</li><li>【师/PPT】<strong>真实歧义 vs 伪歧义</strong>（P50）：真实歧义在真实语料中出现不同切分（&quot;地面积&quot;）；伪歧义仅理论上可能（&quot;市政府&quot;实际 99% 以上是 市/政府）</li><li>【师/PPT】<strong>未登录词（OOV, Out Of Vocabulary）</strong>（P51）：<strong>派生词</strong>（晕晕乎乎/高高兴兴、自动化）与<strong>命名实体</strong>（人名/地名/机构/商标/商品名）；老师用墨西哥女孩的超长姓名（名字+母姓+父姓+奶奶姓+爷爷姓）讲长人名</li><li>【PPT】P53–P145 系统讲了汉语切分的<strong>三类方法</strong>（基于规则 FMM/BMM、基于分类、基于序标 HMM/CRF 与深度网络）与 SIGHAN 评测、SOTA 模型——<strong>转写未覆盖</strong>（见 corrections.md 四）</li></ul>
+<p><strong>一句话总结</strong>：汉语切分的两大拦路虎是边界歧义（OA/CA，及混合）与 OOV（派生词+命名实体）；歧义又分真实与伪歧义。</p>
+<hr>
+<h2>全篇 takeaway（5 条）</h2>
+<ol><li><strong>骨架</strong>：语料 → 单元识别（篇章/句/短语/词/子词）→ 词形态分析；方法永远是&quot;识别 + 表示 + 组合&quot;三件事。</li><li><strong>英语路线</strong>：断词定外部边界、词形还原做内部还原；三层知识（词典/配列/正字法）用 FSA→FST 建模，生成与剖析对称，本质是 seq2seq。</li><li><strong>汉语路线</strong>：因&quot;词无定界&quot;，任务变成<strong>切分</strong>；标准不唯一（赵元任/吕叔湘/王力/徐通锵的&quot;字/词&quot;之争）。</li><li><strong>两大拦路虎</strong>：边界歧义（交集 OA / 组合 CA / 混合）+ 未登录词 OOV（派生词、命名实体）；歧义别忘分真实与伪。</li><li><strong>历史观</strong>：从涓涓细流到 2013 表示之变、2018 范式之变，量变到质变；FST/RNN/seq2seq 是后续序列模型的历史底座。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="notes.md">notes.md</a></footer>
+</div></body></html>

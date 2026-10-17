@@ -1,6 +1,10 @@
 :80 {
 	root * /srv
 
+	# 课堂录音 / 转写等本地素材（各级 raw/）不对外暴露
+	@raw path */raw/*
+	respond @raw 404
+
 	file_server {
 		hide .*
 		hide .git

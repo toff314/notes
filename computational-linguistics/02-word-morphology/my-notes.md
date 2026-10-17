@@ -1,0 +1,4 @@
+# 我的课上笔记（如实转写存档 · 未做整理）
+
+> **未提供课上笔记**（本讲输入仅为录音转写 `raw/transcript.md` + PPT `raw/slides-1-word-morphology.pptx`、`raw/slides-2-min-edit-distance.pptx`）。
+> 若后续提供课堂手写/照片笔记，按规则如实转写存档于此（保留原符号/箭头/涂改，字迹不清标 `❓`，仅存档对照、不参与勘误与融合）。

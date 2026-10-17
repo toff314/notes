@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 2 讲 词形态分析 · 思路大纲</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a></div>
+<h1>计算语言学基础 · 第 2 讲 词形态分析 · 思路大纲</h1>
+<h2>主线（讲者是怎么推下来的）</h2>
+<ol><li><strong>收尾过渡</strong>：先补完绪论——研究史&quot;涓涓细流&quot;、2013 表示之变与 2018 范式之变、知识体系（本体/单元×语法语义语用）、公开评测之力、可解释性，以及中国先驱（留到下节）</li><li><strong>立框架</strong>：第 2 章引言——语言分横向/纵向交流，<strong>语料</strong>承载纵向记忆；语料有<strong>层次结构</strong>（篇→段→句→短语→词→子词）；<strong>理解自下往上汇聚、生成自上往下规划</strong>；方法永远是&quot;<strong>单元识别 + 单元表示 + 组合</strong>&quot;三件事</li><li><strong>聚焦到&quot;词&quot;</strong>：本章取&quot;词&quot;这一层单元 → 词形态分析（Lexical Morphology）</li><li><strong>英语·定边界</strong>：断词 Tokenization 确定词的<strong>外部边界</strong>；英语靠空格标点近乎&quot;平凡任务&quot;，但缩写/混排等例外多 → 正则表达式（NLTK）</li><li><strong>英语·析内部</strong>：词形还原 Lemmatization 还原词典原形（省词典、聚语义）；构词法 <code>前缀+词干+后缀</code>，穷举不可行 → 剖析（串→结构）/生成（结构→串）互为反向</li><li><strong>英语·建模</strong>：涉及<strong>三类知识</strong>（词典/配列规则/正字法）→ 引入<strong>中间层</strong>双层结构 → 词典用 <strong>FSA</strong>、配列与正字法各用 <strong>FST</strong>；生成/剖析靠 FST 对称复用；后有用 <strong>RNN 抽取 FST</strong> 的研究，本质是 <strong>seq2seq</strong></li><li><strong>汉语·定任务</strong>：汉语是独立语，<strong>词无定界</strong> → 独有&quot;<strong>切分</strong>&quot;任务；赵元任/吕叔湘/王力/徐通锵的&quot;字/词&quot;之争，切分标准不唯一 → 用&quot;切分单元&quot;取代&quot;词&quot;</li><li><strong>汉语·找难点</strong>：两大拦路虎——<strong>边界歧义</strong>（交集 OA / 组合 CA / 混合）与<strong>未登录词 OOV</strong>（派生词、命名实体）；歧义又分<strong>真实</strong>与<strong>伪</strong>歧义</li><li><strong>转折/延伸</strong>【PPT】：面对这些难点，早期走<strong>基于规则</strong>（FMM/BMM）、<strong>基于分类</strong>、<strong>基于序标</strong>（HMM/CRF/深度）的路线；再往后是<strong>子词分割</strong>（BPE 等）；并用<strong>最小编辑距离</strong>做非词错误检测与纠正——这些转写未展开，见 corrections.md</li></ol>
+<h2>概念关系</h2>
+<pre class="mermaid">flowchart TD
+    A[&quot;语料 corpus&lt;br/&gt;（纵向·被定格的语言）&quot;] --&gt; B[&quot;层次结构&lt;br/&gt;篇→段→句→短语→词→子词&quot;]
+    B --&gt; C[&quot;方法三件事&lt;br/&gt;单元识别 + 单元表示 + 组合&quot;]
+    C --&gt; D[&quot;词形态分析 Lexical Morphology&quot;]
+    D --&gt; E[&quot;英语：断词 Tokenization&lt;br/&gt;定外部边界&quot;]
+    D --&gt; F[&quot;英语：词形还原 Lemmatization&lt;br/&gt;析内部结构&quot;]
+    F --&gt; G[&quot;三类知识&lt;br/&gt;词典/配列/正字法&quot;]
+    G --&gt; H[&quot;FSA → FST 有限状态转录机&lt;br/&gt;生成 ⇄ 剖析（seq2seq）&quot;]
+    D --&gt; I[&quot;汉语：切分 Segmentation&lt;br/&gt;词无定界&quot;]
+    I --&gt; J[&quot;边界歧义&lt;br/&gt;OA / CA / 混合&quot;]
+    I --&gt; K[&quot;未登录词 OOV&lt;br/&gt;派生词 / 命名实体&quot;]
+    J --&gt; L[&quot;消歧：规则/分类/序标【PPT】&quot;]
+    K --&gt; L
+    D -.-&gt; M[&quot;子词分割（BPE）【PPT】&quot;]</pre>
+<h2>如果只记三件事</h2>
+<ul><li><strong>方法三件事</strong>：单元识别 + 单元表示 + 组合——任何语言任务都这样拆</li><li><strong>英语靠 FST，汉语靠消歧</strong>：三层知识（词典/配列/正字法）用 FSA→FST 建模，生成与剖析是同一机器的两个方向；汉语没有&quot;词&quot;，难点全在边界歧义与 OOV</li><li><strong>一切终归消歧</strong>：切分、检索、输入法背后都是&quot;在多种可能性里选一个&quot;，与第 1 讲的歧义主线一脉相承</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="outline.md">outline.md</a></footer>
+</div></body></html>

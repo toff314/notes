@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 2 讲 词形态分析 · 差异与存疑</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a></div>
+<h1>计算语言学基础 · 第 2 讲 词形态分析 · 差异与存疑</h1>
+<blockquote><p><strong>双源模式</strong>：转写（<code>raw/transcript.md</code>，约 4.2 万汉字课堂逐字稿）+ PPT（<code>raw/slides-1-word-morphology.pptx</code> 165 页、<code>raw/slides-2-min-edit-distance.pptx</code> 29 页，已抽 <code>raw/slides-outline.md</code>）。</p><p>依据格式：转写侧（§主题 / 原话）＋ PPT 侧（页码）。<strong>PPU 术语一律以 PPT 为准</strong>。</p></blockquote>
+<h2>一、转写 ↔ PPT 差异</h2>
+<table><tr><th>#</th><th>类型</th><th>转写</th><th>PPT</th><th>裁决</th><th>依据</th></tr><tr><td>1</td><td>术语</td><td>「limitization / demutation / 词音还原」</td><td><strong>Lemmatization 词形还原</strong></td><td>以 PPT 为准</td><td>转写 §英语·词形还原（&quot;apply a demutation&quot;）／ PPT P8、P14、P16</td></tr><tr><td>2</td><td>术语</td><td>「passing（剖析）」</td><td><strong>Parsing（剖析）</strong></td><td>以 PPT 为准</td><td>转写 §英语·剖析生成／ PPT P16</td></tr><tr><td>3</td><td>术语</td><td>「finish state automator / SSA / SST / FSD」</td><td><strong>有限状态自动机 FSA / 有限状态转录机 FST</strong></td><td>以 PPT 为准</td><td>转写 §三类知识建模、FST／ PPT P20、P21</td></tr><tr><td>4</td><td>术语</td><td>「正字法 / ortho graphic」</td><td><strong>Orthographic(Phonological) Rules（正字法）</strong></td><td>以 PPT 为准（补英文全称）</td><td>转写 §三类知识／ PPT P18</td></tr><tr><td>5</td><td>术语</td><td>「配列规则」（先生口述，未给英文）</td><td><strong>Morphotactics（配列规则）</strong></td><td>以 PPT 为准（补英文）</td><td>转写 §FST／ PPT P18</td></tr><tr><td>6</td><td>术语</td><td>「英文当中还有所谓的字词 sub」「词素」</td><td><strong>子词（Subwords）/ 子词切割</strong></td><td>以 PPT 为准</td><td>转写 §单元识别／ PPT P6、P148</td></tr><tr><td>7</td><td>数字</td><td>「100 多页」「170 多页」</td><td>02-1 分册<strong>共 165 页</strong></td><td>以 PPT 为准（老师为概数）</td><td>转写 §第2章开场／ PPT 分册页眉 165 页</td></tr></table>
+<h2>二、ASR 噪声（PPT 裁决，正文已采用 PPT 写法）</h2>
+<ul><li>「tokenization 断词」：转写多处作&quot;段词/断词&quot;，PPT 作 <strong>Tokenization（断词）</strong>（P8）</li><li>「segmentation 切分」：转写作&quot;介词/切分&quot;，PPT 作 <strong>Segmentation（切分）</strong>（P38）</li><li>「Overlap / Combination ambiguity」：转写作&quot;交集歧义/组合歧义&quot;，PPT 作 <strong>OA / CA</strong>（P41/P43/P46）</li><li>「OOV out of vocabulary」：转写作&quot;未登词/ov&quot;，PPT 作 <strong>未登录词（Out Of Vocabulary）</strong>（P51）</li><li>「《你好，李焕英》/ 胜利化工厂」：转写口语提及，PPT 给出规范切分示例（P39/P40）</li><li>「差点没上上上上海的车」：PPT 确认切分 <strong>差点/没/上/上/上/上海的车</strong>（P8）</li><li>「A → B → FSA」构图：转写&quot;输入个 B 到一个状态…两个圈儿&quot;，与 PPT FSA 小例（bag/bit）一致（P20）</li></ul>
+<h2>三、存疑（❓ 未定论，不猜答案）</h2>
+<ul><li>❓ 中国先驱人名（转写 §绪论收尾）：<strong>「刘卓」</strong> 疑为 <strong>刘倬</strong>（第 1 讲 PPT 确认）；<strong>「黄昌明」</strong> 疑为 <strong>黄昌宁</strong>；<strong>「于世文」</strong> 疑为 <strong>俞士汶</strong>；<strong>「王知津」（哈工大）</strong>、<strong>「李成树」「方传宁」</strong>、答辩主席 <strong>「周院士」</strong> 均无法核对——第 2 章 PPT 未收录此页</li><li>❓ 转写&quot;著名华人的科学家叫<strong>徐飞</strong>，推了图像挑战赛&quot;：疑为 <strong>李飞飞 / ImageNet</strong>，PPT 无对应页，请核对原音</li><li>❓ 转写&quot;我在隔壁的就是<strong>王慧</strong>老师，他们去了联通&quot;：是否为<strong>王小捷</strong>老师或口误，无法判定</li><li>❓ 转写&quot;复综语&quot;一段指称的具体语言未点名，无法定位到 PPT 的语种分类（P15 只列了复综语/黏着语/屈折语/分析语）</li><li>❓ 转写&quot;土耳其语…一个词 Uygarlastiramadiklarimizdanmissinizcasina&quot;与 PPT P15 英文串一致，但转写口播&quot;civilized+become+tir(cause)…&quot;多处含糊，以 PPT 英文串为准，口播细节存疑</li></ul>
+<h2>四、PPT 有、转写未覆盖（转写实际讲到&quot;未登录词&quot;后即行下课）</h2>
+<ul><li>【PPT】P41–P52：汉语切分两大难点（边界歧义 / 未登录词）的<strong>规范定义与更多例子</strong>——转写只口语举例，未逐条讲定义</li><li>【PPT】P53–P67：<strong>基于规则的切分</strong>——朴素算法、<strong>FMM 前向最大匹配</strong>（词典、MaxLen、&quot;语言学很重要&quot;逐步示例）、<strong>BMM 后向最大匹配</strong>、FMM 处理 OA/OOV、扩展 FMM、规则切分总结</li><li>【PPT】P60–P62：<strong>性能评估</strong>（P/R/F1、Baseline、Ceiling）</li><li>【PPT】P68–P75：<strong>基于分类的切分</strong>（二分类视角、朴素贝叶斯、特征、MaxEnt、深度表示、联合决策）</li><li>【PPT】P76–P132：<strong>基于序标的切分</strong>（BIO 标签集、HMM 五元组/Viterbi/Baum-Welch、MEMM 与局部归一化/模型偏置、CRF、特征模板、深度网络+CRF）</li><li>【PPT】P133–P145：<strong>SIGHAN 评测</strong>数据与结果、跨领域/微博、SOTA（BERT-CRF）、&quot;汉语切分是否必要&quot;（[MengYX2019ACL] P145）</li><li>【PPT】P146–P165：<strong>子词分割（Subwords）</strong>——两个任务、BPE token learner/parser、unigram language modeling、WordPiece、词 vs 子词</li><li>【PPT】02-2 P1–P29：<strong>最小编辑距离（MED）</strong>——Levenshtein、三种编辑操作（插/删代价 1、替换代价 2）、动态规划矩阵（execution→intention）、汉语非字/非词错误、汉字形态距离 open question、Glyce 田字格 CNN</li></ul>
+<h2>五、交付说明</h2>
+<ul><li>输入：<code>raw/transcript.md</code>（约 4.2 万汉字）+ <code>raw/slides-1-word-morphology.pptx</code>（165 页）+ <code>raw/slides-2-min-edit-distance.pptx</code>（29 页）+ <code>raw/slides-outline.md</code></li><li>差异检查按 §1.4 矩阵执行：A 类 ASR 噪声 7 处（以 PPT 裁决）、B 类实质差异 7 条（均双侧出处）、C 类【PPT】补强 8 组；G1 双源就位</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="corrections.md">corrections.md</a></footer>
+</div></body></html>
