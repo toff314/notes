@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 思路大纲</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a></div>
+<h1>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 思路大纲</h1>
+<h2>主线（讲者是怎么推下来的）</h2>
+<ol><li><strong>问题</strong>：6G 的需求可能不再来自&quot;用户升级手机&quot;，而来自 AI/机器间通信与算力中心互联——光/无线/铜线的边界在变模糊；在这种背景下，信道模型该怎么做、做到什么精度、AI 到底能帮多少？老师先把标尺立在方法论上：<strong>难的是找到问题，不是解决问题</strong>，并强调传统模型是 AI 时代的&quot;兜底&quot;。</li><li><strong>铺垫（建模总脉络）</strong>：经验模型（快、给均值）→ 统计模型（给分布）→ 仿真/数据驱动（与环境一一对应）；三者是&quot;精度 vs 效率&quot;的连续谱，走到第三阶段是因为算力够了、且感知/3D/雷达需要精确环境。</li><li><strong>核心（室外传播）</strong>：</li></ol>
+<ul><li>概述：距离-强度看斜率，断点（城区 1km / 郊区 100m），&quot;越远越弱&quot;有波导/干涉等<strong>例外</strong>；</li><li>宏蜂窝模型群（Longley-Rice → Okumura → Hata/COST-231 → Walfisch-Bertoni/COST 231-WI → LEE/Egli/Carey/Bertoni-Xia/TIREM）+ SPM 的&quot;地球剖面逐层算&quot;；</li><li>微蜂窝/双线/多线/准三维 UTD/宽带 PCS——能算强弱但缺角度与宽带；</li><li>混合室内-室外（曼哈顿模型）；</li><li>慢衰相关性（Markov/时间-空间相关：不能每台手机各生成一套，要按地图）与服务区/移动模型；测量分大/中/小三个尺度。</li></ul>
+<ol><li><strong>演进（仿真与数字孪生）</strong>：射线追踪/射线发射/FDTD 精度高但代价大；NVIDIA Sionna 类数字孪生既能生成数据又能评估，但<strong>若轨迹与信道不闭环、不与真实网络交互，&quot;这个仿真就是假的&quot;</strong>。</li><li><strong>扩展（新场景）</strong>：NTN（空天地海 + 通感算智；视距概率、基本路损=自由空间+杂波+阴影、O2I 穿透、大气损耗与&quot;无线电窗口&quot;、电离层/对流层闪烁，强调&quot;辩证看频点&quot;）→ A2G/无人机（<strong>低空城市最恶劣</strong>；视距/非视距是平衡；参考信号按高度分配、可移动天线、视觉定位、多模态感知辅助通信与反无人机）。</li><li><strong>前沿（5G/6G 天线）</strong>：massive → XL-MIMO、频率上到毫米波/太赫兹；近场/远场以瑞利距离划分（球面波 vs 平面波）；空间相关性、非平稳性（按单元建模）、GSCM（散射体按形状）、RIS、通感一致性——<strong>让空间颗粒度更细、参数按位置给定而非随机</strong>。</li><li><strong>结论（AI 赋能信道建模）</strong>：以张建华「WEI + AI 空口」四步（感知→特征→语义→知识）把黑盒变知识库，实现场景自适应/实时推理/预测式；老师自己的&quot;图像信道&quot;用 3–4dB 精度换 2–3 个数量级算力；场景适应性（环境天天在变）最难，传统 CSI 仍作兜底。</li></ol>
+<h2>概念关系</h2>
+<pre class="mermaid">flowchart TD
+    A[&quot;6G 新需求&lt;br/&gt;AI/机器间通信 · 算力中心互联&quot;] --&gt; B[&quot;信道建模总脉络&lt;br/&gt;经验→统计→仿真/数据驱动&quot;]
+    B --&gt; C[&quot;室外传播（本讲主线）&quot;]
+    C --&gt; C1[&quot;概述：距离-强度/断点/例外&quot;]
+    C --&gt; C2[&quot;宏蜂窝模型群&lt;br/&gt;Longley-Rice→Okumura→Hata→TIREM · SPM&quot;]
+    C --&gt; C3[&quot;微蜂窝/双线/UTD/曼哈顿&quot;]
+    C --&gt; C4[&quot;慢衰相关性 · 服务区/移动 · 三层测量&quot;]
+    B --&gt; D[&quot;仿真与数字孪生&lt;br/&gt;射线追踪/FDTD/Sionna&quot;]
+    D -. &quot;轨迹与信道不闭环则&#x27;是假的&#x27;&quot; .-&gt; E
+    C --&gt; E[&quot;新场景扩展&quot;]
+    E --&gt; E1[&quot;NTN：空天地海+通感算智&lt;br/&gt;LOS概率/O2I/大气/闪烁&quot;]
+    E --&gt; E2[&quot;A2G：低空最恶劣&lt;br/&gt;视距/非视距平衡&quot;]
+    E2 --&gt; E3[&quot;视觉定位 · 多模态感知辅助 · 反无人机&quot;]
+    E --&gt; F[&quot;5G/6G 天线：XL-MIMO/近场&lt;br/&gt;瑞利距离/非平稳/RIS/通感一致&quot;]
+    F --&gt; G[&quot;AI 赋能信道建模&lt;br/&gt;WEI 四步 + AI 空口&quot;]
+    G --&gt; H[&quot;结论：传统模型兜底 · AI 增强&lt;br/&gt;6G 信道更&#x27;真&#x27;&quot;]
+    D --&gt; G</pre>
+<h2>如果只记三件事</h2>
+<ul><li><strong>一条建模脉络</strong>：经验（快、均值）→ 统计（分布）→ 仿真/数据驱动（与环境一一对应），核心是&quot;精度 vs 效率&quot;的平衡，三阶段并存而非替代。</li><li><strong>两个反复出现的判据</strong>：<strong>问题比方法重要</strong>（找到问题才是护城河）、<strong>传统模型兜底</strong>（数据驱动在垂直领域数据不全、易出错，CSI 不能丢，AI 是增强）。</li><li><strong>6G 信道更&quot;真&quot;</strong>：XL-MIMO/近场/RIS/通感一致性要求散射体按形状、参数按位置/环境给定（而非随机统计），这正是射线追踪与数字孪生的用武之地；而场景天天在变，<strong>环境理解与泛化</strong>是 AI 信道建模最难的关。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="outline.md">outline.md</a></footer>
+</div></body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 疑问与自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</a></div>
+<h1>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 疑问与自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用这份自测）</strong>：</p><p>1. <strong>遮住</strong> <code>notes.md</code>，只看下面的问题；</p><p>2. 合上书与一切笔记，口头或笔头作答（答案须自己组织，不得复述原文）；</p><p>3. 答不出的进&quot;我没掌握&quot;，回看对应小节后再测一次；</p><p>4. 能讲给别人听 = 真懂（费曼标准）；讲不出的地方就是薄弱点。</p></blockquote>
+<h2>自测（合上书回答）</h2>
+<ol><li>老师为什么&quot;回头补前面的方法&quot;，而不是直接讲大模型？&quot;二十年河东二十年河西&quot;&quot;螺旋式上升&quot;各指什么？ → 见 notes §1</li><li>由&quot;未登录词&quot;牵出的第一个独立任务是什么？信息抽取包含哪几个子任务、又与什么结构相关？ → 见 notes §2</li><li>为什么&quot;边界歧义 + 命名实体/新词&quot;会比单独一类难点更难？各举一例。 → 见 notes §3</li><li>同一段方法史有哪两种切法？&quot;基于规则/分类/序标&quot;是按技术分还是按视角分？ → 见 notes §4</li><li>FMM 的两个经验参数是什么？MaxLen 设太大、太小各有何代价？&quot;语言学很重要&quot;在 MaxLen=3 下如何切？ → 见 notes §5</li><li>性能评估为什么强调&quot;评估者视角&quot;？一份可信的评测数据要经过哪些工序、&quot;覆盖度/质控/接口&quot;各指什么？ → 见 notes §6</li><li>P 和 R 的分母分别是什么？以&quot;本 报 讯 春节 临近&quot;为例说明；为什么还需要 F1？ → 见 notes §6</li><li>Baseline 有哪两种用途？Ceiling 一般指什么水平、用来回答什么问题？为什么老师说这条定义&quot;有点过时&quot;？ → 见 notes §6</li><li>BMM 与 FMM 的操作差别在哪？为什么汉语有时更偏好后向？ → 见 notes §7</li><li>FMM/BMM 在 OA、CA、OOV 上分别会犯什么错？&quot;个人&quot;那条规则为什么会被&quot;中国第一个人网站&quot;打脸？根因是什么？ → 见 notes §7</li><li>位置二分类怎么把&quot;切分&quot;变成&quot;分类&quot;？NB 的&quot;用先验估后验&quot;和&quot;朴素&quot;各指什么？ → 见 notes §8</li><li>分类视角的&quot;致命伤&quot;是什么？它逼出了什么新视角？ → 见 notes §8</li><li>BIO 三个标签各代表什么？HMM 的&quot;隐&quot;在哪里、两组参数分别是什么？ → 见 notes §9</li><li>为什么直接求最优标签序列不可行？Viterbi 如何解决？HMM 只顾局部信息会犯什么错？ → 见 notes §9</li><li>什么&quot;同一个问题&quot;让 1961 年的 BASEBALL 与今天的 RAG 隔六十年对话？三阶段史各用什么方式拿答案？ → 见 notes §10</li></ol>
+<h2>我没掌握的（自测后更新）</h2>
+<ul><li>（待自测后填写）</li></ul>
+<h2>我没懂的</h2>
+<ul><li>❓ 转写里&quot;三点&quot;、&quot;MT&quot;、&quot;3D VAD&quot;、&quot;辅助/粉色/高斯列叶斯&quot;等术语所指，PPT 未逐一对应，无法确定</li><li>❓ 学生分享中若干缩写（BASEBALL 被念作&quot;Facebook&quot;、稠密检索的模型名）转写不稳，无法核对</li><li>❓ HMM 之后 MEMM/CRF/深度+CRF 的具体推导与算例，转写未展开（见 corrections.md）</li></ul>
+<h2>待查（需要外部资料）</h2>
+<ul><li>SIGHAN 各届（2003–2016）评测数据与结果、&quot;切分是否必要&quot;（[MengYX2019ACL]）的原文结论（PPT P133–P145）</li><li>MaxEnt（最大熵）、CRF 的经典文献与特征模板（PPT P120–P128）</li><li>CRF++、HanLP、jieba、LTP 等中文分词工具的实现与差异（PPT 未列，属延伸）</li><li>RAG 及相关检索文献（BM25 原始论文、FAISS、DPR 等），用于核对同学分享中的缩写与年份</li></ul>
+<h2>PPT 有、转写未覆盖（需自己看课件补）</h2>
+<ul><li>【PPT】P47–P52：边界歧义 / 未登录词的规范定义与例子（OA/CA/混合、真实/伪歧义）——转写主要口语举例</li><li>【PPT】P53–P67：基于规则的切分——朴素 FMM、FMM 流程图与&quot;语言学很重要&quot;逐步示例、MaxLen、词典、BMM、FMM 处理 OA/OOV、扩展 FMM、规则切分总结</li><li>【PPT】P60–P62：性能评估——P/R/F1 示例与邻接表、Baseline、Ceiling</li><li>【PPT】P68–P75：基于分类的切分——位置二分类、朴素贝叶斯推演、特征、MaxEnt、特征工程、深度表示、pipeline 问题</li><li>【PPT】P78–P132：基于序标的切分——BIO 标签集、HMM 五元组与&quot;天气/冰淇淋&quot;例、状态转移/发射概率、Viterbi 完整算例、MLE/Baum-Welch、HMM 不足、MEMM/CRF/深度+CRF</li><li>【PPT】P133–P145：SIGHAN/NLPCC 评测数据与 SOTA、&quot;汉语切分是否必要&quot;（[MengYX2019ACL] P145）、本章总结</li><li>【PPT】P146–P165：子词分割（Subwords）——OOV 动机、BPE token learner/parser、unigram LM、WordPiece、词 vs 子词</li><li>【PPT】02-2 P1–P29（第 2 讲遗留、本讲未涉及）：最小编辑距离——Levenshtein、动态规划矩阵、汉语非字/非词错误、Glyce 田字格 CNN</li></ul>
+<h2>本课行动（从各节提炼）</h2>
+<ol><li>用 jieba/HanLP 对同一段中文分别跑 FMM、BMM 与 CRF 分词，肉眼标注 OA/CA/OOV 错误，建立&quot;错误类型—方法&quot;的对应直觉</li><li>亲手实现 FMM + BMM（各 ~30 行），并复现&quot;的确/确定&quot;&quot;中国人网站&quot;两类失效，理解&quot;规则写不完&quot;的原因</li><li>手算一遍 P/R/F1 与 Viterbi（用 PPT 的短句），把公式落到具体数字上，避免只会背定义</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="questions.md">questions.md</a></footer>
+</div></body></html>

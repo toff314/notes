@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 听课笔记</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</a></div>
+<h1>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 听课笔记</h1>
+<blockquote><p><strong>本讲一句话</strong>：承接第 2 讲&quot;词无定界&quot;，本讲把汉语切分当成可评测的工程任务来拆——从基于规则的 FMM/BMM（用词典、不管上下文），到基于分类（位置二分类：NB/KNN/MaxEnt/DNN），再到基于序标（BIO 标签 + HMM/Viterbi 的全局决策）；中间插入&quot;性能评估&quot;这把尺子（评测数据、P/R/F1、Baseline/Ceiling）；最后由一位同学分享&quot;从 BASEBALL 到 RAG&quot;的问答六十年。</p><p><strong>结构</strong>：承上（未登录词的延伸）→ 难点叠加 → 方法史三路线（规则→分类→序标）→ 性能评估 → 学生分享</p><p><strong>可疑处</strong>：多处术语 ASR 不稳（Naïve、极大熵、&quot;三点&quot;等），见 corrections.md</p></blockquote>
+<hr>
+<h3>1. 开场：为什么要补足&quot;前面&quot;的方法（师者视角）</h3>
+<p><strong>线索</strong>：大模型一句话就能分词，为什么还要学 FMM、HMM？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】老师原计划讲得快，但发现同学对早期方法陌生、对深度/大模型更熟，于是决定&quot;把前面补足&quot;，不求进度只求纵深（细节可课后深谈）</li><li>【师】读史两体会：<strong>&quot;二十年河东二十年河西&quot;</strong>——神经网络六七十年代火热、后被批到一无是处、20 年后抬头并克服旧问题再上台阶；<strong>&quot;螺旋式上升&quot;</strong>——审美与方法的循环中总会长出新东西。学历史是照镜子，但别迷信它</li><li>【师】直接上大模型当然行，但&quot;只知道用就伸不进去&quot;，难在机制/方法上创新；故借&quot;切分&quot;这个最小任务，看问题如何推着方法往前走</li></ul>
+<p><strong>一句话总结</strong>：先补足早期方法史，是为了拿到&quot;问题→方法→新问题&quot;的演进视角，而不是只会调用大模型。</p>
+<hr>
+<h3>2. 承上：未登录词牵出的更大任务——信息抽取与 NER</h3>
+<p><strong>线索</strong>：未登录词不只影响切分，还牵出了哪些任务？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】未登录词里&quot;命名实体&quot;最有代表性、至今仍被研究 → 由此独立出 <strong>命名实体识别（NER，转写作&quot;三点&quot;❓）</strong>；它第一次被单独提出时，还隶属于更大的任务——<strong>信息抽取（Information Extraction）</strong></li><li>【师】信息抽取包含：<strong>关系抽取</strong>、<strong>事件抽取</strong>、<strong>多模态事件抽取</strong>（老师口播简称&quot;MT&quot;❓）；它与<strong>知识图谱</strong>密切相关，都隶属 NLP</li><li>【师】<strong>新词</strong>：教育部下属机构、学会等会不定期发布&quot;互联网新词&quot;监测报告——这类现象往往先于被收录、被研究</li></ul>
+<p><strong>一句话总结</strong>：一个&quot;未登录词&quot;引出 NER → 信息抽取（关系/事件/多模态），并勾连知识图谱；新词是持续的监测对象。</p>
+<hr>
+<h3>3. 难点叠加：当边界歧义遇上 OOV 与新词</h3>
+<p><strong>线索</strong>：为什么&quot;单个问题能处理、合起来就难&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】PPT P52 把两类麻烦叠起来：<strong>边界歧义 + 命名实体</strong>（&quot;敦煌市长孙熙龙说&quot;、&quot;北京人和足球俱乐部&quot;）与 <strong>边界歧义 + 新词</strong>（&quot;先后 14 次赶超女举 58 公斤级世界纪录&quot;、&quot;一些人在讨论二次元朝什么方向发展&quot;）</li><li>【师】转写里还举了&quot;北京仁和&quot;（可整体也可拆）、&quot;赶超女举&quot;、&quot;二次元&quot;等例，以 PPT P52 为准</li><li>【师】结论：歧义、OOV、新词<strong>一旦组合，问题复杂度就上去了</strong>——这正是汉语切分难缠的地方</li></ul>
+<p><strong>一句话总结</strong>：歧义、OOV、新词单独出现已不易，混合出现时复杂度陡增，这是汉语切分难缠的根源。</p>
+<hr>
+<h3>4. 方法史总览：基于规则 → 基于分类 → 基于序标</h3>
+<p><strong>线索</strong>：三条路线是&quot;技术&quot;之分还是&quot;视角&quot;之分？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】老师按<strong>分词算法的时间发展</strong>梳理三条代表路线：<strong>基于规则</strong>（最早）→ <strong>基于分类</strong> → <strong>基于序标</strong>（P53）</li><li>【师】叫&quot;统计/深度&quot;是看<strong>所用技术</strong>（规则→机器学习→深度学习）；叫&quot;分类/序标&quot;是看<strong>看待业务问题的视角</strong>——视角变了，方法就跟着变。本讲按视角讲</li><li>【师】任何与语言相关的任务史，第一阶段的核心特色几乎都是&quot;<strong>基于规则</strong>&quot;</li></ul>
+<p><strong>一句话总结</strong>：同一段历史可有两种切法（技术：规则→机器学习→深度学习；视角：规则→分类→序标）；本讲按&quot;视角&quot;来讲。</p>
+<hr>
+<h3>5. 基于规则（一）：FMM 前向最大匹配与它的两个参数</h3>
+<p><strong>线索</strong>：FMM 的&quot;最大资源&quot;是什么？/ MaxLen 与词典各带来什么问题？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】最早成型、老师本人第一个做的就是它：<strong>前向最大匹配 FMM（Forward Maximum Match）</strong>，最大资源来自<strong>词典</strong>（P54）</li><li>【师/PPT】示例（P56/P57）：词典只收&quot;语言学/重要&quot;，参数 <strong>MaxLen=3</strong>（即词典最长词长），切&quot;语言学很重要&quot;——从前往后取 3 字&quot;语言学&quot;命中词典 → 移入输出串并补&quot;/&quot;；剩余&quot;很重要&quot;取 3 字不中 → 从右逐个删字到单字&quot;很&quot;→ 默认单字成词；如此循环直到输入串取空</li><li>【师】讨论一：<strong>MaxLen 设多大</strong>？结论是权衡——太大浪费匹配/回退操作，太小则长词切不出；PPT P58 的&quot;小规律&quot;是<strong>词表平均词长 +1/+2</strong>，只是经验参考。同学提的&quot;动态窗口&quot;&quot;按 80% 命中率反推长度&quot;被老师赞赏</li><li>【师】讨论二：<strong>词典该收哪些词</strong>？普通词靠规模，专名（机构/地名/人名）问题更大；这一层仍是<strong>经验性的</strong>（P59）</li></ul>
+<p><strong>一句话总结</strong>：FMM 用固定词典从左到右做最长匹配，性能被两个经验参数（MaxLen、词典内容）决定——简单、快速，但埋着后面所有的坑。</p>
+<hr>
+<h3>6. 性能评估：评测数据与指标 P/R/F1（评估者视角）</h3>
+<p><strong>线索</strong>：老师为什么反复把&quot;开发者视角&quot;扭到&quot;评估者视角&quot;？/ 一份可信的评测数据要经过哪些工序？/ P 和 R 的&quot;分母&quot;分别是什么？/ 基线、天花板各回答什么问题？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】老师先纠视角：<strong>性能评估</strong>要站在<strong>第三方评估者</strong>的角度想&quot;我拿什么数据、多少数据，才能让所有参与者信服&quot;，而不是站在开发者角度只谈自己的效果/时间空间</li><li>【师】评测数据不能只有&quot;原始语料&quot;，还必须有一把<strong>尺子（标准答案/gold）</strong>，并说清<strong>这把尺子怎么造出来</strong>：统一标注标准 → 专家标注 → 多专家<strong>交叉检验</strong> → 冲突交委员会判定 → 多轮迭代 → 直到规模与覆盖达标</li><li>【师】<strong>覆盖度</strong>：内容与规模都要满足最终评测需求；<strong>数据质控</strong>：不能拿错数据或大模型随便生成的结果来填；<strong>接口</strong>：还要规定环境、配置文件、输入/输出格式，很多人写代码来&quot;机测&quot;——有专门做评测研究的人</li><li>【师/PPT】指标（以 P60 为例）：标准答案 4 个词&quot;本 报 讯 春节 临近&quot;，输出 1 得 5 个词。<strong>P（准确率）以自己输出的词数为分母</strong>（3/5）、<strong>R（召回率）以标准答案的词数为分母</strong>（3/4）；二者&quot;各有一套道理&quot;，故用 <strong>F1 调和平均</strong>平衡；更一般形式 <strong>F=(β²+1)PR/(β²P+R)</strong>，F1 即 β=1（P61）</li><li>【师/PPT】P/R 可用<strong>邻接表</strong>统一计算（转写口播作&quot;临界表&quot;❓，PPT P61 作&quot;邻接表&quot;）：P=a/(a+b)、R=a/(a+c)；任何有标准答案的分类/推荐/翻译任务都能照此推广</li><li>【师/PPT】<strong>Baseline 基线</strong>（P62）：最简单方法（如规则）的性能或用于对比的模型——用途有二：① <strong>模型性能比较</strong>（同数据看新模型是否有优势）② <strong>任务难易比较</strong>（同模型换数据比）</li><li>【师/PPT】<strong>Ceiling 天花板</strong>（P62）：大模型超过人之前常指&quot;人（且多人）能达到的水平&quot;；用途是看机器离人还差多少，以及不同任务的天花板高低（有的 50%、有的 98%）能反映任务难易。老师补充：如今大模型个别地方已超过人，此定义有点过时</li><li>【师】实务：竞赛/评测通常<strong>至少发布一个基线</strong>——低于基线就不必凑热闹，先跑通基线再改；论文的 P/R/F1 表就是&quot;信服的证据&quot;（老师另点到一个专门刊物/会议，转写&quot;3D VAD&quot;❓）</li></ul>
+<p><strong>一句话总结</strong>：可信评测 = 覆盖够、说得清来源的标准答案 + 质控与统一接口；P 看自己、R 看标准答案、F1 调和，基线给&quot;脚下最低&quot;、天花板给&quot;往上最高&quot;。</p>
+<hr>
+<h3>7. 基于规则（二）：BMM 与规则扩展——以及它必然的失效</h3>
+<p><strong>线索</strong>：BMM 与 FMM 差在哪，为什么汉语常更偏好 BMM？/ 加规则能走多远？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】BMM 后向最大匹配（P63）：把句子倒着输入，匹配不上时<strong>先砍前头</strong>；同学点出汉语<strong>定语前置</strong>、核心词常在后，故后向有时能先把关键核心词切出</li><li>【师/PPT】FMM/BMM 的失效（P64）：<strong>交集歧义 OA</strong> 总是切 XJ/Y（BMM 则 X/JY）、<strong>组合歧义 CA</strong> 总是把 XY 当一个词、<strong>OOV</strong> 一律切成单字</li><li>【师/PPT】<strong>加规则</strong>（P65）：如&quot;若 W=&#x27;个人&#x27; 且左侧是数词，则切成 个/人&quot;；但马上遇到两个问题——<strong>要写多少条规则（&quot;海了去了&quot;）</strong>、<strong>规则总有例外</strong>（&quot;中国第一个人网站&quot;实为&quot;第一个人/网站&quot;❓）</li><li>【师/PPT】规则法总结（P66）：知识源=词表、知识表示=符号+规则、知识应用=搜索匹配；简单快速但切分质量不高；它仍有价值——FMM+BMM 可用来<strong>发现 OA</strong>（如&quot;的确&quot;：FMM 的确/定、BMM 的/确定）</li><li>【师】根因分析（P67）：FMM/BMM 只用<strong>词表</strong>、<strong>没有上下文信息</strong>；而&quot;一起&quot;还是&quot;一/起&quot;主要取决于上下文（&quot;他们/一起/去看电影&quot; vs &quot;这里发生了/一/起/火灾&quot;）——于是问题变成&quot;如何把上下文信息引入切分？&quot;</li></ul>
+<p><strong>一句话总结</strong>：BMM 是 FMM 的镜像，规则能救局部却救不了全局；根因是固定词表不含上下文——切分视角遂从&quot;规则&quot;转向&quot;分类&quot;。</p>
+<hr>
+<h3>8. 基于分类的切分：位置二分类与 NB/KNN/MaxEnt/DNN</h3>
+<p><strong>线索</strong>：怎么把&quot;切分&quot;变成分类问题？/ NB 的&quot;先验估后验&quot;和&quot;朴素&quot;各指什么？/ 分类视角最终败在哪？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】换视角（P69）：不看&quot;词&quot;，只看每个<strong>字与字之间的位置</strong>——在此位置&quot;分还是不分&quot;，即<strong>位置二分类</strong>（&quot;0 有 1 意 2 见 3 分 4 歧 5&quot;）。切分→一系列二分类→已有的有监督分类器全能用，还能用上下文特征；代价是需要已切分数据训练</li><li>【师】<strong>NB 朴素贝叶斯</strong>：核心是&quot;<strong>用先验估后验</strong>&quot;——后验事先拿不到，就用训练集先验去估（转写&quot;too young too naive&quot;是老师口语解释 <strong>naive</strong>❓）；套贝叶斯公式后分母不影响比大小可丢，于是在<strong>训练集上数数</strong>得到&quot;类别先验 + 已知类别下各特征的概率&quot;，新句来时连乘即决策。&quot;<strong>朴素</strong>&quot;= 引入<strong>特征条件独立</strong>假设，把高维联合概率拆成连乘（转写作&quot;辅助/高斯列叶斯&quot;❓）</li><li>【师】<strong>KNN</strong> 不需训练、需要计算——与已知类别样本算相似度取最近 K 个投票，K 常取奇数避免平票</li><li>【师】NB 只用 <strong>unigram</strong> 一种特征；更细粒度特征（位置、距离、bigram）区分力更强 → <strong>MaxEnt 极大熵</strong>（转写作&quot;几大熵&quot;❓）能综合大量特征函数，但这些特征靠<strong>人工手写</strong>，即&quot;知识工程/特征工程&quot;（P72/P74）；出路是<strong>深度学习自动学表示</strong></li><li>【师/PPT】分类视角致命伤（P75）：各位置<strong>按次序</strong>二分类 → 是 <strong>pipeline（管道）</strong>，<strong>前一步的错往后传导</strong>、每步只是<strong>局部最优</strong>（&quot;决策 1 时管不着 2、3、4&quot;）→ 需要<strong>联合决策 / 全局最优</strong></li></ul>
+<p><strong>一句话总结</strong>：位置二分类把切分接进成熟分类器，NB/KNN/MaxEnt/DNN 依次增强，但 pipeline 的误差传导与局部最优逼出了&quot;序列标注&quot;这一新视角。</p>
+<hr>
+<h3>9. 基于序标的切分：BIO + HMM/Viterbi</h3>
+<p><strong>线索</strong>：BIO 三个标签各代表什么？/ HMM 的&quot;隐&quot;在哪里？/ Viterbi 在解决什么问题？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】序列标注视角（P78）：给每个字打标签，标签集 <strong>S={B, I, O}</strong>（B=词的开始字、I=词的非开始字、O=单独成词）；于是<strong>联合分类 → 序列标注</strong>，&quot;切分 = 找最优标注序列&quot;。例：&quot;有意见分歧&quot; → O B I B I</li><li>【师/PPT】<strong>HMM 隐马尔可夫模型</strong>（P80–P86）：以&quot;天气考古&quot;为例——过去某天<strong>天气冷/热</strong>（隐藏状态）观测不到，只能看到那天<strong>卖了多少冰淇淋</strong>（观测）；故两组参数：<strong>状态转移概率</strong>（今→明天气）与<strong>发射概率</strong>（天气→冰淇淋数量）。&quot;隐&quot;就在于状态是隐藏的。对应切分：观测集=汉字/标点，状态集={B,I,O}，状态转移=标签间转移（p(I|B)…），发射=标签→字（p(今|B)…）</li><li>【师/PPT】直接算最优序列有 <strong>3ⁿ</strong> 种组合、大量重复计算（P93）→ 用 <strong>Viterbi 动态规划</strong>保留中间结果逐时刻递推、最后<strong>反向回溯</strong>（P98–P106 有完整算例，转写未逐步展开）。老师区分<strong>局部 vs 全局最优</strong>（P94–P97）：逐时刻单独取最可能状态可能得到&quot;转移概率为 0 的不可能序列&quot;，Viterbi 求完整最优路径；参数估计（P108）有标注用 <strong>MLE</strong>、无标注用 <strong>Baum-Welch（等价 EM）</strong></li><li>【师/PPT】HMM 的不足（P111–P112）：只用相邻局部信息，遇到&quot;看见一个<strong>人网站</strong>/人影&quot;这类&quot;当前字同、前一标签同、当前标签却不同&quot;的例会错，需利用后文信息</li><li>【PPT】HMM 之后还有 <strong>MaxEnt+Markov=MEMM</strong>（P114–P119，局部归一化/模型偏置）、<strong>CRF 条件随机场</strong>（P120–P128）、<strong>深度网络+CRF</strong>（P131–P132）——<strong>转写未展开</strong>（见 corrections.md）</li></ul>
+<p><strong>一句话总结</strong>：把切分建模成&quot;字序列→标签序列&quot;后，HMM 用状态转移+发射概率、Viterbi 求全局最优标签序列；BIO 与序列标注模型从此成为切分主流。</p>
+<hr>
+<h3>10. 学生分享：从 BASEBALL 到 RAG——问答的六十年</h3>
+<p><strong>线索</strong>：1961 年的棒球问答和今天的 RAG，&quot;同一个问题&quot;是什么？/ 六十年里&quot;拿答案的方式&quot;怎么变？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【同学/PPT 第 11 章】问答是 NLP 最古老的任务之一，标题&quot;从 BASEBALL 到 RAG&quot;——<strong>BASEBALL</strong> 是 1961 年棒球问答系统，<strong>RAG</strong> 是今天的检索增强生成，隔 60 年却面对同一问题（学生口播把 BASEBALL 念作&quot;Facebook&quot;❓）</li><li>【同学】大模型三硬伤：<strong>幻觉</strong>（且自信）、看不到<strong>企业私有数据</strong>、知识<strong>静态</strong> → 故回答前先做&quot;检索增强&quot;</li><li>【同学】三阶段史：① <strong>结构化库 + 人工规则</strong>（BASEBALL、LUNAR）；② <strong>语义解析</strong>（GeoQuery、NL2SQL、TREC 评测、2011 年 IBM Watson 赢得&quot;危险边缘&quot;）；③ <strong>检索</strong>（1971 向量空间模型 → IDF → 1995 BM25 的稀疏检索几十年 → 稠密检索的双塔/交叉编码器 → 2017 前后 FAISS 十亿级向量检索）</li><li>【同学】<strong>RAG</strong> 检索 top-k 片段拼进提示词给大模型；变体有自我决定检索、重排、多跳、微调/反思、端到端联合训练。总结：六十年表达能力越来越强，但每代都在<strong>表达能力</strong>与<strong>可信可控</strong>间权衡，故折中&quot;理解交给大模型、事实交给检索、关键场景用确定程序兜底&quot;</li><li>【师】提醒：AI 重度参与的学习成果，正式场合自己要先过一遍把好关</li></ul>
+<p><strong>一句话总结</strong>：同一问题、六十年、五代方案——从结构化查库到稀疏/稠密检索再到大模型+检索，&quot;理解交给模型、事实交给检索&quot;是当下的可信折中。</p>
+<hr>
+<h2>全篇 takeaway（5 条）</h2>
+<ol><li><strong>一条演进主线</strong>：切分被问题一步步推着走——规则（固定词表、无上下文）→ 分类（引入上下文，但 pipeline 局部最优）→ 序标（联合/全局决策）。价值在于看&quot;问题如何驱动方法&quot;。</li><li><strong>两个经验参数定生死</strong>：FMM/BMM 靠 MaxLen 与词典，简单快速却注定处理不了 OA/CA/OOV；加规则总有例外，根因是词表没有上下文。</li><li><strong>一把尺子贯穿全课</strong>：评测要有带标准答案、覆盖够、说得清来源的数据；P/R/F1 加基线+天花板，回答&quot;我的方法强不强、任务难不难&quot;。</li><li><strong>从分类到序标是关键一跃</strong>：把&quot;分不分&quot;从逐位置二分类（局部、误差传导）改成 BIO 标签序列的整体求解，HMM+Viterbi 给出全局最优。</li><li><strong>同一问题六十年</strong>：问答史从 BASEBALL 到 RAG，始终在&quot;表达能力 vs 可信可控&quot;之间权衡；这也是任何技术史的一面镜子。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="notes.md">notes.md</a></footer>
+</div></body></html>

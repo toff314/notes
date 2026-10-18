@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a></div>
+<h1>听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</h1>
+<h2>讲座元信息</h2>
+<ul><li>讲师：张欣（北京邮电大学 无线通信教研中心；授课属杨红老师团队）</li><li>日期：2026 秋　时长：4 学时（一次课）　来源：线下</li><li>（未提供 meta.json；讲师/日期据转写第 1 段与 PPT 封面页还原）</li><li>课型判定：<strong>学术内容课</strong>（依据：可独立成条的知识/概念 ≥ 12 个——建模三阶段、断点与衰减指数、宏蜂窝模型群、SPM、双线/多线模型、UTD、曼哈顿模型、慢衰时空相关性、射线追踪/FDTD、数字孪生、NTN 路损四分量、O2I 穿透、大气损耗与闪烁、A2G 两径模型、XL-MIMO 近场/瑞利距离、非平稳与 GSCM、通感一致性、WEI 四步、图像信道等）</li><li>课型判定补充：含大量公式/模型/标准号，属<strong>学术内容课</strong>（非实务操作课、非观点分享课）</li></ul>
+<h2>实际输入（必填 · G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>转写（必选）</td><td>raw/transcript.md</td><td>由 raw/录音原稿.pdf 抽取（约 5.6 万字符 / 47,761 汉字），纯 ASR 文本、无时间戳；术语以 PPT 为准</td></tr><tr><td>PPT 课件（必选）</td><td>raw/slides.pdf</td><td>第 4 章「室外传播模型」为主题，合并第 5 章室内传播、NTN、近场 MIMO、6G AI 空口等，共 362 页；已抽 raw/slides-outline.md（页级结构）</td></tr><tr><td>元信息</td><td>未提供</td><td>讲师/日期据转写与 PPT 封面还原</td></tr></table>
+<h2>产物清单</h2>
+<ul><li>notes.md（主笔记，约 5,425 汉字，11 节 + 全篇 takeaway）</li><li>outline.md（思路大纲，含 Mermaid 概念图）</li><li>questions.md（22 题自测 + 我没懂的 + 待查）</li><li>corrections.md（12 条转写↔PPT 差异 + 存疑 + PPT 有转写未覆盖清单）</li><li>spinoffs.md（6 条衍生选题）</li><li>my-notes.md（未提供课上笔记，已写明）</li><li>README.md（本文件）</li></ul>
+<h2>标记说明</h2>
+<p>【师】= 老师原话；【PPT】= PPT 有、转写未覆盖；❓ 存疑 = 转写/识别不确定；⚠️ 差异 = 转写与 PPT 不一致。</p>
+<h2>篇幅说明</h2>
+<p>本次为 4 学时一次课（非 45 分钟标准节）。按 §4 换算（90 分钟上限 6,000 字、小节 ≤12），本讲小节数 11 ≤ 12；notes.md 5,425 汉字在含 4 学时体量放宽的上限内，故自检以 <code>--limit 6500</code> 运行（与第 1 讲一致）。</p>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>简评</th></tr><tr><td>① 脉络还原度</td><td>9/10</td><td>按&quot;问题→建模三阶段→室外模型群→仿真/DT→NTN/A2G→6G 天线→AI&quot;重排，非时间流水账</td></tr><tr><td>② 概括力</td><td>8/10</td><td>每节一句话总结 + 全篇 5 条 takeaway；三层压缩到位</td></tr><tr><td>③ 差异检查有效性</td><td>9/10</td><td>12 条差异均带两侧出处，术语以 PPT 校准（XL-MIMO/瑞利距离等）</td></tr><tr><td>④ 覆盖完整性</td><td>8/10</td><td>PPT 有转写未覆盖页（10–18/19–32/52–58/101–131/133–302/303–330/332–339/353–361）已逐条标注</td></tr><tr><td>⑤ 可复习性</td><td>9/10</td><td>康奈尔式&quot;线索+内容&quot;结构 + 问题式线索 + 22 题提取自测协议</td></tr><tr><td>⑥ 忠实度</td><td>9/10</td><td>存疑未臆造，【PPT】来源均标注，口述数字标为估计</td></tr><tr><td><strong>合计</strong></td><td><strong>52/60</strong></td><td>达标</td></tr></table>
+<h2>自检</h2>
+<p>（见同目录 <code>check_notes.py</code> 运行结果）</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

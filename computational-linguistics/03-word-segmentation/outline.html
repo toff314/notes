@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 思路大纲</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</a></div>
+<h1>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 思路大纲</h1>
+<h2>主线（讲者是怎么推下来的）</h2>
+<ol><li><strong>开场·方法论</strong>：老师先自陈&quot;把前面的方法补足&quot;——同学对早期方法陌生、对深度/大模型更熟，故本讲求纵深不求进度；读史两体会&quot;二十年河东二十年河西&quot;&quot;螺旋式上升&quot;</li><li><strong>承上</strong>：由第 2 讲的&quot;未登录词&quot;引出 <strong>NER</strong>（首次被单独提出）→ 更大的 <strong>信息抽取</strong>（关系/事件/多模态）→ 知识图谱；新词是持续监测对象</li><li><strong>立难点</strong>：把两类麻烦叠起来——<strong>边界歧义 + 命名实体</strong>、<strong>边界歧义 + 新词</strong>（&quot;敦煌市长孙熙龙说&quot;&quot;赶超女举 58 公斤级&quot;），复杂度陡增</li><li><strong>给史观</strong>：同一段历史可有两种切法——<strong>技术</strong>（规则→机器学习→深度学习）与<strong>视角</strong>（规则→分类→序标）；本讲按视角讲，第一章（规则）是任何语言任务的共同起点</li><li><strong>规则·FMM</strong>：<strong>前向最大匹配</strong>——词典 + 两个经验参数（<strong>MaxLen</strong>、<strong>词典内容</strong>）；&quot;语言学很重要&quot;逐步示例；MaxLen 权衡、专名入典难题</li><li><strong>插曲·评估（评估者视角）</strong>：评测要有<strong>带标准答案、覆盖够、说得清来源</strong>的数据（标注标准→专家标注→交叉检验→委员会判定→迭代）；覆盖度/质控/接口；论文的&quot;信服证据&quot;</li><li><strong>评价指标</strong>：例&quot;本 报 讯 春节 临近&quot;→ <strong>P 以自己输出为分母、R 以标准答案为分母</strong>、<strong>F1 调和</strong>；<strong>邻接表</strong>统一计算；<strong>Baseline</strong>（模型比较 vs 任务难易）与 <strong>Ceiling</strong>（离人还差多少；大模型已部分超人）</li><li><strong>规则·BMM 与失效</strong>：<strong>后向最大匹配</strong>（倒着输入、先砍前头）→ FMM/BMM 必错于 <strong>OA/CA/OOV</strong> → <strong>加规则</strong>（&quot;个人&quot;前是数词）却遭遇&quot;规则写不完、总有例外&quot;（&quot;中国第一个人网站&quot;）→ 根因：<strong>只用词表、没有上下文</strong></li><li><strong>视角之变·分类</strong>：位置<strong>二分类</strong>（分/不分）→ NB（先验估后验、特征条件独立）→ 更细粒度特征 → <strong>MaxEnt 极大熵</strong>/DNN → 致命伤：<strong>pipeline 误差传导、局部最优</strong></li><li><strong>视角之变·序标</strong>：<strong>BIO 标签</strong>把切分变成序列标注 → <strong>HMM</strong>（观测=字，状态=B/I/O；转移+发射概率；&quot;天气考古&quot;冰淇淋例）→ <strong>Viterbi</strong> 求全局最优（3ⁿ → 动态规划）→ MLE/Baum-Welch → HMM 不足 →（PPT）MEMM/CRF/深度+CRF <strong>转写未展开</strong></li><li><strong>学生分享</strong>：从 <strong>BASEBALL</strong>（1961）到 <strong>RAG</strong>——结构化库+规则 → 语义解析 → 稀疏/稠密检索 → 检索增强生成，六十年始终在&quot;表达能力 vs 可信可控&quot;间权衡</li></ol>
+<h2>概念关系</h2>
+<pre class="mermaid">flowchart TD
+    A[&quot;承上：未登录词&lt;br/&gt;NER → 信息抽取（关系/事件/多模态）&quot;] --&gt; B[&quot;难点叠加&lt;br/&gt;边界歧义 + 命名实体 / 新词&quot;]
+    B --&gt; C[&quot;方法史三路线（按视角）&quot;]
+    C --&gt; D[&quot;基于规则&lt;br/&gt;FMM / BMM&quot;]
+    D --&gt; D1[&quot;词典 + MaxLen 两个经验参数&quot;]
+    D --&gt; D2[&quot;必错于 OA / CA / OOV&quot;]
+    D2 --&gt; D3[&quot;加规则 → 写不完、总有例外&lt;br/&gt;根因：无上下文&quot;]
+    C --&gt; E[&quot;基于分类&lt;br/&gt;位置二分类&quot;]
+    E --&gt; E1[&quot;NB（先验估后验）→ MaxEnt / DNN&quot;]
+    E1 --&gt; E2[&quot;致命伤：pipeline 误差传导、局部最优&quot;]
+    C --&gt; F[&quot;基于序标&lt;br/&gt;BIO 标签序列&quot;]
+    F --&gt; F1[&quot;HMM：转移概率 + 发射概率&quot;]
+    F1 --&gt; F2[&quot;Viterbi：全局最优（3ⁿ → DP）&quot;]
+    F2 --&gt; F3[&quot;MEMM / CRF / 深度+CRF【PPT】&quot;]
+    G[&quot;性能评估（评估者的尺子）&quot;] -.-&gt;|贯穿| D
+    G --&gt; G1[&quot;评测数据：标准答案 + 覆盖 + 质控 + 接口&quot;]
+    G --&gt; G2[&quot;指标：P/R/F1 + Baseline/Ceiling&quot;]
+    H[&quot;学生分享：BASEBALL → RAG&lt;br/&gt;规则→语义解析→检索→检索增强&quot;] -.-&gt;|同一问题，六十年| C</pre>
+<h2>如果只记三件事</h2>
+<ul><li><strong>一条演进主线</strong>：规则（无上下文）→ 分类（引入上下文，但 pipeline 局部最优）→ 序标（BIO + 全局决策）——问题是方法的推手</li><li><strong>两把尺子定成败</strong>：FMM/BMM 的 MaxLen 与词典决定切分质量；评测的&quot;标准答案+覆盖+来源&quot;决定结论是否可信</li><li><strong>一切终归联合决策</strong>：从逐位置二分类到 Viterbi 全局最优，本质是&quot;在多种切分可能里选一个整体最优&quot;，与第 2 讲的&quot;消歧&quot;主线一脉相承</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="outline.md">outline.md</a></footer>
+</div></body></html>

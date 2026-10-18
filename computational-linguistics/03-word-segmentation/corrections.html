@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 差异与存疑</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</a></div>
+<h1>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 差异与存疑</h1>
+<blockquote><p><strong>双源模式</strong>：转写（<code>raw/transcript.md</code>，约 3.4 万汉字课堂逐字稿）+ PPT（<code>raw/slides-1-word-morphology.pptx</code> 165 页，已抽 <code>raw/slides-outline.md</code>）；本讲复用第 2 讲的 02-1 课件后半（P47–P165）。</p><p>依据格式：转写侧（§主题）＋ PPT 侧（页码）。<strong>术语一律以 PPT 为准</strong>。</p></blockquote>
+<h2>一、转写 ↔ PPT 差异</h2>
+<table><tr><th>#</th><th>类型</th><th>转写</th><th>PPT</th><th>裁决</th><th>依据</th></tr><tr><td>1</td><td>术语</td><td>「三点」</td><td><strong>命名实体识别（NER）</strong></td><td>以 PPT 为准</td><td>转写 §承上·未登录词／ PPT P47–P52</td></tr><tr><td>2</td><td>术语</td><td>「临界表」</td><td><strong>邻接表</strong></td><td>以 PPT 为准</td><td>转写 §性能评估·P/R/F1／ PPT P61</td></tr><tr><td>3</td><td>术语</td><td>「几大熵」</td><td><strong>最大熵（MaxEnt）</strong></td><td>以 PPT 为准</td><td>转写 §基于分类／ PPT P72</td></tr><tr><td>4</td><td>术语</td><td>「辅助 / 粉色 / 高斯列叶斯」</td><td><strong>朴素贝叶斯（Naïve Bayes）</strong></td><td>以 PPT 为准</td><td>转写 §基于分类·NB／ PPT P70–P71</td></tr><tr><td>5</td><td>术语</td><td>「最大匹配」</td><td><strong>Forward Maximum Match（FMM）</strong></td><td>以 PPT 为准（补英文全称）</td><td>转写 §基于规则·FMM／ PPT P54–P57</td></tr><tr><td>6</td><td>数字</td><td>MaxLen 经验「平均词长 +1 / +2」</td><td>PPT 归结为「<strong>小规律</strong>」</td><td>以 PPT 为准（转写为口语经验）</td><td>转写 §基于规则·MaxLen／ PPT P58</td></tr><tr><td>7</td><td>例证</td><td>「北京仁和」「赶超女举」「二次元」</td><td>规范示例「敦煌市长孙熙龙」「北京人和足球俱乐部」「赶超女举 58 公斤级世界纪录」</td><td>以 PPT 为准</td><td>转写 §难点叠加／ PPT P52</td></tr><tr><td>8</td><td>术语</td><td>「朴素 FMM」</td><td><strong>Naïve FMM</strong></td><td>以 PPT 为准（补英文）</td><td>转写 §基于规则·FMM／ PPT P54</td></tr><tr><td>9</td><td>概念</td><td>「决策 1 时管不着 2、3、4」</td><td><strong>pipeline 局部最优 / 联合决策</strong></td><td>以 PPT 为准（归一为术语）</td><td>转写 §基于分类·pipeline／ PPT P75</td></tr><tr><td>10</td><td>术语</td><td>「天气考古」（老师口述）</td><td><strong>HMM 隐马尔可夫模型（天气/冰淇淋例）</strong></td><td>以 PPT 为准</td><td>转写 §基于序标·HMM／ PPT P82–P83</td></tr></table>
+<h2>二、ASR 噪声（PPT 裁决，正文已采用 PPT 写法）</h2>
+<ul><li>「NER」：转写作&quot;三点&quot;，PPT 作 <strong>命名实体识别（NER）</strong>（P47–P52）</li><li>「邻接表」：转写作&quot;临界表&quot;，PPT 作 <strong>邻接表</strong>（P61）</li><li>「MaxEnt 极大熵」：转写作&quot;几大熵&quot;，PPT 作 <strong>最大熵</strong>（P72）</li><li>「Naïve Bayes」：转写作&quot;辅助/粉色/高斯列叶斯&quot;，PPT 作 <strong>朴素贝叶斯</strong>（P70–P71）</li><li>「Viterbi」：转写口播与动态规划表述一致，PPT 作 <strong>Viterbi 算法</strong>（P98–P106）</li><li>「三分 / 三分法」：转写指&quot;规则/分类/序标&quot;三路线，PPT 以流程图并列（P53）</li></ul>
+<h2>三、存疑（❓ 未定论，不猜答案）</h2>
+<ul><li>❓ 转写&quot;MT&quot;（老师口播多模态事件抽取的简称）：PPT 未明确该缩写，无法核对</li><li>❓ 转写&quot;3D VAD&quot;（老师提到的专门刊物/会议）：疑为 arXiv / 某会议的音误，PPT 无对应页，请核对原音</li><li>❓ 学生分享中 &quot;BASEBALL&quot; 被念作 &quot;Facebook&quot;，以及若干稠密检索缩写，转写不稳、PPT（第 11 章）未提供，无法核对</li><li>❓ 转写&quot;超敏&quot;疑为「赶超女举」，末句被 ASR 打乱，以 PPT P52 为准</li><li>❓ HMM 之后 MEMM/CRF/深度+CRF 的推导与算例转写未展开（PPT P114–P132），细节存疑</li></ul>
+<h2>四、PPT 有、转写未覆盖（转写讲到&quot;基于序标/HMM&quot;附近即接近下课，PPT 后半未逐页展开）</h2>
+<ul><li>【PPT】P47–P52：汉语切分两大难点（边界歧义 / 未登录词）的规范定义与更多例子——转写只口语举例</li><li>【PPT】P53–P67：基于规则的切分——朴素 FMM、流程图、&quot;语言学很重要&quot;逐步示例、MaxLen、词典、BMM、FMM 处理 OA/OOV、扩展 FMM、规则切分总结</li><li>【PPT】P60–P62：性能评估（P/R/F1 示例与邻接表、Baseline、Ceiling）</li><li>【PPT】P68–P75：基于分类的切分（位置二分类、朴素贝叶斯推演、特征、MaxEnt、特征工程、深度表示、pipeline 问题）</li><li>【PPT】P78–P132：基于序标的切分（BIO 标签集、HMM 五元组与 Viterbi 完整算例、MLE/Baum-Welch、HMM 不足、MEMM/CRF/深度+CRF）</li><li>【PPT】P133–P145：SIGHAN/NLPCC 评测数据与 SOTA、&quot;汉语切分是否必要&quot;（[MengYX2019ACL] P145）、本章总结</li><li>【PPT】P146–P165：子词分割（Subwords）——BPE token learner/parser、unigram LM、WordPiece、词 vs 子词</li><li>【PPT】02-2 P1–P29（第 2 讲遗留，本讲未涉及）：最小编辑距离</li></ul>
+<h2>五、交付说明</h2>
+<ul><li>输入：<code>raw/transcript.md</code>（40,420 字符 / <strong>34,452</strong> 汉字）+ <code>raw/slides-1-word-morphology.pptx</code>（复用第 2 讲 02-1 课件，165 页）+ <code>raw/slides-outline.md</code>（199 行，含 02-1 165 页 + 02-2 29 页）</li><li>差异检查：一表列 10 条转写↔PPT 实质差异（均双侧出处）；另列 ASR 噪声、存疑、【PPT】补强与交付说明；G1 双源就位</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="corrections.md">corrections.md</a></footer>
+</div></body></html>

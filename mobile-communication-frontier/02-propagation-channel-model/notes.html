@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第 2 讲 电波传播与信道建模 · 听课笔记</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a></div>
+<h1>移动通信技术前沿 · 第 2 讲 电波传播与信道建模 · 听课笔记</h1>
+<blockquote><p><strong>本讲一句话</strong>：本讲以&quot;室外传播模型&quot;为主线，把信道建模的方法脉络（经验模型 → 统计模型 → 仿真/数据驱动）走一遍，再扩展到 NTN 非地面网络、A2G 无人机、5G/6G 大规模天线与&quot;AI 赋能信道建模&quot;；贯穿始终的是老师的一句方法论——<strong>难的不是解决问题，而是找到问题</strong>，以及传统模型在 AI 时代仍是&quot;兜底&quot;。</p><p><strong>结构</strong>：开门（为什么 + 方法论）→ 建模总脉络 → 室外概述 → 宏蜂窝模型群 → 微蜂窝/混合 → 慢衰与测量 → 仿真与数字孪生 → NTN → A2G → 5G/6G 天线 → AI 信道建模</p><p><strong>可疑处</strong>：转写术语 ASR 不稳（Sionna、SPM、Rayleigh、RIS 等），见 corrections.md</p><p><strong>备注</strong>：老师开头说明本课&quot;最后是 RIS 部分&quot;，但转写讲到 AI 信道建模即结束，未见专门 RIS 章节（见 corrections.md）</p></blockquote>
+<hr>
+<h3>1. 开场：这门课讲什么，以及&quot;问题比方法更重要&quot;</h3>
+<p><strong>线索</strong>：老师为什么先花大段时间讲光/无线/铜线和&quot;找问题&quot;，而不是直接进公式？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】自我介绍：属杨红老师团队，研究方向偏仿真（近年软件无线电发展、硬件软件化后，仿真往往更准），内容较杂，含计算机视觉与无线的结合</li><li>【师】本讲框架：先复习基本信道模型的概念与方法 → 再讲标准化（3GPP 等）里常见的模型 → 最后介绍新系统，<strong>以 RIS（智能反射面）为主</strong>；鼓励同学结合自己的工作提问、讨论</li><li>【师】横向类比：光通信/无线/算力中心互联——自由空间抗扰性、卫星、水下等场景下光与无线的差异变小；数据中心里铜线的均衡/编码译码与无线&quot;麦网&quot;研究类似；6G 带宽的价值未必在给普通用户升级手机，而可能在<strong>算力中心短距、高速、可灵活配置、干扰可控</strong>的场景，需求来自 AI/机器间通信</li><li>【师】方法论：读博与工作中<strong>最难的是&quot;找到问题&quot;而非&quot;解决问题&quot;</strong>；过去在文献里找创新（换方法、换参数）在 AI 辅助下变得容易，因而贡献也变小——关键是提出自己的问题</li><li>【师】为什么不能把传统模型全扔：数据驱动在垂直领域数据不全，数据一旦出错，模型可能还不如传统模型（拿大语言模型答垂直领域问题举例）——传统模型是<strong>兜底技术</strong></li></ul>
+<p><strong>一句话总结</strong>：先立&quot;问题比方法重要&quot;的标尺，再从&quot;光/无线/铜线融合、算力中心新需求&quot;说明信道模型的现实落点，并强调传统模型在 AI 时代仍是兜底。</p>
+<hr>
+<h3>2. 建模总脉络：经验模型 → 统计模型 → 仿真/数据驱动</h3>
+<p><strong>线索</strong>：三个阶段各自&quot;给的是什么&quot;、为什么要往下一步走？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】<strong>经验模型（第一阶段）</strong>：相对简单，是一些<strong>含距离/频率/环境/天线高度等参数的公式</strong>（如路损指数 n），相当于无线工程里快速估算小区半径/链路预算的工具——<strong>不准但快</strong></li><li>【师】<strong>统计模型（第二阶段）</strong>：经验公式给的是<strong>均值或大致范围</strong>，不能反映分布；算力不再是瓶颈后，就追求更准——给环境相关的量一个<strong>分布</strong>（均值+方差）</li><li>【师】<strong>仿真/数据驱动（第三阶段）</strong>：基于实测环境（建筑、室内布局）做<strong>一对一</strong>的传播建模（如射线追踪），或基于大数据做数据驱动；老师说统计与仿真其实可算一个阶段，因统计的依据也是大样本数据，只是如今数据驱动做得更多</li><li>【师】为什么要走到第三阶段：不只做通信，还要做<strong>感知/3D/雷达</strong>时，环境的因素必须精确建模，再用统计模型就不对了；算力足够、需求也要求时必须这么做</li><li>【师】但前三阶段并非作废——<strong>精度与效率是核心平衡</strong>：只估算覆盖/信号强度时，经验公式就够，不需要射线追踪</li></ul>
+<p><strong>一句话总结</strong>：经验给均值和速度、统计给分布、仿真/数据驱动给与环境一一对应的精度；三者是&quot;精度 vs 效率&quot;的连续谱，而非简单替代。</p>
+<hr>
+<h3>3. 室外传播概述：距离-强度、断点、衰减指数与&quot;例外&quot;</h3>
+<p><strong>线索</strong>：为什么&quot;随距离增大信号一定减弱&quot;这句话也要打问号？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】室外传播关心的曲线：横轴距离、纵轴信号强度，<strong>最关心它的斜率</strong>（P4–P5）；变化快慢取决于地形地物、障碍物、频段、天气等</li><li>【师】一般规律是<strong>接收强度随距离增大而减小</strong>，但<strong>有例外</strong>：① 特殊建筑布局下近处拐弯、远处反射形成干涉强区；② 海面上的<strong>远端干扰/波导</strong>——大气波导、水汽折射率变化把信号反射下来，远处反而增强；所以&quot;具体问题具体分析&quot;，有视距时基本符合规律</li><li>【师】&quot;自由空间衰减速率最小&quot;这句也要打括号：某些汇聚效应下损耗可能更小</li><li>【师/PPT】断点与衰减指数：P6 给出城区断点约 <strong>d=1000m</strong>、郊区约 <strong>d=100m</strong>（与频率相关）；城区建筑虽多，但信号&quot;夹在楼间&quot;扩散不充分，无遮挡时强度峰值反而更高；郊区扩散快</li><li>【师】视野：PTX/TX/RX、天线高度、环境等都要进公式，这就是后面经验模型的输入</li></ul>
+<p><strong>一句话总结</strong>：距离-强度曲线看斜率；&quot;越远越弱&quot;是主规律但有波导/干涉等例外；断点位置（城区 1km、郊区 100m）反映城区&quot;汇聚&quot;与郊区&quot;扩散&quot;的差别。</p>
+<hr>
+<h3>4. 宏蜂窝经验模型群一览与 SPM 剖面法</h3>
+<p><strong>线索</strong>：这么多模型（Longley-Rice、Okumura、Hata…）彼此是什么关系？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】老师快速浏览宏蜂窝模型群（P9–P58）：Longley-Rice（不规则地形 ITM）、Durkin（不规则地形场强、菲涅尔区）、Okumura（基于日本大量实测、城区最广用）、Hata/Okumura-Hata（1km 以上宏蜂窝经验公式）、COST-231 Hata（密集城区扩展）、Walfisch-Bertoni 及 COST 231-WI（街道多屏绕射）、LEE、Egli、Carey、Bertoni-Xia、TIREM 等</li><li>【师/PPT】基于仿真的代表作 <strong>SPM</strong>：跨区域大，要考虑对流层绕射/散射、地面双径（直射+地面反射）、山等障碍物；方法是<strong>先做传播路径的地球剖面，再逐层往前算</strong></li><li>【师】这种剖面法的误差来源：绕射不仅与收发连线上的障碍物剖面有关，还与剖面两侧较近的障碍物有关；要消除除非用射线追踪，但在超大尺度上不现实——<strong>算力不够时都是问题，如今可用实测数据+二维神经网络提特征来补</strong></li><li>【师/PPT】Okumura 的&quot;峡谷效应/信道化&quot;（P19 起）：规则街道像波导，某些方向（东西向/南北向街道）信号特别强。这是<strong>基站选址</strong>的现实依据</li><li>【师/PPT】模型里的修正因子要靠环境校准：天线有效高度（海平面高度减周围平均地形起伏）、水面/陆地布局、频率修正曲线等；Hata 类模型给的是<strong>中值</strong>，也有粗统计（P%）——老师说这种统计&quot;大样本对、单次难说&quot;</li></ul>
+<p><strong>一句话总结</strong>：宏蜂窝模型群都是&quot;实测+拟合&quot;的经验/半经验公式，SPM 关注地球剖面；它们的共性是给了面向中值的快速估算，修正参数必须按环境校准，精度换效率。</p>
+<hr>
+<h3>5. 微蜂窝、双线/多线模型与混合室内-室外（曼哈顿）</h3>
+<p><strong>线索</strong>：微蜂窝为什么&quot;能算强弱却不适合多天线/宽带&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】微蜂窝模型（P60–P82）：双线模型（视距+地面反射，P61）、多线模型（四线/六线，P63）、经验模型、准三维 UTD、LEE 微蜂窝、宽带 PCS 微蜂窝（Feuerstein，1900MHz）</li><li>【师】多径叠加能算强弱，但<strong>不太适合多天线/宽带系统</strong>：宽带信号频分后&quot;就平了&quot;，相干干涉不明显；且传统多径测量常是单向性（无角度信息）——如今价值不高</li><li>【师/PPT】混合室内-室外<strong>曼哈顿模型</strong>（P84–P88）：建模<strong>街道布局</strong>与站址对覆盖的影响；假定用户经同一通道出入建筑，室内外损耗可线性叠加（无快衰）</li><li>【师】室内覆盖的现实痛点：业务量大 + 环境复杂 + 成本高，三碰头；一个出路就是后面要讲的 <strong>RIS</strong></li></ul>
+<p><strong>一句话总结</strong>：微蜂窝/双线模型擅长窄带强弱估算、缺角度与宽带能力；曼哈顿模型把&quot;街道布局+室内外穿透&quot;纳入，室内覆盖的痛点在量、环境与成本。</p>
+<hr>
+<h3>6. 慢衰相关性、服务区/移动模型与室外测量</h3>
+<p><strong>线索</strong>：为什么&quot;每个手机独立生成一套阴影衰落&quot;是错的？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】阴影衰落最早按<strong>对数正态随机数</strong>生成（标准差约 8dB），但<strong>没考虑相邻点相关性</strong>（P102–P106 的 Markov/时间相关与空间相关）；更关键的问题：同一环境里两台手机路径相近时衰落应相关，而&quot;每台各生成一套&quot;是不对的——<strong>应按地图生成</strong></li><li>【师】即便按地图做了站级一致性，仍&quot;不真实&quot;——人造环境很难是高斯分布（有建筑规律），把整座城市合起来才可能近似高斯；<strong>最终极是拿真实地图来生成</strong></li><li>【师/PPT】服务区模型（pico/Manhattan/车辆，P108–P115，含 wrap-around）、移动模型（P116–P124，初始/运动中/目的地特性）</li><li>【师/PPT】室外测量（P90–P99）：要在<strong>三个层面</strong>测——沿距离的路径损耗趋势（大尺度）、给定距离弧上的阴影衰落（中尺度）、几个波长内的小尺度多径；现在有了位置/地形信息，也可直接画网格测</li></ul>
+<p><strong>一句话总结</strong>：阴影衰落必须建模相邻点的时空相关性、并按地图生成；测量要同时覆盖大/中/小三个尺度，这是统计模型&quot;像不像真的&quot;的关键。</p>
+<hr>
+<h3>7. 仿真与数字孪生：射线追踪、FDTD 与&quot;不闭环的仿真&quot;</h3>
+<p><strong>线索</strong>：为什么说&quot;只要不跟真实网络连在一起，你的仿真就是假的&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】确定性方法：射线追踪（镜像法）/射线发射（SBR）/FDTD，以及室内确定性建模（P203–P226）；老师说这些电磁方法<strong>更准但更适合天线/近场</strong>，其他场景&quot;太复杂&quot;</li><li>【师/PPT】<strong>NVIDIA Sionna</strong>（转写作&quot;英伟达的 RT+C+physical+S&quot;❓，P 未收）：开源，含信道/物理层/链级，被综述论文用来做<strong>数字孪生（DT）</strong>——把城市建筑建模后用 RT 生成信道数据，再做物理层与系统性能验证</li><li>【师】DT 的用处：一是<strong>生成数据</strong>训练 AI/智能体（真实数据采不到时用仿真补），二是评估新技术（6G 评估）；但仿真数据<strong>泛化性不够</strong>，换真实环境仍可能要迁移学习/小样本学习</li><li>【师】&quot;仿真不准/不闭环&quot;：V2V、无人机蜂群的<strong>移动轨迹↔信道↔资源分配</strong>本应闭环互相影响，但常用随机轨迹或实测 trace，<strong>环路是断的</strong>（trace 是&quot;死&quot;的），因此现在的纯计算机仿真&quot;就是个假的&quot;</li><li>【师】真正有意义的仿真要<strong>与真实物理世界持续交互</strong>（DT），但带来安全、数据流量与算力代价；老师认为只有当 AI 智能体真正部署到基站/终端/车/无人机里时，才接近&quot;真正的智能化&quot;</li></ul>
+<p><strong>一句话总结</strong>：确定性仿真（射线追踪/FDTD）精度高但代价大；数字孪生既能生成数据又能评估，但若轨迹与信道不闭环、不与真实网络交互，仿真本质上仍是&quot;假的&quot;。</p>
+<hr>
+<h3>8. NTN 非地面网络：空天地海与传播要素</h3>
+<p><strong>线索</strong>：为什么视线概率表&quot;跟环境有关、城区和郊区应不一样&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】6G 八个字<strong>&quot;空天地海 + 通感算智&quot;</strong>（P305–P306）：NTN 是所有飞行物体网络的总称，含卫星（LEO/MEO/GEO，如 Starlink/Kuiper/OneWeb）、HAPS 高空平台、空对地；轨道越低星座密度越高；场景为偏远/海上/应急/民航</li><li>【师/PPT】<strong>视距概率（LOS probability）</strong>（P307）：取决于 UE 环境与仰角，标准化给表让仿真对齐，但<strong>表与环境相关</strong>——北京城区与郊区应不同，越开阔/房子越矮，视距概率越高</li><li>【师/PPT】<strong>基本路损</strong>（P308–P310）：PL = 自由空间 + 杂波损耗 + 阴影衰落；几何上要考虑地球曲率、仰角（仰角越高遮挡越少）</li><li>【师/PPT】<strong>O2I 穿透损耗</strong>（P311–P313）：与建筑热效率（金属化玻璃/空心墙/钢筋混凝土屏蔽强）、建筑类型、室内位置、移动性有关，由两个对数正态分布组合；正着进墙少损耗小、斜着进墙多损耗大</li><li>【师/PPT】<strong>大气损耗</strong>（P314–P315）：主要取决于频率、仰角、海拔与水汽密度，查表（水汽/干燥空气/氮氧），即&quot;无线电窗口&quot;；<strong>对 10GHz 以上明显，以下基本透明</strong></li><li>【师】<strong>辩证看频点</strong>（P316–P321 闪烁）：某些频点吸收特别强，通常通信会绕开；但需要<strong>减少干扰</strong>（算力中心）或做<strong>感知</strong>（对氧气/氮气敏感的频点）时反而要用它——&quot;哲学就是不能只看一个点&quot;</li><li>【师/PPT】<strong>闪烁损耗</strong>：电离层（只考虑 6GHz 以下，与位置/时间/季节/太阳活动有关，靠电离层反射可远距离雷达/远洋通信）与对流层（6GHz 以上，随频率与仰角增加）</li></ul>
+<p><strong>一句话总结</strong>：NTN 覆盖&quot;空天地海&quot;，传播要算视距概率、基本路损、O2I 穿透、大气损耗与电离层/对流层闪烁；视距概率表与环境相关，频点选择要辩证（吸收强未必是坏事）。</p>
+<hr>
+<h3>9. A2G 与无人机信道：低空是最恶劣的场景</h3>
+<p><strong>线索</strong>：为什么说&quot;低空城市&quot;的环境最复杂？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】A2G 信道（P322–P328）：要素有直射/反射/绕射/散射与地面反射；忽略 UAV 自身及附近散射体（机身、螺旋桨、马达有影响）；相比地面场景 <strong>LOS 更常见、绕射更少、阴影更弱</strong></li><li>【师】但<strong>低空城市最恶劣</strong>：起降时遮挡概率大，信号时强时弱、干扰也时强时弱，再叠加飞控/导航定位——反射会导致定位&quot;飘&quot;（直射径与反射径测距/测角有偏差）</li><li>【师】<strong>视距 vs 非视距是一个平衡</strong>：视距时信号强、定位准（但干扰也强、信道秩低/流数少）；非视距时信号弱、定位不准，但<strong>空间自由度高</strong>——可用空间多流/分级、用<strong>位置指纹</strong>（缺点是没飞过就无指纹、环境一变指纹失效），再不行就上 <strong>RIS</strong></li><li>【师】参考信号按<strong>空域高度</strong>分配：高度以上基本视距、参考信号没用，可用窄带（约 10MHz）；低空需要更多空域维度、用更宽（约 20MHz）</li><li>【师】UAV 特性：悬停时可能平稳（一直好或一直差，深衰落无法交织），飞行时统计分布随环境变；可用<strong>调整自身轨迹</strong>或<strong>可移动天线</strong>（老师说雷达本来就是早期可移动天线，如今指微小距离调整）改善</li><li>【师/PPT】频段与业务：毫米波支持大带宽、适合高多普勒但用于<strong>payload</strong> 而非控制（飞控要稳定可靠、带宽不大）；低频 2.4/5.8GHz 对机动不敏感；低空组网多用现有基站旁瓣/副本打天上，或用低频窄带广覆盖高塔做飞控+毫米波定向做图传/数传</li><li>【师/PPT】AG 散射/测量（P325–P328）：除 LOS 外最强多径多来自地面（起降落到楼顶反射强），水面反射各径强度与 TOA 相近但船只带来强反射；通常单发单收、一方固定、速度不能太快；<strong>两径模型</strong>较适用（LOS 时路损指数 2、起伏约 3dB）</li><li>【师】定位：真正的高精度定位靠<strong>视觉</strong>（可见光波长微米级，角度/距离分辨率高，但受天气影响）；无线定位（GNSS/RSS/TOA）通用性强、无隐私问题但误差大——低空可<strong>多模态</strong>融合视觉</li><li>【师/PPT】<strong>非射频感知辅助</strong>（P329–P330，3GPP SA1 文稿 S1-220094）与<strong>反无人机</strong>：发现用光电/红外/无线各有局限（非法改装可换特殊频段、碳纤维机体电磁特征弱），需在屏幕上&quot;找峰&quot;判断；摄像头可做<strong>遮挡预测/波束预测/切换/速率适配</strong>，代价是特征提取与推理，边缘算力目前不是问题，难在<strong>标准化</strong>（可能只能做私有/专有方案）</li></ul>
+<p><strong>一句话总结</strong>：A2G 关键词是&quot;低空最恶劣&quot;与&quot;视距/非视距的平衡&quot;；由此引申出参考信号按高度分配、可移动天线、定位用视觉、多模态感知辅助通信与反无人机——最终都落到&quot;怎么把多模态信息用起来&quot;。</p>
+<hr>
+<h3>10. 5G/6G 天线信道建模：XL-MIMO、近场、RIS 与通感一致性</h3>
+<p><strong>线索</strong>：天线阵列变大、频率变高后，传统统计模型为什么不够用？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】规模变化（P341–P343）：从 massive MIMO 到 <strong>XL-MIMO/extremely large</strong>，阵列越来越大、频率越来越高（毫米波/太赫兹），并引入<strong>智能反射面</strong>来&quot;调节环境&quot;；传统统计模型不再合适（3GPP 38.901 之后逐渐引入散射体的<strong>几何分布</strong>）</li><li>【师/PPT】<strong>近场/远场</strong>（P332–P339）：远场看成平面波（考虑扫描）、近场看成球面波（考虑聚焦），以<strong>瑞利距离</strong>（与孔径平方、频率之积有关）划分；XL-MIMO 下电磁波不能只看成一条射线，要有&quot;形状&quot;与汇聚效应，需精细建模</li><li>【师】<strong>空间相关性</strong>要严格建模（离得近相关性高、远的相关性低，随轨迹渐变而非跳变）；室外较集中、室外到深层室内相关性差（障碍物多、随机性大）</li><li>【师】<strong>非平稳性</strong>：间隔多个波长以上的阵元多径统计特性可能不同，&quot;左右两端不一样&quot;，需<strong>对各个天线单元分开建模</strong>；<strong>GSCM 增强</strong>要求散射体按车辆/建筑形状（而非随机点/随机簇）建模，才能反映定位/感知</li><li>【师】<strong>通感一体化一致性（consistency）</strong>：同一散射体从不同角度散射的信号有规律、非随机；6G 信道建模不能只用统计分布，要用射线追踪之类生成<strong>与位置有关</strong>的信道参数</li><li>【师】RIS 的动机：毫米波/太赫兹易被遮挡、覆盖弱，引入 RIS 后要把<strong>角度相关的响应</strong>建进模型</li></ul>
+<p><strong>一句话总结</strong>：阵列变大、频率变高后，信道要按&quot;近场球面波、空间相关、非平稳、几何随机、通感一致&quot;来精细建模；本质是让空间颗粒度更细、参数按场景提前给定而非随机。</p>
+<hr>
+<h3>11. AI 赋能信道建模：从 WEI 到&quot;四步走&quot;</h3>
+<p><strong>线索</strong>：AI 信道模型和传统 CSI 是什么关系？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师/PPT】以张建华老师团队的 <strong>WEI（Wireless Environmental Information，无线环境信息）+ AI 空口</strong>为例（P344–P362）：把信道建模与后续的资源管理/决策联系起来</li><li>【师】AI 的动机：当问题是<strong>非线性、多维度优化</strong>时传统迭代太慢（算完信道已变），AI 推理快——但代价是需要大量数据训练</li><li>【师/PPT】<strong>四步</strong>：环境感知（GPS/深度图像/RGB/点云 → 预处理）→ 环境特征（降维、区分散射体中心位置与轮廓）→ 环境语义（面向任务组合特征）→ 环境知识（环境信息与电磁传播的定量关系）；目标是<strong>把黑盒变成知识库</strong>、提升泛化与可解释</li><li>【师/PPT】特点（P346）：<strong>场景自适应</strong>（室内外/城区郊区无需重训，只调与环境相关的参数）、<strong>实时推理</strong>（比射线追踪快，10ms 以内？）、<strong>预测式/先发制人（proactive）</strong></li><li>【师】WEI 与传统 CSI 并行：<strong>传统 CSI 不放弃</strong>，AI 只是增强——相当于&quot;一边用 AI，一边用实测测量与校验&quot;</li><li>【师】老师自己的<strong>图像信道</strong>工作（与张建华老师略有不同）：把地图/建筑输入训练好的模型，给定基站位置，对每个格点（不同高度）快速给出路径损耗；不算很准（平均差约 3–4dB），<strong>但计算量差 2–3 个数量级</strong>，适合快速估算/调位置</li><li>【师】<strong>场景适应性最难</strong>：即便位置不变，环境（人/物）天天在变，固定场景训出来会过拟合；需要真正的&quot;环境理解&quot;（上下文关联）+ 准确的物理因素建模</li><li>【师】泛化与深度的关系：AI 模型换基站即用需要大训练量、高复杂度（类比人脑长年积累），是否值得取决于任务复杂度与成本（功耗/算力）</li></ul>
+<p><strong>一句话总结</strong>：AI 信道建模用&quot;环境感知→特征→语义→知识&quot;把黑盒变知识库，实现场景自适应与实时推理；传统 CSI 仍作兜底，&quot;图像信道&quot;用少量精度换 2–3 个数量级的算力，最难的仍是环境天天在变下的泛化。</p>
+<hr>
+<h2>全篇 takeaway（5 条）</h2>
+<ol><li><strong>一条建模脉络</strong>：经验模型（快、给均值）→ 统计模型（给分布）→ 仿真/数据驱动（与环境一一对应）；贯穿其中的是&quot;精度 vs 效率&quot;的平衡。</li><li><strong>&quot;找问题&quot;比&quot;解决问题&quot;重要</strong>：从光/无线/铜线融合、算力中心新需求，到低空最恶劣场景，老师反复强调提出问题的价值。</li><li><strong>例外与辩证</strong>：越远越弱有波导/干涉例外；吸收强的频点做感知/抗干扰时反而是好事——不要只看一个点。</li><li><strong>传统模型是兜底</strong>：数据驱动在垂直领域数据不全、易出错，传统模型与 CSI 不能丢；AI 是增强而非替代。</li><li><strong>6G 信道更&quot;真&quot;</strong>：XL-MIMO/近场/RIS/通感一致性要求散射体按形状、参数按位置给定，而非随机统计——这也正是射线追踪与数字孪生的用武之地。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="notes.md">notes.md</a></footer>
+</div></body></html>

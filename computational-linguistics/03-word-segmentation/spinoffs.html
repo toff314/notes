@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</a></div>
+<h1>计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>从本讲提炼 <strong>6</strong> 条可独立成文的点。锚点 = PPT 页码（双源），下游仍须<strong>独立核实</strong>；转写含 ASR 噪声，凡引讲座原话处均标 <code>❓ 待核</code>。</p><p><strong>发布回流</strong>：文章写完后<strong>两处</strong>都要更新——① 本索引表的「状态 / 链接」列；② 该条候选末尾的 <code><strong>发布</strong></code> 行。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送给</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>汉语分词的两大拦路虎：交集歧义与组合歧义</td><td>write-zhihu-tech <code>观点：</code></td><td>S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>2</td><td>从 FMM 到 Viterbi：汉语分词方法的演进</td><td>write-zhihu-tech <code>观点：</code></td><td>S2+S4</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>3</td><td>用&quot;天气考古&quot;讲透 HMM 与 Viterbi</td><td>write-tech-tutorial Mode A</td><td>S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>4</td><td>中文分词工具怎么选：从 FMM 到 CRF 到 BERT</td><td>write-tech-tutorial Mode A</td><td>S3+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>5</td><td>大模型时代还需要中文分词吗？</td><td>write-zhihu-tech <code>观点：</code></td><td>S4+S6</td><td>P2</td><td>短评~标准</td><td>⬜ 未发布</td><td>—</td></tr><tr><td>6</td><td>问答六十年：从 BASEBALL 到 RAG</td><td>write-zhihu-tech <code>观点：</code></td><td>S2+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>—</td></tr></table>
+<hr>
+<h3>1. 汉语分词的两大拦路虎：交集歧义与组合歧义</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：汉语分词为什么难——交集歧义与组合歧义</code></li><li><strong>讲座锚点</strong>：PPT P47–P52（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §难点叠加（&quot;敦煌市长孙熙龙说&quot;&quot;赶超女举&quot;❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S4 + S5</strong> —— &quot;能穿多少穿多少&quot;&quot;北京人和足球俱乐部&quot;都是反直觉的日常例子（S4 反差），又直接落到分词器/检索的工程痛点（S5）；PPT 给了 OA/CA 的规范定义与更多例子。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把散点例子整理成<strong>可判别的分类框架</strong>（OA 切 XJ/Y、CA 把 XY 当一个词），并补真实 vs 伪歧义；给出&quot;FMM/BMM 能自动侦测哪些、不能侦测哪些&quot;的结论（P64）。</li><li>② 对读者：<strong>信息增益 + 可操作性</strong>——读者能拿这套判据审视自己遇到的切分错误，理解输入法候选为什么时对时错。</li><li><strong>素材种子</strong>：定义（OA/CA/混合）、例子（的确、一起、个人网站）、应用（分词评测）</li><li><strong>缺口（下游必须自己搜）</strong>：OA/CA 在真实语料中的占比统计与出处</li><li><strong>体量建议</strong>：标准长文（3000–5000 字）</li><li><strong>待核</strong>：❓ 转写例子多为口播，以 PPT P52 为准，仍需回一手文献</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>2. 从 FMM 到 Viterbi：汉语分词方法的演进</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：从基于规则到基于序标——汉语分词的六十年方法演进</code></li><li><strong>讲座锚点</strong>：PPT P53–P132（三路线全流程）／转写 §方法史总览、§基于规则、§基于分类、§基于序标</li><li><strong>为什么</strong>：命中 <strong>S2 + S4</strong> —— 有清晰的&quot;问题驱动方法&quot;叙事主线（无上下文→局部最优→全局最优），且观点反差强（&quot;规则早已过时&quot;其实不成立，FMM+BMM 至今可用于发现歧义，P66）。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把讲座分散的四个小节串成<strong>一条因果链</strong>，每跃迁都指出&quot;前一方法暴露了什么新问题&quot;。</li><li>② 对读者：<strong>认知增益</strong>——理解方法史不是替代关系而是&quot;补丁—新问题&quot;的螺旋，与第 1 讲的&quot;审美循环&quot;呼应。</li><li><strong>素材种子</strong>：FMM/BMM、位置二分类/NB/MaxEnt、BIO/HMM/Viterbi、CRF/BERT-CRF</li><li><strong>缺口（下游必须自己搜）</strong>：各阶段代表工具与 SOTA（SIGHAN/BERT-CRF）的真实评测数据</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 转写对 MaxEnt/CRF 段较略，以 PPT P72/P120–P128 为准</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>3. 用&quot;天气考古&quot;讲透 HMM 与 Viterbi</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A —— 默认深度教程）</li><li><strong>主题串（可直接复制）</strong>：<code>用&quot;天气考古&quot;讲透隐马尔可夫模型与 Viterbi 算法（以中文分词为例）</code></li><li><strong>讲座锚点</strong>：PPT P80–P106（HMM 五元组、天气/冰淇淋例、状态转移与发射概率、3ⁿ→动态规划、Viterbi 算例）／转写 §基于序标·HMM</li><li><strong>为什么</strong>：命中 <strong>S3 + S6</strong> —— 有完整技术纵深（是什么→怎么算→为什么用 DP），且&quot;天气考古&quot;是个好直觉入口；PPT 直接给了 Viterbi 的完整算例（P98–P106），是现成锚点。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把 PPT 的表格算例补成<strong>逐时刻递推 + 反向回溯的完整演示</strong>，并给出可运行的 Python 实现。</li><li>② 对读者：<strong>可操作性</strong>——读者能自己写一个 HMM 分词器，理解&quot;局部最优 vs 全局最优&quot;的差别（P94–P97 盒中取粉笔例）。</li><li><strong>素材种子</strong>：原理（HMM 五元组、MLE/Baum-Welch）、算法（Viterbi DP）、应用（分词/词性标注/语音）</li><li><strong>缺口（下游必须自己搜）</strong>：Baum-Welch（EM）的推导与收敛性</li><li><strong>体量建议</strong>：标准长文 ~ 专栏级</li><li><strong>待核</strong>：❓ 转写对 Viterbi 算例未逐步展开，以 PPT P98–P106 为准</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>4. 中文分词工具怎么选：从 FMM 到 CRF 到 BERT</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A —— 默认深度教程）</li><li><strong>主题串（可直接复制）</strong>：<code>中文分词工具怎么选：从 FMM、jieba 到 CRF、BERT 的实测对比</code></li><li><strong>讲座锚点</strong>：PPT P133–P145（SIGHAN/NLPCC 评测、SOTA、切分是否必要）／PPT P54–P132（方法原理）</li><li><strong>为什么</strong>：命中 <strong>S3 + S5</strong> —— 有技术纵深（原理 → 工具 → 选型）又极具现实落点（&quot;我该用哪个分词库&quot;，S5）；评测章节（P133–P145）提供了比较框架的入口。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把讲座的原理落到<strong>具体工具</strong>（jieba / HanLP / LTP / pkuseg）的实测对比与适用场景。</li><li>② 对读者：<strong>可操作性</strong>——给出选型决策表（任务、领域、速度、精度权衡），读者可直接照着选。</li><li><strong>素材种子</strong>：工具（jieba/HanLP/LTP/pkuseg）、评测（SIGHAN、微博域）、SOTA（BERT-CRF、字/子词建模）</li><li><strong>缺口（下游必须自己搜）</strong>：各工具的实测数据与最新版本；领域适配（医疗/法律/社交）表现</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 讲座未做工具实测，需独立跑 benchmark</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>5. 大模型时代还需要中文分词吗？</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：大模型时代还需要中文分词吗——&quot;切分是否必要&quot;的争论</code></li><li><strong>讲座锚点</strong>：PPT P145（[MengYX2019ACL] 认为直接基于字的模型在某些任务上优于切分后模型）／PPT P138–P143（深度把切分从特征工程转为自动表示）／转写 §第 2 章开场（&quot;你用大模型很容易&quot;❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S4 + S6</strong> —— 有争议反差（&quot;分词无用论&quot; vs &quot;分词仍然必要&quot;），且 [MengYX2019ACL] 与 SOTA 结果可查（S6）。讲座只在一页给结论，<strong>讲而未透（S1）</strong>。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把一行结论展开为<strong>正反两方证据</strong>（切分 vs 字/子词建模的评测数据，SIGHAN/微博 P136/P143）。</li><li>② 对读者：<strong>认知增益</strong>——纠正&quot;分词过时&quot;与&quot;分词必需&quot;两种简单化判断，理解结论取决于任务、数据与表示。</li><li><strong>素材种子</strong>：论文（Meng et al. 2019 ACL）、数据（SIGHAN 各届）、争议（字 vs 词 vs 子词）</li><li><strong>缺口（下游必须自己搜）</strong>：MengYX2019 原文与适用范围；LLM 分词器对中文的处理现状</li><li><strong>体量建议</strong>：短评 ~ 标准长文</li><li><strong>待核</strong>：❓ 讲座未展开此节，锚点来自 PPT 页</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>6. 问答六十年：从 BASEBALL 到 RAG</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode B —— 主题串加前缀 <code>观点：</code>）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：同一个问题问了六十年——从 BASEBALL 到 RAG 的问答史</code></li><li><strong>讲座锚点</strong>：PPT 第 11 章（学生分享，PPT 未提供）／转写 §学生分享（BASEBALL、向量空间模型、IDF、BM25、双塔/交叉编码器、FAISS、RAG❓ 待核）</li><li><strong>为什么</strong>：命中 <strong>S2 + S5</strong> —— 有强叙事主线（1961→今天，同一问题换了五代方案）与鲜明反差（几十年前的棒球问答系统与今天的 RAG 撞题，S4 倾向），且 RAG 是当下热点（S5）。</li><li><strong>增益</strong>：</li><li>① 相对本讲：把同学的分享补成<strong>一条可核查的时间线</strong>（BASEBALL 1961 / 向量空间模型 1971 / BM25 1995 / Watson 2011 / FAISS 2017 / RAG 2020），每个节点给一手出处。</li><li>② 对读者：<strong>认知增益</strong>——理解&quot;检索增强&quot;不是新问题而是老问题的当代解法，以及&quot;表达能力 vs 可信可控&quot;的永恒权衡。</li><li><strong>素材种子</strong>：BASEBALL、向量空间模型、IDF、BM25、IBM Watson、稠密检索、FAISS、RAG</li><li><strong>缺口（下游必须自己搜）</strong>：各节点年份与论文的准确出处（同学口播不稳，须独立核实）</li><li><strong>体量建议</strong>：标准长文</li><li><strong>待核</strong>：❓ 第 11 章 PPT 未提供，全部锚点来自转写口播，须逐条核实</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

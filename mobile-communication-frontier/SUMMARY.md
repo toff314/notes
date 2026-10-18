@@ -9,3 +9,4 @@
 | # | 课 | 笔记 | 大纲 | 自测 | 勘误 | 衍生选题 |
 |---|---|---|---|---|---|---|
 | 01 | 课程介绍 + 智能空口技术 | ✅ [notes](01-course-intro-smart-air-interface/notes.html) | ✅ [outline](01-course-intro-smart-air-interface/outline.html) | ✅ [questions](01-course-intro-smart-air-interface/questions.html) | ✅ [corrections](01-course-intro-smart-air-interface/corrections.html) | ✅ [spinoffs](01-course-intro-smart-air-interface/spinoffs.html) |
+| 02 | 电波传播与信道建模 | ✅ [notes](02-propagation-channel-model/notes.html) | ✅ [outline](02-propagation-channel-model/outline.html) | ✅ [questions](02-propagation-channel-model/questions.html) | ✅ [corrections](02-propagation-channel-model/corrections.html) | ✅ [spinoffs](02-propagation-channel-model/spinoffs.html) |

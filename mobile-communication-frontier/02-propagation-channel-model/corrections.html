@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 差异与存疑</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../index.html">笔记架首页</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a></div>
+<h1>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 差异与存疑</h1>
+<blockquote><p>转写为 ASR 产物（<code>raw/transcript.md</code>，约 5.6 万字符），口语噪声与同音错较多。术语以 PPT 为准；内容以转写为准。</p><p>每条 ⚠️ 均带两侧出处；❓ 只标存疑，不猜答案。</p></blockquote>
+<h2>一、转写 ↔ PPT 差异</h2>
+<table><tr><th>#</th><th>类型</th><th>转写</th><th>PPT</th><th>裁决</th><th>依据</th></tr><tr><td>1</td><td>事实（讲者信息）</td><td>「我是杨红老师团队的老师」</td><td>第 1 页作者栏「mm，张欣」</td><td><strong>已澄清（作者确认）</strong>：第 2 讲由<strong>张欣</strong>讲授，其属杨红老师团队</td><td>转写 §1 ／ PPT P1</td></tr><tr><td>2</td><td>术语（章节归属）</td><td>全篇讲&quot;室外传播模型&quot;</td><td>第 1 页「第 4 章 室外传播模型」，第 2 页 4.1–4.5 目录</td><td>一致；本讲以第 4 章为骨架，另含补充/第 5 章/NTN/MIMO 等</td><td>转写 §1 ／ PPT P1–P2</td></tr><tr><td>3</td><td>术语</td><td>「英伟达的 RT+C+physical+S」</td><td>未找到对应页（疑为 NVIDIA Sionna 简介）</td><td><strong>存疑待核</strong>：结合&quot;开源/信道/物理层/链级/数字孪生&quot;判为 NVIDIA Sionna</td><td>转写&quot;仿真/数字孪生&quot;节 ／ PPT 无直接对应</td></tr><tr><td>4</td><td>术语</td><td>「叉 L MIMO / 一个 L MIMO」</td><td>第 343 页「XL-MIMO：非平稳性和球面波前」</td><td>以 PPT 为准，还原为 <strong>XL-MIMO</strong></td><td>转写 §10 ／ PPT P343</td></tr><tr><td>5</td><td>术语</td><td>「瑞丽距离」</td><td>第 333–334 页「Rayleigh distance」</td><td>以 PPT 为准，统一为「瑞利距离」</td><td>转写 §10 ／ PPT P333</td></tr><tr><td>6</td><td>术语</td><td>「SU MIMO / massive MIMO」</td><td>第 342 页「天线规模更大，massive → extreme large」</td><td>依上下文还原为 massive → XL-MIMO</td><td>转写 §10 ／ PPT P342</td></tr><tr><td>7</td><td>术语</td><td>「SPM」（跨区域大、对流层绕射、地球剖面）</td><td>第 41–46 页 COST 231-WI / Walfisch-Bertoni</td><td>转写&quot;SPM&quot;疑为标准剖面模型通称，全称待核</td><td>转写 §4 ／ PPT P41–P46</td></tr><tr><td>8</td><td>术语</td><td>「张建华老师团队」「WEI」</td><td>第 344 页「Jianhua Zhang ... 6G AI-Enabled Air Interface」</td><td>一致（WEI = Wireless Environmental Information）</td><td>转写 §11 ／ PPT P344</td></tr><tr><td>9</td><td>事实（内容）</td><td>转写称&quot;最后是 RIS 部分&quot;</td><td>全篇未见专门 RIS 章节（RIS 散见于近场/覆盖处）</td><td><strong>不冲突但未落实</strong>：转写结尾在 AI 信道建模，RIS 专门章节未出现</td><td>转写 §1、§11 ／ PPT P332–P362（无 RIS 专页）</td></tr><tr><td>10</td><td>术语</td><td>「Ai2 / AI 空口」</td><td>第 346 页「WEI 6G AI2 需求」、第 344 页「AI-Enabled Air Interface」</td><td>一致：AI2 = AI-Enabled Air Interface</td><td>转写 §11 ／ PPT P346</td></tr><tr><td>11</td><td>事实（数字）</td><td>「人体 20dB，混凝土墙 36dB」（60GHz）</td><td>第 256 页「穿透力弱：人体 20dB，混凝土墙 36dB」</td><td>一致</td><td>转写（60GHz 一笔带过） ／ PPT P256</td></tr><tr><td>12</td><td>事实（数字）</td><td>「城区断点 1000m、郊区 100m」</td><td>第 6 页「城区的转折点在 d=1000m 附近 / 郊区的转折点在 d=100m 附近」</td><td>一致</td><td>转写 §3 ／ PPT P6</td></tr></table>
+<h2>二、存疑（转写或识别不确定，未定论）</h2>
+<ul><li>❓ 转写&quot;仿真/数字孪生&quot;节「英伟达的 RT+C+physical+S / S+ / S 几」前后不一，疑为 <strong>NVIDIA Sionna</strong>（含 Sionna RT/SYS/PHY 模块），待核。</li><li>❓ 转写多处出现「CC、SA、3GBP」——&quot;CC&quot;疑为 <strong>3GPP 内部或 ITU 相关缩写</strong>、&quot;3GBP&quot;应为 <strong>3GPP</strong>（同音误识），笔记按上下文还原。</li><li>❓ 转写「RIS」在开头被列为重点、结尾未见专门章节；是否为时间不足省略，或 RIS 内容并入 A2G/MIMO 各节，待核（见差异表 #9）。</li><li>❓ 转写「射线出来」疑为&quot;射线发射&quot;（ray-launching），与&quot;射线追踪（ray-tracing）&quot;混用，PPT 第 210–220 页区分二者，边界待看课件。</li><li>❓ 转写「GSCM」「几何随机」处是否即 <strong>Geometry-Based Stochastic Channel Model</strong>，待核（PPT 第 343 页提&quot;GSCM 增强&quot;）。</li><li>❓ 转写「可移动天线」老师补充&quot;雷达本来就是可移动天线&quot;，与 6G 的 movable antenna（细粒度位置调整）是否为同一概念，待核。</li><li>❓ 转写「参考信号按空域高度分配…10MHz / 20MHz」的数字（约 10MHz/20MHz）为口述近似，具体带宽以标准为准。</li><li>❓ 转写「我们的图像信道…平均差 3–4dB、计算量差 2–3 个数量级」为老师口述，具体数值待核原始论文。</li><li>❓ 转写「场景自适应…10ms 以内？」，老师用问号语气，属个人估计，非结论。</li><li>❓ 转写将&quot;曼哈顿模型&quot;用于室内-室外穿透，与 PPT 第 84–88 页一致，但&quot;曼哈顿&quot;与&quot;Manhattan 步行小区&quot;（P111）是否同一所指，待核。</li><li>❓ 转写多处人名/机构以音代字（如团队合作者姓名），不影响内容，不逐一校勘。</li></ul>
+<h2>三、PPT 有、转写未覆盖</h2>
+<ul><li>【PPT】第 10–18 页：Longley-Rice（两种模式、主要参数、4 种变化模式、Urban Factor）、Durkin（菲涅尔区）——转写未逐条展开（仅&quot;浏览模型群&quot;）。</li><li>【PPT】第 19–32 页：Okumura 的地形参数与 5 个因子（h_ts/h_te/h_go、地面起伏高度、独立山区地形参数、混合陆地-海上参数）——转写只笼统提&quot;修正因子&quot;。</li><li>【PPT】第 33–40 页：Hata / COST-231 Hata 的具体公式（L=69.55+26.16lg f−13.82lg h_te−a(h_re)+[44.9−6.55lg h_te]lg d）——转写未给公式。</li><li>【PPT】第 52–58 页：Egli、Carey、Bertoni-Xia、TIREM 模型——转写未涉及。</li><li>【PPT】第 101–131 页：&quot;室外传播环境模拟（补充）&quot;——4.6 慢衰相关性、4.7 服务区模型、4.8 移动模型、4.9 天线方向性、4.10 干扰载波隔离、WINNER 五种部署场景（InH/UMi/UMa/RMa/SMa）——转写只覆盖慢衰相关与移动模型。</li><li>【PPT】第 133–302 页：&quot;室内无线传播及覆盖&quot;整章（室内信道参数、经验/确定性模型、射线跟踪、室内覆盖系统、60GHz、毫米波、E-band backhaul、室内 100GHz、V2V、VANET 移动模型）——转写仅点到&quot;室内覆盖痛点&quot;与&quot;V2V/无人机仿真不闭环&quot;。</li><li>【PPT】第 303–330 页：NTN 各页公式与表格（PL=PLb+PLg+PLs+PLe、O2I 双对数正态、ITU-R 对流层闪烁三部分算法、AG 测量结果表）——转写只给结论。</li><li>【PPT】第 332–339 页：近场 MIMO 的瑞利距离公式、near-field beam split（THz spatial-wideband）、distance-aware precoding、LDMA——转写只讲大意。</li><li>【PPT】第 353–361 页：WEI &quot;无线环境信息处理步骤&quot;（S1 环境感知 / S2 环境特征 / S3 环境语义 / S4 环境知识）逐页细节与&quot;面向任务的 WEI 6G AI2 验证&quot;——转写覆盖了&quot;四步&quot;框架，逐页细节未展开。</li><li>【PPT】第 251–253、271–272、274、300–302 页：仅页眉（&quot;BUPT WT&amp;T 119/120/121/139/140/142&quot;）等图片页（无文字），属课件分节页。</li><li>【PPT】第 362 页：致谢页（&quot;谢谢&quot;）。</li></ul>
+<h2>四、交付说明</h2>
+<ul><li>本讲转写无时间戳，差异表&quot;依据&quot;列以「转写 §X ／ PPT P..」定位（§ 为 <code>notes.md</code> 小节号，P 为 <code>raw/slides-outline.md</code> 页号），两侧标记齐备，便于回溯。</li><li>二、三两节为列表（不参与机判&quot;差异行&quot;计数）；第一节为唯一差异表。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="corrections.md">corrections.md</a></footer>
+</div></body></html>
