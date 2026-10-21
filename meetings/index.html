@@ -40,11 +40,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <h1>会议 · Meetings</h1>
 <p>按会议组织的纪要包：每场会一个子目录，先判定会议类型，再产出对应台账。</p>
 <table><tr><th>类型</th><th>识别信号</th><th>产物</th></tr><tr><td><strong>决策型</strong></td><td>有表决、拍板、明确取舍</td><td>纪要 / 决策 / 行动 / 待定 / 结转 / 勘误</td></tr><tr><td><strong>论坛型</strong></td><td>多位讲者轮流分享 + 点评，无表决</td><td>上述六件 + 讲者矩阵 / 横向主题</td></tr><tr><td><strong>宣讲型</strong></td><td>单向传达政策/方案，Q&amp;A 为主</td><td>上述六件 + 关键信息 / 问答</td></tr></table>
-<h2>待整理</h2>
-<table><tr><th>会议</th><th>日期</th><th>预判类型</th><th>转写</th><th>状态</th></tr><tr><td>高中学校特色发展论坛</td><td>2026-10-21</td><td>论坛型</td><td><a href="../录音%201-转文本.docx">录音 1-转文本.docx</a></td><td>已评估，待生成纪要</td></tr></table>
-<p><strong>预判依据</strong>：5 位汇报人 + 主持人 + 2 位点评专家；无表决、无正式决策；另有议程截图可校正人名与标题。</p>
-<p><strong>已知问题</strong>：</p>
-<ul><li>说话人标签复用：<code>发言人7</code> 同时对应朱思克与郝进宏，<code>发言人2</code> 同时对应张云与尚宝山；</li><li>ASR 错名：朱新克/朱思克、张云婷/张云、郝建国/郝进宏、红罗/红螺寺、直普/职普、中国高中/综合高中、协奏体/协作体；</li><li>无 PPT，按论坛型处理，不套用听课笔记。</li></ul>
+<h2>已收录</h2>
+<table><tr><th>会议</th><th>日期</th><th>类型</th><th>讲者</th><th>纪要</th></tr><tr><td>高中学校特色发展的路径与策略（分论坛一）</td><td>2026-10-21</td><td>论坛</td><td>5 位汇报 + 2 位专家点评</td><td><a href="2026-10-21-high-school-feature-forum/README.html">README</a> · <a href="2026-10-21-high-school-feature-forum/minutes.html">纪要</a> · <a href="2026-10-21-high-school-feature-forum/speakers.html">讲者矩阵</a> · <a href="2026-10-21-high-school-feature-forum/themes.html">横向主题</a></td></tr></table>
 <h2>新增一场会</h2>
 <ol><li>在 <code>meetings/&lt;YYYY-MM-DD-slug&gt;/</code> 下放本地产物，<code>raw/</code> 放转写、议程、名单（不入库）；</li><li>用 <code>write-meeting-notes</code> 生成纪要包；</li><li>跑 <code>bash scripts/build-html.sh</code>（自动扫描，无需登记）；</li><li>更新本页与根 <code>README.md</code> / 根 <code>index.html</code>。</li></ol>
 <footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
