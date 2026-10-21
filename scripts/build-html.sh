@@ -27,7 +27,9 @@ crumb() { # <rel-dir> 生成面包屑导航（相对当前页目录回溯；每�
     IFS='/'
     for p in $d; do
       j=$((j + 1)); cur="${cur:+$cur/}$p"
-      if [ -f "$cur/README.md" ]; then disp=$(h1 "$cur/README.md"); else disp="$p"; fi
+      if [ -f "$cur/index.md" ]; then disp=$(h1 "$cur/index.md")
+      elif [ -f "$cur/README.md" ]; then disp=$(h1 "$cur/README.md")
+      else disp="$p"; fi
       link="$(rep $((n - j)))index.html"; [ -f "$cur/index.md" ] || link="$(rep $((n - j)))README.html"
       nav+="<a href=\"$link\">$disp</a>"
     done

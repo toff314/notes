@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Notes · 听课笔记</title>
+<title>Notes · 课程 / 读书 / 会议笔记</title>
 <style>
 :root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
 * { box-sizing: border-box; }
@@ -37,49 +37,63 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 
 </head><body><div class="wrap">
 <div class="nav"><a href="index.html">笔记架首页</a></div>
-<h1>Notes · 听课笔记</h1>
-<p>一个「多课程笔记架」仓库：每门课一个子目录，统一提供<strong>中文笔记在线阅读（HTML）</strong>与源 Markdown，并保留<strong>主笔记 / 思路大纲 / 自测 / 勘误 / 衍生选题</strong>五类产物；课程课件（PPT）走 <strong>Git LFS</strong> 一并托管。</p>
+<h1>Notes · 课程 / 读书 / 会议笔记</h1>
+<p>一个「课程 + 读书 + 会议」三分区的笔记仓库，统一提供<strong>中文笔记在线阅读（HTML）</strong>与源 Markdown。</p>
+<table><tr><th>分区</th><th>目录</th><th>内容</th></tr><tr><td><strong>课程</strong></td><td><a href="courses/"><code>courses/</code></a></td><td>听课笔记：主笔记 / 思路大纲 / 自测 / 勘误 / 衍生选题（五类产物）</td></tr><tr><td><strong>读书</strong></td><td><a href="reading/"><code>reading/</code></a></td><td>读书笔记：三区笔记 / 永久卡片 / 自测 / 行动清单 / 可执行验证（七类产物）</td></tr><tr><td><strong>会议</strong></td><td><a href="meetings/"><code>meetings/</code></a></td><td>会议纪要：决策 / 行动 / 待定 / 结转 / 勘误；论坛型另加讲者矩阵与横向主题</td></tr></table>
 <h2>站点</h2>
-<table><tr><th>入口</th><th>地址</th></tr><tr><td>笔记首页</td><td><code>http://&lt;host&gt;:17001/</code></td></tr><tr><td>课程页</td><td><code>http://&lt;host&gt;:17001/&lt;course-slug&gt;/</code></td></tr><tr><td>读书架（姊妹仓，读书笔记）</td><td><code>http://&lt;host&gt;:17002/</code>（仓库 <code>~/readings/</code>）</td></tr></table>
-<p>部署方式：<code>docker compose up -d</code>（Caddy 静态托管 + 目录浏览，见 <a href="docker-compose.yaml"><code>docker-compose.yaml</code></a> 与 <a href="Caddyfile"><code>Caddyfile</code></a>）。若需对外域名，在上层反向代理加一条 <code>notes.&lt;域&gt; → 127.0.0.1:17001</code> 即可（本仓库只负责站点本身）。</p>
+<table><tr><th>入口</th><th>地址</th></tr><tr><td>笔记首页</td><td><code>http://&lt;host&gt;:17001/</code>（课程 / 读书 / 会议三个入口）</td></tr><tr><td>课程分区</td><td><code>http://&lt;host&gt;:17001/courses/</code></td></tr><tr><td>读书分区</td><td><code>http://&lt;host&gt;:17001/reading/</code></td></tr><tr><td>会议分区</td><td><code>http://&lt;host&gt;:17001/meetings/</code></td></tr></table>
+<p>部署方式：<code>docker compose up -d</code>（Caddy 静态托管，见 <a href="docker-compose.yaml"><code>docker-compose.yaml</code></a> 与 <a href="Caddyfile"><code>Caddyfile</code></a>）。</p>
 <h2>已收录</h2>
-<table><tr><th>课程</th><th>目录</th><th>课次</th><th>课件</th><th>进度</th></tr><tr><td>习近平著作选读（北京邮电大学 · 马克思主义学院）</td><td><a href="xi-jinping-selected-works/"><code>xi-jinping-selected-works/</code></a></td><td>第 1 讲 导论（开课第一讲）</td><td>无课件</td><td>1 讲已完成</td></tr><tr><td>移动通信技术前沿（北京邮电大学 · 信息与通信工程学院）</td><td><a href="mobile-communication-frontier/"><code>mobile-communication-frontier/</code></a></td><td>第 1–2 讲（课程介绍 + 智能空口技术 · 电波传播与信道建模）</td><td>见 slides/</td><td>2 讲已完成</td></tr><tr><td>计算语言学基础（北京邮电大学）</td><td><a href="computational-linguistics/"><code>computational-linguistics/</code></a></td><td>第 1–3 课（绪论 · 词形态分析 · 汉语切分）</td><td>10 章 / 19 份 PPT</td><td>3 课已完成</td></tr></table>
+<h3>课程</h3>
+<table><tr><th>课程</th><th>目录</th><th>课次</th><th>课件</th><th>进度</th></tr><tr><td>习近平著作选读（北京邮电大学 · 马克思主义学院）</td><td><a href="courses/xi-jinping-selected-works/"><code>xi-jinping-selected-works/</code></a></td><td>第 1 讲 导论（开课第一讲）</td><td>无课件</td><td>1 讲已完成</td></tr><tr><td>移动通信技术前沿（北京邮电大学 · 信息与通信工程学院）</td><td><a href="courses/mobile-communication-frontier/"><code>mobile-communication-frontier/</code></a></td><td>第 1–2 讲（课程介绍 + 智能空口技术 · 电波传播与信道建模）</td><td>见 slides/</td><td>2 讲已完成</td></tr><tr><td>计算语言学基础（北京邮电大学）</td><td><a href="courses/computational-linguistics/"><code>computational-linguistics/</code></a></td><td>第 1–3 课（绪论 · 词形态分析 · 汉语切分）</td><td>10 章 / 19 份 PPT</td><td>3 课已完成</td></tr></table>
+<h3>读书</h3>
+<table><tr><th>书</th><th>目录</th><th>范围</th><th>进度</th></tr><tr><td>Speech and Language Processing（第三版）</td><td><a href="reading/slp3/README.html"><code>slp3/</code></a></td><td>第 1–11 章</td><td>11 章完成 / 26 章</td></tr></table>
+<p>指定一本书的书稿路径后，用 <code>write-read-notes</code> 技能产出笔记并放入 <code>reading/</code>。</p>
+<h3>会议</h3>
+<table><tr><th>会议</th><th>日期</th><th>类型</th><th>转写</th><th>状态</th></tr><tr><td>高中学校特色发展论坛</td><td>2026-10-21</td><td>论坛型（预判）</td><td><a href="录音%201-转文本.docx"><code>录音 1-转文本.docx</code></a></td><td>已评估，待生成纪要</td></tr></table>
+<p>会议转写用 <code>write-meeting-notes</code> 生成纪要包；论坛型不要求 PPT，也不会硬造决策与行动项。</p>
 <h2>目录约定</h2>
 <pre><code>notes/
-├── index.html                       # 笔记首页（课程卡片）
+├── index.html                       # 笔记首页（课程 / 读书 / 会议 三个入口）
+├── courses/                         # 课程分区
+│   ├── index.md / index.html        # 课程分区页
+│   └── &lt;course-slug&gt;/               # 每门课
+│       ├── README.md                # 课程说明
+│       ├── SUMMARY.md / SUMMARY.html# 课次目录与进度
+│       ├── index.html               # 课程页
+│       ├── slides/                  # 课件 PPT（Git LFS）
+│       └── &lt;NN-lecture-slug&gt;/       # 每一课（产物平铺；本地素材放 raw/，不入库）
+├── reading/                         # 读书分区
+│   ├── index.md / index.html        # 读书分区页
+│   └── &lt;book-slug&gt;/                 # 每本书
+│       ├── README.md                # 书目索引（进度 + 各章链接）
+│       └── &lt;NN-chapter&gt;/            # 每章一套笔记（三区/卡片/自测/行动/选题/labs）
+├── meetings/                        # 会议分区
+│   ├── index.md / index.html        # 会议分区页
+│   └── &lt;YYYY-MM-DD-slug&gt;/           # 每场会（纪要/决策/行动/待定/结转/勘误）
 ├── docker-compose.yaml              # Caddy 部署（宿主机 17001）
 ├── Caddyfile
 ├── .gitattributes                   # 大二进制走 Git LFS（pptx / pdf / 图片）
-├── scripts/
-│   ├── md2html.py                   # Markdown → 在线阅读 HTML（零依赖）
-│   └── build-html.sh                # 批量渲染：全部 .md → 同名 .html
-└── &lt;course-slug&gt;/                   # 每门课
-    ├── README.md                    # 课程说明
-    ├── SUMMARY.md / SUMMARY.html    # 课次目录与进度
-    ├── index.html                   # 课程页
-    ├── slides/                      # 课件 PPT（Git LFS）
-    └── &lt;NN-lecture-slug&gt;/           # 每一课（产物平铺；本地素材放 raw/，不入库）
-        ├── README.md                # 本课索引（元信息 + 产物清单 + 自评分）
-        ├── notes.md                 # 主笔记
-        ├── outline.md               # 思路大纲（含 Mermaid，HTML 已接 CDN 渲染成图）
-        ├── questions.md             # 自测题 + 疑问 + 待查（含提取自测协议）
-        ├── corrections.md           # 勘误（转写 ↔ PPT 差异 + 存疑）
-        ├── spinoffs.md              # 衍生选题（可编辑；含成文链接）
-        ├── my-notes.md              # 可选：课上笔记存档
-        ├── flashcards.md            # 可选：背诵卡（Anki）
-        └── raw/                     # 转写 / 课件源 / 课上笔记照片（.gitignore 忽略）</code></pre>
-<blockquote><p><strong><code>.md</code> 与 <code>.html</code> 并存</strong>：阅读用 <code>.html</code>，编辑改 <code>.md</code>；改完执行 <code>bash scripts/build-html.sh</code> 重渲染。</p><p><strong>渲染脚本自动扫描</strong>全部 <code>.md</code>（排除 <code>scripts/</code>、各级 <code>raw/</code>），按目录层级自动生成面包屑导航、</p><p>取文件首个 <code># </code> 标题作页题——<strong>新增课次或产物无需登记</strong>，直接重跑即可。</p></blockquote>
-<h2>新增一课</h2>
-<ol><li>在 <code>&lt;course-slug&gt;/</code> 下建 <code>&lt;NN-lecture-slug&gt;/</code>（产物平铺，本地素材放 <code>raw/</code>）；</li><li>放入本课 5 类产物（<code>notes.md</code> / <code>outline.md</code> / <code>questions.md</code> / <code>corrections.md</code> / <code>spinoffs.md</code>）+ <code>README.md</code>（可选产物 <code>my-notes.md</code> / <code>flashcards.md</code> 同样平铺）；</li><li><code>bash scripts/build-html.sh</code> 渲染 HTML（自动扫描，无需登记）；</li><li>更新本课 <code>README.md</code>、课程 <code>SUMMARY.md</code> 与 <code>index.html</code>。</li></ol>
+└── scripts/
+    ├── md2html.py                   # Markdown → 在线阅读 HTML（零依赖）
+    └── build-html.sh                # 批量渲染：全部 .md → 同名 .html</code></pre>
+<blockquote><p><strong><code>.md</code> 与 <code>.html</code> 并存</strong>：阅读用 <code>.html</code>，编辑改 <code>.md</code>；改完执行 <code>bash scripts/build-html.sh</code> 重渲染。</p><p><strong>渲染脚本自动扫描</strong>全部 <code>.md</code>（排除 <code>scripts/</code>、各级 <code>raw/</code>），按目录层级自动生成面包屑导航、</p><p>取文件首个 <code># </code> 标题作页题——<strong>新增课程 / 书目无需登记</strong>，直接重跑即可。</p></blockquote>
+<h2>新增内容</h2>
+<h3>新增一门课</h3>
+<ol><li>在 <code>courses/&lt;course-slug&gt;/</code> 下建 <code>&lt;NN-lecture-slug&gt;/</code>（产物平铺，本地素材放 <code>raw/</code>）；</li><li>放入本课 5 类产物（<code>notes.md</code> / <code>outline.md</code> / <code>questions.md</code> / <code>corrections.md</code> / <code>spinoffs.md</code>）+ <code>README.md</code>；</li><li><code>bash scripts/build-html.sh</code> 渲染 HTML；</li><li>更新本课 <code>README.md</code>、课程 <code>SUMMARY.md</code>、<code>courses/index.md</code> 与根索引。</li></ol>
+<h3>新增一本书</h3>
+<ol><li>指定书稿路径（<code>.pdf</code> / <code>.epub</code> / <code>.md</code> / <code>.txt</code>），用 <code>write-read-notes</code> 按章产出；</li><li>在 <code>reading/&lt;book-slug&gt;/</code> 下为每章建 <code>&lt;NN-chapter&gt;/</code>，放入六件套 + <code>labs/</code>；书目级 <code>README.md</code> 做索引；</li><li><code>raw/</code> 书稿与划线留在本地，不入库；</li><li><code>bash scripts/build-html.sh</code> 渲染 HTML；</li><li>更新 <code>reading/index.md</code> 与根索引。</li></ol>
+<h3>新增一场会</h3>
+<ol><li>把转写（<code>.docx/.srt/.vtt/.txt/.md</code>）与可选的议程、名单、上次行动项放进 <code>meetings/&lt;YYYY-MM-DD-slug&gt;/raw/</code>；</li><li>用 <code>write-meeting-notes</code> 判定会议类型（决策 / 论坛 / 宣讲）并产出纪要包；</li><li><code>raw/</code> 原素材留在本地，不入库；</li><li><code>bash scripts/build-html.sh</code> 渲染 HTML；</li><li>更新 <code>meetings/index.md</code> 与根索引。</li></ol>
 <h2>课件与 Git LFS</h2>
 <p>课件（PPT/PDF）与图片由 <code>.gitattributes</code> 交给 <strong>Git LFS</strong> 管理：</p>
 <pre><code>git lfs install            # 首次
 git lfs ls-files           # 查看被 LFS 跟踪的文件
 git lfs pull               # 克隆后拉取大文件</code></pre>
 <h2>关于「衍生选题」</h2>
-<p><code>spinoffs.md</code> 是<strong>可编辑的 Markdown</strong>：每条候选含「主题串（可直接投喂下游写作技能）/ 讲座锚点 / 为什么 / 增益 / 素材种子 / 缺口」，以及一列 <strong>成文链接</strong>。链接写的是线上站点 URL，<strong>可随时手改</strong>。</p>
+<p><code>spinoffs.md</code> 是<strong>可编辑的 Markdown</strong>：每条候选含「主题串（可直接投喂下游写作技能）/ 锚点 / 为什么 / 增益 / 素材种子 / 缺口」，以及一列 <strong>成文链接</strong>。链接写的是线上站点 URL，<strong>可随时手改</strong>。</p>
 <h2>版权</h2>
-<p>课堂内容（讲稿、课件）版权归授课教师与学校所有。本仓库为<strong>个人学习笔记与资料存档</strong>，供本人复习使用。</p>
+<p>课堂内容（讲稿、课件）版权归授课教师与学校所有；书籍原文版权归原作者与出版社所有。本仓库为<strong>个人学习笔记与资料存档</strong>，供本人复习使用。</p>
 <footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
 源文件：<a href="README.md">README.md</a></footer>
 </div></body></html>
