@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>企业级多智能体设计实战 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">企业级多智能体设计实战</a><a href="README.html">《企业级多智能体设计实战》消化索引（digest README）</a></div>
+<h1>企业级多智能体设计实战 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p>多智能体的核心不是&quot;调框架&quot;，而是&quot;组建数字员工团队&quot;——把人类团队的管理学（角色、协作、审批、复盘）工程化。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>Harness Engineering 三代演进</strong>：控制权从&quot;写提示词&quot;（骑手）→&quot;组上下文&quot;（教练）→&quot;造环境&quot;（牧场主）。</li><li><strong>Orchestrator 三关键设计</strong>：Task 对象精准传参、子 Agent 隔离沙箱、结果传路径不传内容——主 Agent 无写工具。</li><li><strong>三维隔离判断法</strong>：记忆/技能/决策偏好三个维度，两个以上显著不同才新建角色，否则扩 Skills。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li>邮箱用三态状态机（unread→in_progress→done）而非 read:bool，防崩溃丢任务。</li><li>复盘用 root_cause 枚举逼出分类思考，打破&quot;下次注意&quot;式复述。</li><li>成本围栏在 Hook 层用代码硬停止，不靠 Agent 自觉。</li><li>权限 Default-Deny，密钥在工具执行层注入、不上 LLM 上下文。</li><li>告警用消耗率（预算燃烧速度）而非原始阈值，噪声减 90%。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p>AI 项目失败的第一原因不是技术不够好，而是选题错了——MIT 报告 95% 的企业 GenAI 试点未产生可测量的业务影响，因为&quot;用正确的技术解决了错误的问题&quot;。</p>
+<h2>值不值得花时间？</h2>
+<p>值——但要挑着看。后半程（模块四/五 + 生产交付篇，约 15 讲）是独立于框架、可迁移的原创工程方法论，含金量高；前半程（架构思维 + 模块一/二/三）偏框架 API 走读和 demo 演示，可快速掠过。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

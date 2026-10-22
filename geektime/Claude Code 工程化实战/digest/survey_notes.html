@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：Claude Code 工程化实战</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 工程化实战</a><a href="README.html">《Claude Code 工程化实战》消化索引（digest README）</a></div>
+<h1>课程通览：Claude Code 工程化实战</h1>
+<h2>基本信息</h2>
+<ul><li>模块数：8（开篇词 / 热点加餐 / 基础篇 / 子代理 / Skills 技能系统 / 核心机制和组件 / 工程化进阶 / 结束语）</li><li>总讲数：34（含开篇词 2、热点加餐 5、加餐总结 2、结束语 2）</li><li>总时长：约 592 分钟（9.9 小时）</li><li>讲师：黄佳（佳哥），极客时间资深讲师，前作《MCP和A2A前沿实战》</li><li>课程定位：Claude Code 从入门到工程化的实操课——以&quot;组件即能力&quot;为主线（记忆 → 子代理 → Skills → Hooks/MCP/Tools → Headless/Rules/SDK/Plugins），外加热点加餐跟踪 2026 年 AI Agent 生态（OpenClaw、Harness、Workflow、源码泄露验证）</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong></li></ul>
+<p>这门课把 Claude Code 定位为&quot;可编程、可扩展、可组合的 AI Agent 框架&quot;，系统讲解其底层技术全景（五层架构）与六大扩展组件：记忆系统（CLAUDE.md）、Sub-Agents（任务委派）、Skills（可操作知识）、Hooks（事件驱动拦截）、MCP（外部工具连接）、Tools（工具内核），再进阶到工程化能力（Headless CI/CD、Rules 规则系统、Agent SDK 编程接口、Plugins 打包分发）。核心主张：<strong>学概念不学工具</strong>——架构思维（Agentic Loop、上下文工程、权限分层、记忆管理）比任何特定工具用法更持久；Agent 复杂度靠&quot;更好的结构&quot;消化而非&quot;更聪明的模型&quot;。</p>
+<ul><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong></li></ul>
+<p>已解决：①Claude Code 各组件&quot;是什么、怎么配、什么时候用&quot;的完整教程（组件覆盖率达到产品全貌）；②四个工程决策框架——多 Agent 模式选型（04）、子代理使用模式（03-07）、Skills 设计模式（09-13）、Hook 体系（15-16）；③知识分发的核心矛盾（Push vs Pull、渐进式披露）；④用源码泄露事件对课程早期架构推测做了十点实证回填（hot-03），证明课程框架&quot;方向正确&quot;。未解决/回避：①缺少真实的失败案例与反面数据（课程全程几乎无失败演示，Demo 均为&quot;预期成功&quot;路径）；②量化数据大量来自讲师转述（27+ 平台、52,000+ Skills、token 提升 98% 等）缺可追溯源头；③Hot 加餐有明显&quot;追热点+推广行动营&quot;的营销属性，观点密度低于正课；④技术细节以 Claude Code 版本快照为准（Agent Teams、Workflow 均为实验/预览功能），时效性风险高。</p>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>开篇词</td><td>2</td><td>课程定位、直播回放</td><td>低</td></tr><tr><td>热点加餐</td><td>5</td><td>OpenClaw/Harness/源码泄露/范式3.0/Workflow</td><td>高</td></tr><tr><td>基础篇</td><td>2</td><td>全景导览、记忆系统</td><td>中</td></tr><tr><td>子代理（Sub-Agents）</td><td>7</td><td>概念/多Agent模式/审查/高噪声/并行/Teams</td><td>高</td></tr><tr><td>Skills 技能系统</td><td>7</td><td>SKILL.md/任务型/渐进式披露/配合/标准</td><td>高</td></tr><tr><td>核心机制和组件</td><td>4</td><td>Hooks/MCP/Tools</td><td>高</td></tr><tr><td>工程化进阶</td><td>5</td><td>Headless/Rules/SDK/Plugins</td><td>高</td></tr><tr><td>结束语 &amp; 结课测试</td><td>2</td><td>感悟、测试</td><td>低</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>intro</td><td>开篇词｜共生而非替代</td><td>人机共舞、课程地图</td><td>⭐</td><td>定位+叙事</td></tr><tr><td>live</td><td>直播回放</td><td>四层架构、PPT链接</td><td>⭐</td><td>纯视频索引</td></tr><tr><td>hot-01</td><td>从 OpenClaw 到 OpenCode</td><td>爆款拆解、3卡点、方法论</td><td>⭐⭐</td><td>案例+营销并存</td></tr><tr><td>hot-02</td><td>Harness 架构深度解析</td><td>Harness、Agentic Loop、上下文管理</td><td>⭐⭐⭐</td><td>概念体系+一手资料分级</td></tr><tr><td>hot-03</td><td>真相大白：源码泄露</td><td>十点实证验证、QueryEngine</td><td>⭐⭐⭐</td><td>全课最硬核实证</td></tr><tr><td>hot-04</td><td>AI 工程范式 3.0</td><td>Harness Engineering、行动营</td><td>⭐</td><td>纯视频+推广</td></tr><tr><td>hot-05</td><td>Workflow 编排载体</td><td>控制流、确定性、第五种模式</td><td>⭐⭐⭐</td><td>概念对比清晰</td></tr><tr><td>01</td><td>登台远望：底层技术全景</td><td>五层架构、四大组件、选型</td><td>⭐⭐</td><td>体系化教程</td></tr><tr><td>02</td><td>过目不忘：记忆系统</td><td>五层记忆、CLAUDE.md</td><td>⭐⭐</td><td>结构清晰教程</td></tr><tr><td>03</td><td>分而治之：Sub-Agents</td><td>上下文污染、权限、配置文件</td><td>⭐⭐</td><td>核心概念</td></tr><tr><td>04</td><td>量体裁衣：Multi-Agent 指南</td><td>四模式、90.2%数据、决策树</td><td>⭐⭐⭐</td><td>全课方法论高地</td></tr><tr><td>05</td><td>明察秋毫：只读安全审计</td><td>最小权限、审查维度</td><td>⭐⭐</td><td>实战型</td></tr><tr><td>06</td><td>去芜存菁：高噪声处理</td><td>信噪比、50行法则、输出格式</td><td>⭐⭐</td><td>框架+实战</td></tr><tr><td>07</td><td>百舸争流：并行与流水线</td><td>独立→并行、交接契约</td><td>⭐⭐</td><td>实战型</td></tr><tr><td>08</td><td>群策群力：Agent Teams</td><td>竞争假设、Teams 协作</td><td>⭐⭐</td><td>新功能整理</td></tr><tr><td>bonus-subagent</td><td>子代理专题总结</td><td>两层能力、综合案例</td><td>⭐</td><td>回顾+作业</td></tr><tr><td>09</td><td>触类旁通：SKILL.md</td><td>description触发、参考型/任务型</td><td>⭐⭐⭐</td><td>核心概念</td></tr><tr><td>10</td><td>令行禁止：任务型 Skills</td><td>七步设计、精确授权</td><td>⭐⭐</td><td>实战清单</td></tr><tr><td>11</td><td>循序渐进：渐进式披露</td><td>三层架构、路由表、token</td><td>⭐⭐⭐</td><td>架构方法论</td></tr><tr><td>12</td><td>珠联璧合：Skills+SubAgent</td><td>组合方向、三种模式</td><td>⭐⭐</td><td>Demo 型</td></tr><tr><td>13</td><td>纲举目张：Skills 架构定位</td><td>五层定位、四种设计模式</td><td>⭐⭐</td><td>篇幅短</td></tr><tr><td>14</td><td>星火燎原：行业开放标准</td><td>27+平台、AAIF、skills.sh</td><td>⭐⭐⭐</td><td>行业视角+数据</td></tr><tr><td>bonus-skills</td><td>Skills 专题总结</td><td>六讲全景、大作业</td><td>⭐</td><td>回顾</td></tr><tr><td>15</td><td>防微杜渐：Hooks 基础</td><td>17事件、四种执行类型</td><td>⭐⭐⭐</td><td>安全工程价值</td></tr><tr><td>16</td><td>未雨绸缪：Hooks 高级</td><td>Stop Hook、质量门控</td><td>⭐⭐⭐</td><td>系统性最强</td></tr><tr><td>17</td><td>海纳百川：MCP</td><td>USB-C类比、三种传输</td><td>⭐⭐</td><td>教程型</td></tr><tr><td>18</td><td>庖丁解牛：Tools 内核</td><td>原子操作、涌现、Bash</td><td>⭐⭐⭐</td><td>设计哲学</td></tr><tr><td>19</td><td>无人值守：Headless</td><td>CI/CD、管道、最小权限</td><td>⭐⭐⭐</td><td>实战价值高</td></tr><tr><td>20</td><td>有章可循：Rules</td><td>指令vs权限、员工手册类比</td><td>⭐⭐⭐</td><td>概念精准</td></tr><tr><td>21</td><td>登堂入室：Agent SDK 基础</td><td>SDK、权限模式、会话</td><td>⭐⭐</td><td>教程型</td></tr><tr><td>22</td><td>得心应手：Agent SDK 高级</td><td>自定义工具、四道防线、流式</td><td>⭐⭐⭐</td><td>生产级</td></tr><tr><td>23</td><td>化零为整：Plugins</td><td>打包分发、团队能力包</td><td>⭐⭐</td><td>收尾型</td></tr><tr><td>outro</td><td>结束语</td><td>心路、抱团取暖</td><td>⭐</td><td>鸡汤</td></tr><tr><td>quiz</td><td>结课测试</td><td>20题指引</td><td>⭐</td><td>无内容</td></tr></table>
+<h2>整体印象</h2>
+<ul><li>课程主线：<strong>&quot;组件即能力&quot;的功能全景 + &quot;结构消化复杂度&quot;的工程思维</strong>。先底层全景（01），再逐个组件（记忆/子代理/Skills/Hooks/MCP/Tools），最后工程化进阶（Headless/Rules/SDK/Plugins），配 5 篇热点加餐追踪生态前沿。</li><li>最大亮点：</li></ul>
+<ol><li><strong>hot-03（源码泄露实证）</strong>：用真实泄露源码逐条验证课程架构推测，QueryEngine/generator 模式/上下文工程/反蒸馏等发现远超教程内容，是全课唯一&quot;从黑箱到白箱&quot;的实证飞跃。</li><li><strong>04（多 Agent 模式选型）</strong>：四种模式+量化对比+升级决策树，是可直接复用的架构决策框架。</li><li><strong>16（Hooks 高级）</strong>：Stop Hook 质量门控体系完整（continue 机制、防死循环、SubagentStart/Stop），把&quot;检查过了才算做完&quot;的工程思想讲透。</li><li><strong>20（Rules）</strong>：&quot;员工手册 vs 门禁系统&quot;的软硬约束二分法精准有力。</li></ol>
+<ul><li>明显水份：</li></ul>
+<ol><li>开篇词/直播回放/结束语/结课测试/两篇专题加餐 = 7 讲低密度内容（约 20% 讲数）。</li><li>hot-01/hot-04 营销属性浓，夹带行动营推广；AI 工程范式 3.0 几乎无正文。</li><li>大量&quot;释题&quot;成语包装（防微杜渐/未雨绸缪/珠联璧合…）属于形式化填充，但信息密度本身不低。</li><li>Demo 类讲（05/07/12/23）核心可复用的是&quot;设计模式&quot;，不是代码本身。</li></ol>
+<ul><li>独特之处：<strong>课程即案例</strong>——讲师把&quot;如何学 Claude Code&quot;本身做成演示（用 Claude Code 分析 Claude Code 源码），并结合 2026 年热点事件持续加餐，这在同类工具课里罕见。</li><li><strong>形式/内容判断</strong>：这门课本质是&quot;教思维方式&quot;为主（架构视角、设计模式、决策框架），&quot;堆砌事实知识&quot;为辅（功能清单、配置语法）。但思维方式部分依赖大量转述数据支撑，批判性消费时需独立验证。</li></ul>
+<h2>警惕信号汇总（Phase 2 将逐条审计）</h2>
+<ul><li>精确数据无出处：token 利用率提升 98%（11）、27+ 平台/52,000+ Skills/180,000 安装量（14）、90.2% 性能提升（04，可追溯到 Anthropic 官方，⚠️）</li><li>品牌化重命名风险：&quot;五个原子操作&quot;（18）、&quot;协作层/能力层/规范层&quot;（hot-01）、&quot;三层输出格式设计法&quot;（06）均为已有概念重组</li><li>源码走读冒充深度风险：hot-03 的伪代码与图片标注&quot;概念性伪代码/基于泄露源码的架构分析&quot;，需警惕二次加工</li><li>对立面缺失：全课几乎无&quot;何时不该用 Claude Code / 用别的工具更好&quot;的对比案例</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

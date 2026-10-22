@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Claude Code 工程化实战》— 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 工程化实战</a><a href="README.html">《Claude Code 工程化实战》消化索引（digest README）</a></div>
+<h1>《Claude Code 工程化实战》— 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p><strong>Claude Code 不是工具，是 Harness（智能体编排框架）</strong>——它把&quot;只会输出文本&quot;的模型变成&quot;能行动&quot;的 Agent；而多 Agent 的复杂度不靠更聪明的模型解决，靠更好的结构消化。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>Agentic Loop</strong>（hot-02/03）：推理→工具调用→结果回注→继续推理。Claude Code 的引擎叫 QueryEngine，用 generator 模式实现，工具权限门控每个调用。</li><li><strong>四模式+决策树</strong>（04）：多 Agent 只有四种模式——Sub-Agents（隔离）、Skills（渐进加载）、Handoffs（状态切换）、Router（并行分发）。铁律：先单 Agent，遇瓶颈再升级；先加工具，再加 Agent。</li><li><strong>控制流位置</strong>（hot-05）：编排逻辑放哪——Claude 上下文里（Sub-Agent，灵活不可重复）还是脚本里（Workflow，可重复可并发）。流程稳定了才值得搬进 Workflow。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>子代理隔离高噪声</strong>（06）：命令输出&gt;50 行且你只关心&lt;10 行 → 配子代理消化，输出格式按&quot;结果→细节→建议&quot;三层设计。</li><li><strong>Stop Hook 质量门控</strong>（16）：<code>continue: true</code> 让&quot;测试不过就不让 Claude 停&quot;，配 <code>stop_hook_active</code> 防死循环——把检查变成交付前置条件。</li><li><strong>Skill 渐进式披露</strong>（11）：SKILL.md 只做路由（Quick Reference 表格），公式放 reference/，脚本放 scripts/——用最少 token 换最高质量。</li><li><strong>精确授权</strong>（10/15）：<code>allowed-tools: Bash(git commit:<em>)</code> 而非 <code>Bash(</em>)</code>；PreToolUse 正则拦截危险命令，exit 2 拒绝。</li><li><strong>CI 最小权限</strong>（19）：无人值守时 <code>--allowedTools</code> 白名单 + <code>--max-turns</code> 控成本 + 权限配置兜底——AI 不会主动判断安全，责任全在配置端。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><strong>Harness 本身就是 IP，比模型更值钱</strong>（hot-03）：Anthropic 用假工具注入污染竞品训练数据（反蒸馏）、对推理中间过程加密封签名——工具定义和系统提示词的商业价值被提升到与模型同级。泄露后社区 2 小时复刻出代码结构，却复刻不了&quot;模型-Harness 共同进化&quot;的提示词知识。上下文工程（Git 注入/去重/大结果落盘/LSP）才是真正的秘密武器，不是模型。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值</strong> —— 如果你是 Claude Code 重度用户且想从&quot;会用&quot;升级到&quot;会建&quot;：04（多 Agent 决策树）、16（质量门控）、hot-03（源码实证）三讲就值回票价。<strong>但</strong>：Agent Teams/Workflow 是实验功能，Skills 生态数据有出版时点性；纯想看文档的人直接看官方文档更快。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

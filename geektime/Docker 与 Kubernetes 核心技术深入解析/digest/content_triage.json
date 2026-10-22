@@ -1,0 +1,1795 @@
+{
+  "course": "Docker 与 Kubernetes 核心技术深入解析",
+  "triage_date": "2026-08-31",
+  "total_lectures": 39,
+  "gold_count": 6,
+  "silver_count": 23,
+  "copper_count": 10,
+  "iron_count": 0,
+  "overall_snr": 3.42,
+  "data_audit": {
+    "total_claims": 67,
+    "verified": 58,
+    "partial": 8,
+    "unverifiable": 1,
+    "suspicious": 0,
+    "summary": "全部萃取消极内容（含机制类判断）共 67 项：✅58 ⚠️8 ❓1 🚩0。另对全课 25 条量化声明单独审计：9 条可验证（36%）、4 条部分验证（16%）、12 条无法独立验证（48%，多为讲师生产实践与内部数据）、0 条可疑。课程无编造数据迹象，但量化声明过半为内部经验，写作引用时须标注'据讲师称'。"
+  },
+  "entries": [
+    {
+      "lecture_id": "01",
+      "lecture_title": "从系统架构谈起",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "架构演进史：单体→SOA→微服务，附 IBM 单体失控案例、Istio 多组件合并案例与通信模式对比。",
+      "adler_q2": "回答『为什么需要容器/微服务』：解释了单体后期不可维护、SOA 的 ESB 瓶颈，给出拆分三要素与点对点+网关通信建议；未解决『微服务拆分粒度』的绝对标准（承认取决于业务）。",
+      "adler_q3": "基本成立：单体痛点（800 人维护、改日志构建两天）为讲师亲历叙事，可信但不可验证；SOA 失败与微服务成功的判断符合业界共识；Istio 合并案例合理但仅一例。分析不完整：未讨论单体+事件驱动等混合形态。",
+      "adler_q4": "能向团队解释『新业务为什么先单体』与『升级痛苦=划分不对』的判别标准；可立即用代码扫描识别拆分边界。",
+      "critical_notes": "常识性架构背景为主，唯一亮点是 Istio 合并案例的『更少组件有时更好维护』洞见；无量化声明。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "升级痛苦是微服务划分错误的信号",
+          "source_text": "如果每次升级都很痛苦，说明你原来的微服务划分是不对的",
+          "paraphrase": "把『升级难』作为划分粒度的反馈信号：切分不仅是功能维度，还须考虑团队职责与升级路径。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "10",
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "讲师经验+系统设计共识",
+            "notes": "逻辑自洽，作为设计原则引用"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "用包调用关系扫描识别拆分边界",
+          "source_text": "若两个包完全没有互相调用，往往意味着二者逻辑独立，天然可以切分成不同业务",
+          "paraphrase": "用代码依赖扫描的客观信号代替纯业务直觉判断可拆分边界。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "可复现的代码工程方法",
+            "notes": "无量化数据，可自行验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "理解 Docker",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.0,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "Docker 起源与定位：组合 cgroups/Namespace/UnionFS 三大内核技术，容器与虚拟机在技术栈/性能/密度上的对比，基础命令演示。",
+      "adler_q2": "回答『容器解决了微服务的什么问题』：独立网络身份、资源利用效率、启动速度、环境一致性；已解决概念层问题，但深入机制留待 L03/L04。",
+      "adler_q3": "基本成立但证据弱：『容器性能与主机相差不超过 1%』无测试出处；虚拟机几十实例/容器几千实例为量级估计；性能对比结论符合原理推理（无虚拟层）。",
+      "adler_q4": "能在选型层面向他人说明容器 vs 虚拟机差异；但无原理纵深，动手操作需依赖官方文档。",
+      "critical_notes": "教程级内容，命令演示占比较大，量化数据无出处；真正的技术深挖在后续两讲。",
+      "extractions": [
+        {
+          "type": "quote",
+          "name": "容器不是发明新技术，而是组合成熟技术并创新场景",
+          "source_text": "Docker 本身没有发明底层技术，而是利用 Linux 内核中已存在的成熟技术",
+          "paraphrase": "容器技术的突破在于组合与场景创新，而非底层原创——这对评估『新技术的贡献』有参考意义。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03",
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Docker 官方历史与内核技术事实",
+            "notes": "可验证，非量化声明"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "Docker 的核心技术（一）",
+      "snr_score": 3.5,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "Namespace（task_struct/nsproxy、clone/setns/unshare、六类隔离）与 cgroups（子系统、CPU Share vs CFS quota、vruntime 红黑树调度）原理，附 CPU 压制实验。",
+      "adler_q2": "回答『容器隔离与资源控制的内核实现』：namespace 提供独立身份、cgroups 提供资源配额；通过实验（200%→100%→50%→10%）完整验证 quota/period=核数；未涉及 cgroup v2 细节。",
+      "adler_q3": "基本成立且可验证：vruntime 公式（实际运行时间×1024÷权重）、CFS 默认参数、quota/period 换算均与内核文档一致；『CPU Share 不是上限』的反直觉点正确；cgroup driver 统一问题（kubelet 拒绝启动）为真实部署事实。",
+      "adler_q4": "能独立做 CPU/内存 cgroups 实验，理解『为什么容器 CPU 限制用 quota 而非 share』；能排查 cgroup driver 不一致导致的集群安装失败。",
+      "critical_notes": "原理扎实、实验证据链完整；扣分在术语讲解有转录噪音与部分概念（红黑树细节）略冗余。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "CPU Share（相对值）vs CFS Quota（绝对值）的资源控制二分",
+          "source_text": "CPU Share 有竞争按比例分、无竞争可独占；quota/period=分配的 CPU 核数，是硬上限",
+          "paraphrase": "限制 CPU 先分清语义：需要公平分配用 share，需要硬上限用 quota；容器限额场景必须用 quota。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "26"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Linux CFS 文档",
+            "notes": "与内核 CFS 调度器文档一致"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "可压缩资源可超压、不可压缩资源只能杀",
+          "source_text": "CPU 给 0.1 个也转得动只是变慢；内存压到限额后申请失败触发 OOM kill",
+          "paraphrase": "判断资源能否超额：CPU 过载优雅降级，内存过载直接终止进程——这是容器 OOM 的根源。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "07",
+            "33"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Linux 内核资源语义",
+            "notes": "正确，与内核 OOM 行为一致"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "quota/period 微秒换算核数",
+          "source_text": "quota 设 100000 即 1 核、50000 即 0.5 核、10000 即 0.1 核，top 实时响应",
+          "paraphrase": "排查容器 CPU 限制时直接按 quota/period 换算期望核数，避免『配了 50% 却只有 10%』的困惑。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "26"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "实验可复现",
+            "notes": "实验证据链完整，可自行验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "Docker 的核心技术（二）",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Docker 的创举——OverlayFS 分层文件系统：Dockerfile 分层、写时复制、Bootfs/Rootfs、存储驱动演进、OCI 标准、containerd-shim 控制面/数据面分离。",
+      "adler_q2": "回答『镜像为什么可移植、分层如何工作』：每条指令一层、共性层跨镜像共享、写时复制让一份基础镜像支撑无数容器；并解释 Docker 引擎架构为何演进为 CLI→daemon→containerd→shim→runc。",
+      "adler_q3": "基本成立：写时复制/分层机制与 OverlayFS 行为一致（含同名文件上层覆盖下层演示）；『早期 Docker daemon 作为父进程导致升级重启全部容器』的架构洞见成立（符合 Docker 历史）；『Docker 被 K8s 废弃的是 dockerd』的解释准确。",
+      "adler_q4": "能理解镜像分层与缓存的关系（Dockerfile 实践的基础）；能向他人解释为什么 containerd 可独立于 Docker 存在。",
+      "critical_notes": "分层文件系统机制解释清晰，架构演进洞见独立于官方文档；部分为既有知识的整理。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "容器引擎控制面/数据面分离",
+          "source_text": "早期 Docker daemon 直接作为容器进程父进程，升级或重启 Docker 会重启所有应用；containerd+shim 把 shim 托管给 init system 解耦",
+          "paraphrase": "管理组件与业务进程解耦是可升级性的前提——这个架构动机可迁移到任何 PaaS 设计。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "28",
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Docker/containerd 架构史",
+            "notes": "符合 containerd 演进历史"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "Docker 的创举是分层文件系统而非容器本身",
+          "source_text": "cgroups 与 namespace 都不是新技术，Docker 开创性地提出基于分层的文件系统来管理整个容器镜像",
+          "paraphrase": "评估 Docker 的贡献应落在镜像分层与面向应用打包，而非隔离技术本身。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Docker 历史事实",
+            "notes": "准确，namespace/cgroups 早于 Docker"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "容器网络",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "Docker 四种网络模式（None/Host/Container/Bridge）、手工配置 veth pair+bridge 复现默认网络、Overlay/Underlay 跨主机方案与 VXLAN 抓包。",
+      "adler_q2": "回答『容器如何获得独立网络身份、跨主机如何互通』：None 模式手工配置到 Bridge 自动化，Overlay 封装 vs Underlay 融入两条路径；未涉及多宿主生产 CNI 选型（留给 L30）。",
+      "adler_q3": "基本成立：veth pair、bridge、iptables DNAT 的实现描述与 Linux 行为一致；VXLAN 抓包验证（ICMP→UDP→IP 层级）可复现；None 模式『Docker 只建 namespace 不配网络』正确。",
+      "adler_q4": "能手工复现容器网络配置（可迁移到排障：ip link/nsenter/brctl 一套工具链）；能区分 Overlay/Underlay 的适用边界。",
+      "critical_notes": "实验教学价值高、概念对比清晰；但内容多来自 Docker 标准文档，独立洞见有限，故置于银矿低位。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "手工配置容器网络=理解 Docker 网络驱动的黑盒",
+          "source_text": "veth pair 一端插 docker0、一端进容器 namespace 改名 eth0、配 IP 配默认路由",
+          "paraphrase": "排障容器网络不通时按『接线-改名-配 IP-配路由』顺序逐项验证，定位断点。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "30",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Linux 网络工具可复现",
+            "notes": "实验步骤可自行复现"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "Dockerfile 的最佳实践",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Dockerfile 工程实践：构建上下文、层缓存机制、多段构建、基础镜像选型、ADD/COPY/EXPOSE/ENTRYPOINT 语义与踩坑、tini 信号处理、镜像 Tag 与 CI/CD 版本对应。",
+      "adler_q2": "回答『如何构建可维护、可追溯、可高效分发的镜像』：构建上下文决定构建速度、层缓存失效联动、多段构建瘦身、Tag 双快照可追溯；已解决大部分工程问题，未深入镜像仓库权限治理。",
+      "adler_q3": "基本成立：构建上下文上传、ADD/COPY checksum 缓存比对、VOLUME 指令后写失效、EXPOSE 只是约定等均与 Docker 行为一致；『基础镜像里每个工具都是攻击面』的安全视角正确；tini 信号转发机制符合事实。",
+      "adler_q4": "能立即改进现有 Dockerfile（合并 RUN、调整层顺序、用 COPY 替代 ADD、多段构建）；能理解优雅终止失效的根因之一（init 进程吞信号）。",
+      "critical_notes": "踩坑密度高、可操作性强；部分内容（12 Factor）为原则复述，属整理性贡献。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "构建缓存失效是联动的：变动少的层放下面",
+          "source_text": "底层镜像层缓存一旦失效，会引发其上面所有层级联失效",
+          "paraphrase": "把依赖安装等低频变更指令放 Dockerfile 靠前，应用代码靠后，最大化缓存命中。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Docker 构建缓存机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "EXPOSE 只是约定而非强制",
+          "source_text": "不写 EXPOSE，应用监听 80 端口照样可被访问",
+          "paraphrase": "端口可访问性由进程监听决定，EXPOSE 仅服务镜像文档化——避免被『没写 EXPOSE 所以不通』误导。",
+          "writing_angle": "opinion",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Docker 行为可验证",
+            "notes": "可直接验证"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "镜像 Tag 与源码 Git Tag 一一对应",
+          "source_text": "发布版本=镜像 Tag+源码 Tag 双快照，杜绝看日志 debug 时代码对不上",
+          "paraphrase": "建立镜像 Tag 与 git tag 的强对应关系，任何生产版本都可回溯到源码。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Git/CI 通用实践",
+            "notes": "无量化数据，工程常识"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "Kubernetes 架构基础（一）",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 4.0,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Kubernetes 的 Borg 渊源：Cell/Job/Task/Naming、在线离线混布、WorstFit/BestFit 调度、幂等性、可压缩/不可压缩资源，以及命令式 vs 声明式系统的遥控器类比。",
+      "adler_q2": "回答『K8s 为什么这样设计』：源自 Borg 十多年集群管理经验（混布提利用率、声明式保幂等）；用两个遥控器讲透命令式/声明式差异；未展开 Borg 与 K8s 的完整映射细节。",
+      "adler_q3": "基本成立：Borg 混布数据（98% 服务器、95% 跑 25+ task/4500 线程）可溯源至 Google Borg 论文；WorstFit/BestFit 行为描述正确；『副本冗余必须跨故障域否则无意义』正确.",
+      "adler_q4": "能向团队解释『为什么 K8s 用声明式 API』与『为什么副本要跨故障域』；能理解资源申请的『合理余量』与平台回收的张力。",
+      "critical_notes": "整理性内容质量高：Borg 量化数据可验证、遥控器类比可迁移；独立洞见有限但教学提炼出色。",
+      "extractions": [
+        {
+          "type": "analogy",
+          "name": "电视遥控器（命令式）vs 空调遥控器（声明式）",
+          "source_text": "命令式按一下变一下、基于返回再指示；声明式只设目标值，中间过程不干涉",
+          "paraphrase": "用日常遥控器讲透声明式 API 的本质：声明期望状态而非操作序列，天然幂等。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "08",
+            "09"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "类比教学法",
+            "notes": "非量化，逻辑自洽"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "谷歌混布量化数据",
+          "source_text": "谷歌 98% 的服务器实现在线/离线混布；95% 跑超过 25 个 task、4500 个线程",
+          "paraphrase": "引用谷歌 Borg 论文数据说明混布提升利用率的工程收益。",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Google Borg 论文（Abhishek Verma et al. 2015）",
+            "notes": "论文公开可查，数据一致"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "Kubernetes 架构基础（二）",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "标准 API 战略、etcd watch 模式、控制面组件分工（API Server 只管存、Controller Manager 决定怎么做、Scheduler 专职调度）、Informer/Lister 框架与 Deployment→RS→Pod 联动演示。",
+      "adler_q2": "回答『K8s 架构如何组织』：星型连接（组件只连 API Server）、etcd 数据库+消息中间件双重角色、三个 A 与 Mutating/Validating 顺序；通过 nginx Deployment 创建演示完整链路。",
+      "adler_q3": "基本成立：etcd watch 长连接推送、API Server 缓存缓解 etcd 读压力、Informer 的 list-watch+Reflector+DeltaFIFO 链路描述准确；『API Server 无业务逻辑』的判断正确。",
+      "adler_q4": "能画出 K8s 请求流转全图并向他人讲解；能理解『Pod Pending 不是故障而是系统在努力』的最终一致性。",
+      "critical_notes": "架构链路完整、信息密度高，是理解后续组件章节的骨架；独立洞见（星型连接、三个 A 三道门）为结构化提炼。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "API Server 星型连接+watch 驱动",
+          "source_text": "所有组件都只连接 API Server，对象变化由 API Server 推送驱动其他组件",
+          "paraphrase": "理解 K8s 内部协作：一切变更经 API Server 落 etcd 再广播，组件间不直接通信。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "09",
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 架构事实",
+            "notes": "准确"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "Scheduler 三阶段：Predict→评分→Bind",
+          "source_text": "把不满足需求的节点过滤掉，再按维度权重打分，最后与节点产生绑定关系",
+          "paraphrase": "调度器=过滤+打分+绑定的通用范式，可迁移到理解其他调度系统（Mesos/Nova）。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "26"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "kube-scheduler 源码",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "了解 kubectl，深入理解 Kubernetes（一）",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "kubectl 转换器本质、kubeconfig/context、IaaS/PaaS/SaaS 演进与 Kubernetes 定位、声明式系统设计原则（幂等、对象组合、复杂度线性、避免简单封装）、self-hosting 与 kubeadm 装集群。",
+      "adler_q2": "回答『K8s 的设计原则与运维方式』：声明式 API 的幂等性、复杂度必须随对象数线性增长、condition 复用、避免简单封装（StatefulSet 不并入 ReplicaSet）；附带 cgroup driver 坑与 self-hosting 概念。",
+      "adler_q3": "基本成立：声明式幂等、复杂度线性（300→3000 对象应为 10 秒而非 10 小时）是 K8s 社区真实设计约束；cgroup driver 不一致导致 kubelet 退出为事实；『二进制安装适合学习、生产用 kubeadm』符合共识。",
+      "adler_q4": "能按设计原则评估自己写的控制器/API（复杂度线性、避免状态属性分支）；能独立完成 kubeadm 装集群并避开 cgroup driver 坑。",
+      "critical_notes": "设计原则提炼是官方文档之外的洞见；kubectl/IaaS-PaaS-SaaS 部分为教程整理。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "声明式系统四原则：幂等/对象组合/复杂度线性/避免简单封装",
+          "source_text": "操作对象复杂度必须与对象数成正比；行为差异大的对象拆成两个而非加状态属性",
+          "paraphrase": "评估集群规模扩容与 API 设计时用线性复杂度与对象组合原则自检。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "08",
+            "10"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 社区设计文档共识",
+            "notes": "符合 Kubernetes 设计文档"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "kubelet 与 Docker 的 cgroup driver 必须一致",
+          "source_text": "kubelet 用 systemd、Docker 默认 cgroupfs，不一致时 kubelet 直接退出",
+          "paraphrase": "装集群失败先查 cgroup driver 一致性，统一为 systemd。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "kubeadm 安装事实",
+            "notes": "真实部署坑，可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "深入理解 Kubernetes（二）",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "对象共性四要素：TypeMeta（GKV）、Metadata（Namespace+Name、Label/Annotation、Finalizer、ResourceVersion）、Spec/Status 分工与版本演进（Alpha→Beta→GA）。",
+      "adler_q2": "回答『K8s 对象如何抽象』：TypeMeta 定义我是什么、Metadata 定义我是谁、Spec 是用户期望、Status 是控制器回写；解释 Finalizer 逻辑删除与 ResourceVersion 乐观锁。",
+      "adler_q3": "基本成立：Finalizer 删除流程（deletionTimestamp→控制器清理→二次确认物理删除）、乐观锁（409 Conflict+客户端重试）、版本演进均为事实；内容为对象规范复述，官方文档高度覆盖。",
+      "adler_q4": "能读懂 YAML 里 TypeMeta/Metadata 各字段含义；能解释『为什么删除 Pod 会卡在 Terminating』（Finalizer）。",
+      "critical_notes": "机制解释准确，但独立洞见有限，作为对象规范复述置于铜矿。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "核心对象概览",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心对象遍历：Node（Capacity vs Allocatable）、Namespace、Pod（共享网络、资源声明、三种探针）、ConfigMap/Secret/ServiceAccount、Service、ReplicaSet/Deployment/StatefulSet/Job/DaemonSet/CRD。",
+      "adler_q2": "回答『核心对象都长什么样、为何这样设计』：为后续调度/生命周期章节提供对象背景；探针三兄弟、StatefulSet 身份、CRD 开表类比等要点到位。",
+      "adler_q3": "基本成立：探针语义、StatefulSet『删谁补谁』、Capacity/Allocatable 差异、Secret 三层防护（base64→RBAC→etcd 加密）均准确；整体为对象遍历，深度受限于概览定位。",
+      "adler_q4": "能快速建立对象全景地图；能理解『为什么生产不用裸 Pod』与探针就绪机制。",
+      "critical_notes": "对象概览信息完整、要点准确，但独立洞见少、官方文档覆盖度高。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "etcd 概要：主要功能及使用场景",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "etcd 定位（分布式 KV 存储）、Watch/Lease/CAS 三大机制、三大使用场景（KV 库/服务发现/消息订阅）与 etcdctl 基本操作。",
+      "adler_q2": "回答『etcd 是什么、能干什么』：Watch 用推送替代轮询、Lease 服务发现失效剔除、CAS 选主；性能数据（1000 写/2000 读）无 benchmark 出处。",
+      "adler_q3": "基本成立：Watch/Lease/CAS 机制描述正确；『服务发现依赖续约，续约失败自动失效』正确；性能数据为 ❓，未附测试场景。",
+      "adler_q4": "能判断 etcd 的适用场景（可替代 Zookeeper 键值场景）；能上手 etcdctl 基本操作。",
+      "critical_notes": "入门级概览，为 Raft 与实现章节铺垫；无独立洞见。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "Raft 协议",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 4.0,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Raft 协议：Quorum 多数同意、三态（Follower/Candidate/Leader）、选举超时与 Term、日志复制、网络分区行为、Learner 角色。",
+      "adler_q2": "回答『分布式一致性如何达成』：选主（多数投票）与日志复制（多数确认后 commit）两个行为；解释网络分区时少数派只读、恢复后回滚未提交日志。",
+      "adler_q3": "基本成立且可验证：Election Timeout 150-300ms、Term 机制、奇数成员原则、Learner 先同步后投票均与 Raft 论文一致；『偶数节点无意义、加节点还引入平票』的反直觉点正确。",
+      "adler_q4": "能向他人完整复述 Raft 工作流程；能理解 etcd 集群为何要奇数节点、为何 Leader 故障期间不可写。",
+      "critical_notes": "原理讲解清晰、反直觉点成立、与 Raft 论文一致；为整理性内容但有教学提炼价值。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Raft 两大行为：选主+日志复制",
+          "source_text": "Follower 超时未收心跳变 Candidate 拉票，多数同意成 Leader；写操作经 Leader 日志复制多数确认后 commit",
+          "paraphrase": "理解任何 Raft 实现（etcd/Consul）只看选主与日志复制两个闭环。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "14",
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Raft 论文（Ongaro & Ousterhout 2014）",
+            "notes": "与论文一致"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "偶数节点无意义：4 节点与 3 节点容错相同还引入平票",
+          "source_text": "4 节点集群两个 Candidate 各得 2 票投票无效；3 节点容忍 1 故障、5 节点容忍 2 故障",
+          "paraphrase": "规划 etcd 集群成员数时按容错需求选 3 或 5，绝不选偶数。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Raft 共识机制",
+            "notes": "推理正确，可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "etcd 如何实现 Raft 协议",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "etcd 的 Raft 工程实现：投票资格校验、Leader 完整性、WAL 预写日志、revision/MVCC 存储、watchable store 与 match index。",
+      "adler_q2": "回答『etcd 如何把 Raft 落地为生产系统』：WAL 先写日志再落库、MVCC 以 revision 为 key 保留全版本、watch 分 sync/unsync group；数据包 1.5MB 限制。",
+      "adler_q3": "基本成立且部分可验证：WAL 结构、1.5MB 限制（etcd 文档明确）、revision 与 K8s resourceVersion 对应均准确；MVCC 机制描述正确。",
+      "adler_q4": "能读懂 etcd 存储结构（WAL/boltDB/kvindex）；能理解『频繁变更的 key 会让存储膨胀』与 compact 的必要性。",
+      "critical_notes": "工程实现细节扎实，但偏源码/机制走读，独立洞见有限。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "频繁变更的 key 会撑大存储，需 compact",
+          "source_text": "boltDB 以 revision 为 key 保存每次变更完整信息，所有历史版本都保留",
+          "paraphrase": "监控 etcd 存储增长时，优先排查高频变更的 key；用 compact 压缩历史版本。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "15",
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "etcd 存储机制",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "15",
+      "lecture_title": "构建高可用 etcd 集群",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "实验课：cfssl 证书、三成员 mTLS 集群、snapshot 备份、破坏后 restore 恢复、配额写满 alarm 处理。",
+      "adler_q2": "回答『如何构建安全高可用的 etcd 集群并备份恢复』：mTLS 双向认证、一份快照 restore 出多成员、磁盘满→alarm→拒写→defrag+disarm 流程。",
+      "adler_q3": "基本成立：mTLS 配置、snapshot restore 流程、quota 行为（alarm no space、写失败、需 disarm）均与 etcd 行为一致；『一份快照可 restore 多成员』正确。",
+      "adler_q4": "能独立完成 etcd 备份恢复演练；能处理磁盘满后的 alarm 恢复顺序（先清理再解除）。",
+      "critical_notes": "实验流程清晰、坑真实（alarm 恢复顺序）；但以操作步骤为主，无独立洞见。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "磁盘写满后 etcd 恢复写入的正确顺序",
+          "source_text": "先 defrag 清理磁盘碎片，但 no space alarm 还在，必须先 alarm disarm 才能继续写入",
+          "paraphrase": "遇到 etcd no space 先 defrag 再 disarm alarm，顺序反了写入仍失败。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "etcd 行为可验证",
+            "notes": "机制可复现"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "高可用集群管理",
+      "snr_score": 4.2,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "生产 etcd 集群管理：operator/Helm 两种拉起、堆叠 vs 外部部署、3/5 节点权衡、gRPC 连接复用故障案例、本地 SSD 最佳实践、参数调优与『30 分钟快照+10 秒增量』增强备份。",
+      "adler_q2": "回答『生产 etcd 如何运维』：operator=CRD+Controller 范式、etcd 横向扩展反直觉（member 越多写入越慢）、list 不带 resourceVersion 穿透到 etcd 堵死 gRPC 的故障链、快照+增量备份方案。",
+      "adler_q3": "基本成立：gRPC 同 group 对象共用连接、list 无 resourceVersion 穿透、网络存储不可行回归本地 SSD 等均有完整因果链；心跳 100ms/选举超时 1000ms 可验证；『扩展反而降低写入性能』正确；RTT 经验值（心跳=RTT 0.5-1.5 倍）为工程经验不可独立验证。",
+      "adler_q4": "能设计生产 etcd 备份方案（快照+增量）、能规避 list 穿透与网络存储陷阱、能按故障域规划集群规模——多项可直接落地的运维决策。",
+      "critical_notes": "生产故障案例密度高、量化经验值实用、设计动机与权衡讲得清楚；是全书运维价值最高的一讲。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "list 不带 resourceVersion 穿透导致 5000 节点故障",
+          "source_text": "大集群 DaemonSet 每分钟 list 一次 pod 且没加 resource version，请求穿透到 etcd；1 万 pod 一次 list 超 100MB，5000 个并发 list 堵死共享 gRPC 连接",
+          "paraphrase": "客户端 list 务必带 resourceVersion 信任缓存；过滤发生在 API Server 而数据仍全量从 etcd 传输，『我以为 filter 了』是隐患。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "17",
+            "24"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师生产环境案例",
+            "notes": "故障链机制可验证，具体数值为内部环境"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "30 分钟快照+10 秒增量事件的备份方案",
+          "source_text": "snapshot 锁磁盘空间，频繁做会暴涨；从快照结束 revision watch 所有事件每 10 秒写增量",
+          "paraphrase": "快照低频+增量高频组合，兼顾磁盘压力与数据时效，可迁移到任何 KV 存储备份设计。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "17"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师团队生产方案",
+            "notes": "方案思路可验证，参数为内部配置"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "etcd 横向扩展反而降低写入性能",
+          "source_text": "member 越多写入需要确认的节点越多，性能越低；动态扩展难（强配置、有状态）",
+          "paraphrase": "遇 etcd 性能瓶颈先查慢查询/磁盘/网络，不要默认加节点。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Raft 多数确认机制",
+            "notes": "与 Raft 机制一致"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "网络存储挂 etcd 被证明不可行",
+          "source_text": "网盘挂 remote member 永远跟不上就掉队，集群状态不对；最终回归本地 SSD+独立盘+定期远端备份",
+          "paraphrase": "etcd 数据盘必须本地 SSD 独立盘，备份走远端，不要试图用网络存储兼任。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "17"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "生产实践共识",
+            "notes": "符合 etcd 官方存储建议"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "etcd 常见问题及解决办法",
+      "snr_score": 4.1,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "生产问题集：快照+增量备份实现、数据落盘加密、查询对应关系与乐观锁、FMA 故障注入——API Server 假健康导致 40% 节点被误驱逐的经典案例。",
+      "adler_q2": "回答『etcd 生产故障如何预防与修复』：备份方案增强（事件流增量补 status 局限）、FMA 主动制造故障验证控制面、health check 只看端口可达的缺陷与 API Server 自杀方案。",
+      "adler_q3": "基本成立：FMA 案例因果链完整（etcd 503 但端口通→API Server 误健康→节点状态上报失败→controller 误驱逐 40%）；『端口通≠服务健康』的洞见正确；落盘加密、409 乐观锁机制准确；故障数值为内部环境不可验证。",
+      "adler_q4": "能设计更真实的 health check（探测依赖组件存活而非端口）；能主动用故障注入验证控制面韧性；排障时能区分『节点真故障』与『控制面假健康』。",
+      "critical_notes": "教科书级故障叙事+可操作解决方案，独立于官方文档；是全书故障排查方法论最高的一讲。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "FMA 故障注入：假健康 API Server 引发大规模误驱逐",
+          "source_text": "5 节点 master 中 2 个 etcd 503 无响应，但 health check 只看 2379 端口可达；负载均衡使 40% 节点挂在假健康 API Server 上，节点状态上报失败被误判下线，controller manager 大规模驱逐 pod",
+          "paraphrase": "健康检查必须真实探测依赖组件存活；关键控制面组件故障时宁可自杀让流量切走，也不伪健康拖垮业务。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "16",
+            "24"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师生产环境 FMA 案例",
+            "notes": "故障链机制可验证，比例数值为内部环境"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "FMA（Failure Mode Analysis）故障注入方法论",
+          "source_text": "主动给控制面组件制造故障，测试业务应用是否受影响——控制面怎么死都不要影响业务",
+          "paraphrase": "把『制造故障→观察业务影响』纳入控制面变更的上线流程，主动暴露假健康/伪故障。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "可靠性工程方法论",
+            "notes": "与混沌工程思想一致"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "health check 真实探测依赖存活",
+          "source_text": "etcd 无响应时 API Server 自杀，节点会自动重新连到其他健康 API Server 恢复状态",
+          "paraphrase": "设计健康检查不止查端口，要查依赖的实质状态；服务异常时主动摘除自己。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "24"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "可靠性工程实践",
+            "notes": "方案合理可落地"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "API Server 概念",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "API Server 定位（控制面 API 网关、唯一连接 etcd 的组件）、认证/鉴权/准入/限流四层自我保护、请求宏观流转。",
+      "adler_q2": "回答『API Server 是什么、为什么需要四层保护』：认证你是谁、鉴权你能做什么、准入对象是否合法、限流防自我打死；为后续章节提供地图。",
+      "adler_q3": "基本成立：四层职责与唯一连接 etcd 的判断准确；宏观流转（认证→鉴权→Mutating→校验→Validating→etcd）正确；内容为概念引入，深度由后续章节补充。",
+      "adler_q4": "能建立 API Server 职责全景；能理解『用户不能直接连 etcd』的架构约束。",
+      "critical_notes": "概念性开篇，为模块目录性内容。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "API Server 认证机制",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "认证机制 demo：Insecure/Secure Port、X509 证书+CSR 签发闭环、静态 token、ServiceAccount 的 JWT token。",
+      "adler_q2": "回答『API Server 如何识别请求者』：证书靠 CA 背书、token 靠持有秘密、ServiceAccount 靠 API Server 自签发；用 403 证明『认证通过≠有权限』。",
+      "adler_q3": "基本成立：X509 CSR 流程、静态 token CSV 格式、ServiceAccount token 为 JWT 均准确；『403 恰恰证明认证成功』的反直觉点正确；内容为官方文档复述+演示。",
+      "adler_q4": "能自己签发用户证书并配置 RBAC 完成认证授权闭环；能正确解读 403 含义。",
+      "critical_notes": "demo 型讲解、机制清楚，独立洞见有限。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "403 恰恰证明认证成功",
+          "source_text": "API Server 回应『CNCamp 这个用户不能 get namespaces』，说明认证已通过，只是授权失败",
+          "paraphrase": "排查 403 时先区分认证与授权：能报出用户名说明认证已过，问题在权限。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 认证机制",
+            "notes": "可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "基于 Webhook 的认证服务集成",
+      "snr_score": 3.9,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Webhook 认证集成：TokenReview 协议、认证代理机制（GitHub PAT 示例）、token cache TTL、以及无指数退避导致 Keystone 被重试风暴打死的生产事故。",
+      "adler_q2": "回答『如何与企业认证平台集成』：API Server 把 TokenReview 转发给外部认证服务，认证服务代理到后端（GitHub/LDAP/AD/Keystone）并回填 Status；事故复盘说明必须指数退避+熔断。",
+      "adler_q3": "基本成立：TokenReview 结构（Spec.Token→Status）准确；TTL 默认 2 分钟可验证；『无退避重试把自愈变成 DDoS』的事故链完整且符合分布式系统常识；事故规模（300 集群、数小时）为内部数据不可验证。",
+      "adler_q4": "能设计 Webhook 认证服务（协议转换器模式）；写外部依赖调用时强制指数退避+熔断——这是可直接改变编码习惯的教训。",
+      "critical_notes": "事故复盘是独立于官方文档的洞见，教学价值高；整讲其余为教程性内容，故置银矿高位。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "无指数退避的重试风暴把 Keystone 打死",
+          "source_text": "认证插件 Token 过期 renew 出错后没有等待立即 retry；上百个集群并发，认证服务短时故障+无等待重试→请求堆积→恢复就被打死，短时故障放大为数小时故障",
+          "paraphrase": "对第三方依赖的调用必须实现指数退避与熔断；Kubernetes 的自动重试在没有退避控制时从自愈能力变成 DDoS。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师生产事故",
+            "notes": "机制符合分布式系统常识，规模数值为内部数据"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "Webhook 认证=协议转换器",
+          "source_text": "从 API Server 拿到 TokenReview，转换为后端认证系统认识的请求并转发，再组装成 Kubernetes 的 Status 返回",
+          "paraphrase": "对接任何企业认证系统（LDAP/AD/Keystone）只需实现 TokenReview 的协议转换，更换后端不影响对外接口。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "19"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s TokenReview 规范",
+            "notes": "协议机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "API Server 授权机制",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "授权机制：ABAC/RBAC、Role/ClusterRole/绑定模型、Subject 与 Group、多租户强弱隔离规划、生产事故教训与 namespace admin 自动化。",
+      "adler_q2": "回答『认证后你能做什么』：RBAC 的 Who/What/How 模型、namespace 范围 vs 集群范围授权、强/弱隔离策略；附春节误删生产集群与 update→patch 权限坑。",
+      "adler_q3": "基本成立：RBAC 对象模型与 ServiceAccount Group=namespace 的命名规则准确；『权限可传递』、『最小权限原则』正确；事故（配置文件指向生产导致删库）符合真实运维风险。",
+      "adler_q4": "能规划多租户集群的 RBAC 体系（强/弱隔离）；能把 update 改造为 patch 时同步检查权限；能设计 NamespaceCreator 自动化授权。",
+      "critical_notes": "事故教训真实、隔离规划可操作；RBAC 模型本身为整理性内容。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "update→patch 的性能优化必须同步补权限",
+          "source_text": "前几年大量控制器把 update 改 patch 优化性能，本地测试 OK、上线后才发现 patch 权限忘记给",
+          "paraphrase": "凡把控制器从 update 迁移到 patch，必须同步检查 RBAC 是否含 patch verb。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s RBAC 机制",
+            "notes": "可验证"
+          }
+        },
+        {
+          "type": "case_study",
+          "name": "配置文件指向错误环境导致生产集群被删",
+          "source_text": "某同学想对测试系统执行删除集群动作，配置文件却指向生产系统，导致生产集群被删，春节全员上线修复",
+          "paraphrase": "生产变更前核对 kubeconfig context；最小权限（只读）是防止误操作的最后防线。",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师亲历事故",
+            "notes": "事故细节无法独立验证，但风险模式真实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "API Server 准入控制",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "准入控制：变形与校验两大目的、ResourceQuota 配额场景、内置准入插件总览、Mutating/Validating Webhook 开发部署全流程。",
+      "adler_q2": "回答『有权限也不代表对象合法』：准入在认证授权之后、持久化之前校验；ResourceQuota 保护控制面资源；Webhook 通过 AdmissionReview 协议扩展。",
+      "adler_q3": "基本成立：配额报错与权限报错的区分正确（认证授权都过仍可因配额失败）；Mutating 先变形 Validating 后校验的顺序正确；Webhook 必须 HTTPS+caBundle 为事实。",
+      "adler_q4": "能用 ResourceQuota 管控多租户资源；能开发准入 Webhook 做安全加固（如强制 runAsNonRoot）。",
+      "critical_notes": "教程级+机制解释，配额场景与 Webhook 链路完整；独立洞见有限。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "认证→授权→准入三层防线",
+          "source_text": "认证判断你是谁、授权判断你能不能做、准入判断对象是否合法",
+          "paraphrase": "设计任何开放平台时把『身份-权限-内容合法性』拆成三道独立关卡，便于审计与扩展。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "18",
+            "24"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s API Server 机制",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "23",
+      "lecture_title": "API Server 限流方法",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "限流算法（固定/滑动窗口、漏桶、令牌桶）、MaxInFlight 全局限流、APF 多等级多队列与 Shuffle Sharding。",
+      "adler_q2": "回答『API Server 如何防止被自己打死』：全局并发限制+写并发限制，APF 按优先级/队列隔离坏用户；参数推荐值与调优方法。",
+      "adler_q3": "基本成立：四种限流算法描述正确；MaxInFlight 默认值（400/200）可验证；APF 的 FlowSchema/PriorityLevel/Shuffle Sharding 机制准确；『一个坏用户拖死整个集群→多队列隔离』的动机正确；推荐值（1500/500）为压测经验不可验证。",
+      "adler_q4": "能评估自研服务限流算法选型（令牌桶 vs 漏桶）；能理解并调优 APF 隔离策略保护共享集群。",
+      "critical_notes": "APF 机制讲解清楚、设计动机充分；限流算法为常识整理。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Shuffle Sharding：50 个队列最多进 4 个",
+          "source_text": "任何一条 Flow 最多只允许进少数几个队列，坏 Flow 最多塞死 4 个队列，其余 46 个仍存活",
+          "paraphrase": "多租户系统限流用『分片+限制破坏半径』隔离单点破坏者，而不是全局限总量。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "APF 设计（K8s 社区）",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "24",
+      "lecture_title": "高可用 API Server",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "高可用 API Server：冗余部署+负载均衡、Pod 化探活与资源预留、WatchCache Ring Buffer、统一访问入口、多租户四大能力与 NamespaceCreator 自动化。",
+      "adler_q2": "回答『API Server 高可用与多租户如何落地』：无状态是冗余的前提、缓存收敛 etcd 连接、双入口风险；多租户=可信+资源+访问+配额隔离组装。",
+      "adler_q3": "基本成立：WatchCache Ring Buffer、list 不带 resourceVersion 穿透、双入口（VIP vs ClusterIP 混用）风险均准确；NamespaceCreator（Mutating Webhook 记 UserInfo+RBAC Controller 绑 RoleBinding）可操作；资源预留教训（先 OOM 后 CPU 受限）为亲历。",
+      "adler_q4": "能规划 API Server 资源预留（随集群规模增长）与统一访问入口；能组装多租户集群的隔离能力。",
+      "critical_notes": "方案串讲性质，多数概念前文已覆盖；NamespaceCreator 模式与资源预留教训有独立价值。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "API Server 资源要按集群增长预留",
+          "source_text": "早期集群规模小留的资源小，规模变大后内存爆掉天天 OOM，调大内存后又发现 CPU 只给了 2 核",
+          "paraphrase": "上线前按目标集群规模预留 API Server CPU/内存，否则增长期会先 OOM 后 CPU 受限变慢。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师生产经验",
+            "notes": "经验合理，无法独立验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "25",
+      "lecture_title": "API Server 运作机制，apimachinery 组件",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "apimachinery：GKV、External/Internal/Storage Version 与 conversion、code generator、storage.go strategy、sub-resource（pod/status 不更新 spec）。",
+      "adler_q2": "回答『K8s 对象在代码里如何定义与流转』：双版本（external/internal）+conversion 实现向前兼容、code generator 自动生成 client/informer/lister、sub-resource 独立策略避免状态上报覆盖 spec 变更。",
+      "adler_q3": "基本成立：版本演进（v1alpha1→v1）、sub-resource『更新状态时不更新 spec』（用 etcd 旧 spec 覆盖请求 spec）的机制解释准确且反直觉；内容为源码走读，对非研发读者性价比低。",
+      "adler_q4": "（研发向）能读懂 K8s 对象定义与生成代码流程；能理解为什么 Status 更新走 patch 且不校验版本。",
+      "critical_notes": "源码走读类，概念解释有价值但表达效率对非研发读者低。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "sub-resource 让状态上报不覆盖 spec 变更",
+          "source_text": "更新 pod/status 时用 etcd 里已存在的 spec 覆盖用户带过来的 spec——即使请求带了 spec 变更也会被丢弃",
+          "paraphrase": "状态与期望分离写入是并发安全的关键：状态频繁变更不应携带 spec 快照，避免旧 spec 覆盖新变更。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "kube-apiserver 源码机制",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "26",
+      "lecture_title": "调度器 kube-scheduler",
+      "snr_score": 4.1,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "调度器：两阶段原理（Predicate/Priority）、request/limit 超售、init container 资源计算、NodeSelector/亲和反亲和、Taint/Toleration 三效应、PriorityClass 抢占、多调度器生态与运维问题（无熔断放大、应用炸弹）。",
+      "adler_q2": "回答『Pod 如何被放到合适的节点』：request 给调度器锁定、limit 给 cgroup 配额的超售机制；Taint 三效应与生产隔离场景；PriorityClass 抢占保关键业务；运维问题说明节点正常≠可用。",
+      "adler_q3": "基本成立：超售机制（request<limit 的差值即超售空间）、CPU 单位换算、Taint 三效应、抢占驱逐均准确；『节点状态正常≠节点可用』与『应用炸弹循环摧毁节点』的分析独立且正确；压测数据（8000 Pod/2 分钟）为内部实验不可验证。",
+      "adler_q4": "能设计 Pod 资源声明（区分 request/limit）；能规划 Taint/Toleration 的租户隔离；能预防应用炸弹（PID 限额）与调度熔断问题。",
+      "critical_notes": "机制+实验+运营经验最丰富的一讲：超售、Taint、抢占、应用炸弹均有独立洞见。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "request（调度器锁定）≠limit（cgroup 配额）= 超售空间",
+          "source_text": "request 是最少需求、被调度器锁定；limit 是上限、由 cgroup 限制；两者差值即超售",
+          "paraphrase": "资源利用率来自超售：只要业务高峰错峰，request<limit 可显著提升节点密度。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "03",
+            "33"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 资源模型",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "Taint 是门禁、Label 是邀请",
+          "source_text": "Taint 默认拒绝、需 Toleration 凭证才能进；三类 Effect：NoSchedule/PreferNoSchedule/NoExecute",
+          "paraphrase": "强隔离用 Taint 而非 Label——Label 打了别人也能用，Taint 才能保证『专属节点』。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 调度机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "应用炸弹：无限制的 Pod 能循环摧毁整个集群",
+          "source_text": "某个 Pod 有 fork 炸弹/PID leak 且不加限制，耗尽节点资源→节点 NotReady→Pod 被驱逐调度到好节点再次破坏",
+          "paraphrase": "给容器设置 PID/连接等资源限额（新版本单 Pod PID 限制）是防节点级灾难的兜底。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "28"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 资源隔离机制",
+            "notes": "机制成立，问题真实"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "调度器无熔断会放大底层故障",
+          "source_text": "某节点底层出问题但状态仍正常，因资源最多最容易被选上，Pod 调过去跑不起来，删了又调回来",
+          "paraphrase": "节点健康状态与真实可用性存在 gap，监控需覆盖『调度后 Pod 是否能跑起来』，不能只信节点上报。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师运营经验",
+            "notes": "问题模式真实，无量化数据"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "27",
+      "lecture_title": "控制器 Controller Manager",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "控制器模式：Informer/Lister 框架、工作队列去重与最终一致性、shared informer 内部链路、Deployment→RS→Pod 接力、滚动升级（template hash）、Job/StatefulSet/DaemonSet、ownerReference 与 GC 级联删除。",
+      "adler_q2": "回答『集群如何从声明状态自动收敛到真实状态』：控制器=list-watch+队列+worker 的通用骨架；队列只放 key 去重，配合最终一致性把一秒十次变更收敛为一次处理。",
+      "adler_q3": "基本成立：Informer 三种事件、队列 key 去重、template hash 触发滚动升级、ownerReference 级联删除均准确；『队列只放 key 是最终一致性的落地』的洞见独立且正确。",
+      "adler_q4": "能读懂任意控制器代码（同一骨架）；能设计自定义控制器/operator 的数据流；能理解滚动升级的 maxSurge/maxUnavailable。",
+      "critical_notes": "控制器模式讲解透彻、与调度器/kubelet 同构的洞察有价值；框架为整理性内容。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "队列只放 key：最终一致性的工程落地",
+          "source_text": "对象频繁变更时队列对 key 去重，Worker 取出后从 Lister 拿最终状态，中间变化不作数",
+          "paraphrase": "处理高频变更的事件系统：队列存标识+取最新状态，比存完整对象快得多且天然幂等。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "09",
+            "28"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "k8s controller-runtime 机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "Deployment 以模板 hash 是否变化作为部署信号",
+          "source_text": "两个镜像本质相同但 tag 字符串变了，template hash 变化就触发一次新部署",
+          "paraphrase": "镜像 tag 必须语义化：tag 变化即触发滚动升级，滥用 latest/字符串差异会制造无意义部署。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "06"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 滚动升级机制",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "28",
+      "lecture_title": "kubelet 组件",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "kubelet：API 层+一组 Manager（Probe/OOMWatcher/cAdvisor/Eviction 等）、SyncLoop/Pod Worker、PLEG、三种 Pod 清单获取方式、Sandbox Container（pause）与 sync pod 细粒度流程。",
+      "adler_q2": "回答『节点上 Pod 如何被拉起与守护』：kubelet 复用控制器模式（SyncLoop）；PLEG 定期 List 运行时上报 Pod 状态；Sandbox 提供稳定网络底座；『Pod 定义 1 容器、节点跑 2 进程』。",
+      "adler_q3": "基本成立：PLEG 机制与 GC 超时坑、Sandbox/pause 动机（网络先就绪、进程崩溃不丢网络）、Dockershim 废弃真相均准确；『docker 被废弃的是 dockershim』的判断正确。",
+      "adler_q4": "能解释『为什么 Pod 里有 pause 容器』；能排查 PLEG 超时导致的节点异常（退出容器堆积）；排障 Pod 启动顺序问题（存储先于容器）。",
+      "critical_notes": "pause 底座解释反直觉且独立，PLEG 性能坑真实；组件讲解为主。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "网络不挂在应用容器上，而挂在 pause 底座上",
+          "source_text": "应用进程异常退出会丢失与网络 namespace 的绑定；Sandbox（pause，sleep infinity）提供永不退出的稳定底座",
+          "paraphrase": "设计高可用系统时把『易变部分』与『稳定底座』解耦——容器进程可随便重启，网络/存储身份不丢。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "33"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s sandbox 机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "Docker 被废弃的是 dockershim 而非 Docker",
+          "source_text": "2021 年热传『Docker 被 K8s 废弃』，实际废弃的是 kubelet 与 Docker 的适配层 Dockershim，改走标准化 CRI",
+          "paraphrase": "技术换代消息要区分『组件本身』与『适配层』——适配层淘汰不代表底层技术死亡。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s CRI 演进史",
+            "notes": "事实准确"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "29",
+      "lecture_title": "容器运行时接口 CRI",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "CRI：Kubernetes 与 Docker 的标准之争历史、gRPC 服务本质、High/Low-Level Runtime 分层、OCI 三类规范、Docker→containerd 切换实操。",
+      "adler_q2": "回答『K8s 如何与容器运行时解耦』：CRI 把启动过程抽象为 gRPC 接口；High-Level 拉镜像解包成 bundle、Low-Level（runc）真正起进程；Docker 内部是 dockerd+containerd。",
+      "adler_q3": "基本成立：Docker 与 Kubernetes 竞争史（Solomon 与 Kelsey Hightower 口水战）为公开事实；运行时分层与 OCI 规范准确；『去掉 dockerd 让架构变简单』的判断正确；团队选型对比（containerd vs CRI-O）为内部测试不可验证。",
+      "adler_q4": "能执行 Docker→containerd 运行时切换（kubelet 两个参数）；能用 crictl 排查容器；能向他人解释『弃用 Docker』的准确含义。",
+      "critical_notes": "标准之争历史与选型理由有独立价值；其余为整理性内容。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "接口与实现解耦防止厂商锁定",
+          "source_text": "K8s 只定义并调用 CRI 接口，由不同运行时提供实现，不再与某个具体运行时强绑定",
+          "paraphrase": "平台层用标准接口隔离厂商：用户可自由替换实现，生态话语权不落入单一厂商。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s/OCI 演进史",
+            "notes": "历史事实可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "30",
+      "lecture_title": "容器网络接口 CNI",
+      "snr_score": 4.0,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "CNI：网络模型原则、三类插件（IPAM/主插件/metaplugin）、exec 调用机制、VXLAN 与 BGP 两种跨节点模式、Calico 组件/IPAM 数据结构、169.254.1.1 全 1 MAC 虚拟网关、BGP mesh 规模挑战与 Route Reflector、Cilium。",
+      "adler_q2": "回答『K8s 如何打通容器网络』：CNI 是可执行文件直接调用（区别于 CRI 的 gRPC）；Calico 的 VXLAN 封装 vs BGP 路由交换两条路径；IPAM 三对象（IPPool/IPAMBlock/IPHandle）；大集群 BGP mesh 指数膨胀需 RR 星状化。",
+      "adler_q3": "基本成立：CNI exec 机制、VXLAN 封包层级、Calico Felix/BIRD/confd 分工、全 1 MAC 虚拟网关、BGP RR 解法均准确；『每个节点当路由器在节点增多时路由复杂度指数上升』的分析独立且正确；Cilium 内核版本门槛（5.4+）为公开事实。",
+      "adler_q4": "能诊断容器网络（nsenter/ip route/arp 全 1 MAC）；能按规模选型（小集群 flannel、生产 Calico BGP、大集群 RR、新内核可考虑 Cilium）；能读懂 Calico 的 IPAM CRD。",
+      "critical_notes": "机制解释+生产选型经验+规模分析均有独立洞见，是网络知识密度最高的一讲。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "Pod 默认网关 169.254.1.1 无人配置，靠全 1 MAC 把流量吸到 veth 外侧",
+          "source_text": "容器内任何网络请求由全 1 MAC 响应，请求都被外边 cali 端口处理，由主机转发",
+          "paraphrase": "排障容器网络时不要找『谁配置了这个网关 IP』——它是虚拟的，实际由 veth pair 外侧设备处理。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "05",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Calico 网络实现",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "BGP mesh 规模挑战→Route Reflector 星状化",
+          "source_text": "每个节点都是路由器，集群变成 mesh 网络，节点越多路由信息指数级上升；RR 用集中交换节点把 mesh 变星状",
+          "paraphrase": "网络/服务发现等 mesh 类方案在规模增长时都面临指数膨胀，需引入中心汇聚点降维。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "39"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "BGP 网络工程",
+            "notes": "机制正确"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "IPAM 三对象：IPPool→IPAMBlock→IPHandle",
+          "source_text": "IPPool 定义总 IP 段；按 /26 划给节点成 IPAMBlock；IPHandle 记录 IP 与 Pod 的关联",
+          "paraphrase": "理解网络插件的 IP 管理：总池-节点分片-分配记录三层结构，任何 IPAM 设计都可对照。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Calico CRD 结构",
+            "notes": "可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "31",
+      "lecture_title": "容器存储接口 CSI",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "CSI：存储驱动演进（in-tree→flexVolume→CSI）、create/attach/mount 三步与控制面/数据面分工、emptyDir/hostPath/PV-PVC 三种存储路径、静态 vs 动态供给与 LVM/local PV 生产实践。",
+      "adler_q2": "回答『K8s 如何挂存储』：CSI 用 gRPC 取代内嵌代码与可执行文件；控制面（create/attach 集中控制器）与数据面（mount 在节点）分离；用户只面对 PVC。",
+      "adler_q3": "基本成立：存储驱动三阶段演进动机（版本耦合→灵活性）正确；PVC/PV 绑定、静态 vs 动态供给路径、LVM noisy neighbor 权衡均准确；『20% 性能提升』为内部测试不可验证。",
+      "adler_q4": "能设计 Pod 存储方案（临时用 emptyDir、半持久 hostPath 慎用、持久化走 PVC）；能按 IO 需求选择独占 local PV 或 LVM。",
+      "critical_notes": "原理+生产实践，静动态供给对比清楚；独立洞见有限。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "决策与执行分离：create/attach 集中、mount 在节点",
+          "source_text": "create volume 和 attach 由 kube-controller-manager 集中处理，mount 必须发生在每个 Pod 运行的节点上由 kubelet 完成",
+          "paraphrase": "控制面决策可集中、数据面动作必须就地——这一分工模式可迁移到任何分布式存储设计。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "CSI 架构",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "32",
+      "lecture_title": "Rook 的工作原理",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "Rook 项目走读：Operator=CRD+Controller 拉起控制面、Provisioner/plugin 分工、Unix socket+empty dir 通信、Discover 裸盘机制、CephCluster/pool/StorageClass 抽象。",
+      "adler_q2": "回答『Rook 如何在 K8s 上提供存储』：operator 监听 CRD 拉起 Ceph 控制面；provisioner 通用框架+存储插件经共享 socket 通信；用户流程=PVC→Rook 建 PV→绑定。",
+      "adler_q3": "基本成立：operator 模式、provisioner/agent 分工、Unix socket IPC 描述准确；为第三方项目介绍+演示，深度受限于项目文档。",
+      "adler_q4": "能理解 operator 类项目（Rook/etcd-operator）的通用骨架；能按教程跑通 Ceph 存储。",
+      "critical_notes": "项目走读+演示为主，『两个容器通过 empty dir 共享 Unix socket 完成 IPC』有机制价值；整体独立洞见有限。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "operator=CRD+Controller 的范式",
+          "source_text": "Rook Operator 利用 controller-runtime 实现 CRD，基于这些 CRD 创建相关资源，把整个控制面拉起来",
+          "paraphrase": "任何『把运维动作自动化』的工具都可按 CRD 声明+控制器执行来设计。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Operator 模式共识",
+            "notes": "可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "33",
+      "lecture_title": "深入理解 Pod 的生命周期",
+      "snr_score": 4.2,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "Pod 生命周期：状态机与 phase/condition 计算、状态-根因对照表、QoS Class 推导、污点驱逐（300 秒容忍）、三类探针、ReadinessGate、优雅终止三动作链与 SIGTERM 被 shell 吞掉的坑、高可用=冗余×故障域×优雅启停。",
+      "adler_q2": "回答『Pod 如何优雅地活与死』：QoS 由 request/limit 关系推导而非显式配置；探针默认值哲学（Liveness 乐观/Readiness 悲观）；优雅终止的信号穿透链（PreStop→SIGTERM→SIGKILL）。",
+      "adler_q3": "基本成立：QoS 推导、驱逐优先级（BestEffort→Burstable→Guaranteed）、默认 TolerationSeconds=300/terminationGracePeriod=30、探针 failureThreshold=3 均可验证；『bash/sh 吞掉 SIGTERM 使优雅终止失效』的踩坑符合 Linux 信号机制；团队 900 秒扩展为内部实践。",
+      "adler_q4": "能按对照表快速定位 Pod 异常根因（CrashLoopBackOff/OOMKilled/CreateContainerConfigError）；能写出真正优雅终止的应用（处理 SIGTERM、日志走 stdout）；能合理设计探针避免启动风暴。",
+      "critical_notes": "信息密度全课最高、踩坑亲历（bash 吞信号）、反直觉点多（Liveness/Readiness 默认值相反、300 秒缓冲抖动）、可操作性极强。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "bash/sh 吞掉 SIGTERM 破坏优雅终止",
+          "source_text": "容器镜像有自带日志输出，但用 bash 命令把日志重定向到文件；删除 Pod 时 SIGTERM 被 bash 吃掉不往下传，应用里的优雅中止逻辑失效，发布特别慢",
+          "paraphrase": "应用容器用 shell 封装启动会破坏信号传递链；日志应输出 stdout，信号处理用 tini 或应用自实现。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "06",
+            "28"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Linux 信号机制",
+            "notes": "机制可验证，符合 shell 行为"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "QoS Class 由 request/limit 关系自动推导",
+          "source_text": "Guaranteed=Request==Limit；Burstable=Limit>Request；BestEffort=不声明资源",
+          "paraphrase": "资源声明同时决定保障等级与驱逐优先级：关键业务 Guaranteed，其余 Burstable 超售。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "26"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s QoS 机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "Liveness 默认乐观、Readiness 默认悲观",
+          "source_text": "Readiness 未到初始延迟前默认 NotReady；Liveness 未探测前默认 Live",
+          "paraphrase": "探针默认值哲学相反：流量保守（不就绪不放）、存活乐观（不误杀）——理解后才能正确配置。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "11"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 探针行为",
+            "notes": "行为可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "高可用=冗余副本×故障域×优雅启停×平台机制",
+          "source_text": "三个副本不能在同一物理节点，还要跨机架、跨可用区；配合 maxSurge 滚动升级",
+          "paraphrase": "高可用是组合结果，任何一环缺失都会在某类故障下失效——先评估能忍受多长不可用时间。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "26",
+            "39"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 高可用实践共识",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "34",
+      "lecture_title": "服务发现",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "服务发现与负载均衡全景：数据包格式、负载均衡=改包头、NAT/新建连接/DR/隧道四种技术、DNS A 记录与 TTL 弱点、集中式/进程内/sidecar 三种形态、纵向 vs 横向扩展。",
+      "adler_q2": "回答『服务发现要解决什么、LB 有哪些实现』：A 服务如何获知 B 的地址/健康/负载；四种 LB 技术的代价（NAT 不参与连接、DR 共享 IP、隧道加包头）；DNS 只做弱化均衡（TTL 问题）。",
+      "adler_q3": "基本成立：NAT/DR/隧道/新建连接的机制描述准确；『DNS 不在数据面、客户端信任 TTL 导致地址变化不可感知』正确；进程内 LB 强耦合→sidecar 独立进程的演进逻辑成立。",
+      "adler_q4": "能判断不同场景的 LB 选型（客户端直连/独立进程/集中式）；能解释『为什么不能靠 DNS 做动态切流』。",
+      "critical_notes": "理论梳理系统、『改包头』总结精炼；为整理性内容但结构清晰。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "负载均衡的本质=修改数据包头",
+          "source_text": "把虚拟 IP 的目标地址/端口换成真实服务器的目标地址/端口，由负载均衡器执行",
+          "paraphrase": "理解任何 LB 技术（NAT/DR/隧道/四层/七层）都回到『改哪里、怎么改包头』的框架。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "35",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "网络工程原理",
+            "notes": "可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "35",
+      "lecture_title": "Service 对象",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "Service 对象：selector 标签汇聚、Endpoint 中间表（就绪/未就绪分类）、EndpointSlice 性能优化、不带 selector 手工 Endpoint、五种类型、Service Topology 就近访问。",
+      "adler_q2": "回答『Service 如何把理论落地』：selector 汇聚一组 Pod、Endpoint 作为多对多中间表、就绪状态决定流量承接；EndpointSlice 用切片解决大对象全量推送。",
+      "adler_q3": "基本成立：Endpoint 中间表类比、notReady 不承接流量、不带 selector 接外部资源、Topology 强弱约束均准确；EndpointSlice 切片思路正确（默认切片 100，讲师示例 500/1000 为配置场景）。",
+      "adler_q4": "能设计 Service 暴露方案（内部 ClusterIP、外部 NodePort/LB、无头服务）；能理解『Pod 就绪才承接流量』的机制落点。",
+      "critical_notes": "机制解释清楚、中间表类比好；对象语义为官方文档复述。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Endpoint 是 Service 与 Pod 的中间表",
+          "source_text": "一个 Service 可选多个 Pod、一个 Pod 可发布成不同服务；Endpoint 与 Service 同名、维护 address/notReadyAddress",
+          "paraphrase": "多对多关系用中间表表达是数据库常识，K8s 用同一思路解耦 Service 与 Pod。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 对象机制",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "36",
+      "lecture_title": "kube-proxy 组件",
+      "snr_score": 3.8,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "kube-proxy：Netfilter/SKB 数据包流转、iptables 概率命中 DNAT 链解读（33%/50%/100%）、iptables 三大问题、IPVS 与 dummy 设备、虚 IP 可转发不可寻址。",
+      "adler_q2": "回答『负载均衡规则由谁怎么配置』：kube-proxy 监听 Service/Endpoint 变化配置内核 NAT；iptables 用概率链做多后端分流；IPVS 需把 ClusterIP 绑 dummy 设备（因无 PREROUTING hook）。",
+      "adler_q3": "基本成立：iptables 概率链机制、IPVS Hook 点差异（无 PREROUTING）、dummy 设备必要性、『ClusterIP ping 不通 curl 通』均准确；iptables 规则膨胀与全量刷新问题真实；结论『生产尽量用 IPVS』符合业界共识。",
+      "adler_q4": "能读懂 iptables -t nat 规则链定位 Service 转发问题；能决策 iptables vs IPVS 选型；能理解 ClusterIP 虚地址的本质。",
+      "critical_notes": "iptables 概率链与 IPVS dummy 差异的解读少见且准确；内核机制整理为主。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "iptables 概率链 vs IPVS 列表：为什么 IPVS 更适合大规模",
+          "source_text": "iptables 用 33%/50%/100% 概率命中做多后端分流，后端越多规则链越长；IPVS 维护 virtual IP+后端列表",
+          "paraphrase": "大规模负载均衡选『表驱动』（IPVS）而非『链式概率匹配』（iptables），规则规模可控。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "30"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "内核网络机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "ClusterIP 是虚 IP：可参与转发、不可被寻址",
+          "source_text": "Service IP 没绑定任何设备，ping 不通；curl 发出真实数据包经内核规则 DNAT 才通",
+          "paraphrase": "排障时不要 ping ClusterIP（必然不通），直接用 curl 验证业务连通性。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "35"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 网络行为",
+            "notes": "行为可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "37",
+      "lecture_title": "DNS 原理和实践",
+      "snr_score": 3.7,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "DNS 服务发现：CoreDNS 内存态+控制器同步、FQDN 拼接规则、普通/Headless/ExternalName 三种 DNS 形态、ndots/search domain、enableServiceLinks 踩坑、split-horizon 内外统一域名。",
+      "adler_q2": "回答『如何用名字稳定发布服务』：服务名+namespace 是全局唯一标识（比 IP 稳定）；CoreDNS 控制器动态校正域名→IP 映射；Headless 由 DNS 直接返回 Pod IP。",
+      "adler_q3": "基本成立：FQDN 规则、Headless/ExternalName 的 DNS 记录形态、ndots 阈值默认 5 均准确；enableServiceLinks 踩坑（Service 太多→环境变量撑爆 runc 命令行→Pod 起不来）机制合理且为文档外案例。",
+      "adler_q4": "能正确使用短名/全名（理解 ndots 与 search domain）；大规模多 Service 场景知道关 enableServiceLinks 改用 DNS。",
+      "critical_notes": "enableServiceLinks 踩坑独特、机制解释清楚；其余为 DNS 原理整理。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "Service 太多导致 Pod 起不来：环境变量撑爆命令行",
+          "source_text": "同 namespace 建几千个 Service 后 Pod 建不出来；所有 Service 环境变量都作为 runc 启动参数传入，命令行超长被系统截断",
+          "paraphrase": "大规模多 Service 场景设 enableServiceLinks=false，改用 DNS 服务发现。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "35"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "讲师生产经验/社区案例",
+            "notes": "机制合理，规模数值为经验"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "服务名+namespace 是比 IP 更稳定的服务标识",
+          "source_text": "Service 一重建 ClusterIP/NodePort 就变，但名字不变；DNS 记录由控制器动态校正",
+          "paraphrase": "对外发布用『名字』而非『地址』：名字是身份、地址是可替换的实现细节。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "35"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "DNS 设计原理",
+            "notes": "可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "38",
+      "lecture_title": "Ingress 对象",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "Ingress：L4 vs L7 本质差异、Ingress 与 Ingress Controller 分离、TLS Termination、ingress class 选择、统一入口收敛 IP 消耗。",
+      "adler_q2": "回答『Service 之外的七层路由需求』：基于域名/路径/Header 的精细路由；Ingress 是声明对象、Controller 转换为代理配置；七层转发反而让四层更简单（多服务共享 VIP）。",
+      "adler_q3": "基本成立：L4/L7 差异、Ingress Controller 转换机制、TLS 证书放 Secret 的约定、ingress class 多 Controller 选择均准确；『IP 消耗随服务数线性增长→统一 VIP 收敛』的分析正确。",
+      "adler_q4": "能设计 Ingress 发布流程（Deployment→Service→Ingress 三步）；能配置 HTTPS Ingress 与多 Controller 选择。",
+      "critical_notes": "概念+演示，『简单对象 vs 灵活性』的设计权衡讨论有提炼价值；独立洞见有限。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "L4 每服务一个 IP vs L7 统一 VIP 收敛",
+          "source_text": "L4 模式下 1000 个服务需 1000 个 ClusterIP；Ingress 让多服务共享一个 API 网关 VIP 统一接入",
+          "paraphrase": "评估入口方案时看资源消耗曲线：L4 线性增长 vs L7 收敛到网关，规模决定选型。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "34",
+            "39"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "K8s 网络设计",
+            "notes": "机制可验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "39",
+      "lecture_title": "案例分享：通过 Ingress 和 Service 完成一个网络拓扑",
+      "snr_score": 4.0,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "真实项目：DNS TTL 切流陷阱、99/1 权重负载均衡、硬件 LB 三大痛点、自建 Ingress Controller（DNS+四层+七层配置）、ECMP 横向扩展、IPVS Tunnel+DSR、BGP 路由宣告、8 城边缘节点加速（140ms→40ms）。",
+      "adler_q2": "回答『如何构建高可用跨地域多活网络拓扑』：DNS 摘除≠流量切换→用 LB 做切流开关；ECMP 让多节点共享 VIP 横向扩展四层；DSR 让回包直连客户端；自有骨干网+边缘节点做跨境加速。",
+      "adler_q3": "基本成立：DNS TTL 陷阱、99/1 权重、ECMP/DSR/BGP 宣告机制均准确且可迁移；硬件 LB 痛点（成本/闲置/采购周期）符合行业现实；量化数据（140→40ms、4% 营收、十几万美金）为内部项目/预测不可独立验证。",
+      "adler_q4": "能直接借鉴完整方案：用 LB 而非 DNS 做切流、ECMP 扩展四层、DSR 优化回程、边缘节点+骨干网做跨境加速；能向决策层说明网络性能的商业价值。",
+      "critical_notes": "完整真实项目叙事、方案可迁移性强、设计动机与权衡（99/1 保活、CDN 渐进迁移）清晰；量化数据不可验证需标注。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "DNS 摘除≠流量切换，切流要依赖流量必经组件",
+          "source_text": "客户端缓存 DNS 记录，即使 DNS 侧已摘除故障线路，流量仍持续发往旧 LB IP；在 LB 上切流秒级生效",
+          "paraphrase": "任何『切流』需求不要依赖 DNS（缓存滞后），要用流量必经的 LB 作为切流开关。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "34",
+            "37"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "DNS 缓存机制",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "ECMP：多节点宣告同一 VIP 实现四层横向扩展",
+          "source_text": "多个节点宣告同一 IP 段，路由器等值多路径+五元组哈希选路",
+          "paraphrase": "横向扩展『入口地址』不靠加 IP，靠多节点共享 VIP+路由器等值路由，哈希保证连接一致性。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "30"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "网络工程（ECMP）",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "DSR：入站走 LB、回包直连客户端",
+          "source_text": "回包时外层包已丢弃、内层包 Source IP 是客户端 IP，响应包直接按路由回客户端",
+          "paraphrase": "大流量回程优化用 DSR 避免 LB 成为回程瓶颈；前提是保留客户端源 IP（隧道而非 NAT）。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "34",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "网络工程（DSR）",
+            "notes": "机制可验证"
+          }
+        },
+        {
+          "type": "case_study",
+          "name": "跨境访问优化：自有骨干网+边缘节点卸载 TLS",
+          "source_text": "8 个城市各 15 台服务器建 K8s 集群，部署 Ingress 方案；边缘先卸载 TLS 再以 HTTP 回源主数据中心",
+          "paraphrase": "跨境加速三件套：边缘节点就近接入+自有骨干网固定路径+边缘卸载 TLS 减握手开销。",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "❓",
+            "source_url": "讲师生产项目",
+            "notes": "方案机制可验证，140ms→40ms 与 4% 营收为内部数据"
+          }
+        }
+      ]
+    }
+  ]
+}

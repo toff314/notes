@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《架构设计合理性实战》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">架构设计合理性实战</a><a href="README.html">《架构设计合理性实战》消化索引（digest README）</a></div>
+<h1>《架构设计合理性实战》消化索引（digest README）</h1>
+<blockquote><p>本目录是《架构设计合理性实战》（讲师：华仔，架构实战营模块3）的结构化消化产物，生成于 2026-08-31。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/架构设计合理性实战/digest/</code></p><p><strong>课程原文绝对路径</strong>：`/home/yuanwu/geektime/output/架构设计合理性实战/如何保证设计出合理的架构？/&lt;讲&gt;/</p><p>⚠️ 正文说明：各讲 .md 文件为 47 字节占位符，实际正文为同名 <code>_sub0.vtt</code> 字幕转录（已转 <code>_transcript.txt</code>）。</p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、三幕逐幕评价（定位/方法论/实战）。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、9 条量化声明的数据审计。引用任何课程数据前必查 verification 状态。</li><li><strong><code>theme_articles/theme-001.json</code></strong> — 可直接成文的主题深挖素材包（架构选型方法论）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（三幕评价+数据可信度审计）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题深挖文素材（架构选型：优先级排序评估法）</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（5 主题重组 + Mermaid 概念图 + 3 条阅读路线）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5 分钟速览</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记（Adler 两问 + 章节标题矩阵）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要（6 讲扫描数据）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣 + 数据审计（gold 1 / silver 5）</td><td>机读</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 acts / overall_assessment / writing_direction</li><li>读 <code>content_triage.json</code> 的 data_audit（9 条声明：✅1 ⚠️1 ❓6 🚩1）</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>读 <code>theme_articles/theme-001.json</code> 的 narrative_arc / verification_gate</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong>（存储难度 100 倍、短信转化率、6 个月/2-3 年、15-16 台、性能量级无基线）</li><li>按 source_lectures（03/05/06）对应路径读讲课原文核对引文：</li></ol>
+<ul><li><code>如何保证设计出合理的架构？/3. 架构设计中期应该怎么做？/…_transcript.txt</code></li><li><code>如何保证设计出合理的架构？/5. 消息队列备选架构设计实战/…_transcript.txt</code></li><li><code>如何保证设计出合理的架构？/6. 消息队列备选架构选择和细化实战/…_transcript.txt</code></li></ul>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文绝对路径</th></tr><tr><td>06</td><td>消息队列备选架构选择和细化实战</td><td><code>/home/yuanwu/geektime/output/架构设计合理性实战/如何保证设计出合理的架构？/6. 消息队列备选架构选择和细化实战/6. 消息队列备选架构选择和细化实战_transcript.txt</code></td></tr></table>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
+<ul><li>存储系统难度&quot;业务功能 1 vs 存储 100&quot;（第6讲，🚩 夸张比喻无出处）</li><li>短信转化率 1-2%、实际访问量 5000 多（第1讲，❓ 讲师经验）</li><li>澳X通项目 3 个月开发/6 个月监管上线（第2讲，❓ 个人案例）</li><li>自研存储 0→1 要 6 个月、成熟 2-3 年（第6讲，❓ 经验判断）</li><li>自研服务器 15-16 台（第6讲，❓ 个人案例）</li><li>Kafka 4-5 万 vs MySQL 3-4 万 vs 自研 2-4 千性能量级（第6讲，⚠️ 量级常识无基线，引用须标注）</li></ul>
+<h2>元信息</h2>
+<ul><li>消化评分：3.56/5（🥇1 🥈5 🥉0 ⛏️0）</li><li>处理文章数：6（正文为 vtt 转录，.md 为占位符）</li><li>主题深挖文：1 篇（金矿 1 → 决策表 0-1 篇；金矿+银矿 6 ≥ 5，SNR 3.56 ≥ 2.5 不减半）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

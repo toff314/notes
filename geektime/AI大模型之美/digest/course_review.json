@@ -1,0 +1,101 @@
+{
+  "type": "course_review",
+  "course": "AI大模型之美",
+  "title_idea": "复盘一门2023年的「LLM应用开发」课：哪些内容三年后依然成立，哪些已经烂掉？",
+  "data_credibility_summary": {
+    "total_claims": 25,
+    "verified_pct": "88%",
+    "partial_pct": "8%",
+    "unverifiable_pct": "4%",
+    "suspicious_pct": "0%"
+  },
+  "narrative_structure": {
+    "acts": [
+      {
+        "act_name": "第一幕：课前必读 + 基础知识篇（开篇词、导读、01-08）",
+        "act_summary": "这一幕回答「为什么人人该学 AI 应用开发」并建立工具基础。开篇词和导读是标准的时代号召+学习方法，情绪价值大于信息价值；01 讲是纯环境配置；02-08 讲用「零机器学习基础做情感分析」切入，逐讲演示 Completion 和 Embedding 两个原语如何替代传统的分类、聚类、摘要、改写。这一幕的亮点是第 02 讲「传统 ML vs LLM」的对照——用朴素贝叶斯+特征工程的繁琐，反衬 LLM 零样本分类的「20 行代码」。但整体仍是教程级，模型和 API 已全面过时，主要价值在于让读者建立「用接口替代训练」的心智。",
+        "highlights": [
+          "第02讲用传统ML对照凸显LLM降门槛，且用真实数据集（Amazon评论）验证而非空谈",
+          "「用接口替代训练」的主线清晰，两个原语贯穿全课"
+        ],
+        "criticisms": [
+          "开篇词/导读/01讲共占3讲却几乎无知识含量，铺垫冗余",
+          "零样本分类96%准确率是单数据集单次运行结果，被当作通用结论陈述"
+        ],
+        "data_credibility_flags": [
+          "L02的96%准确率来自OpenAI Cookbook单次demo，非通用结论（⚠️）",
+          "L01无任何可验证内容，纯环境配置"
+        ]
+      },
+      {
+        "act_name": "第二幕：实战提高篇（一）——RAG、LangChain、Agent（09-18）",
+        "act_summary": "这一幕是课程的价值核心。第 09 讲建立语义检索（RAG 的检索原语），第 10 讲提出「第二大脑」模式（即后来的 RAG），并给出「世界知识 vs 上下文知识」这一关键概念区分；第 11 讲讨论开源替代的成本与数据安全动机；第 13 讲提出「多步提示语」（思维链的前身），是课程少数可迁移的方法论；第 15/17 讲把工具调用推进到 Agent/ReAct。这一幕的框架性内容（RAG、CoT、Agent）经受了时间检验，至今仍是 LLM 应用开发的主流范式，是全课唯一值得精读的部分。代价是：所有实现都深度绑定 2023 年初的 LangChain/llama-index API，现已全部废弃，读者需自行迁移。",
+        "highlights": [
+          "第10讲「第二大脑」准确预见RAG范式，「世界知识/上下文知识」二分是理解LLM边界的关键心智模型",
+          "第13讲「多步提示语」可迁移，且用真实bug（format_time(-1)）验证了方法有效性",
+          "第17讲Agent追溯到MRKL/ReAct论文，学术可验证，且诚实展示Agent失败案例"
+        ],
+        "criticisms": [
+          "LangChain/llama-index深度绑定导致5-6讲（14/16等）沦为「会过时的库教程」",
+          "第12讲Excel插件与第13讲内容重叠，可压缩",
+          "开源模型部分（第11讲）的ChatGLM-6B已被彻底淘汰"
+        ],
+        "data_credibility_flags": [
+          "L10的「中文语料<1%」无精确出处（❓），「text-davinci-003贵10倍」为近似数",
+          "L15的「352×493算错」、L13的「-1返回59min59s」均为可复现的代码demo（✅）"
+        ]
+      },
+      {
+        "act_name": "第三幕：实战提高篇（二）——语音与图像多模态（19-27）",
+        "act_summary": "这一幕从语音（Whisper/TTS/数字人）转向图像（CLIP/Stable Diffusion/ControlNet/Visual ChatGPT），最后用 Midjourney 案例收尾到产品设计。技术上，第 23 讲 CLIP 的「文本图像同向量空间」和第 24 讲 Stable Diffusion 的三模块架构讲解清晰，「生成 vs 搜索」的本质区分是一针见血的洞察；第 26 讲 Visual ChatGPT 揭示了 Agent 机制可推广到任意 ML 模型（Task Matrix）。但 19-22、25 讲仍是教程堆叠，D-ID 等 SaaS 演示价值低。这一幕的意外之喜是第 27 讲——全课唯一的「产品思维」讲，独立于代码、可迁移性强，是全课表达效率最高的一讲。",
+        "highlights": [
+          "第24讲「宇航员骑马的图证明是生成而非搜索」一针见血点出扩散模型本质",
+          "第27讲AIGC产品三原则（用户社区/及时反馈/数据飞轮）独立于技术栈，「隐式反馈即标注」是点睛之笔",
+          "第26讲把Agent从文本工具推广到视觉模型，引出Task Matrix概念"
+        ],
+        "criticisms": [
+          "19-22、25讲为纯教程/演示，数字人讲（21）依赖D-ID等SaaS，价值低",
+          "多模态模块偏「体验工具」而非「讲原理」，深度不足",
+          "第23讲零样本目标检测分数偏低（0.28）未加解释"
+        ],
+        "data_credibility_flags": [
+          "L27的「Midjourney十几人/1亿美元年收入」是广为报道但未官方确认的数据（⚠️）",
+          "L23的「CLIP用4亿图片训练」「ResNet在ImageNet 90%+」可验证（✅）"
+        ]
+      },
+      {
+        "act_name": "第四幕：结束语 + 直播加餐（结束语、结课测试、加餐一/二）",
+        "act_summary": "这一幕是课程尾声与自我更新。结束语和结课测试是常规收尾，无实质内容；直播加餐是视频无正文。真正的价值在加餐一、加餐二——它们是课程唯一的「现代化更新」，纠正了「temperature=0 即可复现」的常见误解，用 JSON 模式 + seed + fingerprint 给出稳定输出的工程方案，用 Function Call 把第 15/17 讲的工具调用思想「原生化」到 OpenAI API，并用「减法描述写反导致结果变负」的 demo 有力地验证了「函数描述即契约」。两讲质量高于多数正课，可惜只是加餐而非主线。",
+        "highlights": [
+          "加餐一纠正「temperature=0即复现」的反直觉点，给出seed+fingerprint完整方案",
+          "加餐二「函数描述决定调用正确性」用减法demo演示得淋漓尽致",
+          "两讲加餐质量高于多数正课，是课程的诚实自我更新"
+        ],
+        "criticisms": [
+          "加餐一/二依赖的模型名（gpt-3.5-turbo-0125等）也已变更，时效性仍强",
+          "直播加餐为视频无正文，无法被文本化消化"
+        ],
+        "data_credibility_flags": [
+          "加餐一的text-davinci-003已废弃、JSON模式/seed参数均可在OpenAI官方文档验证（✅）",
+          "加餐二的MacBook M3价格$1449是SerpAPI实时数据，具时效性（⚠️）"
+        ]
+      }
+    ]
+  },
+  "overall_assessment": {
+    "who_should_read": "适合两类人：一是 2023 年前后想快速入门 LLM 应用开发、又不愿碰数学的工程师/产品经理，这门课用「用接口替代训练」的思路把门槛降到了最低；二是想梳理 RAG/Agent/多模态早期思想脉络的人——第 10、13、17 讲准确预见了后来的主流范式，读它们能理解这些概念的「原始动机」。",
+    "who_should_skip": "已熟悉 RAG、LangChain、Function Calling 的现代开发者应跳过——课程所有库 API（LangChain/llama-index）和模型（GPT-3.5/ChatGLM-6B）已全部废弃，读了反而要花时间做概念迁移。想系统学 LLM 原理或 prompt 工程理论的人也应跳过，这不是一门原理课。",
+    "value_for_hour": "ROI 呈极度二八分化：全课 34 讲中，2 讲金矿（10/13）+ 11 讲银矿提供了约 80% 的价值，其余 21 讲（铜矿 16 + 铁矿 5）基本是「会过时的库教程 + 鸡汤 + 环境配置」。按方法论 vs 水份估算，约 30% 是可迁移的方法论（RAG、CoT、Agent、产品三原则），60% 是事实性教程（会过时），10% 是填充。策略性阅读建议：只花 30 分钟读 [10]/[13]/[17]/[27] 四讲即可拿到核心价值，再花 90 分钟补 7 讲银矿；若追求现代工具链，直接看 LangChain/LlamaIndex 最新官方文档的性价比远高于读本课的库教程部分。",
+    "best_approach": "把本课当「思想史」而非「工具书」读：重点抓 RAG、多步提示语、Agent、多模态这四个概念的原始动机和心智模型，代码一律跳过（已废弃），概念映射到现代工具（RAG→LlamaIndex/LangChain 新版、工具调用→Function Calling）。"
+  },
+  "search_keywords": [
+    "Retrieval-Augmented Generation RAG",
+    "Chain-of-Thought prompting",
+    "LangChain Agent ReAct MRKL",
+    "Stable Diffusion architecture CLIP UNet VAE",
+    "Function Calling LLM tools",
+    "AIGC product design data flywheel",
+    "zero-shot classification embedding"
+  ],
+  "writing_direction": "写一篇「复盘一门2023年LLM应用课」的评论：第一幕讲它如何用「用接口替代训练」降门槛，第二幕讲它的核心贡献——「第二大脑（RAG）」和「多步提示语（CoT）」两个概念如何准确预见了后来的行业主流，第三幕讲多模态与产品思维，第四幕点出「加餐质量高于正课」的诚实更新。结尾回答「值不值得读」：值得读的是那 4 讲框架性内容（30 分钟），不值得读的是 30 讲会过时的库教程。贯穿始终的叙事张力是「方法论的持久性 vs 工具链的速朽性」——这门课最好地证明了：可迁移的思维框架能穿越版本更迭，而绑定特定库的教程三年内必然烂掉。"
+}

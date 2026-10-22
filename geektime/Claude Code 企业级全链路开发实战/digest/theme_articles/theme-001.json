@@ -1,0 +1,58 @@
+{
+  "id": "theme-001",
+  "theme": "规范驱动开发（SDD）：如何让 AI 永远在轨道上",
+  "source_lectures": [
+    "02",
+    "06",
+    "14",
+    "27",
+    "31"
+  ],
+  "lecture_tiers": {
+    "gold": 4,
+    "silver": 1,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "同样用 Claude Code，为什么效果天差地别？根因不在 AI 能力，而在你给它的输入是否清晰。模糊大需求让 AI 自由发挥、越做越偏，甚至顺手加上你没要的功能。核心问题是：如何让 AI 的每一次输出都稳定地落在你定义的轨道上？",
+    "act2_method": "课程给出的答案是规范驱动开发（SDD）四步闭环：定规范 → AI 执行 → 人验证 → 迭代规范。落地工具是 CLAUDE.md 五层结构（项目上下文/架构/代码组织/数据库/接口+行为指令，06 讲）；把反复使用的方法沉淀成 Skill（14 讲）；用质量体系四层次兜底（27 讲）；再放到业界工具谱系（Spec-Kit/Spec Coding）里定位，对老项目按改造三原则渐进引入（31 讲）。",
+    "act3_critique": "这套方法论的边界：SDD 本身不是新概念（Spec-Driven Development 业界已有），课程贡献在于把它操作化成'单人 + AI'的闭环；论证全靠个人体感，无可核验数据；'规范写什么'依赖个人认知深度，课程自认无法替代。数据可信度：源码泄漏规模、embedding 降价可验证，但双模型 review 的 12/4、$40 订阅等为个人实践不可独立验证，写作时不得作为事实引用。"
+  },
+  "title_idea": "规范驱动开发（SDD）：为什么你调不好 AI，是因为你从没给它写过一份好规范",
+  "type": "methodology",
+  "search_keywords": [
+    "规范驱动开发",
+    "Spec-Driven Development",
+    "CLAUDE.md",
+    "Spec Kit",
+    "AI 编程规范",
+    "AGENTS.md"
+  ],
+  "visualization_hints": [
+    "Mermaid 流程图：SDD 四步闭环（定规范→AI 执行→人验证→迭代规范，跑偏回流）",
+    "Mermaid 分层图：CLAUDE.md 五层结构（项目上下文→架构→代码组织→数据库→接口+行为指令）"
+  ],
+  "controversy_hooks": [
+    "SDD 是不是对既有工程实践的'品牌化重命名'？",
+    "'规范驱动'和'提示词工程'的边界在哪，谁更值钱？",
+    "老项目引入 SDD 的改造成本，是不是被低估了？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "Claude Code v2.1.88 源码泄漏约 51.2 万行/1900 文件 → Anthropic 官方确认"
+    ],
+    "avoid_claims": [
+      "双模型 review 抓出 12 问题 4 高危 — 讲师个人实践 (❓)",
+      "Claude 订阅约 $40/月 — 个人陈述 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义",
+      "核心原理",
+      "实操方法",
+      "边界与批判"
+    ],
+    "min_score": 52
+  }
+}

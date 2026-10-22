@@ -1,0 +1,182 @@
+{
+  "lecture": "4. 深入理解 Kubernetes（二）",
+  "source": "/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第二章：Kubernetes 架构原则和对象设计/4. 深入理解 Kubernetes（二）/4. 深入理解 Kubernetes（二）.txt",
+  "intro": "承接上一讲的分层架构与对象设计原则：Kubernetes 把种类繁多的被管理对象用一种共性的方式抽离出来。每个 Kubernetes 对象（及配置文件）都遵循统一规范，最重要的 API 属性组是 TypeMeta、Metadata、Spec、Status 四类，本讲逐一拆解这些共性的属性是如何定义的。",
+  "segments": [
+    {
+      "start": "",
+      "end": "",
+      "topic": "TypeMeta 概述：GKV（Group/Kind/Version）三属性定义对象身份",
+      "points": [
+        "TypeMeta 是 Kubernetes 对象的最基本定义，包含三个重要属性：Group、Kind、Version（合称 GKV）。",
+        "Kind：定义这个对象是什么类型——每个被管理的对象都有一个对应的 Kind。",
+        "Group：把相同功能、相同目的的对象组织到同一个组，是不同类型对象的组织方式。类比 Java 的 package（包管理）：给对象设计类，把相同类型的类放进同一个包，Kubernetes 同样把同类对象归入一个 Group。",
+        "Version：Kubernetes 用来支持 API 向前兼容的设定——微服务架构中 API 会不断演进，从 V1 演进到 V2 时必须照顾向前兼容。",
+        "小结：TypeMeta 定义了一个对象是哪一个组的什么类型的哪个版本，基本就定义了对象是什么。"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Kubernetes 的对象模型不是第一天就设计成最终版本，而是通过 Group/Kind/Version 三元组进行渐进式演进。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "版本演进机制：Alpha→Beta→GA，过渡期双版本并存与 conversion 转换",
+      "points": [
+        "Kubernetes 的 release 节奏：以前每季度发布一个版本，现在是一年三个版本（约四个月一个版本）。",
+        "任何 API 定义都是渐进演进的：新模型先设为 V1 Alpha1，随后 V1 Alpha2、V1 Alpha3 递增演进；功能尚未稳定的版本会一直停留在 Alpha 阶段。",
+        "当功能相对成熟、基本快到生产就绪时进入 Beta：V1 Beta1→V1 Beta2→V1 Beta3。",
+        "当功能生产就绪、模型基本不会再改时，升为 V1（正式版/GA）。",
+        "版本演进要做向前兼容：在过渡版本中两个版本都会支持（例如既可以从 V1 Alpha1 访问，也可以从 V1 Alpha2 访问）。",
+        "API Server 层面实现了 conversion 方法，负责不同版本之间的转化。"
+      ],
+      "tradeoffs": [
+        "版本兼容策略：过渡期双版本并存以做到向前兼容，代价是需要 API Server 的 conversion 机制做版本间转换。"
+      ],
+      "turning_points": [
+        "Alpha 阶段永远不稳定（未定版时版本号持续递增）、Beta 才接近生产就绪、V1 才代表生产就绪——Kubernetes 用版本号向使用者传达 API 的稳定承诺。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Metadata：Namespace 与 Name 唯一定义对象实例（我是谁）",
+      "points": [
+        "Metadata（源码中叫 ObjectMeta）是所有 Kubernetes 对象的重要通用属性，用来定义对象的元数据。",
+        "其中最重要的两个属性是 Namespace 和 Name。",
+        "Namespace 可理解为一个虚拟目录，用来放置对象；通过 Namespace 可以做隔离和权限控制。",
+        "Kubernetes 对象分为两类：集群级对象（如计算节点 Node，属于整个集群，Namespace 值永远为空）与命名空间级对象（如 Pod、Service，归属于某个租户或用户）。",
+        "一个对象的 Namespace + Name 就是它在集群中的唯一值，唯一定义了对象实例。",
+        "分工对比：TypeMeta 定义\"我是什么\"，Metadata 定义\"我是谁\"。"
+      ],
+      "tradeoffs": [
+        "集群级对象（Node）与命名空间级对象（Pod/Service）的隔离边界不同：前者全局唯一、后者按命名空间隔离。"
+      ],
+      "turning_points": [
+        "对象实例在集群中的唯一标识是 Namespace+Name 的组合，而不是 Name 本身。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Metadata 附加属性：Label（打标签+过滤查询）与 Annotation（对象扩展）",
+      "points": [
+        "Label 是给对象打标签，本身是一个 K-V 键值对。例如可以标记某个 Pod 是哪个部门创建的、为哪个环境创建的、属于什么应用。",
+        "有了标签就可以做过滤查询（类似 Docker 的标签过滤）：通过过滤条件把不满足查询条件的对象过滤掉。",
+        "Annotation 与 Label 实现类似（也是一个键值对 Map），但不能做过滤查询，在使用上有差异。",
+        "Annotation 的用途：当 Kubernetes 提供的声明式结构体（spec 属性）不能满足全部需求、附加属性没地方放时，可以把任意扩展属性放进 Annotation——它是 Kubernetes 对象的扩展机制。"
+      ],
+      "tradeoffs": [
+        "Label 可做过滤查询但通常结构受限；Annotation 不可过滤查询，但可以放任何想放的扩展属性。"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Finalizer：对象删除的资源锁与优雅清理机制",
+      "points": [
+        "Finalizer 本质上是一个资源锁。正常情况下删除对象：请求发到 API Server → 认证鉴权 → 写入/删除 etcd，删除本身就是物理删除，etcd 里的数据被抹掉、对象消失。",
+        "问题场景：控制器可能在出错、升级或系统维护期间没有工作；此时若对象被删除，删除事件在控制器启动之前已经发生，新启动的控制器实例收不到通知，就会丢失一次对象删除事件。",
+        "加了 Finalizer 的对象被删除时不会直接物理删除，而是逻辑删除：把对象的 deletionTimestamp 属性置为删除那一刻的时间戳。",
+        "好处：控制器可以捕获事件（看到的是 update 事件），发现 deletionTimestamp 不为空就知道用户想删除该对象，从而在控制器内做清理处理。",
+        "典型使用场景：Pod 创建后需要配置外部网络、外部 DNS 或外部负载均衡等外部资源时，需要为对象加 Finalizer。",
+        "完整流程：负责配置外部资源的控制器先给对象加 Finalizer（对象被锁住、不会被物理删除）→ 用户删除对象 → 控制器看到 update 事件、deletionTimestamp 不为空 → 控制器清除外部配置 → 控制器自己删掉之前加的 Finalizer → Kubernetes 发现 Finalizer 已为空，自动由逻辑删除转为物理删除，对象才真正消失。"
+      ],
+      "tradeoffs": [
+        "Finalizer 由谁加：由负责清理外部资源的那个配置控制器自己加，而不是用户手动加——清理方对自己的资源负责。"
+      ],
+      "turning_points": [
+        "删除不是瞬间消失：Finalizer 把\"物理删除\"改造成\"逻辑删除（置 deletionTimestamp）→ 控制器清理 → 二次确认后物理删除\"，防止控制器因不在线而错过删除事件。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "ResourceVersion：乐观锁实现多组件无锁并发修改",
+      "points": [
+        "ResourceVersion 也是一把锁，解决的是多个组件同时修改一个对象时的访问安全问题。",
+        "悲观锁方式：修改前先加锁，拿不到锁就阻塞等待。安全但问题明显——高并发下大量进程/线程阻塞等待，整个系统效率低。",
+        "乐观锁方式：给对象记录版本信息。例如两个进程同时拿到对象的 V1 版本并各自修改，请求都发到 API Server 这一端，API Server 按顺序处理。",
+        "API Server 处理第一个请求：请求基于 V1 修改、属性更新合法，处理成功后把版本更新为 V2。",
+        "处理第二个请求：API Server 检查请求带的版本号是 V1，而当前服务端版本已是 V2，判定该请求基于旧数据修改、非法，直接拒绝。",
+        "被拒绝的客户端拿到最新版本重试即可，整个系统以无锁状态运作。"
+      ],
+      "tradeoffs": [
+        "悲观锁：安全但高并发下大量阻塞、效率低；乐观锁：无阻塞、系统效率高，但请求可能被拒、需要客户端拿最新版本重试。"
+      ],
+      "turning_points": [
+        "乐观锁把并发安全从\"阻塞等待锁\"变成\"版本号校验 + 失败后拿新版本重试\"，让多组件在无锁状态下修改同一对象。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Label 深入：长度约束与 label selector 过滤查询",
+      "points": [
+        "Label 是 string 类型的 K-V map，且有约定限制：label 的 key 不能超过 63 字节；value 可以为空但不能超过 253 字节。",
+        "Label 主要用来标识应用或对象的属性：如 release 是 stable 还是 canary、environment 是 dev/qa/production、应用是前端还是后端、语言是 Ruby/Go/Java 等。",
+        "Label 可以作为过滤查询条件（label filter/selector）：例如 kubectl get pod -l a=c 的语义是查询当前 namespace 中带 a=c 标签的 Pod。",
+        "过滤查询的请求发到 API Server，API Server 在返回结果之前会按查询条件把不符合条件的对象过滤掉。",
+        "Kubernetes 中很多对象的属性叫 selector：selector 意味着它是一个查询条件，往往对应另一个被查询对象的 label。"
+      ],
+      "tradeoffs": [
+        "Label 的 key/value 有明确长度限制（63/253 字节），设计标签键名时需注意。"
+      ],
+      "turning_points": [
+        "selector 属性 = 查询条件，与目标对象的 label 形成\"查询方-被查询方\"的配对关系，这是 Kubernetes 对象间松耦合关联的机制。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Annotation 补充与 Spec/Status：期望状态 vs 真实状态",
+      "points": [
+        "Annotation 补充：它是对对象的注解，当对象默认的 spec 无法满足要求时，把附加属性放进去以扩展对象；Annotation 没有 Label 的 63/253 字节长度限制、可以很长，但不能做过滤查询，任何想放的内容都可以放。",
+        "TypeMeta 和 Metadata 是每个对象的通用属性，所有 Kubernetes 对象都要定义、要符合 Kubernetes 的对象语义要求。",
+        "Spec 和 Status 每个对象都不一样：属性名可以叫 spec 也可以叫别的，可以叫 status 也可以叫别的；一个对象可以只有 status 没有 spec，也可以只有 spec 没有 status，比较灵活。",
+        "不同对象各自的 Spec/Status 正是定义这些对象与众不同的地方。",
+        "Spec 是 specification 的简称，是用户希望对象的期望状态（desired state），本质是用户输入——例如遥控器期望空调 25 度。",
+        "Status 是真实状态（actual state），由每个对象对应的控制器去配置，配置完成后写回对象；Status 通常不是人为控制的。"
+      ],
+      "tradeoffs": [
+        "Spec 来自用户输入、Status 由控制器写入——两者来源不同，用户不应直接改 Status。"
+      ],
+      "turning_points": [
+        "声明式 API 的核心分工：Spec 表达\"我要什么\"，Status 表达\"现在是什么\"，控制器负责把 Status 收敛到 Spec。"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Kubernetes 对象的 group 分层组织方式",
+      "points": [
+        "核心组件组（最早毕业、最核心的一组对象）：支撑 Kubernetes 运作的基础对象，包括 Node（管理节点）、Namespace（隔离）、Pod（运行作业的基础）、ConfigMap（应用配置）、PV/PVC（为 Pod 挂载 volume）等。",
+        "应用管理层：在管理节点、运行应用实例能力之上组织应用实例，包括 StatefulSet（有状态副本集）、Deployment（管理无状态副本集）、ReplicaSet、DaemonSet（每个节点上都跑一个 Pod 时使用）、Job 和 CronJob（短作业）；分为 APP（定义 long-running 在线业务）和 Batch（定义批处理/离线作业）两类。",
+        "服务发布层：有了应用管理后要把服务发布出去——Service、Ingress。",
+        "自动扩缩容管控层：HPA、VPA 等对象，以及 PDB（PodDisruptionBudget）、PodPreset 等。",
+        "策略管理层：权限管理、Pod 安全管理、网络策略管理等等。"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Kubernetes 把大量对象按目的分层组织到不同 group：核心对象→应用管理→服务发布→扩缩容管控→策略管理，从\"让系统跑起来\"到\"管好运行的应用\"逐层递进。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "每个 API 最重要的属性组是 TypeMeta、Metadata、Spec、Status 四类，几乎所有的 Kubernetes 对象都包含这些属性（配置规范也遵循）。",
+    "TypeMeta：Kubernetes 对象的最基本定义，含 GKV 三属性——Group（按功能/目的组织对象的组）、Kind（对象类型）、Version（支持 API 向前兼容的设定）。",
+    "Version 演进：Alpha（V1 Alpha1→Alpha2→Alpha3，未定版阶段永远在 Alpha）→ Beta（V1 Beta1→Beta2→Beta3，接近生产就绪）→ V1（生产就绪、模型基本不再改）；过渡期双版本并存，由 API Server 的 conversion 方法负责版本转化。",
+    "Metadata（源码名 ObjectMeta）：定义对象的元数据，最重要的属性是 Namespace 与 Name；Namespace+Name 构成对象在集群中的唯一标识。",
+    "对象两类：集群级对象（如 Node，Namespace 永远为空）与命名空间级对象（如 Pod、Service，归属于某租户/用户）。",
+    "TypeMeta 定义\"我是什么\"，Metadata 定义\"我是谁\"。",
+    "Label：给对象打标签的 K-V 键值对，可做过滤查询；约束为 key ≤ 63 字节、value 可为空但 ≤ 253 字节。",
+    "Annotation：与 Label 实现类似的键值对 Map，不能做过滤查询、无长度限制，用于给对象扩展任意附加属性。",
+    "Finalizer：本质上是一个资源锁——有 Finalizer 的对象删除时只做逻辑删除（置 deletionTimestamp），待控制器清理完外部资源并移除 Finalizer 后才物理删除。",
+    "ResourceVersion：乐观锁——维护对象版本信息，API Server 校验修改请求是否基于最新版本，基于旧版本则拒绝；客户端取最新版本重试。",
+    "Spec（specification）：用户希望对象的期望状态（desired state），是用户输入；Status：对象的真实状态（actual state），由控制器配置并写回对象。",
+    "Selector：对象的某个属性叫 selector 意味着它是一个查询条件，往往对应另一个被查询对象的 label。"
+  ],
+  "closing": "小结：至此对 Kubernetes 如何抽象对象——共性的部分（TypeMeta/Metadata 通用属性、Spec/Status 差异化定义）以及如何按 group 分层组织对象——有了比较深入的了解。下一节课会挑一些核心对象，逐一看看它们的 Spec 和 Status 到底是怎么设计的。"
+}

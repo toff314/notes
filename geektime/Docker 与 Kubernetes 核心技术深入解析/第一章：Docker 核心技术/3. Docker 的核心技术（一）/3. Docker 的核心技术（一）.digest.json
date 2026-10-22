@@ -1,0 +1,299 @@
+{
+  "lecture": "3. Docker 的核心技术（一）",
+  "source": "/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第一章：Docker 核心技术/3. Docker 的核心技术（一）/3. Docker 的核心技术（一）.txt",
+  "intro": "承接上一节（容器概要、Docker 安装配置与基本操作），本节进入硬核部分：Docker 所依赖的两大 Linux 核心技术——Namespace（隔离）与 cgroups（资源控制），先讲容器四大特性引出这两个技术，再逐一讲原理、系统调用/子系统、调度机制，并以两个动手实验验证。",
+  "segments": [
+    {
+      "start": "",
+      "end": "",
+      "topic": "容器四大特性：隔离性、资源可配额、可移植性、安全性",
+      "points": [
+        "容器主要特性包括：隔离性、资源可配额（原文'可配合'）、可移植性（原文'辨写性'）、安全性",
+        "隔离性：程序运行在隔离环境中，所有依赖都必须在隔离环境内存在；生产环境构建容器镜像（原文'进向'）时会做依赖检查，依赖检查全部通过说明应用所有依赖有效，就能很容易在其他环境重放（部署）",
+        "资源可配额：依赖 cgroups（原文'C Group'）控制容器所能消耗的资源，从而调节同一操作系统内多个进程对资源的抢占",
+        "可移植性：因为有了隔离性，容器镜像可以在任何地方重放",
+        "安全性：一方面隔离性好所以天然安全，另一方面 Linux 自身有安全保证技术",
+        "引出方式：'说千句不如亲手试一试'，直接进入重点技术实操部分"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "四大特性之间存在因果链：隔离性 → 可移植性（镜像可随处重放）；隔离性 → 天然安全"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Namespace 技术来源与原理：Task Struct 中的 nsproxy 属性",
+      "points": [
+        "Namespace 技术并不是 Docker 的独创技术，是 Linux 本身现存的、相对成熟稳定的技术",
+        "Linux 内核中描述进程的数据结构叫 task_struct，其中有一个 nsproxy 属性（原文'NS Proxy'），用来定义该进程所在的 Namespace",
+        "nsproxy 内部又包含 UTSNS、IPCNS、MNTNS、PIDNS、NetNS、UserNS，即一个进程可以同时置于多个不同种类的 Namespace 中",
+        "进程在创建时就有天然的 Namespace：Linux 中 PID 为 1 的第一个进程（如 systemd）拥有默认的 Namespace，即常说的主机（host）Namespace",
+        "进程关系是树状的：所有进程都是通过其他进程 fork（原文'Folk'）出来的；systemd fork 子进程时会自动把自己的 Namespace 复制到新进程上，所以默认情况下新子进程与主机共用同一个 Namespace",
+        "默认情况下感受不到 Namespace 的存在，因为所有进程共用同一个 PID Namespace、网络 Namespace、用户 Namespace"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "反直觉点：不是只有容器才有 Namespace——主机上每个进程都有 Namespace，只是默认全部相同所以感知不到",
+        "关键概念：fork 子进程默认继承（复制）父进程的 Namespace，这正是'主机进程看不出隔离'的原因"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Namespace 的三大系统调用与种类清单",
+      "points": [
+        "Linux 提供三个系统调用完成 Namespace 操作：",
+        "clone：创建新进程时可通过 flag 参数指定新进程是否需要新的 Namespace，以及哪一类 Namespace 是新的、哪一类复用主机/父进程的",
+        "setns（原文'Set OS'）：调整/切换，把某个已经存在的进程切换到另外一个 Namespace 中去",
+        "unshare（原文'Unshared'）：把进程移动到新的 Namespace 里面去",
+        "关键 Namespace 种类与隔离资源：Network 隔离网络配置、PID 隔离进程号、UTS 隔离主机域名、IPC 隔离进程间通信、MNT 隔离文件系统挂载、User 隔离用户",
+        "支持版本：大部分 Namespace 在 Linux 2.6 内核版本就已支持，新内核基本全部支持",
+        "换个维度理解：每个用户进程都可以拥有自己的 Namespace——独立的网络、独立的 PID、独立的文件系统、独立的用户、独立的主机名，构成完全与主机隔离的封闭运行环境"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "方案对比：clone 管'创建时指定'、setns 管'运行时切换'、unshare 管'移动/脱离'，三者覆盖 Namespace 生命周期不同阶段",
+        "核心结论：有了 Namespace 技术，就可以把一个主机上的普通进程变成拥有独立身份（网络/PID/文件系统/用户/主机名）的隔离环境——这就是容器技术的精髓"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "各 Namespace 细节逐个讲解（PID/Network/IPC/MNT/UTS/User）",
+      "points": [
+        "PID Namespace：隔离不同的 PID 号，第一个 Namespace 里看到的 PID 与第二个里看到的不一样；容器内进程都是主机 Namespace fork 出来的，所以容器内部进程在主机的 ps 里都能看到，但内外看到的 PID 号不同，二者存在映射（原文'硬射'）关系",
+        "容器启动时有一个入口进程（Entry Point，原文'Energy Point'），该进程在容器 PID Namespace 中就是 PID 1，其他所有进程都由它 fork 出来",
+        "Network Namespace：进程拥有独立的网络身份，与主机不同且彼此隔离——'这是容器技术里面最重要的 Namespace'，因为进程要有独立身份就要给它独立的 Network Namespace",
+        "IPC Namespace：用于进程间通信（发信号量、共享内存）；不在同一个 IPC Namespace 的进程不能做 IPC，若希望它们通过 IPC 通信必须放进同一个 IPC Namespace",
+        "MNT Namespace：对应进程能看到的文件系统（呼应 task_struct 中 MM、File System、OpenFile、Signal 等资源），每个进程看到的文件系统可以不同",
+        "UTS Namespace：每个进程拥有自己的主机域名，配合 Network Namespace 就拥有了'独立主机名 + 独立 IP'",
+        "User Namespace：每个进程可以有自己的用户管理系统，用户是隔离的"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "易错点：PID Namespace 是'软隔离'——容器内进程在主机上仍然可见（ps 能看到），只是 PID 号不同，存在映射关系",
+        "易错点：IPC 隔离意味着跨 Namespace 的进程无法用信号量/共享内存通信，分布式通信必须走网络层",
+        "重点标注：Network Namespace 是容器技术里最重要的隔离维度"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Namespace 常用命令实操：lsns、/proc/PID/ns、nsenter",
+      "points": [
+        "lsns：查看当前操作系统里有哪些 Namespace；可加类型过滤参数（如查网络类型，对应 'lsns -t net'，原文'GangPinNet'），列出每个 Namespace 的 ID 号与对应进程号",
+        "PID 1 的 systemd 有自己的 Namespace；主机上任何进程都有自己的 Namespace",
+        "因为机器上跑了很多 Docker 容器，所以可以看到很多网络 Namespace",
+        "/proc 是特殊文件系统，查看当前主机运行进程的相关配置；每个 PID 在 /proc 下都有对应目录，进入 /proc/<PID>/ns 目录可以列举该进程对应的 IPC Namespace、MNT Namespace 等每个 Namespace 的 ID",
+        "nsenter（原文'NS Enter'）进入 Namespace 查看配置：用 -t 指定 PID，-n 指定进入 Network Namespace",
+        "实例：主机上用 ip addr 看到的是主机网络配置（10.2.15.x、192.168.34.2 等）；nsenter -t <Nginx 容器进程 PID> -n 进入后看到容器内部 IP 172.17.0.2，与主机 IP 完全不同，完全是另外一个空间，可以把它当成另外的一个操作系统"
+      ],
+      "tradeoffs": [
+        "ip addr 看到的永远是当前进程所处 Namespace 的网络配置，要看容器网络必须用 nsenter 进入容器进程的 Network Namespace"
+      ],
+      "turning_points": [
+        "反直觉点：172.17.0.2 这样的容器 IP 只有在该容器进程的 Network Namespace 内才存在，主机上看不到"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Namespace 动手实验：unshare 创建新网络 Namespace + nsenter 验证",
+      "points": [
+        "实验目标：验证通过 unshare 可以让一个进程进入独立的 Network Namespace",
+        "开第二个终端窗口，用 unshare -f -n 运行 sleep 60（原文'Sleep60'，-f 指定、-n 表示新建 Network Namespace），让该进程进入一个全新的 Network Namespace 并睡眠一分钟",
+        "通过 lsns 查看，发现新的 Network Namespace 已创建，对应进程号 5521850",
+        "再用 nsenter -t 5521850 -n 进入该进程的 Network Namespace 查看网络配置",
+        "结果：因为没做任何网络配置，该 Namespace 内只有 loopback 地址（lookback），没有任何其他地址，与主机网络完全不同",
+        "结论：Namespace 的工作原理就是'进程在 fork 时可以让它置于独立的 Namespace'；其他种类的 Namespace 大同小异"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "反直觉点：unshare 后新进程的网络是'空'的（只有 loopback），容器内看到的网络完全由之后注入/配置产生，验证了 Namespace 是隔离的起始点而非完整网络环境"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "引入 cgroups：Control Group 的作用、css_set 与层级结构",
+      "points": [
+        "Namespace 解决的是隔离问题（把进程放到独立环境运行），接下来要解决的问题是为进程控制资源，这就引出 Linux 另一个主流技术：cgroups（Control Group，原文'C Group'）",
+        "cgroups 定义：对 Linux 里面的进程做统一的监控和管控；该技术由 Google 贡献到社区（原文'骨骼贡献到社区'）",
+        "cgroups 分不同的子系统（Subsystem，原文'Subbersystem'），不同子系统控制不同资源：CPU、内存、Disk IO 等",
+        "进程是树状结构（一个进程会 fork 很多其他进程），cgroups 也采用类似的层级结构（Hierarchy，原文'Horror Key'）来组织管理，对应操作系统的目录结构",
+        "回顾 task_struct：除 nsproxy 外还有另一个重要属性 css_set（原文'CSS Set'），它是 cgroups 子系统状态（C Group Subsystems State）数据结构的对象",
+        "印证方式：cgroups 同样是 task_struct 中的属性，通过它把进程与资源控制关联起来"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "技术演进点：Namespace 负责'隔开'，cgroups 负责'限流'，两者共同构成容器资源隔离的左右手",
+        "关键概念：css_set 是进程与 cgroups 子系统的关联点（对应 Namespace 的 nsproxy）"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "cgroups 系统结构图与子系统种类（含 CPU 绑核）",
+      "points": [
+        "结构图（自下而上）：底层硬件体系（CPU、内存、存储）→ 操作系统内核（负责进程调度、内存管理、cgroups 控制、虚拟文件系统、网络协议栈等）→ 用户态进程",
+        "系统初始化时第一个进程（如 systemd）是 PID 1，所有其他进程都由它直接或间接 fork 出来，形成父子/子孙结构",
+        "所有进程启动时第一可设置不同的 Namespace（隔离），第二可由 cgroups 控制每个进程的资源",
+        "cgroups 控制的资源子系统：",
+        "Block IO：控制读写磁盘的速度",
+        "CPU：控制为进程分配多少 CPU 时间片（多 CPU 是并发、单 CPU 是分时复用）",
+        "CPU Account：汇报 CPU 资源的使用状态",
+        "CPU Set：CPU 绑定（绑核）——多核 CPU 时把某个进程绑到某一个 CPU 核上；进程与核绑死后该核不做进程切换，没有上下文切换开销，TLB 表缓存永远可复用，程序始终高效",
+        "Device：允许或拒绝 cgroups 任务对该设备的访问",
+        "Memory：控制一个进程用多少内存",
+        "Kubernetes 后期对 CPU 绑核做了很大增强：一些高优先级任务直接通过绑核 CPU 的方式保障性能"
+      ],
+      "tradeoffs": [
+        "CPU 绑核的取舍：以牺牲该核的服务其他进程能力为代价换取进程的极致性能（无切换开销 + TLB 复用）",
+        "CPU 子系统控制的是'时间片分配'（分时复用时谁用多少）；多核并发时才是并行执行"
+      ],
+      "turning_points": [
+        "可引用结论：绑核后 CPU 不做进程切换，TLB 缓存永远可复用，程序永远高效——Kubernetes 对高优先级任务就用绑核保障性能"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "CPU 子系统的两种控制手段：CPU Share（相对值）vs CFS Period/Quota（绝对值）",
+      "points": [
+        "CPU 子系统控制进程能用多少 CPU 有两种手段：CPU Share（相对值）和绝对时间（period/quota）",
+        "CPU Share 是相对值：例如主机有三个 CPU，定义两个 cgroups，进程一放第一个、进程二放第二个；把第一个的 cpu.shares 设为 512、第二个设为 1024，512:1024 = 1:2，操作系统调度时按 1:2 分配时间片",
+        "绝对时间按两个配置文件配置：cfs_period_us（原文'CFS Pair 的 us'）是分母/周期，cfs_quota_us（原文'Cota'）是分子/配额",
+        "默认 period 设为 100000 微秒：quota 设 100000，即在一个 100000 微秒的使用周期内最多用 100000 微秒，相当于分给进程一个 CPU；quota 降到 50000，即 100000 微秒时间片内最多用 50000 微秒，等于半个 CPU；可以继续往下压",
+        "CPU Share 与 period/quota 的区别：Share 是相对值——有竞争时大家按百分比划分，没有竞争时就可以一直用（B group 里什么都没跑、没耗 CPU 时，A 可以把 CPU 全部吃掉）；period/quota 是绝对时间——给你设了 0.1 个 CPU 就不可能超过它"
+      ],
+      "tradeoffs": [
+        "相对值（share）适合'竞争时公平分配、空闲时尽力使用'；绝对值（quota）适合'硬性上限、绝不允许超限'",
+        "易混淆点：CPU Share 1024 不是'1 个 CPU'，它只是相对权重，无人竞争时单进程可吃满所有核"
+      ],
+      "turning_points": [
+        "反直觉点：CPU Share 不是上限——'给你分 1:2 的份额，但没人跟你抢时你可以独占全部 CPU'；只有 quota 才是硬上限",
+        "关键量化：quota/period = 分配的 CPU 数（100000/100000 = 1 核，50000/100000 = 0.5 核）"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "CFS 完全公平调度器与 vruntime 公式 + 红黑树",
+      "points": [
+        "Linux 提供多个进程调度器：最高优先级是 RT（Real Time）调度器，基本是轮循（round-robin）——多个 RT 进程轮流调度，保证实时性",
+        "次优的是 CFS（Completely Fair Scheduler，完全公平调度器）调度器，普通用户进程一般都用 CFS",
+        "CFS 引入虚拟运行时间 vruntime（原文'V-Round Time'）概念：vruntime = 实际运行时间 × 1024 ÷ 进程权重",
+        "含义：进程权重越大，它的虚拟时钟跑得越慢，获得的 vruntime 越长——权重越大的进程分到的时间越长",
+        "Linux 内核用红黑树维护调度队列：红黑树是自平衡树，没有一条路径比其他路径长出两倍（基本均等，可能差两个节点），时间复杂度 O(log N)，插入、删除、查找都很快，因为它是一棵平衡的排序树",
+        "红黑树用法：vruntime 最小的进程放最左边、最大的放最右边，每次调度都从最左取最小值——谁的 vruntime 最小就先运行谁"
+      ],
+      "tradeoffs": [
+        "RT vs CFS：RT 保实时性（轮循），CFS 保公平性（按权重），两者服务不同优先级的进程"
+      ],
+      "turning_points": [
+        "可引用定义：CFS = Completely Fair Scheduler（完全公平调度器），核心公式 vruntime = 实际运行时间 × 1024 ÷ 进程权重",
+        "反直觉点：'公平'不是等分 CPU，而是按权重比例分享——权重越大虚拟时钟走得越慢、实际占用的 CPU 时间越长",
+        "复用知识：红黑树（此前讲 ip 相关章节提过）是自平衡树，时间复杂度 O(log N)"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "CFS 调度流程细节：tick → schedule → pick_next_task → context_switch",
+      "points": [
+        "CFS 调度器维护一个时钟滴答（tick，原文'时鐘漏气/抽气'）",
+        "tick 开始：调度器调用 schedule() 调度进程运行，schedule() 会调用 pick_next_task（原文'Pick Nest Task'）从就绪队列中选一个最合适的进程——即 vruntime 值最小（红黑树最左）的那个",
+        "选定进程后做上下文切换 context_switch（原文'Contact Switch'），切换到新的地址空间去运行",
+        "tick 结束：更新进程的 vruntime——有的进程执行了、有的没执行，vruntime 会做顺序调整，红黑树通过插入/反转重新排序，把更紧迫的进程放到最左边",
+        "每次进程调度永远从最左边取 vruntime 最小的进程执行：第一，这是调度优先级；第二，优先级越高的进程 vruntime 消耗得越慢，能占用更多时间",
+        "由此 vruntime 与 CPU Share 产生关联：CPU Share 越大的进程能占有的 CPU 时间就越长"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "机制闭环：CPU Share（权重）→ vruntime 增速不同 → 红黑树排序 → pick_next_task 取最左 → 高权重进程分到更多 CPU 时间"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "CPU 子系统实验：busy loop 程序 + cgroups 压制 CPU 从 200% 到 10%",
+      "points": [
+        "在 cpu 子系统目录下新建目录 cgroup_demo，进入后所有控制文件都被自动创建出来，通过调整这些控制文件控制该 cgroups 内的资源",
+        "Busy Loop（原文'Basey Loop'）演示程序：一个主线程做 for 循环 + 用 goroutine 起一个新的子线程做同样的 for 循环；两个线程都空转持续消耗 CPU，默认会占 2 个 CPU",
+        "go build 编译后运行 busy loop，top 显示 CPU 占用约 194%（接近 200%，因为抢的是时间片），记下进程号",
+        "把进程号写入 cgroups 的 cgroup.procs 文件（该文件定义哪些进程被这个 cgroups 控制），进程即被该 cgroups 控制；此时未改任何控制文件，top 仍是 200% 上下跳",
+        "可用工具回顾：cpu.shares 默认 1024；cfs_period_us 默认 100000 微秒（转录为'100 微秒'，按内核默认应为 100000μs）；cfs_quota_us 默认 -1（不限制）",
+        "实验过程：echo 100000 到 cfs_quota_us → quota 与 period 相同 = 分 1 个 CPU → top 降到 100%；echo 50000 → 立刻掉到 50%；echo 10000 → 理论上只能用 1/10 个 CPU → top 显示 10%",
+        "结论：这就是通过 cgroups 压制进程资源；容器技术正是基于 cgroups 的这种机制来限制容器进程的资源"
+      ],
+      "tradeoffs": [
+        "易错点：只把进程号写入 cgroup.procs（加入 cgroups）本身不改变资源占用，必须配合修改 cpu.shares 或 cfs_period_us/cfs_quota_us 等控制文件才生效",
+        "易错点：多线程程序占用为 200% 表示跨两个核，cgroups 按'quota/period 核数'压，100000→1 核、50000→0.5 核、10000→0.1 核，比例直观可见"
+      ],
+      "turning_points": [
+        "实验证据链：cgroup.procs 加入进程 → 修改 cfs_quota_us → top 占用实时响应（200%→100%→50%→10%）",
+        "关键量化：quota/period 直接换算成核数（100000/100000=1 核，50000/100000=0.5 核，10000/100000=0.1 核）"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Memory 子系统、可压缩/不可压缩资源、OOM 行为与 C Group Driver 统一问题",
+      "points": [
+        "CPU Account 子系统可以查看每一个 CPU 的使用情况",
+        "Memory 子系统重要参数 limit_in_bytes（原文'Limit Invest'）：控制进程最多能用多少内存，-1 表示不限制；想限制进程内存就把目标数值填进去，与 CPU 实验操作方式类似",
+        "CPU 是可压缩资源：进程很忙可能需要 2 个 CPU，但给它 0.1 个 CPU 也可以——慢慢转就行，只是进程变慢",
+        "内存是不可压缩资源：进程需要 10G（原文'10 个级'）内存被压制成 1G（原文'1 个级'）后，新的内存申请就申请不出来，程序会出问题——对非可压缩资源操作系统处理行为不同",
+        "当用 memory 子系统通过 limit_in_bytes 限制进程内存，达到限制后程序不能再继续运行：有一个配置文件 oom_control（原文'OMCtrl'），默认行为就是 OOM kill（原文'OMQ'）——直接把进程杀死让它重新启动；行为可以改写",
+        "cgroups 本身可以有不同的 Driver：Docker 用的是 cgroupfs（原文'C Group FS'）驱动，整个操作系统用的是 systemd 的 cgroup driver",
+        "用 Kubernetes（原文'Couple Netizen'）时这两者必须统一：Docker 默认用 cgroupfs，其他进程由 systemd 拉起并用 systemd 这套系统管控，Docker 拉起的进程用 cgroupfs 这套系统管控，就会出现'一仆二主'——同一套资源被两套系统瓜分管理，系统异常压力大时会引发不必要的问题",
+        "Kubernetes 启动时会检查 Docker 用了哪个 cgroup driver，发现不是 systemd 就默认报错不启动；所以搭 Kubernetes 集群时往往需要先修改 Docker 本身的 cgroup driver，Kubernetes 才能启动起来"
+      ],
+      "tradeoffs": [
+        "可压缩（CPU）压得过火只是变慢；不可压缩（内存）压得过火是申请失败 → OOM kill，进程被杀重启——两种资源的管理策略必须分开对待",
+        "易错点：cgroupfs 与 systemd 两套 cgroup driver 并存会导致同一资源被两套系统管理（一仆二主），高压力下引发故障；Kubernetes 强制统一为 systemd"
+      ],
+      "turning_points": [
+        "反直觉点：CPU 可以'超额'压制（0.1 个 CPU 也转得动，只是慢），内存不能——这是可压缩与不可压缩资源的本质差异，也是容器 OOM 的根源",
+        "易错点（Kubernetes 部署高频坑）：Kubelet 检查 Docker cgroup driver 非 systemd 直接报错拒绝启动，搭集群第一步要先改 Docker 的 cgroup driver"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "课后作业：Memory 子系统实验（Memory Demo）",
+      "points": [
+        "Memory 子系统与 CPU 子系统行为类似，实验留给课后完成",
+        "实验步骤：到 memory 子系统里创建一个目录并绑定你的进程",
+        "在 GitHub 上留了 Memory Demo 程序：运行该程序让它消耗内存（原文'消耗 CPU'），通过 cgroups 压制它的上限",
+        "观察点：当 limit（limit_in_bytes）到达以后，程序具体会有什么样的行为（对应 OOM kill 机制）"
+      ],
+      "tradeoffs": [],
+      "turning_points": []
+    }
+  ],
+  "key_definitions": [
+    "容器四大特性：隔离性、资源可配额（cgroups 控制）、可移植性、安全性",
+    "隔离性的作用链：隔离环境 → 构建镜像时依赖检查 → 依赖全通过 → 可在其他环境重放（可移植性的来源）",
+    "Namespace 不是 Docker 独创：'Namespace 技术并不是 Docker 的独创技术，它是 Linux 本身的一个现存的相对成熟稳定的技术'",
+    "task_struct 中的 nsproxy 属性定义进程所在的 Namespace，内部含 UTSNS/IPCNS/MNTNS/PIDNS/NetNS/UserNS",
+    "fork 默认继承：新子进程默认与主机共用同一个 Namespace（systemd fork 时自动复制自己的 Namespace）",
+    "Linux 三大 Namespace 系统调用：clone（创建时指定新 Namespace）、setns（把已有进程切换到另一个 Namespace）、unshare（把进程移到新 Namespace）",
+    "Network Namespace 是最重要的容器隔离维度：'一个进程要有独立的身份，就要给它一个独立的 Network Namespace'",
+    "PID Namespace 中入口进程（Entry Point）是 PID 1，其他进程都由它 fork；容器内进程在主机 ps 中可见，只是 PID 号不同（映射关系）",
+    "cgroups（Control Group）：'对 Linux 里面的进程去做统一的监控和管控'，Google 贡献到社区；以层级结构（Hierarchy）组织，对应目录结构",
+    "task_struct 中 css_set 属性是进程与 cgroups 子系统状态的关联对象",
+    "cgroups 子系统清单：Block IO（磁盘读写速度）、CPU（时间片）、CPU Account（状态汇报）、CPU Set（绑核）、Device（设备访问）、Memory（内存用量）",
+    "CPU 绑核机制：进程绑到某核后该核不做进程切换，无切换开销、TLB 缓存永远可复用，程序始终高效；Kubernetes 对高优先级任务用绑核保障性能",
+    "CPU Share（相对值）：有竞争按比例分（512:1024=1:2），无竞争可独占全部 CPU，不是上限",
+    "CFS Period/Quota（绝对值）：quota/period = 分配的 CPU 核数，是硬上限，设 0.1 个 CPU 就不可能超过",
+    "CFS = Completely Fair Scheduler（完全公平调度器），vruntime = 实际运行时间 × 1024 ÷ 进程权重；权重越大虚拟时钟越慢、占用 CPU 时间越长",
+    "红黑树性质：自平衡、无路径比其他路径长出两倍、时间复杂度 O(log N)；内核用它按 vruntime 排序，调度时取最左（vruntime 最小）的进程",
+    "CFS 调度闭环：tick → schedule() → pick_next_task 取 vruntime 最小 → context_switch 切换 → 更新 vruntime 重排红黑树",
+    "可压缩资源 vs 不可压缩资源：CPU 给 0.1 个也转得动（只是变慢）；内存压到限额后申请失败，达到 limit_in_bytes 上限触发 oom_control 默认行为 OOM kill 杀进程重启（可改写）",
+    "cgroups Driver 统一：Docker 默认用 cgroupfs、操作系统用 systemd driver，两者并存会'一仆二主'；Kubernetes 启动时检查 Docker cgroup driver，非 systemd 就报错不启动",
+    "容器技术精髓：Namespace 把主机上的普通进程变成拥有独立身份（网络/PID/文件系统/用户/主机名）的隔离环境，cgroups 在此基础上限制资源"
+  ],
+  "closing": "课程总结到 cgroups 的 Memory 子系统后收尾：内存子系统的实验留作课后作业——在 memory 子系统目录创建 cgroups 并绑定进程，运行 GitHub 上提供的 Memory Demo 程序消耗内存，通过 limit_in_bytes 压制上限，观察达到 limit 后程序的具体行为（OOM kill）。本节课覆盖了容器四大特性、Namespace 的原理/系统调用/种类/实操实验、cgroups 原理/子系统/CPU 与内存控制实验、CFS 调度器与 C Group Driver 统一问题，为下一节继续讲 Docker 核心技术（二）铺垫。"
+}

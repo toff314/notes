@@ -1,0 +1,1738 @@
+{
+ "course": "Claude Code 企业级老项目改造实战",
+ "scan_date": "2026-08-31",
+ "total_lectures": 37,
+ "modules": [
+  {
+   "module_index": 0,
+   "module_name": "热点速递",
+   "lecture_count": 1,
+   "value_density": "low"
+  },
+  {
+   "module_index": 1,
+   "module_name": "开篇词",
+   "lecture_count": 1,
+   "value_density": "low"
+  },
+  {
+   "module_index": 2,
+   "module_name": "方法论：夯实基础",
+   "lecture_count": 5,
+   "value_density": "high"
+  },
+  {
+   "module_index": 3,
+   "module_name": "了解项目：掌握实践路径",
+   "lecture_count": 7,
+   "value_density": "high"
+  },
+  {
+   "module_index": 4,
+   "module_name": "运行和测试：编译、测试、建立护栏",
+   "lecture_count": 4,
+   "value_density": "high"
+  },
+  {
+   "module_index": 5,
+   "module_name": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "lecture_count": 5,
+   "value_density": "high"
+  },
+  {
+   "module_index": 6,
+   "module_name": "阶段总结复盘",
+   "lecture_count": 2,
+   "value_density": "medium"
+  },
+  {
+   "module_index": 7,
+   "module_name": "二次开发：基于 Hermes Agent 做自动化测试",
+   "lecture_count": 6,
+   "value_density": "medium"
+  },
+  {
+   "module_index": 8,
+   "module_name": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+   "lecture_count": 3,
+   "value_density": "medium"
+  },
+  {
+   "module_index": 9,
+   "module_name": "总结复盘",
+   "lecture_count": 1,
+   "value_density": "medium"
+  },
+  {
+   "module_index": 10,
+   "module_name": "结束语 & 结课测试",
+   "lecture_count": 2,
+   "value_density": "low"
+  }
+ ],
+ "lectures": [
+  {
+   "lecture_id": "hotspot",
+   "title": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+   "module": "热点速递",
+   "module_index": 0,
+   "source_file": "热点速递/热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？/热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？.md",
+   "word_count": 2519,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 今天技术圈被一条消息刷屏：**据报道，阿里内部宣布禁用 Claude 全系产品，包括 Claude Code，禁令很快生效**。消息一出，不少人开始慌：是不是以后用不了 Claude Code 了？我学的这套东西是不是白学了？生产力会不会大跌？ 我想借这个事，聊几句冷静的话。不站队，也不煽动，就聊三个我认为比“能不能用”更重要的问题：**大厂为什么会禁一个工具**？**",
+   "last_200_words": "图一时方便，把预付的钱搭进去，也别把关键工作流建在一个随时可能消失的中转服务上。 说到底，正确的姿态不是死守一个工具，而是**手里常备两三套能互相替代的组合**。任何单一工具被断，你都能平滑切换，活照样干得漂亮。这种切换自如的底气，本身就是能力的一部分。 ## 写在最后 技术封锁这件事，历史反复上演过。**短期看，它是阵痛，会带来不便和落差；但拉长看，它往往会逼出一个更强的本土生态**。 把大量的",
+   "headings": [
+    "大厂为什么禁一个工具？",
+    "我们学 AI 编程，到底在学什么？",
+    "没了 Claude Code，我们用什么？",
+    "写在最后"
+   ],
+   "key_terms": [
+    "工具锁定：常备两三套可替代组合",
+    "AI 编程能力 = 跨工具迁移的工作流而非绑定单一工具"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "时事评论，观点（工具替代/生态）与课程方法论弱相关，无独立方法论贡献",
+   "warning_signals": [
+    "opening_closing_only",
+    "personal_anecdote_only"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "intro",
+   "title": "开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？",
+   "module": "开篇词",
+   "module_index": 1,
+   "source_file": "开篇词/开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？/开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？.md",
+   "word_count": 3835,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 在正式开始之前，先聊聊我做这门课的初衷。 Claude Code 出来这两年，大家都在用它改自己手上的代码。从写新功能、改 bug、加测试，到现在很多工程师也开始拿它动那个跑了几年的老系统。 但很多人改着改着会发现，效果跟自己预期差距挺大。同样的工具、同样在改老代码，有人改出来又稳又快，有人改完一上线就出问题。有人觉得 AI 真的能帮到自己，有人觉得 AI 比自己还能添",
+   "last_200_words": "LAUDE.md 积累得越完整，AI 对项目的理解越深；SKILL.md 写得越好，改造的标准化程度越高；验收体系越成熟，你敢放手让 AI 做的事就越多。推到第三个任务的时候，你会发现自己已经不再需要手把手带 AI。 冷启动过去了，飞轮越转越快、越转越轻松，这就是这门课要帮你建立的节奏。 跟着课程一讲一讲走，不要跳。前面五部分把方法论建起来，中间两部分把方法论铺到不同形式上，最后一部分把方法论带回",
+   "headings": [
+    "大家都在踩同一种坑",
+    "我自己也踩过的一个典型坑",
+    "后来我摸出来的几件事",
+    "这门课你要走的路",
+    "推满载大卡车的飞轮"
+   ],
+   "key_terms": [
+    "冷启动飞轮：前期慢、后期复利"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "开场白+课程地图，'推满载大卡车的飞轮'比喻有启发但无干货",
+   "warning_signals": [
+    "opening_closing_only"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "01",
+   "title": "01｜老项目改造的真实链路：从接手到交付，人到底做了什么？",
+   "module": "方法论：夯实基础",
+   "module_index": 2,
+   "source_file": "方法论：夯实基础/01｜老项目改造的真实链路：从接手到交付，人到底做了什么？/01｜老项目改造的真实链路：从接手到交付，人到底做了什么？.md",
+   "word_count": 4428,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 从这一讲开始我们正式进入课程。第一部分的 5 讲是方法论基础。这一部分不讲工具怎么用，不讲提示词怎么写，目的是把认知底座打好。学完这五讲，你应该获得三件东西：**一个正确的 AI 协作心智、一张工具地图、一套判断力框架**。接下来的课程内容，全部在这个底座上展开。 好，我们从 01 开始。这门课要回答的问题是：**面对你公司里那个跑了几年的老项目，怎么用好 Claude",
+   "last_200_words": "，后面越来越轻松。 这一讲还没讲到 Claude Code 具体怎么用。我希望你先理解那条人的原始链路，后面讲 AI 怎么进来、哪一步帮你做 80%、哪一步帮你做 30%、哪一步几乎插不上手，你才能对上焦。在你那个跑了三五年的老系统上，一步一步把自己的节奏跑出来。这个节奏建立起来之后，那个老项目就不再是负担，它会变成你最熟悉的工作对象。 ## 思考题 1. 回想你上一次接手一个老项目，大致是怎么做",
+   "headings": [
+    "一个真实的场景",
+    "你可能遇到过类似的场景",
+    "面对这样的场景，人本来会怎么做",
+    "为什么这件事对 AI 协作特别关键",
+    "为什么“前六步”特别容易被跳过",
+    "冷启动慢，飞轮转起来就快",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "九步链路",
+    "70/30 比例",
+    "冷启动飞轮",
+    "隐性约定（不要删的注释）"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "九步接手链路整理清晰，70%理解/30%动手比例反直觉，冷启动飞轮心法有用",
+   "warning_signals": [
+    "personal_anecdote_only"
+   ],
+   "connects_to": [
+    "02",
+    "03"
+   ],
+   "connects_to_reason": "九步链路是后续分工与三层控制的参照系",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "02",
+   "title": "02｜Claude Code 进来后：哪一步变了，哪一步没变？",
+   "module": "方法论：夯实基础",
+   "module_index": 2,
+   "source_file": "方法论：夯实基础/02｜Claude Code 进来后：哪一步变了，哪一步没变？/02｜Claude Code 进来后：哪一步变了，哪一步没变？.md",
+   "word_count": 3548,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲讲了九步真实链路。学完那一讲你可能会想：**链路是清楚了，那 AI 进来之后，每一步我到底该让它做多少、自己守多少？**这一讲就回答这个问题。 读完这一讲，你会获得一张人机分工图。面对任何一个陌生老项目的任何一步，你都能快速判断：这一步应该让 Claude Code 冲在前面，还是应该自己在前头、AI 辅助。 ## 分工别搞错了 先澄清一件事，**分工不是“会不会",
+   "last_200_words": "接方是谁、最终验收、上线风险识别都在这里。 记住那句话：**20% 的盲区，经常就是 100% 的事故**。AI 做不到的那 20%，你不主动补，它就是 0。 下一讲我们展开三层控制：理解、约束、验证。光有分工图还不够，要让 AI 在第一档和第二档里真正可信地帮你干活，还需要一套让它不乱来的框架。 ## 思考题 1. 拿你手上正在维护的那个项目，按九步走一遍。对照每一步，写一写：如果现在让 Cla",
+   "headings": [
+    "分工别搞错了",
+    "第一档：AI 主导，做 80%",
+    "第二档：人机对半，AI 做 50%",
+    "第三档：人主导，AI 做 20% 或更少",
+    "最危险的情况是什么",
+    "那 20% 就是你的位置",
+    "AI 改变的不是链路，是节奏",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "三档分工",
+    "20% 盲区",
+    "人机分工"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "三档分工（80/50/20）是常见认知整理，但'20% 盲区=100% 事故'金句有记忆点",
+   "warning_signals": [
+    "no_counter_example"
+   ],
+   "connects_to": [
+    "01",
+    "03"
+   ],
+   "connects_to_reason": "承接九步链路，引出三层控制",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "03",
+   "title": "03｜理解、约束、验证：让 AI 可信的三层控制",
+   "module": "方法论：夯实基础",
+   "module_index": 2,
+   "source_file": "方法论：夯实基础/03｜理解、约束、验证：让 AI 可信的三层控制/03｜理解、约束、验证：让 AI 可信的三层控制.md",
+   "word_count": 4071,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲结尾我留了一句话：光有分工图还不够，要让 AI 真正可信地帮你干活，还需要一套让它不乱来的框架。 这一讲就把这套框架给你，名字叫“三层控制”：理解、约束、验证。对应三个动作：**让 AI 看见、让 AI 听话、让 AI 可信**。学完这一讲，你会明白为什么有些人用 Claude Code 用得稳、有些人用得一塌糊涂。差别就在这三层做没做、做到了哪一层。 ## 为什",
+   "last_200_words": "I 的工程师，要么三层都没建，要么只建了一两层。 到这里，你可能会觉得 01-03 这三讲讲得有点虚，没怎么动代码。但当你真正进入老项目改造的时候，你会发现，后面 30 讲所有的具体动作，根都在这三讲里。九步链路、三档分工、三层控制，这是整门课方法论的骨架。 希望你把 01-03 这三讲记在心里，带回到你的改造任务中。内化之后你会发现：**老项目改造没那么复杂，其实都是这套骨架在重复转。** ##",
+   "headings": [
+    "为什么光有分工图不够",
+    "三层控制",
+    "第一层：理解，让 AI 看见",
+    "第二层：约束，让 AI 听话",
+    "第三层：验证，让 AI 可信",
+    "三层不是孤立的",
+    "这不是流程，是骨架",
+    "映射到九步",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "三层控制",
+    "静态/动态约束",
+    "Harness Engineering",
+    "正循环"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "三层控制（理解/约束/验证）是课程骨架，正循环机制有实质组织价值；接近 Anthropic Harness Engineering 概念但落地清晰",
+   "warning_signals": [
+    "acronym_branding"
+   ],
+   "connects_to": [
+    "01",
+    "02",
+    "05"
+   ],
+   "connects_to_reason": "映射九步链路，贯穿全课程",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "04",
+   "title": "04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？",
+   "module": "方法论：夯实基础",
+   "module_index": 2,
+   "source_file": "方法论：夯实基础/04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？/04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？.md",
+   "word_count": 4600,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲我们讲了三层控制：理解、约束、验证。这一讲来看具体的工具。 讲到工具，你可能已经有点焦虑了。Claude Code、Cursor、Copilot、Cline、CLAUDE.md、AGENTS.md、SKILL.md、Spec-Kit、Kiro、MCP、Sourcegraph、SonarQube、SDD、Harness……一连串的概念、工具、仓库，还有层出不穷的新名",
+   "last_200_words": "管理、能力扩展、规范驱动开发、工程辅助是四类不同性质的辅助武器。 按场景选武器：主武器永远是 AI 编码 Agent，辅助工具根据场景复杂度加减。 本课聚焦的是 Claude Code + CLAUDE.md + SKILL.md + MCP 这四件**。**其他工具知道有就够了，特定场景会用到。 记住那个心法：**够用就停**。工具数量不代表能力，熟练度才代表能力。 ## 思考题 1. 你现在经",
+   "headings": [
+    "为什么需要一张武器库地图",
+    "武器库里有什么",
+    "第一类：AI 编码 Agent",
+    "第二类：上下文管理",
+    "第三类：能力扩展",
+    "第四类：规范驱动开发（SDD）",
+    "第五类：工程辅助",
+    "怎么判断该拿哪件武器",
+    "老项目改造真正要重度用的工具",
+    "够用就停",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "AI 编码 Agent",
+    "上下文管理",
+    "SDD",
+    "MCP",
+    "够用就停"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "工具全景罗列（五类武器），'够用就停'心法唯一亮点",
+   "warning_signals": [
+    "no_counter_example"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "05",
+   "title": "05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景",
+   "module": "方法论：夯实基础",
+   "module_index": 2,
+   "source_file": "方法论：夯实基础/05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景/05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景.md",
+   "word_count": 7381,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲特殊一点。前面四讲讲的是方法论：**九步链路、人机分工、三层控制、武器库**，这些是“技”。这一讲想给你“道”。 业界现在教 AI 编程的课太多，讲工具的更多。你已经学了 Claude Code 怎么用、CLAUDE.md 怎么写，但我不希望你只停在“技”上。我想让你知道：**这门课讲的方法论不是我的个人套路，是业界从学术到工程，不同角度同时收敛出来的方向**。 ",
+   "last_200_words": "ks Solutions，2026 **风险数据源：** * Addy Osmani 关于 Comprehension Debt 的系列文章 * Florida International University 关于 Brownfield Tax 的联合研究 * Sonar State of Code Developer Survey (2026) * Veracode 2025 年度安全报告 *",
+   "headings": [
+    "业界看到的三个真实问题",
+    "Comprehension Debt：理解债",
+    "Brownfield Tax：棕地税",
+    "Verification Debt：验证债",
+    "三个债背后是同一件事",
+    "业界在收敛的共同方向",
+    "学术：怎么让 AI 像专家一样读代码",
+    "大厂：Anthropic 把老项目改造标准化了",
+    "咨询：Thoughtworks 和 Cleveroad 的判断",
+    "开源：社区在验证不同可能性",
+    "殊途同归",
+    "![图片](images/img_002.png)",
+    "一本 20 年前的书",
+    "这门课站在哪里",
+    "小结",
+    "思考题",
+    "参考资料"
+   ],
+   "key_terms": [
+    "Comprehension Debt",
+    "Brownfield Tax",
+    "Verification Debt",
+    "Characterization Test",
+    "Seam",
+    "理解→改造→验证"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "三个债（理解债/棕地税/验证债）综合框架有价值，Feathers 复兴洞察好，但量化数据大量无法独立验证",
+   "warning_signals": [
+    "precise_data_no_source",
+    "paper_name_drop"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": [
+    {
+     "claim": "Anthropic 52人RCT：AI组代码理解测试低17%",
+     "context": "05讲业界全景",
+     "preliminary_status": "needs_check"
+    },
+    {
+     "claim": "Dumb Zone：context使用率超40%输出下降",
+     "context": "05讲，FIU研究",
+     "preliminary_status": "needs_check"
+    },
+    {
+     "claim": "Sonar调查：42%代码AI生成、96%不信任、48%每次review",
+     "context": "05讲",
+     "preliminary_status": "needs_check"
+    },
+    {
+     "claim": "Veracode 2025：45% AI生成代码引入安全漏洞",
+     "context": "05讲",
+     "preliminary_status": "likely_ok"
+    },
+    {
+     "claim": "Chain of Understanding论文：CodeMap降低LLM依赖79%",
+     "context": "05讲，arXiv:2504.04553",
+     "preliminary_status": "likely_ok"
+    },
+    {
+     "claim": "Thoughtworks CodeConcise：COBOL逆向时间减66%",
+     "context": "05讲",
+     "preliminary_status": "needs_check"
+    }
+   ]
+  },
+  {
+   "lecture_id": "06",
+   "title": "06｜了解项目的八步心法：从 README 到核心链路",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/06｜了解项目的八步心法：从 README 到核心链路/06｜了解项目的八步心法：从 README 到核心链路.md",
+   "word_count": 4952,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 从这一讲开始，我们真正上手开始改造。这部分的核心议题叫做“了解项目”。在标准的流程中或者在我看来，**一个老项目到手，不管你准备改什么，第一件事永远是先把它摸清楚。这一步没走扎实，后面所有动作都是瞎动**。 第二部分的六讲围绕一件事：**怎么用 Claude Code 高效地摸清一个陌生老项目**。这一讲是开篇，给你一套心法，接下来每一讲对应心法里的一个具体动作。 ##",
+   "last_200_words": "干的这些事合起来，就是八步心法的完整落地。 老项目改造最难的第一步从来不是改，是摸清。摸清这件事过去靠工程师的经验和韧性，现在有 AI，但方法论不变，只是执行更快。 这门课教不了你把每一个项目都摸到完美，也不承诺你走完八步就万事大吉。**我能做的是把我自己多年接老项目的一套动作诚实地交给你**，你拿去在自己的项目上走一走、改一改，走出属于你自己的节奏。熬过冷启动，后面全是复利。 ## 思考题 1.",
+   "headings": [
+    "为什么要一套“心法”",
+    "八步心法",
+    "三个原则让心法落地",
+    "第一个原则：螺旋不是线性",
+    "第二个原则：沉淀文档，不是留在脑子里",
+    "第三个原则：建立锚点，不是读懂",
+    "接下来六讲要做什么",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "八步心法",
+    "螺旋不是线性",
+    "沉淀文档",
+    "建立锚点"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "八步心法三原则（螺旋、沉淀、锚点）有洞察，'建立锚点不是读懂'反直觉",
+   "warning_signals": [
+    "acronym_branding"
+   ],
+   "connects_to": [
+    "08",
+    "09",
+    "10",
+    "11"
+   ],
+   "connects_to_reason": "第二部分开篇，后续每讲对应一个动作",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "07",
+   "title": "07｜安装画图工具：给 Claude Code 装上画图 Skill",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/07｜安装画图工具：给 Claude Code 装上画图 Skill/07｜安装画图工具：给 Claude Code 装上画图 Skill.md",
+   "word_count": 5297,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲的八步心法里，第 4 步是“画项目全景”。这一讲按理说应该开始画 Spring AI Alibaba Admin 的架构图了，但动笔之前我想先停一下，因为我意识到一件事：**在讲怎么画之前，得先让 Claude Code 真的能画图**。 你试过没有？打开 Claude Code，跟它说“帮我画一张项目架构图”，它大概率会给你一段 mermaid 源码，让你自己去",
+   "last_200_words": "**硬守的一条线**：AI 画的图一定有错。你要 review，要修正，要存档到项目 docs 里。画图这件事不是“AI 画完就完”，是“AI 起稿 + 你把关 + 留下资产”。 装好画图能力，下一讲我们真正动手，用这几类图给 Spring AI Alibaba Admin 画出完整的项目全景。 ## 思考题 1. 你现在电脑上装的 Claude Code（或其他 AI 编程工具）装过几个 SKI",
+   "headings": [
+    "花一分钟认识 SKILL",
+    "工具怎么选？安装 claude-mermaid",
+    "了解老项目需要的四类必备图",
+    "四类图的画法：提示词 + 坑",
+    "架构图",
+    "模块依赖图",
+    "时序图",
+    "数据库 schema 图",
+    "让图真的好看：3 个细节",
+    "最后一个提醒：AI 画的图一定有错",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "SKILL 消费者视角",
+    "claude-mermaid",
+    "四类图"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "装画图 Skill 环境配置为主，'AI 画的图一定有错'提醒有实践价值",
+   "warning_signals": [
+    "pure_setup"
+   ],
+   "connects_to": [
+    "08"
+   ],
+   "connects_to_reason": "08 讲画图的前提",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "08",
+   "title": "08｜俯视项目全景：用提示词画出架构图、模块图、依赖图",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/08｜俯视项目全景：用提示词画出架构图、模块图、依赖图/08｜俯视项目全景：用提示词画出架构图、模块图、依赖图.md",
+   "word_count": 4581,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲装好了画图能力，这一讲我们正式拿 Spring AI Alibaba Admin 开刀，开始干活了。 从这一讲开始，第二部分剩下的五讲（08 到 12），每一讲都在这个项目上做事。**所有出现的提示词、产出的图、沉淀的文档，都围绕它展开。你跟着一起操作会收获最大**。 ## 先把项目 clone 下来 花两分钟准备一下： ```plain git clone ht",
+   "last_200_words": "放在 `docs/` 目录下。 2. 讲清楚了为什么要画三张图：**架构图锚定系统级共识**、**模块图暴露代码级依赖**、**依赖图展示生态级牵挂**。三张图是三种不同粒度的俯视，不重复。 3. 给了三套提示词，分别画出这三张图。提示词像人说话的风格，不堆格式化要求，只把关键指令和关键约束说清楚。每一张图都附上常见坑和 review 要点，让你不至于画到一半一头雾水。 ## 思考题 1. 你手上",
+   "headings": [
+    "先把项目 clone 下来",
+    "为什么先画三张图",
+    "开始画图",
+    "第一张：架构图",
+    "第二张：模块图",
+    "第三张：依赖图",
+    "画完不是终点，review 和存档才是",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "架构图",
+    "模块图",
+    "依赖图",
+    "三粒度俯视"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "三张图（架构/模块/依赖）三粒度分类清晰，提示词+坑+review 要点教程级，但属已知知识复述",
+   "warning_signals": [
+    "demo_inflation",
+    "no_counter_example"
+   ],
+   "connects_to": [
+    "06",
+    "07",
+    "09"
+   ],
+   "connects_to_reason": "八步心法第4步落地",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "09",
+   "title": "09｜接口和数据模型：让 AI 产出生成接口清单和 Schema",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/09｜接口和数据模型：让 AI 产出生成接口清单和 Schema/09｜接口和数据模型：让 AI 产出生成接口清单和 Schema.md",
+   "word_count": 22272,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲画完了三张俯视图，系统级有了架构图、代码级有了模块图、生态级有了依赖图。三种粒度的俯视摆在 `docs/` 里，你和 AI 对这个项目有了第一层共识，通过俯视告诉你“项目长什么样”，但它没告诉你“项目怎么被调用”和“项目在处理什么数据”，而这就是本节课要讲的内容。 对应八步心法第 5 步：**梳理接口和数据模型**。梳理完你会拿到两份新的资产：**一份 REST ",
+   "last_200_words": "2. 提示词的关键是**让 AI 读真实文件**。接口清单让它扫所有 Controller，数据模型让它综合看 entity、DTO、建表 SQL。不让它读代码就会脑补。 3. 做完互相校对。接口里提到的实体在数据模型里要能找到，反过来也一样。这个自洽性是资产可信的前提。 到这里 `docs/` 里已经有五份资产了。加上下一讲我们要写的 CLAUDE.md，项目的“脑图”就基本成型。 ## 思考题",
+   "headings": [
+    "接口和数据模型为什么要一起梳理",
+    "资产 1：REST 接口清单",
+    "REST 接口清单",
+    "目录",
+    "1. 认证 / 账号",
+    "1.1 认证",
+    "1.2 账号管理",
+    "2. Prompt 管理",
+    "3. 数据集管理",
+    "4. 评估器管理",
+    "5. 实验管理",
+    "6. 模型配置（Studio）",
+    "7. 可观测性",
+    "8. 应用管理",
+    "9. 工作流调试",
+    "10. 知识库 / 文档 / 分块",
+    "知识库",
+    "文档",
+    "文档分块",
+    "11. 模型 / Provider 管理",
+    "模型选择器",
+    "Provider 配置",
+    "12. 工具 / 插件",
+    "工具（内置）",
+    "插件",
+    "13. MCP Server",
+    "14. Agent Schema",
+    "15. 文件上传",
+    "16. API Key",
+    "17. 工作空间"
+   ],
+   "key_terms": [
+    "REST 接口清单",
+    "数据模型",
+    "互相校对",
+    "docs 资产"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "22K字大半是样例文档（REST清单+Schema）；'让AI读真实文件不脑补'+'互相校对'是关键方法",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "08",
+    "10"
+   ],
+   "connects_to_reason": "docs 五份资产之二",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "10",
+   "title": "10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识/10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识.md",
+   "word_count": 4468,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲结束时，`docs/` 目录里住了五份资产：架构图、模块图、依赖图、接口清单、数据模型。你和 AI 对这个项目已经有了相当多的共识。 但有一件事还没做：**让 AI 在每次启动时就带着这些共识进来**。 这一讲就做这件事。我们把五份资产凝成一份 CLAUDE.md，放进项目根目录。下次任何人（包括你自己）打开这个项目，Claude Code 启动时会自动读它，AI",
+   "last_200_words": "是操作。放进 CLAUDE.md 会让它臃肿，每次启动都加载没必要，它们应该住到另一个地方。下一讲我们讲怎么从老项目里**挖出这些重复流程**，写成你的第一个 SKILL。 ## 思考题 1. 你手上的项目如果现在让你写 CLAUDE.md 的“禁区”和“历史包袱”两节，你能列出几条？列不出的原因是真的没有这些坑，还是你自己还没搞清楚？如果是后者，这些信息目前存在哪里，同事脑子里？Jira 的某个",
+   "headings": [
+    "新老项目的 CLAUDE.md 不一样",
+    "里面放什么、不放什么",
+    "让 AI 帮你生成初稿",
+    "禁区和历史包袱",
+    "禁区",
+    "历史包袱",
+    "review 的三个检查点",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "CLAUDE.md 定位：索引+常识",
+    "禁区",
+    "历史包袱",
+    "300行上限"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "CLAUDE.md=索引+常识（非复制）；禁区/历史包袱两节必须人写、AI猜不出的洞察尖锐，三个 review 检查点可操作",
+   "warning_signals": [],
+   "connects_to": [
+    "05",
+    "08",
+    "09",
+    "11"
+   ],
+   "connects_to_reason": "五份资产凝成一份项目常识",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "11",
+   "title": "11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能/11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能.md",
+   "word_count": 9649,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲结尾我留了一句话：还有一类东西没落地，就是反复要做的操作流程。这类东西放不进 CLAUDE.md，因为它不是常识、是操作。改造前的体检、PR 前的检查、文档跟着代码走，**这些每次改造都要走一遍的流程，应该住到另一个地方，这个地方就是 SKILL**。 07 讲里我们装过一个别人写的 SKILL（画图），那是消费者视角。这一讲换角度，教你**从自己的老项目里挖出重",
+   "last_200_words": "项目根目录有一份 CLAUDE.md、`.claude/skills/` 里有一个你自己挖出来的 SKILL。这就是老项目的 AI 协作基础设施。 下一讲是第二部分的实操课，我会把 08-11 这四讲的提示词全部串起来，在 Spring AI Alibaba Admin 上跑一遍完整流程。第三部分就进入编译运行和护栏了。 ## 思考题 1. 你手上项目最让你头疼的“反复做但没沉淀”的流程是什么？这",
+   "headings": [
+    "老项目的 SKILL 的一些特点",
+    "老项目特别需要 SKILL",
+    "SKILL 的起点是“挖”，不是“设计”",
+    "老项目里哪些流程值得挖",
+    "一个老项目到底需要多少个 SKILL",
+    "实操开始：让 AI 帮你挖",
+    "第一步：让 AI 分析项目重复流程",
+    "第二步：让 AI 出 Top 3 推荐",
+    "第三步： 让 AI 生成完整的 CRUD SKILL",
+    "第四步：生成技术文档自动更新的 SKILL",
+    "docs-auto-sync",
+    "触发场景",
+    "产出",
+    "Usage",
+    "allowed-tools",
+    "Instructions",
+    "Step 0 — 解析参数",
+    "Step 1 — 收集代码侧接口清单（当 docTarget 为 `api` 或 `both`）",
+    "Step 2 — 收集代码侧数据模型清单（当 docTarget 为 `model` 或 `both`）",
+    "agentscope 侧（MyBatis-Plus）",
+    "admin 侧（JPA）",
+    "Step 3 — 读取现有文档",
+    "读 docs/api-list.md，按 ## 章节分组",
+    "读 docs/data-model.md，按 ### 表名分组",
+    "Step 4 — 交叉比对：接口",
+    "Step 5 — 交叉比对：数据模型",
+    "Step 6 — 输出差异报告",
+    "docs-auto-sync 差异报告",
+    "摘要",
+    "接口差异（共 N 条）"
+   ],
+   "key_terms": [
+    "SKILL 三特征",
+    "挖≠设计",
+    "docs-auto-sync",
+    "SKILL 是养出来的"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "SKILL 起点是'挖'不是'设计'，三特征判断法（可复制/可参数化/可自动化）实用，数量克制（5个内）有见地",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "07",
+    "10"
+   ],
+   "connects_to_reason": "从消费者视角转向生产者视角",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "12",
+   "title": "12｜实操课：完整摸清一个陌生项目的全流程演示",
+   "module": "了解项目：掌握实践路径",
+   "module_index": 3,
+   "source_file": "了解项目：掌握实践路径/12｜实操课：完整摸清一个陌生项目的全流程演示/12｜实操课：完整摸清一个陌生项目的全流程演示.md",
+   "word_count": 5474,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲是第二部分的结尾。前面 06-11 讲每一讲做一件事，这一讲把 08 到 11 的动作在 Spring AI Alibaba Admin 上连起来跑一遍，从 `git clone` 到 `docs/` 五份资产齐全、CLAUDE.md 写好、第一个 SKILL 装进去。 这是一节实操课，文中配有视频。提示词都在下面，你可以打开 Claude Code 照着跑。跑完",
+   "last_200_words": "← ER 图 ``` 这就是一个老项目的 AI 协作基础设施。 ## 小结 第二部分结束。从 06 讲八步心法到 11 讲第一个 SKILL，整个“了解项目”的方法论在 Spring AI Alibaba Admin 上跑完一遍。 接下来从 13 讲开始第三部分：**编译 + 测试 + 建立护栏**。理解了项目还不够，要能跑起来、能验证、能兜底。有了这些，我们到第四部分才能安心动手做真实的需求改造",
+   "headings": [
+    "准备",
+    "场景一：画三张全景图",
+    "场景二：梳理接口和数据模型",
+    "场景三：生成 CLAUDE.md",
+    "场景四：挖出第一个 SKILL",
+    "一键跑完全流程：让 Claude Code 自主执行",
+    "跑完之后的样子",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "一键工作流",
+    "五份资产",
+    "第一个 SKILL"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "实操演示课，把 08-11 提示词串跑，提示词清单可复用但独立增量少",
+   "warning_signals": [
+    "demo_inflation",
+    "pure_setup"
+   ],
+   "connects_to": [
+    "08",
+    "09",
+    "10",
+    "11"
+   ],
+   "connects_to_reason": "第二部分实操串讲",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "13",
+   "title": "13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过",
+   "module": "运行和测试：编译、测试、建立护栏",
+   "module_index": 4,
+   "source_file": "运行和测试：编译、测试、建立护栏/13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过/13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过.md",
+   "word_count": 6218,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 第二部分我们把一个老项目从“完全不懂”摸到了“docs/ 五份资产 + CLAUDE.md + 一个 SKILL”的程度。但有一件事还没做：**让项目真的在你电脑上跑起来**。 这一讲开始进入第三部分。说一下这部分的定位：**第三部分的工作流几乎对每个老项目都一样**。不管你实践的是 Spring AI Alibaba Admin，还是你公司那个跑了五年的订单系统，前置",
+   "last_200_words": "防死循环。所有踩坑过程沉淀成日志，最终汇成 setup-guide.md 和 env-bootstrap SKILL，成为团队和你自己的长期资产。 整个第三部分的提示词都是这个特点：拿来即用，改改项目名就能在自己公司项目跑。这一讲是最典型的一讲。 下一讲我们摸清这个项目的测试现状：能跑通吗？覆盖度怎样？动手改造之前要不要补测试？ ## 思考题 1. 你最近一次接手老项目搭环境花了多长时间？这一讲的",
+   "headings": [
+    "环境搭建是老项目改造最大的坑",
+    "让 AI 把环境一把搞定",
+    "Step 1：依赖盘点",
+    "Step 2A：本地安装方案（主推）",
+    "Step 2B：依赖启停管理脚本",
+    "Step 2C：Docker 方案（备选）",
+    "Step 3：编译启动",
+    "Step 4：接口冒烟",
+    "把过程沉淀成长期资产",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "环境工程师",
+    "依赖盘点",
+    "冒烟测试",
+    "env-bootstrap SKILL"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "环境搭建 SOP（依赖盘点→本地安装→编译→冒烟），沉淀为 setup-guide.md+env-bootstrap SKILL 的资产化思路好",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "14",
+    "16"
+   ],
+   "connects_to_reason": "第三部分第一步",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "14",
+   "title": "14｜摸清现有测试：能跑通吗？覆盖度怎样？",
+   "module": "运行和测试：编译、测试、建立护栏",
+   "module_index": 4,
+   "source_file": "运行和测试：编译、测试、建立护栏/14｜摸清现有测试：能跑通吗？覆盖度怎样？/14｜摸清现有测试：能跑通吗？覆盖度怎样？.md",
+   "word_count": 4446,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 13 讲跑完，应用活在你电脑上。中间件起来了、应用编译启动了、核心接口 curl 通了。看起来万事俱备，可以动手改造了。 **别急，还差一步：摸清测试**。 老项目改造里最常见的事故是这样的：你让 AI 帮你改一个 service 方法，AI 改完一行，悄悄改坏了五行。如果没测试，这五行被改坏的事实你两周后才能发现。可能是某个对接方报 bug 来找你，可能是上线后客诉，",
+   "last_200_words": "、有了更好的有什么）。 加上 13 讲的环境产出，第三部分到这里完成了“环境跑通 + 测试摸清”两件事。下一讲我们基于 test-gaps.md 真正补出测试，特别是 Characterization Test 这种锁住老项目“现实行为”的方法。补完之后改造前的护栏就齐了。 **老项目改造的护栏，不是测试覆盖率指标，是改造路径上的关键节点都有兜底。摸清比补全重要十倍。** ## 思考题 1. 你手",
+   "headings": [
+    "为什么先“摸”再“补”",
+    "摸底四步法",
+    "Step 1：摸核心链路",
+    "Step 2：摸现有测试",
+    "Step 3：跑一遍看实际状态",
+    "Step 4：算出缺口清单",
+    "最大的坑：不要让 AI 大而全",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "摸底四步",
+    "test-gaps.md",
+    "P0/P1 缺口",
+    "不要让 AI 大而全"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "摸底四步法+缺口清单，'不要让AI大而全''摸清比补全重要十倍'反直觉",
+   "warning_signals": [],
+   "connects_to": [
+    "15"
+   ],
+   "connects_to_reason": "补测试的前置",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "15",
+   "title": "15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为",
+   "module": "运行和测试：编译、测试、建立护栏",
+   "module_index": 4,
+   "source_file": "运行和测试：编译、测试、建立护栏/15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为/15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为.md",
+   "word_count": 6447,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 14 讲跑完，你手上有一份 `docs/test-gaps.md`，里面是动手改造之前必须补的测试缺口清单。 如果你的项目本来就有一些测试，那 15 讲对你来说很轻，按缺口清单一项一项让 AI 补就行。 但更多同学面对的是另一种情况：**项目几乎没测试，或者 14 讲跑出来发现测试根本不能跑**。这种情况下“补”的工作量大到让人退缩。这一讲就是为这种情况写的。 ## 为",
+   "last_200_words": "方法论全部讲完。docs/ 里的资产、scripts/ 下的脚本、CI 里的护栏全部到位。改造前的所有准备工作都搞定了。 下一讲是第三部分的实操课，我会把 13-15 讲的提示词全部串起来，在 Spring AI Alibaba Admin 上跑一遍完整流程。跑完 16 讲，第三部分收尾，第四部分就要开始真正动手做需求改造了。 ## 思考题 1. 你手上项目最近一次改造，有没有出现过“AI 改了什",
+   "headings": [
+    "为什么以前没人补，现在能补了",
+    "该不该补：先做决策",
+    "要补哪些：按价值排优先级",
+    "怎么补：两步走，每批严格控量",
+    "Step 1：让 AI 出补测试计划",
+    "Step 2：让 AI 一批一批补",
+    "让 CI 当你的兜底护栏",
+    "Step 1：让 AI 分析项目当前的 CI 状态",
+    "Step 2：让 AI 写完整的 CI workflow",
+    "Step 3：跑通 CI",
+    "最容易翻车的点：不要让 AI 一口气补",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "Characterization Test",
+    "断言凭实际不凭应该",
+    "补测试优先级",
+    "CI 兜底护栏",
+    "每批1-3个"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "gold",
+   "initial_tier_rationale": "Characterization Test 有 Feathers 出处；'AI 会用业务直觉补断言'的隐性偏差识别是应用级新洞察；补测试优先级+分批控量+CI 护栏全程可操作",
+   "warning_signals": [],
+   "connects_to": [
+    "05",
+    "14",
+    "19"
+   ],
+   "connects_to_reason": "验证层核心落地",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "16",
+   "title": "16｜实操课：给一个老项目建立完整改造前护栏的全流程演示",
+   "module": "运行和测试：编译、测试、建立护栏",
+   "module_index": 4,
+   "source_file": "运行和测试：编译、测试、建立护栏/16｜实操课：给一个老项目建立完整改造前护栏的全流程演示/16｜实操课：给一个老项目建立完整改造前护栏的全流程演示.md",
+   "word_count": 8056,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲是第三部分的收尾。前面 13-15 讲每一讲做一件事，这一讲把环境搭建、测试摸底、补测试、CI 集成的所有动作在 Spring AI Alibaba Admin 上连起来跑一遍。从项目还没跑起来，到项目活了 + 测试摸清 + 必要的兜底测试补上 + CI 自动跑护栏到位。 这是一节实操课，视频演示。提示词都在下面，你可以打开 Claude Code 照着跑。跑完你",
+   "last_200_words": "出兜底测试和 CI 护栏，整个“改造前准备”的方法论全部跑完。 第二部分加第三部分加起来一句话：**理解了项目（脑图）、跑通了项目（环境）、护住了项目（测试 + CI）**。这三件事做完，才有资格谈改造。 下一讲第四部分开始，我们终于要动手做真实需求改造了。我们会从一个模糊的业务需求出发，让 AI 帮你拆出一份能直接指导开发的技术文档。 ## 思考题 1. 跑完整套流程大约花了你多少时间？最卡你的",
+   "headings": [
+    "准备",
+    "场景一：让 AI 当你的环境工程师",
+    "场景二：摸清测试现状",
+    "场景三：补出兜底测试",
+    "场景四：让 CI 当你的兜底护栏",
+    "一键跑完全流程：让 Claude Code 自主执行",
+    "跑完之后的样子",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "改造前护栏",
+    "一键工作流",
+    "CI 集成"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "实操演示课，串跑 13-15 提示词，独立增量少",
+   "warning_signals": [
+    "demo_inflation",
+    "pure_setup"
+   ],
+   "connects_to": [
+    "13",
+    "14",
+    "15"
+   ],
+   "connects_to_reason": "第三部分实操串讲",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "17",
+   "title": "17｜从一句话需求到需求文档：让 AI 帮你拆需求",
+   "module": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "module_index": 5,
+   "source_file": "需求改造：给 Spring AI Alibaba Admin 加新功能/17｜从一句话需求到需求文档：让 AI 帮你拆需求/17｜从一句话需求到需求文档：让 AI 帮你拆需求.md",
+   "word_count": 13144,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 前面我们花了大量的时间讲方法论、讲环境搭建、讲如何建立测试、讲如何铺设护栏。到这里你可能有点着急，怎么还没开始改。我想先分享一个观点：**AI 需要有一套完整的质量保障体系。** 什么是质量保障体系？就是前面讲的那些方法论和流程，它有两个很重要的作用： 1. **保证你改造的下限和质量**。在经验、熟练度、能力等还不够成熟的时候，这套质量保障体系会保证你改造质量的下限，",
+   "last_200_words": "围）→ AI 出定稿。全程 20 分钟。 4. 最容易翻车的点：把 AI 草稿当定稿。AI 强的部分覆盖 70%，但漏的 30% 才是文档从能用到好用的关键。这 30% 必须人补。 下一讲我们拿着这份需求文档，开始拆改造方案：涉及哪些代码、改哪些地方、用什么 diff 库、改造任务怎么排，把“做什么”翻译成“怎么做”。 ## 思考题 1. 你拿过的需求文档里最让你头疼的是哪个维度？业务目标、边界场",
+   "headings": [
+    "应该停下来：AI 帮不了你了",
+    "学习思路",
+    "功能描述：Prompt 版本对比",
+    "怎么拆才算合格",
+    "大家做得不好的三个原因",
+    "需求文档的六维体系",
+    "AI 在六维上的能力地图",
+    "怎么用 AI 拆得又快又准",
+    "Step 1：让 AI 出六维草稿",
+    "Step 2：人补关键三个判断",
+    "Step 3：让 AI 出定稿",
+    "生成需求文档",
+    "Prompt 版本对比（Diff）",
+    "1. 业务目标",
+    "2. 用户场景",
+    "3. 接口契约",
+    "基本信息",
+    "入参",
+    "返回结构",
+    "错误码",
+    "4. 边界场景",
+    "5. 老项目约束",
+    "6. 不在这次范围里",
+    "本期砍掉（不做）",
+    "留到下期",
+    "怎么避免最常见的翻车",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "需求六维",
+    "AI 能力地图",
+    "人补三个判断",
+    "老项目约束",
+    "不在范围"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "gold",
+   "initial_tier_rationale": "需求六维体系（作者自承'结构化而非发明'）+ AI 六维能力地图（85/60/30分）+三步走（草稿→人补三判断→定稿），可操作性与分工洞察双高",
+   "warning_signals": [
+    "precise_data_no_source"
+   ],
+   "connects_to": [
+    "18",
+    "22"
+   ],
+   "connects_to_reason": "改造第一环，输出需求文档",
+   "claimed_data_points": [
+    {
+     "claim": "AI 强维度85+分/中60/弱30以下",
+     "context": "17讲AI能力地图",
+     "preliminary_status": "needs_check"
+    },
+    {
+     "claim": "AI覆盖70%、人补30%、三步20分钟、比手写省2小时",
+     "context": "17讲",
+     "preliminary_status": "needs_check"
+    }
+   ]
+  },
+  {
+   "lecture_id": "18",
+   "title": "18｜从需求文档到改造方案：让 AI 帮你把改造想透",
+   "module": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "module_index": 5,
+   "source_file": "需求改造：给 Spring AI Alibaba Admin 加新功能/18｜从需求文档到改造方案：让 AI 帮你把改造想透/18｜从需求文档到改造方案：让 AI 帮你把改造想透.md",
+   "word_count": 12004,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲我们完成了需求文档的整理，接下来是不是动手写代码了呢？依然不是。需求清楚不等于可以开始开发。因为需求讲“做什么”、改造讲“怎么改”，中间隔着一份方案文档。**这一讲就教你怎么用 AI 把这份方案文档跑出来**。 ## 这一步要解决什么问题 需求文档拿到手，我们常做的一件事是：扫一眼、心里大概有数，然后直接上手写代码。其实这个思路本身是没问题的，但是这个操作很看开发",
+   "last_200_words": "ocs/ 资产不是一次性产出，是每次改造都被验证、被丰富的活资产，这一讲是“活资产闭环”的第一次落地。后面 19/20 讲做完代码改造后，资产还会再被更新一轮。 下一讲我们带着这份方案文档动手写代码。先做后端：建 DTO、加 Service 方法、加 Controller 接口、补 Characterization Test、跑通集成测试。 ## 思考题 1. 你最近一次做改造，动手前有没有画过改",
+   "headings": [
+    "这一步要解决什么问题",
+    "七步走",
+    "Step 1：让 AI 摸出改造涉及的链路",
+    "Step 2：让 AI 列出所有改造点",
+    "Step 3：让 AI 画改造流程图",
+    "Step 4：让 AI 说明影响范围",
+    "Step 5：让 AI 说明准备怎么改",
+    "Step 6：让 AI 整合信息，方便审核",
+    "Prompt 版本 Diff — 改造方案（定稿）",
+    "1. 一句话概要",
+    "2. 涉及链路",
+    "节点表",
+    "调用链路图",
+    "3. 改造点清单",
+    "后端",
+    "前端",
+    "测试 & 文档",
+    "4. 改造流程图",
+    "5. 影响范围与风险",
+    "6. 改造步骤与顺序",
+    "7. 待审核的关键决策点",
+    "Step 7：你审核 + 调整 + 定稿",
+    "把改造方案沉淀回 docs/",
+    "最终产出",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "方案七步",
+    "改造点清单 P01-P10",
+    "决策点审核",
+    "显式考虑前端",
+    "活资产闭环"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "方案七步走（摸链路→列改造点→画流程→影响→步骤→整合→决策审核）教程级优秀；'显式考虑前端''有分歧才给方案'两个提示词技巧实用",
+   "warning_signals": [],
+   "connects_to": [
+    "17",
+    "19",
+    "20"
+   ],
+   "connects_to_reason": "需求文档到改造方案",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "19",
+   "title": "19｜执行改造（上）：后端开发跑通测试",
+   "module": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "module_index": 5,
+   "source_file": "需求改造：给 Spring AI Alibaba Admin 加新功能/19｜执行改造（上）：后端开发跑通测试/19｜执行改造（上）：后端开发跑通测试.md",
+   "word_count": 12597,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 18 讲跑完，你手上有一份审核过的改造方案。终于到动手写代码这一步。这一讲做后端，对应方案里的 P01-P06：建 DTO、实现 Service、加 Controller、补集成测试、跑通 mvn test。 **这节课的提示词会写得比较细，约束比较多。**因为本节课就是让 Claude Code 完成后端接口的开发，越详细的提示词和约束，效果越好。建议你多琢磨下提示词",
+   "last_200_words": "）、有测试覆盖（Characterization Test + diffVersions 单元测试）、不破坏现有行为（Characterization Test 改造前后结果一致）。下一讲做前端：接入新接口、改造 VersionCompareModal、加 loading 状态、和后端联调。 ## 思考题 1. 你最近一次让 AI 改老代码，有没有遇到 AI 顺手优化的情况？如果当时有 Chara",
+   "headings": [
+    "怎么改才算合格",
+    "改造前先锁住现有行为",
+    "改造执行的四个原则",
+    "怎么用 AI 跑通后端改造",
+    "Step 1：锁住改造前的行为（Characterization Test）",
+    "Step 2：建 DTO（P01-P03）",
+    "Step 3：实现 Service（P04-P05）",
+    "Step 4：加 Controller（P06）",
+    "Step 5：补单元测试 + curl 验证返回结构",
+    "登录拿 token（替换为你的实际账号密码）",
+    "调 diff 接口（替换为你数据库里真实存在的 promptKey 和两个版本号）",
+    "Step 6：跑通 mvn test 全套",
+    "Step 7：提交 + 文档自动更新",
+    "怎么避免最常见的翻车",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "改造四原则",
+    "锁住改造前行为",
+    "小步执行",
+    "3次兜底"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "改造执行四原则+后端七步（锁行为→DTO→Service→Controller→测试→全套→提交），Characterization Test 改造前落地，翻车规避要点具体",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "15",
+    "18",
+    "20"
+   ],
+   "connects_to_reason": "方案 P01-P06 后端落地",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "20",
+   "title": "20｜执行改造（下）：前端开发和接口对接",
+   "module": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "module_index": 5,
+   "source_file": "需求改造：给 Spring AI Alibaba Admin 加新功能/20｜执行改造（下）：前端开发和接口对接/20｜执行改造（下）：前端开发和接口对接.md",
+   "word_count": 4058,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 19 讲跑完，后端 GET diff 接口已经能用 curl 跑通。这一讲做前端，对应 18 讲方案里的 P07-P10：API 函数 + 类型声明 + 加新的对比按钮 + 接入 modal。 前端改造的特点是，没办法靠 mvn test 这种自动化验证兜底，唯一的验证方式是亲眼看效果。所以这一讲的节奏是：**先跑起来看现状、让 AI 找改造点、让 AI 改、预览效果*",
+   "last_200_words": "的）：AI 扫代码再细也不能替你点几下产品看现状 * **小步执行 + 自主修复 + 3 次兜底**（13/19 讲） * **Characterization Test 兜底**（15/19 讲） * **断言凭“实际”不凭“应该”**（15/19 讲） * **文档自动更新**（10/18 讲）：包括把这次的翻车教训写进 CLAUDE.md ## 思考题 1. 你最近一次接手老项目改造，开工前",
+   "headings": [
+    "起服务，看现状",
+    "让 AI 告诉你前端改造在哪里",
+    "让 AI 改前端",
+    "预览效果",
+    "复盘：我和 AI 都没发现这个功能本来就有",
+    "这次翻车说明什么",
+    "那这次改造白做了吗",
+    "老项目改造前必须做的兜底动作",
+    "总结",
+    "思考题"
+   ],
+   "key_terms": [
+    "人是最后的兜底员",
+    "改造前点产品",
+    "AI 理解业务功能弱",
+    "翻车复盘"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "gold",
+   "initial_tier_rationale": "稀缺诚实反面案例：整整4讲工作量因'改造前没点产品'归零；'AI扫代码强但理解业务功能弱''人是最后的兜底员'洞察深刻；兜底动作 30 秒可执行",
+   "warning_signals": [],
+   "connects_to": [
+    "17",
+    "18",
+    "19",
+    "22"
+   ],
+   "connects_to_reason": "前端执行+翻车复盘，教训写入 CLAUDE.md",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "21",
+   "title": "21｜实操课：一次完整改造的全流程演示 + 验收复盘",
+   "module": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+   "module_index": 5,
+   "source_file": "需求改造：给 Spring AI Alibaba Admin 加新功能/21｜实操课：一次完整改造的全流程演示 + 验收复盘/21｜实操课：一次完整改造的全流程演示 + 验收复盘.md",
+   "word_count": 9297,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲是第四部分的收尾。前面 17-20 讲每一讲做一段，这一讲把“接到一句话需求”到“前端跑通可提 PR”的所有动作连起来跑一遍。从“leader 给你一句话”到“需求文档 + 改造方案 + 后端代码 + 测试 + 前端跑通 + docs/ 全部同步更新”。 **这是一节实操课，视频演示**。提示词都在下面，你可以打开 Claude Code 照着跑。跑完你的项目里就",
+   "last_200_words": "这四件事做完，你已经具备在任何老项目上独立做改造的能力。 这次改造还留下了一条最值钱的教训：改造前先点产品看现状，AI 扫代码不能替代。这条教训已经写进 CLAUDE.md，下次类似改造 AI 会主动提醒你做。这一讲开头的“改造前的硬约束”和一键工作流里“第零步现状确认”也是这次教训的产物。 第五部分，我们会做整个改造的大复盘，把方法论再深一层。 ## 思考题 1. 跑完整套流程大约花了你多少时间",
+   "headings": [
+    "准备",
+    "改造前的硬约束：先点产品确认现状",
+    "然后启动后端、启动前端、登录账号 saa/123456",
+    "场景一：把一句话需求拆成需求文档",
+    "场景二：把需求文档拆成改造方案",
+    "场景三：跑通后端改造",
+    "场景四：跑通前端改造 + 资产同步",
+    "一键跑完整流程：让 Claude Code 自主执行",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "完整改造闭环",
+    "一键工作流",
+    "第零步现状确认"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "实操演示课，串跑 17-20，'第零步现状确认'是新增亮点",
+   "warning_signals": [
+    "demo_inflation",
+    "pure_setup"
+   ],
+   "connects_to": [
+    "17",
+    "18",
+    "19",
+    "20"
+   ],
+   "connects_to_reason": "第四部分实操串讲",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "22",
+   "title": "22｜核心五问：这门课的思路是如何解决问题的？",
+   "module": "阶段总结复盘",
+   "module_index": 6,
+   "source_file": "阶段总结复盘/22｜核心五问：这门课的思路是如何解决问题的？/22｜核心五问：这门课的思路是如何解决问题的？.md",
+   "word_count": 4307,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 第四部分跑完，我们停一下。讲到这里，前面四个部分的方法论都铺完了：理解项目、跑通项目、护住项目、改造一个项目。但我猜你心里有一些疑问还没问出口。 我整理了五个最常见的： 1. 这个思路真的能解决我日常改造里遇到的问题吗？ 2. 我能直接抄这套思路吗？ 3. 流程这么多，我必须一步一步跟吗？ 4. 我看整个过程没用什么高级 AI 工具，为什么？ 5. 我也按思路跑了一遍，",
+   "last_200_words": "动凭经验，跑熟了流程会内化。 4. 工作流为先、工具补位：这门课用了不少朴素的工具，没用高级工具是因为没必要。 5. 效果不好的根本原因：该停的地方没停，以及三个失败模式 + 一种隐性失败 工作量下来 ≠ 思考量下来，这句话你记牢。 下一讲我们再演练一次：换一个 Spring AI Alibaba Admin 上的功能，用同样的流程跑一遍。不重复方法论，只给图、提示词、点评。证明这套流程不依赖于具",
+   "headings": [
+    "思路真的能解决问题吗？",
+    "能直接抄吗？",
+    "流程这么多必须一步一步跟吗？",
+    "为什么没用什么高级 AI 工具？",
+    "跑了流程效果还是不好，问题出在哪？",
+    "**失败模式一：17 讲拆需求时偷懒**",
+    "**失败模式二：18 讲跳过 Step 7 决策点审核**",
+    "**失败模式三：跳过现状确认**",
+    "还有一种更隐性的失败：自己不够细心 + 漏掉细节",
+    "一句话总结",
+    "收尾：AI 是加速，不是兜底",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "AI 是加速不是兜底",
+    "三个失败模式",
+    "工作量≠思考量",
+    "慢就是快",
+    "流程内化"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "gold",
+   "initial_tier_rationale": "'AI是加速不是兜底'+三个失败模式+自检清单（17讲偷懒/18讲跳过决策审核/跳过现状确认），'工作量下来≠思考量下来'高密度金句，复盘诚实度高",
+   "warning_signals": [],
+   "connects_to": [
+    "17",
+    "18",
+    "20"
+   ],
+   "connects_to_reason": "第四部分复盘",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "23",
+   "title": "23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面",
+   "module": "阶段总结复盘",
+   "module_index": 6,
+   "source_file": "阶段总结复盘/23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面/23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面.md",
+   "word_count": 4999,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 22 讲复盘了五个常见疑问，最关键的一句话是：老项目改造，AI 是加速，不是兜底。你看完可能会想问一个问题：**你说这套流程可复现，那换个功能能不能跑通？** 这一讲就回答这个问题。不重复方法论，只给图、提示词、点评。你跟着扫一遍，应该会有这样一个体感：哦～原来这套流程在另一个功能上也是这么跑、产出物长这样。 那么二次演练会更复杂吗？正好相反。这次反而是整门课提示词最少",
+   "last_200_words": "组件、29 个改造点，这些都是新的复杂度，但**没有一个让工作流偏离原本的节奏**。 第六部分开始，我们换一个语言（Python / Hermes Agent）跑同样的工作流，验证一次跨技术栈的可迁移性。Java 项目能跑通的工作流，换到 Python 项目还能不能稳？等到第六部分跑完你心里会有答案。 ## 思考题 1. 这一讲让你最有感的一点是什么？是“一个提示词出三份文档”的轻快，还是“必须人",
+   "headings": [
+    "为什么这次可以比较轻松？",
+    "这次改什么：给 SAA Admin 加一个 Overview 页面",
+    "场景一：现状确认",
+    "场景二：一个提示词出三份文档",
+    "场景三：人工校验三份文档",
+    "场景四：执行后端改造",
+    "场景五：执行前端改造",
+    "场景六：文档自动更新",
+    "跟第一次改造的差异点",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "Overview 页面",
+    "现状确认",
+    "一个提示词出三份文档"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "silver",
+   "initial_tier_rationale": "二次演练验证流程可迁移性，'一个提示词出三份文档'效率提升明确，但属已讲方法论的复用",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "17",
+    "18",
+    "19",
+    "20",
+    "22"
+   ],
+   "connects_to_reason": "换功能重跑同一工作流",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "24",
+   "title": "24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent/24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent.md",
+   "word_count": 7026,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 从这一讲开始，我们进入第六部分。这一部分要做的事情和前面几部分都不太一样。前面我们改造的是公司内部维护的老项目，代码是我们的、bug 是我们的、方向也是我们定的。但还有另一种同样常见的场景：**接到一个需求，要基于一个开源项目去实现**。比如运维同学做内部巡检平台，先看 Prometheus 生态有什么现成的；后端同学给业务接工作流引擎，先看 Temporal、Airf",
+   "last_200_words": "关键是两点：**你要有自己的拆解框架****，****你要带着任务去问**。框架决定问什么，任务决定怎么问。两个都到位，认知建立的速度会比你想象的快。 跑完今天这一讲，我手上已经有了一份对 Hermes 够用的认知。但还差一步，**我还没拿这份认知去对照那句“做一个自动化测试 Agent”的需求**。下一讲，我们就来做这件事，把一句话需求拆成能交付的方案。 这一套打法不是 Hermes 专用的，下",
+   "headings": [
+    "方法论：让 AI 帮你建立顶层认知",
+    "学习前的一些想法",
+    "顶层认知，要有自己的拆解框架",
+    "带着任务去问，而不是裸问",
+    "三个提示词，摸清楚 Hermes 大体框架",
+    "提示词一：它是什么 + 它的内部机制",
+    "提示词二：它能做什么",
+    "提示词三：它怎么扩展",
+    "跑完之后我对 Hermes 的认知",
+    "先停一下，回到官方文档",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "拆解框架",
+    "带着任务去问",
+    "三问（是什么/做什么/怎么扩展）"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "学习框架方法（有自己的拆解框架+带着任务去问），三个提示词摸框架，教程级无原创框架",
+   "warning_signals": [
+    "no_counter_example"
+   ],
+   "connects_to": [
+    "25"
+   ],
+   "connects_to_reason": "Hermes 二次开发前置",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "25",
+   "title": "25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案/25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案.md",
+   "word_count": 9796,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲我们摸透了 Hermes，知道它能给我们什么、自己要写什么。但摸 Hermes 不是终点，只是手段。我们真正要做的事情是：**给 RobustMQ 加 7×24 不间断的自动化混沌测试**。 选 RobustMQ 作为这一讲的载体，有两个理由。一是它是个基础软件项目，质量要求是生产级的，自动化测试是真实需要，不是为了课程编出来的场景。二是社区里已经有 issue ",
+   "last_200_words": "写得清楚就够了。 写完两份文档，第一件事其实是放下。第二天早上再看一遍，你常常会发现某个决策当时拍得太草率，趁还没动手赶紧改回来。真正动手前，留一晚给方案沉淀，这条经验比方法论本身值钱。 所以接到需求当天就开始写代码的人，没一个交付得好。理由不是“先写文档显得专业”，而是写文档的过程本身就是把需求里所有藏着的事拍清楚的过程。不拍清楚就动手，等于把代码当成需求的探索工具，代价是改代码远比改文档贵。 ",
+   "headings": [
+    "背景： 加什么样的自动化测试",
+    "第一次翻译：从一句话到完整设计",
+    "AI 给的初版",
+    "我反问的几个点",
+    "完整设计文档成型了",
+    "第二次翻译：从自研到建在 Hermes 上",
+    "自研路径的真实成本",
+    "Hermes 上的方案",
+    "我反问的几个点",
+    "AI 把方案收紧了",
+    "完整方案文档成型了",
+    "拿到这两份文档之后",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "两次翻译",
+    "反问不是追问",
+    "收敛提示词",
+    "因果链可追溯",
+    "设计文档/方案文档"
+   ],
+   "initial_value_score": 4,
+   "initial_tier": "gold",
+   "initial_tier_rationale": "两次翻译（需求→完整设计、设计→方案）的问题域/方案域分离模型清晰；'反问不是追问''别又冒新决策，把这版收紧'是高级提示词技巧；引用真实文档URL可验证",
+   "warning_signals": [],
+   "connects_to": [
+    "24",
+    "26",
+    "27",
+    "28"
+   ],
+   "connects_to_reason": "一句话需求→可动手方案",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "26",
+   "title": "26｜跑通 Hermes Agent：Hello World 之后再回看方案",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/26｜跑通 Hermes Agent：Hello World 之后再回看方案/26｜跑通 Hermes Agent：Hello World 之后再回看方案.md",
+   "word_count": 6214,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲我们把一句话需求翻译成了完整设计文档和完整方案文档，手上拿着两份评审级文档。但纸面上的方案再清晰，在工具上跑不通就只是 PPT。这一讲就是把 Hermes 真正跑起来，验证那份方案里的每个扩展点都活着。 ## 别全读文档，先跑通 接到一个新工具，大多数人的第一反应是把官方文档从头读一遍。这是慢路。 慢在哪？读完整套文档，你脑子里全是抽象概念，没一个动作落到键盘上。",
+   "last_200_words": "→ 写 Hello World → 跑通 → 对照真实项目想清楚怎么放。 前三步是工具掌握，工程师在任何工具上都该这么做。第四步是项目落地，把通用的工具能力对接到具体的工程任务，这一步走完，你才真正接管了这个工具。 很多人第一天卡在前两步，把环境装得完美、文档读得透彻，但没动手写过任何扩展，这是慢路。先跑通最小闭环，再带着具体问题读对应章节，这条路上每一步都有反馈，每一次卡壳都是下一步的指路灯。 ",
+   "headings": [
+    "别全读文档，先跑通",
+    "装上，跟它聊一聊",
+    "自己写一个 Hello World",
+    "一个最简 Tool:get_current_time",
+    "一个最简 Skill:hello-world",
+    "Hello World",
+    "When to Use",
+    "Procedure",
+    "跑通之后，卡过的坑也要记下来",
+    "回到我们的项目：25 讲的方案怎么落到 Hermes 上",
+    "触发链路在我们的项目里怎么走",
+    "第一行代码该往哪里下",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "先跑通",
+    "最小闭环",
+    "最简 Tool/Skill",
+    "坑要记下来"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "'别全读文档先跑通'的工程节奏有方法论价值，Hello World+Tool+Skill 最小闭环教程级",
+   "warning_signals": [
+    "pure_setup"
+   ],
+   "connects_to": [
+    "25",
+    "27"
+   ],
+   "connects_to_reason": "验证方案扩展点活着",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "27",
+   "title": "27｜让代码长出来：用提示词驱动写 Skill 套件",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/27｜让代码长出来：用提示词驱动写 Skill 套件/27｜让代码长出来：用提示词驱动写 Skill 套件.md",
+   "word_count": 11410,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲我们装好了 Hermes、跑通了 Hello World，还把 25 讲方案里的每个文件在 Hermes 用户目录里找到了位置。这一讲让代码长出来。 ![图片](images/img_000.png) 不是自己一行行敲，是用提示词驱动 Claude Code 写。 ## 动手前先想清楚 ### 系统跑起来，长这样 动手写代码之前，先把这套系统真的跑起来时是什么样想",
+   "last_200_words": "件没传到位，AI 给的代码就会偏离方案文档，跑起来出问题。 开发顺序也有讲究：依赖在先、Tool 在先。cluster.py 第一个写，因为后面所有 Tool 依赖它给的 endpoint；Skill 最后写，因为它是 Tool 的使用说明书，说明书要等东西做出来再写。 跟着这个顺序把六个文件写完，代码层就齐了。下一讲填业务层，然后让 Hermes 真的跑起来，看见报告 push 进 GitHub",
+   "headings": [
+    "动手前先想清楚",
+    "系统跑起来，长这样",
+    "为了跑成这样，要做几件事",
+    "开工：5 个 Tool ＋ 1 个 SKILL.md",
+    "cluster.py",
+    "observability.py",
+    "client.py",
+    "chaos.py",
+    "report.py",
+    "SKILL.md 骨架",
+    "点评一下 AI 写的代码",
+    "cluster.py 的点评",
+    "observability.py 的点评",
+    "client.py 的点评",
+    "chaos.py 的点评",
+    "report.py 的点评",
+    "SKILL.md 骨架的点评",
+    "整体看一眼",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "Skill 套件",
+    "开发顺序",
+    "代码点评",
+    "75%可复用"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "提示词驱动写 Skill 套件，'依赖在先、Tool 在先、Skill 最后'开发顺序洞见好；但主体是代码走读+点评",
+   "warning_signals": [
+    "source_code_walkthrough"
+   ],
+   "connects_to": [
+    "25",
+    "26",
+    "28"
+   ],
+   "connects_to_reason": "方案文档→5个Tool+SKILL",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "28",
+   "title": "28｜跑通系统：填业务层，看见混沌测试真的跑起来",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/28｜跑通系统：填业务层，看见混沌测试真的跑起来/28｜跑通系统：填业务层，看见混沌测试真的跑起来.md",
+   "word_count": 7788,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲代码长出来了，5 个 Tool 和 SKILL.md 骨架全部就位，每个 Tool 都通过单点对话验证过。但这套系统现在还跑不起来，具体场景没填、报告模板空着、Deploy Key 没生成、Cron 没装。这一讲把这些填完，然后用一段对话把整个系统真的跑一遍。 ## 27 讲漏了什么 回头看 27 讲末尾留的五个待办： * 场景库 `scenarios/` 是空的",
+   "last_200_words": "能复用；业务层是当前这个具体项目的定义，跟 RobustMQ 绑死。先做代码层，再填业务层，工程上更稳。下次再做一个类似系统（给另一个开源项目加自动化测试），代码层 80% 能搬，业务层完全重写。 跑通系统不是终点。第二期飞书接入、更多场景库、Quality Dashboard 前端，都是在这条已经活起来的链路上往外长。但今天看着报告 push 进 GitHub 这一刻，值得停下来。 ## 思考题",
+   "headings": [
+    "27 讲漏了什么",
+    "把业务层填进去",
+    "场景库 scenarios/",
+    "报告模板 templates/report.md.j2",
+    "套件配置 config.yml",
+    "~/.hermes/skills/robustmq-chaos-test/config.yml",
+    "GitHub Deploy Key 和 test-reports 仓库",
+    "cron.yml 三档调度",
+    "~/.hermes/cron.yml",
+    "让 Hermes 跑起来",
+    "先看一眼 Tool 和 Skill 都加载了",
+    "用对话跑一次完整测试",
+    "接下来怎么变成 7×24",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "业务层",
+    "场景库",
+    "cron 三档调度",
+    "代码层/业务层分离"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "填业务层（场景库/报告模板/config/cron），'代码层80%能搬、业务层完全重写'的分层洞见有可迁移价值",
+   "warning_signals": [
+    "source_code_walkthrough"
+   ],
+   "connects_to": [
+    "25",
+    "27",
+    "29"
+   ],
+   "connects_to_reason": "混沌测试真正跑起来",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "29",
+   "title": "29｜实操：从一句话需求到 7×24 系统的全流程演示",
+   "module": "二次开发：基于 Hermes Agent 做自动化测试",
+   "module_index": 7,
+   "source_file": "二次开发：基于 Hermes Agent 做自动化测试/29｜实操：从一句话需求到 7×24 系统的全流程演示/29｜实操：从一句话需求到 7×24 系统的全流程演示.md",
+   "word_count": 11408,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲是第六部分的收尾。前面 24-28 每一讲做一段，这一讲把“接到一句话需求”到“7×24 系统跑起来”的所有动作连起来跑一遍。从 leader 给你“用 Hermes Agent 实现 7×24 混沌测试”这一句话，到完整设计文档 ＋ 完整方案文档 ＋ 5 个 Tool ＋ Skill ＋ 业务层 ＋ 真实运转。 **这是一节实操课，视频演示**。提示词都在下面，",
+   "last_200_words": "，你不用自己撸。这条教训已经写进 25 讲方案文档，下次类似工作流 AI 会主动提醒你做。这一讲的提示词清单和一键工作流里“第零步反问”也是这条教训的产物。 整门课到这里也接近尾声。一个工程师在 AI 时代能交付的最值钱的东西，**不是写代码的能力，是把方向定准、把约束讲清楚、把模糊变具体的能力**。AI 给你一个 80 分的初稿，你要做的不是改成 95 分，是先判断初稿是不是建立在对的方向上。方",
+   "headings": [
+    "准备",
+    "进入 Hermes 仓库目录,所有提示词都在这里跑",
+    "场景一：第一次翻译，从一句话到完整设计文档",
+    "场景二：跑通 Hermes 验证机制",
+    "安装 Hermes",
+    "跟它聊一聊,感受手感",
+    "场景三：让代码长出来，5 个 Tool ＋ Skill 骨架",
+    "场景四：填业务层",
+    "~/.hermes/skills/robustmq-chaos-test/config.yml",
+    "第一步:生成 ed25519 密钥对(空 passphrase 给自动化用)",
+    "第二步:在 GitHub 上创建 public 仓库 test-reports,然后:",
+    "Settings → Deploy keys → Add deploy key",
+    "把 ~/.ssh/test-reports-deploy.pub 内容贴进去,勾 Allow write access",
+    "第三步:初始化仓库",
+    "~/.hermes/cron.yml",
+    "一键跑完整流程：让 Claude Code 自主执行",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "一键工作流",
+    "7×24 系统",
+    "第零步反问"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "iron",
+   "initial_tier_rationale": "42分钟实操演示，重复 24-28 提示词，独立增量极少",
+   "warning_signals": [
+    "demo_inflation",
+    "pure_setup"
+   ],
+   "connects_to": [
+    "24",
+    "25",
+    "26",
+    "27",
+    "28"
+   ],
+   "connects_to_reason": "第六部分实操串讲",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "30",
+   "title": "30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产",
+   "module": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+   "module_index": 8,
+   "source_file": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码/30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产/30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产.md",
+   "word_count": 7104,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 从这一讲开始，我们进入第七部分。回过头看，这门课从第一讲开始，讲的就是同一件事：**AI 时代怎么做老项目改造**。前面两部分讲了这件事的两种形式。 一种是公司内的老项目。代码是你的、bug 是你的、方向是你定的。你需要在 AI 帮助下读懂、护住、改造一个有几年历史的老代码库。 另一种是基于开源做需求。代码不是你的，但用法是你的。开源项目本质上也是一个老项目，你需要在 ",
+   "last_200_words": "示词写清楚，AI 半小时给你结果。 第一个 PR 选什么？标准只有一条：走通流程比技术难度重要。SignYourName 这种入口看着简单，但它跑的是完整 PR 流程，跑通了你后面再大的 PR 都是同一条路。 合并那一刻，你拿到的不是技术胜利，是心理资产。这一条比 PR 本身值钱得多。 下一讲我们做第二个 PR，真正有技术含量的那种。 ## 思考题 回想你之前有没有想过给开源项目提 PR，但最后没",
+   "headings": [
+    "我自己走过的弯路",
+    "为什么 AI 时代开源依然是简历最值钱的资产",
+    "开第一个口子最难",
+    "让 AI 帮我推荐项目",
+    "让 AI 找最简单的 PR 入口",
+    "跑一遍 SignYourName PR",
+    "合并那一刻",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "开源 commit 价值",
+    "SignYourName 入口",
+    "心理资产"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "'开源 commit 依然是简历最值钱资产'观点课；'走通流程比技术难度重要'、'合并那一刻是心理资产'有见地，但论据是个人经验",
+   "warning_signals": [
+    "personal_anecdote_only",
+    "no_counter_example"
+   ],
+   "connects_to": [
+    "31",
+    "32"
+   ],
+   "connects_to_reason": "第七部分起点",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "31",
+   "title": "31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活",
+   "module": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+   "module_index": 8,
+   "source_file": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码/31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活/31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活.md",
+   "word_count": 7668,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 上一讲跑通了 SignYourName，你的名字进了 RobustMQ 项目的贡献者列表。但那是心理胜利，不是真本事。第一个 PR 证明你能在不属于你的代码上交付，第二个 PR 才证明你能在不熟的栈上做出真正的工程贡献。 这一讲就做这件事。我们会在 30 讲那个 Rust 项目上完成两件事：**第二个 PR 加一个真实功能 + 第一个 issue 报告一个真实问题**。",
+   "last_200_words": "跑 PR + 扫漏洞提 issue。这一讲所有提示词都在 fork 后的项目仓库目录下打开 Claude Code 跑。AI 在仓库里有完整的代码访问能力，提示词才能驱动完整的开发流程。接下来就是选下一个感兴趣的项目，在那个项目目录下把这套流程再跑一遍。 下一讲是这部分的实操演示，我会把整套动作模板化，给你一份可以反复用的提示词清单。 ## 思考题 回想你的技术栈里，有没有一个你想学但一直没真正用",
+   "headings": [
+    "先用 24 讲的方法摸清项目",
+    "让 AI 帮我筛 issue",
+    "让 AI 改 + 测试 + 提 PR",
+    "让 AI 找一个不复杂的漏洞，提 issue",
+    "成为 Contributor 的那一刻",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "AI 当助教",
+    "Rust 助教",
+    "高质量 issue",
+    "Contributor"
+   ],
+   "initial_value_score": 3,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "让 AI 当 Rust 助教（摸项目→筛issue→改+测+提PR→找漏洞提issue）教程级，'AI 当学科助教'模式有参考价值",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "24",
+    "30",
+    "32"
+   ],
+   "connects_to_reason": "第二个 PR",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "32",
+   "title": "32｜实操：挑战开源的全流程演示和我的开源经验",
+   "module": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+   "module_index": 8,
+   "source_file": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码/32｜实操：挑战开源的全流程演示和我的开源经验/32｜实操：挑战开源的全流程演示和我的开源经验.md",
+   "word_count": 10747,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲是第七部分的收尾。前面 30、31 讲两个 PR、一个 issue 跑完了，这一讲把那两讲的所有动作连起来打包成一份可以反复用的清单，以后碰到任何项目都按这个清单跑。 **这是一节实操课，视频演示。**提示词都在下面，你可以打开 Claude Code 照着跑。跑完你就有了完整的“挑战开源”工作流。除此之外，这一讲还多一节，分享我这些年开源踩过的坑、看到的成长路径",
+   "last_200_words": "AI 让它升值。整门课所有的动作都在训练后一类能力。 如果你只能从这部分记一句话，记这一句：开源不是技术比赛，是耐心比赛。AI 时代，这条更对。 挑一个你感兴趣的项目，按这一讲的清单跑通第一轮，然后每周回来一次，每次只做一个小改动。频次大于单次重量。3 个月后回头看，你的 GitHub 个人页面会变成另一个样子。不是因为你做了什么了不起的事，只是因为你没停下来。 ## 思考题 1. 跑完整套流程大",
+   "headings": [
+    "准备",
+    "场景一：找到合适自己的项目",
+    "场景二：以 RobustMQ 为例，跑通第一个 PR",
+    "场景三：以 RobustMQ 为例，跑通第二个 PR",
+    "场景四：以 RobustMQ 为例，提一个高质量 issue",
+    "一键跑完整流程：让 Claude Code 自主执行",
+    "经验分享：那些动作之外的事",
+    "小结",
+    "思考题"
+   ],
+   "key_terms": [
+    "挑战开源清单",
+    "开源是耐心比赛",
+    "频次大于单次重量"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "实操演示+开源经验分享，'开源是耐心比赛''频次大于单次重量'有见地，但主体是演示",
+   "warning_signals": [
+    "demo_inflation"
+   ],
+   "connects_to": [
+    "30",
+    "31"
+   ],
+   "connects_to_reason": "第七部分实操串讲",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "33",
+   "title": "33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目",
+   "module": "总结复盘",
+   "module_index": 9,
+   "source_file": "总结复盘/33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目/33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目.md",
+   "word_count": 3791,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这一讲不教新东西。前面 32 节课，该讲的方法论、提示词、工作流、踩过的坑，都讲完了。这一讲要做的事是回头看，把整门课跑过的所有动作重新组织一遍，变成一份你能拎走的资产。知识可以忘，但工作姿势忘不了。 我们一起走的这一段，从开篇词那句“老项目改造，Claude Code 能做好吗”开始，跑过三个真实项目、写了一百多段提示词、踩过一堆坑、留下了一份提示词 SOP 文档。 ",
+   "last_200_words": "码，是把方向定准、把约束讲清楚、把模糊变具体的能力**。AI 给你一个 80 分初稿，你要做的不是改成 95 分，是先判断初稿建立在对的方向上。方向不对，改 100 遍也是错的。 **第二句：让 Claude Code 加速产出，把时间投在它替代不了的协作和判断上**。写代码这一段大量交给 AI，但 review、讨论、长期跟踪、跟人协作、判断方向，这些自己做。这是 AI 时代工程师的正确姿势。 ",
+   "headings": [
+    "三种形式，一套打法",
+    "一套打法的四个动作",
+    "三种债和三种风险",
+    "把整门课带回你自己的项目",
+    "小结"
+   ],
+   "key_terms": [
+    "三种形式",
+    "四个动作",
+    "三种债"
+   ],
+   "initial_value_score": 2,
+   "initial_tier": "copper",
+   "initial_tier_rationale": "改造 SOP 总结课：三种形式一套打法+三个债三个风险，作为全课索引有价值但无新内容",
+   "warning_signals": [
+    "opening_closing_only"
+   ],
+   "connects_to": [
+    "01",
+    "03",
+    "05",
+    "15",
+    "20",
+    "22"
+   ],
+   "connects_to_reason": "全课收束",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "farewell",
+   "title": "结束语｜少年依旧",
+   "module": "结束语 & 结课测试",
+   "module_index": 10,
+   "source_file": "结束语 & 结课测试/结束语｜少年依旧/结束语｜少年依旧.md",
+   "word_count": 1544,
+   "has_audio": true,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 这门课到这里就结束了，很高兴遇见你。 33 讲一路走过来，你应该已经摸到了那一套体系。开篇词里我说过，Claude Code 改老项目这件事，差的不是 AI，差的是用法，大部分人还没把这个体系用起来。 整门课带你走过了三种形式：公司内的老代码、基于开源做需求、给陌生开源项目贡献代码。三种形式背后是同一套方法论，你已经在三个不同的载体上都跑过一遍。 但这不是这门课真正想告",
+   "last_200_words": "的判断力。 去把这门课带回你自己的项目吧。可能是你公司里那个跑了几年没人愿意碰的老系统，可能是你早就关注但一直没勇气提 PR 的那个开源项目。这门课给了你方法，Claude Code 给了你加速，但最终走完全程的是你自己。 **少年依旧，不是一种状态，是一个选择。这个选择，你可以每天做一次。** 谢谢你看到这里，很高兴能有机会跟你分享我这些年踩过的坑、思考过的事。 AI 真好玩，编程真好玩，这一行",
+   "headings": [],
+   "key_terms": [],
+   "initial_value_score": 1,
+   "initial_tier": "iron",
+   "initial_tier_rationale": "结课鸡汤，无方法论增量",
+   "warning_signals": [
+    "opening_closing_only"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": []
+  },
+  {
+   "lecture_id": "quiz",
+   "title": "结课测试｜来赴一场满分之约！",
+   "module": "结束语 & 结课测试",
+   "module_index": 10,
+   "source_file": "结束语 & 结课测试/结课测试｜来赴一场满分之约！/结课测试｜来赴一场满分之约！.md",
+   "word_count": 182,
+   "has_audio": false,
+   "has_images": true,
+   "first_200_words": "你好，我是 Robert。 专栏正式结课了，为认真学习的你点赞！为了帮你检验自己的学习成果，我特意准备了一套结课测试题。题目共有 20 道，13 道单选题，7 道多选题，满分 100 分，快来挑战一下吧！ [![](images/img_000.png)](http://time.geekbang.org/quiz/intro?act_id=9493&exam_id=21309)",
+   "last_200_words": "你好，我是 Robert。 专栏正式结课了，为认真学习的你点赞！为了帮你检验自己的学习成果，我特意准备了一套结课测试题。题目共有 20 道，13 道单选题，7 道多选题，满分 100 分，快来挑战一下吧！ [![](images/img_000.png)](http://time.geekbang.org/quiz/intro?act_id=9493&exam_id=21309)",
+   "headings": [],
+   "key_terms": [],
+   "initial_value_score": 1,
+   "initial_tier": "iron",
+   "initial_tier_rationale": "结课测试入口，182字",
+   "warning_signals": [
+    "opening_closing_only"
+   ],
+   "connects_to": [],
+   "connects_to_reason": "",
+   "claimed_data_points": []
+  }
+ ]
+}

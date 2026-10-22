@@ -1,12 +1,13 @@
-# Notes · 课程 / 读书 / 会议笔记
+# Notes · 课程 / 读书 / 会议 / 极客时间笔记
 
-一个「课程 + 读书 + 会议」三分区的笔记仓库，统一提供**中文笔记在线阅读（HTML）**与源 Markdown。
+一个「课程 + 读书 + 会议 + 极客时间」四分区的笔记仓库，统一提供**中文笔记在线阅读（HTML）**与源 Markdown。
 
 | 分区 | 目录 | 内容 |
 |---|---|---|
 | **课程** | [`courses/`](courses/) | 听课笔记：主笔记 / 思路大纲 / 自测 / 勘误 / 衍生选题（五类产物） |
 | **读书** | [`reading/`](reading/) | 读书笔记：三区笔记 / 永久卡片 / 自测 / 行动清单 / 可执行验证（七类产物） |
 | **会议** | [`meetings/`](meetings/) | 会议纪要：决策 / 行动 / 待定 / 结转 / 勘误；论坛型另加讲者矩阵与横向主题 |
+| **极客时间** | [`geektime/`](geektime/) | 课程消化产物：一页纸 digest / 精华讲卡 / 金银铜铁分拣 / 写作简报（digest-course 技能产出） |
 
 ## 站点
 
@@ -16,6 +17,7 @@
 | 课程分区 | `http://<host>:17001/courses/` |
 | 读书分区 | `http://<host>:17001/reading/` |
 | 会议分区 | `http://<host>:17001/meetings/` |
+| 极客时间分区 | `http://<host>:17001/geektime/` |
 
 部署方式：`docker compose up -d`（Caddy 静态托管，见 [`docker-compose.yaml`](docker-compose.yaml) 与 [`Caddyfile`](Caddyfile)）。
 

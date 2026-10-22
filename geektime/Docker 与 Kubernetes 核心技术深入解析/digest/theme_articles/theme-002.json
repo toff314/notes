@@ -1,0 +1,63 @@
+{
+  "id": "theme-002",
+  "theme": "Pod 优雅终止的艺术：SIGTERM 是怎么被你的 shell 悄悄吞掉的",
+  "source_lectures": [
+    "06",
+    "28",
+    "33"
+  ],
+  "lecture_tiers": {
+    "gold": 1,
+    "silver": 2,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "你明明在应用里写了优雅退出逻辑，Kubernetes 删除 Pod 时还是被强制杀死、请求全断、发布慢如蜗牛。为什么？因为优雅终止不是'应用自己处理信号'就够的——它是一条完整的信号穿透链：PreStop 脚本 → SIGTERM → 超时 SIGKILL，而链路里任何一个环节（bash/sh 封装、init 进程、日志重定向）都能把 SIGTERM 悄悄吞掉，让你的优雅退出逻辑形同虚设。",
+    "act2_method": "先讲清楚 kubelet 的终止机制（L33）：TerminationGracePeriodSeconds 默认 30s 的总计时（含 PreStop+应用处理时间）；Liveness 默认乐观/Readiness 默认悲观的探针默认值哲学；节点故障时 NoExecute 污点+300s TolerationSeconds 缓冲网络抖动。再讲信号穿透链的三个坑（L33/L06）：① 用 bash/sh 封装启动命令会吞掉 SIGTERM（讲师亲历：日志重定向到文件导致发布极慢）；② 多进程容器必须选对 init 进程（tini 负责转发信号+清理僵尸进程）；③ 优雅退出的正确姿势：Pod 进 Terminating 后停止接新请求→处理存量请求→断开连接→进程退出。最后落到 kubelet 的 Sandbox 设计（L28）：网络挂在永不退出的 pause 上，与容器生命周期解耦。",
+    "act3_critique": "这套方法的边界：①SIGTERM 被 shell 吞掉是 Linux 信号机制的事实（可验证），但'发布特别慢'的细节为讲师亲历叙事；②tini/单容器单应用是推荐方案，不是强制——传统多进程应用迁移仍需自行解决 PID 1 僵尸进程与信号转发；③TolerationSeconds 扩到 900s 是团队内部配置（❓），默认 300s 即可满足多数场景；④grace period 与业务存量连接耗时强相关，长连接服务需调大 TerminationGracePeriodSeconds，无通用最优值。写作时聚焦'机制可验证'的部分，亲历故事标注来源。"
+  },
+  "title_idea": "你的优雅退出为什么失效？一条 SIGTERM 被 bash 吞掉的真实排障记",
+  "type": "tutorial",
+  "search_keywords": [
+    "Kubernetes 优雅终止",
+    "SIGTERM 信号转发",
+    "PreStop hook",
+    "tini 僵尸进程",
+    "TerminationGracePeriodSeconds",
+    "Liveness Readiness 探针",
+    "Pod 生命周期",
+    "pause 容器 Sandbox"
+  ],
+  "visualization_hints": [
+    "Mermaid 时序图：删除 Pod→PreStop→SIGTERM→(被 bash 吞掉)→超时 SIGKILL 的失败路径 vs 正确路径",
+    "流程图：优雅退出四步（停新请求→处理存量→断开连接→退出）",
+    "对比表：Liveness（默认乐观）vs Readiness（默认悲观）vs Startup（低频探测）"
+  ],
+  "controversy_hooks": [
+    "『应用里写了优雅退出逻辑』≠『会优雅退出』——信号必须穿透启动链到达真正的工作进程",
+    "『日志重定向到文件』这种看似无害的操作会破坏整个优雅终止机制",
+    "Liveness 默认认为你活着、Readiness 默认认为你没就绪——两个默认值哲学相反"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "TerminationGracePeriodSeconds 默认 30s → Kubernetes 默认值",
+      "节点 Not Ready 的默认 TolerationSeconds=300s → Kubernetes 默认行为",
+      "探针 failureThreshold 默认 3（连续失败才算失败）→ Kubernetes 探针属性",
+      "bash/sh 不转发 SIGTERM 给子进程 → Linux 信号机制",
+      "Pod 共享网络 Namespace，Sandbox(pause) 先启动、CNI 建网后再启用户容器 → kubelet 行为"
+    ],
+    "avoid_claims": [
+      "团队把 TolerationSeconds 扩到 900s — 内部实践 (❓)，仅作方向参考",
+      "'发布特别慢'的具体时长/场景细节 — 讲师亲历叙事 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：优雅终止为何失效",
+      "核心原理：信号穿透链与探针默认值哲学",
+      "实操方法：正确写 PreStop、选 tini、日志走 stdout、调 grace period",
+      "边界与批判：多进程迁移场景与长连接调参"
+    ],
+    "min_score": 52
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "lecture": "4. API Server 的授权机制",
+  "source": "4. API Server 的授权机制.txt",
+  "duration_min": 32.9,
+  "intro": "在理解认证之后，本讲回答'认证出你是谁之后能做什么'：讲解 Kubernetes 授权要处理的信息、ABAC 与 RBAC 两种授权方式、Role/RoleBinding/ClusterRole/ClusterRoleBinding 对象模型、多租户权限规划与生产事故教训。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "03:00",
+      "topic": "授权要解决的问题与授权方式总览",
+      "points": [
+        "认证用来知道请求代表的人/个体/组件是谁，但认证结束后只知道'你是谁'，'你能做什么操作'由授权解决",
+        "授权处理的信息：请求携带的用户信息、用户组信息；用户要操作哪些对象（如 Pod、Service、Node）；通过什么方法（verbs）操作",
+        "授权支持多种插件但比认证少：ABAC、RBAC、Webhook 授权",
+        "ABAC（Attribute Based Access Control）：类似静态密码/静态 token 的配置方式，配置 CSV 文件写明哪个用户对哪个对象有什么操作权限，交给 API Server 重启生效——相当于把纯文本文件当数据库",
+        "RBAC（Role-based Access Control）更通用，是讲解重点",
+        "Webhook 授权：把授权放到外部统一授权平台，但使用场景不多——因为授权的参与者（发起人、目标对象、动作）都在 Kubernetes 集群内部，多数情况集群可闭环自行决定"
+      ],
+      "tradeoffs": [
+        "授权信息全部在集群内，多数场景无需外部 Webhook 授权；除非公司授权策略集中在统一平台统一管控",
+        "ABAC 用文本文件当数据库，不灵活，RBAC 是主流"
+      ],
+      "turning_points": [
+        "认证与授权的分工：认证回答'你是谁'，授权回答'你能做什么'"
+      ]
+    },
+    {
+      "start": "03:00",
+      "end": "07:00",
+      "topic": "RBAC 通用模型与 Kubernetes 的 Who/What/How",
+      "points": [
+        "RBAC 不是 Kubernetes 特有，是任何平台权限管控的通用模式：先定义权限（Permission=要操作哪些对象+通过什么方式操作，如订单系统的创建/查询/删除/更新），把一堆 Permission 聚合为角色（如系统管理员、普通用户），再通过 User-Role 绑定决定用户属于哪个角色",
+        "Kubernetes RBAC 解决的是 Who 谁能对 What 什么对象 怎么样 How 操作",
+        "Who 有两类：User（基于外部认证系统的用户）与 ServiceAccount（Kubernetes 自己生成的系统账号），即授权主体 Subject",
+        "What：哪个 API Group、哪个 Resource、以及 Subresource（如 pod status，与主对象分离的复数对象）；Verbs 即真正的操作，如 get、watch、list、delete",
+        "对象与操作的组合汇聚成 Role，Role 再与主体通过 RoleBinding 绑定，主体即可按 verbs 操作这些对象"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "业界已验证的 RBAC 模型：Permission→Role→主体绑定，Kubernetes 只是在其技术栈上实现这套模式"
+      ]
+    },
+    {
+      "start": "07:00",
+      "end": "11:40",
+      "topic": "Role/RoleBinding 与 ClusterRole/ClusterRoleBinding 的作用范围",
+      "points": [
+        "Kubernetes 引入四个对象：Role、RoleBinding、ClusterRole、ClusterRoleBinding",
+        "Role/RoleBinding 与 namespace 相关：Role 放在某 namespace 下只有该 namespace 可用，RoleBinding 授予的权限也仅针对该 namespace",
+        "示例：PodReader Role 定义在 default namespace，含 core group 的 pod 的 get/watch/list 权限；ClusterRole SecretReader 定义 core group 的 secret 只读权限、不填 namespace，是全局范围对象",
+        "ClusterRole/ClusterRoleBinding 是集群范围：ClusterRoleBinding 绑定用户后，用户可操作集群所有 namespace 中的对象",
+        "ClusterRole 全局可建，因此 ClusterRole 可被 RoleBinding 引用——RoleBinding 既能引用本地 Role 也能引用集群 ClusterRole",
+        "权限可传递：管理员赋予权限后，被授权者理论上可把权限再授予他人，层层传递实现集群分级运营，多租户集群不必每次操作都找管理员"
+      ],
+      "tradeoffs": [
+        "带 cluster 关键字的对象是全局范围，不带的是 namespace 相关——这是最常见的理解误区",
+        "权限可传递是双刃剑：支撑分级运营，也要求谨慎授权"
+      ],
+      "turning_points": [
+        "RoleBinding 引用 ClusterRole 是在 namespace 内复用全局角色的标准做法"
+      ]
+    },
+    {
+      "start": "11:40",
+      "end": "15:40",
+      "topic": "授权主体：User、ServiceAccount 与 Group 授权",
+      "points": [
+        "主体两类：User（用户认证信息来自外部平台）与 ServiceAccount（Kubernetes 自己生成）",
+        "授权除针对具体用户/服务账号外，还可针对 Group：认证时返回用户所属组，若授权针对组，则属于该组的用户授权通过",
+        "ServiceAccount 也有 Group 概念：namespace 是 serviceaccount 的聚合，SA 的 Group 就是其 namespace——权限授予某 namespace，则该 namespace 下所有 ServiceAccount 都有权限",
+        "命名格式：ServiceAccount 主体 kind=ServiceAccount、name=system:serviceaccount:<ns>:<sa>；SA 的 Group kind=Group、name=system:serviceaccounts:<ns>（到 namespace 一级结束）",
+        "RBAC 授权其实很简单：Rule 引用无差异，差别只在 Subject 绑定的类型是 User、ServiceAccount 还是 Group"
+      ],
+      "tradeoffs": [
+        "给 namespace 授权即等于给该 namespace 下所有服务账号授权，需要评估影响面"
+      ],
+      "turning_points": [
+        "ServiceAccount 的 Group 就是其所在 Namespace——namespace 维度授权覆盖其下所有 SA"
+      ]
+    },
+    {
+      "start": "15:40",
+      "end": "20:00",
+      "topic": "多租户集群权限规划：强隔离与弱隔离",
+      "points": [
+        "构建多租户集群要先规划角色：平台管理员对整个平台做运维支撑",
+        "管理员是否拥有所有资源的所有操作权限需 case by case：用户 namespace 里的 secret 可能保存密码、token、cert 等敏感信息，平台管理员很多情况下不应读取，可把 secret 排除",
+        "强隔离场景：集群支持 100 个用户分属不同业务部门，彼此完全不可见——不允许读全局 page、不知道有多少 namespace，只关心自己的 namespace",
+        "弱隔离场景：非敏感信息大家可读（如 eBay 内部协作平台信任用户），跨 namespace 的公共/私有资源可只读，但敏感信息（secret，连管理员也读不到）排除；写操作仅限自己的 namespace 以隔离权限、保证业务不被破坏",
+        "生产系统原则：如无必要勿增实体，权限不是越高越好；误操作删除东西造成故障是大事"
+      ],
+      "tradeoffs": [
+        "强隔离 vs 弱隔离：强隔离用户只关心自己 namespace；弱隔离公共资源只读开放、敏感信息排除、写只限自己 namespace",
+        "权限越高的风险：生产系统一次误操作就是重大故障，宁可少要权限"
+      ],
+      "turning_points": [
+        "如无必要勿增实体：读权限够用就不要写权限，是对生产系统也是对用户自己的保护"
+      ]
+    },
+    {
+      "start": "20:00",
+      "end": "23:40",
+      "topic": "事故教训与 cluster-admin 演示",
+      "points": [
+        "主讲人亲历：到腾讯后预判短期内不动生产系统变更，主动请管理员去掉所有写操作权限、只保留只读；后来一次误操作（以为操作本地 demo 环境、实际请求发到了客户集群）因没有写权限而失败，出了一身冷汗但未造成事故",
+        "春节前后事故：某负责集群管理开发的部门同学想对测试系统执行删除集群动作，配置文件却指向生产系统，导致生产集群被删，春节假期全员上线修复",
+        "Demo：通过 GitHub personal access token 访问集群资源被告知无权限；创建 cluster-admin 的 ClusterRoleBinding 绑定给该 GitHub 用户后，get 通过、甚至可以 delete pod——有权限后'无所不能'",
+        "警示：对生产系统要有敬畏之心，没有必要的权限不要拿"
+      ],
+      "tradeoffs": [
+        "配置文件指向错误（测试/生产环境混淆）是集群误删事故的典型根因",
+        "cluster-admin 演示展示了权限放大后的真实能力，也提醒最小权限原则"
+      ],
+      "turning_points": [
+        "只读权限关键时刻能救命：无写权限的误操作会被系统挡住"
+      ]
+    },
+    {
+      "start": "23:40",
+      "end": "28:00",
+      "topic": "namespace admin 自动化方案",
+      "points": [
+        "目标：用户创建 namespace 后自动拥有该 namespace 内所有资源的操作权限，无需额外授权",
+        "实现一：namespace admission controller（mutating webhook）对 namespace 做变形——请求提交 API Server 时 request header 里有 user info，提取创建者用户信息，给 namespace 打 annotation 记录是谁创建的",
+        "实现二：rbac controller 监听 namespace 创建事件，读取 annotation 中的创建者信息，创建 RoleBinding 与该 namespace 的 namespace-admin ClusterRole 绑定",
+        "因为创建的是 RoleBinding（namespace 范围），权限只在该 namespace 生效——用户获得当前 namespace 内所有对象的操作权限",
+        "这是一个实际落地的时间方案，做权限隔离自动化时可参考"
+      ],
+      "tradeoffs": [
+        "方案依赖两个组件配合：mutating webhook 记录创建者 + rbac controller 生成绑定",
+        "创建者信息通过 annotation 传递，需要保证 annotation 的可靠写入"
+      ],
+      "turning_points": [
+        "把'用户自治 namespace'自动化：创建即授权，减少管理员介入"
+      ]
+    },
+    {
+      "start": "28:00",
+      "end": "32:54",
+      "topic": "最佳实践与踩坑总结",
+      "points": [
+        "ClusterRole 与 namespace 无关，授予普通用户必须慎重再慎重：集群管理员用 ClusterRole 授予，普通用户用 namespace 相关的 RoleBinding 授予，剩下的事情由用户自行运营",
+        "CRD 是全局对象，创建权限一般不下发给用户，由平台统一创建；创建 CRD 的同时要授予相应使用权限，否则反复沟通",
+        "不推荐开启 insecure 访问方式，不要让任何人（包括管理员）绕过认证",
+        "update vs patch 的坑：update 把整个对象发给 API Server 统一更新，对象很大；patch 在客户端生成变更部分（如只改 replicas=5 的小文件）发过去，前几年 patch 刚支持时大量控制器把 update 改 patch 优化性能，本地测试 OK、上线后才发现 patch 权限忘记给，变更很小不容易发现，最终功能不工作",
+        "业务逻辑与权限必须同步：新增一个对象的访问时，确保相应权限也跟上，避免到生产最后时刻才暴露问题",
+        "授权在 Kubernetes 闭环内处理，外部 Webhook 授权场景不多（除非公司集中授权平台），与认证 Webhook 区别不大，有需求可自行查阅；RBAC 是生产环境最常用的授权方式"
+      ],
+      "tradeoffs": [
+        "patch 只发变更部分、性能好，但权限粒度与 update 不同，改造时必须同步检查 RBAC 权限",
+        "CRD 权限：创建权与使用权要一并规划",
+        "任何绕过认证的通道（insecure）都该关闭"
+      ],
+      "turning_points": [
+        "性能优化（update→patch）引发的权限缺失是隐蔽故障的典型来源：业务逻辑与权限必须同步演进"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "授权：认证之后确认用户（Who）能对哪些对象（What）做什么操作（How/verbs）——get、watch、list、delete 等。",
+    "ABAC（Attribute Based Access Control）：通过 CSV 文本文件配置哪个用户对哪个对象有什么操作权限，API Server 重启后生效，相当于把纯文本文件当数据库。",
+    "RBAC（Role-based Access Control）：Permission（对象+操作）聚合为 Role，Role 通过 RoleBinding 与主体绑定；Kubernetes 的对象为 Role、RoleBinding、ClusterRole、ClusterRoleBinding。",
+    "Role/RoleBinding 是 namespace 范围的授权对象；ClusterRole/ClusterRoleBinding 是集群范围的授权对象；ClusterRole 可被任意 namespace 的 RoleBinding 引用。",
+    "授权主体 Subject 分两类：User（外部认证系统用户）与 ServiceAccount（Kubernetes 生成的系统账号），还可针对 Group 授权。",
+    "ServiceAccount 命名格式 system:serviceaccount:<namespace>:<name>；SA 的 Group 是 system:serviceaccounts:<namespace>——namespace 是 serviceaccount 的聚合，权限授予 namespace 则其下所有 SA 生效。",
+    "Subresource：与主对象分离的复数对象，如 pod status。",
+    "namespace admin 自动化：mutating webhook 在 namespace 创建时从 request header 提取 user info 打 annotation 记录创建者；rbac controller watch namespace 创建事件，据 annotation 创建 RoleBinding 绑定 namespace-admin ClusterRole。"
+  ],
+  "closing": "授权在 Kubernetes 闭环内处理，Webhook 外部授权场景不多；生产环境最常用的是 RBAC，希望大家深入理解 RBAC 的 Role/RoleBinding/ClusterRole/ClusterRoleBinding 模型与最小权限原则。今天的课就到这里，谢谢大家。"
+}

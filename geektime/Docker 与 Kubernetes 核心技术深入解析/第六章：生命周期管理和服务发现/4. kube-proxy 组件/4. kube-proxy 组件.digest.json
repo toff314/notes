@@ -1,0 +1,121 @@
+{
+  "lecture": "4. kube-proxy 组件",
+  "source": "4. kube-proxy 组件.txt",
+  "duration_min": 42.93,
+  "intro": "上一讲学习了 Service/Endpoint 关系与类型，本节深入 kube-proxy 这个\"真正配置负载均衡\"的组件：它 watch Service 与 Endpoint/EndpointSlice，借助 Linux 内核 Netfilter 的 NAT 能力落地负载均衡；对比 iptables 与 IPVS 两种模式的原理、优劣与切换实践。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "08:00",
+      "topic": "kube-proxy 职责与四种工作模式",
+      "points": [
+        "kube-proxy 是控制器模式的组件：watch Service、Endpoint、EndpointSlice 变化，通过操作系统内核能力（NAT）配置负载均衡",
+        "内核不解析应用包：只处理 TCP/UDP 包头，应用层数据丢回用户态由应用读取",
+        "部署方式：Static Pod 或 DaemonSet；支持多种模式：Userspace（Go 写的代理软件，数据包在内核与用户态反复跳转、效率低，仅当内核不支持 NAT 时才用，如边缘设备）、iptables、IPVS（两者都是 Netfilter 框架的插件）、winuserspace（Windows）",
+        "前置知识建议：延伸阅读 Linux 的 Netfilter、iptables、IPVS"
+      ],
+      "tradeoffs": [
+        "Userspace 是低效模式：用户态做负载均衡要内核→用户态反复跳转，仅内核无法支持地址转换时兜底"
+      ],
+      "turning_points": [
+        "kube-proxy 是\"控制器\"而非\"代理进程\"：它负责把内核规则配置好，数据面由内核完成"
+      ]
+    },
+    {
+      "start": "08:00",
+      "end": "16:30",
+      "topic": "Netfilter 框架与数据包在内核的流转",
+      "points": [
+        "Netfilter 是 Linux 内核处理数据包的框架：网卡收到包 → 硬件中断 → CPU 调软中断（softirqd 进程）→ 网卡驱动通过 DMA 把数据拷入内核内存 → 构造 SKB（sk_buff，含真实数据与五元组）→ 交给 Netfilter",
+        "SKB 存五元组：源 IP、目标 IP、源端口、目标端口、协议，代表请求的协议与流向",
+        "路由决策（Routing Decision）先判断数据包目标是本机（走 LOCAL_IN 给本地进程）还是转发（走 FORWARD）",
+        "Netfilter 提供一系列 Hook 点，允许在用户态配置规则：规则 = 匹配条件 + 行为（防火墙丢包、负载均衡做地址转换）",
+        "表类型：raw（打标记）、mangle（打标记）、nat（修改包头的网络地址转换）、filter（防火墙过滤）；负载均衡用 nat 表"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "负载均衡=在内核 hook 点配置\"匹配条件→改目标地址\"的规则，数据面完全在内核态完成"
+      ]
+    },
+    {
+      "start": "16:30",
+      "end": "26:00",
+      "topic": "iptables 模式实战：KUBE-SERVICES 链与概率 DNAT",
+      "points": [
+        "iptables 关键 hook：PREROUTING（包进来、路由判决前）与 OUTPUT（本地进程发包），都可做 DNAT（改目标地址）；支持的表因 hook 而异",
+        "kube-proxy 工作方式：watch API Server，调用 iptables 命令生成规则：\"目标 IP=ClusterIP 且协议 TCP 且端口 80 → 跳转 KUBE-SERVICES 链\"，KUBE-SERVICES 链被挂到 PREROUTING 与 OUTPUT 两个 hook",
+        "概率命中机制（三个后端 Pod 时）：33% 概率执行规则 1（DNAT 到 Pod A），未命中再 50% 概率执行规则 2（DNAT 到 Pod B），都未命中则 100% 执行规则 3（DNAT 到 Pod C）；iptables 规则自上而下执行",
+        "实验：三个 Pod + nginx basic Service（ClusterIP 10.164.0.239），iptables-save -t nat 导出规则，解析出 33%/50%/100% 三段 DNAT 规则对应三个真实 Pod IP",
+        "关键事实：ClusterIP 不绑定任何设备，只是 iptables 里的一条匹配规则；ping 不通（无设备响应）但 curl 通（真实 TCP 包走规则做 DNAT 转发到后端 Pod）"
+      ],
+      "tradeoffs": [
+        "概率式命中决定了转发是\"粗粒度\"的，后端数量大时靠概率近似均分",
+        "本地 Pod 访问 Service 走 OUTPUT hook，外部请求走 PREROUTING hook，两条路径都要经过 KUBE-SERVICES"
+      ],
+      "turning_points": [
+        "\"Service IP 拼不通但 curl 通\"是 iptables 模式的典型可观测特征"
+      ]
+    },
+    {
+      "start": "26:00",
+      "end": "31:00",
+      "topic": "iptables 模式的三大局限",
+      "points": [
+        "规则爆炸：几个 Service 就产生大量复杂规则，肉眼难以解读；负载均衡配置需要大量规则堆叠",
+        "转发粒度粗 + 效率低：按概率命中，后端有 1 万 Pod 时规则可达上万条，自上而下命中末尾规则需要遍历大量规则，转发效率低",
+        "无增量刷新：iptables 规则是文本，kube-proxy 只能整表清空重刷，几万条规则时刷新开销巨大（曾出现 IPVS 相关 CPU softlock 导致应用进程被饿死）",
+        "规模受限结论：iptables 模式下集群规模不能太大，Service 数量与单个 Service 后端 Pod 数都受限"
+      ],
+      "tradeoffs": [
+        "iptables 原本面向少量手工防火墙规则，被 Kubernetes 用于负载均衡后规则量级从几条变成几千上万条",
+        "大数据包量下整表刷新带来的 CPU 开销是生产环境 softlock 的常见来源"
+      ],
+      "turning_points": [
+        "规则\"自上而下概率命中\"与\"整表清空重刷\"是 iptables 在负载均衡场景效率低下的两个根因"
+      ]
+    },
+    {
+      "start": "31:00",
+      "end": "39:00",
+      "topic": "IPVS 模式：为负载均衡而生的 Netfilter 插件",
+      "points": [
+        "IPVS 是 LVS（Linux Virtual Server，本为负载均衡而生）的组成部分，是 Netfilter 的另一插件，对 NAT 包处理支持更好",
+        "hook 差异：IPVS 只有 LOCAL_IN 与 LOCAL_OUT（无 PREROUTING/POSTROUTING），因此访问 ClusterIP 时路由判决前地址未被改写，路由会判定 ClusterIP 非本机地址而丢包",
+        "解决方案：IPVS 模式下把所有 Service 的 ClusterIP 绑定到本机 dummy 设备 kube-ipvs0 上，路由判定识别为本地地址 → 走到 LOCAL_IN hook 执行 IPVS 规则",
+        "规则清晰：ipvsadm -Ln 显示 Virtual IP 与真实 IP（Real Server）列表，无 iptables 那种复杂链；支持 RR（Round Robin）、Least Connection、权重等调度算法，由 kube-proxy 启动参数配置",
+        "跨集群差异：kube-ipvs0 是 dummy 设备，不响应外部 ARP，因此集群外 ping ClusterIP 仍不通"
+      ],
+      "tradeoffs": [
+        "IPVS 相比 iptables：规则清晰、调度策略丰富、控制面刷新与数据面转发效率更高",
+        "代价：需要在每个节点维护绑定全部 ClusterIP 的 dummy 设备（大集群地址很多，但已成熟无大碍）"
+      ],
+      "turning_points": [
+        "IPVS 与 iptables 的本质差异来自 hook 点不同：没有 PREROUTING，就必须先把 ClusterIP 绑成本机地址"
+      ]
+    },
+    {
+      "start": "39:00",
+      "end": "42:56",
+      "topic": "模式切换实践与生产建议",
+      "points": [
+        "切换步骤：编辑 kube-proxy 的 ConfigMap 把 mode 设为 ipvs → 重启 kube-proxy Pod（删除即可）→ flush 掉旧 iptables 规则 → 用 ipvsadm -Ln 查询验证",
+        "切换后可见：ClusterIP 绑定在 kube-ipvs0 设备上，集群内 ping 通、集群外不通（dummy 设备不应答外部 ARP）",
+        "生产建议：能上 IPVS 就上 IPVS，仅在内核支持受限时才退回 iptables"
+      ],
+      "tradeoffs": [
+        "切换模式需注意 flush 旧 iptables 规则，避免新旧规则并存干扰"
+      ],
+      "turning_points": []
+    }
+  ],
+  "key_definitions": [
+    "kube-proxy：运行在每个节点、watch Service/Endpoint/EndpointSlice，利用内核 Netfilter NAT 能力配置负载均衡的控制器组件",
+    "Netfilter：Linux 内核数据包处理框架，提供 PREROUTING/INPUT(LOCAL_IN)/FORWARD/OUTPUT(LOCAL_OUT)/POSTROUTING 等 hook 点；iptables 与 IPVS 都是其插件；SKB（sk_buff）是内核中代表数据包的结构，含五元组（源/目标 IP、源/目标端口、协议）",
+    "iptables 负载均衡实现：KUBE-SERVICES 链挂到 PREROUTING/OUTPUT，按 33%/50%/100% 概率逐条命中完成 DNAT 到不同后端 Pod",
+    "ClusterIP 是纯虚地址：不绑定任何设备，ping 不通但 curl 通",
+    "iptables 三大局限：规则数爆炸、概率式转发粒度粗效率低、变更只能整表清空重刷（无增量），大规模下出现 CPU softlock",
+    "IPVS（Linux Virtual Server 的组成部分）：Netfilter 另一插件，仅 LOCAL_IN/LOCAL_OUT 两个 hook，需把所有 ClusterIP 绑定到 kube-ipvs0 dummy 设备；支持 RR、Least Connection、权重等调度算法",
+    "IPVS 模式的 kube-ipvs0 是 dummy 设备，不响应外部 ARP，集群外 ping ClusterIP 依然不通"
+  ],
+  "closing": "给出生产建议：能上 IPVS 就上 IPVS，仅当内核支持受限时才使用 iptables；鼓励课后对照 Netfilter 数据流图深入阅读 Linux 网络知识（Netfilter/iptables/IPVS）。"
+}

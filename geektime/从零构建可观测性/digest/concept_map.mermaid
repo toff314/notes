@@ -1,0 +1,44 @@
+flowchart LR
+    subgraph 心智模型[可观测性心智模型 · L01]
+        O[可观测性<br/>通过系统输出判断状态]
+        P[三大支柱]
+        G[四大黄金指标<br/>延迟/流量/错误/饱和度]
+        S[SLI → SLO → SLA]
+        O --> P
+        O --> G
+        O --> S
+    end
+
+    subgraph 支柱落地[三大支柱落地 · L01/L02/L03]
+        LOG[日志 · Loki+LogQL<br/>只索引标签不索引全文]
+        MET[指标 · Prometheus<br/>Counter/Gauge/Histogram/Summary]
+        TRC[追踪 · OpenTelemetry+Tempo<br/>trace ID + span ID]
+        P --> LOG
+        P --> MET
+        P --> TRC
+    end
+
+    subgraph 业务应用[业务应用 · L02]
+        HPA[弹性伸缩<br/>HPA/adapter/KEDA ScaleObject]
+        ALERT[告警<br/>PrometheusRule+AlertManager<br/>疲劳治理+分层+webhook]
+        MET --> HPA
+        MET --> ALERT
+    end
+
+    subgraph 大规模[大规模生产 · L03]
+        TH[Thanos<br/>对象存储+sidecar+query+store+compact]
+        DS[下采样<br/>原始块→5分钟→1小时]
+        MC[多集群 global view<br/>external label+cluster variable]
+        MET --> TH
+        TH --> DS
+        TH --> MC
+    end
+
+    subgraph 统一[统一闭环 · L04]
+        TID[trace ID 关联一切]
+        GRAF[Grafana 三数据源互跳<br/>log⇄trace⇄metric]
+        LOG --> TID
+        MET --> TID
+        TRC --> TID
+        TID --> GRAF
+    end

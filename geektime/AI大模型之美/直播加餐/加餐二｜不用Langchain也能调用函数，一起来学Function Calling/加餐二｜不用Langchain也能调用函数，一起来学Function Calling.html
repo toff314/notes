@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>加餐二｜不用Langchain也能调用函数，一起来学Function Calling</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../README.html">geektime</a><a href="../../README.html">AI大模型之美</a><a href="../README.html">直播加餐</a><a href="README.html">加餐二｜不用Langchain也能调用函数，一起来学Function Calling</a></div>
+<p>你好，我是徐文浩。</p>
+<p>在去年的课程里，我们就说过，像GPT这样的大语言模型，其实并不是全知全能的。无论是简单的算术题，还是想要获取实时的外部信息，如果直接让GPT给出答案，往往会得到错误的结果。</p>
+<p>对于这类问题，一个常见的解决方案就是<strong>把大语言模型和自己撰写的程序代码结合起来</strong>。让程序代码解决获取外部的实时信息和精确的数学计算问题，让大语言模型解决语言理解和内容生成问题。然后通过大语言模型的逻辑推理能力，把两者结合起来，通过对用户输入内容的理解，去调用不同的程序代码，最终完成用户的需求。</p>
+<p>在前面第14～17课里，我们就介绍过如何使用 Langchain 这个开源框架来做到这一点。而正因为这种方式非常有效，OpenAI 直接在后续的模型里内置了这个能力，也就是我们今天要介绍的 Function Call。</p>
+<h2>通过 Function Call 来计算数学题</h2>
+<h3>定义工具方便 Function Call 的调用</h3>
+<p>我们先通过一个最简单的四则运算的例子，看看怎么使用ChatGPT 的 <strong>Function Call</strong> 的能力。想让 ChatGPT 能够使用“按计算器”的方式，就需要先定义一些“按计算器”的 Function。</p>
+<pre><code>import json
+def add(x, y):
+    return json.dumps({&quot;result&quot; : x + y})
+
+def subtract(x, y):
+    return json.dumps({&quot;result&quot; : x - y})
+
+def multiply(x, y):
+    return json.dumps({&quot;result&quot; : x * y})
+
+def divide(x, y):
+    if y == 0:
+        return &quot;Error! Division by zero.&quot;
+    return json.dumps({&quot;result&quot; : x / y})
+
+def get_tools_definition(function_name, description):
+    return {
+            &quot;type&quot;: &quot;function&quot;,
+            &quot;function&quot;: {
+                &quot;name&quot;: function_name,
+                &quot;description&quot;: description,
+                &quot;parameters&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;properties&quot;: {
+                        &quot;x&quot;: {
+                            &quot;type&quot;: &quot;number&quot;,
+                            &quot;description&quot;: &quot;The first number&quot;,
+                        },
+                        &quot;y&quot;: {
+                            &quot;type&quot;: &quot;number&quot;,
+                            &quot;description&quot;: &quot;the second number&quot;,
+                        },
+                    },
+                    &quot;required&quot;: [&quot;x&quot;, &quot;y&quot;],
+                },
+            },
+        }
+
+tools = [
+    get_tools_definition(&quot;add&quot;, &quot;add x to y&quot;),
+    get_tools_definition(&quot;subtract&quot;, &quot;subtract y from x&quot;),
+    get_tools_definition(&quot;multiply&quot;, &quot;x multiply y&quot;),
+    get_tools_definition(&quot;divide&quot;, &quot;x divide y&quot;),
+]
+</code></pre>
+<p>定义可以被 Function Call 调用的 Function 的代码这里的Python 函数代码非常简单，我们定义了简单的四个加减乘除的函数。不过，为了让 ChatGPT 这样的 AI 能够调用这些代码，这些函数的返回值需要做一下特殊处理。我们不能直接返回对应的计算结果，而是需要把返回结果，以一个 json 字符串的形式包装起来。所以在这里，我们通过 json.dumps 返回了以 result 作为 key，计算结果作为 value 的 字典（dict），进行了序列化之后的字符串。</p>
+<p>除此之外，为了让 ChatGPT 理解每个函数是干什么的，我们还需要为这些函数定义一下它们的描述。在这里，加减乘除四个函数的描述除了<strong>函数名称（name）</strong>和<strong>描述（description）</strong>不同之外，其他都是一样的。所以我定义了一个 <strong>get_tools_definition</strong> 函数，来为这四个函数定义对应的描述信息。</p>
+<p>一个可以给 ChatGPT 调用的 Function Call 的描述信息，是一个 Python 的dict。里面通过键值对的方式提供一些参数。</p>
+<ol><li>必选的 <strong>type</strong> 参数，值必须是 <strong>function</strong>，来告诉 ChatGPT 这是一个 function call 的工具。</li><li>必选的 <strong>function</strong> 参数，内部也是一个 dict，通过下面的这些参数来描述这个 function 是干什么的，以及如何调用：</li></ol>
+<ul><li><strong>name</strong> 定义了 function 对应的名称，后续在 ChatGPT 返回的结果里，就会根据这个名称来告诉我们应该调用哪一个 function。</li><li><strong>description</strong> 描述了 function 能干什么事情，ChatGPT 并不会去读取你定义的 Python 函数代码。所以你需要在 description 里清楚地描述出你这个 function 是用来干什么事情的。</li><li><strong>parameters</strong> 定义了这个函数能够支持的输入参数，里面是一个 JSON Schema 对象。在这里，我们定义了 <strong>x</strong> 和 <strong>y</strong> 这两个参数，并且描述了他们的类型是 number。然后通过 <strong>required</strong> 这个属性，定义了在函数的输入里 <strong>x</strong> 和 <strong>y</strong> 这两个参数都是必须的。</li></ul>
+<h3>通过 ChatGPT 来选择调用的 Function Call</h3>
+<p>在有了 <strong>get_tools_definition</strong> 函数之后，我们在 <strong>tools</strong> 这个数组，一口气定义了加减乘除的四个函数。有了这个tools 数组，我们就可以沿用之前的 ChatGPT 的 API，来组合 AI 和 Python函数，实现算术运算了。</p>
+<pre><code>from openai import OpenAI
+import json
+
+client = OpenAI()
+
+messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What does 1024 + 10086 equal to?&quot;}]
+response = client.chat.completions.create(
+    model=&quot;gpt-3.5-turbo-0125&quot;,
+    messages=messages,
+    tools=tools,
+    tool_choice=&quot;auto&quot;,  # auto is default, but we&#x27;ll be explicit
+)
+</code></pre>
+<p>这里调用的 ChatGPT 的代码和之前基本一样，一个小小的区别在于，我们传入了 <strong>tools</strong> 和 <strong>tools_choice</strong> 这两个参数。其中，<strong>tools</strong> 参数用的就是我们刚刚定义好的 tools 数组，而 <strong>tools_choice</strong> 参数则是设置成了 <strong>&quot;auto&quot;</strong>，也就是告诉 ChatGPT，它应该自动决策应该使用哪一个函数。在这里，我们发送给 ChatGPT 的问题是 “What does 1024 + 10086 equal to?”，我们期望它会调用加法来进行对应地计算。</p>
+<pre><code>response_message = response.choices[0].message
+print(response_message.content)</code></pre>
+<p>输出结果：``<code>python None </code>``</p>
+<p>调用了 ChatGPT 之后，我们可以像往常一样，把对应的消息结果给打印出来。你可以看到，这个时候返回的输出结果是 None，而不是一个我们可以阅读的答案。不过这一点，其实是在意料之内的，因为我们通过 tools 和 tools_choice 这两个参数，告诉了 ChatGPT 我们想要使用 Function Call 功能，所以我们希望 ChatGPT 并不是返回一个文本消息给我们，而是告诉我们应该调用哪一个 function，以及调用这个 function 的参数是什么。而这些信息，我们可以从 response 的 tool_calls 字段中拿到。</p>
+<pre><code>tool_calls = response_message.tool_calls
+available_functions = {
+    &quot;add&quot;: add,
+    &quot;subtract&quot;: subtract,
+    &quot;multiply&quot;: multiply,
+    &quot;divide&quot;: divide,
+}
+
+for tool_call in tool_calls:
+    function_name = tool_call.function.name
+    tool_call_id = tool_call.id
+    function_to_call = available_functions[function_name]
+    function_args = json.loads(tool_call.function.arguments)
+    function_response = function_to_call(
+        x=function_args.get(&quot;x&quot;),
+        y=function_args.get(&quot;y&quot;),
+    )
+    print(function_response)
+    //从 tool_calls 中拿到需要调用的函数以及参数，并且实际调用对应的函数</code></pre>
+<p>输出结果：</p>
+<pre><code>{&quot;result&quot;: 11110}</code></pre>
+<p>可以看到，返回的结果就是 1024 + 10086 的计算结果。</p>
+<p>我们实际拿到的 tool_calls 是一个列表，里面可能会有多个 function 对象，我们可以依次获取并调用这些 function。function的 name 参数就对应着我们之前在定义 tool 的过程中的 name 参数，function 的 arguments 参数就对应着我们之前定义 tool 过程中的 parameters 参数。通过利用 name 名称对应的函数，调用对应的参数名称，我们就能获取到函数执行的结果。</p>
+<h3>获取自然语言回答的问题答案</h3>
+<p>不过，我们还是希望 ChatGPT 能够通过一个自然语言来告诉我们答案。因为很多时候，Function Call 调用的函数，只是一个中间结果，而不是我们想要的最终答案。</p>
+<pre><code>messages.append(response_message)
+messages.append(
+    {
+        &quot;tool_call_id&quot;: tool_call_id,
+        &quot;role&quot;: &quot;tool&quot;,
+        &quot;name&quot;: function_name,
+        &quot;content&quot;: str(function_response),
+    }
+)  
+
+final_response = client.chat.completions.create(
+    model=&quot;gpt-3.5-turbo-0125&quot;,
+    messages=messages,
+)
+print(final_response.choices[0].message.content)</code></pre>
+<p>输出结果：``<code>python 1024 + 10086 = 11110 </code>``可以看到，返回的输出结果是整个算术式，而不是孤零零的一个数字。</p>
+<p>所以，我们需要再给到 ChatGPT 更多的上下文（Context），让它理解我们是通过调用 Function Call 选择了一个函数进行调用，并且拿到了函数的调用结果，然后请它给我们一个最终的答案。</p>
+<p>首先，我们要把刚才第一次 ChatGPT 调用的返回结果添加到 messages 里，让 ChatGPT 知道这时它返回给我们选择要调用的Function Call 是什么。也就是刚刚那段代码中的第一行内容。</p>
+<pre><code>messages.append(response_message)</code></pre>
+<p>其次，我们还要将 Function Call 的调用结果，也封装成一条消息，加入到 messages 中。在这条消息里面，我们需要告诉 ChatGPT，它的 tool_call_id 就是刚才它要求调用的 function call的 id，对应的 role 就是 “tool”，而 name 就是 function_name。</p>
+<p>最后，我们把这个包含了 ChatGPT 选择的 function call，以及 function call 的返回结果的 messages 再次发送给 ChatGPT，就能拿到一个自然语言表达的结果，而不是一个 function call 给到的一个孤零零的数字。比如，在这里最终的输出结果就是这样一个算术式子：</p>
+<pre><code>1024 + 10086 = 11110</code></pre>
+<h3>需要注意函数调用的描述</h3>
+<p>Function Call 的功能非常强大且实用，不过要注意。ChatGPT 其实并不知道我们撰写的 Python 函数代码是怎么实现的。比如，我们可以看一看，如果在减法的描述里，把 x 和 y 的关系写反，会怎么样。</p>
+<p>我们先把前面整个 Function Call 的过程封装成一个函数。</p>
+<pre><code>def chat_using_function_call(content, tools = tools, available_functions = available_functions, client = client):    messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: content}]
+    response = client.chat.completions.create(
+        model=&quot;gpt-3.5-turbo-0125&quot;,
+        messages=messages,
+        tools=tools,
+        tool_choice=&quot;auto&quot;,  # auto is default, but we&#x27;ll be explicit
+    )
+    response_message = response.choices[0].message
+    messages.append(response_message)    
+    tool_calls = response_message.tool_calls
+    for tool_call in tool_calls:
+        function_name = tool_call.function.name
+        function_to_call = available_functions[function_name]
+        function_args = json.loads(tool_call.function.arguments)
+        function_response = function_to_call(
+            x=function_args.get(&quot;x&quot;),
+            y=function_args.get(&quot;y&quot;),
+        )
+        messages.append(
+            {
+                &quot;tool_call_id&quot;: tool_call.id,
+                &quot;role&quot;: &quot;tool&quot;,
+                &quot;name&quot;: function_name,
+                &quot;content&quot;: function_response,
+            }
+            )
+    final_response = client.chat.completions.create(
+        model=&quot;gpt-3.5-turbo-0125&quot;,
+        messages=messages,
+    )
+    print(final_response.choices[0].message.content)</code></pre>
+<p>然后调用 Function Call 来进行减法计算。</p>
+<pre><code>chat_using_function_call(&quot;What does 10086 - 1024 equal to?&quot;)</code></pre>
+<p>输出结果：</p>
+<pre><code>10086 - 1024 equals to 9062.</code></pre>
+<p>我们先把之前的的 Function Call 的调用链路封装成一个函数，这样后面我们要测试不同的function 的 description 的时候会比较方便。可以看到，在这个时候，我们询问 ChatGPT 一个减法问题的时候，获得的答案仍然是正确的。</p>
+<p>接下来，我们来修改一下减法 function 的描述，我们的subtract 函数实现里写的是 x - y，但是在描述中，我们把它改成 y - x。</p>
+<pre><code>tools = [
+    get_tools_definition(&quot;add&quot;, &quot;add x to y&quot;),
+    get_tools_definition(&quot;subtract&quot;, &quot;y - x&quot;),
+    get_tools_definition(&quot;multiply&quot;, &quot;x multiply y&quot;),
+    get_tools_definition(&quot;divide&quot;, &quot;x divide y&quot;),
+]
+chat_using_function_call(&quot;What does 10086 - 1024 equal to?&quot;, tools = tools)</code></pre>
+<p>输出结果：``<code>python 10086 - 1024 equals -9062. </code>``可以看到，这个时候 ChatGPT 给到的减法的答案就错了。它按照我们的描述更换了输入的 x 和 y 这两个参数的顺序，导致减法的结果变成了一个负数。<strong>所以想要让 function call 获得一个准确而有效的结果，对function 的准确描述和命名就非常重要了。</strong></p>
+<h2>通过 Function Call 来连接外部资料库</h2>
+<p>在刚刚的例子里，我们提出的问题，直接通过一次 Function Call 就得到了答案。但是很多时候，我们询问的问题更加复杂，API 只是帮助我们获取了信息，最终还需要 ChatGPT 去分析这个答案才会拿到最终的结果。</p>
+<h3>尝试 SerpAPI</h3>
+<p>比如说，市场上有很多搜索相关的 API，能够帮助我们拿到商品的相关信息，我就经常使用 SerpAPI 来快速搭建一些原型。</p>
+<p>首先，你还是需要安装 serpapi 和 google-search-results 这两个 python 库。</p>
+<pre><code>%pip install serpapi
+%pip install google-search-results</code></pre>
+<p>然后我们去 serapi.com 注册一个账号，就能获得一个 API_KEY，可以进行 100 次免费的搜索API 的调用。</p>
+<p>我们先来试一试这个搜索 API。</p>
+<pre><code>API_KEY = &quot;YOUR_API_KEY&quot;
+
+from serpapi import GoogleSearch
+params = {
+  &quot;engine&quot;: &quot;google_shopping&quot;,
+  &quot;q&quot;: &quot;Macbook M3&quot;,
+  &quot;api_key&quot;: API_KEY
+}
+search = GoogleSearch(params)
+results = search.get_dict()
+shopping_results = results[&quot;shopping_results&quot;]
+
+import json
+pretty_json = json.dumps(shopping_results, indent=4)
+print(pretty_json)</code></pre>
+<p>输出结果：``<code>python [ { &quot;position&quot;: 1, &quot;title&quot;: &quot;Apple 14\&quot; MacBook Pro (M3, Space Gray) with Apple M3 8-Core Chip 8GB Unified RAM ...&quot;, &quot;link&quot;: &quot;https://www.bhphotovideo.com/c/product/1793630-REG/apple_mtl73ll_a_14_macbook_pro_with.html?kw=APMTL73LLA&amp;ap=y&amp;smp=y&amp;BI=E6540&amp;srsltid=AfmBOopxJGtKB93QRtNQIcVcZ6ExpmkCUFj_tri2hicX0iQ02Jwvegnii78&quot;, &quot;product_link&quot;: &quot;https://www.google.com/shopping/product/1?gl=us&amp;prds=pid:10805795665197980642&quot;, &quot;product_id&quot;: &quot;10805795665197980642&quot;, &quot;serpapi_product_api&quot;: &quot;https://serpapi.com/search.json?device=desktop&amp;engine=google_product&amp;gl=us&amp;google_domain=google.com&amp;hl=en&amp;product_id=10805795665197980642&quot;, &quot;source&quot;: &quot;B&amp;H Photo-Video-Audio&quot;, &quot;price&quot;: &quot;$1,449.00&quot;,…………... &quot;store_rating&quot;: 4.4, &quot;store_reviews&quot;: 1400 } ] </code>``可以看到，我们通过一个简单的关键词，就能搜索到里面的商品名称、价格等购物信息。</p>
+<h3>将 SerpAPI 封装成 Function Call</h3>
+<p>有了这个搜索函数的能力，我们就可以把它封装成 function call，供我们后续通过 ChatGPT 来调用。</p>
+<p>我们先封装 search_product 的代码。</p>
+<pre><code>def search_product(product_keywords):
+
+    params = {
+    &quot;engine&quot;: &quot;google_shopping&quot;,
+    &quot;q&quot;: product_keywords,
+    &quot;api_key&quot;: API_KEY
+    }
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    shopping_results = results[&quot;shopping_results&quot;][0]
+    return json.dumps(shopping_results)
+
+tools = [
+    {
+        &quot;type&quot;: &quot;function&quot;,
+        &quot;function&quot;: {
+            &quot;name&quot;: &quot;search_product&quot;,
+            &quot;description&quot;: &quot;search for a product on google shopping, get information like name, price, description etc.&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;product_keywords&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;Name or key words of the product to search&quot;,
+                    },
+                },
+                &quot;required&quot;: [&quot;product_keywords&quot;],
+            },
+        }
+    },
+]</code></pre>
+<p>然后根据新的参数和函数，封装Function Call 的过程。</p>
+<pre><code>available_functions = {
+    &quot;search_product&quot;: search_product,
+}
+
+def chat_using_function_call(content, tools = tools, available_functions = available_functions, client = client):
+    messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: content}]
+    response = client.chat.completions.create(
+        model=&quot;gpt-3.5-turbo-0125&quot;,
+        messages=messages,
+        tools=tools,
+        tool_choice=&quot;auto&quot;,  # auto is default, but we&#x27;ll be explicit
+    )
+    response_message = response.choices[0].message
+    messages.append(response_message)    
+    tool_calls = response_message.tool_calls
+    for tool_call in tool_calls:
+        function_name = tool_call.function.name
+        function_to_call = available_functions[function_name]
+        function_args = json.loads(tool_call.function.arguments)
+        function_response = function_to_call(
+            product_keywords=function_args.get(&quot;product_keywords&quot;),
+        )
+        print(&quot;function &quot; + function_name + &quot;, with arguments &quot; + str(function_args) + &quot; called&quot;)
+        messages.append(
+            {
+                &quot;tool_call_id&quot;: tool_call.id,
+                &quot;role&quot;: &quot;tool&quot;,
+                &quot;name&quot;: function_name,
+                &quot;content&quot;: function_response,
+            }
+            )
+    final_response = client.chat.completions.create(
+        model=&quot;gpt-3.5-turbo-0125&quot;,
+        messages=messages,
+    )
+    print(final_response.choices[0].message.content)
+ </code></pre>
+<p>这里的代码和前面加减乘除的代码基本一样，我们只是修改了对应的函数 name、description、parameters 这些配置参数。并且在 Function Call 的调用链路中，通过 print 函数，打印出了什么样的 function 被调用了。</p>
+<p>有了这样的封装，我们就可以来问问 ChatGPT，最新的 Macbook M3 的价格了。</p>
+<pre><code>chat_using_function_call(&quot;What is the price of Macbook M3?&quot;, tools = tools)</code></pre>
+<p>输出结果：``<code>python function search_product, with arguments {&#x27;product_keywords&#x27;: &#x27;Macbook M3&#x27;} called The price of the Apple 14&quot; MacBook Pro with M3 8-Core Chip and 8GB Unified RAM is $1,449.00. You can find more details on the product <a href="https://www.bhphotovideo.com/c/product/1793630-REG/apple_mtl73ll_a_14_macbook_pro_with.html?kw=APMTL73LLA&amp;ap=y&amp;smp=y&amp;BI=E6540&amp;srsltid=AfmBOopxJGtKB93QRtNQIcVcZ6ExpmkCUFj_tri2hicX0iQ02Jwvegnii78">here</a>. </code>``</p>
+<p>可以看到，在输出结果中 ChatGPT 先通过我们封装好的 search_product 函数，搜索了搜索引擎中的购物信息。在最终的返回结果中，也给出了详细的Macbook M3 的配置、价格，乃至购买链接。</p>
+<p>而且我们不仅可以查看单个商品的信息，还能利用 Function Call 的能力，比较两个不同商品的价格信息。比如，我们可以让 ChatGPT 帮助我们比较 Macbook M3 和 Macbook M2 的商品价格。</p>
+<pre><code>chat_using_function_call(&quot;Could you help me to compare the price of Macbook M3 and Macbook M2?&quot;, tools = tools)</code></pre>
+<p>输出结果：``<code>python function search_product, with arguments {&#x27;product_keywords&#x27;: &#x27;Macbook M3&#x27;} called function search_product, with arguments {&#x27;product_keywords&#x27;: &#x27;Macbook M2&#x27;} called The price of the Macbook M3 (Apple 14&quot; MacBook Pro with M3 8-Core Chip 8GB Unified RAM) is $1,449.00. You can find more details about it <a href="https://www.bhphotovideo.com/c/product/1793630-REG/apple_mtl73ll_a_14_macbook_pro_with.html?kw=APMTL73LLA&amp;ap=y&amp;smp=y&amp;BI=E6540&amp;srsltid=AfmBOopxJGtKB93QRtNQIcVcZ6ExpmkCUFj_tri2hicX0iQ02Jwvegnii78">here</a>. The price of the Macbook M2 (MacBook Air 15-Inch, M2 8GB RAM 256GB SSD) is $999.00. More details can be found <a href="https://www.bestbuy.com/site/apple-macbook-air-15-laptop-m2-chip-8gb-memory-256gb-ssd-midnight/6534606.p?skuId=6534606&amp;utm_source=feed">here</a>. Therefore, the Macbook M3 is priced higher than the Macbook M2. </code>``可以看到，在输出的结果中，ChatGPT 的 Function Call 被调用了两次，分别查询了 Macbook M3 和 Macbook M2 的商品信息。并且，它并不是直接拿其中的任何一个返回结果给我们一个答案，而是真的比较了两个商品的价格，并告诉我们新款的 M3 的价格要高于旧款的 M2。</p>
+<p>这也是 Function Call 功能的强大之处，它可以通过多个 Function Call 调用，并且配合 ChatGPT 自身的理解能力和推理能力，给出一个复杂问题的答案。</p>
+<h2>小结</h2>
+<p>好了，这一讲到这里就结束了。这一讲我为你介绍了 OpenAI 的 ChatGPT 的相关接口提供的 Function Call 能力。和之前我们介绍过的 Langchain 类似， Function Call 可以让 AI 选择外部的程序函数来调用，解决 ChatGPT 这样的语言模型并不擅长进行数学运算，也缺少有时效性的外部数据信息的问题。</p>
+<p>并且ChatGPT 一次请求中，可能会让你调用多个外部函数，这样我们就可以组合不同的 Function Call 的调用结果，解决更加复杂的问题。</p>
+<h2>思考题</h2>
+<p>在这一讲的代码实现中，我们在获得 Function Call 的调用结果后，并不会根据拿到的返回结果，再次调用 Function Call。你想一想，我们在什么场景下会产生这样的“连环调用”Function Call 的需求呢？如果有的话，你能尝试撰写代码实现这样的通用功能吗？</p>
+<p>欢迎你把你的代码实现分享再评论区，也欢迎你把这节课的内容分享给其他朋友，我们下节课再见！</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="加餐二｜不用Langchain也能调用函数，一起来学Function Calling.md">加餐二｜不用Langchain也能调用函数，一起来学Function Calling.md</a></footer>
+</div></body></html>

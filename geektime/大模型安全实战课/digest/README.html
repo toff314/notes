@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《大模型安全实战课》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">大模型安全实战课</a><a href="README.html">《大模型安全实战课》消化索引（digest README）</a></div>
+<h1>《大模型安全实战课》消化索引（digest README）</h1>
+<blockquote><p>本目录是《大模型安全实战课》（讲师：赵帅，前极氪汽车资深算法专家）的结构化消化产物，生成于 2026-08-31。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/大模型安全实战课/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/大模型安全实战课/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、四幕逐幕评价。任何写作任务先读它定位基调（金矿 1 讲，银矿 14 讲，整体 2.83/5）。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、数据审计（21 条量化声明：12 ✅ / 3 ⚠️ / 4 ❓ / 2 🚩）。引用任何课程数据前必查。</li><li><strong><code>theme_articles/theme-001.json</code></strong> — 可直接成文的主题深挖素材包（&quot;对齐+评估闭环&quot;命题）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕评价+ROI+写作方向）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题深挖文素材（1 篇：行为对齐与安全评估闭环）</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（六主题重组+Mermaid 概念图+路线 A/B/C）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5 分钟速览（3 框架+5 方法+1 反直觉观点）</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记（Adler 两问+模块地图+标题矩阵）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要（38 讲首尾词+小标题+关键词+风险信号）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣+数据审计（评分卡+Adler 四问+萃取+验证状态）</td><td>机读</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 acts / overall_assessment / writing_direction</li><li>读 <code>content_triage.json</code> 的 data_audit 与 gold/silver 讲 critical_notes</li><li>建议标题方向：《大模型安全课值不值得学？我评完38讲后只推荐这15讲》</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件（当前 1 篇：theme-001）</li><li>读其 narrative_arc / verification_gate / quality_rubric_hints</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong></li><li>按其 source_lectures（17/29/01/26）对应路径读讲课原文核对引文</li></ol>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级与原文金句</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文绝对路径</th></tr><tr><td>17</td><td>对齐技术：RLHF、RLAIF与Constitutional AI与行为控制</td><td><code>/home/yuanwu/geektime/output/大模型安全实战课/防御篇/17｜对齐技术：RLHF、RLAIF与Constitutional AI与行为控制/17｜对齐技术：RLHF、RLAIF与Constitutional AI与行为控制.md</code></td></tr></table>
+<p>银矿导航（次优先引用）：04/06/07/12/13/16/18/20/22/25/26/27/29/31（路径见 <code>lecture_summaries.json</code> 的 <code>source_file</code> 字段，均在 <code>/home/yuanwu/geektime/output/大模型安全实战课/&lt;模块&gt;/&lt;讲&gt;/</code> 下）。</p>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
+<ul><li>&quot;某 AI 助手回答种族问题导致品牌掉粉十万&quot;（第03讲，🚩 无出处，疑似编造）</li><li>&quot;斯坦福 GrootLM 提出水印方法&quot;（第26讲，🚩 无出处，疑似虚构/张冠李戴）</li><li>&quot;90% 以上的诱导式攻击在身份切换策略处被切断&quot;（第06讲，❓ 讲师内部演练，无独立来源）</li><li>&quot;花了两周才找出毒样本&quot;（第07讲，❓ 讲师个人经历）</li><li>&quot;医疗平台用 RLAIF 让主模型变谨慎&quot;（第17讲，❓ 讲师转述）</li><li>&quot;采集阶段伪造坐标可规避 90% 以上风险暴露&quot;（第18讲，❓ 讲师经验值）</li><li>&quot;端侧模型 200 毫秒内完成推理&quot;（第27讲，⚠️ 经验值，非正式基准）</li><li>&quot;模糊中立派 vs 正面肯定派&quot;实测分类（第17讲，⚠️ 可复测但非正式评测，模型版本会更新）</li></ul>
+<p>写作引用规则：只引用 <code>content_triage.json</code> 中 <code>verification.status == &quot;✅&quot;</code> 的数据；⚠️ 需注明差异；❓/🚩 一律不直接引用。</p>
+<h2>元信息</h2>
+<ul><li>消化评分：2.83/5（🥇1 🥈14 🥉19 ⛏️4，共 38 讲）</li><li>数据审计：21 条量化声明，12 ✅ / 3 ⚠️ / 4 ❓ / 2 🚩（57% 可验证）</li><li>主题深挖文：1 篇（金矿 1 讲 → 决策表 1-2 档；金矿+银矿 15 ≥ 5，整体 SNR 2.83 ≥ 2.5，未触发减半）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

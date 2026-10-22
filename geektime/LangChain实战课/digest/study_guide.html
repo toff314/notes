@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangChain实战课学习指南</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">LangChain实战课</a><a href="README.html">《LangChain实战课》消化索引（digest README）</a></div>
+<h1>LangChain实战课学习指南</h1>
+<blockquote><p>一句话课程价值总结：一门用&quot;易速鲜花&quot;贯穿案例、把 LangChain 六大组件逐个拆透的入门教程——精华在&quot;提示工程→ReAct代理&quot;这条认知升级链，其余八成是官方文档的中文复述。</p></blockquote>
+<h2>课程画像</h2>
+<ul><li>讲师：黄佳（新加坡科研局研究员）</li><li>适合人群：想从零上手 LangChain 开发 LLM 应用的工程师；想快速理解 Agent/RAG 概念的入门者</li><li>不适合人群：已熟悉 LangChain 或需要生产级工程细节（评估、成本优化、鲁棒性）的进阶者；追求原创方法论的人</li><li>投入时间：推荐 4-5 小时（快览 30 分钟 + 深度 2 小时 + 选读 2 小时）</li><li>价值密度：⭐⭐⭐ (2.7/5)</li></ul>
+<h2>阅读路线</h2>
+<h3>路线 A：快速浏览（30 分钟）</h3>
+<p>只需读以下 4 讲，抓住课程主干：</p>
+<ul><li>[03] 模型I/O — 理由：LangChain 核心抽象，理解全课的地基</li><li>[05] 提示工程（下）CoT/ToT — 理由：全课学术含金量最高的提示技术</li><li>[11] 代理（上）ReAct — 理由：全课唯一金矿，LLM→Agent 的认知跃迁</li><li>[15] RAG — 理由：企业需求量最大的方向，全流程梳理</li></ul>
+<h3>路线 B：深度阅读（2 小时）</h3>
+<p>在路线 A 基础上补充：</p>
+<ul><li>[04] 提示工程（上）Few-Shot — 理由：提示结构四要素+语义选择器</li><li>[10] 记忆 — 理由：四种记忆机制的 Token 成本权衡，工程关键</li><li>[12] 代理（中）AgentExecutor — 理由：ReAct 提示模板的内核剖析</li><li>[18] CAMEL — 理由：多代理角色扮演，前瞻性最强</li></ul>
+<h3>路线 C：时间充裕（5 小时）</h3>
+<p>全部 ⭐⭐⭐ 和 ⭐⭐ 章节（03/04/05/06/10/11/12/13/15/18），加 [02] 建立整体直觉，[19] 了解自主代理，[22] 综合复习。</p>
+<h2>核心知识地图（按主题重组，非原课程顺序）</h2>
+<h3>主题一：Model I/O——LangChain 的底层抽象</h3>
+<p><strong>一句话总结</strong>：任何 LLM 应用都可抽象为&quot;输入提示→调用模型→解析输出&quot;三步，LangChain 的价值在于把这三步做成可复用的框架层。</p>
+<p><strong>关键框架</strong>：Model I/O = Format(提示模板) + Predict(模型) + Parse(输出解析)。提示模板管&quot;说什么&quot;，模型管&quot;怎么算&quot;，输出解析管&quot;拿回结构化结果&quot;。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 PromptTemplate 定义一次模板，动态替换变量生成多个提示（来源：第03讲）</li><li>用 StructuredOutputParser 把模型返回的文本解析成 JSON/字典（来源：第03讲）</li><li>继承 LLM 基类实现 <code>_call</code>，接入任意本地/开源模型（来源：第06讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;模型可以自由选择、自主训练，而调用模型的框架往往是有章法、可复用的&quot; — 第03讲</p></blockquote>
+<h3>主题二：提示工程——从示例到思维链的演进</h3>
+<p><strong>一句话总结</strong>：提示工程是 LLM 应用的元技能，从&quot;给示例(Few-Shot)&quot;到&quot;给思考步骤(CoT)&quot;再到&quot;给多路径搜索(ToT)&quot;，逐步提升模型推理质量。</p>
+<p><strong>关键框架</strong>：提示结构四要素（指令+上下文+输入+输出指示器）→ Few-Shot/Zero-Shot → CoT(思维链) → ToT(思维树)。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 FewShotPromptTemplate + 语义相似度选择器，动态挑最相关示例省 Token（来源：第04讲）</li><li>Zero-Shot CoT 只需加一句&quot;Let&#x27;s think step by step&quot;（来源：第05讲）</li><li>ToT 让模型同时生成多条候选路径再择优（来源：第05讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;你只要简单地告诉模型&#x27;让我们一步步的思考&#x27;，模型就能够给出更好的答案&quot; — 第05讲</p></blockquote>
+<h3>主题三：ReAct 代理——LLM 从聊天到行动的跃迁</h3>
+<p><strong>一句话总结</strong>：CoT 只提升推理却解决不了幻觉，ReAct 把&quot;推理&quot;和&quot;行动&quot;结合，让 LLM 能自主调用外部工具，这是本课最核心的概念。</p>
+<p><strong>关键框架</strong>：ReAct = Reasoning(观察+思考) + Acting(调用工具/给答案)。核心洞察是&quot;操作的序列不硬编码，而是由 LLM 动态决定&quot;——这正是链与代理的本质区别。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 <code>ZERO_SHOT_REACT_DESCRIPTION</code> 初始化代理，加载 serpapi + llm-math 工具（来源：第11讲）</li><li>理解 ReAct 提示模板的完整协议（Question/Thought/Action/Action Input/Observation 循环）（来源：第12讲）</li><li>按任务类型选代理：结构化工具对话 / Self-Ask / Plan-and-execute（来源：第13讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;你的大模型现在从一个仅能通过内部知识对话的 Bot，飞升为了一个有手有脚能使用工具的智能代理&quot; — 第11讲</p></blockquote>
+<h3>主题四：记忆与上下文管理</h3>
+<p><strong>一句话总结</strong>：LLM 本质无状态，&quot;记忆&quot;就是把历史对话拼进提示，四种机制是&quot;存储量 vs 成本 vs 精确性&quot;的三角权衡。</p>
+<p><strong>关键框架</strong>：Buffer(全量) → BufferWindow(只记最近k轮) → Summary(用LLM总结省Token) → SummaryBuffer(混合：总结早期+保留近期)。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>短对话用 BufferMemory，长对话用 SummaryBufferMemory（来源：第10讲）</li><li>用 max_token_limit 控制 SummaryBuffer 的切换阈值（来源：第10讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;ChatGPT 能记得你说过的话，正是因为它把对话上下文作为提示的一部分传递&quot; — 第10讲</p></blockquote>
+<h3>主题五：RAG——检索增强生成</h3>
+<p><strong>一句话总结</strong>：RAG 给非结构化数据建一张&quot;向量地图&quot;，查询时做语义检索再喂给 LLM，是企业落地量最大的方向。</p>
+<p><strong>关键框架</strong>：文档加载 → 文本转换(分割) → 嵌入 → 存储(缓存/向量库) → 检索 → 索引。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>chunk 大小三考量：上下文窗口 + 任务类型 + 文本结构（来源：第15讲）</li><li>向量库选型六维度：规模/速度、持久性、易用性、成本、特性、安全（来源：第15讲）</li><li>用 CacheBackedEmbeddings 缓存嵌入省重复计算（来源：第15讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;没有&#x27;最好&#x27;的向量数据库，只有&#x27;最适合&#x27;的向量数据库&quot; — 第15讲</p></blockquote>
+<h3>主题六：多代理与自主代理</h3>
+<p><strong>一句话总结</strong>：从 CAMEL 的角色扮演到 BabyAGI 的自主任务循环，多代理协作是 LLM 应用的下一个前沿。</p>
+<p><strong>关键框架</strong>：CAMEL(角色扮演+Inception Prompting) / BabyAGI(执行+任务创建+优先级三代理) / HuggingGPT(规划+选模型+执行+汇总)。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用任务指定代理把模糊需求具体化（来源：第18讲）</li><li>BabyAGI 三代理结构：execution / task_creation / prioritization（来源：第19讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;能否让 ChatGPT 自己生成这些引导文本呢？&quot; — 第18讲（CAMEL 的出发点）</p></blockquote>
+<h2>可忽略内容</h2>
+<p>以下章节可以直接跳过（信噪比 &lt; 2.0 或纯包装）：</p>
+<ul><li>[开篇词] — 课程营销，无知识含量</li><li>[结束语] — 结课感悟鸡汤</li><li>[结课测试] — 纯测试题入口</li><li>[加餐LCEL] / [加餐LangSmith] — 仅 PPT 和视频链接，无正文</li><li>[01] 环境安装 — 一次性配置内容，可查官方文档代替</li></ul>
+<h2>延伸阅读</h2>
+<ul><li>论文：Yao et al. 2023《ReAct: Synergizing Reasoning and Acting in Language Models》（本课 ReAct 出处）</li><li>论文：Jason Wei et al. 2022《Chain-of-Thought Prompting Elicits Reasoning in LLMs》（本课 CoT 出处）</li><li>论文：Yao et al. 2023《Tree of Thoughts》（本课 ToT 出处）</li><li>书籍：作者黄佳《零基础学机器学习》</li><li>课程：吴恩达《ChatGPT Prompt Engineering for Developers》（提示工程权威入门）</li><li>官方文档：LangChain 官方 docs（本课内容的主要来源，建议直接对照学习）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide.md">study_guide.md</a></footer>
+</div></body></html>

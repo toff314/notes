@@ -1,0 +1,395 @@
+[
+  {
+    "order": 0,
+    "title": "第一章：Docker 核心技术",
+    "title_safe": "第一章：Docker 核心技术",
+    "articles": [
+      {
+        "id": "902145",
+        "title": "1. 从系统架构谈起",
+        "title_safe": "1. 从系统架构谈起",
+        "time": "21:32",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902146",
+        "title": "2. 理解 Docker",
+        "title_safe": "2. 理解 Docker",
+        "time": "25:55",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902147",
+        "title": "3. Docker 的核心技术（一）",
+        "title_safe": "3. Docker 的核心技术（一）",
+        "time": "43:46",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902148",
+        "title": "4. Docker 的核心技术（二）",
+        "title_safe": "4. Docker 的核心技术（二）",
+        "time": "27:08",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902149",
+        "title": "5. 容器网络",
+        "title_safe": "5. 容器网络",
+        "time": "29:21",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902150",
+        "title": "6. Dockerfile 的最佳实践",
+        "title_safe": "6. Dockerfile 的最佳实践",
+        "time": "54:11",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "第二章：Kubernetes 架构原则和对象设计",
+    "title_safe": "第二章：Kubernetes 架构原则和对象设计",
+    "articles": [
+      {
+        "id": "902151",
+        "title": "1. Kubernetes 架构基础（一）",
+        "title_safe": "1. Kubernetes 架构基础（一）",
+        "time": "33:28",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902152",
+        "title": "2. Kubernetes 架构基础（二）",
+        "title_safe": "2. Kubernetes 架构基础（二）",
+        "time": "45:34",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902153",
+        "title": "3. 了解 kubectl，深入理解 Kubernetes（一）",
+        "title_safe": "3. 了解 kubectl，深入理解 Kubernetes（一）",
+        "time": "48:14",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902154",
+        "title": "4. 深入理解 Kubernetes（二）",
+        "title_safe": "4. 深入理解 Kubernetes（二）",
+        "time": "25:30",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902155",
+        "title": "5. 核心对象概览",
+        "title_safe": "5. 核心对象概览",
+        "time": "55:39",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "第三章：Kubernetes 控制平面组件：etcd",
+    "title_safe": "第三章：Kubernetes 控制平面组件：etcd",
+    "articles": [
+      {
+        "id": "902156",
+        "title": "1. etcd 概要：主要功能及使用场景",
+        "title_safe": "1. etcd 概要：主要功能及使用场景",
+        "time": "21:54",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902157",
+        "title": "2. Raft 协议",
+        "title_safe": "2. Raft 协议",
+        "time": "26:19",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902158",
+        "title": "3. etcd 如何实现 Raft 协议",
+        "title_safe": "3. etcd 如何实现 Raft 协议",
+        "time": "33:17",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902159",
+        "title": "4. 构建高可用 etcd 集群",
+        "title_safe": "4. 构建高可用 etcd 集群",
+        "time": "29:06",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902160",
+        "title": "5. 高可用集群管理",
+        "title_safe": "5. 高可用集群管理",
+        "time": "45:08",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902161",
+        "title": "6. etcd 常见问题及解决办法",
+        "title_safe": "6. etcd 常见问题及解决办法",
+        "time": "23:54",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "第四章：Kubernetes 控制平面组件：API Server",
+    "title_safe": "第四章：Kubernetes 控制平面组件：API Server",
+    "articles": [
+      {
+        "id": "902162",
+        "title": "1. Kubernetes 核心组件：API Server 概念",
+        "title_safe": "1. Kubernetes 核心组件：API Server 概念",
+        "time": "16:50",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902163",
+        "title": "2. API Server 的认证机制",
+        "title_safe": "2. API Server 的认证机制",
+        "time": "25:13",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902164",
+        "title": "3. 基于 Webhook 的认证服务集成",
+        "title_safe": "3. 基于 Webhook 的认证服务集成",
+        "time": "25:27",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902165",
+        "title": "4. API Server 的授权机制",
+        "title_safe": "4. API Server 的授权机制",
+        "time": "32:54",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902167",
+        "title": "5. API Server 的准入控制",
+        "title_safe": "5. API Server 的准入控制",
+        "time": "31:35",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902168",
+        "title": "6. API Server 的限流方法",
+        "title_safe": "6. API Server 的限流方法",
+        "time": "29:00",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902169",
+        "title": "7. 高可用 API Server",
+        "title_safe": "7. 高可用 API Server",
+        "time": "22:54",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902170",
+        "title": "8. API Server 运作机制，apimachinery 组件",
+        "title_safe": "8. API Server 运作机制，apimachinery 组件",
+        "time": "33:14",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+    "title_safe": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+    "articles": [
+      {
+        "id": "902171",
+        "title": "1. 调度器 kube-scheduler",
+        "title_safe": "1. 调度器 kube-scheduler",
+        "time": "01:09:41",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902172",
+        "title": "2. 控制器 Controller Manager",
+        "title_safe": "2. 控制器 Controller Manager",
+        "time": "56:42",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902173",
+        "title": "3. kubelet 组件",
+        "title_safe": "3. kubelet 组件",
+        "time": "38:02",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902174",
+        "title": "4. 容器运行时接口 CRI",
+        "title_safe": "4. 容器运行时接口 CRI",
+        "time": "24:32",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902175",
+        "title": "5. 容器网络接口 CNI",
+        "title_safe": "5. 容器网络接口 CNI",
+        "time": "45:09",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902176",
+        "title": "6. 容器存储接口 CSI",
+        "title_safe": "6. 容器存储接口 CSI",
+        "time": "32:59",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902177",
+        "title": "7. Rook 的工作原理",
+        "title_safe": "7. Rook 的工作原理",
+        "time": "27:35",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "第六章：生命周期管理和服务发现",
+    "title_safe": "第六章：生命周期管理和服务发现",
+    "articles": [
+      {
+        "id": "902178",
+        "title": "1. 深入理解 Pod 的生命周期",
+        "title_safe": "1. 深入理解 Pod 的生命周期",
+        "time": "54:39",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902179",
+        "title": "2. 服务发现",
+        "title_safe": "2. 服务发现",
+        "time": "43:46",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902180",
+        "title": "3. Service 对象",
+        "title_safe": "3. Service 对象",
+        "time": "29:02",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902181",
+        "title": "4. kube-proxy 组件",
+        "title_safe": "4. kube-proxy 组件",
+        "time": "42:56",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902182",
+        "title": "5. DNS 原理和实践",
+        "title_safe": "5. DNS 原理和实践",
+        "time": "23:23",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902183",
+        "title": "6. Ingress 对象",
+        "title_safe": "6. Ingress 对象",
+        "time": "27:47",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "902184",
+        "title": "7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑",
+        "title_safe": "7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑",
+        "time": "29:45",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  }
+]

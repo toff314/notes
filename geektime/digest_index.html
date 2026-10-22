@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>极客时间课程消化总索引</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../index.html">笔记架首页</a><a href="README.html">geektime</a></div>
+<h1>极客时间课程消化总索引</h1>
+<blockquote><p>本索引汇总 5 门课程的消化结果，用于横向对比与写作选题决策。</p><p>每门课的详细产物位于各自课程目录下的 <code>digest/</code> 子目录。</p></blockquote>
+<p>生成日期：2026-08-14</p>
+<h2>总览对比</h2>
+<table><tr><th>课程</th><th>讲数</th><th>金矿</th><th>银矿</th><th>铜矿</th><th>铁矿</th><th>整体 SNR</th><th>数据可信度</th><th>主题深挖文</th></tr><tr><td>如何成为学习高手</td><td>24</td><td>3</td><td>16</td><td>5</td><td>0</td><td><strong>3.5/5</strong></td><td>23 声明，16 可验证</td><td>2 篇</td></tr><tr><td>AI原生开发工作流实战</td><td>28</td><td>4</td><td>20</td><td>2</td><td>2</td><td>3.2/5</td><td>13 声明，仅 2 可追溯</td><td>2 篇</td></tr><tr><td>企业级多智能体设计实战</td><td>44</td><td>6</td><td>15</td><td>16</td><td>7</td><td>3.0/5</td><td>37 声明，14 可追溯</td><td>3 篇</td></tr><tr><td>AI大模型之美</td><td>34</td><td>2</td><td>11</td><td>16</td><td>5</td><td>2.79/5</td><td>25 声明，22 可验证</td><td>1 篇</td></tr><tr><td>LangChain实战课</td><td>29</td><td>1</td><td>10</td><td>13</td><td>5</td><td>2.7/5</td><td>14 声明，9 可验证</td><td>1 篇</td></tr></table>
+<h2>五门课一句话判决</h2>
+<ol><li><strong>如何成为学习高手</strong>（3.5/5）— 五门中 SNR 最高。本质是「把认知心理学翻译成中文技巧」的整理与合成，金矿集中在记忆底层逻辑（考试思维、连点成线、组块化）。<strong>优势</strong>：数据可信度高（16/23 可追溯真实心理学成果，0 编造）；<strong>短板</strong>：后半段自律/时间管理模块重复度高，有软广。</li></ol>
+<ol><li><strong>AI原生开发工作流实战</strong>（3.2/5）— AI 工程方法论课的标杆。讲&quot;AI 原生开发&quot;（规范驱动开发、Agent Skills、TDD 与 AI 协同），约 60% 方法论 + 40% 工具操作。<strong>风险</strong>：方法论快速演进、工具部分随版本贬值，且存在&quot;精确百分比无出处&quot;的数据隐患（&quot;领先 90% 开发者&quot;等）。</li></ol>
+<ol><li><strong>企业级多智能体设计实战</strong>（3.0/5）— 44 讲大课，精华在后半程（数字员工团队、企业级加固、生产交付），是独立于 CrewAI 框架、可迁移的工程方法论；前半程偏框架 API 走读和 XiaoPaw 演示，有 RGB/C.U.P./五步SOP 等品牌化重命名信号。<strong>风险</strong>：约 40% 量化声明无法追溯（629 次测试 80% 劫持率、17.2x 误差放大）。</li></ol>
+<ol><li><strong>AI大模型之美</strong>（2.79/5）— 2023 年&quot;用接口替代训练&quot;的 LLM 入门课，历史价值大于实用价值。精华仅 RAG/第二大脑、多步提示语/CoT 2 讲，它们准确预见了后来主流范式。<strong>风险</strong>：LangChain/llama-index 的 API 已全部废弃，30+ 讲是会过时的库教程。</li></ol>
+<ol><li><strong>LangChain实战课</strong>（2.7/5）— 引用规范、教学清晰但原创为零的教程课。八成是 LangChain 官方文档的中文复述 + 鲜花案例，方法论 vs 水份约 3:7。唯一金矿是 ReAct 那一讲。</li></ol>
+<h2>值得优先深挖的写作主题（按价值排序）</h2>
+<table><tr><th>优先级</th><th>主题</th><th>来源课程</th><th>类型</th><th>核心卖点</th></tr><tr><td>⭐⭐⭐</td><td>SDD 规范驱动开发第一性原理</td><td>AI原生开发工作流实战 theme-001</td><td>methodology</td><td>&quot;代码已死，规范当立&quot;的权力反转命题</td></tr><tr><td>⭐⭐⭐</td><td>能力封装四象限选型（Skills/MCP/Subagent/Headless）</td><td>AI原生开发工作流实战 theme-002</td><td>comparison</td><td>工程决策框架，可迁移性强</td></tr><tr><td>⭐⭐⭐</td><td>记忆的底层逻辑：主动加工</td><td>如何成为学习高手 theme-001</td><td>methodology</td><td>有认知科学出处的反常识记忆法</td></tr><tr><td>⭐⭐</td><td>数字员工团队工程方法论</td><td>企业级多智能体设计实战 theme-001</td><td>methodology</td><td>独立于 CrewAI 的可迁移方法论</td></tr><tr><td>⭐⭐</td><td>RAG/第二大脑 + 多步提示语/CoT 的范式预见</td><td>AI大模型之美 theme-001</td><td>methodology</td><td>&quot;2023 年预见了 2024-2025 主流范式&quot;</td></tr><tr><td>⭐⭐</td><td>从 CoT 到 ReAct：大模型如何从&quot;聊天&quot;进化成&quot;动手&quot;</td><td>LangChain实战课 theme-001</td><td>methodology</td><td>认知跃迁的完整推导链</td></tr><tr><td>⭐⭐</td><td>自律的真相：他律&gt;自律</td><td>如何成为学习高手 theme-002</td><td>opinion</td><td>反直觉观点，有争议性</td></tr></table>
+<h2>三门 AI 课的交叉命题（可做对比文章）</h2>
+<p>三门课共同指向同一条技术演进主线：<strong>LLM 应用开发从&quot;提示工程&quot; → &quot;链/代理抽象&quot; → &quot;AI 原生工作流&quot;的范式迁移</strong>。</p>
+<ul><li><code>AI大模型之美</code>（2023）讲的是最底层：用接口替代训练，如何和模型说话。</li><li><code>LangChain实战课</code>（2023）讲的是中间层：Chain / Memory / Agent / RAG 这些抽象。</li><li><code>AI原生开发工作流实战</code>（2024-2025）讲的是最上层：这些抽象如何沉淀成工程师的日常工作流（CLAUDE.md、Agent Skills、MCP、TDD）。</li><li><code>企业级多智能体设计实战</code>（2024-2025）则深入到多 Agent 协作的工程化落地（协作模式、企业级加固、生产交付）。</li></ul>
+<p>一个潜在的爆款选题：<strong>《三年四堂课，看清 LLM 应用开发的一条主线》</strong>，用四门课的消化结果串起完整演进史。</p>
+<h2>各课程 digest 目录</h2>
+<ul><li><code>如何成为学习高手/digest/</code> — 完整 8 类产物 + 2 篇主题文</li><li><code>AI原生开发工作流实战/digest/</code> — 完整 8 类产物 + 2 篇主题文</li><li><code>企业级多智能体设计实战/digest/</code> — 完整 8 类产物 + 3 篇主题文</li><li><code>AI大模型之美/digest/</code> — 完整 8 类产物 + 1 篇主题文</li><li><code>LangChain实战课/digest/</code> — 完整 8 类产物 + 1 篇主题文</li></ul>
+<h2>写作前必读提醒</h2>
+<ol><li>引用任何数据前，先查对应课程 <code>content_triage.json</code> 的 <code>data_audit</code> 和 extraction 的 <code>verification</code> 字段。</li><li>🚩 可疑 / ❓ 无法验证的数据，禁止写入最终文章。数据隐患最大的是 <code>AI原生开发工作流实战</code>（&quot;领先 90% 开发者&quot;等营销性夸大）和 <code>企业级多智能体设计实战</code>（约 40% 量化声明无法追溯）。</li><li>每篇主题文自带的 <code>verification_gate.avoid_claims</code> 是硬闸门，写文章时必须遵守。</li></ol>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="digest_index.md">digest_index.md</a></footer>
+</div></body></html>

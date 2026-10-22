@@ -1,0 +1,334 @@
+{
+  "course": "从零构建可观测性",
+  "triage_date": "2026-08-31",
+  "total_lectures": 4,
+  "gold_count": 0,
+  "silver_count": 4,
+  "copper_count": 0,
+  "iron_count": 0,
+  "overall_snr": 3.6,
+  "data_audit": {
+    "total_claims": 26,
+    "verified": 15,
+    "partial": 5,
+    "unverifiable": 6,
+    "suspicious": 0,
+    "summary": "26 个量化声明中 15 个可独立验证（58%，多为 SRE 标准概念、追踪历史事件与可复算的算术推导），5 个部分验证（如 Kalman 1960、TSDB 默认 retention、Datadog 2019 时间表述），6 个无法验证（多为转述'官方数据'的压缩率/纳秒级解压性能数字、Grafana 大会规模数字、BCC 贡献者数），0 个可疑。课程数据整体可信、无编造迹象；性能类数字（压缩 12 倍、10-43ns 解压、TB/PB 日处理量）应标注'据讲师称'后再引用。"
+  },
+  "entries": [
+    {
+      "lecture_id": "01",
+      "lecture_title": "从零构建可观测性（一）",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "讲了什么：可观测性心智模型（控制理论起源、监控/APM/可观测性演进、三大支柱、Google 黄金指标、SLI/SLO/SLA）+ 日志支柱 Loki 全链路（EFK/ELK 对比、安装、LogQL 语法、Promtail 采集原理、轻量原理、对象存储/多租户/读写分离生产实践）+ Prometheus 入门（K8S 指标采集链路、Operator CRD 体系、kube-prometheus-stack、黑盒/白盒监控、四种指标类型、ServiceMonitor 写法、PromQL 与 dashboard）。论证结构：概念铺垫→选型对比→实操 demo→原理揭示→生产实践。",
+      "adler_q2": "解决什么问题：中小团队如何选型（Loki vs ELK）并落地日志与指标监控。已解决：选型逻辑（为什么 Loki 轻量——不索引全文）、LogQL 完整查询体系、黑盒/白盒监控两条路径、ServiceMonitor/PodMonitor 写法与默认 relabeling、P95/QPS 查询语句。未解决：Loki 大规模存储细节（TSDB 索引只提一句）、日志级告警只一句带过；告警与弹性伸缩整体留到下一讲。",
+      "adler_q3": "说得有道理吗：整体成立，无重大知识错误。知识不足：Loki vs ES 对比只讲 Loki 优势，未展开 ELK 全文检索在复杂查询场景下的优势与迁移代价；分析不完整：'Loki 一天 TB/PB 级'引用无出处；demo 与答疑约占 40% 时长稀释密度。",
+      "adler_q4": "与我何干：能立刻照做——helm 装 Loki 查日志、写 LogQL 过滤字段与求 TP99、集成 client SDK 输出指标、写 ServiceMonitor 抓业务指标、算 QPS/P95 建大盘；并获得'通过系统输出判断系统状态'的可迁移思维方式。",
+      "critical_notes": "本讲是课程的'地基'：概念部分为教科书级整理（三大支柱/黄金指标/SLI-SLO-SLA 均可追溯到 Google SRE Book），实操部分为优秀教程（LogQL 与 ServiceMonitor 写法可直接抄）。最大加分点是 Loki 轻量原理的机制解释（只索引时间戳+标签而非全文），这是多数教程不讲透的。扣分点：2h48m 内安装演示、等待、答疑占时过长，ASR 转录进一步放大阅读成本。无原创框架，属银矿中上。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "Loki 轻量原理：不索引日志文本，只索引时间戳+标签",
+          "source_text": "Loki 最大的区别点是它不索引日志文本，只索引两部分内容：时间戳和 Prometheus 格式类似的标签（app/container/job 等）。日志行内容不索引，但前面的日志流选择器已经把数据量缩小到足够精确，再在已定位的日志流内做过滤，性能和存储都得到保证。",
+          "paraphrase": "Loki 用'粗粒度定位（标签+时间）→ 细粒度过滤（行内）'替代 ES 的全文本索引，这是它轻量、低成本的核心机制。",
+          "writing_angle": "comparison",
+          "related_lectures": ["03"],
+          "verification": {
+            "status": "✅",
+            "source_url": "Grafana Loki 官方文档（log store / index 设计）",
+            "notes": "Loki 官方设计即'只索引标签与时间戳，内容靠 LogQL 流内过滤'，概念可查证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "SLI / SLO / SLA 三层服务质量模型",
+          "source_text": "SLI 是定义服务质量的关键指标（错误率、吞吐、延迟、可用性）；SLO 是基于 SLI 的量化承诺（如 P95 延迟 300ms 以内、可用性 99.9%）；SLA 是不满足 SLO 时的赔偿协议。DevOps/SRE 重点掌握 SLI 和 SLO。",
+          "paraphrase": "先定关键指标（SLI），再定量化承诺（SLO），SLA 只是商务赔偿条款——对内部团队，SLO 是真正要背的指标。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Google SRE Book（SLI/SLO/SLA 章节）",
+            "notes": "SRE 标准概念，可交叉验证"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "LogQL 查询语法：日志流选择器 + 管道操作符",
+          "source_text": "LogQL 由两部分组成：大括号内的日志流选择器（app/container 等标签），以及管道操作符（|= 包含、!= 不包含、|~ 正则）。进阶：logfmt/json 格式化后可对字段做数值比较（如 duration>50ms）、line format 精简输出、over_time 从日志算 TP99、label format/drop/keep 管理标签。",
+          "paraphrase": "LogQL = 先选日志流（标签），再在流内过滤与运算（关键字/正则/字段比较/聚合），与 PromQL 同构，学会一个另一个也通了。",
+          "writing_angle": "tutorial",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Grafana Loki LogQL 官方文档",
+            "notes": "语法与函数均为官方文档内容"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "监控/APM/可观测性三者演进：从单机到分布式",
+          "source_text": "监控收集展示指标+简单告警；APM 基于 SDK/agent 做侵入式代码级性能分析（如 New Relic）；可观测性是监控与 APM 的下一阶段——涵盖所有了解系统状态的工具与实践，核心是适应分布式微服务架构（含分布式追踪）。",
+          "paraphrase": "三者的本质差异在'面向的系统形态'：单机→单体应用→分布式，复杂度逐级抬升，工具也随之换代。",
+          "writing_angle": "methodology",
+          "related_lectures": ["03", "04"],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源（业界通行概念梳理）",
+            "notes": "为讲师整理，与主流定义一致但非引述单一权威来源"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "从零构建可观测性（二）",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲了什么：基于业务指标的自定义弹性伸缩（HPA 原理、metrics-server 的 APIService 注册机制、prometheus-adapter、KEDA 及 ScaleObject、cron/MQ scaler、多 scaler 混用取最大值）+ 告警体系（PrometheusRule CRD、AlertManager 路由/抑制/静音、告警疲劳治理、告警分层、prometheus-alert webhook 接飞书）。核心主张：业务指标比 CPU/内存更快反映流量变化，是更优的伸缩信号。",
+      "adler_q2": "解决什么问题：业务指标怎么驱动 K8S 伸缩；告警怎么配、怎么发、怎么不淹没真告警。已解决：两条伸缩路径完整 demo（adapter 复杂配置 vs KEDA 单条 PromQL）、自定义指标 HPA 的 autoscaling/v2 写法、PrometheusRule 告警规则、飞书多渠道通知打通。未解决：prometheus-adapter 的 query 表达式细节未讲透（讲师自己也承认复杂）、prometheus-alert 模板定制未展开。",
+      "adler_q3": "说得有道理吗：整体成立且实战性最强。知识不足：KEDA 内部机制（controller/scale loop）讲得浅，'HPA 每 15 秒查一次'未给出处；分析不完整：直方图 bucket 陷阱只给了'图变直线'的判别信号，未给 bucket 设计方法论（如指数分布档位）；无反面案例：未讲 KEDA 在超大流量/短突发下的坑。",
+      "adler_q4": "与我何干：能立刻配置 KEDA ScaleObject 实现 QPS/队列长度驱动的伸缩；能写 PrometheusRule 并接飞书告警；能按'pod→业务/node→DevOps/集群→Infra'重构告警路由；掌握'分位数图变直线=查 bucket'的排障直觉。",
+      "critical_notes": "全课实战密度最高的一讲。直方图 bucket 陷阱（分位数估算失真、图为直线）和直方图 vs Summary 的维度化对比（聚合能力/客户端服务端开销/误差）是教科书里少见的实操级洞察；KEDA 用一条 PromQL 对比 adapter 的复杂配置，选型判断清晰；告警疲劳三参数与告警分层是可直接迁移的 SRE 实践。扣分点：HPA 原理与 KEDA 组件内部原理偏浅，无失败案例。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "直方图 bucket 配置陷阱：分位数图为直线 = bucket 不合理",
+          "source_text": "如果 bucket 设置与实际值分布差距太大（如实际延迟 100-200ms，bucket 却设 100-250ms），直方图估算分位数会超出实际值范围。判别信号：查询分位数趋势图几乎是一条直线时，大概率是 bucket 配置有问题。",
+          "paraphrase": "直方图分位数是估算值，精度受 bucket 档位约束；'分位数曲线不动'是 bucket 失配的典型症状，需自定义指数型 bucket。",
+          "writing_angle": "opinion",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Prometheus 文档（Histogram bucket 与 quantile 估算）",
+            "notes": "数学上可验证：线性插值估算受桶边界约束"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "直方图 vs Summary 选型决策",
+          "source_text": "需要聚合选直方图（服务端可 sum 跨实例），了解分布范围选直方图（便于配 bucket）；分布完全未知且需要非常精确的分位数时选 Summary。直方图客户端开销低（本质是 counter），Summary 客户端计算分位数+滑动窗口、开销高但可更准。",
+          "paraphrase": "聚合需求与精度需求决定选型：要跨实例聚合或可预估分布 → 直方图；未知分布+绝对精确 → Summary。",
+          "writing_angle": "comparison",
+          "related_lectures": ["01"],
+          "verification": {
+            "status": "✅",
+            "source_url": "Prometheus 官方文档（Histogram vs Summary）",
+            "notes": "官方对比表内容，讲师转述完整"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "KEDA ScaleObject：一条 PromQL 替代 adapter 复杂配置",
+          "source_text": "KEDA 注册 external.metrics.k8s.io group，ScaleObject CRD 定义触发器（prometheus/MQ/cron 等几十种）与工作负载关系，自动生成 HPA。trigger 只需写 prometheus 地址、target 值、指标名和一条 PromQL（如 sum(rate(response status=500))>10），比 prometheus-adapter 的 series/labelMatches/queries 表达式简单得多。",
+          "paraphrase": "KEDA 把'外部指标→HPA'抽象成声明式 ScaleObject，Prometheus 触发只需一条 PromQL；生产环境优先 KEDA 而非 adapter。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["01"],
+          "verification": {
+            "status": "✅",
+            "source_url": "KEDA 官方文档（ScaleObject/Prometheus scaler）",
+            "notes": "KEDA 开源项目官方机制"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "告警疲劳治理三参数：group_wait / group_interval / repeat_interval",
+          "source_text": "group_wait 等待多久为同一组收集更多告警再发送（默认约 30s 可调高）；group_interval 同组发送新告警的间隔（默认 5 分钟）；repeat_interval 重复告警发送间隔（建议 4 小时以上）。过短的参数会产生告警疲劳，淹没真告警。",
+          "paraphrase": "告警频率三参数是疲劳治理的旋钮：组内收敛、组间节流、重复降噪，生产默认值要调长。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "Prometheus Alertmanager 官方配置文档",
+            "notes": "三个参数均为 Alertmanager 官方配置项"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "告警分层组织：pod 层→业务团队，node 层→DevOps/SRE，集群层→Infra/运维",
+          "source_text": "告警要发给真正关心的人：pod 级（业务应用）告警给业务团队；node 级（节点挂了影响容量）告警给 DevOps/SRE；集群级（大故障/机房）告警给运维或 Infra。分组按命名空间/集群/数据中心，不按实例（pod）。",
+          "paraphrase": "告警分层的本质是'按影响半径分配接收人'，并配合 Alertmanager 路由树实现组织级通知体系。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "讲师实践总结，与 SRE 社区通行做法一致但无单一权威出处"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "可观测性大规模生产实践",
+      "snr_score": 3.9,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲了什么：Prometheus 大规模生产三大挑战（长期存储/高可用去重/global view）与解决方案对比（M3DB/Cortex/Thanos），Thanos 全组件架构（sidecar/query/store gateway/compact/ruler）、下采样机制与量化分析、查询分片优化、多集群 sidecar 模式与 global view 落地；后半讲分布式追踪历史（X-Trace→Dapper→Zipkin→SkyWalking→Jaeger→OTel）与 OpenTelemetry 三合一原理。核心主张：远程存储让 Prometheus 接近无状态，对象存储+冷热分层+下采样解决无限存储与查询性能。",
+      "adler_q2": "解决什么问题：大指标量怎么存（对象存储）、怎么查（下采样/分片）、怎么多集群统一看（global view）。已解决：Thanos 全组件架构与部署步骤、下采样量化（30 天 17 万样本→下采样后 300ms/9MB）、store gateway 时间/标签分片、多集群 external label + cluster variable 方案。未解决：receiver 模式细节与 ruler 告警只给链接；'压缩 12 倍''10-43ns 解压'等性能数字转述无出处。",
+      "adler_q3": "说得有道理吗：全课最严密的一讲，成立。知识不足：性能数字（压缩率、纳秒解压、TB/PB）为转述，应降级引用；分析不完整：多集群方案隐含'观测集群与生产集群网络互通'前提，讲师提及但未展开网络隔离下的替代方案细节；历史通史（约 30 分钟）与 Q&A 占时较长。",
+      "adler_q4": "与我何干：能设计大规模 Prometheus 存储架构（2 小时 TSDB 热窗口 + 对象存储冷数据 + 下采样保留策略）；能定量解释'一年查询为什么爆炸'避免选型踩坑；能搭建多集群 global view 一套看所有集群；理解'下采样是空间换时间而非省存储'的取舍。",
+      "critical_notes": "本讲为全课价值顶点，最接近金矿。独创性在两点：一是把下采样做了可复算的量化分析（17 万样本/2G/1 分 20 秒 → 300ms/9MB，且点出 30 天与 1 年查询量相同源于 5 分钟/1 小时块与月/年跨度同为 12 倍），二是多集群 global view 给出完整可复现配方（external label + thanos query 多 endpoint + cluster variable）。Thanos 组件与 Prometheus 的'微服务版'类比也颇精妙。扣分：部分性能数字转述无出处，历史通史稀释密度，无失败案例。金矿标准要求'可验证的原创贡献'，本讲为'原创性的整理与合成'，故定格银矿顶端 3.9。",
+      "extractions": [
+        {
+          "type": "data_point",
+          "name": "10 亿级指标查询的量化爆炸：30 天 17 万样本、1 年 2G 数据/1 分 20 秒解压",
+          "source_text": "以 10 秒抓取间隔为例：30 天 = 17 万样本点；即使 step 降分辨率，存储层处理量不变，block 压缩约 12 倍、解压约 10-43ns/样本。查 1 年指标要解压约 2G 数据、约 1 分 20 秒，直接让 Prometheus 查询爆炸。",
+          "paraphrase": "查询爆炸的根源在存储层必须解压全量样本，分辨率降级只影响展示不影响存储读取量。",
+          "writing_angle": "opinion",
+          "related_lectures": [],
+          "verification": {
+            "status": "✅",
+            "source_url": "算术可复算（10s×60×60×24×30=17.28 万）；压缩率/纳秒数字为讲师转述",
+            "notes": "17 万样本为可验证算术；'压缩 12 倍''10-43ns'标注据讲师称（❓）"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "下采样是空间换时间，不是省存储",
+          "source_text": "下采样把原始块变为 5 分钟块与 1 小时块，存储总量反而更大，但查询时自动按时间范围选合适分辨率的块。30 天用 5 分钟块、1 年用 1 小时块，因 5 分钟/1 小时 = 12 倍、月/年 = 12 倍，两者处理数据量相同（约 300ms、9MB）。",
+          "paraphrase": "下采样牺牲存储换取查询速度，且 12 倍分辨率与 12 倍时间跨度匹配，使不同时间尺度的查询成本恒定。",
+          "writing_angle": "methodology",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Thanos 官方 downsampling 文档（机制可查证）；具体数值为讲师推算",
+            "notes": "机制正确；300ms/9MB 为基于假设的推算，未给完整计算式"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "Thanos = Prometheus 的微服务版本（组件一一类比）",
+          "source_text": "Thanos 各组件可类比 Prometheus 内部模块：query≈query engine、sidecar≈本地存储对接、store gateway≈对象存储读取、compact≈压缩模块、ruler≈告警规则。存储层换成对象存储后，Prometheus 接近无状态。",
+          "paraphrase": "把单体内聚的 Prometheus 拆成可独立伸缩的组件，是理解 Thanos 架构的最快路径。",
+          "writing_angle": "methodology",
+          "related_lectures": ["01"],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Thanos 官方组件文档",
+            "notes": "类比为讲师教学归纳，组件功能可查证"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "多集群 global view：external label + thanos query 多 endpoint + cluster variable",
+          "source_text": "被观测集群安装 kube-prometheus-stack 时配置 external label cluster=xxx 并禁用 Grafana，仅保留 Prometheus+Thanos sidecar；观测集群的 thanos query 增加被观测集群 sidecar 的公网/VPC IP endpoint；两集群 sidecar 都将 2 小时外 block 上传同一对象存储。Grafana dashboard 启用内置 cluster variable 后，一套面板可切换查看所有集群。",
+          "paraphrase": "用 external label 给每集群打标，thanos query fan-out 各集群 sidecar + 统一对象存储，Grafana 一个 cluster 变量实现 global view。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["01", "04"],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Thanos 多集群文档（sidecar 模式）+ 讲师实验环境",
+            "notes": "方案可复现但依赖实验环境（K3S+COS），生产需按网络互通条件调整"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "分布式追踪历史脉络（2007-2021）",
+          "source_text": "2007 X-Trace（伯克利）→ 2010 Google Dapper 论文 → 2012 Zipkin（Twitter，B3 header）→ 2015 SkyWalking（Apache 顶级项目）与 OpenTracing（CNCF）→ 2017 Jaeger（Uber，内部 4000+ 微服务）→ 2019 OpenTracing+OpenCensus 合并为 OpenTelemetry → 2020 Grafana Tempo → 2021 SigNoz（Datadog 开源替代）。",
+          "paraphrase": "分布式追踪二十余年几乎都在吃 Dapper 论文的老本，2019 年后行业收敛到 OpenTelemetry 标准。",
+          "writing_angle": "case_study",
+          "related_lectures": ["04"],
+          "verification": {
+            "status": "✅",
+            "source_url": "各项目官网/CNCF 记录（X-Trace/Dapper/Zipkin/SkyWalking/Jaeger/OTel/Tempo/SigNoz）",
+            "notes": "历史事件与年份均可公开查证；Datadog 2019 表述（⚠️）指具体产品线，公司 APM 早于该年"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "OpenTelemetry 概述与用法",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲了什么：OTel 实战——SDK 集成三件套（trace 经 gRPC 发 Tempo、log 格式带 trace_id/span_id 由 instrument 自动填充、metric 输出携带 #trace_id OpenMetrics 注释）+ Grafana 三数据源打通（Loki derived field 正则提取 trace_id、Prometheus exemplar 显示、Tempo traces-to-log 用 APP 变量拼 logQL）+ 三个查询实验（log→trace、metric→trace、trace→log）+ 自动注入方式（环境变量+opentelemetry-instrument）与 EBPF 对比。核心主张：OTel 是标准不是实现，价值在于用 trace ID 把日志/指标/追踪串成一体闭环排查。",
+      "adler_q2": "解决什么问题：三界打通怎么落地、SDK 与自动注入怎么选。已解决：完整可复现的三数据源配置与三个查询实验；SDK（定制性强）vs 自动注入（零代码但指标无法注入）的取舍；trace ID 透传机制（HTTP header/RPC metadata）。未解决：OTel 大规模落地成本只做了定性收益评估；EBPF 生产级实践未展开；trace ID 丢失的排障只给方向无诊断清单。",
+      "adler_q3": "说得有道理吗：成立。知识不足：自动注入为何无法覆盖指标的机制解释较浅；分析不完整：未讲 OTel 高 QPS 下的采样（sampling）策略这一关键生产话题；无反面案例：未讲三合一方案在纯日志/纯指标团队中的过渡路径。",
+      "adler_q4": "与我何干：能照做配置出 log/metric/trace 互跳的可观测性面板；能给业务讲清 trace ID 透传与 SDK 集成要点；能判断自家该用 SDK 还是自动注入；理解 EBPF 的能力边界（无分布式追踪）。",
+      "critical_notes": "本讲把 OTel'三合一'从口号落成可复现配置，是全课最稀缺的资产：Loki derived field（正则提 trace_id）+ Prometheus exemplar + Tempo traces-to-log（APP 变量）三处配置与三个查询实验构成完整闭环，任何团队可照搬。SDK vs 自动注入对比表清晰（源码改动/定制性/启动器）。扣分：环境搭建演示占时较长，自动注入与 EBPF 部分偏浅，无采样策略等生产话题。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "Grafana 三数据源 trace ID 互跳配置（loki derived field + prometheus exemplar + tempo traces-to-log）",
+          "source_text": "Loki data source 添加派生字段：用正则从日志提取 trace_id，并开启 link 指向 Tempo；Prometheus data source 开启 exemplar 显示并 link 到 Tempo（label 名 trace_id）；Tempo data source 配置 traces-to-log：关联 Loki，用业务侧输出的 APP 属性拼 logQL（APP=xxx）实现反向跳转。",
+          "paraphrase": "三处配置的本质是同一个套路：告诉每个数据源'trace ID 怎么取、怎么去 Tempo 查'，即可实现 log/metric/trace 双向互跳。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["01", "03"],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Grafana 官方文档（Loki derived fields / Prometheus exemplars / Tempo traces to logs）",
+            "notes": "三项均为 Grafana 官方功能，配置路径可复现；讲师演示环境为 K3S+COS"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "OTel 三合一原理：用 trace ID 关联 log/metric/trace",
+          "source_text": "业务集成 OTel SDK 后：日志输出带 trace_id/span_id；指标输出以 OpenMetrics 注释携带 #trace_id（Prometheus 会识别存储）；trace 数据本身天然含 trace_id。三者以同一 trace ID 为键，即可在 Grafana 中任意方向跳转排查。",
+          "paraphrase": "三合一的实现不靠 OTel 存储任何东西，而是靠统一携带 trace ID 这个'关联键'，存储仍由 Loki/Prometheus/Tempo 各司其职。",
+          "writing_angle": "methodology",
+          "related_lectures": ["03"],
+          "verification": {
+            "status": "✅",
+            "source_url": "OpenTelemetry 官方文档（trace context 传播与 OpenMetrics exemplar 规范）",
+            "notes": "trace 上下文传播与 exemplar 均为公开规范"
+          }
+        },
+        {
+          "type": "comparison",
+          "name": "SDK 集成 vs 自动注入（opentelemetry-instrument）",
+          "source_text": "SDK 集成：需改业务源码，定制性强（自定义日志格式、指标、span 属性），不依赖启动器；自动注入：代码零改动，通过环境变量（OTEL_SERVICE_NAME/OTLP endpoint/APP）加 opentelemetry-instrument 启动器实现，支持 .NET/Java/JS/PHP/Python 五种语言，但指标无法自动注入、定制性差。",
+          "paraphrase": "自动注入省代码但止步于 trace+log，要完整三合一必须回落到 SDK；小团队先用自动注入起步，指标诉求上来再补 SDK。",
+          "writing_angle": "comparison",
+          "related_lectures": ["03"],
+          "verification": {
+            "status": "✅",
+            "source_url": "OpenTelemetry 官方文档（auto-instrumentation 支持语言）",
+            "notes": "五语言支持与限制可查证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "EBPF 无法实现分布式追踪，与 OTel 是互补关系",
+          "source_text": "EBPF 在内核级 hook system call，可无侵入采集服务拓扑、网络指标、IO 与安全事件；但分布式追踪（trace）目前 EBPF 无法实现，仍需 OTel。实践中二者常结合：内核/网络级数据用 EBPF，应用级 trace/metric 用 OTel。",
+          "paraphrase": "EBPF 强在内核视角（网络/IO/安全），OTel 强在应用视角（trace/业务指标），各有边界、互补使用。",
+          "writing_angle": "opinion",
+          "related_lectures": ["03"],
+          "verification": {
+            "status": "✅",
+            "source_url": "EBPF 社区与 OTel 官方定位",
+            "notes": "业界共识：EBPF 无分布式追踪能力，二者互补"
+          }
+        }
+      ]
+    }
+  ]
+}

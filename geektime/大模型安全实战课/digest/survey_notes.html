@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：大模型安全实战课</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">大模型安全实战课</a><a href="README.html">《大模型安全实战课》消化索引（digest README）</a></div>
+<h1>课程通览：大模型安全实战课</h1>
+<h2>基本信息</h2>
+<ul><li>模块数：6（开篇词 / 启航篇 / 风险篇 / 防御篇 / 企业篇 / 结束语&amp;结课测试）</li><li>总讲数：38（其中正文 33 讲 + 开篇词 3 讲 + 结束语/测试 2 讲）</li><li>总时长：约 480 分钟（chapters.json 统计，音频 37 个）</li><li>讲师：赵帅（前极氪汽车资深算法专家，11 年工程经验的 AI 算法工程师，自研车载助手大模型 0→1 部署）</li><li>课程定位：面向企业技术人员/安全负责人的大模型安全&quot;全景式扫盲+防线搭建&quot;实战课，覆盖攻击面识别、防御机制、行业落地与评估体系</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong></li></ul>
+<p>课程以&quot;大模型安全=新基本功&quot;为总纲，按 启航（安全认知+模型机制+风险类型+安全架构）→ 风险（提示注入/投毒/逆向/隐私/有害信息/DoS/绕过）→ 防御（输入过滤/输出把关/伦理治理/对齐技术/数据生命周期/安全运维/红队审计）→ 企业（聊天/代码/搜索/教育/行业/可解释性/多模态/联邦/评估/演练/过滤器/加固/趋势）四段式展开，核心主张是：大模型本身没有&quot;边界感&quot;，安全必须通过系统架构（输入-上下文-输出三道门）+ 行为对齐（RLHF/RLAIF/CA）+ 数据治理（生命周期管理）+ 度量评估（五维评估体系）共同构建，且是随模型能力演化的动态博弈。</p>
+<ul><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong></li><li>已解决：攻击面系统化识别（8类风险+提示注入攻防+投毒后门+多模态绕过，均给出分类与检测方法）；防御机制从输入/上下文/输出三层搭建（过滤、隔离、审查、拒答模板）；对齐技术原理与选型（RLHF/RLAIF/CA 对比与落地要点）；数据全生命周期安全框架；安全评估体系与基准清单；若干可运行代码（AST 代码审查、FGSM 攻击、Aho-Corasick/FAISS 过滤器）。</li><li>部分解决：企业级落地的&quot;量化效果&quot;缺乏数据支撑（多处&quot;90%&quot;&quot;10GB&quot;等为讲师经验值）；模型水印等前沿技术停留在概念+玩具代码层。</li><li>未解决/回避：没有给出任何真实安全事件的第一手完整数据（全部为转述或内部演练）；对&quot;国产模型水印方案缺失&quot;这一现实仅作提示未给替代路径；联邦学习/可解释性等话题深度不足，点到为止。</li></ul>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>开篇词</td><td>3</td><td>安全理念、7大误区、自测题、安全建设三步走</td><td>低</td></tr><tr><td>启航篇</td><td>4</td><td>安全认知、模型机制、8类风险、三道门架构</td><td>中</td></tr><tr><td>风险篇</td><td>8</td><td>提示注入、投毒后门、模型盗窃、隐私、有害信息、DoS、绕过</td><td>中</td></tr><tr><td>防御篇</td><td>8</td><td>输入过滤、输出把关、伦理治理、对齐技术、数据生命周期、SRE、红队</td><td>高</td></tr><tr><td>企业篇</td><td>13</td><td>场景安全、可解释性、多模态、联邦学习、评估、演练、过滤器、加固、趋势</td><td>高</td></tr><tr><td>结束语 &amp; 结课测试</td><td>2</td><td>结课致辞、20题测试</td><td>低</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>开篇词</td><td>大模型安全不是黑科技，是新的基本功</td><td>安全闭环、动态博弈</td><td>⭐</td><td>动员性内容，理念概述</td></tr><tr><td>课前热身</td><td>10道题帮你测试 AI &quot;安全分&quot;</td><td>自测题</td><td>⭐</td><td>纯热身</td></tr><tr><td>直播回放</td><td>不想大模型&quot;裸奔&quot;？安全建设三步走</td><td>7大误区、三维度审视</td><td>⭐⭐</td><td>误区清单有组织价值，口语化</td></tr><tr><td>01</td><td>初识安全：如何理解大模型安全？</td><td>3H、DAN、Gemini、输入-中间-输出</td><td>⭐⭐</td><td>案例可验证但常识复述</td></tr><tr><td>02</td><td>模型机制：运行逻辑全景图</td><td>上下文、接口校验</td><td>⭐</td><td>教科书式机制介绍</td></tr><tr><td>03</td><td>风险类型：8类高频威胁</td><td>8类风险清单</td><td>⭐</td><td>标准分类复述</td></tr><tr><td>04</td><td>安全架构：有边界的大模型系统</td><td>三道门、上下文沙箱</td><td>⭐⭐</td><td>框架清晰、有政务案例</td></tr><tr><td>05</td><td>提示注入攻防战（上）</td><td>五式注入、Prompt泄露</td><td>⭐⭐</td><td>攻击方式系统盘点</td></tr><tr><td>06</td><td>提示注入攻防战（下）</td><td>角色冻结、输出模糊扫描、泄露三连问</td><td>⭐⭐⭐</td><td>演练具体可操作，数据存疑</td></tr><tr><td>07</td><td>微调数据&quot;投毒&quot;与模型&quot;后门&quot;</td><td>污染输出/行为、Zeta Flag、诱导触发测试</td><td>⭐⭐⭐</td><td>分类清晰，检测方法可落地</td></tr><tr><td>08</td><td>模型&quot;盗窃&quot;与逆向算法攻击</td><td>黑箱/白盒、模仿窃取</td><td>⭐</td><td>概述，深度浅</td></tr><tr><td>09</td><td>敏感信息防范</td><td>PII、Presidio/Faker、令牌化</td><td>⭐⭐</td><td>工具教程级</td></tr><tr><td>10</td><td>有害信息生成与公共信息风险</td><td>上下文风险、敏感度评分</td><td>⭐⭐</td><td>概念有启发，策略泛化</td></tr><tr><td>11</td><td>拒绝服务攻击</td><td>Prompt DoS、Token陷阱</td><td>⭐⭐</td><td>诱导方式分类可操作</td></tr><tr><td>12</td><td>绕过安全防护的技术与挑战</td><td>六种绕过、规则迭代盲区</td><td>⭐⭐</td><td>系统梳理有价值</td></tr><tr><td>13</td><td>提示词过滤净化</td><td>提示残影、双层拦截、结构化包装</td><td>⭐⭐⭐</td><td>&quot;提示残影&quot;概念新，工具引用足</td></tr><tr><td>14</td><td>输出内容把关</td><td>审查机制进化史、辅助判别模型</td><td>⭐⭐</td><td>演进梳理清晰</td></tr><tr><td>15</td><td>黄赌毒等内容治理</td><td>伦理边界、人体艺术案例</td><td>⭐</td><td>泛谈，决策机制不具体</td></tr><tr><td>16</td><td>舆情与品牌防护</td><td>内部文档泄露案例、信息分级</td><td>⭐⭐</td><td>真实案例有细节</td></tr><tr><td>17</td><td>对齐技术：RLHF/RLAIF/CA</td><td>人教/模型教/规则教、实测分类、3H</td><td>⭐⭐⭐</td><td>全课最佳，可复现观察+反面对话</td></tr><tr><td>18</td><td>数据生命周期安全</td><td>五阶段、行位等价伪造数据</td><td>⭐⭐</td><td>框架实用，概念有技术含量</td></tr><tr><td>19</td><td>安全运维：大模型SRE体系</td><td>ELK/ClickHouse、回滚</td><td>⭐⭐</td><td>组织尚可，无原创</td></tr><tr><td>20</td><td>红队测试与安全审计</td><td>红队流程、区块链存证、NIST</td><td>⭐⭐</td><td>取证链条完整</td></tr><tr><td>21</td><td>聊天助手越狱防护</td><td>越狱本质、高发场景</td><td>⭐</td><td>与风险篇重复</td></tr><tr><td>22</td><td>编程助手防代码注入</td><td>AST分析、沙箱执行、可信标签</td><td>⭐⭐</td><td>少有的工程方案课</td></tr><tr><td>23</td><td>搜索问答识别幻觉</td><td>伪引用=信源伪造、RAG</td><td>⭐⭐</td><td>洞察有价值</td></tr><tr><td>24</td><td>儿童保护与内容审查</td><td>意图识别、安全人格微调</td><td>⭐</td><td>合规讨论，技术浅</td></tr><tr><td>25</td><td>金融医疗政务部署要点</td><td>最小可访问、国密合规</td><td>⭐⭐</td><td>行业基线差异化</td></tr><tr><td>26</td><td>可解释性与审计</td><td>RAG出处、水印分类、DLP</td><td>⭐⭐</td><td>引用充分，代码玩具级</td></tr><tr><td>27</td><td>融合模型的安全新维度</td><td>图文绕过、FGSM、端云协同</td><td>⭐⭐⭐</td><td>论文引用足，防御体系具体</td></tr><tr><td>28</td><td>联邦学习与分布式安全</td><td>标签翻转、TEE/SMPC</td><td>⭐</td><td>概述</td></tr><tr><td>29</td><td>安全评估体系</td><td>五维指标、四模块实验室、基准清单</td><td>⭐⭐⭐</td><td>全课整理密度最高，可验证</td></tr><tr><td>30</td><td>模拟提示注入与防御演练</td><td>三道防线演练</td><td>⭐</td><td>演示为主</td></tr><tr><td>31</td><td>构建简易版安全过滤器</td><td>Aho-Corasick/FAISS/上下文组合</td><td>⭐⭐</td><td>可运行代码，教程级</td></tr><tr><td>32</td><td>企业级安全应用加固案例</td><td>训练溯源、数据水印、三事件</td><td>⭐⭐</td><td>案例具体但新增量有限</td></tr><tr><td>33</td><td>大模型安全的未来趋势</td><td>行为风险、可信红线</td><td>⭐⭐</td><td>前瞻展望</td></tr><tr><td>结束语</td><td>AI浪潮波澜四起</td><td>安全责任感</td><td>⭐</td><td>结课致辞</td></tr><tr><td>结课测试</td><td>期待你的满分答卷</td><td>20题测试</td><td>⭐</td><td>纯测试入口</td></tr></table>
+<h2>整体印象</h2>
+<ul><li>课程主线：从&quot;风险认知 → 攻防拆解 → 防线构建 → 评估度量 → 行业落地&quot;的安全闭环，主张&quot;安全不是靠训好模型，而是靠管住系统&quot;。</li><li>最大亮点：L17 对齐技术（实测模型派系分类+三大对齐机制对比）、L29 安全评估体系（五维+四模块+权威基准）、L27 多模态攻防（论文引用充分+端云协同防御）、L07 投毒后门（分类+检测+修复全链路）。</li><li>明显水份：开篇词/热身/直播回放/结束语/结课测试 5 讲纯动员；L02 模型机制、L03 8类风险、L08 逆向、L28 联邦学习、L24 儿童保护为教科书级复述；L15 黄赌毒伦理泛谈；多讲存在&quot;讲师经验值数据&quot;（90%、10GB 等）无独立来源。</li><li>独特之处：少有的以&quot;企业视角&quot;系统组织的大模型安全课程，对&quot;提示残影&quot;&quot;行位等价伪造数据&quot;&quot;语境角色切换式越权&quot;等概念有细分贡献；大量可验证链接（arXiv、OWASP、OpenAI 系统卡、GitHub 工具）。</li><li><strong>形式/内容判断</strong>：这门课更多是在&quot;教思维方式 + 堆砌事实知识&quot;之间，防御篇/企业篇偏&quot;建立系统性安全架构思维&quot;，风险篇偏&quot;事实知识清单&quot;。整体是高质量的&quot;知识整理型&quot;课程，而非&quot;原创研究型&quot;；真正有独立洞见的讲约 6-7 篇（06/07/13/17/26/27/29）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

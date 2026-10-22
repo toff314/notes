@@ -1,0 +1,112 @@
+{
+  "type": "course_review",
+  "course": "Docker 与 Kubernetes 核心技术深入解析",
+  "title_idea": "我在这门 K8s 原理课里捡到的 6 个生产级教训：etcd 假健康、重试风暴、SIGTERM 被吞……",
+  "data_credibility_summary": {
+    "total_claims": 25,
+    "verified_pct": "32%",
+    "partial_pct": "16%",
+    "unverifiable_pct": "52%",
+    "suspicious_pct": "0%"
+  },
+  "narrative_structure": {
+    "acts": [
+      {
+        "act_name": "第一幕：容器地基与架构哲学（L01-L11：Docker 核心技术、K8s 架构原则与对象设计）",
+        "act_summary": "从单体→SOA→微服务演进讲起，用 Borg 的集群管理思想（Cell/Job/Task、在线离线混布、WorstFit/BestFit）解释 Kubernetes 的 DNA，再用'电视遥控器 vs 空调遥控器'讲透声明式系统。技术上把 Docker 三大内核技术（Namespace/cgroups/OverlayFS）逐个拆开：CFS vruntime 公式、quota/period 换算核数、CPU 压制实验（200%→10%）、写时复制与分层共享，并演示 K8s 控制面组件与 Deployment→RS→Pod 联动链路。这一幕是全书'为什么这样设计'的论证起点。",
+        "highlights": [
+          "Borg 混布量化数据（98%/95%）可溯源至 Google Borg 论文（L07）",
+          "CFS quota/period=核数与 CPU 压制实验可复现验证（L03）",
+          "命令式/声明式遥控器类比与声明式四原则（幂等/对象组合/复杂度线性/避免简单封装）提炼出色（L07/L09）",
+          "Docker 创举=分层文件系统、控制面/数据面分离的架构演进洞见（L04）"
+        ],
+        "criticisms": [
+          "L01/L02 为常识性架构演进与命令演示，信息密度低（铜矿）",
+          "『容器性能与主机相差不超过 1%』等量化声明无测试出处（❓）",
+          "L10/L11 对象模型与对象概览高度依赖官方文档复述"
+        ],
+        "data_credibility_flags": [
+          "L02 容器性能≈裸金属（相差不超过1%）无出处 (❓)",
+          "L07 Borg 混布数据有论文出处可验证 (✅)"
+        ]
+      },
+      {
+        "act_name": "第二幕：etcd 与 Raft——全课生产价值最高的模块（L12-L17）",
+        "act_summary": "把分布式一致性从原理（Raft 选主+日志复制、网络分区、Learner）讲到工程实现（WAL、revision/MVCC、match index），再进入生产运维：mTLS 集群构建、snapshot 备份恢复、磁盘写满 alarm 处理、operator/Helm 管理方式、堆叠 vs 外部部署、3/5 节点权衡。两讲金矿贡献了全课最稀缺的内容：gRPC 连接复用+list 穿透导致 5000 节点故障的完整因果链，以及 FMA 故障注入发现的'API Server 假健康→40% 节点被误驱逐'教科书级案例。",
+        "highlights": [
+          "list 不带 resourceVersion 穿透堵死 gRPC 连接的故障链（L16）",
+          "FMA 案例：health check 只看端口可达→etcd 503 仍被当健康→大规模误驱逐（L17）",
+          "『etcd 横向扩展反而降低写入性能』的反直觉洞见（L16）",
+          "『30 分钟快照+10 秒增量』生产级备份方案（L16/L17）"
+        ],
+        "criticisms": [
+          "L12 概要/L15 集群构建为入门与实验内容（铜矿）",
+          "故障案例数值（40%、100MB、5000 节点）为内部环境，无法独立验证（❓）",
+          "Raft 原理（L13）为整理性内容，深度依赖论文原文"
+        ],
+        "data_credibility_flags": [
+          "L16/L17 故障案例规模数据为内部环境 (❓)",
+          "L13 Election Timeout 150-300ms、L14 1.5MB 限制可验证 (✅)"
+        ]
+      },
+      {
+        "act_name": "第三幕：API Server——四道门与机制深挖（L18-L25）",
+        "act_summary": "把 API Server 拆成认证（你是谁）、授权（你能做什么）、准入（对象是否合法）、限流（防自我打死）四道门，逐个用 demo 与代码走读讲透：X509/静态 token/ServiceAccount JWT 认证、RBAC 与多租户隔离、Mutating/Validating Webhook、APF 的 Shuffle Sharding 多队列隔离。亮点在 L20 的 Keystone 重试风暴事故复盘（无指数退避的重试把自愈变成 DDoS）与 L21 的权限事故教训（春节误删生产集群、update→patch 权限坑）。L25 的 apimachinery 源码走读对运维受众性价比低。",
+        "highlights": [
+          "无指数退避→重试风暴打死认证平台的完整事故复盘（L20）",
+          "APF/Shuffle Sharding『50 队列最多进 4 个』的坏用户隔离设计（L23）",
+          "『403 恰恰证明认证成功』的认证/授权分离反直觉点（L19）",
+          "多租户 NamespaceCreator 自动化授权模式（L24）"
+        ],
+        "criticisms": [
+          "L18 概念/L19 认证 demo/L22 准入教程性内容偏多（铜矿为主）",
+          "L25 apimachinery 为源码走读，非研发受众表达效率低",
+          "L23 限流参数推荐值（1500/500）为压测经验无出处（❓）"
+        ],
+        "data_credibility_flags": [
+          "L20 token cache TTL 默认 2 分钟可验证 (✅)",
+          "L23 max-requests/max-mutating 默认 400/200 可验证 (✅)；推荐值 1500/500 为压测经验 (❓)"
+        ]
+      },
+      {
+        "act_name": "第四幕：调度/运行时/数据面——机制最密与全书集成（L26-L39）",
+        "act_summary": "调度器讲透超售（request≠limit）、Taint 门禁、PriorityClass 抢占与应用炸弹；控制器模式用『队列只放 key』讲清最终一致性落地；kubelet 用 pause Sandbox 解释『1 容器 2 进程』；CRI/CNI/CSI 三大接口各有独立洞见（CRI 标准之争、Calico 全 1 MAC 虚拟网关与 BGP→RR 演进、CSI 决策/执行分离）。数据面从负载均衡=改包头讲起，经 Service/kube-proxy（iptables 概率链 vs IPVS dummy）到 DNS（enableServiceLinks 踩坑）与 Ingress。L33 的 Pod 生命周期是全书信息密度最高的一讲；L39 用真实跨境多活项目（ECMP/DSR/99-1 权重/边缘加速）完成总集成。",
+        "highlights": [
+          "bash/sh 吞 SIGTERM 破坏优雅终止的亲历踩坑（L33）",
+          "Liveness 乐观/Readiness 悲观的探针默认值哲学（L33）",
+          "Calico 全 1 MAC 虚拟网关与 BGP mesh 指数膨胀→Route Reflector（L30）",
+          "iptables 33%/50%/100% 概率链 vs IPVS 需绑 dummy 设备的机制差异（L36）",
+          "L39 真实项目：DNS 摘除≠切流、ECMP 多节点共享 VIP、DSR 回包直连"
+        ],
+        "criticisms": [
+          "L32 Rook 为第三方项目演示（铜矿），与主线相关性弱",
+          "L31 CSI/L35 Service/L38 Ingress 部分为官方文档复述",
+          "L39 量化数据（140ms→40ms、4% 营收、十几万美金）为内部项目，不可独立验证（❓）"
+        ],
+        "data_credibility_flags": [
+          "L33 TolerationSeconds=300s、TerminationGracePeriod=30s 为默认值可验证 (✅)；团队扩至 900s 为内部实践 (❓)",
+          "L39 跨大陆 140ms→40ms 与 4% 营收为内部项目数据 (❓)"
+        ]
+      }
+    ]
+  },
+  "overall_assessment": {
+    "who_should_read": "有 1 年以上容器/K8s 使用经验的运维与研发工程师；负责生产集群、平台建设、云原生架构的人。它的价值不在'怎么用'（命令演示很少），而在'为什么这样设计'——Raft 一致性、超售资源模型、Taint 门禁、优雅终止信号链、负载均衡改包头，这些机制级解释能直接迁移到排障与架构决策。对写控制器的研发，L25/L27 的机制走读也有帮助。",
+    "who_should_skip": "零基础入门者（课程默认你已会 docker 基本操作并愿意自己装集群）；只想'点按钮部署应用'的纯用户（原理课不提供操作手册）；时间紧张且只想要结论的人（需自己从 39 讲中挑金矿，约 1/4 内容为教程/文档复述）。",
+    "value_for_hour": "按 39 讲约 21.6 小时计算，真正的高密度价值集中在 6 讲金矿（约 3.5 小时）与 16 讲中高银矿（约 8 小时），合计约 11.5 小时，占比约 53%；其余为教程复述/项目演示（铜矿约 5.5 小时）与低密度内容。方法论含量高：多数讲在教'设计动机与权衡'的思维方式，而非堆砌事实。策略性阅读建议：先读 L16/L17/L33/L39 四讲金矿建立'生产视角'，再按需读 L26/L30 补调度与网络，最后回头看 L13/L14 补一致性原理；铜矿章节（L01/L02/L10/L11/L12/L15/L18/L25/L32）可在遇到具体问题时按索引查阅。",
+    "best_approach": "边读边做：按 L09 教程装好 kubeadm 集群，用 L33 的作业（Go HTTP Server 上云：优雅启停+QoS+探活+Service/Ingress 发布）串联全书知识点；对照 etcd 官方文档验证 L16/L17 的经验结论；把 L39 的案例方案（LB 切流/ECMP/DSR）当作自己集群的架构演练。"
+  },
+  "search_keywords": [
+    "Kubernetes 原理",
+    "etcd Raft 高可用",
+    "kube-scheduler 超售 Taint",
+    "优雅终止 SIGTERM",
+    "CNI Calico BGP",
+    "API Server APF 限流",
+    "Ingress Service 服务发现",
+    "Kubernetes 生产踩坑",
+    "声明式系统 控制器模式",
+    "kube-proxy iptables IPVS"
+  ],
+  "writing_direction": "不建议写'课程笔记复述'（网上已有大量官方文档搬运），而应写'从这门课提炼的生产级教训'：以 6 讲金矿为骨架，串出 3-4 条可执行结论——etcd 假健康如何引发大规模误驱逐、无退避重试如何把自愈变成 DDoS、SIGTERM 如何被 shell 吞掉、为什么切流不能依赖 DNS。用'故障现象→根因→修复'的三幕结构，把讲师亲历案例讲成故事，并在结尾给出可操作清单。注意：40% 误驱逐、140ms→40ms、4% 营收等数据为讲师内部经验（❓），写作时必须标注'据讲师称'或仅作方向性引用，不得作为权威事实。"
+}

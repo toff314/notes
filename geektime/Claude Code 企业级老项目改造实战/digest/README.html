@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Claude Code 企业级老项目改造实战》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 企业级老项目改造实战</a><a href="README.html">《Claude Code 企业级老项目改造实战》消化索引（digest README）</a></div>
+<h1>《Claude Code 企业级老项目改造实战》消化索引（digest README）</h1>
+<blockquote><p>本目录是《Claude Code 企业级老项目改造实战》（讲师：Robert）的结构化消化产物，生成于 2026-08-31。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、三幕逐幕评价（方法论地基 / 实战闭环 / 方法论迁移）。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 37 讲逐讲评分、四层分拣、Adler 四问、数据审计。引用任何课程数据前必查 verification 状态。</li><li><strong><code>theme_articles/</code></strong>（3 篇）— 可直接成文的主题深挖素材包（含 verification_gate 数据闸门）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（三幕结构+数据可信度+ROI）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题文：Characterization Test 安全网（跨 05/14/15/19）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-002.json</code></td><td>主题文：人是最后的兜底员翻车复盘（跨 17/20/22）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-003.json</code></td><td>主题文：两段式翻译需求方法论（跨 17/18/25）</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（5 主题重组+Mermaid 概念图）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5 分钟速览（一核心/三框架/五方法/一反直觉）</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>课程通览（模块地图+章节矩阵+Adler 两问）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>37 讲逐讲摘要（首尾 200 字+标题+风险信号）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>37 讲逐讲分拣+数据审计（Phase 2 核心产物）</td><td>机读</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 narrative_structure.acts / overall_assessment / writing_direction</li><li>读 <code>content_triage.json</code> 的 data_audit 获取数据可信度结论</li><li>可选标题灵感已内置：<code>title_idea</code> 字段</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件，按主题选一篇</li><li>读其 narrative_arc（三幕结构）/ verification_gate / search_keywords</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong></li><li>按其 source_lectures 对应路径读讲课原文核对引文</li></ol>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级与金句</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文绝对路径</th></tr><tr><td>15</td><td>补出一套兜底测试：让 AI 用 Characterization Test 锁住行为</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/运行和测试：编译、测试、建立护栏/15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为/15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为.md</code></td></tr><tr><td>17</td><td>从一句话需求到需求文档：让 AI 帮你拆需求</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/需求改造：给 Spring AI Alibaba Admin 加新功能/17｜从一句话需求到需求文档：让 AI 帮你拆需求/17｜从一句话需求到需求文档：让 AI 帮你拆需求.md</code></td></tr><tr><td>20</td><td>执行改造（下）：前端开发和接口对接</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/需求改造：给 Spring AI Alibaba Admin 加新功能/20｜执行改造（下）：前端开发和接口对接/20｜执行改造（下）：前端开发和接口对接.md</code></td></tr><tr><td>22</td><td>核心五问：这门课的思路是如何解决问题的？</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/阶段总结复盘/22｜核心五问：这门课的思路是如何解决问题的？/22｜核心五问：这门课的思路是如何解决问题的？.md</code></td></tr><tr><td>25</td><td>两次翻译：把&quot;基于 Hermes Agent 的自动化测试&quot;拆成技术方案</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级老项目改造实战/二次开发：基于 Hermes Agent 做自动化测试/25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案/25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案.md</code></td></tr></table>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
+<ul><li><strong>🚩 可疑（无出处且过于精确）</strong>：</li><li>&quot;Dumb Zone：context 使用率超 40% 输出质量下降&quot;（05 讲，FIU 研究无原始链接）</li><li>&quot;跑了流程效果还是不好，99% 的原因是该停的地方没停&quot;（22 讲，绝对化无数据）</li><li><strong>❓ 无法验证（讲师经验型估计）</strong>：</li><li>&quot;70% 时间理解、30% 动手&quot;（01 讲）</li><li>&quot;AI 主导做 80% / 对半 50% / 人主导 20%&quot;（02 讲）</li><li>&quot;AI 强维度 85+ 分、中 60 分、弱 30 分以下&quot;（17 讲）</li><li>&quot;三步拆需求 20 分钟、比手写省 2 小时&quot;（17 讲）</li><li>&quot;AI 覆盖 70%、人补 30%&quot;（17/22 讲）</li><li>&quot;Anthropic 52 人实验：AI 组理解测试低 17%&quot;（05 讲）</li><li>&quot;Thoughtworks CodeConcise：COBOL 逆向时间减 66%&quot;（05 讲）</li><li>&quot;CodeMap 降低 LLM 依赖 79%&quot;（05 讲，论文存在但数值未核实）</li><li>&quot;30 分钟 CI 换上千次自动检查&quot;（15 讲）</li><li>&quot;自研成本比工具函数大好几倍 / 0.2x&quot;（25 讲）</li><li>&quot;代码层 80% 能搬、业务层完全重写&quot;（28 讲）</li><li><strong>⚠️ 部分验证（来源真实，数值需回原始报告核实）</strong>：</li><li>&quot;Sonar 调查：42% 代码 AI 生成 / 96% 不信任 / 48% 每次 review&quot;（05 讲）</li><li>&quot;Veracode 2025：45% AI 生成代码引入安全漏洞&quot;（05 讲）</li><li>&quot;Anthropic $100M Partner Network + Code Modernization Starter Kit&quot;（05 讲）</li><li>&quot;Cleveroad 三个失败模式&quot;（05 讲）</li></ul>
+<h2>元信息</h2>
+<ul><li>消化评分：<strong>2.82/5</strong>（🥇5 🥈10 🥉17 ⛏️5）</li><li>金矿占比 13.5%（符合 10-15% 目标），金矿+银矿 15 讲 → 主题深挖文 3 篇（决策表：金矿 5-7 → 2-3 篇；总体 SNR 2.82 ≥ 2.5 不减半）</li><li>量化声明可信度：全课 18 条声明中仅 1 条完全可验证（6%），11 条无法独立验证（61%）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

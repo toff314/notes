@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《企业级多智能体设计实战》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">企业级多智能体设计实战</a><a href="README.html">《企业级多智能体设计实战》消化索引（digest README）</a></div>
+<h1>《企业级多智能体设计实战》消化索引（digest README）</h1>
+<blockquote><p>本目录是《企业级多智能体设计实战》（讲师：晓寒）的结构化消化产物，生成于 2026-08-14。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/企业级多智能体设计实战/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/企业级多智能体设计实战/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、逐幕评价。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、数据审计。引用任何课程数据前必查。</li><li><strong><code>theme_articles/</code></strong>（若存在）— 可直接成文的主题深挖素材包（共 3 篇）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕评价）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题深挖：从 Orchestrator 到数字员工团队</td><td>机读</td></tr><tr><td><code>theme_articles/theme-002.json</code></td><td>主题深挖：Prompt 管不了 Agent 安全</td><td>机读</td></tr><tr><td><code>theme_articles/theme-003.json</code></td><td>主题深挖：AI 项目失败的第一原因是选题</td><td>机读</td></tr><tr><td><code>study_guide.md</code> / <code>study_guide_slim.md</code></td><td>学习指南 / 速览</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣+数据审计</td><td>机读</td></tr><tr><td><code>concept_map.mermaid</code></td><td>概念关系图</td><td>人读（渲染）</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 acts / overall_assessment</li><li>读 <code>content_triage.json</code> 的 data_audit</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件，按主题选一篇</li><li>读其 narrative_arc / verification_gate</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong></li><li>按其 source_lectures 对应路径读讲课原文核对引文</li></ol>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文路径</th></tr><tr><td>23</td><td>Orchestrator范式</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/模块四：协作与设计模式，掌握5大架构设计模式/23｜Orchestrator范式：任务层的主 Agent + 子 Agent/23｜Orchestrator范式：任务层的主 Agent + 子 Agent.md</code></td></tr><tr><td>26</td><td>任务链与信息传递</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/模块四：协作与设计模式，掌握5大架构设计模式/26｜任务链与信息传递：数字员工的协作协议/26｜任务链与信息传递：数字员工的协作协议.md</code></td></tr><tr><td>27</td><td>Human as 甲方</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/模块四：协作与设计模式，掌握5大架构设计模式/27｜Human as 甲方：如何设计 Agent 团队的人类介入点/27｜Human as 甲方：如何设计 Agent 团队的人类介入点.md</code></td></tr><tr><td>28</td><td>数字员工的自我进化</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/模块四：协作与设计模式，掌握5大架构设计模式/28｜数字员工的自我进化：让 Agent 团队越用越好/28｜数字员工的自我进化：让 Agent 团队越用越好.md</code></td></tr><tr><td>34</td><td>需求边界</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/生产交付篇：全生命周期工程化/34｜需求边界：如何使用 AI 适用性评估表识别高 ROI 场景？/34｜需求边界：如何使用 AI 适用性评估表识别高 ROI 场景？.md</code></td></tr><tr><td>36</td><td>评测体系</td><td><code>/home/yuanwu/geektime/output/企业级多智能体设计实战/生产交付篇：全生命周期工程化/36｜评测体系：让AI质量可量化/36｜评测体系：让AI质量可量化.md</code></td></tr></table>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
+<ul><li>629 次安全测试劫持成功率 80%（第 32 讲，🚩 精确数值无来源且被反复引用）</li><li>Galileo+PwC 独立验收 70% vs 10%（第 23 讲，⚠️ 无原始报告）</li><li>Google DeepMind 误差放大 17.2 倍（第 23 讲，❓ 无出处）</li><li>MAST inter-agent 误对齐 37%（第 26 讲，❓ 无出处）</li><li>约 15% 云端 Skill 藏木马（第 32 讲，❓ 无出处）</li><li>Agent 死循环 264 小时烧 $70,000+（第 30 讲，❓ 轶事）</li><li>Anthropic 1协调者+3-5专家提升 90%+（第 25 讲，❓ 无出处）</li></ul>
+<h2>元信息</h2>
+<ul><li>消化评分：3.0/5（🥇6 🥈15 🥉16 ⛏️7）</li><li>数据审计：37 个量化声明中 14 个可验证（38%）、7 个部分验证（19%）、15 个无法验证（40%）、1 个可疑（3%）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

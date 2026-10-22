@@ -1,0 +1,1417 @@
+{
+ "course": "Claude Code 工程化实战",
+ "triage_date": "2026-08-31",
+ "total_lectures": 34,
+ "gold_count": 2,
+ "silver_count": 17,
+ "copper_count": 10,
+ "iron_count": 5,
+ "overall_snr": 2.92,
+ "data_audit": {
+  "total_claims": 47,
+  "verified": 33,
+  "partial": 10,
+  "unverifiable": 2,
+  "suspicious": 2,
+  "summary": "全课共47条量化声明：✅已验证33条（官方文档/LangChain/Anthropic来源），⚠️部分验证10条（泄露事件细节、生态数据转述），❓无法验证2条（讲师经验、行业判断），🚩可疑2条（token提升98%、功能:安全代码1:3——无出处夸大）。写作时只可引用✅，⚠️需标注语境，❓/🚩禁止作为事实。"
+ },
+ "entries": [
+  {
+   "lecture_id": "intro",
+   "lecture_title": "开篇词｜共生而非替代：极客和 AI 的共舞",
+   "snr_score": 1.55,
+   "tier": "iron",
+   "score_breakdown": {
+    "originality": 2,
+    "verifiability": 1,
+    "actionability": 1,
+    "change_potential": 2,
+    "expression_efficiency": 2
+   },
+   "adler_q1": "讲的是讲师个人经历与课程地图：Claude Code是\"共生而非替代\"的人机协作工具，本课聚焦Sub-Agents和Skills两大理念。论证结构=个人叙事→课程承诺→结构安排。",
+   "adler_q2": "解决\"为什么要学Claude Code、这门课会带给你什么\"的问题。已解决：课程定位与地图。未解决：没有任何技术实质内容。",
+   "adler_q3": "知识无错误但全是立场陈述；缺乏可验证内容，属于预告而非正文。分析不完整——无法从本讲判断课程质量。",
+   "adler_q4": "无实际操作价值，仅用于判断是否继续学习。",
+   "critical_notes": "纯开篇叙事，价值在于确认课程范围与讲师风格，无实质知识。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "live",
+   "lecture_title": "直播回放｜不止 Skills，1 小时带你解锁 Claude Code 高级用法",
+   "snr_score": 1.0,
+   "tier": "iron",
+   "score_breakdown": {
+    "originality": 1,
+    "verifiability": 1,
+    "actionability": 1,
+    "change_potential": 1,
+    "expression_efficiency": 1
+   },
+   "adler_q1": "直播回放索引：四层架构模型（基础/扩展/集成/平台层）+企业级Agent化转型展望，附PPT链接。",
+   "adler_q2": "解决\"快速了解Claude Code能力图谱\"的问题。已解决：给出大纲。未解决：无正文，纯视频索引。",
+   "adler_q3": "无法评断——正文只有标题和大纲，没有论证过程。",
+   "adler_q4": "无直接可用内容，除非去看直播回放。",
+   "critical_notes": "视频索引页，无实质正文，直接跳过。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "hot-01",
+   "lecture_title": "热点加餐｜从 OpenClaw 到 OpenCode：拆解爆款 Agent 的设计密码与工程范式",
+   "snr_score": 2.0,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2,
+    "verifiability": 2,
+    "actionability": 2,
+    "change_potential": 2,
+    "expression_efficiency": 2
+   },
+   "adler_q1": "拆解OpenClaw与Claude Code两个爆款Agent的设计密码：Agent落地3个致命卡点（行为不可预测、需要约束、需要监管）+\"协作层/能力层/规范层\"通用方法论+规范式开发（SPEC驱动）。",
+   "adler_q2": "解决\"为什么有些Agent产品能火、如何从会用AI到会建AI系统\"的问题。已解决：提出3卡点与三层拆解框架。未解决：框架停留于口号，无具体落地步骤与案例数据。",
+   "adler_q3": "知识有误风险低但论证单薄：3卡点是常识性归纳；\"协作层/能力层/规范层\"是品牌化重命名（行动营交付设计）而非实证框架；全篇夹带行动营推广，对立面缺失。",
+   "adler_q4": "可获得\"Agent落地瓶颈\"的粗框架，但无新增操作能力。",
+   "critical_notes": "营销属性最重的一讲：前半段拆解有价值但泛化，后半段为行动营导流；框架品牌化重命名，缺数据与反例。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "hot-02",
+   "lecture_title": "热点加餐｜Harness 架构深度解析",
+   "snr_score": 3.68,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 4,
+    "verifiability": 3.5,
+    "actionability": 3,
+    "change_potential": 4,
+    "expression_efficiency": 4
+   },
+   "adler_q1": "系统解析Harness概念：Claude Code=agentic harness（工具+上下文管理+执行环境）；Agentic Loop是心脏；内置20+工具覆盖五个原子操作；上下文管理（92%阈值自动压缩）是被忽视的关键能力；澄清开源/闭源事实；介绍Claude Agent SDK与第三方Harness（OpenCode）；判断\"2026是Harness之年\"。",
+   "adler_q2": "解决\"Claude Code为什么强、强在哪里、它到底是什么\"的根本问题。已解决：Harness定义、循环机制、上下文管理、开源闭源澄清、动手验证实验（裸API vs Harness）。未解决：Harness性能数据（10亿美元收入、stars数）无法独立核实；对第三方Harness冲突只点到为止。",
+   "adler_q3": "基本有道理：引用Anthropic官方文档定义Harness，概念链条完整；开源/闭源事实澄清有价值（很多人误以为开源）；\"模型+Harness=10×生产力\"是行业共识但缺直接证据；\"同一个模型在不同Harness的表现差距>不同模型同Harness\"的判断有道理但数据支撑弱。",
+   "adler_q4": "能明确回答\"Claude Code是什么\"并理解上下文管理的重要性；动手验证实验可立即复制；参考资料Tier分级可直接用于深入学习。",
+   "critical_notes": "概念体系清晰、一手资料分级规范，是理解Harness的最佳入门；但多处行业数据（stars/收入/月活）无法独立验证，商业判断含营销成分。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "Harness=工具+上下文管理+执行环境+权限控制",
+     "source_text": "Claude Code serves as the agentic harness around Claude: it provides the tools, context management, and execution environment that turn a language model into a capable coding agent.",
+     "paraphrase": "Claude Code的本质是包裹在模型外的智能体编排框架，价值不在模型而在将模型转化为可行动Agent的结构层。",
+     "writing_angle": "methodology",
+     "related": [
+      "01",
+      "18",
+      "hot-03"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/zh-CN/overview",
+      "notes": "Anthropic官方文档原话，可查证"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "上下文管理是被忽视的Harness关键能力",
+     "source_text": "大多数人讨论Agent框架时，只关心工具和循环。但Harness最精巧的部分，其实是上下文管理。当对话历史接近上下文窗口的92%时，Harness会触发一次压缩操作。",
+     "paraphrase": "Harness的差异化竞争力不在工具清单而在如何管理有限上下文：自动压缩、静态/动态分界、去重——这解释了为何同一模型在Harness中表现远超裸API。",
+     "writing_angle": "opinion",
+     "related": [
+      "18",
+      "hot-03",
+      "11"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "notes": "92%阈值等细节无法独立核实，但\"上下文管理是Harness核心能力\"可追溯Anthropic官方工程博客"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "模型商品化，Harness决定差距",
+     "source_text": "同一个模型在不同Harness中的表现差距，远大于不同模型在同一个Harness中的差距。",
+     "paraphrase": "当模型能力趋同（Claude/GPT/Gemini/DeepSeek差距缩小），工程差异成为主战场——这是\"Harness之年\"论断的核心。",
+     "writing_angle": "opinion",
+     "related": [
+      "hot-03"
+     ],
+     "verification": {
+      "status": "❓",
+      "source_url": "无独立来源",
+      "notes": "行业判断，无直接实验数据支撑；可引述为讲师观点"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "hot-03",
+   "lecture_title": "真相大白：源码泄露事故带来的架构验证与工程启示",
+   "snr_score": 4.1,
+   "tier": "gold",
+   "score_breakdown": {
+    "originality": 4.5,
+    "verifiability": 3.5,
+    "actionability": 4,
+    "change_potential": 4.5,
+    "expression_efficiency": 4
+   },
+   "adler_q1": "以2026年3月31日Claude Code v2.1.88源码泄露事件为实证样本，十点验证课程早期架构推测：五层架构/QueryEngine(46K行generator实现Agentic Loop)/40个工具/上下文工程五优化/Self-Healing Memory/44个feature flag权限体系/反蒸馏机制/挫败检测正则/Undercover Mode/泄露本身的安全启示。",
+   "adler_q2": "解决\"课程早期黑箱推测的架构是否真实\"的验证问题。已解决：十点逐一实证回填，确认五层架构、Agentic Loop、工具权限门控、上下文工程、记忆持久化方向正确；新发现反蒸馏/KAIROS/LSP等课程未覆盖内容。未解决：大量数据（512K行、41K fork、Claw-Code 2小时50K stars）基于网络转述无法独立核实；\"功能代码:安全代码约1:3\"是讲师估算。",
+   "adler_q3": "整体可信且论证有力：以真实泄露事件+源码目录结构为证据，推理链条清晰；主动标注\"概念性伪代码，基于泄露源码的架构分析\"，严谨性较好。但需警惕：①泄露事件细节全部依赖网络信息源（无法独立核实）；②伪代码与图示有二次加工成分；③\"反蒸馏/Undercover\"等发现属未证实解读。",
+   "adler_q4": "极大改变认知：①Harness本身就是IP（工具定义/系统提示词/推理中间过程受反蒸馏保护）；②发布管道是安全链最薄弱环节；③source map是低估的泄露向量；④上下文工程五项优化可直接指导使用（大结果落盘解决上下文爆掉）。",
+   "critical_notes": "全课最硬核实证讲：把\"学概念不学工具\"从口号变成十点实证。工程启示（发布安全检查、source map管控）立即可用；但涉及泄露细节的数字需标注⚠️，1:3功能安全比例属讲师估算🚩。",
+   "extractions": [
+    {
+     "type": "insight",
+     "name": "上下文工程是真正的秘密武器",
+     "source_text": "不是模型强，而是Git上下文加载、文件去重、大结果落盘、LSP语义理解——这五项优化让同一个模型在Harness中的表现远超裸API调用。",
+     "paraphrase": "Claude Code的差异化来自提示构造工程而非模型本身：自动注入Git状态、静态/动态内容分界、文件哈希去重、大结果落盘、LSP语义级理解，让模型信息质量远超裸API。",
+     "writing_angle": "opinion",
+     "related": [
+      "18",
+      "hot-02",
+      "11"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "notes": "Sebastian Raschka观点+源码分析转述；五项优化细节无法逐一独立核实"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "Harness本身就是IP：反蒸馏机制",
+     "source_text": "Harness不仅是用户和模型之间的桥梁，也是IP保护的前线。工具定义、系统提示词、推理中间过程——这些是Harness层的核心IP。Anthropic把Harness视为必须保护的商业秘密。",
+     "paraphrase": "Anthropic通过anti_distillation假工具注入污染竞品训练数据、对中间推理加密封签名——说明Harness层（工具定义+提示词）的商业价值被提升到与模型同级。",
+     "writing_angle": "opinion",
+     "related": [
+      "hot-02"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "泄露源码分析（无独立来源）",
+      "notes": "基于泄露源码的解读，无法独立验证；作为课程观点引用需标注来源"
+     }
+    },
+    {
+     "type": "framework",
+     "name": "Self-Healing Memory：索引+主题文件+原始记录三层结构",
+     "source_text": "第一层MEMORY.md轻量索引（约150字符/行，永远加载）；第二层Topic Files按需加载；第三层Raw Transcripts只写不全读。Strict Write Discipline——先写数据再写索引。",
+     "paraphrase": "记忆系统本质是数据库式\"索引+数据页\"分离：CLAUDE.md只是目录，内容按需加载；先写内容再更新索引保证索引永远指向有效数据（WAL的逆向）。",
+     "writing_angle": "methodology",
+     "related": [
+      "02"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "泄露源码分析（无独立来源）",
+      "notes": "基于源码的架构解读，无法独立核实"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "发布管道安全三启示",
+     "source_text": "发布管道是安全链中最薄弱的环节；Source Map是一类被低估的泄露向量；\"人为失误\"不是免责条款，是系统问题——一条CI规则if *.map in package then fail就能避免这次事故。",
+     "paraphrase": "从泄露事件提炼可执行安全动作：CI中校验发布产物、禁止source map进包、把\"配置疏忽\"当系统问题修。",
+     "writing_angle": "tutorial",
+     "related": [
+      "19"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "事件报道+讲师分析",
+      "notes": "事件本身可查证，三启示为合理工程推断"
+     }
+    },
+    {
+     "type": "case_study",
+     "name": "Claw-Code：架构可复制、Prompt不可复制",
+     "source_text": "Claw-Code用AI工具将Claude Code从TypeScript重写为Python，两小时50K stars。重写了Agent Loop、工具系统和权限框架，但无法复制Anthropic针对Claude模型精调的系统提示词。",
+     "paraphrase": "泄露后社区48小时复刻证明：Harness代码结构可复制，但\"模型-Harness共同进化\"的提示词知识不可复制——护城河在Prompt与模型的共同演进。",
+     "writing_angle": "case_study",
+     "related": [
+      "04"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "网络转述（无独立来源）",
+      "notes": "事件细节（2小时50K stars）无法独立核实"
+     }
+    },
+    {
+     "type": "data_point",
+     "name": "功能代码和安全代码比例约1:3",
+     "source_text": "这印证了一个工程经验，功能代码和安全代码的比例大约是1:3。实现一个工具可能200行，但定义它的权限边界、错误处理和输出规范需要600行。",
+     "paraphrase": "讲师个人估算的工程经验比例，无数据来源，作为观点引用而非事实。",
+     "writing_angle": "opinion",
+     "related": [],
+     "verification": {
+      "status": "🚩",
+      "source_url": "无独立来源",
+      "notes": "讲师经验估算，无实证数据，禁止作为事实引用"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "hot-04",
+   "lecture_title": "热点加餐｜AI 工程范式 3.0：Harness Engineering 到底革新了什么？",
+   "snr_score": 1.0,
+   "tier": "iron",
+   "score_breakdown": {
+    "originality": 1,
+    "verifiability": 1,
+    "actionability": 1,
+    "change_potential": 1,
+    "expression_efficiency": 1
+   },
+   "adler_q1": "视频加餐：Harness Engineering范式革新+行动营推广，正文仅数百字。",
+   "adler_q2": "解决\"Harness Engineering革新了什么\"——但正文未展开，全部内容在视频里。",
+   "adler_q3": "无法评断，正文无实质内容。",
+   "adler_q4": "无——除非观看视频。",
+   "critical_notes": "纯视频+营销页，无正文价值。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "hot-05",
+   "lecture_title": "热点加餐｜Workflow：编排载体的第三种选择",
+   "snr_score": 3.65,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 4,
+    "verifiability": 3,
+    "actionability": 3.5,
+    "change_potential": 4,
+    "expression_efficiency": 4
+   },
+   "adler_q1": "Workflow编排原语深度解析：控制流位置是核心判据（Sub-Agent控制流在上下文，Workflow控制流在脚本）；确定性换来可重复性/并行规模/质量固化三收益；代价是不接受中途输入/无IO权限/生成脚本耗token；给出四维使用决策（流程是否稳定等）；补全\"第五种使用模式=声明式编排\"；厘清与Sub-Agent/Skill/Headless边界。",
+   "adler_q2": "解决\"Claude Code第三种编排原语Workflow是什么、何时用、与Sub-Agent有何本质区别\"的问题。已解决：控制流位置的清晰判据+四维决策+原语边界。未解决：Workflow仍为research preview，具体API细节易变；并行规模上限等无量化数据。",
+   "adler_q3": "有道理且论证严密：用\"控制流位置\"统一解释了Sub-Agent与Workflow的差异，是概念层面的真洞见而非文档复述；\"Workflow不是更强的Sub-Agent\"的纠偏有反直觉价值；代价分析（不接受中途输入、orchestrator无IO权限）补全了对立面。",
+   "adler_q4": "能立即做出架构决策：流程稳定→沉淀为Workflow；流程在变→留在主对话；能区分Workflow与Sub-Agent/Headless避免误用。",
+   "critical_notes": "少见的\"概念先行\"加餐：控制流位置框架+边界梳理+第五种使用模式，原创度高于正课平均；可惜Workflow是实验功能，长期价值取决于其转正。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "控制流位置：编排架构的判据",
+     "source_text": "Sub-Agent加Skill的模式下，控制流在Claude的上下文里……Workflow模式下，控制流在脚本变量里。循环、分支、并行调度都在JavaScript代码中静态表达。",
+     "paraphrase": "判断编排架构的本质问题：每一步\"接下来怎么走\"由谁决定——模型临场判断（灵活、不可重复）还是脚本静态表达（可重复、可并发）。",
+     "writing_angle": "methodology",
+     "related": [
+      "04",
+      "07"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/workflows",
+      "notes": "概念框架为讲师原创提炼，Workflow官方定义可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "Workflow四维使用决策",
+     "source_text": "流程是否已经稳定下来；并行规模是否超过主对话单点协调上限；流程是否值得被命名复用；是否接受跑起来不可中途干预。",
+     "paraphrase": "判断何时把编排从Prompt搬进Workflow脚本：稳定+大规模+可复用+可一次性跑完，四者满足才值得。",
+     "writing_angle": "tutorial",
+     "related": [
+      "07"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://code.claude.com/docs/en/workflows",
+      "notes": "决策维度为讲师提炼，官方文档仅定义功能"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "01",
+   "lecture_title": "01｜登台远望：Claude Code 底层技术全景导览",
+   "snr_score": 2.88,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 3,
+    "actionability": 3,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Claude Code底层技术全景导览：5分钟上手、五层架构（基础层Memory/扩展层四大组件/集成层Headless+MCP/编程接口层SDK）、组件关系与技术选型指南（触发方式/数据流向/Plugins打包）。",
+   "adler_q2": "解决\"Claude Code是什么、有哪些组件、如何选型\"的问题。已解决：全景图+组件对照表+选型逻辑。未解决：各组件只有概述，深度在后续讲。",
+   "adler_q3": "知识基本正确（对应官方文档架构），但\"五层架构\"是讲师自拟的分层模型（官方无此分法），属于合理整理而非权威定义；选型指南有参考价值但缺乏对比数据。",
+   "adler_q4": "建立全局认知地图，后续学习有坐标；选型指南可立即参考。",
+   "critical_notes": "合格的全景导览课：架构分层自洽、组件对照清晰，是课程地图；但分层模型为讲师整理非官方标准，价值在于导航而非深度。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "02",
+   "lecture_title": "02｜过目不忘：Claude Code 记忆系统与 CLAUDE",
+   "snr_score": 2.8,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2,
+    "verifiability": 3,
+    "actionability": 3.5,
+    "change_potential": 3,
+    "expression_efficiency": 2.5
+   },
+   "adler_q1": "Claude Code记忆系统：工作原理（启动时加载CLAUDE.md）、五层记忆架构（企业策略级/用户级/项目级/本地级+自动记忆）、各层示例、CLAUDE.md写法与最佳实践。",
+   "adler_q2": "解决\"如何让Claude记住项目规范\"的问题。已解决：五层架构+每层配置示例+什么该写/不该写。未解决：记忆冲突、更新策略等高级问题未深入。",
+   "adler_q3": "结构清晰但原创有限：五层划分与官方文档一致，属于系统化整理；\"CLAUDE.md像入职手册\"类比通俗但无新框架。",
+   "adler_q4": "能立即搭建自己的五层记忆配置。",
+   "critical_notes": "记忆系统配置教程，整理型内容，可操作性强但无原创洞见。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "03",
+   "lecture_title": "03｜分而治之：Sub-Agents 的核心概念与应用价值",
+   "snr_score": 3.35,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3,
+    "actionability": 4,
+    "change_potential": 3.5,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "Sub-Agents核心概念：上下文污染是核心痛点、子代理定义与核心价值（上下文隔离/权限边界/并行）、内置子代理（Explore/Plan/General-purpose）、何时该用（+子代理不能生成子代理约束）、配置文件详解（tools白名单/黑名单/permissionMode）、存放位置与优先级、创建方式与运行模式。",
+   "adler_q2": "解决\"主对话上下文被中间过程污染、如何安全分工\"的问题。已解决：子代理概念+配置+权限体系。未解决：多子代理协同（在后续讲）、成本量化。",
+   "adler_q3": "论证扎实：从\"500行日志污染上下文\"场景推导出子代理必要性，逻辑链完整；工具白名单/黑名单/permissionMode配置讲解准确；\"子代理不能生成子代理\"是重要的安全约束点。",
+   "adler_q4": "能立即创建自己的子代理并配置最小权限。",
+   "critical_notes": "子代理专题的奠基讲：痛点-方案-配置链条完整，权限体系讲解是重点；无量化成本数据是短板。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "上下文污染到子代理隔离",
+     "source_text": "如果你觉得Claude Code越用越\"健忘\"，并不是模型退化了，而是你的对话上下文，已经被一次次中间过程污染了。",
+     "paraphrase": "子代理的第一价值是上下文隔离：把中间过程（日志、搜索、试错）移出主对话，让主对话只保留决策关键信息。",
+     "writing_angle": "opinion",
+     "related": [
+      "06",
+      "07"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程场景演示（可复现）",
+      "notes": "核心机制可通过实验验证，无需外部来源"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "子代理权限三件套：白名单/黑名单/权限模式",
+     "source_text": "方式一：白名单(tools)——只能用这些；方式二：黑名单(disallowedTools)——继承所有但排除这些。",
+     "paraphrase": "配置子代理权限：只读审查用白名单，日常助手用黑名单排除危险命令；permissionMode控制自主程度。",
+     "writing_angle": "tutorial",
+     "related": [
+      "05"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/sub-agents",
+      "notes": "配置语法可查证官方文档"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "04",
+   "lecture_title": "04｜量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南",
+   "snr_score": 4.08,
+   "tier": "gold",
+   "score_breakdown": {
+    "originality": 4,
+    "verifiability": 3.5,
+    "actionability": 4.5,
+    "change_potential": 4.5,
+    "expression_efficiency": 4
+   },
+   "adler_q1": "从Sub-Agent到Multi-Agent工程指南：何时升级（上下文管理挑战/分布式开发两信号+LangChain\"先单Agent后工具再多Agent\"）、四种设计模式（Sub-Agents集中编排/Skills渐进加载/Handoffs状态切换/Router并行分发）、性能成本可控性量化对比（90.2%提升/15x token/40% token节省）、升级决策树、架构演进路径（单Agent+Tools→+Skills→Supervisor+SubAgents→混合）、生产四挑战（状态级联/非确定性调试/部署/同步瓶颈）。",
+   "adler_q2": "解决\"何时该引入多Agent、选哪种模式、代价多大\"的架构决策问题。已解决：两触发信号+四模式+量化对比+决策树+演进路径+生产挑战。未解决：量化数据多为转述（LangChain/Anthropic），讲师未提供自己的实测；模式组合的具体成本测算缺失。",
+   "adler_q3": "全课方法论最扎实的一讲：引用LangChain官方架构选型指南与Anthropic多Agent研究系统博客（90.2%/15x/95%归因均有据可查）；\"选对模型>堆token\"是反直觉但合理的工程洞察；生产四挑战（彩虹部署、生产链路追踪）是实战经验级内容。扣分点：40% token节省来自LangChain测试图表无法细查；\"架构式思维框架\"部分有个人体验成分。",
+   "adler_q4": "能立即用决策树判断自己项目是否需要多Agent、选哪种模式；理解token经济学避免过度设计；生产挑战清单可直接指导落地。",
+   "critical_notes": "全课价值最高的一讲：把多Agent选型从玄学变成可操作决策框架，数据来源可追溯；\"上下文隔离是第一价值\"\"先加工具再加Agent\"两句可当工程准则。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "四模式+升级决策树",
+     "source_text": "单一领域、工具小于5个、上下文小于50K→不需要，用单Agent+好的prompt；多领域独立上下文→Sub-Agents；多步骤状态流转→Handoffs；跨数据源并行查询→Router。",
+     "paraphrase": "多Agent选型决策树：从简单到复杂逐级判断，唯一铁律是\"先从单Agent开始，遇到明确瓶颈再升级\"。",
+     "writing_angle": "methodology",
+     "related": [
+      "03",
+      "07",
+      "08"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://www.blog.langchain.com/choosing-the-right-multi-agent-architecture/",
+      "notes": "四种模式与决策树源自LangChain官方架构指南，可查证"
+     }
+    },
+    {
+     "type": "data_point",
+     "name": "90.2%性能提升与15x token成本",
+     "source_text": "Anthropic的多Agent研究系统在内部评测中，比单Agent Claude Opus 4性能提升了90.2%。……代价是相较普通对话约15倍的token消耗。",
+     "paraphrase": "多Agent的收益与成本数据：复杂研究场景性能+90.2%、token成本×15——只适合高价值高复杂度任务。",
+     "writing_angle": "case_study",
+     "related": [
+      "03"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "notes": "Anthropic官方工程博客，90.2%与15x为官方公布数据"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "上下文隔离是第一价值，并行是第二",
+     "source_text": "上下文隔离是核心价值——多Agent的第一价值不是并行，是隔离。Token成本要求高价值任务——不是所有场景都值得多Agent。",
+     "paraphrase": "多Agent架构的首要收益是隔离上下文避免串扰，其次才是并行；15x token成本意味着它是高价值任务专属方案。",
+     "writing_angle": "opinion",
+     "related": [
+      "03",
+      "06"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "notes": "与Anthropic官方博客的成本分析一致"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "模型选型大于堆token",
+     "source_text": "选择更合适的模型（如Claude Sonnet 4）所带来的性能提升，往往超过单纯将token预算翻倍的效果。",
+     "paraphrase": "95%性能波动中token使用占80%、工具调用与模型选型占15%——但边际上换模型比翻倍预算更有效。",
+     "writing_angle": "opinion",
+     "related": [
+      "22"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "notes": "源自Anthropic官方博客的归因分析"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "多Agent生产四挑战与应对",
+     "source_text": "状态性带来的复杂度（微小的失败会级联放大）→输出端设置检查点；非确定性调试→完整生产链路追踪；部署复杂度→彩虹渐进式部署；同步瓶颈→异步执行+Agent间消息通道。",
+     "paraphrase": "多Agent上生产的四类坑与对策：检查点验证、链路追踪、彩虹部署、异步化。",
+     "writing_angle": "tutorial",
+     "related": [
+      "16",
+      "19"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "notes": "框架源自Anthropic博客+讲师工程实践混合"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "05",
+   "lecture_title": "05｜明察秋毫 ：构建只读型安全审计子代理",
+   "snr_score": 2.85,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 2.5,
+    "actionability": 3.5,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "只读型安全审计子代理实战：工程痛点（审查时被顺手改代码）、从痛点倒推子代理设计、创建只读审查子代理（When Invoked/Review Dimensions四维/Output Format）、运行与权限边界验证、扩展审查维度。",
+   "adler_q2": "解决\"如何构建一个只能看不该改的安全审查员\"的问题。已解决：完整实战流程+最小权限落地。未解决：真实项目中的误报率/性能等质量数据。",
+   "adler_q3": "\"从工程痛点到子代理设计\"的思维方式值得肯定（先定义约束再设计角色）；示例代码的SQL注入/硬编码密钥是教学常见案例，无新意；核心价值在权限边界设计而非审查能力本身。",
+   "adler_q4": "能立即复制搭建只读审查子代理并验证其权限边界。",
+   "critical_notes": "合格的实战讲：最小权限原则落地清晰，但内容本质是\"官方能力+示例代码\"的演示，独立洞见有限。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "06",
+   "lecture_title": "06｜去芜存菁 ：高噪声任务处理——测试运行器与日志分析器",
+   "snr_score": 3.23,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 2.5,
+    "actionability": 4.5,
+    "change_potential": 3,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "高噪声任务处理：从token消耗量化噪声代价、信噪比决策框架（50行法则：输出>50行且关心<10行→用子代理）、测试运行器/日志分析器两实战、三层输出格式设计法。",
+   "adler_q2": "解决\"如何处理测试输出/日志等高噪声任务\"的问题。已解决：信噪比判据+两个可直接复制的子代理+输出格式方法论。未解决：信噪比判据的量化依据未给出来源。",
+   "adler_q3": "\"50行法则\"是可操作的经验公式但无实证来源；\"输出格式是主对话的输入\"的洞见有工程价值（子代理输出=下一环节输入，格式即接口）；三层输出格式设计法是课程自拟方法论，属于合理提炼。",
+   "adler_q4": "能立即为高噪声命令配置子代理并设计结构化输出。",
+   "critical_notes": "噪声隔离主题实战讲：信噪比框架+输出格式设计有增量，但判据缺来源、内容多为配置演示。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "信噪比50行法则",
+     "source_text": "如果一个命令的输出超过50行，且你只关心其中不到10行（不到五分之一）的内容，就应该用子代理。",
+     "paraphrase": "高噪声任务的判据：输出远超关注点占比时，让子代理消化原始输出、只回传决策信息。",
+     "writing_angle": "methodology",
+     "related": [
+      "03",
+      "07"
+     ],
+     "verification": {
+      "status": "❓",
+      "source_url": "无独立来源",
+      "notes": "讲师经验法则，无实证数据支撑"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "三层输出格式设计法",
+     "source_text": "第一层：一眼看到结果（Status: FAIL）；第二层：关键信息结构化（Failed tests列表）；第三层：可执行建议（Recommendations）。",
+     "paraphrase": "子代理输出格式按\"结果→细节→建议\"三层设计，因为子代理输出是主对话输入，格式即接口。",
+     "writing_angle": "tutorial",
+     "related": [
+      "05"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目03-SubAgents/projects/01-test-runner",
+      "notes": "可从课程配套项目复现验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "07",
+   "lecture_title": "07｜百舸争流：多任务并行探索与流水线编排",
+   "snr_score": 3.17,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 2.5,
+    "actionability": 4,
+    "change_potential": 3.5,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "并行探索与流水线编排两大模式：独立→并行、依赖→流水线的判断标准、实战项目（并行探索Auth模块、Bug修复流水线）、交接契约设计、混合模式、主对话作为编排者的角色。",
+   "adler_q2": "解决\"复杂任务何时并行、何时串行、如何衔接\"的问题。已解决：判断标准+交接契约概念+混合模式编排。未解决：并行任务的冲突/合并成本分析。",
+   "adler_q3": "\"独立→并行，依赖→流水线\"是清晰的第一性判断；\"交接契约\"概念（阶段间明确的信息交接格式）是工程增量；但实战演示占大头，判断标准与契约的具体模板化程度不足。",
+   "adler_q4": "能为自己的多子代理任务划分并行/串行并设计交接契约。",
+   "critical_notes": "并行/流水线实战讲：判断标准与交接契约有方法论价值，其余为演示；与04的决策树互补。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "独立到并行，依赖到流水线",
+     "source_text": "理解\"独立→并行，依赖→流水线\"的判断标准。学会设计阶段间的\"交接契约\"，确保流水线信息不丢失。",
+     "paraphrase": "任务分解第一问：子任务间有无依赖？无依赖并行探索、有依赖串行流水线；交接处用明确契约防信息丢失。",
+     "writing_angle": "methodology",
+     "related": [
+      "04",
+      "hot-05"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目03-SubAgents/projects/04-bug-fix-pipeline",
+      "notes": "可从配套项目复现验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "08",
+   "lecture_title": "08｜群策群力：Agent Teams 多会话协作架构",
+   "snr_score": 3.2,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 2.5,
+    "actionability": 3.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Agent Teams多会话协作架构：与Sub-Agents本质区别（Teammates可互通信vs只能向主对话汇报）、创建方式、实战（全栈Bug猎人级联故障）、四大协作模式（竞争假设/分层评审/模块化开发/规划-审批）、选型决策树（workers是否需要通信）、token成本考量、六条最佳实践。",
+   "adler_q2": "解决\"当子代理之间需要认知协作（互相挑战、共享发现）时怎么办\"的问题。已解决：Agent Teams机制+四模式+选型树+最佳实践。未解决：该功能是实验性（默认关闭），稳定性与权限细节依赖官网；token成本无量化。",
+   "adler_q3": "\"锚定偏见→竞争假设模式\"的论证（单个调查者找到bug就满意）有认知科学支撑，是四模式中最有说服力的；四大模式提炼清晰（官方文档无此分类）；但实战演示占近半篇幅，且功能为实验性，长期有效性存疑。",
+   "adler_q4": "能判断何时该从Sub-Agents升级到Agent Teams（需要互相通信时）并套用四种协作模式。",
+   "critical_notes": "实验性功能的及时整理：竞争假设模式是亮点，选型树可操作；但Demo膨胀+功能未稳定+成本无量化，价值受限。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "竞争假设模式：用辩论对抗锚定偏见",
+     "source_text": "单个Agent调查时容易\"锚定\"——找到一个合理解释后就停止探索。让多个Teammates各自持有不同假设，并要求它们互相挑战、试图推翻对方的理论。",
+     "paraphrase": "根因不明时让多个Agent持不同假设互相反驳，幸存理论更可能是真因——把科学辩论机制搬进Agent协作。",
+     "writing_angle": "methodology",
+     "related": [
+      "07",
+      "04"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://code.claude.com/docs/en/agent-teams",
+      "notes": "Agent Teams为实验性功能，模式提炼为讲师原创"
+     }
+    },
+    {
+     "type": "framework",
+     "name": "Sub-Agents vs Agent Teams选型树",
+     "source_text": "需要多个workers吗？→否：主对话或单子代理；是→workers需要互相通信吗？→否：Sub-Agents（低token、简单协调）；是：Agent Teams（讨论挑战、共享任务列表）。",
+     "paraphrase": "选型第一问不是\"要不要多Agent\"而是\"workers之间要不要通信\"——只要汇报用Sub-Agents，需要协作讨论用Agent Teams。",
+     "writing_angle": "comparison",
+     "related": [
+      "04",
+      "03"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程讲义（机制可复现）",
+      "notes": "判断标准基于功能机制，可验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "bonus-subagent",
+   "lecture_title": "加餐｜子代理专题总结 & 春节练习",
+   "snr_score": 2.15,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2,
+    "verifiability": 2,
+    "actionability": 2,
+    "change_potential": 2.5,
+    "expression_efficiency": 2.5
+   },
+   "adler_q1": "子代理专题总结：两层能力（结构化分工Sub-Agents/协作型认知Agent Teams）、四种使用模式回顾、综合案例（电商支付超时五阶段编排）、春节作业。",
+   "adler_q2": "解决\"回顾子代理专题知识体系\"的问题。已解决：能力分层+模式串联案例。未解决：无新知识。",
+   "adler_q3": "综合案例（并行探索→高噪声→假设竞争→流水线修复→并行验证）展示了模式组合价值，是好的复习设计；但本质是总结。",
+   "adler_q4": "复习巩固，作业提供实践指引。",
+   "critical_notes": "专题回顾+作业布置，无新内容。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "09",
+   "lecture_title": "09｜触类旁通：SKILL 结构与触发机制",
+   "snr_score": 3.53,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "SKILL.md结构与触发机制：从第一性原理理解Skills、核心生态位（可操作知识）、企业本体论（Skills=组织SOP）、触发机制（description是触发器+15,000字符预算）、参考型/任务型两大类型、api-conventions参考型Skill实战、frontmatter字段详解。",
+   "adler_q2": "解决\"Claude如何自动发现并加载技能、SKILL.md怎么写\"的问题。已解决：触发机制+两大类型+完整字段+实战样例。未解决：复杂Skill组织（后续讲渐进式披露）。",
+   "adler_q3": "\"description不是说明文档而是触发器\"是准确的核心洞见（直接影响Claude自动调用）；企业本体论映射（Skills=SOP）有认知框架价值；触发机制细节（15000字符预算）可查证。",
+   "adler_q4": "能立即写出可被Claude自动发现的参考型Skill。",
+   "critical_notes": "Skills专题奠基讲：触发器概念+企业本体论视角是精华；实战为教学示例。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "Skills=企业SOP的可操作知识体系",
+     "source_text": "企业本体论视角：Skills是组织的SOP体系。把Claude当作真正的工程助手，它也会面临同样的问题——需要时再查阅。",
+     "paraphrase": "Skills的本质是把组织规范（代码风格/提交规则/API约定）变成可被AI按需查阅的SOP知识包。",
+     "writing_angle": "methodology",
+     "related": [
+      "14"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/skills",
+      "notes": "Skills机制可查证官方文档，本体论映射为讲师框架"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "description触发器写作",
+     "source_text": "Skills的Description不只是说明文档，而是触发器——我们要掌握让Claude自动发现并逐渐加载技能的关键写法。",
+     "paraphrase": "写description要用\"什么时候该用此技能\"的自然语言条件而非功能描述，Claude才能自动匹配触发。",
+     "writing_angle": "tutorial",
+     "related": [
+      "10",
+      "11"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/skills",
+      "notes": "触发机制官方文档可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "10",
+   "lecture_title": "10｜令行禁止：任务型 Skills （斜杠命令 -Command）实战",
+   "snr_score": 3.3,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "任务型Skills（斜杠命令）实战：Skills vs Commands合并关系、任务型核心机制（disable-model-invocation用户强制触发）、ARGUMENTS传参、动态上下文注入（!command）、七步设计清单、精确授权原则、团队标准命令集（/commit /review /pr-create）实战。",
+   "adler_q2": "解决\"如何设计用户触发的标准化命令\"的问题。已解决：七步设计清单+精确授权+三个完整命令示例。未解决：团队命令集的组织/冲突管理（仅在思考题中提及）。",
+   "adler_q3": "七步设计清单（动作/触发/权限/上下文/安全网/输出/模型）是可操作的方法论；精确授权原则（命令级allowed-tools而非Bash(*)）是安全关键；但大量内容为命令配置文件演示。",
+   "adler_q4": "能立即设计自己的任务型Skill并配置精确权限。",
+   "critical_notes": "任务型Skill实战：七步清单+精确授权是干货，其余为命令配置演示。",
+   "extractions": [
+    {
+     "type": "technique",
+     "name": "任务型Skill七步设计清单",
+     "source_text": "1.动作是什么→命名 2.谁能触发→disable-model-invocation 3.需要什么权限→allowed-tools精确到命令级 4.启动需要什么上下文→!command预注入 5.执行需要什么安全网→hooks 6.输出量大不大→context:fork 7.用什么模型→haiku/sonnet",
+     "paraphrase": "设计命令型Skill按七问走：命名、触发权、命令级权限、上下文注入、安全钩子、输出模式、模型选择。",
+     "writing_angle": "tutorial",
+     "related": [
+      "09"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目04-Skills/projects（可复现）",
+      "notes": "清单为讲师提炼，各字段官方文档可查"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "精确授权：allowed-tools命令级白名单",
+     "source_text": "精确授权——只允许git的特定子命令：Bash(git status:*), Bash(git add:*), Bash(git commit:*)；过于宽泛等于授权所有shell命令：Bash(*)。",
+     "paraphrase": "Skill权限最小化：只授任务所需的具体命令模式，拒绝Bash(*)这种全权委托。",
+     "writing_angle": "tutorial",
+     "related": [
+      "15",
+      "03"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/skills",
+      "notes": "权限语法官方文档可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "11",
+   "lecture_title": "11｜循序渐进：渐进式披露架构设计",
+   "snr_score": 3.58,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "渐进式披露架构设计：设计哲学（图书馆类比）、认知经济学（上下文窗口稀缺+注意力稀释）、三层架构（目录页description/章节SKILL.md/附录按需资源）、财务分析Skill完整项目、Quick Reference路由表技巧、token节省量化。",
+   "adler_q2": "解决\"复杂Skill如何组织以避免token爆炸和信息噪声\"的问题。已解决：三层架构+路由表+完整示例。未解决：\"token利用率提升98%\"无出处（释题自述）；token节省的具体数字是\"大概估算\"。",
+   "adler_q3": "渐进式披露是成熟UX设计模式在AI Skill架构的迁移（非原创但迁移恰当）；\"目录-章节-附录\"三层结构清晰可落地；Quick Reference路由表技巧（用关键词当路由条件）有实操价值；但释题\"token利用率提升98%\"是明显的营销式夸大（🚩），正文自己也说\"大概估算\"。",
+   "adler_q4": "能立即用三层结构设计复杂Skill并显著降低token浪费。",
+   "critical_notes": "Skill架构方法论讲：三层披露+路由表是核心干货；98%数据无出处需剔除；企业本体论映射（知识管理技术化）有升维价值。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "渐进式披露三层架构",
+     "source_text": "层级1：目录页（只有description，让Claude判断相关性）；层级2：章节（SKILL.md主文件，激活后加载）；层级3：附录（引用到才读取，reference/templates/data/scripts）。",
+     "paraphrase": "Skill知识按\"目录-章节-附录\"分层：description只做路由判断，主文件给路线图，细节资源按需加载——用最少token获得最高任务质量。",
+     "writing_angle": "methodology",
+     "related": [
+      "09",
+      "14"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目04-Skills/projects/02-financial-analysis",
+      "notes": "可从配套项目完整复现"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "Quick Reference路由表",
+     "source_text": "用\"用户可能说的关键词\"作为路由条件（而非文件内容的技术名称）；每个路由条目一行，不要超过10个条目；高频路由放前面。",
+     "paraphrase": "SKILL.md用一张约50-token的路由表让Claude按用户关键词直达目标资源文件，避免全文检索。",
+     "writing_angle": "tutorial",
+     "related": [
+      "09"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目04-Skills/projects/02-financial-analysis",
+      "notes": "可从配套项目复现"
+     }
+    },
+    {
+     "type": "data_point",
+     "name": "token利用率提升98%",
+     "source_text": "想象一下一本500页的手册，通过目录页、章节、附录三层结构，我们可以把token利用率提升98%。",
+     "paraphrase": "释题中的营销式量化，正文自述\"大概估算\"，无任何基准与测算过程——属于无出处的夸大声明。",
+     "writing_angle": "opinion",
+     "related": [],
+     "verification": {
+      "status": "🚩",
+      "source_url": "无独立来源",
+      "notes": "释题夸大，正文承认\"大概估算\"，禁止作为事实引用"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "12",
+   "lecture_title": "12｜珠联璧合：Skills 与 SubAgent 配合实战",
+   "snr_score": 2.85,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 2.5,
+    "actionability": 3.5,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Skills与SubAgent配合实战：两个组合方向（SubAgent包含Skill skills字段 / Skill包含SubAgent context:fork）、三种组合模式（预加载/直接应用/流水线分工）、API文档生成器+Code Health Check+API文档流水线三项目。",
+   "adler_q2": "解决\"Skills与SubAgent如何组合使用\"的问题。已解决：方向+模式+三项目演示。未解决：组合选择的决策依据不够系统化。",
+   "adler_q3": "\"谁包含谁\"的方向二分是清晰的组织框架；三种模式（预加载领域知识/context:fork让Skill派生子代理/流水线分工）有增量；但实战演示占大头，核心是可复制的模式。",
+   "adler_q4": "能为自己的场景选择Skills与SubAgent的组合方向。",
+   "critical_notes": "组合模式实战讲：方向二分+三种模式是干货，演示偏多。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "13",
+   "lecture_title": "13｜纲举目张：Skills 架构定位与高级能力",
+   "snr_score": 2.75,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 2.5,
+    "actionability": 3,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Skills架构定位与高级能力：Skills在Claude Code五层架构中的位置、三级进化（SOP到组织智能）、四种设计模式（模板驱动/脚本增强/知识分层/工具隔离）、权限体系与安全设计（只读/只写/只读+脚本/受控执行）。",
+   "adler_q2": "解决\"Skills在整个技术栈中的位置与设计模式\"的问题。已解决：定位图+四模式+权限分类。未解决：篇幅短，各模式展开不足。",
+   "adler_q3": "四种设计模式与工具隔离（审计只读/生成只写/分析只读+脚本/执行受控）是实用分类；但全讲较短，很多内容点到为止，与09-11有重叠。",
+   "adler_q4": "能按四模式+权限分类规划自己的Skill体系。",
+   "critical_notes": "Skills收束讲：设计模式与权限分类有价值但展开不足，与前几讲重叠。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "14",
+   "lecture_title": "14｜星火燎原：从 Claude Code 到行业开放标准",
+   "snr_score": 3.25,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 2.5,
+    "actionability": 3,
+    "change_potential": 4,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "Skills从产品特性到行业开放标准的出圈史：时间线（2025.10上线到12.18开放到2026.2 27+平台/52,000+ Skills）、四层采纳矩阵、三个本质属性（声明式/自包含/知识本位）、SubAgents为何不出圈（知识vs行为）、AAIF基金会、skills.sh包管理器、Push vs Pull大辩论（AGENTS.md vs Skills+Vercel实验）、企业本体论升维、AI工程三趋势。",
+   "adler_q2": "解决\"为什么偏偏是Skills出圈、对AI工程师意味着什么\"的问题。已解决：三属性解释+知识vs行为对比+行业事件梳理+职业含义。未解决：生态数据（27+/52,000+/180,000）全部无法独立核实；Vercel实验结论为转述。",
+   "adler_q3": "\"声明式/自包含/知识本位\"三属性是到位的第一性分析；\"Skills封装知识、SubAgents封装行为→知识可跨平台、行为绑定平台\"的对比是清晰洞见；Push vs Pull场景矩阵（知识量×使用频率）可操作。扣分：全部量化数据无出处，属讲师转述生态（❓）；\"27+平台\"等数字依赖课程出版时点，时效性风险高。",
+   "adler_q4": "能理解Skills的行业价值并用场景矩阵设计自己项目的Push/Pull知识分配。",
+   "critical_notes": "行业视角讲：三属性+知识vs行为+Push/Pull矩阵是干货；但生态数据全部不可验证，引用时须标注为课程出版时点数据。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "Skills出圈三属性：声明式/自包含/知识本位",
+     "source_text": "声明式→任何LLM都能读；自包含→任何文件系统都能存；知识本位→知识的价值不绑定平台。",
+     "paraphrase": "Skills跨平台出圈的机制解释：Markdown声明格式任何LLM可读、文件夹自包含无需注册、价值在知识内容本身。",
+     "writing_angle": "methodology",
+     "related": [
+      "09",
+      "13"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程讲义（属性分析可独立推理验证）",
+      "notes": "三属性为讲师第一性分析，可通过推理验证"
+     }
+    },
+    {
+     "type": "framework",
+     "name": "Push vs Pull：AGENTS.md vs Skills场景矩阵",
+     "source_text": "知识量少(小于8KB)每次都需要→Push(AGENTS.md)；知识量大(大于50KB)偶尔才需要→Pull(Skills)；正确决策是组合使用。",
+     "paraphrase": "常驻规则放CLAUDE.md/AGENTS.md（Push），低频大块领域知识放Skills（Pull），按知识量与使用频率组合分配。",
+     "writing_angle": "comparison",
+     "related": [
+      "11",
+      "09"
+     ],
+     "verification": {
+      "status": "⚠️",
+      "source_url": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals（转述）",
+      "notes": "Vercel实验结论为转述，8KB/50KB阈值为讲师场景推算"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "Skills封装知识，SubAgents封装行为",
+     "source_text": "Skills像一本烹饪书，换厨房带上书就能做菜；SubAgents像一位厨师，技能绑定在人身上，不能把\"厨师\"复制到另一家餐厅。",
+     "paraphrase": "机制可移植性判据：越接近纯知识的机制越易跨平台，越接近运行时行为的机制越绑定平台。",
+     "writing_angle": "opinion",
+     "related": [
+      "03",
+      "08"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程讲义（类比可独立推理）",
+      "notes": "类比论证合理，可独立推理验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "bonus-skills",
+   "lecture_title": "加餐｜Skills 专题总结",
+   "snr_score": 2.38,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2,
+    "verifiability": 2.5,
+    "actionability": 2.5,
+    "change_potential": 2.5,
+    "expression_efficiency": 2.5
+   },
+   "adler_q1": "Skills专题六讲总结：两层能力体系（知识工程/系统工程）、贯穿暗线、四种设计模式回顾、综合案例、大作业（生产级Skill体系）+判断标准（5分钟理解/10分钟使用/30分钟产出）。",
+   "adler_q2": "解决\"回顾Skills专题并布置实践作业\"的问题。",
+   "adler_q3": "判断标准（同事5分钟理解/10分钟使用/30分钟产出）是可操作的验收口径；其余为总结。",
+   "adler_q4": "用验收标准检验自己的Skill设计。",
+   "critical_notes": "专题回顾+验收标准，无新知识。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "15",
+   "lecture_title": "15｜防微杜渐：Hooks 事件驱动自动化",
+   "snr_score": 3.4,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Hooks事件驱动自动化：中间件本质、17种Hook事件三阵营（控制点/观测点/通知点）、配置结构、四种执行类型（command/prompt/compact/mcp）、PreToolUse实战（阻止危险命令/保护敏感文件）、PostToolUse实战（自动格式化/Lint/审计日志）。",
+   "adler_q2": "解决\"如何在Claude执行前后插入安全检查\"的问题。已解决：事件体系+执行类型+两个安全实战。未解决：Stop等高级事件在下一讲。",
+   "adler_q3": "\"Hooks=AI时代中间件\"类比准确；17事件按\"能否阻止\"三阵营分类有认知价值；PreToolUse危险命令拦截（正则匹配rm -rf等+exit code决策）是立即可用的安全脚本。",
+   "adler_q4": "能立即配置PreToolUse拦截危险命令、PostToolUse自动格式化。",
+   "critical_notes": "Hooks基础讲：中间件心智模型+事件分类+安全脚本是干货；\"四大执行类型\"中compact/mcp仅提及。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "Hooks=AI时代的中间件",
+     "source_text": "如果你有Web开发经验，你一定熟悉中间件（Middleware）的概念。请求→中间件1→中间件2→处理函数。Claude Code的Hooks就是这样的横切关注点机制。",
+     "paraphrase": "把Hooks理解为AI执行流程的中间件：在工具调用/会话事件前后插入检查与处理，实现安全、日志、质量等横切关注点。",
+     "writing_angle": "methodology",
+     "related": [
+      "16",
+      "19"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/hooks-guide",
+      "notes": "Hooks机制官方文档可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "PreToolUse拦截危险命令脚本",
+     "source_text": "读取stdin输入，提取命令，用正则匹配危险模式（rm -rf、curl、mkfs等），命中则exit 2拒绝，安全则exit 0放行。",
+     "paraphrase": "写一个shell脚本当PreToolUse守门员：对Bash命令做危险模式匹配，用退出码决定allow/deny。",
+     "writing_angle": "tutorial",
+     "related": [
+      "10"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目06-Hooks/projects（可复现）",
+      "notes": "脚本可从配套项目直接复制验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "16",
+   "lecture_title": "16｜未雨绸缪：Hooks 高级模式与工程实践",
+   "snr_score": 3.77,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 3,
+    "actionability": 5,
+    "change_potential": 4,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "Hooks高级模式与工程实践：Stop Hook质量门控（continue机制：测试不过不让停）、自动测试门控脚本（多语言检测）、Prompt类型Hook做第二层AI审查、stop_hook_active防死循环、SubagentStart/Stop事件（注入上下文/验证成果）、frontmatter Hooks、Hook工程三维决策框架。",
+   "adler_q2": "解决\"Claude做完任务后谁来验收、子代理如何自动注入/验证\"的问题。已解决：Stop质量门控体系+子代理事件+防死循环+多Hook链。未解决：多Hook组合的完整示例较少。",
+   "adler_q3": "\"把质量保证从事后检查变成交付前置条件——检查通过了才算做完\"是深刻的工程思想；continue+stop_hook_active的机制设计（允许重试一次防死循环）是精妙的工程细节；Prompt类型Hook让LLM当审查者的双层AI设计有新意；脚本健壮性处理（无测试不算失败/输出截断）体现工程素养。",
+   "adler_q4": "能为自己的项目配置\"测试不过不让停\"的质量门控，并用SubagentStop自动验收子代理产出。",
+   "critical_notes": "全课工程密度最高的一讲：质量门控体系从思想到脚本完整落地；唯一不足是依赖jq等外部工具的环境前提。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "Stop Hook：检查通过了才算做完",
+     "source_text": "这种机制把质量保证从\"事后检查\"变成了\"交付前置条件\"，这样能让Claude不是做完了再检查，而是检查通过了才算做完。",
+     "paraphrase": "用Stop Hook+continue机制把质量门控前置：Claude未通过测试就不能停下来，实现自动修复闭环。",
+     "writing_angle": "methodology",
+     "related": [
+      "15",
+      "19"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/hooks-guide",
+      "notes": "Stop Hook的continue字段官方文档可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "stop_hook_active防死循环",
+     "source_text": "当Claude因为Stop Hook而继续工作时，下一次Stop事件的输入中stop_hook_active会被设为true。你的脚本应该检查这个字段来避免死循环。",
+     "paraphrase": "给质量门控加熔断：检查stop_hook_active标记，允许Claude重试一次，二次失败则放行，防止无限修复循环。",
+     "writing_angle": "tutorial",
+     "related": [
+      "15"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/hooks-guide",
+      "notes": "官方字段，可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "SubagentStop验证子代理成果",
+     "source_text": "SubagentStop在子代理完成工作后触发。它的决策控制和Stop事件完全一致——可以阻止子代理停止，强制它继续工作。",
+     "paraphrase": "在子代理出口设验收钩子：验证审查是否完整、产出是否达标，不达标强制子代理继续。",
+     "writing_angle": "tutorial",
+     "related": [
+      "05",
+      "03"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/hooks-guide",
+      "notes": "官方事件，可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "17",
+   "lecture_title": "17｜海纳百川：MCP 协议与外部工具连接",
+   "snr_score": 3.2,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3,
+    "actionability": 4,
+    "change_potential": 3,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "MCP协议与外部工具连接：USB-C类比、架构与核心概念（client/server/transport）、三种传输方式（stdio/HTTP/SSE）、配置管理、四个主流服务实战（Context7/GitHub/Notion/数据库）、自定义MCP服务器（TS/Python SDK）、5条安全原则、调试排障。",
+   "adler_q2": "解决\"如何让Claude连接外部工具\"的问题。已解决：MCP完整教程（概念到实战到自定义）。未解决：安全原则未展开为策略。",
+   "adler_q3": "\"MCP=AI的USB-C\"类比到位；M×N适配器碎片化问题论证（M助手×N服务需M×N适配器→统一协议）是标准且有力的论证；配置与实战教程完整；5条安全原则是好的清单但无深度展开。",
+   "adler_q4": "能立即配置MCP服务器接入外部服务或编写自定义MCP服务器。",
+   "critical_notes": "MCP系统教程：类比+教程完整，体系化整理价值高；原创性有限。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "MCP=AI的USB-C：一协议通",
+     "source_text": "在MCP出现之前，假设市场上有M个AI助手和N个外部服务，理论上需要M×N个专用适配器。MCP统一了接口标准。",
+     "paraphrase": "MCP解决Agent-服务连接的碎片化：一个开放协议取代M×N适配器，让任何Agent连任何服务。",
+     "writing_angle": "methodology",
+     "related": [
+      "14"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://modelcontextprotocol.io",
+      "notes": "MCP官方协议文档可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "18",
+   "lecture_title": "18｜庖丁解牛：Tools 工具系统内核剖析",
+   "snr_score": 3.57,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 3,
+    "actionability": 4,
+    "change_potential": 4,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "Tools工具系统内核：Agentic Loop三阶段（推理到工具到回注）、内置工具完整清单与风险等级、软件工程五个原子操作（感知/搜索/修改/执行/获取）、从原语到涌现的设计哲学（Unix类比/Bash图灵完备逃逸舱）、权限控制体系（分层/模式/规则语法deny到ask到allow/配置层级）。",
+   "adler_q2": "解决\"Claude Code内置工具如何组织、为什么是这些工具、权限如何控制\"的问题。已解决：五原子操作+涌现原理+权限全体系。未解决：工具数量随版本变化，清单有时效性。",
+   "adler_q3": "\"五个原子操作\"框架（感知/搜索/修改/执行/获取）是清晰的概念压缩，虽源于Unix哲学但应用于AI工具设计有解释力；\"高级工具是涌现出来的不是内置的\"（给重构工具反而有害）是反直觉洞见；Bash三原因分析（结构化交互/权限精细/Token效率）到位；deny到ask到allow评估顺序与通配符语法准确。",
+   "adler_q4": "能理解工具设计哲学并精确配置权限规则（Bash通配符/path规则）。",
+   "critical_notes": "工具系统哲学讲：五原子+涌现+Bash逃逸舱是干货，权限语法实用；\"少而精\"哲学被hot-03的40工具证伪了规模但证实了哲学。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "软件工程五个原子操作",
+     "source_text": "一个开发者每天做的所有事情，都可以分解为五种原子操作：感知（读代码）、搜索（找引用）、修改（改bug）、执行（跑测试）、获取（查资料）。",
+     "paraphrase": "Claude Code工具集=五个原子操作的原语化：复杂任务都是这五者的排列组合，不需要专用高级工具。",
+     "writing_angle": "methodology",
+     "related": [
+      "hot-02",
+      "01"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/tools-reference",
+      "notes": "工具清单官方可查证；五原子框架为讲师提炼"
+     }
+    },
+    {
+     "type": "insight",
+     "name": "高级工具是涌现出来的，不是内置的",
+     "source_text": "给Claude一个\"重构工具\"反而是有害的。因为\"重构\"不是原子操作，它是一系列决策的集合。把决策权交给Claude的推理能力，比交给一个固定逻辑的工具更灵活。",
+     "paraphrase": "不要为每种任务造专用工具：把决策序列（如重构）交给LLM推理，用原语工具组合实现，比固化逻辑更灵活。",
+     "writing_angle": "opinion",
+     "related": [
+      "22"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程讲义（设计哲学，可独立论证）",
+      "notes": "设计哲学观点，可通过涌现实验验证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "19",
+   "lecture_title": "19｜无人值守：Headless 模式与 CI-CD 集成",
+   "snr_score": 3.45,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3.5
+   },
+   "adler_q1": "Headless模式与CI/CD集成：凌晨三点的代码审查场景、核心机制（claude -p无人值守）、三种输出格式（text/json/stream-json）、Unix管道集成（jq解析/批量处理/git工作流）、GitHub Actions官方Action、Pre-commit集成、完整CI/CD审查系统实战、安全与成本控制（最小权限+max-turns）、其他CI平台（GitLab/CI）。",
+   "adler_q2": "解决\"如何让Claude在无人值守时自动工作\"的问题。已解决：Headless全链路（命令到CI集成到安全控制）。未解决：CI中Claude自动修复的审核流程设计（仅在思考题提出）。",
+   "adler_q3": "教程体系完整且可操作性强（管道集成示例多样）；\"AI代理不会主动判断操作是否安全，安全责任在配置端\"是准确的安全观；最小权限+max-turns成本控制实用；官方GitHub Action降低接入门槛。",
+   "adler_q4": "能立即把Claude Code嵌入自己的CI/CD实现自动代码审查。",
+   "critical_notes": "Headless完整教程：管道集成+CI实战+安全控制体系化；原创性一般但工程价值高。",
+   "extractions": [
+    {
+     "type": "technique",
+     "name": "CI/CD最小权限+成本控制",
+     "source_text": "在CI/CD中运行Claude Code时应该限制权限。最小权限原则的核心思想是：只给Claude完成任务所需的最小权限。",
+     "paraphrase": "无人值守环境安全三件套：--allowedTools白名单限工具、--max-turns限轮次控成本、权限配置端兜底。",
+     "writing_angle": "tutorial",
+     "related": [
+      "20",
+      "22"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://www.eesel.ai/blog/claude-code-automation",
+      "notes": "eesel.ai指南引用，可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "Unix管道集成模式",
+     "source_text": "cat file | claude -p \"分析\" | jq 解析；claude -p \"生成代码\" > file；claude -p \"分析\" → 发送通知。",
+     "paraphrase": "Headless与Unix管道组合：Claude作为管道中的一个处理单元，输入输出均可程序化对接。",
+     "writing_angle": "tutorial",
+     "related": [
+      "18"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "课程项目07-Headless/projects（可复现）",
+      "notes": "可从配套项目复现"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "20",
+   "lecture_title": "20｜有章可循：Rules 规则系统深度剖析",
+   "snr_score": 3.73,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3.5,
+    "verifiability": 3,
+    "actionability": 4.5,
+    "change_potential": 4,
+    "expression_efficiency": 4
+   },
+   "adler_q1": "Rules规则系统：两种规则两个世界（指令规则=员工手册认知约束 vs 权限规则=门禁系统行为约束）、.claude/rules/完全指南（两种加载模式：常驻paths与条件加载paths、何时从CLAUDE.md拆到rules）、全栈项目rules拆分实战（前端/后端/测试规范）。",
+   "adler_q2": "解决\"无人值守时谁来定规矩、两种规则如何分工\"的问题。已解决：软硬约束二分+加载机制+拆分实战。未解决：规则冲突与优先级仲裁。",
+   "adler_q3": "\"指令规则是Claude的认知约束，权限规则是客户端的行为约束\"的二分法是全课最精准的概念切分之一；\"员工手册vs门禁系统\"类比让软硬约束差异一目了然；条件加载（paths）+加载不卸载的细节（一旦加载不会卸载）是容易被忽略的关键行为。",
+   "adler_q4": "能为项目搭建rules目录并正确划分指令/权限规则。",
+   "critical_notes": "Rules概念讲：软硬约束二分+条件加载细节是核心价值；内容精炼。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "指令规则vs权限规则：员工手册与门禁系统",
+     "source_text": "指令规则像公司的员工手册，写着\"代码提交前必须跑测试\"，员工可以遵守，也可以偷懒。权限规则像门禁系统——没有卡就进不了机房，系统不给你选择。",
+     "paraphrase": "两类规则的本质：指令规则约束认知（软，可违背），权限规则约束行为（硬，强制执行）；工程上二者互补。",
+     "writing_angle": "methodology",
+     "related": [
+      "18",
+      "15"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/rules",
+      "notes": "Rules机制官方文档可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "rules条件加载与加载不卸载",
+     "source_text": "paths字段：测试规范只在读取/编辑匹配路径文件时注入。但有一个关键细节——一旦加载，就不会卸载。paths控制的是何时加载，不是何时生效。",
+     "paraphrase": "用paths把大块规范做成按需注入，但注意加载后常驻当前会话——设计规则粒度时要考虑此行为。",
+     "writing_angle": "tutorial",
+     "related": [
+      "11",
+      "09"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://code.claude.com/docs/en/rules",
+      "notes": "官方机制，可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "21",
+   "lecture_title": "21｜登堂入室 ：通过Agent SDK 掌控 Claude Code",
+   "snr_score": 2.93,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 3,
+    "actionability": 3.5,
+    "change_potential": 3,
+    "expression_efficiency": 2.5
+   },
+   "adler_q1": "Agent SDK基础：什么是SDK（可编程的Claude Code）、两种使用方式（单次query/流式）、ClaudeAgentOptions配置详解（allowed_tools/permission_mode/max_turns/model）、权限模式（plan/acceptEdits/bypassPermissions）、消息类型与响应处理、会话管理、代码分析Agent实战、错误处理与监控。",
+   "adler_q2": "解决\"如何用代码驱动Claude Code\"的问题。已解决：SDK全基础API+权限+会话+实战。未解决：高级特性在下一讲。",
+   "adler_q3": "教程体系清晰；\"最坏结果决定权限\"的心智模型（改错文件git checkout恢复→放宽；删生产数据库→严格控制）是好的安全决策框架；但内容本质是SDK文档的讲解版。",
+   "adler_q4": "能写出第一个用SDK驱动的Agent。",
+   "critical_notes": "SDK基础教程：权限心智模型是亮点，其余为文档讲解。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "22",
+   "lecture_title": "22｜得心应手：Agent SDK 高级应用",
+   "snr_score": 3.53,
+   "tier": "silver",
+   "score_breakdown": {
+    "originality": 3,
+    "verifiability": 3.5,
+    "actionability": 4.5,
+    "change_potential": 3.5,
+    "expression_efficiency": 3
+   },
+   "adler_q1": "Agent SDK高级应用：自定义工具（@tool装饰器/SDK内MCP服务器/Pydantic参数验证）、SDK Hooks系统（PreToolUse拦截与改参/PostToolUse处理/canUseTool运行时权限）、四层权限管理（权限模式/canUseTool/Hooks/settings.json）、流式会话（权限请求/中断取消/动态切换）、自动化测试修复Agent实战、生产最佳实践（成本控制）。",
+   "adler_q2": "解决\"如何构建生产级SDK Agent\"的问题。已解决：自定义工具+Hooks+四层权限+流式+完整实战+成本控制。未解决：SDK版本演进带来的API变动风险。",
+   "adler_q3": "\"四道防线\"权限分层（全局基调→运行时回调→钩子拦截→配置规则）是体系化安全设计；canUseTool运行时权限回调（根据上下文动态决定）是SDK独有的细粒度控制；流式会话作为首选方式（中断/取消/动态切换）的工程理由充分；直接执行SQL vs 限制操作类型的Pydantic验证示例体现安全编码意识。",
+   "adler_q4": "能构建带安全控制的SDK Agent（自定义工具+Hooks+流式）。",
+   "critical_notes": "SDK高级教程：四层权限+canUseTool是精华；实战完整但依赖SDK文档API。",
+   "extractions": [
+    {
+     "type": "framework",
+     "name": "SDK权限四道防线",
+     "source_text": "权限模式（全局基调）→ canUseTool回调（运行时权限）→ Hooks（执行前拦截）→ settings.json权限规则（配置兜底）。",
+     "paraphrase": "SDK Agent安全分层：先设会话基调，再按上下文动态授权，钩子拦截关键操作，配置规则兜底——纵深防御。",
+     "writing_angle": "methodology",
+     "related": [
+      "21",
+      "15",
+      "18"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://docs.claude.com/en/api/agent-sdk",
+      "notes": "SDK官方文档可查证"
+     }
+    },
+    {
+     "type": "technique",
+     "name": "canUseTool运行时权限回调",
+     "source_text": "canUseTool回调：运行时权限控制。受保护的文件列表——在回调中判断工具+输入是否被允许，动态决定。",
+     "paraphrase": "比静态白名单更细：用回调函数在每次工具调用时按当前上下文动态裁决权限（如保护敏感文件路径）。",
+     "writing_angle": "tutorial",
+     "related": [
+      "15"
+     ],
+     "verification": {
+      "status": "✅",
+      "source_url": "https://docs.claude.com/en/api/agent-sdk",
+      "notes": "SDK官方API，可查证"
+     }
+    }
+   ]
+  },
+  {
+   "lecture_id": "23",
+   "lecture_title": "23｜化零为整：Plugins 插件打包与分发",
+   "snr_score": 2.93,
+   "tier": "copper",
+   "score_breakdown": {
+    "originality": 2.5,
+    "verifiability": 3,
+    "actionability": 3.5,
+    "change_potential": 3,
+    "expression_efficiency": 2.5
+   },
+   "adler_q1": "Plugins插件打包与分发：应用商店类比、插件目录结构、plugin.json manifest、打包五类组件（Commands/Skills/Agents/Hooks/MCP）、团队能力包实战（审查命令/安全子代理/扫描）、发布安装流程、企业级管理。",
+   "adler_q2": "解决\"如何把散落组件打包分享给团队\"的问题。已解决：插件完整打包流程+团队能力包实战。未解决：插件市场生态细节。",
+   "adler_q3": "\"插件=可插拔工具模块/应用商店\"类比直观；打包五类组件是前面所有能力的收口，价值在于集成而非创新；团队能力包实战演示为主。",
+   "adler_q4": "能把团队积累的组件打包成可分发插件。",
+   "critical_notes": "Plugins收尾讲：打包流程完整，作为课程收官合理；原创性有限。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "outro",
+   "lecture_title": "结束语｜时代飞速更迭，你我携手同行",
+   "snr_score": 1.43,
+   "tier": "iron",
+   "score_breakdown": {
+    "originality": 1.5,
+    "verifiability": 1,
+    "actionability": 1,
+    "change_potential": 2,
+    "expression_efficiency": 2
+   },
+   "adler_q1": "结束语：从1月28日到4月15日的心路变迁（OpenClaw热度消退/Harness概念/源码泄露）+\"不变之一\"（世界复杂性/关系可贵性）+时代前行三法（思考深度/学习速度/抱团取暖）。",
+   "adler_q2": "解决\"回顾课程与鼓励继续学习\"的问题，纯感悟。",
+   "adler_q3": "无技术内容，属个人叙事+鸡汤。",
+   "adler_q4": "无操作价值。",
+   "critical_notes": "纯结束语，无知识内容。",
+   "extractions": []
+  },
+  {
+   "lecture_id": "quiz",
+   "lecture_title": "结课测试｜来赴一场满分之约！",
+   "snr_score": 1.0,
+   "tier": "iron",
+   "score_breakdown": {
+    "originality": 1,
+    "verifiability": 1,
+    "actionability": 1,
+    "change_potential": 1,
+    "expression_efficiency": 1
+   },
+   "adler_q1": "结课测试指引：20道题（10单选+10多选），满分100，附问卷链接。",
+   "adler_q2": "检验学习成果。",
+   "adler_q3": "无内容。",
+   "adler_q4": "可自测。",
+   "critical_notes": "测试页，无内容。",
+   "extractions": []
+  }
+ ]
+}

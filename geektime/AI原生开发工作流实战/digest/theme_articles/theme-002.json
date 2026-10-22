@@ -1,0 +1,53 @@
+{
+  "id": "theme-002",
+  "theme": "AI 能力封装四象限：Slash Command / Agent Skill / Subagent / MCP 到底怎么选",
+  "source_lectures": ["08", "12", "13", "14", "20", "flash-skills-spec"],
+  "lecture_tiers": {"gold": 2, "silver": 4, "copper": 0},
+  "narrative_arc": {
+    "act1_problem": "当工程师开始'编程 AI'时，会陷入一个真实的决策困境：我有四个扩展 AI 能力的工具——Slash Command、Agent Skill、Subagent、MCP，它们看起来都能'让 AI 做某件事'，到底该用哪个？选错的结果是能力无法被触发、上下文被撑爆、或安全失控。更深层的问题是：这四个工具背后其实是四种不同的心智模型——'用户命令'、'模型发现'、'上下文隔离'、'协议连接'，混淆它们会导致协作模式错配。",
+    "act2_method": "课程给出了一套清晰的分类学：① Slash Command 是'祈使句'，由用户主动调用，代表'流程的确定性'，适合审查、提交这类必须标准化执行的环节；② Agent Skill 是'陈述句'，由模型自主发现调用，核心机制是'渐进式披露'（只注入 description 索引、按需加载指令、深度加载脚本），适合领域专业知识；③ Subagent 的核心是'独立上下文隔离'，让安全专家只思考安全、性能专家只思考性能，不污染主会话，适合需要深度专注的多目标任务；④ MCP 是'协议连接'，用 RPC 把 AI 连到外部系统，且'认证解耦'让密钥永不进入模型上下文。选择原则一句话：标准流程用 Command（确定性），特定领域用 Skill（自主性），复杂多任务用 Subagent（隔离），外部系统用 MCP（连接）。",
+    "act3_critique": "这套分类学的边界在于：① 四者高度重叠且在快速融合——Skill 内部可以调用 MCP 工具、可以定义 Subagent，Command 可以被'升维'成 Skill（13 讲就是演示这个升维），'选型'更多是心智模型的锚定而非硬边界；② '渐进式披露'依赖 description 的触发精度，而 LLM 存在'触发不足'（undertrigger）倾向——写得再好也可能不被调用，这是当前能力的固有脆弱性；③ 四个能力都运行在'官方功能'的快速演进中，教程细节会过时，真正可迁移的是'确定性 vs 自主性''祈使句 vs 陈述句'这些认知区分。数据可信度方面：渐进式披露有 Anthropic 官方 Skill 规范佐证（✅），但'同理心写 Prompt 更有效'等心法纯属个人经验（⚠️）无对照实验。"
+  },
+  "title_idea": "命令、技能、分身、协议：AI 编程的四种能力封装，你用对了吗？",
+  "type": "comparison",
+  "search_keywords": [
+    "Claude Code slash commands vs skills",
+    "Agent Skills progressive disclosure",
+    "subagent context isolation",
+    "MCP model context protocol tools resources prompts",
+    "agentskills.io standard",
+    "AI agent capability extension patterns",
+    "prompt engineering vs skill engineering"
+  ],
+  "visualization_hints": [
+    "对比表格/矩阵：四个能力在'触发方式、上下文、确定性、适用场景'四维度的差异",
+    "Mermaid流程图：Skill 的渐进式披露三层加载（发现层→触发层→执行层）",
+    "Mermaid关系图：Command 可升维为 Skill，Skill 可调用 MCP 工具，MCP 可定义 Subagent 的交叉关系"
+  ],
+  "controversy_hooks": [
+    "Skill 写了却从不被调用——'触发不足'是 LLM 的固有倾向，你的 description 是在和模型的心智理论博弈",
+    "为什么严肃的代码审查反而该用更'笨'的 Slash Command，而不是更'智能'的 Skill？",
+    "放弃 MUST/NEVER 恐吓式 Prompt——'共情式写法'挑战了大多数人对 Prompt 工程的认知"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "渐进式披露三层模型对应 Anthropic 官方 Skill 规范 → agentskills.io 与 anthropics/skills 仓库",
+      "MCP 的 Tools/Resources/Prompts 三类能力为官方协议定义 → modelcontextprotocol.io",
+      "AGENTS.md 作为跨 Agent 开放标准被多家支持 → 社区公开倡议"
+    ],
+    "avoid_claims": [
+      "'SKILL.md 最好不超过 500 行' — 官方建议但非硬约束 (⚠️)",
+      "'同理心写法比 MUST 恐吓式更有效' — 作者个人经验，无对照实验 (⚠️)",
+      "name 字段 1-64 字符等具体规范数字 — 随标准演进，引用需标注版本 (⚠️)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：四工具的能力封装困境",
+      "核心原理：祈使句 vs 陈述句、渐进式披露、上下文隔离、认证解耦",
+      "实操方法：四象限选择决策树",
+      "边界与批判：触发不足、能力融合趋势、过时风险"
+    ],
+    "min_score": 52
+  }
+}

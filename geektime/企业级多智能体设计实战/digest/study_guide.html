@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>企业级多智能体设计实战 · 学习指南</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">企业级多智能体设计实战</a><a href="README.html">《企业级多智能体设计实战》消化索引（digest README）</a></div>
+<h1>企业级多智能体设计实战 · 学习指南</h1>
+<blockquote><p>一句话：这门课的价值不在于教你调 CrewAI，而在于把&quot;组建人类团队&quot;的管理学系统移植到 Agent 工程——从定义角色、设计协作协议，到企业级加固与生产交付，形成一套可迁移的&quot;数字员工团队&quot;方法论。</p></blockquote>
+<h2>课程画像</h2>
+<ul><li>讲师：晓寒（百度架构师出身，头部互金公司 AI 中台负责人）</li><li>适合人群：已会调 Agent 框架、但想搞清楚&quot;怎么上生产&quot;的工程师/架构师；要立项 AI 场景的技术负责人</li><li>不适合人群：想速成某个框架 API 的初学者（本课重点是方法论不是 API 教程）</li><li>投入时间：推荐 8 小时精读（选读金矿+银矿），完整跟练 25 小时</li><li>价值密度：⭐⭐⭐⭐ (3.0/5，后半程高、前半程中)</li></ul>
+<h2>阅读路线</h2>
+<h3>路线 A：快速浏览（30 分钟）</h3>
+<p>只需读 6 讲金矿课，即可抓住全课 20% 的精华：</p>
+<ul><li>[23] Orchestrator 范式 — 全课地基，三堵墙 + 三关键设计</li><li>[26] 协作协议 — 邮箱三态机是&quot;能上生产&quot;的关键</li><li>[27] Human as 甲方 — 人类介入点的正确设计</li><li>[28] 自我进化 — 复盘工程化，方法论最扎实</li><li>[34] AI 适用性评估表 — 立项前最实用的工具</li><li>[36] 评测体系 — AI 质量可量化的四环节</li></ul>
+<h3>路线 B：深度阅读（2 小时）</h3>
+<p>在 A 的基础上补充银矿：</p>
+<ul><li>[18][19] 上下文工程 — 记忆的本质与生命周期</li><li>[25] 三维隔离判断法 — 角色设计</li><li>[30][31][32] 可观测/可靠/安全 — 企业级加固三件套</li><li>[38] 六层监控 — 生产持续退化的防线</li></ul>
+<h3>路线 C：时间充裕（8 小时）</h3>
+<p>全部 ⭐⭐⭐ 和 ⭐⭐（金矿 6 + 银矿 15），外加 [12][16] 工具与 Skills、[35][37][39] 交付闭环。</p>
+<h2>核心知识地图（按主题重组，非原课程顺序）</h2>
+<h3>主题一：从&quot;面向过程&quot;到&quot;面向组织&quot;</h3>
+<p><strong>一句话总结</strong>：AI 应用开发的范式从写提示词（Prompt）→ 组上下文（Context）→ 造环境（Harness），控制权从&quot;写内容&quot;转向&quot;造环境&quot;。</p>
+<p><strong>关键框架</strong>：三代演进把 Agent 比作一匹马——Prompt 时代你是骑手（手把手拉缰绳），Context 时代你是教练（规划赛道），Harness 时代你是牧场主（建好围栏让马自己吃草）。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 Bootstrap 预加载导航骨架（索引&gt;全文），不塞全部内容（来源：第 19 讲）</li><li>关键信息放上下文两头（利用 U 型注意力分布），中间精简（来源：第 18 讲）</li><li>治理上下文用&quot;加法+减法&quot;双框架，只做加法必然 Context Rot（来源：第 18 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;大模型没有记忆。每一次 API 调用都是独立的……记忆的本质，就是一套构建 message list 的机制。&quot; — 第 18 讲</p></blockquote>
+<h3>主题二：数字员工团队的协作协议</h3>
+<p><strong>一句话总结</strong>：Orchestrator 解决&quot;怎么分工做事&quot;，数字团队解决&quot;做事的是谁&quot;——从用完即抛的调度，升级到有 soul/skill/记忆的持久化员工。</p>
+<p><strong>关键框架</strong>：模块四的四机制递进——角色设计（三维隔离+NEVER 清单）→ 任务流转（共享工作区+邮箱三态机）→ 人类介入（甲方三件事）→ 自我进化（五步闭环）。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>新增角色前用三维隔离判断法（记忆/技能/决策偏好），两个以上&quot;是&quot;才新建（来源：第 25 讲）</li><li>邮箱用三态状态机（unread→in_progress→done）而非 read:bool，防 Agent 崩溃丢任务（来源：第 26 讲）</li><li>人只和 Manager 沟通（单一接口原则），需求落文档才算数（来源：第 27 讲）</li><li>复盘用 root_cause 枚举逼出分类思考，打破&quot;下次注意移动端&quot;式复述（来源：第 28 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;Orchestrator 是用完即抛的调度机制，Manager 是跨 session 积累经验的持久化团队成员。&quot; — 第 25 讲</p></blockquote>
+<h3>主题三：企业级加固——Prompt 是建议，Hook 是法律</h3>
+<p><strong>一句话总结</strong>：可观测、可靠、安全三件事都必须放工程层，因为&quot;模型是完全不可信的，让被监控对象自己报告监控数据，等于让考生自己批改试卷&quot;。</p>
+<p><strong>关键框架</strong>：5+2 事件 Hook 骨架统一零散钩子，三策略（重试/循环检测/成本围栏）与三层安全（沙箱/权限网关/身份认证）作为插件挂载，改 yaml 不改代码。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>循环检测用状态哈希去重（方向检测），max_iter 只作最后防线（来源：第 31 讲）</li><li>成本围栏在 Hook 层用代码硬停止，不靠 Agent 自觉（来源：第 31 讲）</li><li>权限用 Deny&gt;Ask&gt;Allow，新工具 Default-Deny（来源：第 32 讲）</li><li>密钥在工具执行层注入，从不上 LLM 上下文（来源：第 32 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;安全不是给 Agent 下命令，是从能力上限制它能做什么。&quot; — 第 32 讲</p></blockquote>
+<h3>主题四：AI 项目失败的第一原因是选题，不是技术</h3>
+<p><strong>一句话总结</strong>：四个独立机构报告交叉印证 AI 项目失败是行业级系统性失败，根因在&quot;用正确的技术解决错误的问题&quot;。</p>
+<p><strong>关键框架</strong>：需求挖掘三法（工作流审计/摩擦点溯源/规模增长映射）→ 四问过滤 → 5 维 25 分评估表 → 评测四环节 → 六层监控，构成从立项到上线到持续迭代的完整闭环。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用&quot;量翻 10 倍是否需要 10 倍人&quot;判断规模瓶颈（来源：第 34 讲）</li><li>立项前必答 Q2&quot;每周发生几次&quot;，&lt;10 次直接暂缓（来源：第 34 讲）</li><li>评测汇总按维度细分而非只看整体通过率；用 pass^k 而非 pass@k 汇报（来源：第 36 讲）</li><li>告警用消耗率（预算燃烧速度）而非原始阈值，噪声减 90%（来源：第 38 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;AI-enabled 是用 AI 把现有工作做得更快更好；AI-native 是问：有哪些有价值的事，因为人类的内在局限，从来没人完整做过？&quot; — 第 34 讲</p></blockquote>
+<h2>可忽略内容</h2>
+<p>以下章节信噪比 &lt; 2.0，可直接跳过：</p>
+<ul><li>[00] 课程介绍 — 营销开场白</li><li>[06] 基础代码环境 — 纯环境配置扫盲</li><li>[11][17][22] XiaoPaw 项目演示 — 一个项目横跨多课的 demo 膨胀</li><li>[test] 结课测试 — 纯测试入口</li><li>[live-01] OpenClaw 直播 — 营销直播稿</li></ul>
+<h2>延伸阅读</h2>
+<ul><li>论文：ReAct (Yao et al. 2022)、Reflexion (NeurIPS 2023)、Retroformer (ICLR 2024)、MT-bench (Zheng et al.)、Lost in the Middle (Liu et al. TACL 2024)</li><li>报告：MIT NANDA Initiative (2025)、Gartner (2025)、BCG (2024)、RAND (2024)</li><li>开源：CrewAI、Claude Code（Harness 设计）、Langfuse（可观测）、AIO-Sandbox</li><li>知乎相关：多智能体架构范式、Agent 记忆工程、LLM-as-Judge 评测</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide.md">study_guide.md</a></footer>
+</div></body></html>

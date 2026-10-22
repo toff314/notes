@@ -1,0 +1,411 @@
+[
+  {
+    "order": 0,
+    "title": "",
+    "title_safe": "",
+    "articles": []
+  },
+  {
+    "order": 1,
+    "title": "热点速递",
+    "title_safe": "热点速递",
+    "articles": [
+      {
+        "id": "963273",
+        "title": "热点速递｜Claude Code 源码泄漏：热闹看完，我们聊点真问题",
+        "title_safe": "热点速递｜Claude Code 源码泄漏：热闹看完，我们聊点真问题",
+        "time": "05:58",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "993815",
+        "title": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+        "title_safe": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+        "time": "06:16",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "开篇词",
+    "title_safe": "开篇词",
+    "articles": [
+      {
+        "id": "963262",
+        "title": "开篇词｜一个人用 Claude Code 造一个简版 Dify，需要多久？",
+        "title_safe": "开篇词｜一个人用 Claude Code 造一个简版 Dify，需要多久？",
+        "time": "10:38",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "认知篇",
+    "title_safe": "认知篇",
+    "articles": [
+      {
+        "id": "963290",
+        "title": "01｜你是架构师，Claude Code 是你的工程团队",
+        "title_safe": "01｜你是架构师，Claude Code 是你的工程团队",
+        "time": "10:17",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "963294",
+        "title": "02｜规范驱动开发（SDD）：让 AI 永远在轨道上",
+        "title_safe": "02｜规范驱动开发（SDD）：让 AI 永远在轨道上",
+        "time": "14:42",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "顶层设计篇",
+    "title_safe": "顶层设计篇",
+    "articles": [
+      {
+        "id": "963507",
+        "title": "03｜产品定义：动第一行代码之前你该想清楚什么",
+        "title_safe": "03｜产品定义：动第一行代码之前你该想清楚什么",
+        "time": "14:15",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "964066",
+        "title": "04｜架构设计（上）：应用架构与代码组织",
+        "title_safe": "04｜架构设计（上）：应用架构与代码组织",
+        "time": "10:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "964308",
+        "title": "05｜架构设计（下）：部署架构、性能预判与数据设计",
+        "title_safe": "05｜架构设计（下）：部署架构、性能预判与数据设计",
+        "time": "13:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "964330",
+        "title": "06｜Claude Code 实战必备：CLAUDE.md、Skills 与工程规范",
+        "title_safe": "06｜Claude Code 实战必备：CLAUDE.md、Skills 与工程规范",
+        "time": "11:48",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "965354",
+        "title": "07｜实操课：顶层设计全流程演示",
+        "title_safe": "07｜实操课：顶层设计全流程演示",
+        "time": "53:42",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "工程搭建篇",
+    "title_safe": "工程搭建篇",
+    "articles": [
+      {
+        "id": "965651",
+        "title": "08｜工程初始化（上）：后端骨架与公共基础设施",
+        "title_safe": "08｜工程初始化（上）：后端骨架与公共基础设施",
+        "time": "13:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "966045",
+        "title": "09｜工程初始化（下）：前端工程与一键启动",
+        "title_safe": "09｜工程初始化（下）：前端工程与一键启动",
+        "time": "08:53",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "966292",
+        "title": "10｜基础组件（上）：后端业务基础设施",
+        "title_safe": "10｜基础组件（上）：后端业务基础设施",
+        "time": "13:35",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "966451",
+        "title": "11｜基础组件（下）：前端 UI 设计与前端基础组件",
+        "title_safe": "11｜基础组件（下）：前端 UI 设计与前端基础组件",
+        "time": "08:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "967091",
+        "title": "12｜实操课：工程搭建全流程演示",
+        "title_safe": "12｜实操课：工程搭建全流程演示",
+        "time": "30:28",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "title": "核心功能交付：基础篇",
+    "title_safe": "核心功能交付：基础篇",
+    "articles": [
+      {
+        "id": "967626",
+        "title": "13｜模型提供商管理：第一个完整功能的交付闭环",
+        "title_safe": "13｜模型提供商管理：第一个完整功能的交付闭环",
+        "time": "13:05",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "967989",
+        "title": "14｜把经验变成 Skill：让 Claude Code 自动按流程走",
+        "title_safe": "14｜把经验变成 Skill：让 Claude Code 自动按流程走",
+        "time": "14:17",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "968077",
+        "title": "15｜Agent 创建与配置：复杂业务逻辑的拆解策略",
+        "title_safe": "15｜Agent 创建与配置：复杂业务逻辑的拆解策略",
+        "time": "15:43",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "968737",
+        "title": "16｜对话引擎（上）：理解对话链路与流式技术选型",
+        "title_safe": "16｜对话引擎（上）：理解对话链路与流式技术选型",
+        "time": "12:05",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "969410",
+        "title": "17｜对话引擎（下）：让智能客服真正开口说话",
+        "title_safe": "17｜对话引擎（下）：让智能客服真正开口说话",
+        "time": "08:36",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "969770",
+        "title": "18｜复杂前端交互：让 Claude Code 帮你搞定流式聊天界面",
+        "title_safe": "18｜复杂前端交互：让 Claude Code 帮你搞定流式聊天界面",
+        "time": "09:32",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "970014",
+        "title": "19｜实操课：核心功能基础篇全流程演示",
+        "title_safe": "19｜实操课：核心功能基础篇全流程演示",
+        "time": "30:31",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 7,
+    "title": "核心功能交付：高级篇",
+    "title_safe": "核心功能交付：高级篇",
+    "articles": [
+      {
+        "id": "970416",
+        "title": "20｜RAG 知识库（上）：用 Claude Code 快速搞懂 RAG 和向量数据库",
+        "title_safe": "20｜RAG 知识库（上）：用 Claude Code 快速搞懂 RAG 和向量数据库",
+        "time": "15:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "971417",
+        "title": "21｜RAG 知识库（下）：给客服一本手册，对话功能集成 RAG",
+        "title_safe": "21｜RAG 知识库（下）：给客服一本手册，对话功能集成 RAG",
+        "time": "17:25",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "972496",
+        "title": "22｜工作流编排（上）：搞懂工作流，把它存起来",
+        "title_safe": "22｜工作流编排（上）：搞懂工作流，把它存起来",
+        "time": "08:21",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "972505",
+        "title": "23｜工作流编排（下）：实现执行引擎，让工作流跑起来",
+        "title_safe": "23｜工作流编排（下）：实现执行引擎，让工作流跑起来",
+        "time": "12:10",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "972992",
+        "title": "24｜MCP 工具接入（上）：搞懂协议，把 Client 跑通",
+        "title_safe": "24｜MCP 工具接入（上）：搞懂协议，把 Client 跑通",
+        "time": "11:22",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973023",
+        "title": "25｜MCP 工具接入（下）：自建 MCP Server，让 Agent 能做真正的事",
+        "title_safe": "25｜MCP 工具接入（下）：自建 MCP Server，让 Agent 能做真正的事",
+        "time": "09:05",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973040",
+        "title": "26｜实操课：核心功能高级篇全流程演示",
+        "title_safe": "26｜实操课：核心功能高级篇全流程演示",
+        "time": "39:15",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 8,
+    "title": "测试与部署篇",
+    "title_safe": "测试与部署篇",
+    "articles": [
+      {
+        "id": "973493",
+        "title": "27｜AI 写代码，保证质量不靠运气，靠体系",
+        "title_safe": "27｜AI 写代码，保证质量不靠运气，靠体系",
+        "time": "20:24",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973498",
+        "title": "28｜容器化与部署：从本地到可交付",
+        "title_safe": "28｜容器化与部署：从本地到可交付",
+        "time": "12:35",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973564",
+        "title": "29｜可观测性与排错：生产级系统的最后拼图",
+        "title_safe": "29｜可观测性与排错：生产级系统的最后拼图",
+        "time": "17:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973571",
+        "title": "30｜实操课：测试部署全流程演示",
+        "title_safe": "30｜实操课：测试部署全流程演示",
+        "time": "30:50",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 9,
+    "title": "高阶与复盘",
+    "title_safe": "高阶与复盘",
+    "articles": [
+      {
+        "id": "973578",
+        "title": "31｜进阶：SDD、Spec-Kit、Spec Coding 与老项目改造",
+        "title_safe": "31｜进阶：SDD、Spec-Kit、Spec Coding 与老项目改造",
+        "time": "20:33",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973581",
+        "title": "32｜局限与起点：让 Hify 成为你真正的项目经验",
+        "title_safe": "32｜局限与起点：让 Hify 成为你真正的项目经验",
+        "time": "06:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 10,
+    "title": "结束语 & 结课测试",
+    "title_safe": "结束语 & 结课测试",
+    "articles": [
+      {
+        "id": "973584",
+        "title": "结束语｜一个人的工程团队，静待花开",
+        "title_safe": "结束语｜一个人的工程团队，静待花开",
+        "time": "03:07",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "973589",
+        "title": "结课测试｜来赴一场满分之约！",
+        "title_safe": "结课测试｜来赴一场满分之约！",
+        "time": "00:22",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  }
+]

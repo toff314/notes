@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Docker 与 Kubernetes 核心技术深入解析》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Docker 与 Kubernetes 核心技术深入解析</a><a href="README.html">《Docker 与 Kubernetes 核心技术深入解析》消化索引（digest README）</a></div>
+<h1>《Docker 与 Kubernetes 核心技术深入解析》消化索引（digest README）</h1>
+<blockquote><p>本目录是《Docker 与 Kubernetes 核心技术深入解析》的结构化消化产物，生成于 2026-08-31。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/&lt;模块&gt;/&lt;讲&gt;/</code>（每讲含 <code>&lt;讲名&gt;.digest.json</code> 结构化讲稿、<code>.md</code> 大纲、<code>.txt</code> 原始讲稿）</p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、四幕评价（容器地基/etcd/API Server/调度与数据面）、数据可信度汇总。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 39 讲逐讲评分、金银铜铁分拣、Adler 四问、萃取内容与验证状态、数据审计。引用任何课程数据前必查。</li><li><strong><code>theme_articles/</code></strong> — 两篇可直接成文的主题深挖素材包（etcd 高可用、Pod 优雅终止）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕结构+ROI 评估）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题文①：etcd 高可用与 Raft 生产落地（跨 L13/L14/L16/L17）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-002.json</code></td><td>主题文②：Pod 优雅终止与 SIGTERM 信号穿透链（跨 L06/L28/L33）</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（6 主题重组+1 张 Mermaid 图+3 条阅读路线）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5 分钟速览（1 件事/3 框架/5 方法/1 反直觉）</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>课程通览（Adler 两问+模块地图+39 讲标题矩阵）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>39 讲逐讲摘要（关键术语/初判/风险信号/量化声明快照）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>39 讲分拣+SNR 评分卡+数据审计（金 6/银 23/铜 10，SNR 3.42）</td><td>机读</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 narrative_structure.acts / overall_assessment</li><li>读 <code>content_triage.json</code> 的 data_audit（量化声明审计结论在 summary 中）</li><li>注意：40% 误驱逐、140ms→40ms、4% 营收等内部数据须标注&quot;据讲师称&quot;</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件，按主题选一篇</li><li>读其 narrative_arc（三幕） / verification_gate</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong></li><li>按其 source_lectures 对应路径读讲课 digest.json 核对引文：</li></ol>
+<ul><li>主题①：<code>第三章：Kubernetes 控制平面组件：etcd/2. Raft 协议/</code>、<code>/3. etcd 如何实现 Raft 协议/</code>、<code>/5. 高可用集群管理/</code>、<code>/6. etcd 常见问题及解决办法/</code></li><li>主题②：<code>第一章：Docker 核心技术/6. Dockerfile 的最佳实践/</code>、<code>第五章：Kubernetes 控制平面组件：调度器和控制器/3. kubelet 组件/</code>、<code>第六章：生命周期管理和服务发现/1. 深入理解 Pod 的生命周期/</code></li></ul>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级与萃取内容</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文 digest.json 绝对路径</th></tr><tr><td>16</td><td>高可用集群管理</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第三章：Kubernetes 控制平面组件：etcd/5. 高可用集群管理/5. 高可用集群管理.digest.json</code></td></tr><tr><td>17</td><td>etcd 常见问题及解决办法</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第三章：Kubernetes 控制平面组件：etcd/6. etcd 常见问题及解决办法/6. etcd 常见问题及解决办法.digest.json</code></td></tr><tr><td>26</td><td>调度器 kube-scheduler</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第五章：Kubernetes 控制平面组件：调度器和控制器/1. 调度器 kube-scheduler/1. 调度器 kube-scheduler.digest.json</code></td></tr><tr><td>30</td><td>容器网络接口 CNI</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第五章：Kubernetes 控制平面组件：调度器和控制器/5. 容器网络接口 CNI/5. 容器网络接口 CNI.digest.json</code></td></tr><tr><td>33</td><td>深入理解 Pod 的生命周期</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第六章：生命周期管理和服务发现/1. 深入理解 Pod 的生命周期/1. 深入理解 Pod 的生命周期.digest.json</code></td></tr><tr><td>39</td><td>案例分享：Ingress 和 Service 网络拓扑</td><td><code>/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第六章：生命周期管理和服务发现/7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑/7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑.digest.json</code></td></tr></table>
+<blockquote><p>注：金矿讲中&quot;可逐字引用&quot;仅限 <code>content_triage.json</code> 中 <code>verification.status=✅</code> 的萃取内容与机制类表述；❓/🚩 数据见下方警示。</p></blockquote>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证），如需使用须标注&quot;据讲师称&quot;：</p>
+<ul><li>容器性能与主机相差不超过 1%（L02，❓ 无测试出处）</li><li>虚拟机一台最多几十个实例、容器可跑几千个（L02，❓ 量级估计）</li><li>心跳周期=网络 RTT 的 0.5-1.5 倍、选举超时=RTT 的 10 倍（L16，❓ 工程经验值）</li><li>40% 节点被误驱逐、1 万 pod 一次 list 超 100MB（L16/L17，❓ 讲师内部环境故障案例）</li><li>外部 Webhook 授权场景不足 10%（L21，❓ 讲师估计）</li><li>100 个节点并发创建 8000 Pod 调度约 2 分钟（L26，❓ 内部压测）</li><li>OverlayFS 比 Device Mapper 提升约 20%（L31，❓ 内部测试）</li><li>团队将 TolerationSeconds 扩至 900 秒（L33，❓ 内部实践）</li><li>单集群 23000 个 Pod（L35，❓ 讲师所见）</li><li>硬件负载均衡器十几万美金/套、公司用几千对（L39，❓ 内部数据）</li><li>跨大陆响应 140ms→40ms、每 100ms 影响 4% 营收（L39，❓ 内部项目/预测）</li></ul>
+<p>部分验证（⚠️，引用需注明差异）：etcd 1000 写/2000 读每秒（官方 benchmark 语境）；EndpointSlice 切片 500/1000（官方默认 100）；node-port-range 3 万-3 万 2（官方 30000-32767）；&quot;30 分钟快照+10 秒增量&quot;为讲师团队生产配置（机制可验证）。</p>
+<h2>元信息</h2>
+<ul><li>消化评分：3.42/5（🥇6 🥈23 🥉10 ⛏️0）</li><li>数据审计：25 条量化声明 → ✅8（32%）⚠️4（16%）❓13（52%）🚩0；无编造数据迹象</li><li>主题深挖文：2 篇（金矿 6 → 决策表 2-3 篇，金+银=29≥5，SNR 3.42≥2.5）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

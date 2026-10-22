@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI原生开发工作流实战 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">AI原生开发工作流实战</a><a href="README.html">《AI原生开发工作流实战》消化索引（digest README）</a></div>
+<h1>AI原生开发工作流实战 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p>AI 原生开发的核心是&quot;<strong>规范驱动开发（SDD）</strong>&quot;：把&quot;代码是真理&quot;倒转为&quot;<strong>规范是真理</strong>&quot;，你从写代码的人变成写规范、编排工作流、治理质量的人。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>SDD 四阶段编译链</strong>：spec.md（意图）→ plan.md（方案）→ tasks.md（任务）→ 代码，AI 扮演逐级&quot;编译器&quot;。</li><li><strong>渐进式披露</strong>：Skill 只注入 description 索引、按需加载指令、深度加载脚本，让 AI 知识库无限扩展而上下文保持轻量。</li><li><strong>AI 协作框架全景</strong>：项目级（团队共享，提交 Git）与用户级（个人专属）两层，组织 commands/skills/agents/hooks/settings。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>坚持 TDD</strong>：先让 AI 写失败测试并人工审查，再写实现——防止 AI&quot;自洽幻觉&quot;（代码和测试一起错）。</li><li><strong>Bug 归属二分</strong>：意图偏差改 spec.md 重新生成；实现错误直接修代码——维护&quot;意图的单一来源&quot;。</li><li><strong>写 Skill 用共情式</strong>：放弃 MUST/NEVER 恐吓，解释&quot;为什么&quot;，AI 才能在边缘场景做出正确变通。</li><li><strong>确定性剥离</strong>：正则清洗、Git 提取等确定性逻辑写成脚本，让 LLM 只做意图理解，省 Token 更鲁棒。</li><li><strong>标准流程用 Command，探索任务用 Skill</strong>：审查/提交追求确定性用 Slash Command，开放式任务才用自主发现的 Skill。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p>AI 时代更要坚持 TDD——不是因为 AI 写测试慢，而是因为让 AI&quot;同时生成代码和测试&quot;会产出<strong>自洽但错误</strong>的结果：测试全绿，功能却是错的。测试先行是唯一能让人类低成本验证&quot;正确性&quot;的锚点。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值</strong>（但有取舍）——概念篇（02）和实战篇的 TDD 心法（19）是真正可迁移到任何 Coding Agent 的底层思想，值得精读；但约一半篇幅是 Claude Code 工具操作，会随版本快速贬值，快览即可。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

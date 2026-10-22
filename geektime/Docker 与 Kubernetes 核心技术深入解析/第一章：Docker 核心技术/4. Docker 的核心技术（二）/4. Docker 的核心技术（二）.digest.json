@@ -1,0 +1,190 @@
+{
+  "lecture": "4. Docker 的核心技术（二）",
+  "source": "/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第一章：Docker 核心技术/4. Docker 的核心技术（二）/4. Docker 的核心技术（二）.txt",
+  "intro": "回顾上节课：cgroups 限制进程资源、namespace 将进程放入独立运行沙箱——但这些都只是利用 Linux 已有的成熟容器化技术，并非 Docker 的创举。本课揭晓 Docker 真正的创举：基于 OverlayFS 的分层文件系统，使开发人员可以面向应用打包（含完整操作系统、中间件、应用程序），这正是 Docker 成功的秘密。",
+  "segments": [
+    {
+      "start": "",
+      "end": "",
+      "topic": "回顾与引入：Docker 的创举是分层文件系统",
+      "points": [
+        "上节课学习了 cgroups：Linux kernel 如何用它限制一个进程所用的资源；配合 namespace 技术，进程可被放入独立环境运行，形成独立的运行沙箱",
+        "cgroups 与 namespace 都不是新技术，都利用了 Linux 现有且相对成熟的容器化技术，都不是 Docker 的创举",
+        "Docker 的创举是 OverlayFS：开创性地提出基于分层的文件系统来管理整个容器镜像",
+        "基于分层文件系统，开发人员可以很方便地面向应用打包：程序包内包含一个完整的操作系统、中间件、以及用户最终要运行的整个应用程序——这是 Docker 能成功的秘密"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Docker 并未发明容器化技术本身（namespace/cgroups 早已存在），真正的创新在于分层文件系统让『面向应用的打包』成为可能"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "UnionFS 概念与 Dockerfile 容器镜像构建",
+      "points": [
+        "Docker 的文件系统利用 UnionFS：通过某些技术把不同目录 mount 到同一个虚拟目录里，不同目录在该虚拟目录中可以有独立权限（可设 Read-only / Read-write），从而把多个不同来源的目录模拟成一个完整的操作系统/文件系统",
+        "Docker 开创性地提出容器镜像概念，以源代码形式（Dockerfile）来定义面向应用的容器镜像构建脚本",
+        "Dockerfile 允许定义：基础镜像/基础操作系统是什么（FROM）、中间要运行哪些命令（如 RUN 安装依赖包）、拷贝要运行的二进制文件（COPY）、以及通过 ENTRYPOINT 命令定义容器镜像运行时执行哪些进程命令",
+        "以源代码形式定义『容器镜像用来运行哪一个应用程序』，正好契合微服务架构的单进程思想"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Dockerfile 把容器镜像构建从『命令式手工操作』变成『声明式源代码』，可版本化、可复用，这是镜像体系能被工程化管理的起点"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "镜像分层与共性层跨镜像共享（Java / Elasticsearch 示例）",
+      "points": [
+        "场景：同一台机器上构建多个镜像且基础镜像相同时，共性部分可以共享——如 Dockerfile Java 与 Dockerfile Elasticsearch 都 FROM Ubuntu，但中间构建过程不同",
+        "左边装 JRE、拷贝 jar 包并执行 jar；右边装 JRE 后再装 Elasticsearch 并运行 Elasticsearch；两者的共性是 FROM Ubuntu 与 install JRE 两条指令相同",
+        "Docker 解析 Dockerfile 并构建镜像时，真的会拉取 Ubuntu 镜像并在其基础之上装 JRE；每一条指令都会被构建成一个容器文件层",
+        "因为指令相同，基础镜像层和 JRE 层对两个容器镜像是通用的，Docker 会在不同容器镜像间共享这些层，事实上只保存一份",
+        "在共用的镜像层基础之上，每个镜像不同的部分再往上堆叠——很好地复用了共通部分，有效减少硬盘占用"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "『每个 Dockerfile 指令 = 一个文件层，指令相同则层相同、跨镜像共享』——这是多个镜像共用一份基础层、节省磁盘的根本机制"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "经典 Linux 文件系统组成：Bootfs 与 Rootfs",
+      "points": [
+        "经典 Linux 一般分两个主要组成部分：Bootfs 和 Rootfs",
+        "Bootfs 又分两个子模块：Bootloader 和 Kernel；Bootloader 的作用是引导操作系统启动，主要就是把 Kernel 加载出来即完成任务",
+        "当 Kernel 被加载到内存以后，整个 Bootfs 会被忘掉（不再需要），接下来就是加载 Rootfs",
+        "Rootfs 就是日常常见的 Dev、Proc、Bin、Etc 等标准目录和文件",
+        "不同 Linux 如果 Kernel 版本一样，整个 Bootfs 基本一致，区别在 Rootfs——例如 Red Hat 商业版、CentOS 与 Ubuntu 可共用相同的 Kernel 版本，Bootfs 基本一致，差异是各自的 Rootfs"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "内核加载进内存后 Bootfs 即被『遗忘』，各发行版差异只在 Rootfs——为『共享内核、只替换用户态文件系统』的容器模型埋下伏笔"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Docker 启动过程：分层堆叠加载与写时复制（Copy-on-Write）",
+      "points": [
+        "经典 Linux 启动：加载完 Rootfs 后先把它设置为 Read-only，进行一系列检查，检查完成后再设成 Read-write 供用户使用，此时修改 Rootfs 里的文件直接生效",
+        "Docker 的启动：初始化时同样把 Rootfs 以 Read-only 方式加载并检查，但检查完毕后并不直接把 Rootfs 变可写，而是在只读文件层基础之上添加新层",
+        "加载过程是一层一层堆叠：先加载 Base Image（如 Ubuntu），该层随后变 Read-write；在其上再加 JRE 层，再加后续指令层——下层永远只读",
+        "所有层级加载完毕后，只有最上面一层变 Read-write；对容器内部文件的所有修改都发生在最上层，不会动到下面 Read-only 的层",
+        "写时复制（Copy-on-Write）：一个镜像可被多个容器使用、一个镜像内的不同层可被多个镜像共享，因此底层基础镜像层永远不被修改；无论起多少个容器，底层基础镜像层都是一致的，只需一份拷贝，不必为不同容器实例再复制一份",
+        "修改基础镜像层中某个文件：在可写层里覆盖一个同名文件即可（写时复制）",
+        "用时分配：空间按区分配，真正需要时才分配，有效节省主机的磁盘空间"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "写时复制让『一份基础镜像支撑无数容器实例』成立：底层共享同一份、各容器只在最上层可写层做差异修改，互不污染"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "容器存储驱动演进：从 AUFS、Device Mapper 到 OverlayFS",
+      "points": [
+        "写时复制行为的实现需要容器存储驱动支持",
+        "存储驱动历史：AUFS（Docker 刚出现时使用的驱动）、Device Mapper、OverlayFS、ZFS、Btrfs",
+        "历史背景：Device Mapper 在 Docker 刚出现时即被 Kernel 本身支持，因此大部分人或场景用 Device Mapper 作为默认存储驱动，但其性能较差",
+        "现在大部分场景用 OverlayFS2：新版本 Kernel 默认自带 OverlayFS 驱动，而且是 OverlayFS2，当前默认配置基本确定选它",
+        "containerd 随 Docker 技术迭代、与 Kubernetes 的集成而发展并定义了一些规范；Docker 本身内嵌了 containerd，containerd 是 Docker 中功能的一个子集，同时也是一个独立开源项目",
+        "无论是 Docker 还是 containerd 都支持 OverlayFS，因此 OverlayFS 是当前主流驱动；其性能高于 AUFS 和 Device Mapper"
+      ],
+      "tradeoffs": [
+        "存储驱动选型：Device Mapper 因内核原生支持曾被广泛采用，但性能差；当前场景基本确定用 OverlayFS2（新内核默认自带、性能更高）"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "OverlayFS 工作原理：两层结构 + 实操演示",
+      "points": [
+        "OverlayFS 遵循 AUFS 的联合文件系统思想，但只有两层：Upper 层（上层目录）和 Lower 层（下层目录）",
+        "UnionFS 把多个目录组织到一个虚拟目录作为 Rootfs 供容器进程使用；OverlayFS 用同样思想，但把来源目录分成两类：基础层（基础镜像、基础包）放 Lower 层，动态内容（修改已有文件、在基础镜像上添加内容）放 Upper 层",
+        "演示：在 Linux 虚拟机中创建 overlayfs 目录，内含四个子目录 Upper、Lower、Merge、Work；在 Lower 建 in_lower 文件（内容 From Lower），在 Upper 建 in_upper 文件，并在上下层各建一个同名文件 in_both 且内容声明各自来源",
+        "mount 命令：type=overlay，通过 Overlay 驱动创建新目录，Lowerdir 指定 Lower、Upperdir 指定 Upper，最终合并到 Merge 目录",
+        "合并结果：Merge 里包含来自上层和下层的文件（示例共三个文件）；同名文件显示来自上层的内容（in_both_from_upper），即上层文件覆盖下层文件",
+        "回到容器镜像：基础镜像层已包含完整操作系统所需的全部文件；想加文件只需在上面加新容器层并用 OverlayFS mount 进去；想修改已存在的文件不必动下层，堆叠一个同名文件即可覆盖——实现对操作系统文件系统的修改但不碰下面文件层",
+        "课后练习：扩展该测试，例如删除一个文件观察 OverlayFS 的行为"
+      ],
+      "tradeoffs": [
+        "mount 合并需要 Work 目录配合（Overlay 驱动合并时的辅助工作目录）"
+      ],
+      "turning_points": [
+        "『同名文件上层覆盖下层』——这就是容器内修改文件却不会污染基础镜像层的核心机制"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "OCI 容器标准（2015 年）：镜像标准 / 运行时标准 / 分发标准",
+      "points": [
+        "前面讲的 namespace（进程隔离）、cgroups（资源配额限制）、OverlayFS（模拟完整文件系统）需要被业界规范化，这就是 OCI 容器标准，从 2015 年开始定义",
+        "背景：Docker 曾自认为是事实标准，但其实现很重——作为厂商必然为自己的商业目的服务；Kubernetes 对接 Docker 时发现很多很重的东西用不上，中间功能存在互相冲突和涵盖",
+        "Kubernetes 以这条线索推动发起 OCI 规范，尝试把容器技术规范化、标准化",
+        "OCI 定义了三个方面的标准：镜像标准（应用应该如何打包，即 OverlayFS 分层文件系统如何通过容器镜像驱动标准化）、运行时标准（如何把构建好的容器镜像解压并运行）、分发标准（如何分发容器镜像）",
+        "当你要实现自己的一套容器规范/容器技术时，就需要遵循这套规范"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "容器事实标准之争：Docker 太重且为商业目的服务，标准化由生态（Kubernetes）推动 OCI 来解耦，而非由单一厂商定义"
+      ]
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "Docker 引擎架构：Docker CLI → Docker daemon → containerd → runc",
+      "points": [
+        "每台机器通过 apt-get install docker 装好 Docker 服务后，包含两部分：Docker daemon（后台服务端，本身是一个 REST API）与 Docker CLI（命令行）",
+        "通过 docker 命令（如 docker pull 拉取镜像、docker run 运行镜像）把请求发送到 Docker daemon 的监听端口",
+        "较新版本的 Docker 已支持 OCI 兼容：daemon 收到请求后通过 gRPC 调用把请求转发给 containerd",
+        "containerd 是真正用来控制这些运行时进程的后台程序，本身是一个可以独立运行的组件",
+        "docker run 的完整链路：请求经 Docker daemon 发给 containerd → containerd 启动 containerd-shim 进程 → shim 通过 runc（底层运行时的接口）真正启动容器进程",
+        "由此，整个 Docker 已经与 OCI 规范完全匹配"
+      ],
+      "tradeoffs": [],
+      "turning_points": []
+    },
+    {
+      "start": "",
+      "end": "",
+      "topic": "containerd-shim 的作用与架构演进：控制面与数据面解耦",
+      "points": [
+        "早期架构：containerd 和 shim 都不存在，容器进程由 Docker daemon 直接拉起，Docker daemon 是所有容器进程的父进程",
+        "致命问题：升级或重启 Docker 时父进程不存在，所有子进程都会被重启——你不能轻易升级 Docker，一升级所有应用都会出问题，这是早期 Docker 的致命问题",
+        "containerd 的解决方式：containerd 是更轻量级的容器管理进程，不作为统一的父进程去真正运行容器应用，而是起一个 shim 进程，由 shim 进程维护容器进程的生命周期",
+        "shim 进程运行起来后，会被交给操作系统的 init system（如 systemd）管理",
+        "这样 Docker/containerd 下面不挂任何子进程，containerd 可以随便更新、升级、重启，下面的应用不受影响——把控制组件和真正运行业务的数据面组件分离开来",
+        "这是 containerd 相对 Docker 的巨大优势（可随意升级修改）；后来 Kubernetes 可以直接对接 containerd（containerd 已是完整运行时），Docker 也不得不加入对 containerd 的支持，于是形成现在的架构"
+      ],
+      "tradeoffs": [
+        "早期『Docker daemon 直接作为容器进程父进程』导致升级/重启 Docker 会重启所有应用，是架构上的致命缺陷；containerd + shim 通过把 shim 托管给 init system 来解耦"
+      ],
+      "turning_points": [
+        "控制面（容器管理组件）与数据面（业务进程）分离是容器运行时架构演进的核心动机——管理组件可随意升级而业务不受影响"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "UnionFS：通过某些技术把不同目录 mount 到同一个虚拟目录里，不同目录在该虚拟目录中有独立权限（可设 Read-only / Read-write），从而把多个不同来源的目录模拟成一个完整的操作系统或文件系统",
+    "Dockerfile：Docker 允许开发人员以源代码形式定义面向应用的容器镜像构建脚本——FROM 指定基础镜像/基础操作系统、RUN 指定要运行的命令（如安装依赖包）、COPY 拷贝要运行的二进制文件、ENTRYPOINT 定义容器镜像运行时执行的进程命令",
+    "容器镜像分层共享：Docker 把 Dockerfile 的每一条指令构建成一个容器文件层，指令相同则层相同，共性层在不同容器镜像间共享、只保存一份，差异部分在共用层上堆叠，从而减少硬盘占用",
+    "Bootfs：Linux 启动的两大组成部分之一，含 Bootloader 与 Kernel；Bootloader 引导启动并把 Kernel 加载进内存即完成任务，之后整个 Bootfs 被遗忘",
+    "Rootfs：Linux 的 Dev、Proc、Bin、Etc 等标准目录和文件；Kernel 版本相同则 Bootfs 基本一致，不同发行版（Red Hat / CentOS / Ubuntu）的差异主要在 Rootfs",
+    "写时复制（Copy-on-Write）：镜像可被多个容器使用、层可被多个镜像共享，因此底层基础镜像层永远不被修改；对基础层文件的修改通过在上层可写层覆盖同名文件实现，多容器只需一份底层拷贝",
+    "用时分配：空间按区分配，真正需要时才分配空间，从而有效节省主机的磁盘空间",
+    "容器存储驱动：支持写时复制/分层文件系统的底层驱动，历史上有 AUFS、Device Mapper、OverlayFS、ZFS、Btrfs；当前主流为 OverlayFS2（新内核默认自带、性能高于 AUFS 与 Device Mapper）",
+    "OverlayFS：遵循 AUFS 思想的联合文件系统，只有两层——Upper 层（动态修改与新增内容）和 Lower 层（基础镜像、基础包）；把两层 mount 合并到虚拟目录后，同名文件上层覆盖下层",
+    "OCI 容器标准（2015 年起）：由 Kubernetes 生态推动、为规范容器技术而定义的标准，包括镜像标准（应用如何打包）、运行时标准（如何解压并运行容器镜像）、分发标准（如何分发容器镜像）；实现自研容器技术需遵循该规范",
+    "Docker 引擎架构：Docker CLI → Docker daemon（REST API）→ gRPC → containerd → containerd-shim → runc（底层运行时接口）→ 容器进程",
+    "containerd：真正控制运行时进程的后台程序，可独立运行的组件，是 Docker 中功能的一个子集，也是独立开源项目；Docker 与 Kubernetes 都支持对接它",
+    "containerd-shim：维护容器进程生命周期的中间进程，运行后交给操作系统 init system（如 systemd）管理，使 Docker/containerd 下不挂任何子进程，从而可随意升级而不影响业务——控制组件与数据面组件分离"
+  ],
+  "closing": "本节课主要学习了 Docker 的文件系统如何通过 OverlayFS 实现堆叠式的文件系统。下节课会更多地谈网络；再后面会看如何利用这种堆叠式文件系统的一些最佳实践。"
+}

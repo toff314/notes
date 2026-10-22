@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangChain实战课 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">LangChain实战课</a><a href="README.html">《LangChain实战课》消化索引（digest README）</a></div>
+<h1>LangChain实战课 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p>LangChain 的精华不是那些组件 API，而是&quot;<strong>CoT 提升推理却解决不了幻觉 → 所以要让 LLM 用工具 → 这就是 ReAct 代理</strong>&quot;这条认知链——LLM 从聊天机器人升级为能自主行动的智能代理。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>Model I/O</strong>：任何 LLM 应用 = 输入提示(Format) + 调用模型(Predict) + 解析输出(Parse) 三步。</li><li><strong>ReAct</strong>：推理(Reasoning: 观察+思考) + 行动(Acting: 调工具/给答案)，LLM 动态决定操作序列。</li><li><strong>RAG</strong>：给非结构化数据建&quot;向量地图&quot;，检索增强生成，企业落地量最大。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>Zero-Shot CoT</strong>：提示里加一句&quot;Let&#x27;s think step by step&quot;就能提升推理（第05讲）。</li><li><strong>Few-Shot + 语义选择器</strong>：用向量相似度动态挑最相关示例，省 Token（第04讲）。</li><li><strong>StructuredOutputParser</strong>：让模型返回 JSON，自动转结构化数据（第03/07讲）。</li><li><strong>记忆选型</strong>：短对话用 Buffer，长对话用 SummaryBuffer（总结早期+保留近期）（第10讲）。</li><li><strong>文本分割三考量</strong>：chunk 大小看上下文窗口 + 任务类型 + 文本结构（第15讲）。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p>提示工程里最神奇的技巧，不是精心设计的复杂模板，而是 Zero-Shot CoT 里一句大白话&quot;让我们一步步思考&quot;——一句话的魔法提示，就能显著提升模型的复杂推理能力。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值，但要挑着读</strong> — 如果目标是&quot;从零上手 LangChain&quot;，这门课的中文讲解 + 可跑通代码比啃英文文档友好；但只有约 30% 内容（提示工程、ReAct、记忆、RAG、多代理）有长期复用价值，其余七成是官方文档复述和鲜花案例演示。建议只读 4-8 讲精华，跳过环境配置、项目实战源码和所有加餐。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

@@ -1,0 +1,104 @@
+{
+  "lecture": "6. Ingress 对象",
+  "source": "6. Ingress 对象.txt",
+  "duration_min": 27.78,
+  "intro": "承接 Service 的 DNS 服务发现，本节追问：Service 作为四层负载均衡（基于五元组做 NAT）无法满足的七层需求（URL/域名/Header 路由、TLS 卸载、API 网关收敛）由 Ingress 承担；讲解 Ingress 对象的定义、Ingress Controller 的工作原理与一个 HTTPS 发布实例。（注：本讲讲稿疑似截断）",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "08:00",
+      "topic": "Service 的四层局限与七层高级需求",
+      "points": [
+        "Service 是四层负载均衡：只能基于数据包五元组（IP、端口、协议）做简单 NAT，满足不了微服务架构下的更高级需求",
+        "高级需求一：API 网关——上百个微服务提供同一域名下的不同子能力，按请求信息（域名、路径 /A 还是 /B、Header）转发到不同微服务",
+        "高级需求二：基于用户请求体/HTTP 包头属性做跳转（如普通用户与高级用户跳不同页面）",
+        "高级需求三：TLS 与业务解耦——研发只写业务，证书签发/续期/加密算法由平台在七层代理统一管控",
+        "结论：内核做不了应用层解析（逐包解析不合理），只有应用层代理能做到，于是 Kubernetes 提供 Ingress 对象描述入站流量分发规则"
+      ],
+      "tradeoffs": [
+        "简单 NAT 无法按 URL/Header 路由，这是 Service 上不去七层、必须引入 Ingress 的根因"
+      ],
+      "turning_points": [
+        "安全能力与业务代码分离是平台化的核心诉求：研发不管证书，平台层统一管理"
+      ]
+    },
+    {
+      "start": "08:00",
+      "end": "13:00",
+      "topic": "四层与七层网络路径的差异",
+      "points": [
+        "L4 路径：每个服务都要独立五元组，三个外部服务都跑 80 端口时需三个不同 ClusterIP；1000 个服务=1000 个 ClusterIP，1 万服务=1 万 ClusterIP，IP 资源占用非常大，通过企业 ELB 接入时 ELB 占用同样巨大",
+        "L7（Ingress）路径：外部→内部的 NAT 仍由 Service 做，但四层可简化——整个网站（无论 100 还是 1000 个微服务）只用一个 API 网关 VIP 统一接入；流量经 Service 转发规则转到 Ingress Pod",
+        "Ingress Pod 职责：TLS Termination（解开 HTTPS、后端走 HTTP）+ 根据域名/路径/Header 决定转发到哪个后端 Service",
+        "效果：收敛外部客户端进入集群的路径，大幅降低 ELB 等资源需求"
+      ],
+      "tradeoffs": [
+        "L4 的\"一服务一 IP\"在服务数量大时 IP 与 ELB 资源成本失控，L7 用统一 VIP 收敛",
+        "TLS 卸载把加密开销放在 Ingress 层，后端服务不用处理证书"
+      ],
+      "turning_points": [
+        "Ingress 不是替代 Service，而是\"Service 之上再叠加一层七层代理\"：外部→Service→Ingress Pod→后端 Service"
+      ]
+    },
+    {
+      "start": "13:00",
+      "end": "18:00",
+      "topic": "Ingress 工作原理：反向代理软件 + Ingress Controller",
+      "points": [
+        "Ingress 本质是一层代理：反向代理软件（常见 nginx、HAProxy，CNCF 明星项目 Envoy 后续在 Istio 中详讲）接收请求并按其配置文件（规则：Domain、Path、跳转目标）转发",
+        "配置文件如何生成：Kubernetes 把高层跳转规则抽象为 Ingress 对象，Ingress Controller 监听这些对象，把规则翻译成反向代理软件能识别的配置并重启/热加载使其生效",
+        "对比：过去是管理员手工写 nginx 配置，有了 Ingress 后用户只需写高层抽象的 Ingress 对象，由 Controller 转成代理配置"
+      ],
+      "tradeoffs": [
+        "Ingress 只是\"规则抽象\"，真正干活的是反向代理软件 + Controller 这一对组件，必须二者都部署"
+      ],
+      "turning_points": [
+        "Ingress Controller 与 CoreDNS 的控制器同构：监听对象 → 转换 → 生效"
+      ]
+    },
+    {
+      "start": "18:00",
+      "end": "25:00",
+      "topic": "Ingress 对象定义与 HTTPS 发布实例",
+      "points": [
+        "发布流程三步：创建 Deployment（Pod 打 label）→ 定义 Service（selector 聚合真实 Pod）→ 定义 Ingress 把 Service 通过统一域名发布出去",
+        "Ingress 对象两部分：spec.tls（secretName，Kubernetes 约定把证书 key/cert 按约定放 secret，Ingress 读取后配置到 nginx）+ spec.rules（host 域名、http.paths 的 path→backend service:port 转发规则）",
+        "ingress class 注解（annotation ingress.class=nginx）：集群可能跑多个 Ingress Controller（nginx/HAProxy/Envoy），用于指定由哪个 Controller 处理",
+        "实验（syncamp.com）：openssl 生成匹配 syncamp.com 的 key 与证书 → kubectl create secret 存为 syncamp-tls → 创建引用该 secret 的 Ingress → 通过 Ingress 入口（ClusterIP 10.68.59.x）以 HTTPS + Host: syncamp.com 头访问，最终到达后端 nginx Pod",
+        "价值体现：100 个后端服务都通过 Ingress Pod 统一入口（/a→a 服务、/b→b 服务），且整个网站获得 HTTPS 安全保证"
+      ],
+      "tradeoffs": [
+        "HTTPS 访问需在请求中带匹配证书域名的 Host 头，否则证书校验不匹配",
+        "TLS 证书需事先通过 secret 注入并遵守约定命名，是配置 Ingress 的额外步骤"
+      ],
+      "turning_points": [
+        "Ingress class 解决\"多个 Controller 并存时选谁\"的问题"
+      ]
+    },
+    {
+      "start": "25:00",
+      "end": "27:47",
+      "topic": "Ingress 的设计权衡（讲稿在此截断）",
+      "points": [
+        "Ingress 对象本身很简单：只有 TLS 部分与 rules（转发规则）部分",
+        "设计原则：把系统设计得简单，其灵活性就受限、不可能支持很多能力；Ingress 走的是\"简化用户配置\"的路线（讲稿在此处中断）",
+        "注：本节在此处截断，未包含后续内容与收尾"
+      ],
+      "tradeoffs": [
+        "简单性 vs 灵活性是 Ingress 对象设计的核心张力：越简单越难以覆盖复杂路由场景",
+        "讲稿疑似截断，后续对 Ingress 局限性的完整讨论缺失"
+      ],
+      "turning_points": []
+    }
+  ],
+  "key_definitions": [
+    "Ingress：描述集群入站流量分发规则的七层对象，可基于域名、URL 路径、Header 等应用层信息转发（Service 是四层，只能基于五元组）",
+    "Ingress Controller：监听 Ingress 对象，把规则翻译成反向代理软件（nginx/HAProxy/Envoy）配置并使其生效；Ingress 是\"高层抽象\"，Controller 是\"翻译器\"",
+    "Ingress 对象组成：spec.tls（引用 secretName 中的证书与私钥，做 TLS Termination）+ spec.rules（host 域名、http.paths 的 path→backend service:port）",
+    "Ingress class（注解/字段）：在多个 Ingress Controller 并存时指定由哪个 Controller 处理",
+    "TLS Termination 在 Ingress（七层代理）完成：对外 HTTPS、对后端 HTTP，安全能力与业务代码解耦",
+    "L4 与 L7 对比：L4 一服务一 ClusterIP（IP/ELB 占用随服务数线性增长）；L7 全站统一 VIP 收敛入口",
+    "Ingress 发布流程：Deployment（Pod 打 label）→ Service（聚合后端）→ Ingress（统一域名发布）"
+  ],
+  "closing": "讲稿疑似截断：最后一段停留在\"Ingress 遵循简化用户配置的路线，所以它又很…\"（半句），未包含 Ingress 局限性展开讨论与正常收尾语；已提取内容覆盖 Ingress 的动机、原理、对象定义与 HTTPS 实例。"
+}

@@ -1,0 +1,54 @@
+graph TB
+    subgraph 架构思维["① 架构思维（01-04）"]
+        P1["四种范式<br/>Prompt/Workflow/Single/Multi"]
+        P2["ReAct 循环"]
+        P3["C.U.P. 选型"]
+    end
+
+    subgraph 上下文记忆["② 上下文与记忆（18-21）"]
+        C1["Harness Engineering<br/>三代演进"]
+        C2["Context Rot<br/>注意力稀释"]
+        C3["Bootstrap/剪枝/压缩"]
+        C4["文件记忆/RAG 检索"]
+    end
+
+    subgraph 工具生态["③ 工具与 Skills（12-16）"]
+        T1["Agent-Native 工具<br/>建设性报错"]
+        T2["Skills 渐进式披露"]
+        T3["MCP/沙箱超能力"]
+    end
+
+    subgraph 数字团队["④ 数字员工团队（23-28）"]
+        D1["Orchestrator<br/>三堵墙+三设计"]
+        D2["三维隔离+NEVER"]
+        D3["共享工作区+邮箱三态机"]
+        D4["Human as 甲方"]
+        D5["自我进化五步闭环"]
+    end
+
+    subgraph 企业加固["⑤ 企业级加固（30-32）"]
+        S1["可观测 5+2 事件"]
+        S2["可靠性 三策略"]
+        S3["安全 三层防御"]
+    end
+
+    subgraph 生产交付["⑥ 生产交付（34-40）"]
+        L1["AI 适用性评估表"]
+        L2["评测四环节"]
+        L3["六层监控"]
+        L4["数据飞轮/组织进化"]
+    end
+
+    P1 --> P2
+    P2 --> D1
+    C1 --> C2 --> C3 --> C4
+    T1 --> T2 --> T3
+    C1 --> C4
+    D1 --> D2 --> D3 --> D4 --> D5
+    T2 --> D3
+    S1 --> S2 --> S3
+    C3 --> S1
+    D5 --> S2
+    L1 --> L2 --> L3 --> L4
+    S1 --> L3
+    D1 --> L1

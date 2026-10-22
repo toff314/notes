@@ -1,0 +1,125 @@
+{
+  "lecture": "3. Service 对象",
+  "source": "3. Service 对象.txt",
+  "duration_min": 29.03,
+  "intro": "承接上一讲的负载均衡理论，本节把理论与 Kubernetes 落地：理解 Service 对象的两大组成部分（selector 与负载均衡规则）、Endpoint 关联机制、各 Service 类型的分配行为，以及 Service Topology 就近访问能力。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "05:00",
+      "topic": "Service 对象的两大组成部分",
+      "points": [
+        "selector：标签过滤规则，通过 label 条件汇聚一组 Pod（如当前 namespace 下 app=nginx 的所有 Pod）",
+        "负载均衡规则：protocol 只支持 tcp 和 udp（Service 是四层、工作在传输层）；port（服务发布端口，如 80）；targetPort（后端 Pod 真实服务端口），本质是端口映射",
+        "Service 创建后的行为：与另一对象 Endpoint 关联，由它落实后端选择"
+      ],
+      "tradeoffs": [
+        "protocol 只有 tcp/udp 两个值，因为 Service 是四层对象，无法感知应用层协议"
+      ],
+      "turning_points": [
+        "selector 一出现就代表 label 过滤查询（与 Pod 的 label 匹配）"
+      ]
+    },
+    {
+      "start": "05:00",
+      "end": "11:30",
+      "topic": "Endpoint 对象：Service 与 Pod 的关联机制",
+      "points": [
+        "Pod IP 不可靠（节点驱逐、版本发布都会导致 Pod 重建换 IP），必须用 Service 提供固定入口",
+        "endpoint controller（controller-manager 内）watch Pod 和 Service 两类对象：Service 定义了 selector 才干活，创建与 Service 同名的 Endpoint，按 selector 选 targetPod 并按就绪状态分到 subset 的 address（就绪）或 notReadyAddresses（不就绪）",
+        "就绪状态的作用落地：默认行为下不就绪的 Pod 不承接流量；所有后端都不就绪时访问 Service 报 connection refused；部分就绪时只转发给就绪 Pod",
+        "Pod 与 Service 是多对多关系，Endpoint 是维护这种关系的中间对象（类比数据库多对多中间表），内含各节点 Pod 的 IP 与 targetRef",
+        "实验：nginx deployment + readiness probe（需 cat 一个文件），Service 创建后 curl ClusterIP 报 connection refused，创建文件后探针成功、Pod 就绪，再 curl 就通了"
+      ],
+      "tradeoffs": [
+        "就绪状态直接决定流量承接，是探针能力在 Service 层的落地体现",
+        "connection refused 往往是后端全部未就绪的典型信号，而不是网络故障"
+      ],
+      "turning_points": [
+        "Endpoint 名与 Service 同名，内容是 address/notReadyAddresses 两组地址列表"
+      ]
+    },
+    {
+      "start": "11:30",
+      "end": "16:00",
+      "topic": "EndpointSlice：大对象的性能优化与无 selector Service",
+      "points": [
+        "大 Service 场景：单 Service 可 select 5000~10000 个 Pod（讲师见过单集群 2.3 万实例的应用），Endpoint 对象会非常大",
+        "Endpoint 变化会推给每个节点的 kube-proxy 刷新配置：大对象 + 频繁变化（大集群总有 Pod 一会好一会不好）对 API Server、kube-proxy、网络都是巨大压力",
+        "EndpointSlice 方案：把大 Endpoint 切成片（可配置如 500 或 1000 个 IP 一片），单 Pod 变化只影响所在切片，传输量从整个大对象降到其几分之一",
+        "无 selector 的 Service：endpoint controller 不创建任何 Endpoint，可手工建同名 Endpoint 填三台集群外虚拟机的 IP，kube-proxy 照样工作（它不关心 Endpoint 来源），实现从集群内部访问集群外部资源"
+      ],
+      "tradeoffs": [
+        "EndpointSlice 是 Endpoint 的替代对象（新版本），核心收益是控制面推送压力与变更爆炸半径",
+        "手工维护 Endpoint 适合少量固定外部资源，规模大了仍需其他方案"
+      ],
+      "turning_points": [
+        "kube-proxy 不校验 Endpoint 来源，只要对象存在就配置转发——这是无 selector Service 能访问外部资源的原因"
+      ]
+    },
+    {
+      "start": "16:00",
+      "end": "21:00",
+      "topic": "ClusterIP 与 NodePort：集群内外的两种访问方式",
+      "points": [
+        "ClusterIP 分配：创建 Service 时 API Server 从启动参数 --service-cluster-ip-range 配置的 IP 区间中分配一个可用 IP（由相关组件完成分配），最终负载均衡把 ClusterIP 访问转成后端 Pod IP（targetPort）",
+        "NodePort：API Server 启动参数配置 nodePort 范围（默认 30000~32767），NodePort 类型 Service 被分配一个节点端口，并在每个节点上监听该端口，收到请求转发到对应后端 Pod",
+        "NodePort 是最常用的从外部访问集群的方式：节点 IP 通常可对外访问，而 Pod IP 与 ClusterIP 对外不可访问",
+        "实验：把 nginx Service 改为 NodePort 类型，被分配 31290 端口，通过节点 IP + 端口在浏览器访问成功（端口由 kube-proxy 真实监听并转发）"
+      ],
+      "tradeoffs": [
+        "NodePort 端口范围有限（3 万~3 万 2 千），大量外部服务需要 LB/Ingress 收敛",
+        "ClusterIP 只能在集群内访问，对外发布必须叠加 NodePort/LB/Ingress 等手段"
+      ],
+      "turning_points": [
+        "NodePort 端口由 kube-proxy 在每个节点上真实监听，因此任何节点 IP+端口都可访问"
+      ]
+    },
+    {
+      "start": "21:00",
+      "end": "24:30",
+      "topic": "LoadBalancer / Headless / ExternalName 类型",
+      "points": [
+        "LoadBalancer：需公司采购或自建负载均衡器 + 对应 service controller 适配，把外部 LB 的 VIP 写回 Service",
+        "Headless Service：显式设置 clusterIP: None，告诉 Kubernetes 连 ClusterIP 都不要；服务发现完全基于 DNS（下节展开），kube-proxy 不做地址转换",
+        "ExternalName：为外部服务（如谷歌）在集群内创建别名，DNS 层实现为 CNAME，避免业务代码硬编码外部域名"
+      ],
+      "tradeoffs": [
+        "Headless 与 ExternalName 都是基于 DNS 的实现，前者直连 Pod IP，后者是外部域名别名"
+      ],
+      "turning_points": [
+        "Service 类型选择本质是\"固定入口形态\"的选择：虚 IP / 节点端口 / 外部 LB / DNS"
+      ]
+    },
+    {
+      "start": "24:30",
+      "end": "29:02",
+      "topic": "Service Topology：就近访问的强弱约束",
+      "points": [
+        "跨地域集群的两种规划：多地各建集群做跨集群部署；或单集群纳管所有地域节点（节点物理距离不均等，就近访问效率更高）",
+        "节点标签：社区支持的 topology.kubernetes.io/zone（可用区）、topology.kubernetes.io/region、topology.kubernetes.io/hostname，Pod 随所在节点继承地域属性",
+        "强约束 NodeLocal：topologyKey=kubernetes.io/hostname，客户端所在节点必须有对应后端 Pod 才转发，否则直接丢弃",
+        "弱约束 PreferLocal：按维度引导服务发现——先本机，再同 zone，再同 region，最后兜底任意；只定义前几层则后面变为强约束（找不到就丢弃）",
+        "应用场景：让北京客户端优先访问北京服务端，实现就近访问"
+      ],
+      "tradeoffs": [
+        "强约束保就近但牺牲可用性（本机没有后端就丢请求），弱约束平衡就近与可用性",
+        "拓扑标签随版本迭代变化，需查官方文档"
+      ],
+      "turning_points": [
+        "topologyKey 定义的是\"转发约束\"而非\"选择偏好\"：强约束宁可丢弃不转发"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "Service 对象由两部分组成：selector（label 过滤规则，汇聚一组 Pod）与负载均衡规则（protocol 仅 tcp/udp、port、targetPort 端口映射）",
+    "Endpoint：Service 与 Pod 之间多对多关系的中间对象（与 Service 同名），由 endpoint controller 自动创建，按就绪状态分为 address 与 notReadyAddresses",
+    "默认行为（关键结论）：未就绪的 Pod 不承接流量；后端全部未就绪时访问 Service 报 connection refused",
+    "EndpointSlice：Endpoint 的切片替代对象（每片可配如 500/1000 个 IP），使 Pod 变化只影响单片，降低向各节点 kube-proxy 推送大对象的开销",
+    "无 selector 的 Service：endpoint controller 不自动创建 Endpoint，需手工建同名 Endpoint 指向集群外 IP，用于从集群内访问集群外资源",
+    "ClusterIP 由 API Server 从 --service-cluster-ip-range 分配；NodePort 默认范围 30000-32767，由 kube-proxy 在每节点监听并转发",
+    "Headless Service：显式 clusterIP: None，不做地址转换，DNS 直接返回 Pod IP；ExternalName：DNS CNAME 别名指向外部服务",
+    "Service Topology：利用 topology.kubernetes.io/{zone,region,hostname} 节点标签 + topologyKey，NodeLocal 为强约束（本机无后端即丢弃），PreferLocal 为弱约束（本机→zone→region→任意逐级兜底）"
+  ],
+  "closing": "布置课后练习：逐个实践不同 Service 类型（ClusterIP/NodePort/LoadBalancer/Headless/ExternalName）的定义与效果，理解不同拓扑定义的强弱约束；预告下节课从原理层面展开 kube-proxy 如何配置服务发现背后的负载均衡。"
+}

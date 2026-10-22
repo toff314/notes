@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code 企业级老项目改造实战 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 企业级老项目改造实战</a><a href="README.html">《Claude Code 企业级老项目改造实战》消化索引（digest README）</a></div>
+<h1>Claude Code 企业级老项目改造实战 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p><strong>老项目改造的本质是&quot;理解 + 开发&quot;，AI 只改变分工不改变链路；AI 是加速，不是兜底——你省下的时间必须投回判断，否则只是在更快地走错路。</strong></p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>三层控制（理解-约束-验证）</strong>：用 docs 资产/CLAUDE.md 让 AI 看见 → 用静态+动态约束让 AI 听话 → 用测试/CI 独立基准让 AI 可信。三者形成正循环，是全课骨架。</li><li><strong>需求六维 + AI 能力地图</strong>：业务目标/用户场景/接口契约/边界场景/老项目约束/不在范围。AI 做数据层（接口契约、edge case、老项目约束），人守判断层（业务方向、产品决策、范围裁剪）——&quot;AI 做 AI 强的 70%，人补 AI 弱的 30%&quot;。</li><li><strong>Characterization Test 断言纪律</strong>：锁住&quot;现在实际做什么&quot;而不是&quot;应该做什么&quot;。AI 补测试会用业务直觉写&quot;应该&quot;断言，把历史包袱当 bug——提示词必须强制&quot;先跑代码记录实际行为，再转成断言&quot;。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li>改造前 30 秒兜底：<strong>先点产品确认&quot;要做的功能不存在&quot;</strong>——AI 扫代码永远发现不了已存在的功能（20 讲翻车教训）。</li><li>改代码前先写 Characterization Test 锁行为，小步提交，改造后对比测试结果（15/19 讲）。</li><li>CLAUDE.md 只放&quot;索引+常识&quot;（超 300 行就是写多了），<strong>禁区/历史包袱两节必须自己写</strong>，提示词让 AI 留空别瞎编（10 讲）。</li><li>拆需求三步走：AI 出六维草稿（强制读 docs+代码）→ 人补三个判断 → AI 出定稿，约 20 分钟（17 讲）。</li><li>接一句话需求先&quot;两次翻译&quot;：先出与技术栈无关的设计文档，再落具体方案；方案阶段喊停 AI：&quot;别又冒新决策，把这版收紧&quot;（25 讲）。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><strong>改造前花 70% 时间理解项目是正常且必要的</strong>（九步链路中前六步是理解）。跳过理解直接让 AI 改，AI 就是瞎的——&quot;20% 的盲区，经常就是 100% 的事故&quot;。慢就是快，熬过冷启动，后面全是复利。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值</strong> — 前提是你会带着批判眼光读：方法论与提示词可直接复制到任何老项目（金矿 5 讲 + 银矿 10 讲占了 70% 价值），且全课少见的诚实（主动展示翻车与失败模式）。但课程数据可信度低（18 条量化声明仅 1 条可独立验证），5 节实操课重复，别为演示买单。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

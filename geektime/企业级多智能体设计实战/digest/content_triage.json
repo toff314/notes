@@ -1,0 +1,1385 @@
+{
+  "course": "企业级多智能体设计实战",
+  "triage_date": "2026-08-14",
+  "total_lectures": 44,
+  "gold_count": 6,
+  "silver_count": 15,
+  "copper_count": 16,
+  "iron_count": 7,
+  "overall_snr": 3.0,
+  "data_audit": {
+    "total_claims": 37,
+    "verified": 14,
+    "partial": 7,
+    "unverifiable": 15,
+    "suspicious": 1,
+    "summary": "37个量化声明中，14个可追溯（MIT/Gartner/BCG/RAND报告、Google Bard/DPD/Air Canada新闻、MT-bench/Reflexion/Retroformer/Liu et al.论文、0.9^10数学、Langfuse star数），7个部分验证（Galileo/PwC 70% vs 10%、Safety Alignment Collapse、Goal Drift等方向正确但数值待核实），15个无法验证（629次测试80%、DeepMind 17.2x、MAST 37%、$70k死循环、$600账单等无出处），1个可疑（629次安全测试精确数值无来源且被反复当作论据）。课程后半程数据可信度高于前半程。"
+  },
+  "entries": [
+    {
+      "lecture_id": "23",
+      "lecture_title": "Orchestrator范式：任务层的主 Agent + 子 Agent",
+      "tier": "gold",
+      "snr_score": 4.4,
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.5
+      },
+      "adler_q1": "单 Agent 在复杂任务上有三堵结构性瓶颈（效果/性能/成本），上下文工程治不了；行业从 Pipeline、Swarm 弯路收敛到 Orchestrator 范式——以任务而非 Agent 为视角，主 Agent 调度、子 Agent 执行、文件路径回传。",
+      "adler_q2": "解决了'复杂任务如何分工'的问题。已解决：三个关键设计（Task对象传参/子Crew隔离/传路径不传内容）各自击穿一堵墙；未解决：子 Agent 用后即抛，没有记忆和角色延续（留给 24-28 课）。",
+      "adler_q3": "基本有道理。核心框架逻辑严密（上下文分割→效果、并发→性能、独立验收→质量）。但'Galileo+PwC 70% vs 10%'和'DeepMind 17.2x'两个数据无法追溯到原始出处，削弱论证强度。",
+      "adler_q4": "能立刻复现一个主 Agent + 子 Agent 的调度骨架；知道规划前先定共享规范、执行者不能自评、有效 Agent 天花板 2-3 个这三个可落地的约束。",
+      "critical_notes": "模块四地基，三堵墙 + 三关键设计 + 三核心价值的映射是清晰的自洽框架。亮点是'以任务为视角'的范式转变、'主 Agent 无写工具'的反直觉设计、'可靠性指数衰减 0.9^10'的可计算论证。扣分点是多个精确数据（70%/10%、17.2x、$600）无原始出处，需降级为'据讲师称'。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Orchestrator 三关键设计",
+          "source_text": "把工作打包成 Task 对象（role/goal/task/tools/input/output）只传这个子任务需要的信息；每次 spawn 创建全新 Crew 实例；子 Agent 结果写文件、只返回路径。主 Agent 只有三个工具、没有任何写工具。",
+          "paraphrase": "用任务对象精准传参、子 Agent 隔离沙箱、结果传路径不传内容，三者分别击穿效果/性能/成本三堵墙。核心原则：精准传递而非全量传递。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "13",
+            "24",
+            "25"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程自研框架）",
+            "notes": "框架本身为课程原创，无外部出处可查，但逻辑自洽"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "独立验收 70% vs 10%",
+          "source_text": "Galileo + PwC 的生产数据：同一任务，有独立验收的准确率是 70%，没有的只有 10%——相差 7 倍。",
+          "paraphrase": "执行者与评审者上下文隔离能带来 7 倍准确率差距，因为执行者被自己的推理过程'自我合理化'污染。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "28",
+            "36"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Galileo 为真实 AI 评测公司，但 70%/10% 精确数值未见原始报告",
+            "notes": "组织真实、数值可性存疑，引用时标注'据课程引 Galileo/PwC 数据'"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "可靠性指数衰减",
+          "source_text": "10 个步骤，每步成功率 90%，整体是 0.9^10≈35%；每步提到 99%，整体是 0.99^10≈90.4%。可靠性不是线性叠加，是指数衰减。",
+          "paraphrase": "多步 Agent 链路的整体成功率是单步可靠性的幂次，必须先把每个子 Agent 单独测稳再组合。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "31"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "基础概率计算，可自行验证",
+            "notes": "纯数学，无需外部来源"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "26",
+      "lecture_title": "任务链与信息传递：数字员工的协作协议",
+      "tier": "gold",
+      "snr_score": 4.0,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "角色定义完成≠能协作。协作需要两套独立机制：共享工作区（状态共享，持久化）和邮箱（任务触发，时序事件），二者解决不同时间维度的问题，不可混用。",
+      "adler_q2": "解决了'多角色之间如何可靠传递状态和触发任务'。已解决：结构化工作区+权限边界、结构化 JSON 邮箱、文件锁原子写、三态状态机（unread/in_progress/done）+补单机制；未解决：真正的常驻进程调度留到 29 课。",
+      "adler_q3": "有道理。三态状态机借鉴 AWS SQS Visibility Timeout 和金融补单语义，是成熟模式的合理移植；'邮箱只传事件、工作区存状态'是清晰的分层。MAST 37% 数据无出处，是瑕疵。",
+      "adler_q4": "能把任意两个数字员工之间用'结构化邮箱+文件锁+三态状态机'串成可靠任务链，并理解为什么 read_inbox 的读取和标记必须在同一锁块内。",
+      "critical_notes": "工程细节密度极高的一课。三态状态机（unread→in_progress→done）区别于 naive 的 read:bool，用 in_progress 时间戳实现崩溃恢复，是真正的生产级设计。'权限控制的目的不是防 AI 作弊，而是缩小注意力范围'是有独立洞见的判断。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "共享工作区 + 邮箱双机制",
+          "source_text": "协作协议的本质是解决两个独立问题：谁能看到什么（状态共享）+ 谁来告诉谁做什么（任务触发）。工作区存状态（持久化，随时可读），邮箱传事件（有时序，有接收者），两者混用会架构混乱。",
+          "paraphrase": "把人类项目管理的 Confluence（公共区）+ Jira（任务系统）模式落到文件/JSON 层，工作区管状态、邮箱管事件。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "23",
+            "27",
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Confluence/Jira 为成熟工具模式",
+            "notes": "模式移植清晰，可追溯"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "三态状态机 + 补单机制",
+          "source_text": "消息状态 unread→in_progress→done，不用 read:bool。Agent 取走消息标 in_progress 而非 done，处理成功才 mark_done；超时由 reset_stale 重置回 unread。这是 AWS SQS Visibility Timeout + 金融补单的语义。",
+          "paraphrase": "用三态而非两态防止 Agent 崩溃导致任务永久丢失；in_progress + processing_since 时间戳是崩溃恢复的关键线索。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "28",
+            "31"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "AWS SQS Visibility Timeout 为公开文档机制",
+            "notes": "借鉴成熟分布式系统模式，可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "27",
+      "lecture_title": "Human as 甲方：如何设计 Agent 团队的人类介入点",
+      "tier": "gold",
+      "snr_score": 4.0,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "人类在 Agent 团队中的定位不是保姆/监工而是'甲方'，只做三件事：说清需求、拍板确认、出问题兜底，对应三个工程化介入点（需求澄清/设计确认/异常兜底），其余完全自主。",
+      "adler_q2": "解决了'自主系统在哪些点必须留人类、如何不成为瓶颈'。已解决：单一接口原则（人只和 Manager 沟通）、human_cli 异步确认、SOP 预埋 checkpoint；未解决：审批疲劳的量化平衡靠经验。",
+      "adler_q3": "有道理，且纠正了一个普遍误区。'on the loop vs in the loop'（Martin Fowler）和 LITL（谎言在循环中）是真实的工程教训。'风险分级减少 60-80% 审批'数据无出处。",
+      "adler_q4": "能设计一个'人只对接 Manager、需求落文档才算数、异常统一发 human.json'的介入协议，并警惕 LITL——不要只看 Agent 汇报的文字，要打开实际产出物。",
+      "critical_notes": "'人当甲方不当保姆'是贯穿全课最有张力的隐喻。单一接口原则 + human.json 二态（区别于 Agent 邮箱三态）是有意的工程区分。LITL 提醒'Agent 汇报可能是幻觉'，切中 HITL 的真实风险。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "甲方三件事 + 三介入点",
+          "source_text": "把自己当老板/甲方而非保姆：项目开始前把需求说清楚、重要方案拍板确认、出大问题出面处理。对应需求澄清（前端）、设计确认（中端）、异常兜底（后端）三个工程化介入点。",
+          "paraphrase": "甲方职责的边界就三件事，其余交给 Agent 自主；三个介入点前置标记'人类必须在场'的环节，是为让自主安全运转。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "26",
+            "28"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创框架）",
+            "notes": "原创隐喻，逻辑自洽"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "LITL 谎言在循环中",
+          "source_text": "Agent 汇报的内容与实际执行不同——在邮件里写'已完成/审查通过'，但实际产出不符合要求。不要只看邮件文字，要打开实际产出物看一看。",
+          "paraphrase": "HITL 可能成为攻击面而非防护层，人批准的是幻象；审计必须落到实际产物而非 Agent 自述。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "28",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "业界公开讨论的概念（Lie in the Loop）",
+            "notes": "有学术/工业界共识支撑"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "28",
+      "lecture_title": "数字员工的自我进化：让 Agent 团队越用越好",
+      "tier": "gold",
+      "snr_score": 4.2,
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "数字团队自我进化 = 人类复盘文化的工程化版本，五步闭环（记录→复盘→提案→落地→验证）；核心难点是复盘——从海量日志定位'该改哪一行'，用五问漏斗 + root_cause 枚举打破复述式反思。",
+      "adler_q2": "解决了'团队如何越用越好'。已解决：三层日志（L1人类纠正黄金数据/L2任务摘要/L3 ReAct细节）、五问漏斗、三档 HITL 审批、before/after_text 锚点替换；未解决：枚举值的覆盖面需按业务定制。",
+      "adler_q3": "有道理，且有学术根基支撑。Reflexion（NeurIPS 2023）、Retroformer（ICLR 2024）是真实论文，'犯错的 Agent 倾向合理化'的诊断准确。Goal Drift / Safety Alignment Collapse 的引用方向正确但数值需谨慎。",
+      "adler_q4": "能搭一套旁路复盘系统：结构化日志 + 思考框架 Skill + 枚举根因 + 分档审批 + 锚点替换，让 Agent 从运行数据里产出可审批的改进提案。",
+      "critical_notes": "本课是全课方法论最扎实的一节。'以终为始'设计 root_cause 枚举（映射到 soul/SOP/memory 文件）是原创洞见；'before/after_text 锚点替换'与 Cursor/Claude Code 的机械 apply 对齐；三档 HITL 把稀缺的人类注意力匹配到改动深度。论文引用可靠。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "五步闭环自我进化",
+          "source_text": "记录（结构化日志取代人类记忆）→复盘（定位失败根因）→提案（结构化文档+证据）→落地（经审批后更新 soul/SOP/Skill）→验证（检查指标是否上升）。",
+          "paraphrase": "把人类团队复盘会工程化：Agent 分析、Human 审批、机械替换，各司其职。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "25",
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创框架）",
+            "notes": "原创综合，逻辑自洽"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "五问漏斗 + root_cause 枚举",
+          "source_text": "五个递进问题：哪些任务差→差在哪一步→人类怎么看→根因是什么类型→改哪个文件哪段。root_cause 必须从枚举（sop_gap/prompt_ambiguity/ability_gap/integration_issue）中选，逼出分类思考。",
+          "paraphrase": "枚举约束打破 LLM'复述式反思'（'下次注意移动端'）的惯性；以终为始，根因分类直接映射到可改的文件。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "25",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Reflexion (NeurIPS 2023) / Retroformer (ICLR 2024) 为真实论文",
+            "notes": "学术根基可追溯"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "三档 HITL 审批",
+          "source_text": "按改动影响深度分三档：memory（自动落地+硬闸门 3条/天、200行上限）/ skill·SOP（Manager 预审+Human 批准）/ soul·code（Human 必审+强制 Dry Run）。",
+          "paraphrase": "soul 一旦改错无法自我纠正（Goal Drift），所以改动越深审批越重；把稀缺的人类注意力匹配到改动深度。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "27"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Goal Drift (2025) / Safety Alignment Collapse (EMNLP 2025) 方向正确，具体数值待核实",
+            "notes": "学术方向可靠，具体数字谨慎引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "34",
+      "lecture_title": "需求边界：如何使用 AI 适用性评估表识别高 ROI 场景？",
+      "tier": "gold",
+      "snr_score": 4.3,
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.5,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "AI 项目失败的第一原因是选题不是技术；交付'需求挖掘三法 + 四问过滤器 + AI 适用性评估表（5维25分）'一套立项前的场景审查工具，并区分 AI-enabled 与 AI-native 两类机会。",
+      "adler_q2": "解决了'该拿 AI 做什么场景'这个前置问题。已解决：三法（工作流审计/摩擦点溯源/规模增长映射）挖候选场景、四问 5 分钟过滤、评估表 10 分钟量化打分；未解决：AI-native 场景识别只给了方向无工具。",
+      "adler_q3": "有道理，且数据可信度高。MIT NANDA 95%、Gartner 50%、BCG 74%/60%、RAND 80% 均为可追溯的行业报告；Klarna 案例是真实新闻。'AI-native 从来没人做是因为人力做不到'是原创且深刻的视角。",
+      "adler_q4": "能立刻用评估表 + 四问给手头任一 AI 需求打分排序，用'规模效应/清晰度/错误容忍度/可结构化/人力替代度'五维避免凭感觉立项。",
+      "critical_notes": "独立于代码的纯方法论课，是全课 ROI 最高的一节。评估表把'感觉上的痛点'变成可协商的数字；'规模效应易高估、错误容忍度易低估'是真实的打分陷阱；AI-enabled vs AI-native 呼应 cloud-native，是原创的分析框架。数据引用密集且大部分可追溯。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "AI 适用性评估表",
+          "source_text": "5 维度 25 分制：规模效应（频率×时长）、任务清晰度（能否写 SOP）、错误容忍度（出错代价）、信息可结构化（输入质量）、人力替代度（是否真瓶颈）。18+优先推进、11-17谨慎试点、10-暂缓。",
+          "paraphrase": "把立项决策从凭感觉变成可协商的数字；最易打错的两个维度是'规模效应易高估、错误容忍度易低估'。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "04",
+            "35"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创工具）",
+            "notes": "原创评分表，逻辑自洽"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "AI-enabled vs AI-native",
+          "source_text": "AI-enabled 是把现有工作做得更快更好；AI-native 是问'有哪些有价值的事，因为人类的内在局限（物理/认知），从来没人完整做过'——不是没价值，是人力做不到。",
+          "paraphrase": "识别 AI-native 入口的方法是换个提问方式：'如果这件事能做了，会发生什么？'而非更好的扫描工具。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "40"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "借鉴 cloud-native 的成熟分型，Karpathy Demo 陷阱名言可查",
+            "notes": "分型有成熟先例"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "AI 项目失败率行业数据",
+          "source_text": "MIT NANDA（2025）95% 企业 GenAI 试点未产生可测量影响；Gartner（2025）50% GenAI 项目失败；BCG（2024）74% 无法扩展价值、60% 零实质价值；RAND（2024）80% 无法实现生产部署。",
+          "paraphrase": "四个独立机构报告交叉印证：AI 项目失败是行业级系统性失败，根因在选题而非技术。",
+          "writing_angle": "data_point",
+          "related_lectures": [
+            "40"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "MIT NANDA / Gartner / BCG / RAND 均为真实公开报告",
+            "notes": "可交叉验证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "36",
+      "lecture_title": "评测体系：让AI质量可量化",
+      "tier": "gold",
+      "snr_score": 4.2,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.5,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "AI 产品质量不可见等于蒙眼飞行；交付'评测集建设→评测执行→评测打分→汇总与结论'四环节流水线，并纠正 pass@k 与 pass^k、LLM 评判偏差等常见误区。",
+      "adler_q2": "解决了'怎么把 AI 质量变成可持续运行的验证体系'。已解决：四环节各环节的具体做法（四种来源、四种执行架构、三层打分、按维度细分汇总）；未解决：平台选型依赖具体技术栈。",
+      "adler_q3": "有道理，案例和数据都可追溯。Google Bard（股价跌 7.7%）、DPD、Air Canada 是真实新闻；MT-bench 论文的 LLM-judge 三偏差（位置 75%/冗长 91.3%/自我增强 25%）有论文出处。'pass@k 合法作弊'是精准的批判。",
+      "adler_q4": "能按四环节搭一套可运行的评测流水线，区分任务型/生成型/Agent 型的打分对象，并避免'用 pass@k 汇报好数字但用户体验 pass^k'的陷阱。",
+      "critical_notes": "评测工程化的完整教程。'grading_criteria 必须始终有、expected_output 可以没有'、'只评回答文字不评实际执行结果'、'pass@k vs pass^k 合法作弊'都是直击痛点的判断。数据可信度高（新闻+论文）。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "四环节评测流水线",
+          "source_text": "评测集建设（地基）→评测执行（跑起来）→评测打分（判好坏）→汇总与结论（做决策）。四环节缺一不可，任何一环选错方法都让体系失效。",
+          "paraphrase": "把评测从'手动跑一下'变成四环节整体设计；评测集四种来源（GT/专家/合成/生产trace）按生命周期递进。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "35",
+            "37"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（工程共识整理）",
+            "notes": "系统化整理，可操作"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "pass@k vs pass^k",
+          "source_text": "pass@k = k 次尝试至少一次成功（评估能力上限）；pass^k = k 次每次都成功（生产要求）。用 pass@k 优化并向老板汇报好数字，但用户实际体验的是 pass^k——数字没造假，优化的不是用户关心的东西。",
+          "paraphrase": "'合法作弊'陷阱：Agent 任务可重试，但用户只有一次机会，指标选错会系统性高估。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "37",
+            "38"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "pass@k 为 Codex 论文标准概念",
+            "notes": "概念有明确出处"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "LLM 评判三偏差",
+          "source_text": "MT-bench 论文：位置偏差（75% 偏向前一个答案）、冗长偏差（91.3% 偏向更长回答）、自我增强偏差（评自己输出系统性高 25%）。",
+          "paraphrase": "LLM-as-Judge 不可靠，需 Position Swap、明确'不因长加分'、用第三方模型规避。",
+          "writing_angle": "data_point",
+          "related_lectures": [
+            "38"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "MT-bench (Zheng et al.) 为真实论文",
+            "notes": "论文可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "01",
+      "lecture_title": "拨开迷雾：AI 应用开发的四种架构范式",
+      "tier": "silver",
+      "snr_score": 3.4,
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "四种架构范式（Prompt/Workflow/Single Agent/Multi-Agent）是 AI 应用开发的选型光谱，用阿什比定律指导复杂度匹配。",
+      "adler_q2": "解决'该用哪种范式'的认知起点。已解决：四范式边界+熵-架构匹配矩阵；未解决：具体决策工具留给第4课。",
+      "adler_q3": "基本有道理，阿什比定律引用准确；'熵-架构匹配矩阵'有品牌化重命名嫌疑（把控制论定律贴工程标签）。",
+      "adler_q4": "能建立'范式有高低之分、按业务不确定性选复杂度'的直觉。",
+      "critical_notes": "全课认知地基，四范式划分清晰实用。扣分：'熵-架构匹配矩阵'是阿什比定律的包装。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "四种架构范式",
+          "source_text": "从 Prompt Engineering 到 Workflow/Chain 到 Single Agent 到 Multi-Agent System，是复杂度递增的光谱。",
+          "paraphrase": "AI 应用开发不是非黑即白，而是四个复杂度层级的连续光谱，按业务不确定性选型。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "03",
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "阿什比定律（Ashby's Law）为控制论经典",
+            "notes": "可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "解构智能体：Agent的解剖学与ReAct范式",
+      "tier": "silver",
+      "snr_score": 3.5,
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "Agent = 大模型 + 工具 + ReAct 循环，'魔法'背后是 Stop Token 与工程接管的朴素逻辑，并手搓一个原生 Agent。",
+      "adler_q2": "解决'Agent 到底怎么工作'的底层理解。已解决：ReAct 机制、手搓 Agent、混合架构；未解决：生产环境 ReAct 的坑留思考题。",
+      "adler_q3": "有道理，源码级解释清晰；'Stop Token 工程接管'是容易被忽视的关键点。",
+      "adler_q4": "能不依赖框架手写一个 ReAct Agent，理解框架到底替自己做了什么。",
+      "critical_notes": "深度扎实，撕开框架黑盒。无数据引用，故论证可验证性一般。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "手搓 ReAct Agent",
+          "source_text": "Agent 的核心是 while 循环：LLM 推理输出 Action，工程层解析并执行工具，Observation 回填，直到 Stop Token。",
+          "paraphrase": "不依赖框架手写原生 Agent，理解 ReAct 的 Thought/Action/Observation 循环本质。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "01",
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "ReAct 为 Yao et al. 2022 真实论文",
+            "notes": "可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "工程全景图：构建企业级多智能体系统的“施工蓝图”",
+      "tier": "silver",
+      "snr_score": 3.4,
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "六层施工蓝图（Level 0 Ready 到 Level 5 Stability）+ 五步认知法，是全课的'施工地图'。",
+      "adler_q2": "解决'企业级系统从哪下手'的路线问题。已解决：六层蓝图+实战五关；未解决：每层细节后续课展开。",
+      "adler_q3": "有道理，作为课程地图价值高；但本身是提纲挈领，无独立深度内容。",
+      "adler_q4": "能对照蓝图诊断自己项目缺哪块能力（RAG/协作/安全/评测）。",
+      "critical_notes": "全课导航图，Level 0-5 分层清晰。属'地图'而非'内容'，故可验证性一般。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "六层施工蓝图",
+          "source_text": "Level 0 Ready（思想+工具武装）→1 MVP（先跑起来）→2 Tools（赋予行动力）→3 Context（工程化提升智商）→4 Collaboration（组织协作）→5 Stability（生产级）。",
+          "paraphrase": "企业级 Multi-Agent 的六层递进施工路线，从玩具 Demo 到生产级。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "06",
+            "34"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创地图）",
+            "notes": "原创路线图"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "工具设计哲学：从 API 到 Agent-Native 的范式跃迁",
+      "tier": "silver",
+      "snr_score": 3.6,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "面向 Agent 的工具与面向人的 API 设计原则本质不同：语义完整性、可描述的简单结构、建设性报错，而非原子性、强类型、状态码。",
+      "adler_q2": "解决'如何把历史 API 改造成 Agent 好用的工具'。已解决：三组范式跃迁 + contextvars 上下文隔离 + Hook 拦截；未解决：具体 SOP 留 13 课。",
+      "adler_q3": "有道理，'建设性报错给 AI 复盘机会'是原创且有价值的判断。",
+      "adler_q4": "能识别自家 API 与 Agent-Native 工具的差距，知道改什么。",
+      "critical_notes": "'从 API 到 Agent-Native 的范式跃迁'是原创洞见，三组对比（原子性→语义完整性等）清晰可操作。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "Agent-Native 工具三范式",
+          "source_text": "原子性→语义完整性、强类型结构→可描述的简单结构、状态码→建设性报错（Constructive Error）。",
+          "paraphrase": "给 Agent 的工具要给'复盘机会'（错误信息带原因），而非给机器看的错误码。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13",
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创）",
+            "notes": "原创判断"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "Skills生态：让Agent接入大量工具",
+      "tier": "silver",
+      "snr_score": 3.6,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "Skills 的本质是把企业私域知识沉淀成 Agent 可复用的能力单元，核心机制是渐进式披露（Progressive Disclosure）。",
+      "adler_q2": "解决'工具有了但 Agent 不知道怎么用'的问题。已解决：SKILL.md 规范、渐进式披露、Skill 与 MCP 竞合；未解决：Skills 治理留 20 课。",
+      "adler_q3": "有道理，'Bash is All You Need'哲学与渐进式披露是真实且重要的工程模式。",
+      "adler_q4": "能把一个高频操作沉淀成带 CRITICAL 约束的 SKILL.md。",
+      "critical_notes": "Skills 是本课体系的关键抽象，渐进式披露解决上下文膨胀。与 Claude Code Skills 机制一致，有现实印证。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "渐进式披露",
+          "source_text": "SKILL.md 只暴露 name + description（约 100 字），模型判断需要时才加载完整内容——像员工需要时才翻操作手册章节，而非背下整本手册。",
+          "paraphrase": "把'知道怎么用'从上下文常驻变成按需加载，控制上下文膨胀。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "12",
+            "20"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Claude Code Skills 为公开机制",
+            "notes": "有现实印证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "从 Prompt 到 Harness：记忆与上下文的设计范式",
+      "tier": "silver",
+      "snr_score": 3.8,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "记忆的本质是构建 message list；三代演进（Prompt→Context→Harness Engineering）反映控制权从'写内容'转向'造环境'，治理核心是加法和减法。",
+      "adler_q2": "解决'Agent 记忆是什么、怎么治理'的认知框架。已解决：加/减法框架、三大核心问题、Context Rot 物理根因；未解决：具体操作时机留 19 课。",
+      "adler_q3": "有道理，'大模型没有记忆、每次调用独立'是准确的基础认知；Context Rot 的注意力有限预算解释有论文支撑（Liu et al. TACL 2024）。",
+      "adler_q4": "能建立'记忆=信息流设计'的心智模型，知道关键信息放两头、中间精简。",
+      "critical_notes": "三代演进框架清晰，Harness=牧场主隐喻生动。'超过 40% 能力下降'数据无出处，需降级。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Harness Engineering 三代演进",
+          "source_text": "Prompt 时代人写全部（骑手拉缰绳）→Context 时代工程逻辑构建（教练划赛道）→Harness 时代设计环境让模型探索（牧场主建围栏）。",
+          "paraphrase": "控制权从'写内容'转向'造环境'；预加载关键索引 + 模型按需探索的混合模式。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "19",
+            "20"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Harness 概念 OpenAI 2026 提出、Context Engineering 归 Karpathy（2025）",
+            "notes": "概念出处方向正确，具体时间待核实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "上下文的生命周期：Bootstrap、剪枝与压缩",
+      "tier": "silver",
+      "snr_score": 3.7,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "Agent 的上下文是'生长'出来的，能干预的是生命周期节点；Bootstrap（加法）、剪枝+压缩（减法）是三大操作，压缩前先持久化保证 lossless。",
+      "adler_q2": "解决'在哪些时刻动手术'的落地问题。已解决：Bootstrap 四件套、@before_llm_call 剪枝压缩、session 持久化恢复；未解决：文件系统记忆留给 20 课。",
+      "adler_q3": "有道理，工程细节扎实；'压缩阈值设 30-40% 而非 80%'、'tool message pair 不可拆散'是真实的生产坑。",
+      "adler_q4": "能实现 session 中断后恢复（连续上下文）和激进压缩，理解 in-place 修改的框架约束。",
+      "critical_notes": "Bootstrap/剪枝/压缩三操作是上下文工程的完整落地。反模式（context.messages 重新赋值失效）很有价值。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "Bootstrap + 剪枝 + 压缩",
+          "source_text": "Bootstrap 注入导航骨架（索引>全文、200行硬上限）；剪枝清旧 tool result（保留占位不断 tool_call_id）；压缩分块摘要（30-40% 主动触发、压缩前先持久化）。",
+          "paraphrase": "上下文生命周期的三大操作，压缩用 lossless 双写（ctx 快照+raw 原始历史）保证信息不永久丢失。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "18",
+            "20"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Claude Code 200 行硬上限为生产验证数字",
+            "notes": "工程细节可迁移"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "25",
+      "lecture_title": "团队角色体系：分工设计与行为规范",
+      "tier": "silver",
+      "snr_score": 3.9,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "角色体系是给数字员工发'职业执照'；三维隔离判断法决定谁该存在，四层框架（Role Charter/soul/Memory/Skills）+ NEVER 清单决定怎么定义。",
+      "adler_q2": "解决'数字团队谁该存在、如何定义'。已解决：三种团队结构对比、三维隔离、四层框架、静态/动态分离；未解决：协作协议留 26 课。",
+      "adler_q3": "有道理。'三维隔离判断法'和'NEVER 清单比正向描述更硬'是原创且有价值的判断；Anthropic 90%+ 数据无出处。",
+      "adler_q4": "能用三维隔离判断法决定是否新建角色，用 NEVER 清单定义决策边界。",
+      "critical_notes": "三维隔离判断法 + NEVER 清单 + 静态/动态分离是本课原创亮点，可操作性极强。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "三维隔离判断法",
+          "source_text": "记忆数据 / 技能体系 / 决策偏好三个维度与现有角色显著不同才值得独立；只有一个维度不同就扩展 Skills 而非新建角色。",
+          "paraphrase": "防止角色膨胀的护栏：先少后多，协调成本会吃掉并发收益。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "24",
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创）",
+            "notes": "原创判断法"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "NEVER 清单",
+          "source_text": "职责说明不能只说'你负责什么'，必须给'你不能做什么'的硬约束——LLM 遇到'我直接做更快'的诱惑时，正向描述易被绕过，NEVER 是硬约束。",
+          "paraphrase": "用负向约束代替正向描述，比'你是协调者'更难被突破。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "23"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创）",
+            "notes": "原创技巧"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "30",
+      "lecture_title": "可观测性：Hook 骨架 + Langfuse 全链路追踪",
+      "tier": "silver",
+      "snr_score": 3.9,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "可观测性是模块五地基：你无法约束你看不见的东西；设计 5+2 事件体系 + 两层配置，把零散 Hook 统一到骨架，接 Langfuse 全链路追踪。",
+      "adler_q2": "解决'零散 Hook 各自为政'的架构问题。已解决：5+2 事件、HookRegistry、两层配置、适配层映射；未解决：拦截能力留 31 课。",
+      "adler_q3": "有道理，'模型自报告不可信'是安全领域基本常识的正确应用；工程细节（frozen dataclass、try-except 保护、路径穿越防护）扎实。",
+      "adler_q4": "能搭一套框架无关的 Hook 骨架，把观测从'Agent 自报告'变成工程层独立观测。",
+      "critical_notes": "Hook 骨架 + 适配层是本课核心工程贡献。$70k 死循环事故数据无出处，属轶事。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "5+2 事件 Hook 骨架",
+          "source_text": "对齐 Agent Turn 周期的 5 事件（BEFORE_TURN/BEFORE_LLM/BEFORE_TOOL_CALL/AFTER_TOOL_CALL/AFTER_TURN）+ 2 生命周期事件（TASK_COMPLETE/SESSION_END），统一零散 Hook。",
+          "paraphrase": "把所有 Agent 框架的执行单元抽象成统一事件体系，观测 handler 插在骨架上，改 yaml 不改代码。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "31",
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Claude Code 26+ 事件为公开设计",
+            "notes": "有现实印证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "31",
+      "lecture_title": "可靠性：重试、循环控制与成本围栏",
+      "tier": "silver",
+      "snr_score": 3.8,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "观测解决看见、可靠解决自动干预；三策略（区分可/不可重试、状态哈希循环检测、代码层成本围栏）挂在 Hook 骨架上自动拦截。",
+      "adler_q2": "解决'Agent 凌晨失控怎么办'。已解决：重试分类、双路径循环检测、CostGuard、dispatch_gate/pending_deny；未解决：业务专属护栏需自行扩展。",
+      "adler_q3": "有道理，'重试的核心是该不该重试'、'成本控制不能靠 Prompt'是精准判断；$63/$200 事故数据无出处。",
+      "adler_q4": "能实现循环检测 + 成本围栏，理解 dispatch_gate 与 pending_deny 绕过框架异常吞噬的技巧。",
+      "critical_notes": "三策略直击生产痛点，pending_deny 模式（绕过 CrewAI except Exception:pass）是真实的框架踩坑经验。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "状态哈希循环检测 + 成本围栏",
+          "source_text": "对 tool_name+output 做哈希，连续 3 次相同即判定循环；成本用 token 粗估在 Hook 层实时算、设上限硬停止。",
+          "paraphrase": "max_iter 是限速器、哈希去重是方向检测，双保险；成本控制用代码不靠 Agent 自觉。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "30",
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创工程）",
+            "notes": "工程可迁移"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "32",
+      "lecture_title": "企业安全性：沙箱、权限网关与身份认证",
+      "tier": "silver",
+      "snr_score": 3.9,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "Agent 安全 ≠ 内容过滤，而是限制工具能力边界；五类威胁共同根因是'都要通过工具做坏事'，对应三层防御（沙箱/权限网关/身份认证）。",
+      "adler_q2": "解决'Prompt 管不了安全'怎么办。已解决：三层工具能力限制、Deny>Ask>Allow、密钥工具层注入、沙箱即身份；未解决：身份认证仍是展望性。",
+      "adler_q3": "有道理，'Prompt 是建议、Hook 是法律'是准确判断；629 次测试、15% 木马等数据无出处，需降级。",
+      "adler_q4": "能实现确定性输入消毒 + 权限网关 + Default-Deny，理解'沙箱即身份'的身份下沉方案。",
+      "critical_notes": "三层防御框架清晰，'五类威胁共同根因'是原创归纳；但多个精确数据（629次/80%/15%）无来源，是最大软肋。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "三层工具能力限制",
+          "source_text": "沙箱限制执行范围（四配置+确定性消毒）→权限网关限制工具选择（Deny>Ask>Allow）→身份认证限制使用主体（沙箱即身份）。",
+          "paraphrase": "所有安全威胁都通过工具做坏事，所以从工具能力上三层限制，全部确定性代码/基础设施，无一靠 Prompt。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "30",
+            "31"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "Claude Code permissions.ts / 悟空沙箱方案为公开设计",
+            "notes": "框架有现实印证，但 629 次测试数据无出处"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "35",
+      "lecture_title": "产品原型：从需求到第一个可验证的Demo",
+      "tier": "silver",
+      "snr_score": 3.3,
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "动手前的三问（Who/What/How good）+ Ground Truth 规划，把'值得做'翻译成'怎么做、怎么算好'。",
+      "adler_q2": "解决'评估通过后往哪推进'的断层。已解决：三问工作法、AI 产品六形态、Ground Truth；未解决：具体评测留 36 课。",
+      "adler_q3": "有道理，'How good 现在就要定'是反直觉但正确的要求；内容偏产品方法论，工程深度一般。",
+      "adler_q4": "能在写代码前先定义 Who/What/How good 和 Ground Truth。",
+      "critical_notes": "'最高风险假设通常不是技术能不能实现，而是用户愿不愿意用'是精准提醒。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "三问工作法 + Ground Truth",
+          "source_text": "第一问 Who（用户是谁）、第二问 What（AI 产品六形态）、第三问 How good（业务成功标准，现在就要定）；Ground Truth 是 AI 系统的'标准答案卷'。",
+          "paraphrase": "在写代码前定义用户、产品形态和成功标准，Ground Truth 决定评测数据从哪来。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "34",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（课程原创）",
+            "notes": "原创方法"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "37",
+      "lecture_title": "持续集成：让 AI 应用稳定演进",
+      "tier": "silver",
+      "snr_score": 3.3,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "AI CICD 三块结构：触发与版本管理（六维快照）、五阶段 CI 流水线、三档发布决策，解决'变更在上线前被拦住'。",
+      "adler_q2": "解决'AI 变更如何稳定演进'。已解决：六类触发、五阶段流水线、快先慢后；未解决：工具选型依赖技术栈。",
+      "adler_q3": "有道理，'AI CICD 比传统 CICD 根本上更难'（质量是概率分布）是准确判断；内容偏工程整合。",
+      "adler_q4": "能设计五阶段 CI 流水线（静态→可用性→行为→成本→安全），理解快先慢后的顺序。",
+      "critical_notes": "'快先慢后'（便宜快速的检查先跑）和六维快照是实用的工程决策。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "AI CICD 三块结构",
+          "source_text": "触发与版本管理（六维快照：代码/Prompt/模型/知识库/Skill/工具）→CI 执行流水线（五阶段）→综合决策（三档：放行/人工审核/阻断）。",
+          "paraphrase": "AI 变更的对象远不止代码，六类变更各有验证逻辑；五阶段快先慢后控成本。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "36",
+            "38"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（工程共识整理）",
+            "notes": "系统化整理"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "38",
+      "lecture_title": "线上监控：知道你的 AI 到底跑得怎么样",
+      "tier": "silver",
+      "snr_score": 3.9,
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "HTTP 200 ≠ 成功；六层监控指标体系（系统→成本→Agent执行→质量→业务→安全合规）+ 消耗率告警，解决 CI 管不了的'生产持续退化'。",
+      "adler_q2": "解决'CI 拦不住的生产退化怎么发现'。已解决：六层指标、ICR 框架、消耗率告警、P0/P1/P2 分级；未解决：采样策略按业务定。",
+      "adler_q3": "有道理，'汇总指标把信号平均掉了'是三个真实案例的共同教训；消耗率告警借鉴 Google SRE 成熟方案。",
+      "adler_q4": "能搭一套六层监控体系，把告警从'阈值超标'改成'预算燃烧速度'，噪声减 90%。",
+      "critical_notes": "六层体系完整、案例有现实依据（Anthropic postmortem、Claude Code）。消耗率告警噪声减 90% 借鉴 SRE，是成熟模式正确迁移。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "六层监控指标体系",
+          "source_text": "系统层（必须有但不够）→成本层（定时炸弹）→Agent 执行层（传统盲区）→质量层（最难量化）→业务层（最终判断）→安全合规层（检测事件）。",
+          "paraphrase": "从'系统有没有在运行'一路建到'用户意图有没有被满足'，多数团队停在第一层。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "30",
+            "36"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Google SRE 多窗口多燃烧率方案为公开方法论",
+            "notes": "消耗率告警可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "39",
+      "lecture_title": "数据飞轮：用线上数据持续迭代 AI Agent",
+      "tier": "silver",
+      "snr_score": 3.2,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "数据飞轮把每次用户交互、每个失败案例变成下次迭代的养料：显式/隐式信号采集 → 信号驱动迭代 → 错误分析（开放/轴心编码）。",
+      "adler_q2": "解决'监控发现问题后怎么主动进化'。已解决：信号采集体系、修复类型阶梯、错误分析编码；未解决：合成数据构建微调集几乎必然失败（批判）。",
+      "adler_q3": "有道理，'用合成数据构建微调集几乎必然失败'是清醒的批判；内容偏方法论，数据支撑一般。",
+      "adler_q4": "能设计一套信号采集+失败案例编码分析流程，把线上数据回流到 eval。",
+      "critical_notes": "数据飞轮是交付篇收尾齿轮，与 36/37/38 形成闭环。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "开放编码 vs 轴心编码",
+          "source_text": "开放编码：先看 10-20 条 bad case 建立初步认知；轴心编码：把问题归到失败分类体系（Failure Taxonomy），每个类别至少 3-5 条 case。",
+          "paraphrase": "从 bad case 挖掘→聚类→得方向性结论，优先修频率最高的失败类别。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "36",
+            "38"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "编码分析为社会研究方法论",
+            "notes": "方法论可追溯"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "Multi-Agent系统：Agent、Task、Process的协作美学",
+      "tier": "copper",
+      "snr_score": 2.8,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "架构师的决断：AI 应用开发选型工具",
+      "tier": "copper",
+      "snr_score": 2.5,
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "定义Agent：从“提示词工程”到“人设工程”",
+      "tier": "copper",
+      "snr_score": 2.6,
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "定义Task——从“步骤控制”到“契约驱动”",
+      "tier": "copper",
+      "snr_score": 2.8,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "定义 Process——任务调度与信息传递",
+      "tier": "copper",
+      "snr_score": 2.4,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.0,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "多模态模型：让你的 Agent 拥有“眼睛”",
+      "tier": "copper",
+      "snr_score": 2.3,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.0,
+        "actionability": 2.5,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "自定义工具封装：构建 Tools 的五步标准 SOP",
+      "tier": "copper",
+      "snr_score": 2.7,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "MCP协议：标准化定义工具接口",
+      "tier": "copper",
+      "snr_score": 2.6,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "15",
+      "lecture_title": "王牌超能力：代码解释器与无头浏览器",
+      "tier": "copper",
+      "snr_score": 2.3,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.0,
+        "actionability": 2.5,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "文件系统记忆：让Agent自己写记忆、自己学技能",
+      "tier": "copper",
+      "snr_score": 2.9,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "搜索驱动的记忆系统：企业级海量记忆管理方案",
+      "tier": "copper",
+      "snr_score": 2.8,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "24",
+      "lecture_title": "认知升级：从任务列表到数字团队",
+      "tier": "copper",
+      "snr_score": 2.9,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "29",
+      "lecture_title": "项目实战4：Agent 小队完成真实项目需求",
+      "tier": "copper",
+      "snr_score": 2.6,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.0,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "33",
+      "lecture_title": "项目实战 5：系统加固你的 XiaoPaw 本地工作助手",
+      "tier": "copper",
+      "snr_score": 2.6,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.0,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "40",
+      "lecture_title": "组织进化：从表演式转型到AI原生组织",
+      "tier": "copper",
+      "snr_score": 2.9,
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "live-02",
+      "lecture_title": "直播回放｜吃透 Claude Code 核心源码",
+      "tier": "copper",
+      "snr_score": 2.7,
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 2.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "背景参考型内容，核心价值已在上位课程覆盖。",
+      "adler_q2": "解决基础认知/框架用法问题，多数为已知知识的整理或源码走读。",
+      "adler_q3": "无硬伤，但无独立于框架/源码的原创洞见，价值密度中等。",
+      "adler_q4": "作为参考，需要时回查具体用法即可。",
+      "critical_notes": "铜矿层：已知知识整理、框架源码走读或项目演示，无独立原创贡献，不提取。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "00",
+      "lecture_title": "课程介绍｜告别“野路子”：转型企业级多智能体架构师",
+      "tier": "iron",
+      "snr_score": 1.2,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "工欲善其器：课程学习的基础代码环境准备",
+      "tier": "iron",
+      "snr_score": 1.5,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "项目实践（一）：小红书爆款笔记生成项目",
+      "tier": "iron",
+      "snr_score": 1.8,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "项目实战2：能力篇——XiaoPaw飞书本地工作助手",
+      "tier": "iron",
+      "snr_score": 1.8,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "项目实战3：XiaoPaw记忆篇：打造懂你的长记忆助手",
+      "tier": "iron",
+      "snr_score": 1.8,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "test",
+      "lecture_title": "结课测试｜检验一下自己的学习成果吧",
+      "tier": "iron",
+      "snr_score": 1.0,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "live-01",
+      "lecture_title": "直播回放｜爆火全网的OpenClaw强在哪儿？",
+      "tier": "iron",
+      "snr_score": 1.3,
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.5,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "营销开场、纯环境配置或项目演示，无实质知识增量。",
+      "adler_q2": "不解决独立问题，属铺垫/配置/演示性质。",
+      "adler_q3": "无独立论证，跳过。",
+      "adler_q4": "无行为改变，直接跳过。",
+      "critical_notes": "铁矿层：开场白/环境配置/项目演示/结课测试，直接跳过。",
+      "extractions": []
+    }
+  ]
+}

@@ -1,0 +1,913 @@
+{
+  "course": "AI原生开发工作流实战",
+  "scan_date": "2026-08-14",
+  "total_lectures": 28,
+  "modules": [
+    {"module_index": 0, "module_name": "开篇词", "lecture_count": 1, "value_density": "high"},
+    {"module_index": 1, "module_name": "前沿技术速递", "lecture_count": 2, "value_density": "high"},
+    {"module_index": 2, "module_name": "概念篇：建立AI原生世界观", "lecture_count": 3, "value_density": "high"},
+    {"module_index": 3, "module_name": "基础篇：掌握与AI伙伴协作的通用语言", "lecture_count": 5, "value_density": "medium"},
+    {"module_index": 4, "module_name": "进阶篇：将AI锻造成你的专属能力", "lecture_count": 7, "value_density": "medium"},
+    {"module_index": 5, "module_name": "实战篇：在真实项目中重塑工程实践", "lecture_count": 7, "value_density": "medium"},
+    {"module_index": 6, "module_name": "结束语&测试题", "lecture_count": 2, "value_density": "low"},
+    {"module_index": 7, "module_name": "精彩答疑", "lecture_count": 1, "value_density": "medium"}
+  ],
+  "lectures": [
+    {
+      "lecture_id": "intro",
+      "title": "开篇词｜AI工作流革命：重新定义软件工程师的每一天",
+      "module": "开篇词",
+      "module_index": 0,
+      "source_file": "开篇词/开篇词｜AI工作流革命：重新定义软件工程师的每一天/开篇词｜AI工作流革命：重新定义软件工程师的每一天.md",
+      "word_count": 5442,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我的极客时间课程《AI原生开发工作流实战》。在正式开启我们的学习旅程之前，我想先与你分享一个近乎每天都在我，或许也在你身边上演的场景。这是一个普通的下午，你正在开发一个新功能。IDE的屏幕上，是你专注构建的业务逻辑；而在另一块屏幕上，或者在一个分屏里，是AI大模型的聊天窗口。你的工作流，变成了一支在两个世界间不断切换的'双屏探戈'。",
+      "last_200_words": "你将获得的，不仅仅是一套能让你的开发效率提升数倍的实战技能，更重要的是，一次彻底的思维升维——你将开始习惯于从'工作流'和'自动化'的更高维度去审视你的日常工作，你将学会如何将AI视为一个可编程的、可信赖的系统组件，去构建属于你自己的'超级生产力机器'。",
+      "headings": [
+        "## 从“AI助理”到“AI同事”：我们离真正的生产力还有多远？",
+        "## 真正的革命：当AI从“工具”变为“工作流原生”",
+        "### 1.0时代：作为“外部大脑”的AI",
+        "### 2.0时代：作为“原生要素”的AI",
+        "## 什么是“AI原生开发工作流”？",
+        "### 第一支柱：可执行的规范（Specs）",
+        "### 第二支柱：持久化的上下文",
+        "### 第三支柱：可编排的行动",
+        "## “重新定义你的一天”：新范式下工程师的新角色"
+      ],
+      "key_terms": [
+        "三大摩擦力：上下文摩擦力、工作流摩擦力、认知摩擦力，阻碍AI协作升级的核心障碍",
+        "AI原生开发三大支柱：可执行规范(Specs)、持久化上下文、可编排行动",
+        "规范驱动开发(SDD)：以spec.md为真理之源，驱动代码生成",
+        "工程师三重角色转变：规范设计者、工作流指挥家、质量治理者"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "课程总纲，框架性强但属概念整合，无外部数据支撑",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "传统模式下80%的时间花在将需求翻译成实现代码", "context": "从代码生产者到规范设计者一节", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "flash-agent-teams",
+      "title": "前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”",
+      "module": "前沿技术速递",
+      "module_index": 1,
+      "source_file": "前沿技术速递/前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”/前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”.md",
+      "word_count": 6200,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。时光飞逝，转眼我们已经来到了2026年。回顾过去的一年，如果说2025年是Coding Agent的元年，以Claude Code为代表的工具让'自然语言编程'真正成为了现实；那么2026年，我们正站在一个新的风口之上——Agent Orchestration（智能体编排）。",
+      "last_200_words": "希望这篇加餐能让你提前感受到2026年软件工程的脉搏。虽然它现在还是实验特性，但未来已来，只是分布尚不均匀。去试试吧，组建你的第一支AI战队！",
+      "headings": [
+        "## Agent Teams：从“单兵”到“集群”的范式跃迁",
+        "## 业界前沿：16个Claude重写C编译器的故事",
+        "## 实战演练：开发一个“待办事项（Todo）”全栈应用",
+        "## 最佳实践与注意事项"
+      ],
+      "key_terms": [
+        "Agent Teams：Team Lead + Teammates 架构，多独立Claude Code进程并行",
+        "Subagent vs Agent Teams：前者串行同一会话，后者完全并行独立上下文",
+        "C编译器实验：16个Claude用20亿token写10万行Rust编译器"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "有官方数据点，但主体是实验特性演示",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "16个Claude Code Agent消耗约20亿输入Token写出10万行Rust C编译器，可编译Linux 6.9内核", "context": "业界前沿一节，附Anthropic官方engineering链接", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "flash-skills-spec",
+      "title": "前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法",
+      "module": "前沿技术速递",
+      "module_index": 1,
+      "source_file": "前沿技术速递/前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法/前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法.md",
+      "word_count": 6800,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "时间过得真快，我们的专栏从2025年底一路走来，伴随着大家在AI原生开发的道路上不断打怪升级，如今已是2026年的春天。相比于专栏正文那些严密、紧凑的工程实战，今天的这篇加餐，我想和大家用稍微轻松一点的节奏，聊一聊一个正处于高速爆发期，且与我们息息相关的话题——Agent Skills（智能体技能）的最新进化，以及那些真正能拉开差距的高阶编写心法。",
+      "last_200_words": "我们正处于一个激动人心的时代，大家都在'摸着石头过河'。今天分享的这些，也是我一路趟过来的经验，起到一个抛砖引玉的作用。AI 原生开发，从来不是比拼谁的语法更熟练，而是比拼谁的心智模型更高级。",
+      "headings": [
+        "## 技能的进化：从“私有方言”到“行业普通话”",
+        "## 规范探索：最新的 Agent Skills Spec 有何不同？",
+        "## 高阶心法：如何写出让 AI “秒懂”的技能？",
+        "### 心法一：编写 Skill，需要人类的“同理心”和“共情能力”",
+        "### 心法二：榨干 `description` 的触发潜能",
+        "### 心法三：将“确定性”剥离，拥抱“脚本化/程序化”",
+        "### 心法四：评测驱动（Eval-Driven）—— 为英语写单元测试",
+        "## 简单实战：打造一个高阶的“PR Changelog 提炼师”",
+        "## 终极建议：用 AI 创造 Skill，方为上策"
+      ],
+      "key_terms": [
+        "agentskills.io：Anthropic 2026年初发布的Agent Skill跨平台标准",
+        "渐进式披露：SKILL.md≤500行，参考资料按需加载",
+        "同理心写法：放弃MUST/NEVER恐吓式，解释Why",
+        "确定性剥离：LLM管控制流，脚本管数据流",
+        "Eval-Driven：给Skill写测试Prompt和客观断言"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "反直觉观点（同理心写Prompt）+可操作心法，含行业标准演进",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "SKILL.md主文件最好不要超过500行", "context": "渐进式披露规范探索一节", "preliminary_status": "needs_check"},
+        {"claim": "name字段限制1-64字符，只能小写字母数字连字符", "context": "严格命名规范一节", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "01",
+      "title": "01｜范式演进：从\"人机协作\"到\"AI原生\"，你的角色变了吗？",
+      "module": "概念篇：建立AI原生世界观",
+      "module_index": 2,
+      "source_file": "概念篇：建立AI原生世界观/01｜范式演进：从'人机协作'到'AI原生'，你的角色变了吗？/01｜范式演进：从'人机协作'到'AI原生'，你的角色变了吗？.md",
+      "word_count": 5793,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在开篇词里，我们共同描绘了一幅开发者在AI时代'双屏探戈'的生动画面，并提出了一个核心观点：我们正在经历一场从'人机协作'到'AI原生'的深刻变革。今天，我们先进入专栏的概念篇。作为我们专栏的第一讲，我不想再泛泛地谈论趋势，而是想邀请你和我一起，建立一个分析模型，来精确地度量这场变革的深度，并清晰地定位我们自身所处的位置。这个模型，我称之为'AI-开发者集成成熟度模型'。",
+      "last_200_words": "请记住，这场范式演进的核心，不是用AI替代我们，而是用AI放大我们的工程思想和架构能力。我们正在从'与机器对话'的工匠，进化为'设计人机协作系统'的工程师。",
+      "headings": [
+        "## 我们身处的“集成困境”",
+        "### Level 1：AI作为外部知识库",
+        "### Level 2：AI作为嵌入式副驾驶",
+        "### Level 3：AI作为原生工作流智能体",
+        "### Level 4：AI作为自主软件工程师",
+        "## 价值的倒转：开发者核心价值栈的演进"
+      ],
+      "key_terms": [
+        "AI-开发者集成成熟度模型：L1外部知识库→L2嵌入式副驾驶→L3原生工作流智能体→L4自主软件工程师",
+        "价值倒转：价值栈从'编码为主'倒转为'意图定义与规范设计为主'",
+        "赛道理论：精通L3是为AI建F1赛道，触及L4是开自动驾驶"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "原创成熟度模型框架，但无外部数据支撑",
+      "warning_signals": ["acronym_branding", "no_counter_example"],
+      "claimed_data_points": [
+        {"claim": "传统模式开发者花费70-80%时间在编码与实现", "context": "价值栈倒转一节", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "title": "02｜核心引擎：AI原生开发第一性原理——规范驱动开发",
+      "module": "概念篇：建立AI原生世界观",
+      "module_index": 2,
+      "source_file": "概念篇：建立AI原生世界观/02｜核心引擎：AI原生开发第一性原理——规范驱动开发/02｜核心引擎：AI原生开发第一性原理——规范驱动开发.md",
+      "word_count": 6834,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们共同建立了一个'AI-开发者集成成熟度模型'，并清晰地描绘了开发者在AI原生时代的角色演进：从代码的生产者，转变为规范的设计者、工作流的指挥家和质量的治理者。你可能会好奇，这三个新角色中，为什么'规范设计师'排在第一位？答案很简单：在AI原生开发范式中，一份高质量的、可被机器精确理解的规范（Specification），是驱动整个开发工作流的起点和核心引擎。",
+      "last_200_words": "SDD为我们描绘了一幅清晰的、通往AI原生开发终局的蓝图，它定义了人与AI在软件工程中最高效、最可扩展的协作接口。我们今天学习的每一项技能都是在为那个完全自主的Level 4时代的到来铺设最坚实的基础。",
+      "headings": [
+        "## 软件开发中“失落的翻译”问题",
+        "## 权力的反转：当规范成为“真理之源”",
+        "## 编译意图：AI Agent扮演的新角色",
+        "## SDD工作流的四个通用阶段",
+        "### 第一阶段：意图定义",
+        "### 第二阶段：技术规划",
+        "### 第三阶段：任务分解",
+        "### 第四阶段：自动化实现",
+        "## 一个具体实现：以GitHub的spec-kit为例",
+        "## 新范式下的开发循环"
+      ],
+      "key_terms": [
+        "失落的翻译：意图与实现之间的信息损耗鸿沟",
+        "权力反转：代码服务于规范，规范成为单一真理之源",
+        "编译意图：AI扮演需求/方案/任务/代码四级编译器",
+        "SDD四阶段：意图定义(spec.md)→技术规划(plan.md)→任务分解(tasks.md)→自动化实现",
+        "Spec→Generate→Validate循环取代Code→Test→Refactor循环"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "课程第一性原理，框架完整且引用spec-kit可查证",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "GitHub spec-kit是SDD的杰出实现，其README含照片相册应用示例", "context": "具体实现一节", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "title": "03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？",
+      "module": "概念篇：建立AI原生世界观",
+      "module_index": 2,
+      "source_file": "概念篇：建立AI原生世界观/03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？/03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？.md",
+      "word_count": 5900,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在前面两讲，我们一起描绘了AI原生开发的宏伟蓝图。理论的灯塔已经树立，但要真正开始航行，我们还缺一艘足够坚固、足够先进的船。今天这一讲，我们将把目光从高远的理论拉回到坚实的地面。我们将一起回答三个环环相扣的问题。",
+      "last_200_words": "选定了我们的'船'，明确了我们的航线，从下一讲开始，我们将正式扬帆起航。我们将从零开始，搭建我们的开发环境，并学习与我们的第一个AI原生伙伴Claude Code进行有效协作的核心技巧。",
+      "headings": [
+        "## 为何是Coding Agent？——寻找AI原生开发的最佳载体",
+        "## 群雄并起：三大主流Coding Agent的真实对决",
+        "### 核心差异：三大智能体的设计哲学",
+        "## 我们的选择：为何聚焦Claude Code？",
+        "## 成本与可用性：一个真实的警告与一个可行的方案"
+      ],
+      "key_terms": [
+        "执行深度与集成自由度：命令行Agent优于IDE插件的原因",
+        "三大设计哲学：Claude Code=工作流引擎、Gemini CLI=上下文专家、Codex CLI=安全编辑助手",
+        "Hungry for Tokens：Coding Agent的Token消耗警告",
+        "客户端+国产模型平替：工具与大脑分离"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "对比分析有价值但工具快速演进易过时",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "Hungry for Tokens是开发者圈广为人知的词，Claude Code/Gemini CLI Token消耗巨大", "context": "成本与可用性一节", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "title": "04｜环境搭建：为Claude Code接入国产大模型",
+      "module": "基础篇：掌握与AI伙伴协作的通用语言",
+      "module_index": 3,
+      "source_file": "基础篇：掌握与AI伙伴协作的通用语言/04｜环境搭建：为Claude Code接入国产大模型/04｜环境搭建：为Claude Code接入国产大模型.md",
+      "word_count": 6600,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们专栏的基础篇。在前面三讲，我们共同建立了一套关于'AI原生开发工作流'的宏大认知框架。这一讲，我们的目标非常明确和务实：动手实践上一讲提出的'引擎移植'策略，在你的本地或远程机器上，搭建一套以Claude Code客户端为核心、以国产AI大模型为动力源的、完整可用的AI原生开发环境。",
+      "last_200_words": "现在，你拥有了一件强大的、经过个性化调校的兵器。但拥有兵器，和懂得如何使用它，是两回事。从下一讲开始，我们将正式进入'剑法'的学习。",
+      "headings": [
+        "## 第一步：安装“车身”——获取Claude Code客户端",
+        "## 核心理念：“车身”与“引擎”的分离",
+        "## 第二步：配置“引擎”——连接国产AI大模型",
+        "## 第三步：验证“新引擎”——发出你的第一条指令",
+        "## 第四步：优化“驾驶舱”——几个让体验翻倍的终端小技巧"
+      ],
+      "key_terms": [
+        "车身与引擎分离：Claude Code客户端(车身)与LLM(引擎)解耦",
+        "分层配置体系：企业级/命令行/项目个人/项目共享/用户级五层settings.json",
+        "ANTHROPIC_BASE_URL：请求重定向实现国产模型接入"
+      ],
+      "initial_value_score": 2,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "纯环境搭建，随版本快速贬值",
+      "warning_signals": ["pure_setup"],
+      "claimed_data_points": [
+        {"claim": "Claude Code要求Node.js 18.0或更高版本", "context": "环境准备一节", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "title": "05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行",
+      "module": "基础篇：掌握与AI伙伴协作的通用语言",
+      "module_index": 3,
+      "source_file": "基础篇：掌握与AI伙伴协作的通用语言/05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行/05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行.md",
+      "word_count": 13535,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。从这一讲开始，我们将正式进入Claude Code的实战世界。现在，是时候拿起'武器'，学习如何驾驭我们这位强大的AI原生伙伴了。要真正驾驭我们这位强大的AI原生伙伴，关键在于升级我们的交互模式。",
+      "last_200_words": "掌握了@和!，你就拥有了与AI进行结构化、高效协作的基础能力。可以说，你已经正式踏入了AI原生开发的大门。",
+      "headings": [
+        "## AI的两只手：一种新的人机交互哲学",
+        "## 精通 `@` 指令：为AI装上“全景摄像头”",
+        "### 引用单个文件：最精准的上下文",
+        "### 引用整个目录：开启“上帝视角”",
+        "## 精通 `!` 指令：赋予AI改造世界的力量",
+        "## 组合的力量：完成你的第一个“感知-行动”工作流闭环"
+      ],
+      "key_terms": [
+        "眼+手心智模型：@代表上下文(感知)，!代表行动(改造)",
+        "@指令Git感知：自动忽略.gitignore匹配的文件",
+        "提议-审批机制：!指令的安全核心，AI提议用户批准",
+        "无沉浸式Shell模式：Claude Code需逐行!执行"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "教程级但有哲学高度，大量demo输出",
+      "warning_signals": ["source_code_walkthrough"],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "06",
+      "title": "06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md",
+      "module": "基础篇：掌握与AI伙伴协作的通用语言",
+      "module_index": 3,
+      "source_file": "基础篇：掌握与AI伙伴协作的通用语言/06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md/06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md.md",
+      "word_count": 22699,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。上一讲，我们精通了@指令，学会了如何为AI一次性地注入文件或目录的上下文。这极大地提升了我们解决局部问题的效率。但很快你就会发现一个新的痛点：有些'知识'，你需要反复、持续地告诉AI。",
+      "last_200_words": "一份精心编写的上下文文件，其价值远超一个配置文件，它本质上是你团队工程文化的'代码化'沉淀，能让你的AI协作效率瞬间提升数倍。",
+      "headings": [
+        "## AI Agent的“长期记忆”：为什么我们需要 `CLAUDE.md`？",
+        "## `AGENTS.md`：从“项目私约”到“行业标准”的演进",
+        "### “巴别塔困境”：项目私约的局限性",
+        "### `AGENTS.md` 的诞生：一个面向未来的“行业标准”",
+        "## 深入 `CLAUDE.md`：强大的分层加载机制与 `@` 导入语法",
+        "### 四级分层加载：从“公司规定”到“个人习惯”",
+        "### `CLAUDE.md` 的查找机制：强大的递归与动态加载",
+        "## `CLAUDE.md` 的生命周期管理：从创建到维护",
+        "## 实战：打造一份高质量的通用Go项目 `CLAUDE.md` 模板"
+      ],
+      "key_terms": [
+        "短期工作记忆vs长期记忆：@file.go vs CLAUDE.md",
+        "巴别塔困境：各Agent自有XX.md导致配置碎片化",
+        "AGENTS.md：跨Agent开放行业标准(给AI的README)",
+        "四级分层加载：企业→项目→用户→模块",
+        "递归向上查找+动态向下发现：monorepo级联上下文",
+        "@导入语法：模块化记忆宫殿",
+        "/init、#、/memory三指令管理生命周期"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "上下文工程核心，含AGENTS.md行业趋势洞察",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "截至2025.10，支持AGENTS.md的Code Agent有OpenAI、Google等多家", "context": "AGENTS.md诞生一节", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "07",
+      "title": "07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”",
+      "module": "基础篇：掌握与AI伙伴协作的通用语言",
+      "module_index": 3,
+      "source_file": "基础篇：掌握与AI伙伴协作的通用语言/07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”/07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”.md",
+      "word_count": 5900,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们一起为我们的Go项目精心编写了一份CLAUDE.md参考模板文件。这份文件就像一本详尽的'团队工作手册'。学完之后，你可能会觉得，我们的AI伙伴已经足够'懂行'了。但是，一些新的、更深层次的问题浮现了。",
+      "last_200_words": "掌握了constitution.md，你就掌握了在AI原生开发中，进行顶层设计和质量治理的终极武器。你不再仅仅是AI的使用者，而是成为了AI行为的立法者和监督者。",
+      "headings": [
+        "## 从“工作手册”到“根本大法”：两种上下文的定位差异",
+        "## 解读“开发九章”：深入 `spec-kit` 的架构哲学",
+        "## 实战：为我们的Go项目量身定制一份 `constitution.md`",
+        "## AI如何理解并遵循“宪法”？"
+      ],
+      "key_terms": [
+        "宪法vs手册：constitution.md(原则契约/高层级) vs CLAUDE.md(操作指南/低层级)",
+        "开发九章：库先行、CLI接口强制、测试先行铁律、简单性、反过度抽象等spec-kit哲学",
+        "NON-NEGOTIABLE：不可协商条款，违宪即驳回",
+        "机制+引导双保障：plan.md合宪性审查Gate + CLAUDE.md提醒"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "接近'道'层面，但开发九章直接源自spec-kit非原创",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "constitution.md概念最早由GitHub的spec-kit项目提出并系统化", "context": "解读开发九章一节，附spec-kit spec-driven.md链接", "preliminary_status": "likely_ok"}
+      ]
+    },
+    {
+      "lecture_id": "08",
+      "title": "08｜自定义指令：精通Slash Commands，打造你的私人命令集",
+      "module": "基础篇：掌握与AI伙伴协作的通用语言",
+      "module_index": 3,
+      "source_file": "基础篇：掌握与AI伙伴协作的通用语言/08｜自定义指令：精通Slash Commands，打造你的私人命令集/08｜自定义指令：精通Slash Commands，打造你的私人命令集.md",
+      "word_count": 11800,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在前面的几讲中，我们已经学会了如何通过@指令为AI提供精准的上下文，以及如何通过CLAUDE.md和constitution.md为它注入持久的'记忆'和'原则'。现在，我们的AI伙伴已经足够'博学'，能够'懂你项目'了。但是，一个新的效率瓶颈又出现了。",
+      "last_200_words": "Slash Commands是你将AI原生开发理念落地的第一块、也是最重要的一块基石。它让你能够开始'编程'AI，将你的智慧和经验，转化为AI可以理解和执行的指令。",
+      "headings": [
+        "## 内置指令精讲：日常提效的瑞士军刀",
+        "## 自定义指令：从“使用者”到“指令设计师”",
+        "### 核心理念：将“高频工作流”封装为斜杠指令",
+        "### Project级与User级指令：团队共享与个人专属",
+        "### 参数的力量：让你的指令“活”起来",
+        "### 高级技巧（一）：利用Frontmatter定义元数据",
+        "### 高级技巧（二）：在指令中调用Shell命令!",
+        "## 实战：创建一个 `/review-go-code` 的团队指令"
+      ],
+      "key_terms": [
+        "高频工作流封装：动态Prompt→静态模板",
+        "$ARGUMENTS vs $1/$2位置参数",
+        "Frontmatter元数据：description/argument-hint/model/allowed-tools",
+        "嵌入!命令：指令执行前先跑Shell命令注入上下文",
+        "最小权限原则：allowed-tools限定只读+go vet"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "教程级但模板完整可操作性强",
+      "warning_signals": ["source_code_walkthrough"],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "09",
+      "title": "09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”/09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”.md",
+      "word_count": 11196,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们专栏的进阶篇。从这一讲开始，我们将从'如何使用AI'，迈向'如何驾驭AI'的更高阶领域。现在，它已经非常聪明，并且蓄势待发。但随之而来的，是一个所有严肃工程师都必须面对的灵魂拷问：我真的能信任一个AI，让它在我的电脑上、在我的项目里，自由地读写文件、执行命令吗？",
+      "last_200_words": "请记住，安全不是效率的敌人，而是效率可持续的保障。掌握了权限与沙箱的协同配置，你就拥有了驾驭AI这匹'千里马'的'缰绳'与'赛道'。",
+      "headings": [
+        "## AI Agent的核心风险：信任，一个必须解决的技术问题",
+        "## 第一大支柱：权限体系——精细到命令级的“立法”",
+        "### 四大权限模式：宏观上设定你的信任级别",
+        "### 权限规则（Permission Rules）：微观上为AI的行为“立法”",
+        "## 第二大支柱：沙箱机制——从“操作系统”层面隔离风险",
+        "### 沙箱的核心原理：基于操作系统原语的隔离",
+        "### “安全YOLO模式”：沙箱与 `bypassPermissions` 的终极结合",
+        "## 实战：为我们的Go项目量身定制一份安全配置"
+      ],
+      "key_terms": [
+        "默认不信任逐步授权全程监督：Claude Code安全哲学",
+        "四大权限模式：default/plan/acceptEdits/bypassPermissions",
+        "权限规则：deny>allow>ask优先级，Bash前缀匹配",
+        "沙箱：bubblewrap+命名空间隔离，默认拒绝网络白名单通行",
+        "安全YOLO模式：沙箱+bypassPermissions的无人值守组合"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "官方功能复述但安全配置实战完整",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "10",
+      "title": "10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力/10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力.md",
+      "word_count": 7076,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们深入了Claude Code的权限体系和沙箱机制，学会了如何为AI戴上一副坚固的'安全镣铐'。这解决了一个核心的信任问题：'我如何确保AI不会做坏事？'。但随之而来的是一个更微妙、也更常见的困境。",
+      "last_200_words": "掌握了Checkpointing，你就拥有了驾驭AI进行更大规模、更具探索性任务的信心。从'只敢让AI写点小函数'，到'敢于让AI重构整个模块'，这正是从AI使用者到AI驾驭者的关键一跃。",
+      "headings": [
+        "## Checkpointing工作原理：会话级的“Git快照”",
+        "## 实战：使用 `/rewind` 在任意检查点间穿梭",
+        "## Checkpointing的边界：它不能做什么？"
+      ],
+      "key_terms": [
+        "Checkpointing：每次Prompt触发，保存代码状态+对话状态的影子Git快照",
+        "/rewind三种模式：只回退代码/只回退对话/全部回退",
+        "边界：不跟踪Bash命令副作用，不跟踪外部编辑，不是Git替代品"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "实操完整且边界辨析清晰",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "11",
+      "title": "11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发/11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发.md",
+      "word_count": 12341,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在前面的课程中，我们已经为AI伙伴Claude Code，装备了强大的'长期记忆'和'私人命令集'。但是，如果你仔细观察，会发现我们当前的协作模式，本质上仍然是交互式的、一问一答的。AI的所有行动，都源于我们的一次主动调用。",
+      "last_200_words": "Hooks机制，是你将个人经验和团队最佳实践，深度、无感地融入AI工作流的终极武器。它让'规范'不再是写在文档里的一句空话，而是成为了一个永远在线、自动执行的'守护进程'。",
+      "headings": [
+        "## 从“用户调用”到“事件触发”：一种新的自动化哲学",
+        "## 深入Claude Code生命周期：AI行动的“事件流”",
+        "## Hooks的配置与结构",
+        "## 实战一：创建 `PostToolUse` Hook，实现Go代码自动格式化",
+        "## 调试Hook",
+        "## 实战二：创建 `PreToolUse` Hook，阻止对 `main` 分支的直接修改"
+      ],
+      "key_terms": [
+        "人驱动vs事件驱动：Slash Commands vs Hooks",
+        "Hook事件：SessionStart/UserPromptSubmit/PreToolUse/PostToolUse/Notification/Stop",
+        "matcher匹配器：Edit|Write|Bash(go:test:*)",
+        "PreToolUse一票否决：exit code 2阻止操作"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "完整脚本实战，事件驱动自动化有价值",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "12",
+      "title": "12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统/12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统.md",
+      "word_count": 15087,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在前面的几讲中，我们已经学会了如何通过自定义指令（Slash Commands）和钩子（Hooks）来扩展和自动化AI的行为。但是，它的能力边界，仍然被局限在Claude Code的内置工具集之内。",
+      "last_200_words": "掌握了MCP，你的AI Agent才真正从一个'本地开发工具'，进化为了一个能够接入你的整个技术生态、具备无限潜能的'自动化中枢'。",
+      "headings": [
+        "## 超越内置工具：为什么我们需要MCP？",
+        "## MCP工作原理：一种为AI设计的RPC协议",
+        "## 安装和配置MCP服务器：`claude mcp add` 与三大Scope",
+        "## 实战一：从“Hello, World”开始——用Go构建你的第一个本地stdio服务器",
+        "## 实战二：连接远程服务——集成GitHub MCP Server",
+        "## MCP的高级用法：将Prompts变为指令"
+      ],
+      "key_terms": [
+        "MCP三角色：Host(Claude Code)/Client(专线连接器)/Server(能力提供方)",
+        "三大能力：Tools(动作)/Resources(数据)/Prompts(工作流模板)",
+        "认证解耦：API Key在Host侧注入，模型不接触密钥",
+        "命名空间：mcp__server_name__tool_name",
+        "三种Transport：http/sse(废弃)/stdio"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "完整Go实现+GitHub集成，实操扎实",
+      "warning_signals": ["source_code_walkthrough"],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "13",
+      "title": "13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力/13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力.md",
+      "word_count": 13000,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在前面的几讲中，我们已经学会了多种为AI'赋能'的方法。然而，一个深刻的矛盾也随之浮现：随着模型能力的提升，我们现在可以构建出能够与完整计算环境交互的通用智能体，但当这些智能体变得越来越强大时，我们就需要一种可组合、可扩展、可移植的方式，来为它们装备领域特定的专业知识。",
+      "last_200_words": "掌握Agent Skills，意味着你开始以一种全新的、更高级的方式来'编程'AI。你不再是为AI编写一次性的'脚本'（Prompt），而是在为它构建一个可复用的、可发现的、不断成长的'能力库'。",
+      "headings": [
+        "## 从“指令”到“技能”：为什么说Agent Skills是能力涌现的关键？",
+        "## 技能的解剖学：一个Skill的具体形态",
+        "## “渐进式披露”：解决AI上下文瓶颈的优雅之道",
+        "## 核心辨析：Skills vs. Slash Commands vs. Sub-agents",
+        "## 实战：将我们的 `/review-go-code` 指令，升维为可自主调用的Skill",
+        "## 深度剖析：从官方PDF Skill示例看高级模式",
+        "## Skills的设计哲学与最佳实践"
+      ],
+      "key_terms": [
+        "指令(祈使句)vs技能(陈述句)：用户调用vs模型调用",
+        "渐进式披露三层：元数据(发现层)→核心指令(触发层)→辅助资源(执行层)",
+        "可移植性+可组合性：标准化文件夹结构+AI自主协调",
+        "升维：Slash Command被动执行→Skill自主发现",
+        "四大最佳实践：单一职责/description广告语/测试演进/版本化"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "能力封装范式转折点，渐进式披露是核心洞察",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "引用Anthropic关于通用智能体需可组合可扩展方式装备专业知识的表述", "context": "开篇引言", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "title": "14｜智能分身：精通Subagent，为复杂任务创建专家AI",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/14｜智能分身：精通Subagent，为复杂任务创建专家AI/14｜智能分身：精通Subagent，为复杂任务创建专家AI.md",
+      "word_count": 13432,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们专栏的第14讲。在前面的课程中，我们已经为Claude Code装备了各式各样的'兵器'。我们的AI伙伴看起来已经无所不能。但随着我们交给它的任务越来越复杂，一个新的、更深层次的瓶颈开始显现。",
+      "last_200_words": "掌握了Subagent，你就拥有了解决更复杂、更专业、更需要深度思考的工程问题的能力。你的AI协作模式，也从与'一个人'对话，升级为了管理一个'虚拟专家团队'。",
+      "headings": [
+        "## 多智能体势在必行：为什么一个“大脑”不够用？",
+        "## Subagent是什么？拥有独立上下文和工具的专家分身",
+        "## 实战：创建一个“Go代码安全审查员”Subagent",
+        "## 如何高效地调用与编排Subagent？",
+        "## Subagent设计的最佳实践"
+      ],
+      "key_terms": [
+        "多智能体系统：上下文压缩+关注点分离",
+        "独立上下文窗口：Subagent不污染主会话，与Skills/Commands的核心区别",
+        "基因字段：name/description/tools/model+System Prompt",
+        "三种调用：隐式调用/显式调用/链式编排",
+        "五条最佳实践：先让AI创造/保持专注/雕琢Prompt/最小权限/版本控制"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "实操完整，五条最佳实践有参考价值",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "15",
+      "title": "15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI",
+      "module": "进阶篇：将AI锻造成你的专属能力",
+      "module_index": 4,
+      "source_file": "进阶篇：将AI锻造成你的专属能力/15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI/15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI.md",
+      "word_count": 11163,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们专栏进阶篇的最后一讲。在过去的几讲中，我们已经将Claude Code打造成了一个无所不能的'钢铁侠战甲'。但是，到目前为止，我们驾驶这套'战甲'的方式，始终是坐在这个交互式的'驾驶舱'里，通过一次次的对话来下达指令。",
+      "last_200_words": "掌握了Headless模式，你就拥有了一把'万能钥匙'，可以打开AI与你现有工具链、脚本和CI/CD系统之间的所有大门。你的想象力，将成为AI能力边界的唯一限制。",
+      "headings": [
+        "## 什么是Headless模式？——让AI成为可编程的函数",
+        "## 详解 `-p` 参数与输入输出流（stdin/stdout）",
+        "## 结构化输出：精通 `--output-format`，获取JSON结果",
+        "## 实战一：编写Shell脚本，调用AI能力分析日志文件",
+        "## 实战二：在GitHub Actions中集成Claude Code，实现自动化流程"
+      ],
+      "key_terms": [
+        "可编程函数：f(输入)=输出，Headless模式",
+        "-p参数：非交互式调用",
+        "--output-format json/stream-json：结构化可审计输出",
+        "stdin/stdout管道：AI成为Shell工具链过滤器",
+        "jq解析+GitHub Actions集成"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "自动化接口核心，两个实战完整",
+      "warning_signals": ["source_code_walkthrough"],
+      "claimed_data_points": [
+        {"claim": "一次代码审查cost 0.1857 USD, 16214 input tokens", "context": "json格式实战示例输出", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "title": "16｜顶层设计：构建你的AI原生开发“驾驶舱”",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/16｜顶层设计：构建你的AI原生开发“驾驶舱”/16｜顶层设计：构建你的AI原生开发“驾驶舱”.md",
+      "word_count": 12762,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们专栏的第四模块——实战篇。从今天开始，我们将把前面所有学到的理论和技巧，全部投入到一个真实的Go项目中。你现在手上已经握有了一整套强大的'武功秘籍'。但一个新的、更严峻的挑战摆在了面前：如何将这些零散的、强大的招式，组合成一套进退有据、威力无穷的'武功体系'？",
+      "last_200_words": "请务必理解并记住今天这张'框架全景图'。它不仅是接下来所有实战学习的'地图'，更是你未来在任何项目中，从零开始构建高效AI原生工作流的'第一性原理'。",
+      "headings": [
+        "## 为什么要先设计一个“AI协作框架”？",
+        "## 终极蓝图：AI原生开发框架全景",
+        "## 详解项目级框架 (`./`)：团队协作的“中央枢纽”",
+        "### `./.claude/`：AI能力的“引擎室”",
+        "### `./specs/`：规范驱动开发（SDD）的“作战指挥室”",
+        "## 详解用户级框架 (`~/`)：你的跨项目“私人武器库”",
+        "## 框架是如何支撑AI原生工作流的？",
+        "## 动手实践：初始化我们的Go项目AI协作框架"
+      ],
+      "key_terms": [
+        "游击战vs体系作战：框架统一团队AI协作",
+        "框架三价值：沉淀经验/统一标准/赋能团队",
+        "项目级(.claude/)vs用户级(~/.claude/)：团队共享vs个人专属",
+        "四设计原则：模块化/分层/可共享/可扩展",
+        "AI协作框架纳入版本控制：作为核心资产"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "整合前面所有能力成体系，是实战篇地基",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "17",
+      "title": "17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md/17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md.md",
+      "word_count": 12233,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们完成了整个实战篇最关键的奠基工作。现在，驾驶舱已就位，引擎已预热。从这一讲开始，我们将正式启动这台机器，踏上AI原生开发工作流的征程。我们的第一站，是软件工程的起点——需求与设计。",
+      "last_200_words": "这份spec.md，现在就是我们项目的'真理之源'。在下一讲，我们将进入'编译'的第二阶段——计划与任务。",
+      "headings": [
+        "## 为什么我们不直接用 `spec-kit`？",
+        "## 场景复刻：一个来自真实世界的“自用小工具”想法",
+        "## 第一步：启动会话与角色设定",
+        "## 第二步：需求澄清与头脑风暴",
+        "## 第三步：最终确认与生成指令",
+        "## 第四步：生成初始目录结构与辅助文档"
+      ],
+      "key_terms": [
+        "需求编译器：把模糊想法编译成spec.md",
+        "不用spec-kit的三考量：第一性原理/灵活性/驾驶舱验证",
+        "四步Prompt：角色设定→头脑风暴→最终确认→生成目录",
+        "做减法：明确拒绝PR diff、图片下载等非MVP需求",
+        "Token不进--参数：防Shell历史泄露"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "完整Prompt实操，需求澄清过程有启发",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "18",
+      "title": "18｜计划与任务：将规范“编译”为plan.md与tasks.md",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/18｜计划与任务：将规范“编译”为plan.md与tasks.md/18｜计划与任务：将规范“编译”为plan.md与tasks.md.md",
+      "word_count": 11368,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们成功地完成了AI原生工作流的第一阶段。我们的'建筑蓝图'已经有了最顶层的设计稿。但是，这份设计稿对于施工队（AI Agent）来说，还太过宏观。",
+      "last_200_words": "运筹帷幄之中，决胜千里之外。plan.md和tasks.md的创建与审查，就是我们这场AI原生开发战役的'运筹帷幄'阶段。",
+      "headings": [
+        "## 回顾：我们在“编译三部曲”中的位置",
+        "## 第一步：技术规划 (`plan.md`) —— AI扮演的“架构师”",
+        "## 第二步：任务分解 (`tasks.md`) —— AI扮演的“技术组长”",
+        "## 进阶技巧：定制你的模板库"
+      ],
+      "key_terms": [
+        "方案编译器：spec.md→plan.md(WHAT到HOW)",
+        "合宪性审查：plan.md含Constitution Check门禁章节",
+        "任务编译器：plan.md→tasks.md(HOW到ACTIONS)",
+        "原子化任务：180+任务，奇数测试偶数实现",
+        "[P]并行标记：无依赖任务可并行",
+        "人工审查是意图精确执行的唯一保障"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "编译三部曲中段，合宪性审查是亮点",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "tasks.md生成184个具体任务，22个[P]可并行任务", "context": "任务分解一节演示输出", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "title": "19｜编码与测试：AI驱动的TDD与框架能力的协同作战",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/19｜编码与测试：AI驱动的TDD与框架能力的协同作战/19｜编码与测试：AI驱动的TDD与框架能力的协同作战.md",
+      "word_count": 19626,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们实战篇的第三讲。我们的AI伙伴，已经拥有了一份精确到'拧哪个螺丝'级别的行动指南。现在，万事俱备，只欠'开工'。从今天开始，我们将正式进入整个AI原生开发工作流中最激动人心的阶段——自动化实现。",
+      "last_200_words": "现在，我们的issue2md项目已经初具雏形，部分核心逻辑经过了严苛的测试验证。但这还只是一堆躺在本地磁盘上的代码。在下一讲，我们将进入协同与审查阶段。",
+      "headings": [
+        "## TDD循环：AI原生时代的“红-绿-重构”",
+        "## 实战心法：驾驭AI编码的两条“黄金法则”",
+        "### 法则一：坚持TDD，是为了防止AI的“自洽幻觉”",
+        "### 法则二：永远维护“意图”的单一来源",
+        "## 进阶技巧：利用 Git Worktree 实现“一人成军”的并行开发"
+      ],
+      "key_terms": [
+        "AI原生TDD：红=代码化规范(失败测试)、绿=最小实现、重构=测试保护下优化",
+        "自洽幻觉：让AI同时写代码和测试会生成配合错误逻辑的测试",
+        "意图单一来源：意图偏差改Spec，实现错误改代码",
+        "AI自我修正：编写-编译-修复闭环",
+        "Git Worktree：一人成军并行开发",
+        "Mock/httptest：测试外部依赖"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "两条黄金法则深刻，自洽幻觉是核心反直觉洞察",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "Phase 2产生23个测试用例，Phase 3产生11个测试用例", "context": "TDD实战演示输出", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "title": "20｜协同与审查：调用框架中的/review指令，实现标准化审查",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/20｜协同与审查：调用框架中的-review指令，实现标准化审查/20｜协同与审查：调用框架中的-review指令，实现标准化审查.md",
+      "word_count": 11484,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们经历了一场激动人心的AI驱动的TDD编码之旅。现在，我们的issue2md项目，其部分核心功能代码已经编写完成，并且拥有了坚实的单元测试作为质量保障。代码静静地躺在我们的本地工作区。",
+      "last_200_words": "学完这一讲，你的AI原生工作流，已经从一个'单人游戏'，升级为了一个能够与团队进行高效、规范化协作的'团队运动'。",
+      "headings": [
+        "## 第一步：AI交叉审查 —— 调用“驾驶舱”中的标准指令",
+        "## 第二步：版本记录 —— 调用 `/commit` 指令，让AI成为你的“史官”",
+        "## 第三步：发起协同 —— 让AI撰写清晰的PR描述",
+        "## 深度辨析：为何在SDD工作流中首选Slash Commands而非Skills？"
+      ],
+      "key_terms": [
+        "AI交叉审查：AI生成→AI审查的闭环",
+        "/commit：分析git diff生成Conventional Commits",
+        "PR描述四部分：背景/实现/测试/验证",
+        "确定性vs自主性：标准流程用Slash Command，探索任务用Skill"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "确定性vs自主性辨析有价值",
+      "warning_signals": [],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "21",
+      "title": "21｜构建与交付：扩展框架能力，实现自动化构建与CI/CD",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/21｜构建与交付：扩展框架能力，实现自动化构建与CI-CD/21｜构建与交付：扩展框架能力，实现自动化构建与CI-CD.md",
+      "word_count": 20884,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。在上一讲，我们成功地将本地的代码变更，转化为了一个高质量的、包含AI自动化审查和清晰描述的Pull Request。但是，一个现代化的软件项目，其'完成'的标志，绝不仅仅是代码被合并到main分支。",
+      "last_200_words": "在下一讲，我们将进入一个全新的、更具挑战性的领域——维护与重构。我们将学习AI Agent在处理存量代码、复杂系统和未知问题时的独特优势。",
+      "headings": [
+        "## 第一步：容器化 —— 让AI生成优化的 `Dockerfile`",
+        "## 第二步：标准化构建 —— 让AI编写通用的 `Makefile`",
+        "## 第三步（升华）：扩展“驾驶舱”——将新能力沉淀回框架",
+        "## 第四步：持续集成 —— 让AI生成CI/CD流水线"
+      ],
+      "key_terms": [
+        "DevOps生成：多阶段构建/依赖缓存/非root用户",
+        "能力沉淀回框架：把Dockerfile/Makefile封装成Slash Command",
+        "CI/CD：GitHub Actions + Headless模式自动诊断",
+        "沉淀与复用：AI原生开发核心思想"
+      ],
+      "initial_value_score": 2,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "大段Dockerfile/Makefile源码走读，核心思想仅'沉淀复用'一点",
+      "warning_signals": ["source_code_walkthrough", "demo_inflation"],
+      "claimed_data_points": [
+        {"claim": "生成的镜像31.2MB", "context": "docker build验证输出", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "22",
+      "title": "22｜维护与重构：AI赋能的系统“体检”与“外科手术”",
+      "module": "实战篇：在真实项目中重塑工程实践",
+      "module_index": 5,
+      "source_file": "实战篇：在真实项目中重塑工程实践/22｜维护与重构：AI赋能的系统“体检”与“外科手术”/22｜维护与重构：AI赋能的系统“体检”与“外科手术”.md",
+      "word_count": 10773,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。欢迎来到我们实战篇的最后一讲。在过去的几讲中，我们一起经历了一场激动人心的'从0到1'的构建之旅。至此，我们的项目成功上线了。但这，真的就是故事的结局吗？",
+      "last_200_words": "最后，让我们在'结束语'中再见。那时，我们将不再讨论具体的工具和技巧，而是站在未来的高度，共同展望人机共生的软件工程新纪元。",
+      "headings": [
+        "## 从“新项目”到“遗留系统”：AI在存量代码中的新挑战",
+        "## 场景一（问题诊断）：扮演“根因分析专家”，智能调试线上Panic",
+        "## 场景二（安全重构）：扮演“外科手术医生”，安全地进行大规模重构",
+        "## 场景三（知识库同步）：扮演“技术文档工程师”，让文档永不过时",
+        "### 实战篇总复盘：AI原生工作流全景图"
+      ],
+      "key_terms": [
+        "从0到1→从1到N：遗留系统的智能分析师角色",
+        "AI验尸官：Headless模式根因分析",
+        "Checkpointing实战：依赖倒置重构的安全网",
+        "知识同步：update-docs指令反向编译文档",
+        "全生命周期闭环：诊断/重构/知识同步"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "三大场景完整，遗留系统视角有增量",
+      "warning_signals": [],
+      "claimed_data_points": [
+        {"claim": "维护与重构任务占据软件工程师超过70%的工作时间", "context": "从1到N一节", "preliminary_status": "needs_check"}
+      ]
+    },
+    {
+      "lecture_id": "quiz",
+      "title": "结课测试｜来赴一场满分之约！",
+      "module": "结束语&测试题",
+      "module_index": 6,
+      "source_file": "结束语&测试题/结课测试｜来赴一场满分之约！/结课测试｜来赴一场满分之约！.md",
+      "word_count": 293,
+      "has_audio": false,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。《AI原生开发工作流实战》正式结课了，为认真学习的你点赞！为了帮你检验自己的学习成果，我特意准备了一套结课测试题。题目共有10道，6道单选题，4道多选题，满分100分。",
+      "last_200_words": "最后，我还给你准备了一个结课问卷，希望你可以抽几分钟填一下。期待你的反馈！",
+      "headings": [],
+      "key_terms": ["结课测试：10道题"],
+      "initial_value_score": 1,
+      "initial_tier": "iron",
+      "initial_tier_rationale": "纯测试题",
+      "warning_signals": ["pure_setup"],
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "ending",
+      "title": "结束语｜未来已来，欢迎来到人机共生的软件工程新纪元",
+      "module": "结束语&测试题",
+      "module_index": 6,
+      "source_file": "结束语&测试题/结束语｜未来已来，欢迎来到人机共生的软件工程新纪元/结束语｜未来已来，欢迎来到人机共生的软件工程新纪元.md",
+      "word_count": 3439,
+      "has_audio": true,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。经过22讲的共同探索，我们的专栏《AI原生开发工作流实战》终于来到了终点。如果说，开篇词是我们对AI大航海时代发出的一声嘹亮号角，那么此刻，我们已经驾驶着自己亲手打造的'AI原生战舰'，成功地穿越了从理论到实践的广阔海域。",
+      "last_200_words": "我是Tony Bai，期待在未来的技术浪潮之巅，与你重逢！最后希望你能花几分钟填写一下结课问卷。",
+      "headings": [
+        "## 我们的航海图：一次完整的思维与技能升维",
+        "## 地平线上的舰队：加速实现AI原生工作流的生态工具",
+        "## 终极愿景：走向“长程自主”的AI开发闭环",
+        "## 最后的叮嘱：成为AI浪潮中的“冲浪者”，而非“被动漂流者”"
+      ],
+      "key_terms": [
+        "道→术→道：概念篇世界观→基础进阶篇技能→实战篇升华",
+        "长程自主闭环：从需求到部署监控自我修复",
+        "spec-kit vs OpenSpec：全新项目vs存量系统的工具选择",
+        "冲浪者vs漂流者：主动驾驭vs被动使用"
+      ],
+      "initial_value_score": 2,
+      "initial_tier": "iron",
+      "initial_tier_rationale": "展望+鸡汤，无新增可操作内容",
+      "warning_signals": ["opening_closing_only"],
+      "claimed_data_points": [
+        {"claim": "你的知识体系已经领先于业界90%的开发者", "context": "最后的叮嘱", "preliminary_status": "likely_fake"}
+      ]
+    },
+    {
+      "lecture_id": "qa",
+      "title": "精彩答疑｜建立AI原生世界世界观",
+      "module": "精彩答疑",
+      "module_index": 7,
+      "source_file": "精彩答疑/精彩答疑｜建立AI原生世界世界观/精彩答疑｜建立AI原生世界世界观.md",
+      "word_count": 5272,
+      "has_audio": false,
+      "has_images": true,
+      "first_200_words": "你好，我是Tony Bai。课程结束已经一段时间了，很多同学给我留言说学到了很多，我也看到很多人在自发地推荐这门课程。回顾这些留言的时候，我发现了很多伙伴提出了非常有意思的问题，同时也启发了我的思考。",
+      "last_200_words": "AI 替你由 0 到 1 搬砖，而需要你负责由 1 到 100 的设计与把关。如果你把关的底气不足，那就是学习的最好动机。",
+      "headings": [],
+      "key_terms": [
+        "损耗左移：SDD把信息损耗控制在成本最低的spec阶段",
+        "约束型上下文vs信息型上下文：规范(护栏)vs代码(素材)",
+        "一个任务一个会话：避免auto-summarizing损耗和上下文污染",
+        "意图单一来源：意图偏差改Spec，实现错误改代码",
+        "反向同步：让AI定期git diff反向更新spec.md"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "答疑补充了损耗左移、约束型上下文等好概念",
+      "warning_signals": [],
+      "claimed_data_points": []
+    }
+  ]
+}

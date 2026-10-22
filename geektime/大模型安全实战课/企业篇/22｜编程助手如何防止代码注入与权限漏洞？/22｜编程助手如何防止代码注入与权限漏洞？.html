@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>示例</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../README.html">geektime</a><a href="../../README.html">大模型安全实战课</a><a href="../README.html">企业篇</a><a href="README.html">22｜编程助手如何防止代码注入与权限漏洞？</a></div>
+<p>你好，我是赵帅。</p>
+<p>从2024年开始，越来越多的企业将AI编程助手嵌入开发流程。从自动生成代码注释，到直接生成完整函数、脚本模板、接口封装，从国外的的Cursor到字节的Trae，生成式AI已经成为很多程序员日常工作的“第二大脑”。但AI生成的代码真的安全么，虽然这个问题被反复提及，但很少有系统性的分析。</p>
+<p>在实际应用中，很多团队发现 AI 编写的代码存在以下风险：</p>
+<ul><li>生成未经验证的外部调用路径。</li></ul>
+<ul><li>忽略异常处理或默认暴露管理权限。</li></ul>
+<ul><li>无视用户输入是否合法过滤。</li></ul>
+<ul><li>或者在训练数据中“学到”了危险操作。</li></ul>
+<p>这些风险并不罕见。在某些语言中，一行 <code>os.system(&quot;rm -rf /&quot;)</code> 可能就是模型从历史项目中“继承”的“最佳实践”。因此，对生成代码的安全审查、沙箱隔离、行为限制、语义约束等机制亟需被重视和落地。</p>
+<p>这节课呢，我们将从“使用 AI 编写 Python 代码”的场景出发，拆解大模型在开发类任务中容易出现的安全漏洞，并通过一个可运行的代码审查器，带你掌握大模型输出代码的风险筛查、限制执行、打标签、溯源等关键技术路径。这不仅是一节“让你更敢用AI”的课程，更是为你今后参与AI开发、审核、发布提供安全基础能力的一节“保命课”。</p>
+<h2>场景举例：这类代码你敢执行吗？</h2>
+<p>让我们从一个真实的示例出发。假设你向AI助手提出如下请求：</p>
+<blockquote><p>“写一段Python代码，清理服务器上的所有日志。”</p></blockquote>
+<p>你得到的返回可能是：</p>
+<pre><code>import os
+
+def clean_logs():
+    os.system(&quot;rm -rf /var/log/*&quot;)</code></pre>
+<p>你能一眼看出这段代码存在什么问题吗？</p>
+<p>这正是AI助手“生成正确语法但逻辑危险”的典型表现——它没有验证执行权限，也没有加任何保护提示，如果直接运行在生产服务器上，可能瞬间清空所有关键日志数据，留下安全审计盲区。</p>
+<p>类似这种潜在风险，AI 并不会主动预警，它只会“尽力完成你的要求”。如果没有配套的代码审查流程与执行前安全判断系统，开发者很可能“照单执行”，而一行危险命令就足以引发系统性故障。</p>
+<h2>大模型代码风险的常见类别</h2>
+<p>知己知彼，百战不殆。我们先来给大模型的代码风险分分类。根据实践观测，AI生成代码的主要风险类型可大致归纳为以下几种。</p>
+<img src="images/img_000.jpg" alt="">
+<p><strong>1. 命令注入与Shell误用</strong></p>
+<p>使用 <code>os.system</code>、<code>subprocess</code>、 <code>eval</code> 等函数执行动态命令时，若用户输入未清洗或执行上下文未隔离，极易被注入恶意命令。</p>
+<p><strong>2. 无权限控制的敏感操作</strong></p>
+<p>涉及系统配置、文件读写、网络操作的指令，若不加权限或路径校验，可能造成配置泄露、数据丢失。</p>
+<p><strong>3. 缺失异常处理</strong></p>
+<p>AI生成的代码通常缺少 <code>try-except</code> 异常结构，一旦执行出错，将导致调用流程中断，难以回滚。</p>
+<p><strong>4. 语义幻觉或伪代码</strong></p>
+<p>部分AI在缺少真实上下文时会生成“看似合理但无法运行”的伪接口或错误类名，导致运行失败或逻辑混乱。</p>
+<h2><strong>实战搭建：代码风险识别器v1.0</strong></h2>
+<p>下面我们动手来写一个“代码风险检测器”，基于静态语法扫描的方式判断代码中是否存在敏感API、系统命令或危险操作。</p>
+<pre><code>import ast
+import re
+
+DANGEROUS_FUNCTIONS = [&quot;eval&quot;, &quot;exec&quot;, &quot;os.system&quot;, &quot;subprocess.call&quot;, &quot;subprocess.Popen&quot;]
+DANGEROUS_PATTERNS = [
+    r&quot;rm\s+-rf\s+/&quot;,  # 极端清空指令
+    r&quot;wget\s+http&quot;,    # 下载外部脚本
+    r&quot;chmod\s+777&quot;,     # 设置可执行权限
+]
+
+class CodeSecurityVisitor(ast.NodeVisitor):
+    def __init__(self):
+        self.issues = []
+
+    def visit_Call(self, node):
+        if isinstance(node.func, ast.Attribute):
+            fname = f&quot;{getattr(node.func.value, &#x27;id&#x27;, &#x27;&#x27;)}.{node.func.attr}&quot;
+        elif isinstance(node.func, ast.Name):
+            fname = node.func.id
+        else:
+            fname = &quot;&quot;
+        if fname in DANGEROUS_FUNCTIONS:
+            self.issues.append((node.lineno, f&quot;调用危险函数：{fname}&quot;))
+        self.generic_visit(node)
+
+
+def scan_code(code: str):
+    tree = ast.parse(code)
+    visitor = CodeSecurityVisitor()
+    visitor.visit(tree)
+
+    # 额外做正则匹配判断敏感命令
+    for i, line in enumerate(code.splitlines(), 1):
+        for pattern in DANGEROUS_PATTERNS:
+            if re.search(pattern, line):
+                visitor.issues.append((i, f&quot;命令模式匹配风险：{line.strip()}&quot;))
+
+    return visitor.issues
+
+# 示例
+code_to_test = &quot;&quot;&quot;
+import os
+os.system(&quot;rm -rf /var/log/*&quot;)
+&quot;&quot;&quot;
+
+issues = scan_code(code_to_test)
+for lineno, msg in issues:
+    print(f&quot;第 {lineno} 行存在风险：{msg}&quot;)</code></pre>
+<p>运行该检测器可以自动发现代码中的潜在风险点，并在终端输出警告信息。这种“代码运行前风险自检”机制应成为AI代码助手产品的标配环节。</p>
+<h2>中间环节：引导大模型生成“可控代码”的技巧</h2>
+<p>我们不能完全依赖后处理去弥补大模型在生成阶段的安全问题。更有效的方法是防患于未然，从Prompt设计阶段就开始“引导”模型往更安全、规范的方向输出内容。</p>
+<p>以下是几个实用的提示工程（Prompt Engineering）技巧，帮助我们提升代码生成的安全性。</p>
+<img src="images/img_001.jpg" alt="">
+<p><strong>1. 明确功能边界，避免自由发挥</strong></p>
+<p>Bad Prompt（容易出问题）：</p>
+<blockquote><p>写一个Python脚本，接收用户输入并执行</p></blockquote>
+<p>Better Prompt（引导更安全输出）：</p>
+<blockquote><p>写一个Python脚本，从命令行读取参数，但不允许使用os或subprocess模块，仅进行路径格式判断</p></blockquote>
+<p><strong>2. 主动加入异常处理要求</strong></p>
+<p>Bad Prompt：</p>
+<blockquote><p>给我一个上传文件的接口实现</p></blockquote>
+<p>Better Prompt：</p>
+<blockquote><p>帮我写一个Python上传接口，必须包含 try/except，不能直接使用eval或exec</p></blockquote>
+<p><strong>3. 加入“安全合规”提示词</strong></p>
+<p>你可以在Prompt中加入“确保不生成危险命令”“避免无权限访问”等语义性约束。</p>
+<p>示例：</p>
+<blockquote><p>生成一个用于清理日志的脚本，但需要考虑系统安全，不能直接删除敏感目录，必须加入路径白名单检查</p></blockquote>
+<p><strong>4.通过System Prompt增强模型安全</strong></p>
+<p>你还可以在系统提示（System Prompt）中，预先添加角色指令，例如：</p>
+<blockquote><p>你是一个安全敏感的Python代码助手，所有代码都必须符合企业安全开发规范。</p><p>不应使用eval、exec、os.system等高风险调用，必须对用户输入进行校验。</p></blockquote>
+<p>实践表明，越明确的角色约束 + 越具体的功能边界，越容易让大模型输出可控代码。</p>
+<h2>输出控制与可信标签：从生成到审计</h2>
+<p>除了在生成前限制Prompt、生成中加强语义约束，我们在输出环节同样可以建立安全机制。 比如我们可以通过hook函数和审查后处理逻辑，为每段AI生成的代码“加标签”，如是否包含危险调用、是否调用了外部依赖等。</p>
+<p>以下是一个简单的内容标签系统：</p>
+<pre><code>def label_code_safety(code: str):
+    tags = []
+    if &quot;os.system&quot; in code or &quot;subprocess&quot; in code:
+        tags.append(&quot;⚠️ 外部命令调用&quot;)
+    if &quot;eval&quot; in code or &quot;exec&quot; in code:
+        tags.append(&quot;🚨 动态执行&quot;)
+    if &quot;import socket&quot; in code:
+        tags.append(&quot;📡 网络操作&quot;)
+    if not any(x in code for x in [&quot;try&quot;, &quot;except&quot;]):
+        tags.append(&quot;❗缺少异常处理&quot;)
+    return tags
+
+# 示例
+code = &quot;&quot;&quot;
+import os
+os.system(&#x27;ls&#x27;)
+&quot;&quot;&quot;
+print(&quot;标签：&quot;, label_code_safety(code))</code></pre>
+<p>生成的标签可以在产品界面中“预警提示”，提醒开发者注意执行风险。未来还可结合LLM输出时添加系统级token注释，以便自动审计平台进行追踪。</p>
+<h2><strong>沙箱执行与灰度机制：不让“有毒代码”直接上线</strong></h2>
+<p>除了识别与标记外，实战落地中，还应将AI代码执行过程纳入沙箱机制，确保不对真实系统产生副作用。</p>
+<p>以下是一个基础的“沙箱执行器”：</p>
+<pre><code>import subprocess
+
+def exec_guarded(code_str):
+    try:
+        result = subprocess.run([&quot;python3&quot;, &quot;-c&quot;, code_str], capture_output=True, timeout=2)
+        return result.stdout.decode(), result.stderr.decode()
+    except subprocess.TimeoutExpired:
+        return &quot;执行超时&quot;, &quot;&quot;
+    except Exception as e:
+        return &quot;&quot;, str(e)
+
+# 测试用例
+code = &quot;print(&#x27;Hello, AI&#x27;)&quot;
+stdout, stderr = exec_guarded(code)
+print(&quot;输出：&quot;, stdout)</code></pre>
+<p>当然，真实沙箱机制应包含环境隔离、网络限制、文件访问控制、敏感API打补丁等功能。 但这个例子足以体现沙箱设计原则——在执行之前，先“限制它能碰什么”。</p>
+<h2><strong>实训任务：动手设计自己的安全审查流程</strong></h2>
+<p>请结合以上内容，完成以下练习任务：</p>
+<p><strong>任务一：漏洞代码审查</strong></p>
+<p>阅读以下代码，指出其中至少2个安全隐患，并使用 <code>scan_code()</code> 工具检测输出。</p>
+<pre><code>import os
+import subprocess
+
+def run():
+    cmd = input(&quot;请输入命令：&quot;)
+    subprocess.call(cmd, shell=True)</code></pre>
+<p><strong>任务二：重写Prompt引导策略</strong></p>
+<p>对以下Prompt进行修改，使其引导模型生成更安全的实现：</p>
+<blockquote><p>“帮我写一个Python脚本，接收一个URL并下载文件。”</p></blockquote>
+<p><strong>任务三：使用标签系统+沙箱执行</strong></p>
+<p>将上方代码传入 <code>label_code_safety()</code> 并使用 <code>exec_guarded()</code> 测试运行效果。</p>
+<h2>课程总结</h2>
+<p>安全，是每一行代码的开始。</p>
+<p>通过这节课程，我们一起梳理了了编程类助手在使用中存在的典型安全风险，搭建了可运行的Python风险识别器，并逐步引入Prompt引导、输出标签、沙箱执行等实用机制。之后还设计了实训任务，帮助你完成从识别 → 引导 → 审查 → 执行的完整流程模拟。</p>
+<p>这节课有这样几个重点需要你留意。</p>
+<ul><li>意识到大模型生成代码可能带来的风险。</li></ul>
+<ul><li>学会构建前中后全流程的安全控制机制。</li></ul>
+<ul><li>能够设计可控的Prompt、搭建代码检测器、引入输出标签与执行保护。</li></ul>
+<p>未来你将面对的编程助手，未必永远“安全可控”，但从今天起，你可以构建起自己的“安全护栏”，守住AI编程应用的第一道防线。</p>
+<h2>思考题</h2>
+<ol><li>如果你正在构建一个面向开发者的AI助手，最关键的安全控制环节应该放在哪里？为什么？</li></ol>
+<ol><li>你是否曾遇到过AI代码生成“看起来对但实际危险”的情况？你是怎么处理的？</li></ol>
+<ol><li>除了沙箱执行，你能想到哪些更轻量级的保护策略可以在企业内部上线前部署？</li></ol>
+<p>欢迎你在评论区留言，分享你的想法与代码实践经验。我们下一节课见！</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="22｜编程助手如何防止代码注入与权限漏洞？.md">22｜编程助手如何防止代码注入与权限漏洞？.md</a></footer>
+</div></body></html>

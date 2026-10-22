@@ -1,0 +1,72 @@
+graph TD
+    subgraph CORE["核心主线"]
+        ACT["主动思考与加工<br/>（记忆的底层逻辑）"]
+        OUT["输出导向<br/>（用输出倒推输入）"]
+    end
+
+    subgraph M1["主题一：记忆与检索"]
+        RET["检索式练习<br/>L03 费力回想优于重读"]
+        ELAB["精细复述/连点成线<br/>L07 记关键词串逻辑"]
+        CHUNK["组块化记忆<br/>L08 7±2组块"]
+        PRIOR["知识储备<br/>L21 象棋实验"]
+    end
+
+    subgraph M2["主题二：专注与心态"]
+        WM["工作记忆有限<br/>L04 焦虑挤占容量"]
+        PEAK["峰终定律<br/>L01 峰值+终值"]
+        MUMO["默念法<br/>L05 带口型自我对话"]
+        SPRINT["短跑观/精力管理<br/>L20 90分钟+15分钟"]
+    end
+
+    subgraph M3["主题三：自律与环境"]
+        START["5分钟起步法<br/>L12"]
+        HETALV["他律<br/>L13 外部约束"]
+        ENV["环境/社会助长<br/>L14 表演型学习"]
+        WRITE["无意识→有意识<br/>L16 写下来"]
+    end
+
+    subgraph M4["主题四：计划与执行"]
+        PARKINSON["帕金森法则<br/>L11 先完成再完美"]
+        TODAY["只规划今天<br/>L17 摆脱倒数日"]
+        LIST["清单+记录时间<br/>L18 计划是工具"]
+        SMALL["拆解小目标<br/>L19 完成感驱动"]
+    end
+
+    subgraph M5["主题五：成长与练习"]
+        GROWTH["成长型思维<br/>L22 能力可塑"]
+        DELIB["刻意练习4原则<br/>L22"]
+        DUAL["双加工理论<br/>L23 路径依赖"]
+        PRACTICE["实践>方法论<br/>L24 1%灵感99%汗水"]
+    end
+
+    ACT --> RET
+    ACT --> ELAB
+    ACT --> CHUNK
+    ACT --> PRIOR
+    OUT --> RET
+    OUT --> DELIB
+    OUT --> PARKINSON
+
+    WM --> MUMO
+    WM --> SPRINT
+    PEAK --> TODAY
+    PEAK --> LIST
+
+    HETALV --> ENV
+    HETALV --> TODAY
+    START --> PARKINSON
+    START --> SMALL
+    WRITE --> ENV
+
+    CHUNK --> PRIOR
+    PRIOR --> GROWTH
+    DELIB --> DUAL
+    DUAL --> PRACTICE
+    LIST --> SMALL
+
+    classDef core fill:#f9d5e5,stroke:#e06377,stroke-width:2px
+    classDef theme fill:#eeeeee,stroke:#999999
+    classDef node fill:#d5e8f9,stroke:#3b7bbf
+    class ACT,OUT core
+    class M1,M2,M3,M4,M5 theme
+    class RET,ELAB,CHUNK,PRIOR,WM,PEAK,MUMO,SPRINT,START,HETALV,ENV,WRITE,PARKINSON,TODAY,LIST,SMALL,GROWTH,DELIB,DUAL,PRACTICE node

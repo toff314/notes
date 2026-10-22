@@ -1,0 +1,27 @@
+flowchart TD
+    LLM["大语言模型 LLM<br/>(无状态, 有幻觉)"]
+    IO["Model I/O 三环节<br/>Format → Predict → Parse"]
+    PE["提示工程<br/>PromptTemplate / Few-Shot"]
+    COT["CoT 思维链<br/>Let's think step by step"]
+    TOT["ToT 思维树<br/>多路径搜索"]
+    MEM["记忆 Memory<br/>历史塞进提示"]
+    CHAIN["链 Chain<br/>硬编码流程"]
+    REACT["ReAct 代理<br/>推理 Reason + 行动 Act"]
+    TOOL["工具 Tool<br/>代理的武器"]
+    RAG["RAG 检索增强<br/>嵌入+向量库+检索"]
+    AUTO["自主代理<br/>CAMEL / BabyAGI"]
+
+    LLM --> IO
+    IO --> PE
+    PE --> COT
+    COT --> TOT
+    COT -->|"CoT只提升推理<br/>解决不了幻觉"| REACT
+    LLM --> MEM
+    MEM -->|"提供上下文"| CHAIN
+    PE -->|"提示=代理的本质"| REACT
+    CHAIN -->|"区别: 链硬编码<br/>代理LLM动态决策"| REACT
+    REACT --> TOOL
+    REACT --> RAG
+    TOOL --> AUTO
+    RAG --> AUTO
+    REACT -->|"ReAct 是底座"| AUTO

@@ -1,0 +1,106 @@
+{
+  "type": "course_review",
+  "course": "企业级多智能体设计实战",
+  "title_idea": "我把一门 44 讲的多智能体课全听完了：真正值钱的不是 CrewAI，是这套'数字员工团队'工程方法论",
+  "data_credibility_summary": {
+    "total_claims": 37,
+    "verified_pct": "38%",
+    "partial_pct": "19%",
+    "unverifiable_pct": "40%",
+    "suspicious_pct": "3%"
+  },
+  "narrative_structure": {
+    "acts": [
+      {
+        "act_name": "第一幕：架构思维 + 工程落地 + 模块一/二/三（01-22 讲）",
+        "act_summary": "这一幕讲基础：四种架构范式、ReAct 原理、Agent/Task/Process 三剑客、工具生态（MCP/代码解释器/Skills）、上下文与记忆（Bootstrap/剪枝/压缩/RAG）。价值呈'两头低中间平'：01/02/05 是合格的认知地基，12/16/18/19 有真洞见（Agent-Native 工具、渐进式披露、Harness 三代演进、上下文生命周期），但大量篇幅被框架 API 走读（03/09/14/15）和 XiaoPaw 项目演示（11/17/22，一个项目横跨 5 课）占据。品牌化重命名信号密集：RGB 模型（Role/Goal/Backstory）、C.U.P. 模型（Complexity/Uncertainty/Performance）、五步标准 SOP——都是给已有概念贴首字母缩写。",
+        "highlights": [
+          "18/19 课的'记忆=构建 message list'+'上下文生命周期三操作'是扎实的认知地基",
+          "12 课'建设性报错给 AI 复盘机会'是原创且有价值的判断",
+          "16 课 Skills 渐进式披露与 Claude Code 机制互相印证"
+        ],
+        "criticisms": [
+          "RGB/C.U.P./五步SOP 是典型品牌化重命名，包装价值大于实质",
+          "XiaoPaw 项目横跨 11/17/22/29/33 五课，demo 膨胀明显",
+          "多课（03/09/14/15）本质是 CrewAI API 源码走读，脱离框架无可迁移洞见"
+        ],
+        "data_credibility_flags": [
+          "L01 的'熵-架构匹配矩阵'是阿什比定律的品牌化重命名 (⚠️)",
+          "L07 的 RGB 模型、L04 的 C.U.P. 模型是首字母缩写包装 (⚠️)",
+          "L18 的'上下文超过 40% 能力下降'数据无出处 (❓)"
+        ]
+      },
+      {
+        "act_name": "第二幕：模块四 协作与设计模式（23-29 讲）",
+        "act_summary": "这一幕是全课价值最高的一段，从 Orchestrator 范式讲到数字员工团队的四机制（角色/协作/介入/进化）。23 课三堵墙+三关键设计奠定地基，25 课三维隔离判断法+NEVER 清单、26 课邮箱三态状态机、27 课 Human as 甲方、28 课自我进化五步闭环，构成了'把人类团队管理学工程化'的完整原创方法论。这是真正独立于 CrewAI 框架、可迁移到任何 Agent 工程的思考。美中不足是 29 课作为收尾又是 XiaoPaw 演示，且有大量精确数据（70%/10%、17.2x、90%+、37%）无法追溯。",
+        "highlights": [
+          "23 课'以任务为视角而非以 Agent 为视角'的范式转变是精准提炼",
+          "26 课三态状态机（unread→in_progress→done）+ 补单机制是生产级设计",
+          "28 课五问漏斗 + root_cause 枚举打破'复述式反思'，有 Reflexion/Retroformer 论文支撑"
+        ],
+        "criticisms": [
+          "Galileo+PwC 70%/10%、DeepMind 17.2x、MAST 37% 等数据密集但无原始出处",
+          "29 课将四大机制验证又做成 demo，未给出真实生产系统的量化结果"
+        ],
+        "data_credibility_flags": [
+          "L23 的 Galileo+PwC 70% vs 10% 数值无原始报告 (⚠️)",
+          "L23 的 DeepMind 17.2x 误差放大无出处 (❓)",
+          "L25 的 Anthropic 90%+ 完成质量提升无出处 (❓)",
+          "L26 的 MAST inter-agent 误对齐 37% 无出处 (❓)"
+        ]
+      },
+      {
+        "act_name": "第三幕：模块五 企业级加固（30-33 讲）",
+        "act_summary": "这一幕讲可观测、可靠、安全，核心洞见是'模型自报告不可信，加固必须在工程层'。30 课 5+2 事件 Hook 骨架统一零散钩子，31 课重试/循环检测/成本围栏三策略，32 课沙箱/权限网关/身份认证三层防御，33 课把三层装到 XiaoPaw。工程细节扎实（frozen dataclass、pending_deny 绕过框架异常吞噬、Deny>Ask>Allow），但安全课的数据（629 次测试 80% 劫持率、15% 云端 Skill 木马）无法追溯，且 33 课仍是 demo 收尾。",
+        "highlights": [
+          "30 课'可观测性必须在工程层实现，模型自报告不可信'是正确的基本常识",
+          "31 课 pending_deny 模式（绕过 CrewAI 异常吞噬）是真实的框架踩坑经验",
+          "32 课'五类威胁共同根因是都要通过工具做坏事'是原创归纳"
+        ],
+        "criticisms": [
+          "629 次安全测试、80% 劫持率等精确数字反复当作论据却无来源",
+          "身份认证层仍是'展望性'内容，讲师未给出可运行方案"
+        ],
+        "data_credibility_flags": [
+          "L32 的 629 次测试 80% 劫持成功率无出处且被反复引用 (🚩)",
+          "L32 的 15% 云端 Skill 藏木马（悟空团队）无出处 (❓)",
+          "L30 的 $70,000 死循环事故是轶事 (❓)"
+        ]
+      },
+      {
+        "act_name": "第四幕：生产交付篇 全生命周期工程化（34-40 讲）",
+        "act_summary": "这一幕从'该拿 AI 做什么'讲到'怎么上线并持续迭代'。34 课 AI 适用性评估表 + AI-enabled/AI-native 视角是全课 ROI 最高的一节，36 课评测四环节 + pass@k/pass^k 陷阱、38 课六层监控 + 消耗率告警都是可直接落地的方法论。这一幕的数据可信度最高（MIT/Gartner/BCG/RAND 报告、Google Bard/DPD/Air Canada 新闻、MT-bench 论文均可追溯）。40 课组织进化收尾，点出'表演式转型'的普遍陷阱。整体是扎实的生产工程方法论，但 35/37/39/40 相对前几讲略显平缓。",
+        "highlights": [
+          "34 课 AI-native 视角（'从来没人做不是因为没价值，而是人力做不到'）是原创且深刻",
+          "36 课 pass@k vs pass^k'合法作弊'是精准批判",
+          "38 课'汇总指标把信号平均掉了'的三个真实案例直击监控盲区"
+        ],
+        "criticisms": [
+          "35/37/39 内容偏产品方法论和工程整合，深度低于 34/36/38",
+          "40 课组织进化部分偏管理鸡汤，'表演式转型'批判虽有价值但数据支撑弱"
+        ],
+        "data_credibility_flags": [
+          "L34 的 MIT/Gartner/BCG/RAND 失败率数据可追溯 (✅)",
+          "L36 的 Google Bard/DPD/Air Canada 案例可追溯 (✅)",
+          "L38 的 Claude Code 六周退化、$37,901 账单需谨慎引用 (⚠️)"
+        ]
+      }
+    ]
+  },
+  "overall_assessment": {
+    "who_should_read": "已经会调 CrewAI/LangChain 等框架、但不知道'怎么把 demo 变成能上生产的系统'的工程师和架构师；需要在公司里立项 AI 场景、判断 ROI 的技术负责人。模块四/五和生产交付篇的可迁移方法论对任何 Agent 框架都适用。",
+    "who_should_skip": "想快速学会某个框架 API 的初学者（本课重点在方法论不在 API）；只想了解'Agent 是什么'的泛读者（前半程有更好的免费资源）；追求严格数据严谨的读者（本课大量数据无出处，需自行验证）。",
+    "value_for_hour": "25.8 小时全听不划算，但精读 6 讲金矿 + 15 讲银矿（约 8 小时）回报很高。方法论与水分比例约 3:7——后半程（模块四之后）方法论密度高达 60-70%，前半程（模块一/二/三）水分占比过半。策略性建议：直接跳 00-22 的框架走读和 demo，从 23 课开始精读，最后回补 18/19 课（上下文工程）和 12/16 课（工具/Skills）作为地基。",
+    "best_approach": "以 23/26/27/28（数字团队）+ 30/31/32（加固）+ 34/36/38（交付）为主线精读，18/19/25/12/16 作为支线补地基；跳过所有 XiaoPaw 演示课和框架源码走读课；引用课程数据前务必回查原始出处（约 40% 的量化声明无法验证）。"
+  },
+  "search_keywords": [
+    "multi-agent orchestrator pattern",
+    "agent memory context engineering",
+    "LLM-as-a-judge evaluation bias",
+    "AI agent observability Langfuse",
+    "agent safety sandbox prompt injection",
+    "digital employee agent team collaboration",
+    "AI project ROI evaluation framework"
+  ],
+  "writing_direction": "文章可走'课程测评'叙事：开篇用一个反直觉结论定调（这门课 80% 的价值集中在后半程 15 讲，前半程一半是框架走读和 demo），然后按四幕结构逐幕评价——第一幕指出品牌化重命名（RGB/C.U.P.）和 demo 膨胀，第二/三/四幕肯定原创方法论（数字员工团队、三层加固、交付闭环）并点出数据无出处的软肋，结尾回答'值不值得'：值得挑着读，但要带着数据审计的眼光。整体基调是'一本有真东西但需要你自己甄别的课'，避免一味吹捧或一味贬低。"
+}

@@ -1,0 +1,106 @@
+{
+  "lecture": "3. kubelet 组件",
+  "source": "3. kubelet 组件.txt",
+  "duration_min": 38.03,
+  "intro": "承接上一讲：Controller Manager 各控制器都遵循 informer + workqueue 的同一框架，学习行为即可反推逻辑；本讲进入每个节点上的代理 kubelet——Kubernetes 最重要的组件之一，详解其架构、职责、Pod 清单加载方式与 Pod 启动流程（含 Sandbox/Pause 容器）。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "08:00",
+      "topic": "kubelet 架构总览：API 层与众多 Manager",
+      "points": [
+        "kubelet 是运行在每个计算节点上的代理，承担大量职责：顶层提供 API 层（自身探活、业务指标上报等，在不同端口上监听不同职责）。",
+        "ProbeManager：为节点上 Pod 发起探针，读取 Pod 定义后按配置的 interval 持续执行 liveness/readiness/startup 探针。",
+        "OOMWatcher：监听 OOM 事件并上报 kubelet；GPUManager：管理节点上的 GPU 等扩展设备。",
+        "Cadvisor：独立开源软件被内嵌进 kubelet（最新版本从 library 被重写为 kubelet 一部分），基于 cgroup 技术采集节点与应用资源状况，是整个集群监控数据的来源。",
+        "DiskSpaceManager 管理节点磁盘空间；StatusManager 管理节点状态；EvictionManager 是节点的守护逻辑。",
+        "ImageGC / ContainerGC / ImageManager：清理不活跃镜像、清理已退出容器（防止磁盘被占满）；VolumeManager 负责存储卷挂载；CertificateManager 提供证书签发与管理能力。"
+      ],
+      "tradeoffs": [
+        "Cadvisor 被内嵌后从监控体系里'消失'，排障时要知道监控数据实际来自 kubelet 内嵌的 cadvisor。"
+      ],
+      "turning_points": [
+        "kubelet 不是'拉容器的小角色'，它同时是探针执行器、资源守护者、监控采集器和证书管理者。"
+      ]
+    },
+    {
+      "start": "08:00",
+      "end": "15:00",
+      "topic": "EvictionManager 驱逐机制与 Sync Loop、PLEG 状态上报",
+      "points": [
+        "资源分两类：可压缩资源（CPU，按分时共享，竞争时各进程受损但不会退出）与不可压缩资源（内存，竞争会导致分配失败），针对不可压缩资源 kubelet 要采取激进动作。",
+        "EvictionManager 监听节点内存水位，到达阈值（如 10G 机器用到 9G）时按既定策略驱逐低优先级、占用内存大且超出自身预设值的 Pod，保护整个节点。",
+        "Sync Loop 是 kubelet 内部的控制器模式：watch 当前节点的 Pod 对象，事件进入队列后由多个 Pod Worker 处理；ComputePodAction 比对节点上已运行容器与 Pod spec（新 Pod→Create、Delete 事件→删除、hash 变化→重建），再通过 CRI 接口真正创建/杀死容器。",
+        "PLEG（Pod Lifecycle Event Generator）：维护 Pod 本地缓存，定期向容器运行时发 List 获取当前 Pod 清单并汇聚状态，通过 Pod Lifecycle Event 上报 API Server。",
+        "生产踩坑：容器运行时不响应会让 PLEG 失败、状态无法上报，节点被判为不正常；曾出现上千上万个 exited container 未清理，PLEG 遍历容器耗时过长导致超时、节点状态异常。"
+      ],
+      "tradeoffs": [
+        "内存不可压缩：一旦竞争即有人分配失败，所以驱逐策略必须激进（宁可驱逐低优 Pod 也不让节点崩溃）。",
+        "PLEG 依赖运行时响应，运行时故障会连带上报链路一起失败，日常要控制 exited container 数量。"
+      ],
+      "turning_points": [
+        "EvictionManager 是'节点的守护神'：不是保证每个 Pod 都不死，而是保证整个节点不因个别 Pod 而崩溃。"
+      ]
+    },
+    {
+      "start": "15:00",
+      "end": "22:30",
+      "topic": "kubelet 职责与三种 Pod 清单获取方式",
+      "points": [
+        "kubelet 运行在所有节点（master 与 worker 都有）；用 watch 机制接收控制面指令，管理 Pod 及其中的容器生命周期。",
+        "注册节点：启动加 --register-node 则自动把当前节点注册到 API Server 并定期上报资源使用情况；否则由管理员手工创建 Node 对象。",
+        "Pod 清单获取方式一：文件目录（staticPodPath）——扫描目录下的 Pod 清单并启动，即静态 Pod；kubeadm 单节点集群的控制面组件（etcd、apiserver、controller-manager、kube-scheduler）都是以静态 Pod 方式加载的。",
+        "方式二：HTTP endpoint（manifestURL 参数）——从一个 URL 拉取 Pod 清单；方式三：watch API Server——kubelet 连接 API Server，监听与当前节点相关的已调度 Pod。"
+      ],
+      "tradeoffs": [
+        "静态 Pod 不经过调度器、由 kubelet 直接管理，适合控制面自举；注意它不能像普通 Pod 一样被调度器迁移。"
+      ],
+      "turning_points": [
+        "控制面组件本身也是 Pod——etcd/apiserver/controller-manager/kube-scheduler 全由 kubelet 以静态 Pod 方式拉起，Kubernetes 用自己管理自己。"
+      ]
+    },
+    {
+      "start": "22:30",
+      "end": "30:30",
+      "topic": "Sandbox Container（Pause）与容器启动顺序",
+      "points": [
+        "现象：一个 Pod 里只有一个 nginx 容器，但 docker ps 能看到两个容器进程——nginx 与 pause（k8s.gcr.io/pause，entrypoint 为 pause，即 sleep forever，不消耗资源、永不退出）。",
+        "为什么需要 Sandbox：容器进程本身可能异常退出（空指针、OOM），若网络 namespace 直接挂在应用容器上，进程退出会导致网络配置丢失、每次重启都要重配网络（系统级命令、效率低且有压力）；且很多应用在容器启动前就需要网络就绪（拉数据库信息、初始化缓存、取 token）。",
+        "Sandbox 提供稳定底座：所有网络挂载在 pause/Sandbox 上，应用容器启动时把自己的网络 namespace 挂载到 Sandbox 上即可；上层进程反复崩溃也不影响网络与存储，提供稳定的运行沙箱。",
+        "启动顺序：先启动 Sandbox Container → containerd 调用 CNI 插件 ADD 网络（返回 Pod IP）→ 此时 Pod 已有 IP、网络就绪 → kubelet 才按顺序拉取镜像、创建并启动用户容器 → 状态回写 API Server。"
+      ],
+      "tradeoffs": [
+        "每个 Pod 多一个 pause 容器是预期行为，排障时不要误判为多余进程。"
+      ],
+      "turning_points": [
+        "Pause/Sandbox 是'容器进程不稳定'与'网络需要稳定'之间的解耦层——把易变的应用容器与稳定的网络底座分开。"
+      ]
+    },
+    {
+      "start": "30:30",
+      "end": "38:02",
+      "topic": "Pod 启动详细流程：准入、cgroup、Volume 与 CRI/CNI 调用顺序",
+      "points": [
+        "完整流程（kubelet→CRI→CNI）：Admit 准入（校验资源需求能否满足，如节点只剩 1 CPU 却硬填 request 2，直接报 out of CPU 写回 Pod 状态）→ 检查节点网络插件是否就绪（否则报错）→ 配置容器所属 cgroup 文件（CPU/内存配置）→ 创建 Pod 数据目录 → volume attach & mount（configMap/secret 等轻量存储只下载挂载；网络存储需创建卷、attach 到节点再 mount，此步不过会一直卡住）→ syncPod 计算 sandbox 与容器变化（不匹配则重建、已不存在则 kill）→ createPodSandbox（生成 sandbox 配置、创建日志目录、调用 CRI 的 gRPC 服务，请求转到 containerd 进程）→ containerd 调 CNI 接口（AddNetwork 完成网络配置）→ 拉镜像、创建并启动用户容器。",
+        "面试要点：CNI/CRI/CSI 三者在 Pod 启动时的先后与依赖——存储挂载在容器启动前完成，网络在 sandbox 创建阶段完成，容器运行时负责承载这些调用。",
+        "CRI 以 gRPC 服务形式被 kubelet 调用；CNI 以可执行文件形式被容器运行时调用；存储（CSI）在后续章节展开。"
+      ],
+      "tradeoffs": [
+        "Volume attach/mount 失败会让 Pod 一直卡在等待状态，是排查'Pod 起不来'时要优先检查的环节之一。"
+      ],
+      "turning_points": [
+        "Pod 的启动不是'拉起一个容器'，而是'沙箱先行→网络就绪→存储就绪→应用容器启动'的严格顺序编排。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "kubelet：运行在每个节点（含 master）上的代理，职责是维护 Pod 及其容器生命周期，注册节点、上报节点资源与 Pod 状态。",
+    "Cadvisor：被内嵌进 kubelet 的独立开源软件，基于 cgroup 技术采集节点与应用资源状况，是整个集群监控数据的来源。",
+    "EvictionManager：kubelet 内的驱逐管理器，监听内存等不可压缩资源水位，按策略驱逐低优先级、超限的 Pod 以保护节点。",
+    "PLEG（Pod Lifecycle Event Generator）：kubelet 内汇聚节点 Pod 状态并上报 API Server 的组件；运行时不响应会导致 PLEG 失败、节点被判异常。",
+    "静态 Pod：kubelet 扫描文件目录（staticPodPath）加载的 Pod 清单，不经过调度器，用于控制面自举。",
+    "Sandbox Container（Pause）：kubelet 为每个 Pod 先启动的稳定底座容器（镜像 k8s.gcr.io/pause，sleep forever 不消耗资源），网络 namespace 挂载其上，保证应用容器重启不影响网络配置。",
+    "Pod 启动顺序：Admit 准入 → 网络插件检查 → cgroup 配置 → 数据目录 → Volume attach/mount → syncPod → createPodSandbox → CRI gRPC → CNI AddNetwork（拿到 Pod IP）→ 拉镜像 → 启动用户容器。"
+  ],
+  "closing": "收尾总结：本讲梳理了 kubelet 的整体框架（API 层与各 Manager：ProbeManager、OOMWatcher、Cadvisor、EvictionManager、VolumeManager、ImageGC/ContainerGC 等）、其核心职责（维护 Pod 生命周期）、三种 Pod 清单加载方式（静态 Pod 目录、HTTP URL、watch API Server），以及 Sandbox/Pause 容器的原理与完整 Pod 启动流程；并预告下节课分别深入 CRI 与 CNI 的细节。"
+}

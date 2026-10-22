@@ -1,0 +1,124 @@
+{
+  "lecture": "1. Kubernetes 核心组件：API Server 概念",
+  "source": "1. Kubernetes 核心组件：API Server 概念.txt",
+  "duration_min": 16.83,
+  "intro": "学完 etcd 模块后，本讲作为 API Server 模块的开篇，回答 API Server 是什么、为什么用户不能直接连 etcd，以及一个请求从进入到持久化到 etcd 的整体流转。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "01:50",
+      "topic": "回顾 etcd 模块并介绍 API Server 模块大纲",
+      "points": [
+        "回顾上一模块：通过 demo 理解了 etcd 的快速启动、读写与 watch 操作原理，以及 Raft 协议和生产系统中的常见问题",
+        "本模块大纲：API Server 的认证怎么做、授权怎么做、准入怎么做、限流怎么做，最后看 Kubernetes API 对象如何实现",
+        "把 API Server 类比为自行开发 REST 服务器的自我保护需求：认证（知道请求来自谁）、授权（判断调用权限）、准入（校验请求合法性）、限流（防止自己被压垮）"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "API Server 是控制面的 API 网关，其核心职责就是自我防护"
+      ]
+    },
+    {
+      "start": "01:50",
+      "end": "04:00",
+      "topic": "API Server 定位：为什么用户不能直接连 etcd",
+      "points": [
+        "API Server 是 Kubernetes 最核心的组件之一，可简单理解为一个 REST API，但附加了认证、授权、数据校验能力",
+        "用户不应该直接连接 etcd——在 Kubernetes 技术栈里只有 API Server 自己去连 etcd，它挡在 etcd 之前充当守护者",
+        "API Server 对 etcd 的保护：限流、认证、授权等操作都在到达 etcd 之前完成；且 API Server 自带缓存机制，大量读操作直接在 API Server 侧处理，不会转发到 etcd，从而有效降低整个集群对 etcd 的并发请求"
+      ],
+      "tradeoffs": [
+        "初学者最常见的误区：问老师怎么直接连数据库 etcd——正确做法是任何数据读写都经由 API Server"
+      ],
+      "turning_points": [
+        "反直觉点：数据库 etcd 不直接暴露给用户，API Server 是唯一的入口守护者",
+        "缓存机制让读操作在 API Server 本地消化，是保护 etcd 的关键设计"
+      ]
+    },
+    {
+      "start": "04:00",
+      "end": "06:30",
+      "topic": "请求处理的宏观流转：认证→授权→准入→持久化",
+      "points": [
+        "Request 发到 API Server 后先经 HTTP Handler，再进入认证（Authentication，知道你是谁）和授权（Authorization，确认有无操作权限）模块",
+        "准入（Admission）分两步：先做 Mutating（变形）——给未设置的属性填默认值或把属性 A 改成 B，支持通过 Webhook 扩展；再做 Kubernetes 自定义对象的 schema validation（校验变形后的对象是否合法）",
+        "schema validation 之后是增强校验：例如 Kubernetes 规定名字不能超过 255 字符，但生产环境希望不超过 63，可通过 Validating Admission Plugin 调用自定义 Webhook 附加校验逻辑",
+        "所有流转完成后数据才存入 etcd，完成持久化"
+      ],
+      "tradeoffs": [
+        "Mutating 与 Validating 是两个不同阶段：变形在前、合法性校验在后，顺序不能颠倒",
+        "默认校验无法满足的个性化规则（如更严格的命名长度限制）需要自行扩展 Validating Webhook"
+      ],
+      "turning_points": [
+        "一个请求的完整生命周期：认证 → 授权 → Mutating → schema validation → Validating Webhook → 存入 etcd"
+      ]
+    },
+    {
+      "start": "06:30",
+      "end": "09:40",
+      "topic": "代码级细节（一）：Panic Recovery、请求超时、审计、伪装",
+      "points": [
+        "Panic Recovery：API Server 用多个 goroutine 处理不同请求，需要保证某个 goroutine 的 panic 不会把整个 HTTP Server 弄死",
+        "Request 超时时间：若不设置，超时未处理完的请求会导致客户端 Connection 一直连着",
+        "Audit（审计）：记录谁对哪些对象做了什么操作——平台维护方排查'业务对象无缘无故消失'时查 Audit Log，几乎 100% 是客户自己或团队成员删的",
+        "Impersonation（伪装）：通过给请求加 header 模拟该请求代表哪个用户；典型场景是集群联邦从联邦层向下分发请求时，用 root 的 kubeconfig 连接成员集群，但通过 impersonation 填充真实用户信息，让下游 API Server 按真实用户做权限校验"
+      ],
+      "tradeoffs": [
+        "不设置请求超时的后果：客户端连接被长期占用",
+        "审计日志是平台运营者自证清白、定位误删责任的关键证据",
+        "impersonation 目前在联邦场景外用途不广"
+      ],
+      "turning_points": [
+        "审计用于回答'谁对对象做了什么操作'，是控制面安全可追溯的基础设施"
+      ]
+    },
+    {
+      "start": "09:40",
+      "end": "12:40",
+      "topic": "代码级细节（二）：MaxInFlight 限流与 kube-aggregator 扩展",
+      "points": [
+        "MaxInFlight（限流）：在途（inflight）请求指从请求到达 API Server 到返回客户端之间正在被处理的请求；MaxInFlight 设置 API Server 最多能处理多少并发请求，达到上限后新的请求会被拒绝",
+        "授权之后是 kube-aggregator：API Server 本身是 HTTP 请求处理器，可以判断当前请求是否是标准 Kubernetes 对象——是则本地处理；若是自定义对象且配置了其他 API Server 支撑，则把请求转发出去",
+        "kube-aggregator 本质是一个代理机制，支持通过 API 聚合（API Aggregation）扩展 Kubernetes 对象"
+      ],
+      "tradeoffs": [
+        "MaxInFlight 是保护 API Server 不被并发请求打死的限流手段，阈值需要结合集群规模权衡",
+        "扩展 Kubernetes 对象可走 aggregator 转发到独立 API Server，而不是把所有逻辑都塞进主 API Server"
+      ],
+      "turning_points": [
+        "kube-aggregator 让 API Server 从单一处理器变成可扩展的聚合网关"
+      ]
+    },
+    {
+      "start": "12:40",
+      "end": "16:50",
+      "topic": "反序列化、版本转换与校验流程，模块总结",
+      "points": [
+        "本地处理的请求需要 decoding：把 JSON 对象反序列化为 Go 对象",
+        "Conversion（版本转换）：Kubernetes 任何对象都有 external version（面向用户）和 internal version（面向内部实现），请求对象先转成 internal version 再做处理与存储",
+        "Admission 细节：先看有没有 Mutating Webhook，有则调用，没有则走内置校验流程；内置校验由对象自己的 storage 实现（如 Pod 的 PodStorage）定义 update strategy / create strategy（更新/创建前做什么）以及 validate 方法（创建/更新前的校验规则，如容器名为空必不通过）",
+        "内置校验之后若配置了 Validating Webhook 则调用；全部通过后存入 etcd，请求返回客户端",
+        "总结：宏观上 API Server 是一个简单 REST 服务器，但展开后职责重大、步骤众多；后续将逐一深入认证、授权、Webhook 编写、限流及其实现"
+      ],
+      "tradeoffs": [
+        "external version 与 internal version 的分离是 Kubernetes 实现 API 演进兼容性的核心设计，用户看到的是外部版本，内部实现统一用 internal version",
+        "对象自身的 create/update strategy 与 validate 方法承载默认校验，自定义规则需另配 Validating Webhook"
+      ],
+      "turning_points": [
+        "从宏观'简单 REST 服务器'到微观'复杂处理链'的反差是本讲核心认知"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "API Server 是 Kubernetes 控制面的 API 网关，本质是一个 REST API，负责认证、授权、数据校验与限流等自我保护功能。",
+    "在 Kubernetes 技术栈中用户不应直接连接 etcd，只有 API Server 自己连接 etcd，它挡在 etcd 之前充当守护者，并通过缓存减少对 etcd 的并发请求。",
+    "一个请求的完整流转：HTTP Handler → 认证 → 授权 → 准入（Mutating → schema validation → Validating Webhook）→ 持久化到 etcd。",
+    "MaxInFlight 限流：在途请求指从请求到达 API Server 到返回客户端之间正在处理的请求，MaxInFlight 设置最多可同时处理的请求数，超出上限即拒绝新请求。",
+    "Audit 审计：记录谁对哪些对象做了什么操作，是平台维护者排查'对象被谁删除'问题的关键机制。",
+    "Impersonation 伪装：通过请求 header 模拟该请求代表哪个用户，用于集群联邦等代用户分发请求的场景。",
+    "kube-aggregator：判断请求是否为标准 Kubernetes 对象，标准对象本地处理，自定义对象可转发到其他 API Server，本质是 API 聚合代理。",
+    "Conversion 版本转换：Kubernetes 对象有 external version（面向用户）和 internal version（面向内部实现），请求先转为 internal version 再处理存储。",
+    "对象的 storage 实现（如 PodStorage）通过 update strategy / create strategy 和 validate 方法定义创建、更新前的默认校验逻辑。"
+  ],
+  "closing": "简要介绍到此结束：宏观上 API Server 是简单的 REST 服务器，展开后处理链复杂；后续课程将深入探讨每个模块的实现，包括认证、授权、编写 Webhook 做额外校验、限流与 API 限流实现，下次课再见。"
+}

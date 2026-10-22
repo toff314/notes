@@ -1,0 +1,788 @@
+{
+  "course": "Claude Code 企业级老项目改造实战",
+  "triage_date": "2026-08-31",
+  "total_lectures": 37,
+  "gold_count": 5,
+  "silver_count": 10,
+  "copper_count": 17,
+  "iron_count": 5,
+  "overall_snr": 2.82,
+
+  "data_audit": {
+    "total_claims": 29,
+    "verified": 6,
+    "partial": 2,
+    "unverifiable": 22,
+    "suspicious": 0,
+    "summary": "entries 中 29 条萃取项的验证分布：6 条✅（Feathers 方法出处、两次翻译文档公开 URL、翻车案例可复现等）、2 条⚠️（三层控制与 Harness Engineering 同构、翻车过程需在项目代码复核）、22 条❓（讲师经验型框架与估算）。另对全课 18 条量化声明做独立审计：仅 1 条完全可验证（Chain of Understanding 论文存在性，arXiv:2504.04553），4 条部分验证（Sonar 42%/96%/48%、Veracode 45%、Anthropic Starter Kit、Cleveroad 报告——来源真实但数值需回原始报告核实），11 条无法独立验证（70%/30%、80/20、20 分钟、99% 等讲师经验型估计），2 条可疑（40% Dumb Zone context 阈值、99% 失败归因——无出处且过于精确）。结论：本课的方法论价值来自框架与可复现工作流，而非数据；任何量化声明在引用前必须回原始来源。"
+  },
+
+  "entries": [
+    {
+      "lecture_id": "15",
+      "lecture_title": "15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为",
+      "snr_score": 4.3,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 4.0, "actionability": 5.0, "change_potential": 4.5, "expression_efficiency": 4.0},
+      "adler_q1": "讲如何用 AI 补出改造前兜底测试：先决策该不该补，再按价值排优先级（改造路径 Characterization > 核心链路集成 > 复杂逻辑单元 > 简单 CRUD），两步走分批补（每批 1-3 个），最后配 CI 让测试持续跑。",
+      "adler_q2": "解决'老项目没测试、AI 补测试又容易大而全'的问题。已解决：决策判断、优先级排序、分批控量方法、CI 落地提示词。未解决：Characterization Test 对并发/时序类行为（非确定性输出）的锁法没有展开；测试断言覆盖度如何量化没有给标准。回避：AI 补的测试质量如何系统性抽查（只给了'追问 100 从哪来'的单点技巧）。",
+      "adler_q3": "基本成立且有出处：Characterization Test 概念引自 Michael Feathers《Working Effectively with Legacy Code》（2004），非编造。四类缺陷检查：知识无误；'AI 会用业务直觉补断言'的偏差判断符合 LLM 行为观察（有其合理性但属讲师经验，无实验数据）；逻辑自洽（锁住'现在实际做什么'→改造后行为不变即可）；分析略不完整——未讨论测试锁死历史 bug 后未来修复的摩擦成本。",
+      "adler_q4": "读完能立刻做三件之前做不了的事：①对即将改造的接口先写 Characterization Test 锁行为；②按四档优先级排出补测试计划；③拒绝'让 AI 一口气补 20 个测试'的冲动，改为每批 1-3 个 review 后放行。",
+      "critical_notes": "本课是整门课验证层的最佳落地：把 Feathers 20 年前的概念和 AI 时代的新风险（AI 写测试时的'应该'偏差）结合，产出可复制提示词。最值钱的洞察是'AI 补断言会基于业务直觉而非实际行为'——这是大多数 AI 辅助测试教程没有的。扣分点：'AI 写测试=不再有借口拖延'带营销语气；量化声明（分钟级、30 分钟 CI 换上千次检查）为讲师经验估计。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "Characterization Test 断言纪律：凭'实际'不凭'应该'",
+          "source_text": "强制 AI 先跑代码记录实际行为，再把行为转成测试断言。提示词里那句：不要凭'应该是什么'写断言，凭'实际是什么'写，是最关键的一句。AI 写测试有一个隐性偏差：它会用业务直觉补断言……那些不一致的地方往往是历史包袱、是对接方依赖、是禁区。",
+          "paraphrase": "AI 补测试的最大风险不是漏测，而是按'业务直觉'写'应该'断言，导致锁住的是想象而非现实。对策：提示词强制 AI 先跑代码记录实际输出，再转成断言。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["05", "14", "19"],
+          "verification": {"status": "✅", "source_url": "Michael Feathers《Working Effectively with Legacy Code》(2004) 中 Characterization Test 定义", "notes": "方法概念有经典出处；'AI 用业务直觉补断言'为讲师应用级洞察，逻辑自洽但无实验数据支撑"}
+        },
+        {
+          "type": "framework",
+          "name": "补测试四档优先级",
+          "source_text": "改造路径上的 Characterization > 核心链路集成 > 复杂逻辑单元 > 简单 CRUD（可不补）。老项目改造的目标不是 80% 测试覆盖率，是改造路径上的关键节点都有兜底。",
+          "paraphrase": "补测试不按覆盖率目标，按改造路径价值排序：要改的地方优先锁，核心写链路次之，纯逻辑再次，简单 CRUD 不补。",
+          "writing_angle": "methodology",
+          "related_lectures": ["14"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验型优先级框架，逻辑自洽但无数据支撑"}
+        },
+        {
+          "type": "insight",
+          "name": "补测试的节奏控制：每批 1-3 个，review 一批过一批",
+          "source_text": "老项目补测试最大的风险：让 AI 一口气补一二十个测试，跑下来一半失败一半通过。问题来了，你没法判断哪些测试是对的、哪些是 AI 瞎写的。整批不可信，等于白做。",
+          "paraphrase": "一次性补大量测试会让失败测试无法归因，整批丧失可信度；小批量+逐批 review 让每一批都是可信资产。",
+          "writing_angle": "opinion",
+          "related_lectures": ["14", "22"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "工程经验判断，与测试左移/小步提交的主流实践一致"}
+        },
+        {
+          "type": "technique",
+          "name": "CI 作为团队级护栏",
+          "source_text": "CI 配置高度标准化……AI 写这种标准化配置文件特别准。今天花 30 分钟让 AI 写好 CI 配置，未来每一次 push 都自动跑一遍测试。测试从'个人资产'变成了'团队级护栏'。",
+          "paraphrase": "让 AI 生成贴合项目的 CI workflow（触发条件/环境/中间件/测试命令/产物），把个人补的测试变成每次提交自动执行的团队护栏。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["16"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "'30 分钟换上千次检查'为讲师估算，CI 本身是成熟工程实践（✅概念）"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "17｜从一句话需求到需求文档：让 AI 帮你拆需求",
+      "snr_score": 4.1,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 3.5, "actionability": 5.0, "change_potential": 4.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲如何用 AI 把一句话需求拆成合格需求文档：需求六维体系（业务目标/用户场景/接口契约/边界场景/老项目约束/不在范围）+ AI 六维能力地图（强 85+/中 60/弱 30-）+ 三步走（AI 出草稿→人补三个判断→AI 出定稿）。",
+      "adler_q2": "解决'需求文档靠经验、状态好就全状态差就漏'的问题。已解决：六维可重复体系、AI/人分工边界（AI 做数据与代码层，人做业务判断）、完整提示词模板+真实决策示例。未解决：六维如何适配非接口型需求（纯算法/纯配置改造）；'人补三个判断'若人对业务也不熟怎么办。回避：AI 能力地图的 85/60/30 分是讲师经验评级，无评测实验。",
+      "adler_q3": "大体成立。作者明确自承'这不是发明新方法论，是把工程师本来就在做的事结构化'——诚实，无框架包装之嫌。四类缺陷：知识无误；'AI 强的维度'判断符合 LLM 在代码/数据层面强、业务判断弱的常识观察；逻辑自洽；分析略不完整——未讨论 AI 在接口契约上'与现有风格一致'的失败案例（AI 也可能编造风格），'边界场景 12 条'依赖项目本身有足够代码可反推。",
+      "adler_q4": "读完能立刻做：①用六维模板拆下一个需求（20 分钟出 90 分文档）；②按'人补三个判断'明确自己该守什么；③在提示词里强制 AI 读 docs/CLAUDE.md/现有代码并显式输出老项目约束。",
+      "critical_notes": "本课是'AI 能力地图'应用的最佳示范：不是笼统说'AI 帮你写文档'，而是精确到每个维度 AI 几分、人补什么。六维体系本身不新，但'老项目约束'作为独立维度（且每条标 CLAUDE.md 来源）和'不在范围'维度（防 AI 顺手扩 scope）是把通用 PRD 方法适配老项目改造的关键增量。样例文档（22K 字中大部分）虽长但演示了 AI 真实产出质量。扣分点：量化评级（85/60/30、70%/30%、20 分钟）全部无独立依据。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "需求文档六维体系",
+          "source_text": "1. 业务目标 2. 用户场景 3. 接口契约 4. 边界场景清单 5. 老项目约束（新项目没有，老项目独有）6. 不在这次范围里的事。这不是发明新方法论，是把工程师本来就在做的事结构化。",
+          "paraphrase": "拆需求按六维跑：目标/场景/契约/边界/老项目约束/范围裁剪，产出格式一致、不漏维度、团队 review 快。其中'老项目约束'与'不在范围'两维是老项目改造特有。",
+          "writing_angle": "methodology",
+          "related_lectures": ["18", "22"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "六维是通用需求工程要素的结构化组合，作者自承非发明；'老项目约束'维度的适配有实践价值"}
+        },
+        {
+          "type": "insight",
+          "name": "AI 六维能力地图：AI 做 AI 强的 70%，人补 AI 弱的 30%",
+          "source_text": "AI 强的维度（85+ 分）：接口契约、技术性 edge case、老项目约束。AI 中等（60 分）：业务目标、用户场景。AI 弱（30 分以下）：边界场景的产品决策、不在这次范围里的事。AI 帮你做 AI 强的（70%），人补 AI 弱的（30%），整体出来 90+。",
+          "paraphrase": "按维度划分 AI/人分工：接口契约、edge case、老项目约束交给 AI；业务方向、产品决策、范围裁剪必须人拍。这是对'AI 当调研员、人当决策员'的精确到维度的落地。",
+          "writing_angle": "opinion",
+          "related_lectures": ["22", "25"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验评级，无评测实验；但'AI 代码/数据层强、业务判断层弱'与主流观察一致"}
+        },
+        {
+          "type": "technique",
+          "name": "三步拆需求法（草稿→人补三判断→定稿）",
+          "source_text": "Step 1：让 AI 出六维草稿（强制读 docs/ + CLAUDE.md + 现有代码，边界场景至少 8 条每条标'待产品决策'或预期行为）。Step 2：人补关键三个判断（业务目标方向、边界场景产品决策、不在范围里的事）。Step 3：让 AI 出定稿。全程 20 分钟，比手写 PRD 省两个小时。",
+          "paraphrase": "把拆需求变成三步：AI 压满数据层草稿（带来源标注）→ 人只做三个业务判断 → AI 按决策整合定稿。每步产出明确、决策权在人。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["18"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "'20 分钟/省 2 小时'为讲师经验估算；工作流本身可直接复现"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "20｜执行改造（下）：前端开发和接口对接",
+      "snr_score": 4.1,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 3.5, "actionability": 4.5, "change_potential": 4.5, "expression_efficiency": 4.0},
+      "adler_q1": "先讲前端改造的执行节奏（起服务看现状→让 AI 找改造点→让 AI 改→预览效果），核心是后半段的翻车复盘：跑完整套改造后发现版本对比功能前端本来就有，整整四讲工作量基本归零。",
+      "adler_q2": "解决'AI 时代改造如何避免做无用功'的问题。已解决：识别出根因（改造前没点产品确认现状）、三个洞察（AI 扫代码强但理解业务功能弱/兜底动作是自己点几下/人是最后的兜底员）、对策（把教训写进 CLAUDE.md 变护栏）。未解决：如何在流程中强制'先点产品'（靠个人纪律+CLAUDE.md 提醒，无流程硬约束）。回避：没有讨论 AI 为什么没能发现已存在功能的技术改进方向（如让 AI 对比现有 UI 组件树）。",
+      "adler_q3": "成立且稀缺。四类缺陷：知识无误；论据是完整的课程内翻车实录（可复现，打开页面即可验证'对比按钮本来就有'）；逻辑严密（AI 看到组件存在但理解为'未完成骨架'的判断符合 LLM 行为）；分析较完整——主动给出了翻车的三层归因并落到 CLAUDE.md 机制。小缺陷：把翻车包装成'课程效果更好'有自我辩护色彩，但未掩盖错误本身。",
+      "adler_q4": "读完能立刻做：①改造开工前先花 30 秒点产品确认现状；②把'改造前必须点产品'写进自己项目的 CLAUDE.md；③改变'把理解项目完全交给 AI'的甩手掌柜心态。这是全课最可迁移的一条行为改变。",
+      "critical_notes": "全课最有价值的单讲之一：罕见的'诚实展示失败全过程'的案例研究。它不是教你怎么做对，是教你怎么发现自己做错了——且这个错（跟 AI 跑完整流程才发现功能已有）在真实团队中极具普遍性。'AI 扫代码再细也不能替你点几下产品'把 AI 能力边界说得非常具体。扣分点：翻车发生前的 17-19 讲流程设计本身没有内置'现状确认'关卡，说明方法论有系统性盲区（讲师 22 讲也承认），这是课程方法论的诚实性证据。",
+      "extractions": [
+        {
+          "type": "case_study",
+          "name": "翻车实录：我和 AI 都没发现这个功能本来就有",
+          "source_text": "整整四讲，我和 AI 都没发现这个功能本来就存在。现在版本历史页面有两个对比按钮：一个旧的（前端 diff）、一个我新加的（后端 diff）。AI 扫一遍代码能列出所有文件、所有方法、所有调用关系，但它理解不了'这个组件正在工作、用户每天都在用'这种业务事实。",
+          "paraphrase": "一个完整的 AI 时代翻车案例：因为没在开工前点产品确认现状，讲师和 AI 合作重造了一个已存在的功能。展示'AI 扫代码≠理解业务'的能力边界。",
+          "writing_angle": "case_study",
+          "related_lectures": ["17", "18", "19", "22"],
+          "verification": {"status": "⚠️", "source_url": "课程内实操记录（Spring AI Alibaba Admin 项目可复现）", "notes": "翻车过程为讲师自述，但项目代码可验证 VersionCompareModal 原本存在"}
+        },
+        {
+          "type": "insight",
+          "name": "人是最后的兜底员：AI 扫代码不能替代点产品",
+          "source_text": "人不只是决策员，还是兜底员。AI 把所有代码层面的事情扫得再细，也不可能替你点一下产品看看现状。这种'看一眼就知道'的事，AI 却做不到。老项目改造里太多这种'看一眼就知道'的事：用户在不在用？看 PV 就知道。接口有没有客户依赖？看监控就知道。",
+          "paraphrase": "AI 的能力边界在'代码世界'，业务现实（功能是否在用、是否被依赖）只能人通过真实环境确认。改造前点几下产品是 30 秒的兜底动作，成本最低、收益最高。",
+          "writing_angle": "opinion",
+          "related_lectures": ["22"],
+          "verification": {"status": "✅", "source_url": "20 讲翻车案例（课程内可复现）", "notes": "洞察由本讲翻车事件直接支撑，可复现验证"}
+        },
+        {
+          "type": "technique",
+          "name": "把教训写进 CLAUDE.md 变成下次护栏",
+          "source_text": "我把这次教训写进 CLAUDE.md：任何改造任务开始之前，先打开生产/测试环境点几下，确认要做的功能不存在。AI 扫代码无法发现'已存在的功能'，必须人手验证。下次类似情况，CLAUDE.md 里这一条会被加载到上下文，AI 会主动提醒我先去点产品。这次踩的坑变成了下次的护栏。",
+          "paraphrase": "把翻车教训固化为 CLAUDE.md 中的强制前置动作，AI 每次启动自动加载并主动提醒，形成'踩坑→沉淀→护栏'的闭环。",
+          "writing_angle": "methodology",
+          "related_lectures": ["10", "22"],
+          "verification": {"status": "✅", "source_url": "课程内实践（CLAUDE.md 机制）", "notes": "CLAUDE.md 自动加载机制是 Claude Code 平台功能，教训固化流程可复现"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "22｜核心五问：这门课的思路是如何解决问题的？",
+      "snr_score": 4.1,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 3.5, "actionability": 4.5, "change_potential": 4.5, "expression_efficiency": 4.5},
+      "adler_q1": "以五个最常见疑问（思路有用吗/能抄吗/必须一步步跟吗/为什么不用高级工具/跑完效果不好问题在哪）为纲复盘整套方法论，核心主张：老项目改造 AI 是加速不是兜底，三个失败模式 + 一种隐性失败解释效果不好的根因。",
+      "adler_q2": "解决'读者跑了流程效果仍不好'的归因问题。已解决：给出 99% 归因（该停的地方没停）、三个失败模式的具体表现与自检方法、'工作量下来≠思考量下来'的核心判断。未解决：没给'流程本身选错场景'（简单改动硬套流程）的边界量化；三个失败模式之外的其他失败原因未穷举。回避：'AI 是加速不是兜底'是立场声明，未与'AI 全托管改造'（如 spec-driven 完全自动）做对照论证。",
+      "adler_q3": "成立，是本课方法论部分的诚实性高峰。四类缺陷：知识无误；论据主要是自省与课程内案例（可复现）；逻辑自洽（该停没停→方向偏→返工）；分析较完整——明确列出'如何判断你是不是这一类'的自检清单。缺陷：'99% 的情况只有一个原因'是修辞性绝对化，无数据支撑；三个失败模式存在幸存者偏差（只总结了自己踩的坑）。",
+      "adler_q4": "读完能立刻做：①用三个自检清单审查自己的最近一次改造（业务目标是不是 AI 写的/方案第 7 节有没有审/开工前有没有点产品）；②把'工作量下来≠思考量下来'作为协作纪律；③对简单改动敢于不跑流程、对复杂改造敢于慢下来。",
+      "critical_notes": "本课把整门课的认知层收拢为可执行的自检清单，是全课最值得反复读的一讲。'工作量下来 ≠ 思考量下来'一句话浓缩了 AI 协作的全部风险：省下的体力如果没投入思考，就只是在更快地走错路。三个失败模式直接对应 17/18/20 讲的坑，形成方法论的自洽闭环。扣分点：'99%''100%'等绝对化表述无依据；'70% 体力活 AI 压缩'与 17 讲的 70/30 口径不统一（一个是 AI 覆盖度、一个是体力/判断比）。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "工作量下来 ≠ 思考量下来",
+          "source_text": "工作量下来 ≠ 思考量下来。这是 AI 协作里最容易混淆的两个概念。流程化的目的，就是让你把省下的体力和时间用在该思考的地方：业务判断、产品决策、现状确认、深度 review。如果你节省的时间没有用在思考上，你就只是在更快地走错路。",
+          "paraphrase": "AI 压缩的是体力活（写文档/扫代码/写测试），不是判断活。省下的时间必须投入到业务判断和深度 review，否则只是更快地做错。",
+          "writing_angle": "opinion",
+          "related_lectures": ["17", "20"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师观点，无数据支撑；与'AI 自动化放大人类偏见'的主流观点一致"}
+        },
+        {
+          "type": "framework",
+          "name": "三个失败模式与自检清单",
+          "source_text": "失败模式一：17 讲拆需求时偷懒（业务目标直接用 AI 的、'待产品决策'没问产品、'不在范围'没拍板）。失败模式二：18 讲跳过 Step 7 决策点审核。失败模式三：跳过现状确认（没先点产品）。还有一种更隐性的失败：不够细心 + 漏掉细节。",
+          "paraphrase": "流程跑完效果差的 99% 归因于'该停的地方没停'：拆需求时偷懒、跳过决策点审核、跳过现状确认。每个模式都配了'怎么判断你是这一类'的自检问题。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "18", "20"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "基于讲师自身改造经验总结，三类模式与课程内翻车事件对应，可复现"}
+        },
+        {
+          "type": "insight",
+          "name": "流程会内化：跑熟之后你心里会有一个清单",
+          "source_text": "跑熟了之后，流程会内化。跑过 5-10 次完整流程后，你不需要每次都打开提示词清单照着抄。你心里会有一个清单：拿到需求先想三件事（业务目标、边界场景、不在范围里的事）；动手前先想两件事（影响范围、关键决策点）；改完代码后必须做（跑测试、看 git diff、检查老代码有没有被顺手改）。",
+          "paraphrase": "流程的目的不是让你永远依赖它，而是通过 5-10 次重复形成肌肉记忆，最终内化为不依赖文档的判断本能。",
+          "writing_angle": "methodology",
+          "related_lectures": ["33"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "符合技能习得的普遍规律（刻意练习理论），讲师经验表述"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "25",
+      "lecture_title": "25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案",
+      "snr_score": 4.0,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 4.0, "actionability": 4.0, "change_potential": 4.0, "expression_efficiency": 4.0},
+      "adler_q1": "讲如何把一句话需求'给 RobustMQ 加 7×24 混沌测试'通过两次翻译拆成可动手的技术方案：第一次翻译（需求→与技术栈无关的完整设计文档），第二次翻译（设计→落在 Hermes 上的技术方案文档），两轮都通过'反问 AI 补漏+收敛'推进。",
+      "adler_q2": "解决'一句话需求直接写代码必返工'的问题。已解决：两次翻译的分层（问题域/方案域分离）、反问技巧（反问不是追问）、收敛技巧（'别又冒新决策，把这版收紧'）、设计→方案因果链的可追溯性。未解决：两次翻译每轮需要几轮反问没有判断标准；方案文档的评审人（谁拍板）没有角色定义。回避：'接到需求当天就写代码的人没一个交付得好'是绝对化断言；自研 vs Hermes 的成本对比是内部估算。",
+      "adler_q3": "成立。四类缺陷：知识无误；关键论点有可验证支撑——引用的两份最终文档有公开 URL（robustmq.com 博客 84/95），社区 issue 背景真实；逻辑严密（设计文档的'协议兼容性目标'→方案文档'run_client 多语言矩阵'的因果链清晰）；分析较完整。缺陷：'自研路径的真实成本'表格是 AI 生成+讲师认可的估算，非实测；'0.2x'类量化声明无原始测算口径。",
+      "adler_q4": "读完能立刻做：①接到一句话需求先做'第一次翻译'（先别谈技术框架，列拍不准的选择）；②在第二次翻译前反问'我选错路径了吗'（用对新工具的认知质疑旧方案）；③用'别又冒新决策，把这版收紧'控制方案发散；④让设计文档与方案文档形成可追溯因果链。",
+      "critical_notes": "本课展示了'用 AI 做方案设计'的进阶玩法：不是让 AI 一次给出方案，而是两次翻译+多轮反问+一次收敛，每轮都有明确目的。'反问不是追问''预设加余地'的提示词哲学、'第二次翻译的灵魂是先反问路径选错没有'，都是超越基础教程的高级技巧。引用真实开源项目与公开文档使其可验证性在本课中最高。扣分点：'没一个交付得好''留一晚给方案沉淀比方法论本身值钱'等表达偏绝对化/鸡汤化。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "两次翻译：问题域与方案域分离",
+          "source_text": "第一次翻译的产物是一份'做什么、不做什么、给谁用、何时完成'的完整设计文档，和技术栈无关。第二次翻译才把完整设计落到 Hermes 上，产出 Skill 设计、Tool 清单、场景库、配置文件这些可以动手的东西。两次翻译都让 Claude Code 帮我做，但每一次我都得提供方向。",
+          "paraphrase": "拆需求分两层：先翻译成与技术栈无关的'做什么'（完整设计），再翻译成落到具体工具的'怎么做'（技术方案）。两次翻译之间插入'路径反问'——用对新工具的认知质疑旧方案。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "24"],
+          "verification": {"status": "✅", "source_url": "https://robustmq.com/zh/Blogs/84 与 /95（两份最终文档公开可查）", "notes": "两次翻译的产物有公开 URL，方法过程课程内可复现"}
+        },
+        {
+          "type": "technique",
+          "name": "反问不是追问，收敛不是展开",
+          "source_text": "这一步是反问，不是追问。反问是'你这里漏了，补上'；追问是'你前面那段再讲讲'。AI 不会主动告诉你它漏了什么，得你自己有一份'完整设计文档该长什么样'的预期。提示词最后那句'别又冒新决策，把这版收紧'很关键……第一次翻译的两轮都在展开，但第二次翻译已经到方案阶段，不能再发散，只能收敛。",
+          "paraphrase": "对 AI 的审查分两种动作：反问（你有预期基准，指出 AI 漏了什么）和收敛（方案阶段禁止 AI 再冒新决策）。阶段不同动作不同：设计阶段允许展开，方案阶段必须收紧。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["22"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师方法论，基于对 LLM 对话行为的观察，可实操验证"}
+        },
+        {
+          "type": "insight",
+          "name": "两份文档的因果链是可追溯性资产",
+          "source_text": "这条因果链是这两份文档真正的价值。后续每一行代码、每一个配置、每一个判断，都能追溯到上游某条需求决策。如果某天需要改协议兼容性策略，你也能立刻知道下游有哪些 Tool 会受影响。开发过程中如果有人问'为什么 run_client 要支持 SDK 版本切换'，答案不是'我觉得这样好'，是'因为设计文档里的协议兼容性目标这么定的'。",
+          "paraphrase": "设计文档与方案文档之间的因果链让每个技术决策可追溯、可影响分析，文档从'事后补的记录'变成'开发中的硬约束'。",
+          "writing_angle": "opinion",
+          "related_lectures": ["18", "33"],
+          "verification": {"status": "✅", "source_url": "课程内实践（两份文档公开可查）", "notes": "因果链设计在 25 讲方案文档中可见，可复现"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "01",
+      "lecture_title": "01｜老项目改造的真实链路：从接手到交付，人到底做了什么？",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲 AI 时代之前人接手老项目的九步真实链路（找人聊→翻资料→看代码→搭环境→curl→深挖→画链路→动手改→验收），主张链路没被 AI 推翻，只改变分工，且 70% 时间在理解、30% 在动手。",
+      "adler_q2": "解决'用 Claude Code 改老项目不顺是因为跳过理解步骤'的问题。已解决：给出九步参照系与 70/30 比例、冷启动飞轮心法。未解决：九步每步的时间量级/产出物没有模板；'理解到什么程度可以动手'无验收标准。回避：'70% 时间理解'没有实证，是讲师经验。",
+      "adler_q3": "基本成立。四类缺陷：知识无误（九步是行业共识的接手流程）；论据是场景故事与讲师经验（可复现性中等）；逻辑自洽；分析不完整——未讨论不同复杂度项目九步的比例差异。'前六步跳过→AI 是瞎的'因果链有说服力。",
+      "adler_q4": "读完能对照自己的接手习惯：检查自己是否跳过了前六步中的某几步，理解'冷启动慢是投资不是浪费'。",
+      "critical_notes": "作为方法论第一课，价值是把'凭经验'的接手流程显式化，给后续 AI 分工提供参照系。无原创框架，是优秀的知识整理。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "九步真实链路 + 70/30 比例",
+          "source_text": "九步里，前六步都是了解项目，只有后三步是改造。70% 的时间花在理解上，30% 的时间才是动手。这个比例和很多人的直觉是反的。",
+          "paraphrase": "老项目接手链路九步中前六步是理解、后三步是改造，理解时间占 70%——跳过前六步直接让 AI 改，AI 就是瞎的。",
+          "writing_angle": "methodology",
+          "related_lectures": ["02", "03", "06"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "'70%'为讲师经验估计，非实测数据"}
+        },
+        {
+          "type": "insight",
+          "name": "冷启动飞轮：熬过冷启动，后面全是复利",
+          "source_text": "第一个改造任务可能要磨两三天，第二个可能一天，第三个几小时就搞定。老项目改造的核心心法就一句话：熬过冷启动。熬过去了，后面全是复利。",
+          "paraphrase": "老项目改造前期理解投入大、产出感低，但理解越深后续改造越快，形成复利飞轮。",
+          "writing_angle": "opinion",
+          "related_lectures": ["06"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验表述，符合学习曲线的一般规律"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "03｜理解、约束、验证：让 AI 可信的三层控制",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.5, "verifiability": 2.0, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 4.0},
+      "adler_q1": "讲让 AI 可信的三层控制：理解层（让 AI 看见完整项目）、约束层（静态约束 CLAUDE.md/SKILL + 动态约束提示词）、验证层（独立于 AI 的基准：集成测试/Characterization Test/独立 review/curl）。三层是时刻工作的骨架而非顺序流程，形成正循环。",
+      "adler_q2": "解决'AI 看不见完整项目、乱改、产出无法验证'三类问题。已解决：三层框架+每层对应动作+与九步的映射+正循环机制。未解决：三层各自的'完成标准'未定义（理解到什么程度算看见）；验证层的测试怎么覆盖 AI 的知识盲区没有量化。回避：三层控制与 Anthropic Harness Engineering 的关系只提一句，未展开异同。",
+      "adler_q3": "大体成立。四类缺陷：知识无误（Harness Engineering 概念真实存在）；论据无外部引用，全凭讲师经验；逻辑自洽（理解决定约束、约束决定验证、验证补理解的正循环）；分析不完整——'验证层'对无法自动化验证的领域（如 UI 视觉、业务正确性）没有覆盖方案。'理解-约束-验证'与 Anthropic 官方三阶段（分析-迁移-验证）高度同构，有贴金风险但讲师自己承认了对应关系。",
+      "adler_q4": "读完能立刻做：①给每个改造任务自检三层：AI 看见了吗/约束写了吗/有独立基准吗；②把动态约束写进每次提示词；③为验证层建改造前后对照基准。",
+      "critical_notes": "三层控制是整门课的骨架，价值在于把'AI 可信'这个模糊目标分解为三个可操作层并建立循环机制。与 Anthropic Harness Engineering 概念高度重合（讲师已承认），独创性打折但组织与落地清晰。'三层不是流程是骨架'的澄清避免读者误用。扣分点：无任何外部引用，三层'让 AI 可信'的因果论证是断言式的。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "三层控制：理解-约束-验证",
+          "source_text": "理解层：让 AI 看见。上下文越准、越完整，AI 表现越稳。约束层：让 AI 听话。规则越清晰、越具体，AI 越不会乱改。验证层：让 AI 可信。基准越密、越独立，AI 产出越敢用。这三层不是三个独立的流程，是一个时刻在工作的骨架。",
+          "paraphrase": "AI 可信度来自三层骨架：用文档/上下文让 AI 看见，用静态+动态约束让 AI 听话，用独立基准让 AI 可信；每层不是一次性流程而是持续积累。",
+          "writing_angle": "methodology",
+          "related_lectures": ["01", "02", "10", "15"],
+          "verification": {"status": "⚠️", "source_url": "Anthropic Harness Engineering / Code Modernization Starter Kit 概念（讲师自承对应）", "notes": "三层控制与业界 Harness Engineering 高度同构，讲师承认对应关系；作为课程组织框架有教学价值"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "06｜了解项目的八步心法：从 README 到核心链路",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲了解老项目的八步心法（README→构建/文档→目录结构→画全景→接口与数据→运行→核心链路→沉淀），以及落地三原则：螺旋不是线性、沉淀文档不是留在脑子里、建立锚点不是读懂。",
+      "adler_q2": "解决'了解老项目无从下手、摸着摸着迷失'的问题。已解决：八步框架+三原则纠正常见误区。未解决：每步的具体产出模板（后面 07-11 讲展开）；'建立锚点'如何识别哪些是锚点没有判据。回避：八步的适用边界（小型项目是否要全走）未讨论。",
+      "adler_q3": "成立。四类缺陷：知识无误；论据是讲师经验；逻辑自洽（螺旋 vs 线性符合复杂系统理解规律）；分析不完整——'沉淀文档'的成本（文档漂移/维护负担）未讨论（11 讲才用 SKILL 缓解）。'建立锚点不是读懂'是少数有洞察的表述。",
+      "adler_q4": "读完能按八步规划自己的摸项目流程，并用三原则纠正常见心态（想一遍读懂、看完就忘、线性推进）。",
+      "critical_notes": "八步心法是第二部分的框架课，三原则（尤其'建立锚点不是读懂'）有方法论价值。结构清晰但内容密度中等，属于承上启下的整理课。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "建立锚点，不是读懂",
+          "source_text": "第三个原则：建立锚点，不是读懂。你不需要把项目每一行都读懂，你需要建立一批'锚点'——那些以后改造时会反复引用的关键位置和结论，先把它们钉住。",
+          "paraphrase": "了解项目的目标不是'全部读懂'而是'建立可引用的锚点'（关键位置+结论），理解是螺旋加深的过程。",
+          "writing_angle": "opinion",
+          "related_lectures": ["08", "10"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验表述，与渐进式理解的认知规律一致"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.5, "verifiability": 2.5, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲老项目 CLAUDE.md 怎么写：定位是'索引+常识'而非 docs 复制，核心是'禁区'与'历史包袱'两节必须人手写（AI 猜不出来），给出生成初稿的提示词与三个 review 检查点。",
+      "adler_q2": "解决'老项目 CLAUDE.md 写不对（要么空泛要么臃肿）'的问题。已解决：索引+常识定位、300 行上限、禁区/历史包袱手写原则、三个检查点。未解决：CLAUDE.md 与 AGENTS.md/SKILL.md 的边界划分只提了一句（11 讲展开）；多语言仓库的 CLAUDE.md 策略未讨论。回避：CLAUDE.md 过长导致的 context 成本没有量化。",
+      "adler_q3": "成立，是本部分洞察最深的一讲。四类缺陷：知识无误；论据是讲师经验+课程内实操截图；逻辑自洽（禁区/历史包袱信息不在代码里→AI 必然猜不出→必须人写，链条成立）；分析较完整。'AI 填不出禁区'的判断符合 LLM 在隐性知识上的局限。'超过 300 行就是写多了'是武断的量化但作为工程纪律有用。",
+      "adler_q4": "读完能立刻做：①给自己的老项目列出禁区与历史包袱各几条；②用'两节留空'的提示词技巧让 AI 生成初稿而不瞎编；③用三个检查点 review 现有 CLAUDE.md。",
+      "critical_notes": "'禁区/历史包袱必须人写'是本课最尖锐的洞察，把 CLAUDE.md 的价值从'给 AI 的说明书'提升到'隐性知识的显性化'。'AI 每次启动都加载全部内容'的机制解释（为什么 CLAUDE.md 比人脑可靠）有说服力。扣分点：300 行阈值武断；'AI 一定猜不出'绝对化（信息密度低的小项目 AI 可能猜对）。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "禁区与历史包袱必须人写，AI 猜不出来",
+          "source_text": "AI 生成的 CLAUDE.md 里一定没有真正有价值的禁区和历史包袱，因为这两节的信息不在代码里、不在 docs/ 里、只在你脑子里。这两节必须手写，它们是老项目 CLAUDE.md 区别于新项目 CLAUDE.md 的根本所在。",
+          "paraphrase": "CLAUDE.md 的价值核心是禁区（哪些不能动）与历史包袱（哪些看着怪但有原因）——这两类隐性知识只存在于人与项目的历史中，AI 无法从代码推断，必须人写。",
+          "writing_angle": "opinion",
+          "related_lectures": ["05", "20"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "基于 LLM 对隐性知识局限的观察，讲师经验；与主流 AI 工程实践一致"}
+        },
+        {
+          "type": "technique",
+          "name": "CLAUDE.md = 索引 + 常识（非复制粘贴）",
+          "source_text": "CLAUDE.md 的定位是索引 + 常识。索引负责指向我们提炼出来的详细内容，常识负责让 AI 一启动就知道关键信息。超过 300 行就是写多了。核心原则：CLAUDE.md 里的每一条，要么是'AI 启动就必须知道的常识'，要么是'指向 docs/ 的入口'。",
+          "paraphrase": "CLAUDE.md 不复制 docs 内容，只放启动必需常识和指向 docs 的链接；每放一条前问：这是常识还是入口？都不是就删。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["09", "11"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验型工程纪律；'300 行上限'为武断阈值但作为纪律有用"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 3.0},
+      "adler_q1": "讲从老项目里'挖'而不是'设计' SKILL：用三特征判断法（可复制/可参数化/可自动化）识别值得写的流程，控制数量（5 个以内），并演示 docs-auto-sync 完整 SKILL 的生成过程。",
+      "adler_q2": "解决'SKILL 写一堆没人用'的问题。已解决：挖 vs 设计的起点、三特征判断法、数量克制原则、让 AI 挖候选的提示词。未解决：SKILL 与 MCP 工具的边界、SKILL 版本管理与团队共享机制未讨论。回避：'一个老项目 5-10 个够用'是经验数字；docs-auto-sync 的具体效果没有运行数据。",
+      "adler_q3": "成立。四类缺陷：知识无误；论据是课程内实操；逻辑自洽（重复流程→沉淀→团队下限拉到上限）；分析不完整——未讨论 SKILL 出错时的调试成本、AI 多 SKILL 匹配冲突的量化。'SKILL 是养出来的不是设计出来的'有洞察。",
+      "adler_q4": "读完能立刻做：①用三特征判断自己项目里哪些重复流程值得写 SKILL；②用'让 AI 分析重复流程'的提示词生成候选清单；③控制 SKILL 数量避免'一句话匹配多个 SKILL'。",
+      "critical_notes": "'挖不是设计'和'三特征判断法'是本节核心贡献，解决了 SKILL 生态最普遍的问题（为写而写）。'先挖 3 个最高频的，用一个月，觉得真的有用再扩展'的节奏建议务实。扣分点：大篇幅是 docs-auto-sync 的 SKILL.md 全文（源码走读成分），稀释了方法论密度。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "SKILL 三特征判断法：可复制/可参数化/可自动化",
+          "source_text": "怎么判断一件事值不值得写成 SKILL？三个特征判断法：1. 可复制——同样的动作序列会被反复执行。2. 可参数化——只有几个变量在变，骨架是同一个。3. 可自动化——动作序列有明确的起点和终点。三个特征同时满足，才值得写成 SKILL。差一个都别硬写。",
+          "paraphrase": "写 SKILL 前先问三连：是不是反复做（可复制）？是不是只有变量变（可参数化）？有没有明确起止（可自动化）？三条全满足才写，否则写进文档或留在脑子里。",
+          "writing_angle": "methodology",
+          "related_lectures": ["07"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验型判断框架，逻辑自洽，无数据支撑"}
+        },
+        {
+          "type": "insight",
+          "name": "SKILL 是养出来的，不是设计出来的",
+          "source_text": "不要追求'一开始就写一套完美的 SKILL 体系'。SKILL 是养出来的，不是设计出来的。第一版只要能跑，能解决一个具体痛点就够了。一个老项目 5-10 个 SKILL 够用了……太多会出现'一句话匹配多个 SKILL'的情况，AI 判断哪个该触发会迷茫。",
+          "paraphrase": "SKILL 体系从解决一个具体痛点起步迭代，而非一次性设计完美体系；数量克制（≤5）避免 AI 触发歧义。",
+          "writing_angle": "opinion",
+          "related_lectures": ["28"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验；'5-10 个够用'为经验数字"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲让 AI 搞定老项目环境搭建的四步（依赖盘点→本地安装主推/脚本/Docker 备选→编译启动→接口冒烟），并把过程沉淀为 setup-guide.md 与 env-bootstrap SKILL 长期资产。",
+      "adler_q2": "解决'环境搭建是老项目改造最大坑'的问题。已解决：四步 SOP、三方案选择（本地/脚本/Docker）、防死循环的节奏控制、资产沉淀。未解决：公司内部私有依赖（VPN/内网源）场景的处理细节；失败重试策略没有系统化。回避：'本地安装主推'与团队规范（统一容器化）冲突时的取舍。",
+      "adler_q3": "基本成立。四类缺陷：知识无误；论据是课程内实操；逻辑自洽（依赖盘点→方案→编译→冒烟）；分析不完整——未讨论 Windows 环境差异。作为教程课价值中等，方法朴实用（脚本化+资产化）。",
+      "adler_q4": "读完能让 AI 接管环境搭建：把依赖盘点/启停脚本/编译/冒烟交给 AI，自己只在关键节点确认，并沉淀 env-bootstrap SKILL 复用。",
+      "critical_notes": "环境搭建课的亮点是'过程沉淀成长期资产'（setup-guide.md + env-bootstrap SKILL）——把一次性环境搭建变成可复用资产，呼应全课资产化主线。技术内容本身（依赖管理/编译/冒烟）是常规工程实践。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "环境搭建四步 + 资产沉淀",
+          "source_text": "Step 1 依赖盘点 → Step 2A 本地安装（主推）/ 2B 启停管理脚本 / 2C Docker 备选 → Step 3 编译启动 → Step 4 接口冒烟。所有踩坑过程沉淀成日志，最终汇成 setup-guide.md 和 env-bootstrap SKILL，成为团队和你自己的长期资产。",
+          "paraphrase": "让 AI 按'盘点→方案→编译→冒烟'四步搞定环境，并把所有踩坑记录沉淀为 setup-guide 文档和可复用 SKILL，把一次性工作变成长期资产。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["16", "28"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "教程流程，讲师经验；资产沉淀思路可复现"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "14｜摸清现有测试：能跑通吗？覆盖度怎样？",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲改造前摸清测试现状的摸底四步法（摸核心链路→摸现有测试→跑一遍看实际状态→算缺口清单），核心约束是'不要让 AI 大而全'。",
+      "adler_q2": "解决'改造前不知道测试能不能兜底'的问题。已解决：摸底四步、test-gaps.md 缺口清单产出、P0/P1 分级。未解决：测试缺口优先级与改造路径的联动在 15 讲展开。回避：现有测试质量（测试本身是否可信）的评估方法未展开。",
+      "adler_q3": "基本成立。四类缺陷：知识无误；论据是课程内实操；逻辑自洽（先摸再补）；分析不完整——'覆盖度'指标如何与改造风险关联没有量化模型。'摸清比补全重要十倍'是好的提醒。",
+      "adler_q4": "读完能按四步给项目做测试摸底，产出缺口清单并识别哪些是改造前必须补的 P0。",
+      "critical_notes": "摸底四步是 15 讲的前置，本身是教程级内容。'不要让 AI 大而全'的约束与 15 讲'不要一口气'呼应，是控制 AI 行为的重要纪律。亮点是产出物（test-gaps.md）与后续工作流衔接清晰。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "护栏不是覆盖率指标，是关键节点兜底；摸清比补全重要十倍",
+          "source_text": "老项目改造的护栏，不是测试覆盖率指标，是改造路径上的关键节点都有兜底。摸清比补全重要十倍。最大的坑：不要让 AI 大而全。",
+          "paraphrase": "补测试的目标不是覆盖率数字，而是改造路径关键节点都有兜底；先摸清缺口再补，并限制 AI 补测试的范围（不追大而全）。",
+          "writing_angle": "opinion",
+          "related_lectures": ["15"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师经验型工程判断"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "18｜从需求文档到改造方案：让 AI 帮你把改造想透",
+      "snr_score": 3.5,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.5, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "讲用七步把需求文档转成改造方案：摸链路→列改造点（P01-P10）→画流程图→影响范围→改造步骤→整合成方案→Step 7 决策点审核，全程用 AI 输出+人审核。",
+      "adler_q2": "解决'需求清楚不等于能开发，老项目改造最常因影响范围不清翻车'的问题。已解决：七步结构化、'显式考虑前端'技巧、'有分歧才给方案'防过度调研、决策点显式列出。未解决：Step 7 决策点审核的具体 checklist 没有模板（22 讲失败模式二正源于此）。回避：改造方案文档的评审角色与流程没有定义。",
+      "adler_q3": "成立，教程级优秀。四类缺陷：知识无误；论据是课程内实操截图（链路表/改造点表/流程图）；逻辑自洽（链路→改造点→影响→步骤的递进合理）；分析不完整——'AI 帮你验证假设'（如'复用 service 会双倍打点'被 AI 否定）的结论依赖 AI 扫描准确性，讲师默认 AI 正确。",
+      "adler_q4": "读完能立刻按七步让 AI 产出可审核的改造方案：拿到需求先让 AI 摸链路并显式考虑前端，列出带编号的改造点，最后审核决策点而非直接开工。",
+      "critical_notes": "七步走是把'想清楚再动手'落地的优秀工作流模板，'显式考虑前端'与'有分歧才给方案、没分歧直接给'两个提示词技巧直击 AI 协作痛点（AI 默认忽略前端、AI 过度调研）。'AI 当调研员帮你验证假设'（双倍打点不存在的例子）展示了 AI 在影响分析中的价值。扣分点：文档样例占篇幅；Step 7 审核环节无模板支撑是方法论薄弱点。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "改造方案七步走",
+          "source_text": "Step 1 摸出改造涉及的链路（从 HTTP 入口到 DB）→ Step 2 列出所有改造点（P01-P10，标类型/文件/行号/改什么）→ Step 3 画改造流程图 → Step 4 说明影响范围（标高/中/低风险）→ Step 5 说明准备怎么改（按依赖排序+关键决策点）→ Step 6 整合信息方便审核 → Step 7（隐含）决策点审核。",
+          "paraphrase": "改造前先让 AI 按七步产出方案：摸链路→列改造点→画图→影响→步骤→整合，最后人审核决策点。每步产出可独立 review。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "19", "22"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师工作流模板，课程内实操可复现"}
+        },
+        {
+          "type": "technique",
+          "name": "两个提示词技巧：显式考虑前端 + 有分歧才给方案",
+          "source_text": "让 AI 显式考虑前端，不然会把改造缩成'加一个后端接口'。提示词最后两行：有分歧给方案、没分歧直接给。这避免了 AI 为每个改造点都凑 2-3 个方案的'过度调研'。",
+          "paraphrase": "①提示词必须显式要求 AI 考虑前端，否则 AI 默认只看接口层；②只有存在真实方案分歧的改造点才让 AI 列对比方案，防止 AI 为显得专业硬凑方案。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["19", "20"],
+          "verification": {"status": "✅", "source_url": "18 讲课程内实操（链路表显示前端已有组件被识别）", "notes": "技巧效果在课程实操中可见"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "19｜执行改造（上）：后端开发跑通测试",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {"originality": 2.5, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲用 AI 跑通后端改造的七步（锁住改造前行为→建 DTO→实现 Service→加 Controller→补单元测试+curl 验证→跑全套测试→提交+文档更新）与改造执行四原则。",
+      "adler_q2": "解决'AI 改代码怎么改才算合格'的问题。已解决：改造四原则（先锁行为/小步执行/自主修复+3次兜底/不破坏现有行为）、七步流程、提示词细化。未解决：AI 改代码的 diff review 标准没有 checklist；'3 次兜底'的终止条件模糊。回避：改造后性能回归的验证方式未讨论。",
+      "adler_q3": "成立。四类缺陷：知识无误；论据是课程内实操（真实代码路径）；逻辑自洽（锁行为→实现→测试的闭环）；分析不完整——'避免最常见翻车'一节以讲师经验为主，未给统计性证据。作为教程课质量扎实。",
+      "adler_q4": "读完能按七步让 AI 完成后端改造：先写 Characterization Test 锁行为再动手，小步执行，跑全套测试，最后提交并同步文档。",
+      "critical_notes": "后端执行是改造闭环中最重的一步，七步流程把'AI 写代码'约束在可控轨道上（锁行为→小步→测试→文档）。改造四原则（尤其'先锁住改造前行为'）是 15 讲方法论的直接落地。提示词细化到可复制的程度。扣分点：教程属性强，独立洞见少；'3 次兜底'规则欠解释。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "改造执行四原则",
+          "source_text": "改造执行的四原则：1. 改造前先锁住现有行为（Characterization Test）。2. 小步执行。3. 自主修复 + 3 次兜底。4. 不破坏现有行为（改造前后测试结果一致）。",
+          "paraphrase": "AI 改代码前先写测试锁行为，改动小步提交，失败让 AI 自主修复最多 3 次，最终以改造前后测试一致为合格标准。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["15", "20"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "讲师工程纪律，基于课程实操"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "23",
+      "lecture_title": "23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {"originality": 2.5, "verifiability": 3.0, "actionability": 3.5, "change_potential": 3.0, "expression_efficiency": 3.5},
+      "adler_q1": "用第二个功能（Overview 页面）重跑 17-21 的工作流，验证流程可迁移性：现状确认→一个提示词出三份文档→人工校验→后端改造→前端改造→文档自动更新。",
+      "adler_q2": "解决'这套流程换个功能还能不能跑通'的疑问。已解决：用第二个真实功能证明工作流不依赖具体需求；'一个提示词出三份文档'证明资产复用后的效率提升。未解决：两次改造的差异点分析停在描述层面，未量化流程复用节省的时间。回避：未展示该功能改造的完整代码过程（只给提示词与结果）。",
+      "adler_q3": "成立。四类缺陷：知识无误；论据是课程内实操；逻辑自洽（复用资产→流程更轻）；分析不完整——'29 个改造点''27 个组件'等数字未给来源语境。作为流程可迁移性证据有价值，但说服力依赖读者相信课程演示真实。",
+      "adler_q4": "读完能验证'同一工作流可在自己项目复用'：第二次改造直接复用 docs 资产与提示词，'一个提示词出三份文档'是效率杠杆。",
+      "critical_notes": "本讲的价值不在新方法论而在可迁移性演示：第二次改造明显更轻（提示词最少、依赖已建好的资产），侧面验证了'冷启动飞轮'。'一个提示词出三份文档'是资产化红利的具体体现。扣分点：演示为主，深度有限。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "一个提示词出三份文档的资产复用",
+          "source_text": "这次反而是整门课提示词最少的一次……因为 docs/ 里的资产都在，AI 能直接基于现有资产工作。场景二：一个提示词出三份文档（需求/方案/影响）。",
+          "paraphrase": "当 docs 资产（接口清单/数据模型/CLAUDE.md）已经建好，第二次改造只需一个提示词让 AI 基于资产产出多份文档，效率大幅提升——资产化红利。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["10", "18", "22"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "课程内演示，讲师经验"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "02｜Claude Code 进来后：哪一步变了，哪一步没变？",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.0, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲九步链路人机分工的三档划分：AI 主导做 80%（读文档/梳理接口/画图）、人机对半 50%、人主导 AI 20% 或更少（验收/决策），金句'20% 的盲区，经常就是 100% 的事故'。",
+      "adler_q2": "解决'每步让 AI 做多少、自己守多少'的问题。已解决：三档分工图。未解决：分档与项目复杂度/团队经验的映射。回避：分档百分比无实证。",
+      "adler_q3": "部分成立。'80/50/20'是讲师经验数字；'AI 做不到的那 20% 你不补就是 0'逻辑自洽；分析不完整——未讨论分工随 AI 能力变化的动态调整。金句有记忆点。",
+      "adler_q4": "读完能对每一步快速判断人机分工档位，守住'20% 盲区'。",
+      "critical_notes": "三档分工是常见的人机协作认知整理，'20% 盲区=100% 事故'金句是全课最易传播的一句话。独创性低，价值在表达。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.5, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 3.0},
+      "adler_q1": "讲 AI 编程工具的五类武器库（编码 Agent/上下文管理/能力扩展/规范驱动开发 SDD/工程辅助）与按场景选武器的方法，主武器是 AI 编码 Agent。",
+      "adler_q2": "解决'工具太多不知道用什么'的问题。已解决：五类分类、按场景选型。未解决：各工具的深度对比/价格/生态成熟度。回避：工具推荐有利益相关性风险未声明。",
+      "adler_q3": "部分成立。五类分类有参考价值但属常识罗列；SDD/Harness 等名词堆砌无展开；'够用就停'心法好。分析不完整——未讨论工具选型的退出成本。",
+      "adler_q4": "读完能对工具生态有地图感，克制工具焦虑。",
+      "critical_notes": "工具罗列课，信息易过时。唯一亮点是'够用就停'的心法（与全课'工具为需求服务'立场一致）。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {"originality": 3.5, "verifiability": 1.5, "actionability": 2.5, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "扫 2025-2026 年 AI+老项目改造的业界全景：三个债（理解债/棕地税/验证债）、四路收敛（学术 Chain of Understanding/大厂 Anthropic/咨询 Thoughtworks/Cleveroad/开源）、Feathers 经典复兴（Characterization Tests 与 Seam）。",
+      "adler_q2": "解决'这门课方法论是不是讲师个人套路'的疑虑。已解决：给出业界共识地图与'理解→改造→验证'的收敛论证。未解决：引用数据的来源大部分不可追溯。回避：没有讨论与主流叙事相左的证据（如 AI 改造失败的案例研究）。",
+      "adler_q3": "框架有价值但数据可信度低。四类缺陷：'Chain of Understanding 论文存在'可验证（arXiv:2504.04553）；但 Anthropic 52 人 RCT 低 17%、FIU 40% Dumb Zone、Thoughtworks 66% 等关键数据均无原始出处；Sonar/Veracode 数据来源真实但数值需核实；逻辑链条（三个债是同一件事）自洽；分析不完整——大量二手转述无交叉验证。",
+      "adler_q4": "读完获得业界地图感与 Feathers 阅读指引，但引用其数据前必须回原始来源。",
+      "critical_notes": "典型'论文贴金'风险讲：引用密度高、可验证性低。三个债的统一框架与 Feathers 复兴洞察有真实价值，但 6 条以上量化声明无法独立验证（见 data_audit）。若直接引用其数据写文章，风险高。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "07｜安装画图工具：给 Claude Code 装上画图 Skill",
+      "snr_score": 2.3,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.5, "actionability": 3.0, "change_potential": 2.0, "expression_efficiency": 2.0},
+      "adler_q1": "讲给 Claude Code 安装画图 Skill（claude-mermaid）、认识四类必备图（架构/模块依赖/时序/DB schema）的画法与坑。",
+      "adler_q2": "解决'AI 只给 mermaid 源码不渲染'的问题。已解决：安装步骤、四类图画法提示词。未解决：不同渲染方案的优缺点对比。回避：工具失效时的替代方案。",
+      "adler_q3": "部分成立。环境配置为主；'AI 画的图一定有错'提醒有实践价值；'AI 起稿+你把关+留下资产'定位正确。",
+      "adler_q4": "读完能装好画图能力并开始画图。",
+      "critical_notes": "环境配置课，技术内容常规。'AI 画的图一定有错'是全课少数针对 AI 幻觉的直白警告。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "08｜俯视项目全景：用提示词画出架构图、模块图、依赖图",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.0, "expression_efficiency": 3.5},
+      "adler_q1": "讲用提示词给 Spring AI Alibaba Admin 画三张图（架构图/模块图/依赖图），三张图代表三种粒度俯视（系统级/代码级/生态级），画完要 review 存档。",
+      "adler_q2": "解决'AI 画图后如何保证可信'的问题。已解决：三张图的定位区分、提示词+常见坑+review 要点。未解决：图与代码漂移后的更新机制（11 讲 docs-auto-sync 部分解决）。回避：三张图的最小规模/复杂度阈值。",
+      "adler_q3": "成立。三粒度分类（系统级共识/代码级依赖/生态级牵挂）有清晰度价值；'画完不是终点，review 和存档才是'原则好；内容属教程复述，无原创框架。",
+      "adler_q4": "读完能按提示词画出项目三张图并知道 review 重点。",
+      "critical_notes": "教程级内容，三粒度俯视的分类是唯一亮点。价值在于给'了解项目'提供了具体可执行的产物清单。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "09｜接口和数据模型：让 AI 产出生成接口清单和 Schema",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.5, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.5},
+      "adler_q1": "讲梳理接口与数据模型两份资产：让 AI 扫 Controller 生成 REST 接口清单、综合 entity/DTO/建表 SQL 生成数据模型，产出后互相校对保证自洽。",
+      "adler_q2": "解决'项目怎么被调用、处理什么数据说不清'的问题。已解决：两份资产生成方法与校对机制。未解决：超大项目的接口清单规模控制。回避：文档生成后的维护成本（11 讲才解决）。",
+      "adler_q3": "部分成立。'让 AI 读真实文件不脑补'与'互相校对自洽'是关键方法；但 22K 字大半是样例文档（REST 清单全文），方法论密度低。",
+      "adler_q4": "读完能让 AI 产出接口清单与数据模型并校对。",
+      "critical_notes": "样例文档撑篇幅的典型（22K 字课程大半是 AI 产出粘贴）。方法论内核（读真实文件+互相校对）只有几句话，其余是产物展示。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "12｜实操课：完整摸清一个陌生项目的全流程演示",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 2.5, "expression_efficiency": 3.0},
+      "adler_q1": "实操演示课：把 08-11 的动作在 Spring AI Alibaba Admin 上连起来跑一遍，从 clone 到五份资产+CLAUDE.md+第一个 SKILL，含'一键跑完'的自主执行提示词。",
+      "adler_q2": "解决'方法论怎么串起来用'的问题。已解决：端到端演示、一键工作流提示词。未解决：演示过程中的失败场景未展示。回避：一键自主执行的边界与风险。",
+      "adler_q3": "部分成立。演示价值在于整合，独立增量少；'一键跑完全流程'提示词有复用价值但把控制权交给 AI 的风险未充分讨论。",
+      "adler_q4": "读完能照抄提示词跑完整摸项目流程。",
+      "critical_notes": "实操演示课（demo 性质），价值是指示词清单可复用；'一键自主执行'是亮点也是风险点（未经 20 讲'人是兜底员'的约束讨论）。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "16｜实操课：给一个老项目建立完整改造前护栏的全流程演示",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 2.5, "expression_efficiency": 3.0},
+      "adler_q1": "实操演示课：串跑 13-15（环境搭建/测试摸底/补测试/CI 集成），从项目没跑起来到 CI 自动护栏到位。",
+      "adler_q2": "解决'改造前准备怎么一步到位'的问题。已解决：端到端演示。未解决：演示耗时数据（2 小时）只给结果不给过程。回避：CI 配置与团队既有 CI 冲突场景。",
+      "adler_q3": "部分成立。演示整合为主；'理解了项目/跑通了项目/护住了项目'的三句话总结是好的收束。",
+      "adler_q4": "读完能照抄提示词建立改造前护栏。",
+      "critical_notes": "实操演示课，独立增量少。三句话总结（理解/跑通/护住）是模块价值的高度浓缩。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "21｜实操课：一次完整改造的全流程演示 + 验收复盘",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 2.5, "expression_efficiency": 3.0},
+      "adler_q1": "实操演示课：串跑 17-20 完整改造（一句话需求→需求文档→方案→后端→前端→资产同步），含'改造前的硬约束：先点产品确认现状'。",
+      "adler_q2": "解决'完整改造闭环怎么跑'的问题。已解决：端到端演示、一键工作流。未解决：演示与真实项目的时间成本差异。回避：改造中途 AI 卡壳的恢复策略。",
+      "adler_q3": "部分成立。新增亮点是'第零步现状确认'——这是 20 讲翻车教训的直接产物，说明课程在自我修正。其余为演示整合。",
+      "adler_q4": "读完能照抄完整改造工作流提示词。",
+      "critical_notes": "实操演示课。最有价值的是看到 20 讲翻车教训如何反哺流程（第零步现状确认被加进一键工作流），是课程自我修正的证据。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "24",
+      "lecture_title": "24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.5, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 2.5},
+      "adler_q1": "讲用 AI 快速学习新开源项目的框架：要有自己的拆解框架（它是什么/能做什么/怎么扩展），带着任务去问而不是裸问，跑完回官方文档对照。",
+      "adler_q2": "解决'拿到开源项目怎么快速建立认知'的问题。已解决：三问框架、带任务提问、文档对照。未解决：拆解框架如何适配不同类型的开源项目。回避：AI 认知错误如何发现（只提了'回到官方文档'）。",
+      "adler_q3": "基本成立。'有自己的拆解框架+带着任务去问'是好的学习法；'先停一下，回到官方文档'体现严谨；但内容为方法论常识整理，无原创框架。",
+      "adler_q4": "读完能用三问框架+任务式提问快速摸清新开源项目。",
+      "critical_notes": "教程级内容。'框架决定问什么，任务决定怎么问'的表述精炼；对 25 讲的两次翻译有铺垫作用。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "26",
+      "lecture_title": "26｜跑通 Hermes Agent：Hello World 之后再回看方案",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.5, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.0},
+      "adler_q1": "讲跑通新工具的正确姿势：别全读文档先跑通，装好→聊一聊→写 Hello World→写最简 Tool/Skill→记坑→回看方案落地。",
+      "adler_q2": "解决'新工具上手慢'的问题。已解决：先跑通的最小闭环方法、坑记录习惯。未解决：Hello World 到生产级之间的跨度方法。回避：跑通但方案有错的检测手段。",
+      "adler_q3": "基本成立。'别全读文档先跑通'是工程常识的有效强调；'每一步卡壳都是下一步的指路灯'表述好；内容为教程级。",
+      "adler_q4": "读完能按最小闭环法快速上手任何新 AI 工具。",
+      "critical_notes": "教程级内容。核心价值是'先跑通最小闭环，再带问题读文档'的节奏方法论，可在任何工具上复用。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "27",
+      "lecture_title": "27｜让代码长出来：用提示词驱动写 Skill 套件",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲用提示词驱动 AI 写混沌测试 Skill 套件（5 个 Tool + SKILL.md），并对 AI 写的代码逐一点评，给出'依赖在先、Tool 在先、Skill 最后'的开发顺序。",
+      "adler_q2": "解决'方案文档怎么变成可运行代码'的问题。已解决：开发顺序、代码点评要点、单点验证。未解决：AI 写代码的质量评估标准（点评是主观的）。回避：代码安全审计（Tool 的权限边界）未系统讨论。",
+      "adler_q3": "部分成立。'依赖在先、Tool 在先、Skill 最后'的顺序洞见有工程价值；主体是代码走读与点评（源码走读冒充深度风险）。'75% 可复用'数据无出处。",
+      "adler_q4": "读完能按依赖顺序让 AI 生成 Skill 套件并 review 代码。",
+      "critical_notes": "典型'源码走读成分重'的讲：逐文件点评 AI 写的代码占用大量篇幅。亮点是开发顺序（cluster→observability→client→chaos→report→SKILL）与'说明书要等东西做出来再写'的判断。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "28",
+      "lecture_title": "28｜跑通系统：填业务层，看见混沌测试真的跑起来",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.0, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.5},
+      "adler_q1": "讲填混沌测试系统的业务层（场景库/报告模板/配置/Deploy Key/cron 调度），让 Hermes 真正跑起来并看到报告 push 进 GitHub。",
+      "adler_q2": "解决'代码层有了怎么跑起来'的问题。已解决：业务层各文件填充、cron 三档调度、凭据管理。未解决：混沌测试结果的有效性验证（测试本身可信吗）。回避：7×24 运行的成本与稳定性运维。",
+      "adler_q3": "部分成立。'代码层 80% 能搬、业务层完全重写'的分层洞见有可迁移价值；大量篇幅是配置与部署细节（易过时）。",
+      "adler_q4": "读完能照抄把类似系统跑起来。",
+      "critical_notes": "部署配置课。'代码层/业务层分离'的可复用率判断（80% 能搬）是少数有普适价值的抽象；具体配置内容随 Hermes 版本易过时。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "30",
+      "lecture_title": "30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产",
+      "snr_score": 2.8,
+      "tier": "copper",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲怎么完成第一个开源 PR：让 AI 推荐项目、找最简单入口（SignYourName）、跑通完整 PR 流程，主张'走通流程比技术难度重要'、'合并那一刻是心理资产'。",
+      "adler_q2": "解决'开源贡献第一道坎（开第一个口子）'的问题。已解决：选项目/选入口/跑 PR 的提示词、心理建设。未解决：PR 被拒的应对策略（只提了跑通没提被拒）。回避：'开源 commit 是简历最值钱资产'的论证是个人观点，无雇主视角证据。",
+      "adler_q3": "部分成立。'走通流程比技术难度重要'是好的入门策略；'心理资产'概念有洞察；但'简历最值钱'是立场声明，SignYourName 类入口对技术成长的边际价值被弱化。",
+      "adler_q4": "读完能完成第一个开源 PR，克服'不敢提交'的心理障碍。",
+      "critical_notes": "观点+教程混合课。对 AI 时代开源入门有实操价值，但'简历最值钱资产'的论断缺乏数据支撑（可争议，适合写观点文）。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "31",
+      "lecture_title": "31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.0, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.5},
+      "adler_q1": "讲让 AI 当 Rust 助教完成第二个有难度的 PR：摸清项目→筛 issue→AI 改+测+提 PR→找漏洞提 issue，成为 Contributor。",
+      "adler_q2": "解决'在不熟的技术栈上做工程贡献'的问题。已解决：AI 当学科助教的工作流。未解决：AI 提的 PR 质量被维护者拒的风险管理。回避：'405 M'（代码库规模）等数字无语境。",
+      "adler_q3": "部分成立。'AI 当 Rust 助教'模式有参考价值（把 AI 当学科教师而非代码生成器）；教程属性强，独立洞见少。",
+      "adler_q4": "读完能让 AI 辅助在陌生技术栈上完成开源 PR。",
+      "critical_notes": "教程课。'AI 当助教'（让 AI 解释概念、审代码、教语法）的定位比'AI 当写手'更适合学习场景，是可借鉴的模式。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "32",
+      "lecture_title": "32｜实操：挑战开源的全流程演示和我的开源经验",
+      "snr_score": 2.3,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.0},
+      "adler_q1": "实操演示课：串跑 30-31 的开源工作流（找项目→PR→issue），加一段个人开源经验分享。",
+      "adler_q2": "解决'开源工作流怎么打包复用'的问题。已解决：可复用提示词清单、经验分享。未解决：演示之外的失败场景。回避：'1.5 倍''5 万'等经验数字无语境。",
+      "adler_q3": "部分成立。'开源不是技术比赛，是耐心比赛''频次大于单次重量'的经验有见地；主体是演示与清单。",
+      "adler_q4": "读完能照抄开源贡献清单并调整心态。",
+      "critical_notes": "演示+经验课。'频次大于单次重量'（每周一个小改动）是比'憋大招'更可持续的开源策略，是少数有普适价值的观点。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "33",
+      "lecture_title": "33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目",
+      "snr_score": 2.4,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.5, "verifiability": 2.0, "actionability": 2.5, "change_potential": 2.5, "expression_efficiency": 2.5},
+      "adler_q1": "总结课：把全课动作组织为'三种形式（公司内改造/基于开源开发/开源贡献）、一套打法（四个动作）'，并重述三个债与三种风险。",
+      "adler_q2": "解决'把整门课带回自己项目'的问题。已解决：SOP 组织、动作清单。未解决：SOP 的适用裁剪指南。回避：无新内容（自承）。",
+      "adler_q3": "部分成立。作为全课索引有价值；'知识可以忘，工作姿势忘不了'表述好；无独立方法论增量。",
+      "adler_q4": "读完能把全课方法打包带走。",
+      "critical_notes": "收束课，价值在结构化的回顾而非新内容。'三种债和三种风险'的对应是好的记忆框架。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "hotspot",
+      "lecture_title": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+      "snr_score": 1.7,
+      "tier": "iron",
+      "score_breakdown": {"originality": 2.0, "verifiability": 1.5, "actionability": 1.5, "change_potential": 2.0, "expression_efficiency": 1.5},
+      "adler_q1": "时事评论：借阿里禁用 Claude 事件聊'大厂为什么禁工具''学 AI 编程在学什么''没了 Claude Code 用什么'。",
+      "adler_q2": "解决'工具被禁后学的东西是否白学'的焦虑。已解决：立场安抚（学的是工作流不是工具）。未解决：禁用事件的事实核实（无信源）。回避：阿里禁用的具体原因分析。",
+      "adler_q3": "弱。纯观点评论，无数据无信源；'正确的姿态不是死守一个工具''历史反复上演'是常识性观点。",
+      "adler_q4": "获得心态层面的工具中立意识。",
+      "critical_notes": "时事评论，与课程方法论弱相关，价值密度低。'常备两三套可替代组合'的建议可迁移到任何工具依赖场景。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "intro",
+      "lecture_title": "开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？",
+      "snr_score": 1.8,
+      "tier": "iron",
+      "score_breakdown": {"originality": 2.0, "verifiability": 1.5, "actionability": 2.0, "change_potential": 2.0, "expression_efficiency": 1.5},
+      "adler_q1": "开场白：讲课程初衷（大家都踩'AI 改老代码效果差'的坑）、讲师踩过的坑、课程路线图（五部分方法论+两种形式+带回自己项目）。",
+      "adler_q2": "解决'这门课解决什么问题'的定位。已解决：给出课程承诺与路线图。未解决：无实质内容。回避：讲师履历（自称'摸出来'无背书）。",
+      "adler_q3": "弱。'推满载大卡车的飞轮'比喻生动；'差的不是 AI，差的是用法'是课程核心主张的预告；无实质论证。",
+      "adler_q4": "获得课程地图，决定是否值得学。",
+      "critical_notes": "开场白，'冷启动飞轮'比喻是全课最核心的认知意象，但本讲本身无干货。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "29",
+      "lecture_title": "29｜实操：从一句话需求到 7×24 系统的全流程演示",
+      "snr_score": 1.9,
+      "tier": "iron",
+      "score_breakdown": {"originality": 1.5, "verifiability": 2.0, "actionability": 3.0, "change_potential": 1.5, "expression_efficiency": 1.5},
+      "adler_q1": "42 分钟实操演示：串跑 24-28（一句话需求→设计→方案→跑通 Hermes→代码长出来→业务层→7×24 系统）。",
+      "adler_q2": "解决'整个二次开发流程怎么串起来'的问题。已解决：端到端演示与提示词汇总。未解决：无独立增量。回避：长时运行系统的稳定性验证结果。",
+      "adler_q3": "弱。演示性质，重复前四讲提示词；'第零步反问'是唯一增量（呼应 25 讲教训）。",
+      "adler_q4": "能照抄提示词跑完整流程。",
+      "critical_notes": "最长实操课（42 分钟）但独立增量最少，属于把已有内容串跑的演示课。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "farewell",
+      "lecture_title": "结束语｜少年依旧",
+      "snr_score": 1.3,
+      "tier": "iron",
+      "score_breakdown": {"originality": 1.0, "verifiability": 1.5, "actionability": 1.0, "change_potential": 1.5, "expression_efficiency": 1.5},
+      "adler_q1": "结课感言：回望课程、鼓励继续实践。",
+      "adler_q2": "无实质问题解决。",
+      "adler_q3": "鸡汤性质。",
+      "adler_q4": "无。",
+      "critical_notes": "纯结课鸡汤。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "quiz",
+      "lecture_title": "结课测试｜来赴一场满分之约！",
+      "snr_score": 1.0,
+      "tier": "iron",
+      "score_breakdown": {"originality": 1.0, "verifiability": 1.0, "actionability": 1.0, "change_potential": 1.0, "expression_efficiency": 1.0},
+      "adler_q1": "结课测试入口。",
+      "adler_q2": "无。",
+      "adler_q3": "无实质内容（182 字）。",
+      "adler_q4": "无。",
+      "critical_notes": "纯测试入口。",
+      "extractions": []
+    }
+  ]
+}

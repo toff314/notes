@@ -1,0 +1,111 @@
+{
+  "lecture": "6. 容器存储接口 CSI",
+  "source": "6. 容器存储接口 CSI.txt",
+  "duration_min": 32.98,
+  "intro": "学习容器运行中另一个核心组件 CSI（Container Storage Interface）：从容器运行时自身存储驱动与外挂数据卷存储驱动两个层面切入，梳理存储插件架构演进（in-tree→FlexVolume→CSI）、emptyDir/hostPath/持久化存储三类选择，并通过 PV/PVC 实验与本地存储规划讲解生产实践。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "06:30",
+      "topic": "容器运行时存储驱动演进：Device Mapper → overlayfs",
+      "points": [
+        "容器存储分两个层面：容器运行时自身的存储驱动（镜像层的联合文件系统），以及额外挂载的数据卷存储驱动（存算分离后程序输出数据要落到额外存储卷）。",
+        "早期 Docker 用 Device Mapper，因为它是当时 Linux kernel 内置的存储驱动，而 overlayfs 尚未合入内核；随着内核版本演进 overlayfs 成为内核内置驱动，随后成为 Docker 与 containerd 的默认存储驱动。",
+        "性能测试结论：overlayfs 相对 Device Mapper 有约 20% 的性能提升，且与主机文件系统性能几乎一致；因此选型时 overlayfs 基本没有其他选择。"
+      ],
+      "tradeoffs": [
+        "存储驱动选择要跟随内核能力：overlayfs 合入内核后才可能成为默认，早期只能依赖 Device Mapper。"
+      ],
+      "turning_points": [
+        "overlayfs 性能已逼近裸主机文件系统——'容器镜像层'的读写损耗问题基本被解决。"
+      ]
+    },
+    {
+      "start": "06:30",
+      "end": "13:00",
+      "topic": "CSI 架构演进：in-tree → FlexVolume → 标准 CSI",
+      "points": [
+        "第一代 in-tree 插件：存储挂载逻辑写在 kubelet 代码里，与 kubelet 强耦合，发版互相牵制（kubelet 发版等存储代码、存储修 bug 等 kubelet release），无法灵活增强。",
+        "第二代 out-of-tree FlexVolume：类似 CNI，把存储插件编译成可执行文件，kubelet 通过 os/exec 直接执行完成挂载；比 in-tree 灵活但仍有局限。",
+        "第三代标准 CSI（Container Storage Interface）：类似 CRI，把存储接口从本地文件执行升级为基于 gRPC 的远程调用，约定存储驱动需要实现的接口。",
+        "CSI 分工：CreateVolume（调用远端存储 API 创建卷）与 Attach（卷与计算节点绑定）由 kube-controller-manager 侧的通用框架（provisioner、attacher）完成；Mount（把卷挂载成容器可用目录）发生在 Pod 启动时，由 kubelet 完成；控制面与节点侧均通过 unix socket 与存储驱动通信。",
+        "CSI 插件形态：kube-controller-manager 提供标准 CSI 框架 + 每个存储厂商实现自己的 CSI driver，两者配合。"
+      ],
+      "tradeoffs": [
+        "三代演进主线是'解耦'：in-tree 耦合最重、FlexVolume 半解耦、CSI 用 gRPC 彻底解耦，代价是分层与 socket 通信增加排障复杂度。"
+      ],
+      "turning_points": [
+        "创建卷/挂载卷是'远端操作'、mount 是'本地操作'——所以 Create/Attach 归集中式 controller 管理、Mount 归每节点 kubelet。"
+      ]
+    },
+    {
+      "start": "13:00",
+      "end": "19:30",
+      "topic": "存储类型（一）：临时存储 emptyDir 与半持久化 hostPath",
+      "points": [
+        "emptyDir（临时存储）：Pod 创建时为其创建空目录，Pod 删除时随之删除；用途：输出日志、中间临时文件、多个容器共享数据（多个容器 mount 同一 emptyDir）；medium 可设为 Memory，写入内存不落盘、提升写入效率。",
+        "emptyDir 与 Pod 生命周期绑定：容器重启（crash/OOM）数据仍在，Pod 重建则数据消失，适合中间数据与快速恢复场景。",
+        "hostPath（半持久化）：在主机文件系统开辟目录 mount 进容器，类似 docker run -v；Pod 删除后主机目录仍在、数据保留；可指定 type（如 Directory、块设备等）。",
+        "hostPath 三大风险：数据混乱（不同 Pod 复用同一 hostPath 目录互相污染）、磁盘管理（Pod 删了目录还在，日积月累占满主机磁盘）、安全（用户获得操作主机文件系统的权限）。",
+        "生产原则：hostPath 通常只给管理员使用（如网络插件 calico-node 用 hostPath 把 CNI 文件拷到主机），不建议开放给普通用户。"
+      ],
+      "tradeoffs": [
+        "emptyDir 与 Pod 生命周期一致是特性也是局限——需要持久数据时不能用它。",
+        "hostPath 是'危险的便利'：管理型组件必备，普通业务默认禁用。"
+      ],
+      "turning_points": [
+        "临时（emptyDir）、半持久（hostPath）、持久（PV/PVC）三种存储的选择边界就是'数据要不要随 Pod 死亡而存活'。"
+      ]
+    },
+    {
+      "start": "19:30",
+      "end": "27:30",
+      "topic": "持久化存储：StorageClass、PV、PVC 与 hostPath 实验",
+      "points": [
+        "StorageClass：定义集群提供的存储类型（一家公司有多少种存储就建多少个，如 SATA/SAS 快慢档），包含 provisioner 与支撑参数。",
+        "PVC（PersistentVolumeClaim）：用户声明需要什么样的存储（大小、访问模式、storageClass）；PV（PersistentVolume）：CSI driver 创建真实卷后同步创建的对象；PV 与 PVC 通过 storageClass 匹配建立绑定关系。",
+        "用户路径：定义 PVC → CSI driver 创建真实卷并创建 PV → PVC/PV 绑定 → Pod 通过 volume.persistentVolumeClaim 引用 PVC，把卷 mount 进容器。",
+        "实验（hostPath 手工版）：主机创建目录 + index.html → 手工定义 PV（storageClass=manual、capacity 100Mi、ReadWriteOnce、hostPath 指向该目录）→ 创建匹配的 PVC（自动与 PV 绑定）→ 创建 nginx Pod 把 PVC mount 到 /usr/share/nginx/html → 访问页面发现 index.html 已被改写为主机目录内容，直观验证 PV/PVC/Pod 依赖链。",
+        "生产实践：多种存储按性能/价格分层定义多个 StorageClass，配合配额管理约定谁能用哪类存储、用多少。"
+      ],
+      "tradeoffs": [
+        "PV/PVC/Pod 三层概念容易混淆：PVC 是用户申请、PV 是供给结果、Pod 是消费方，三者靠 storageClass 与容量/访问模式匹配绑定。"
+      ],
+      "turning_points": [
+        "用户只声明'我要多大、什么类型的卷'（PVC），具体卷由谁创建、落在哪完全由 StorageClass 对应的驱动决定——这是存储声明式抽象的完整闭环。"
+      ]
+    },
+    {
+      "start": "27:30",
+      "end": "32:59",
+      "topic": "本地存储规划：Dedicated Local PV 与 Dynamic Local Volume（LVM）",
+      "points": [
+        "本地存储分两类：追求高 IOPS 的应用希望独占物理盘（Dedicated local PV）；不关心写入速度但需要大容量的应用用 LVM（Logic Volume Manager）动态组装多块盘（Dynamic local volume）。",
+        "LVM 是把多块盘组成大的 volume group 再逻辑分卷，多个应用可能共享同一块物理盘，产生 neighbor noise（相邻应用互相干扰），不适合高频写入的性能敏感应用。",
+        "Dedicated local PV 流程：节点上架时每块盘预先创建一个 local PV（不经过 LVM）→ 用户创建 PVC（Pending）→ 用户创建 Pod → 调度器根据 Pod 申请的 PVC 找到还有合适大小盘的节点 → Pod 与节点绑定 → 最终把独占盘 mount 给容器。",
+        "Dynamic local volume 流程：不预创建 PV → 用户创建 PVC（Pending，已定义大小）→ 用户创建 Pod → 选择节点 → 更新 PVC 记录节点绑定 → 节点上 external provisioner 经 CSI driver 调用 LVM 命令动态分配盘 → 创建 PV 并建立 PVC/PV 绑定 → mount 给容器。",
+        "两种本地存储对应不同 StorageClass，由用户按应用特性自行选择；磁盘介质（HDD/SSD）是另一个维度的衡量。",
+        "平台侧要支持多种模式的原因：从用户层面 Kubernetes 简单，但平台要支撑多样化场景，灵活性大导致方案构建难度高，最终目标是全自动化、方便用户介入。"
+      ],
+      "tradeoffs": [
+        "独占盘保证性能但浪费空间（一盘一 PV）；LVM 省盘但引入 neighbor noise——按应用读写特性取舍。",
+        "动态本地卷依赖 external provisioner 与 LVM 命令链路，故障面比手工 PV 更大。"
+      ],
+      "turning_points": [
+        "本地存储与网络存储的调度差异：本地卷必须先由调度器感知'哪台机器还有匹配的盘'，所以 PVC 会参与调度决策（节点绑定先于卷创建）。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "overlayfs：Docker/containerd 的默认存储驱动（内核内置后），相比 Device Mapper 有约 20% 性能提升、与主机文件系统性能几乎一致。",
+    "CSI 演进：in-tree 插件（逻辑写在 kubelet 内、耦合重）→ out-of-tree FlexVolume（可执行文件、os/exec 调用）→ 标准 CSI（基于 gRPC 的接口抽象）。",
+    "CSI 分工：CreateVolume 与 Attach 由 kube-controller-manager 侧 CSI 框架（provisioner/attacher）完成，Mount 由节点 kubelet 完成，两端与 CSI driver 通过 unix socket 通信。",
+    "emptyDir：与 Pod 生命周期一致的临时空卷，可设 medium=Memory 写入内存，用于日志/中间文件/容器间共享数据。",
+    "hostPath：把主机目录挂载进容器的半持久化存储，Pod 删除后数据仍在；存在数据混乱、磁盘占满、安全风险，生产仅限管理员/系统组件使用。",
+    "StorageClass：定义集群提供的存储类型（provisioner + 参数），一家公司的每类存储对应一个。",
+    "PVC（PersistentVolumeClaim）：用户对存储的申请（大小、访问模式、storageClass）；PV（PersistentVolume）：存储驱动创建真实卷后生成的供给对象；PVC 与 PV 通过 storageClass 匹配绑定，Pod 通过 PVC 消费卷。",
+    "Dedicated Local PV：节点上架时每块物理盘预创建一个 local PV，供高 IOPS 独占型应用使用。",
+    "Dynamic Local Volume：通过 external provisioner + CSI driver 调用 LVM 命令按需动态组装磁盘，供需要大容量、可容忍共享干扰的应用使用。"
+  ],
+  "closing": "收尾总结：本讲从运行时存储驱动（Device Mapper→overlayfs）与外挂存储驱动（in-tree→FlexVolume→CSI）两条线梳理了 Kubernetes 存储体系，讲解了 emptyDir、hostPath 与 PV/PVC 持久化存储三类选择，通过手工 hostPath 的 PV/PVC 实验验证了声明式存储依赖链，并对比了 Dedicated Local PV 与 Dynamic Local Volume（LVM）两种本地存储方案及其调度差异；强调平台侧存储灵活性的目标是实现全自动化。"
+}

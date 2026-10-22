@@ -1,0 +1,60 @@
+flowchart TD
+    SDD["规范驱动开发 SDD<br/>(核心引擎 L02)"]
+    SPEC["spec.md<br/>意图定义·WHAT/WHY"]
+    PLAN["plan.md<br/>技术规划·HOW"]
+    TASKS["tasks.md<br/>任务分解·ACTIONS"]
+    CODE["代码实现"]
+    CONST["constitution.md<br/>项目宪法 L07"]
+    CLAUDE["CLAUDE.md<br/>操作手册 L06"]
+    AGENTS["AGENTS.md<br/>跨Agent标准 L06"]
+
+    CMD["Slash Command L08<br/>用户调用·确定性"]
+    SKILL["Agent Skill L13<br/>模型调用·自主性"]
+    SUB["Subagent L14<br/>独立上下文·专家"]
+    MCP["MCP服务器 L12<br/>连接外部系统"]
+
+    HOOKS["Hooks L11<br/>事件驱动·自动化"]
+    PERM["权限+沙箱 L09<br/>事前约束"]
+    CKPT["Checkpointing L10<br/>事后补救"]
+    HEADLESS["Headless模式 L15<br/>可编程接口"]
+
+    TDD["AI驱动TDD L19<br/>防自洽幻觉"]
+    AUDIT["AI交叉审查 L20"]
+
+    SDD --> SPEC
+    SDD --> PLAN
+    SDD --> TASKS
+    SPEC --> PLAN
+    PLAN --> TASKS
+    TASKS --> CODE
+    CONST -->|"合宪性审查"| PLAN
+    CLAUDE -->|"长期记忆"| SDD
+    AGENTS -->|"公有契约"| CLAUDE
+    CLAUDE -->|"导入宪法"| CONST
+
+    CLAUDE --> CMD
+    CLAUDE --> SKILL
+    CLAUDE --> SUB
+    SDD --> TDD
+    TDD --> CODE
+    CODE --> AUDIT
+    AUDIT --> CODE
+
+    CMD -->|"封装的确定性流程"| AUDIT
+    SKILL -->|"渐进式披露"| CLAUDE
+    SUB -->|"上下文隔离"| SKILL
+    MCP -->|"扩展工具集"| SUB
+    HOOKS -->|"自动格式化"| CODE
+    PERM --> CODE
+    CKPT --> CODE
+    HEADLESS -->|"CI集成"| AUDIT
+    HEADLESS --> MCP
+
+    classDef core fill:#fff3cd,stroke:#e0a800,stroke-width:2px;
+    classDef doc fill:#d1ecf1,stroke:#0c5460;
+    classDef cap fill:#d4edda,stroke:#155724;
+    classDef safe fill:#f8d7da,stroke:#721c24;
+    class SDD,SPEC,PLAN,TASKS core;
+    class CONST,CLAUDE,AGENTS doc;
+    class CMD,SKILL,SUB,MCP,HOOKS,HEADLESS cap;
+    class PERM,CKPT safe;

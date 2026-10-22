@@ -1,0 +1,406 @@
+{
+  "course": "从零构建可观测性",
+  "scan_date": "2026-08-31",
+  "total_lectures": 4,
+  "modules": [
+    {
+      "module_index": 0,
+      "module_name": "第一章：从零构建可观测性",
+      "lecture_count": 2,
+      "value_density": "high"
+    },
+    {
+      "module_index": 1,
+      "module_name": "第二章：OpenTelemetry 和可观测性大规模生产实践",
+      "lecture_count": 2,
+      "value_density": "high"
+    }
+  ],
+  "lectures": [
+    {
+      "lecture_id": "01",
+      "title": "从零构建可观测性（一）",
+      "module": "第一章：从零构建可观测性",
+      "module_index": 0,
+      "source_file": "第一章：从零构建可观测性/1. 从零构建可观测性（一）/1. 从零构建可观测性（一）.md",
+      "word_count": 49299,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "OK好七点了我们的今天周日的直播就正式开始这一节课跟大家分享的是从零构建可观测性这个模块相对来说在我们整个device或者是SIE整个环节里面是属于非常重要的一个环节也就是说在你工作当中你除了构建我们我们之前说的这个demo s工作流最最直接的体现就是CSDD对吧除了这两个以外可观测性也是我们delos和SRE里面你需要在公司里面着重的去去去深入的去做的11个1个比较好的一个方向并且这个可观测性相",
+      "last_200_words": "对于如果你是刚开始实践的话请求相关的指标先收集起来再说就是我们说的HDP状态码请求延时这些先收集起来对吧然后后面你所需要再收集其他东西的时候再加就好了OK好如果没有别的问题的话我们今天的内容我们就整节课的内容就先到这里如果后续大家有问题的话可以把问题发到群里面我们助教老师和我都会去给大家做这个解答好我们今天直播就到这里就结束了感谢各位大家的参与我们下周三下周三继续来讲这个可观测性OK好各位同学再见",
+      "headings": [
+        "课程模块总览（可观测性五部分：概述/日志/监控/弹性伸缩/告警）",
+        "可观测性概述：控制理论起源（1960 Kalman）与工业制造（西门子监控大盘）",
+        "监控 vs APM vs 可观测性：三者演进与区别",
+        "可观测性三大支柱：日志、指标、分布式追踪",
+        "Google 四大黄金指标：延迟、流量、错误、饱和度",
+        "SLI / SLO / SLA：内部服务质量定义与承诺",
+        "日志选型对比：EFK/ELK vs Loki（Grafana 生态）",
+        "Loki 安装与 Grafana 查询（demo）",
+        "LogQL 语法：日志流选择器 + 管道操作符",
+        "LogQL 进阶：logfmt/json 格式化、字段值比较、line format、over_time 查 TP99、label format/drop/keep",
+        "Loki 采集原理：Promtail daemonset + hostPath 挂载 /var/log/pods",
+        "Loki 轻量原理：只索引时间戳与标签，不索引日志文本",
+        "Loki 生产实践：TSDB 索引、COS/OSS 对象存储、多租户、读写分离",
+        "K8S 指标采集原理：cAdvisor → metrics-server → metrics API / HPA",
+        "Prometheus 抓取原理：HTTP pull + 服务发现 + relabeling",
+        "Prometheus Operator：CRD 体系（Prometheus/AlertManager/ServiceMonitor/PodMonitor/Probe/PrometheusRule）",
+        "kube-prometheus-stack：一键安装全套 + 内置告警规则与 dashboard",
+        "黑盒监控：blackbox-exporter + Probe CRD（网站可用性/SSL/DNS）",
+        "白盒监控：client_golang SDK + 四种指标类型（Counter/Gauge/Histogram/Summary）",
+        "ServiceMonitor vs PodMonitor：写法与默认 relabeling 机制",
+        "PromQL：rate() 算 QPS、sum by (path)、histogram_quantile 算 P95",
+        "Grafana dashboard 构建（接口分组 QPS、P95 延迟、热力图）",
+        "Q&A：多行日志、EFK 迁移 Loki、trace ID 业务框架、业务指标构建"
+      ],
+      "key_terms": [
+        "可观测性（Observability）：通过系统输出（日志/指标/追踪）判断系统状态的能力",
+        "监控（Monitoring）：收集并展示指标+简单告警，可观测性的子集",
+        "APM：应用性能分析，基于 SDK/agent 的侵入式代码级分析",
+        "三大支柱：日志、指标、分布式追踪",
+        "四大黄金指标（Google）：延迟、流量、错误、饱和度",
+        "SLI：服务质量关键指标；SLO：基于 SLI 的量化承诺；SLA：赔偿协议",
+        "Loki：Grafana 生态轻量日志系统（存储+索引），配 Promtail 采集、Grafana 查询",
+        "LogQL：Loki 查询语言 = 日志流选择器 + 管道操作符",
+        "Promtail：daemonset 部署的日志采集器，hostPath 挂载 /var/log/pods",
+        "cAdvisor / metrics-server / metrics API：K8S 指标采集链路",
+        "Prometheus Operator：CRD 声明式管理 Prometheus 实例与抓取配置",
+        "ServiceMonitor/PodMonitor：声明式指标抓取对象",
+        "黑盒监控：blackbox-exporter + Probe，不侵入业务监控网站可用性",
+        "白盒监控：业务集成 SDK 输出指标",
+        "Counter/Gauge/Histogram/Summary：Prometheus 四种指标类型",
+        "累计直方图：后一个 bucket 包含前面所有数据",
+        "PromQL：指标选择器 + rate()/sum by/histogram_quantile",
+        "receiver 语义中的 QPS：基于业务指标的弹性伸缩目标"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "概念框架（三大支柱/黄金指标/SLI-SLO-SLA）可查证，Loki 轻量原理与 LogQL 体系是优质整理；但 2h48m 内安装演示与答疑占比大，独创新少",
+      "warning_signals": [
+        "demo_inflation",
+        "no_counter_example"
+      ],
+      "connects_to": ["02", "03", "04"],
+      "connects_to_reason": "本讲建立三大支柱心智模型并落地日志/指标，02 深化指标应用与告警，03/04 延展大规模生产与 OTel 打通",
+      "claimed_data_points": [
+        {
+          "claim": "可观测性概念最早来自 1960 年（Kalman）系统控制理论",
+          "context": "可观测性概述/历史部分",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Google 提出四大黄金指标：延迟、流量、错误、饱和度",
+          "context": "三大支柱之指标部分",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Loki 官方公布最大使用规模为每天 TB/PB 级数据（Grafana 大会）",
+          "context": "Loki 性能 Q&A",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "SLA 赔偿基本都是代金券",
+          "context": "SLA 讲解",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "title": "从零构建可观测性（二）",
+      "module": "第一章：从零构建可观测性",
+      "module_index": 0,
+      "source_file": "第一章：从零构建可观测性/2. 从零构建可观测性（二）/2. 从零构建可观测性（二）.md",
+      "word_count": 35069,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "八点了那我们的直播就正式开始好我们先简单看一下我们上节课讲的内容上节课我们讲的这个lucky还有promise fils这一块对于loc ky而言我们通过ham的方式把lucky和prom tel以及graph单独安装到这个集群里面然后我们就可以采集到集群里面所有的这些标准输出的那些日志然后对于gravina我们是通过上节课我们安装的这个cube prom stack通过这个stack我们来去安装",
+      "last_200_words": "可以有一个global view全局的一个视角可以看到你所有集群的指标所以这是我们下节要讲的Open table的是我们下节课还会讲这个同可观测性的统一解决方案对吧就是我们刚刚说的把这几个东西都通过翠CID给它连接起来并且在gram里面去查OK好我们今天的直播就先到这里到这里我们就结束了我们这周日我们再继续讲这个open tennis、open ternary以及可观测性的大规模实践好各位同学再见",
+      "headings": [
+        "上节回顾：网关层 vs 业务层指标精度（ingress 只能到服务，不能到 path）",
+        "直方图 bucket 配置陷阱：分位数估算失真、分位数图为直线",
+        "直方图 vs Summary：聚合/客户端开销/服务端开销/误差维度对比与选型",
+        "annotation 抓取为什么不推荐（与应用定义耦合）",
+        "HPA 工作原理：metrics-server 注册 APIService（metrics.k8s.io）",
+        "prometheus-adapter：注册 custom.metrics.k8s.io，自定义指标转 HPA",
+        "自定义指标 HPA 配置（autoscaling/v2，AverageValue 类型）与压测演示",
+        "KEDA：注册 external.metrics.k8s.io，ScaleObject CRD",
+        "KEDA 演示：单条 PromQL 触发 500 错误 QPS 伸缩",
+        "KEDA 常用 scaler：cron 定时扩容、消息队列长度扩容",
+        "多个 scaler 混用：HPA 取各指标推荐副本数的最大值",
+        "告警体系总览：Grafana Alert vs AlertManager，国内 IM 渠道缺失",
+        "PrometheusRule CRD：表达式 + for 持续时间 + annotations（go template）",
+        "告警状态机：pending → firing；错误占比告警（rate(500)/rate(total)）",
+        "多渠道通知：prometheus-alert webhook 中转飞书/钉钉/企业微信/短信",
+        "告警疲劳治理：group_wait/group_interval/repeat_interval",
+        "告警分层组织：pod 层→业务团队、node 层→DevOps/SRE、集群层→运维/Infra",
+        "AlertManager 特性速查表与高可用（勿在实例前挂 LB）",
+        "Q&A：Redis MQ scaler、告警发 Teams、集群联邦 vs Thanos"
+      ],
+      "key_terms": [
+        "直方图 bucket：客户端设置的分桶，影响分位数估算精度",
+        "Summary（摘要）：客户端计算分位数+滑动窗口，服务端只查询",
+        "HPA（Horizontal Pod Autoscaler）：K8S 内置水平伸缩",
+        "metrics-server：注册 metrics.k8s.io APIService 提供 CPU/内存指标",
+        "prometheus-adapter：注册 custom.metrics.k8s.io，转化 Prometheus 指标",
+        "KEDA：基于事件驱动的 HPA 伸缩器，注册 external.metrics.k8s.io",
+        "ScaleObject：KEDA CRD，定义触发器（prometheus/MQ/cron）与工作负载关系",
+        "cron scaler：定时扩容，适合波峰波谷业务",
+        "PrometheusRule：声明式告警规则 CRD",
+        "for 持续时间：告警触发所需持续时间，生产建议调高",
+        "pending/firing：告警状态机",
+        "告警疲劳：过多无效告警淹没真告警",
+        "group_wait/group_interval/repeat_interval：告警分组与重复发送参数",
+        "webhook 中转：alertmanager → prometheus-alert → 飞书/钉钉机器人"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "直方图bucket陷阱、直方图vs摘要、KEDA单条PromQL、告警疲劳参数均为实战级洞察，可操作性极高；但以整理与经验传授为主",
+      "warning_signals": [
+        "no_counter_example"
+      ],
+      "connects_to": ["01", "03", "04"],
+      "connects_to_reason": "承接 01 的 Prometheus 指标采集，为 03 的大规模存储提供弹性伸缩应用场景，告警链路与 04 的 OTel 三合一无直接冲突",
+      "claimed_data_points": [
+        {
+          "claim": "HPA 每 15 秒查询一次指标",
+          "context": "HPA 工作原理",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "直方图默认 bucket（go 客户端）为若干固定档位",
+          "context": "直方图 bucket 配置",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "title": "可观测性大规模生产实践",
+      "module": "第二章：OpenTelemetry 和可观测性大规模生产实践",
+      "module_index": 1,
+      "source_file": "第二章：OpenTelemetry 和可观测性大规模生产实践/1. 可观测性大规模生产实践/1. 可观测性大规模生产实践.md",
+      "word_count": 48211,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "老师重新开始讲一下我们这节课跟大家分享的是这个promise大规模的生产实践以及open time其实我们在上一节课通过这个cube proof stack我们整个stack大家安装完了之后大家就可以快速的去体验这个promise locky以及alert manager那一块的内容但是实际上其实有同学已经在这个微信群里面提到了我们上节课的这个安装方式或者这个使用方式其实它并不针对于这个生产环境对",
+      "last_200_words": "atrice的唯一的一个相就是相同能能关联起来的部分对吧你以前只能按时间说查那你现在有了这个trace ID就不一样了对吧你可以用这个trace ID来查了好最后下节课我们还会简单讲一讲这个EBPF然后跟这个open generally的一个对比OK好如果没有其他问题的话我们这一节课就到这里我们下周三下周三再继续跟大家来介绍这个open term tory的实战部分我们这节课就先到这里各位同学再见",
+      "headings": [
+        "Prometheus 大规模生产三大挑战：长期存储、高可用、重复指标与 global view",
+        "Prometheus 架构五部分与 TSDB retention 默认 10 天",
+        "remote write/remote read：写远程存储的机制与限制（对象存储不可直写）",
+        "高可用方案演进：多实例+NGX（数据一致性差）→ HA+远程存储 → 联邦集群（运维复杂）",
+        "远程存储技术选型对比：M3DB / Cortex / Thanos",
+        "Thanos 架构：sidecar/query/store gateway/compact/ruler/receiver",
+        "Thanos = Prometheus 的微服务版：组件一一类比",
+        "冷热分层：2 小时内 TSDB 查询，之外走对象存储",
+        "kube-prometheus-stack 集成 Thanos sidecar + COS 对象存储（demo）",
+        "Grafana 添加 Thanos 数据源，数据一致性验证",
+        "10 亿级指标查询问题：分辨率/step、17 万样本点、压缩 12 倍、解压 10-43ns",
+        "一年查询要解压 2G 数据约 1 分 20 秒 → 查询爆炸",
+        "下采样（downsampling）：原始块→5 分钟块→1 小时块，空间换时间",
+        "下采样后查询：30 天/1 年均 300ms、9MB（12 倍分辨率与时间跨度匹配）",
+        "Thanos 生产建议：query-frontend 缓存、块保留策略、降高基数、去不必要指标",
+        "查询优化：store gateway 按时间分片（minTime/maxTime）、按 label（region）分片",
+        "Prometheus Operator 分片+多副本（replicas+shards），Thanos 自动去重",
+        "多集群监控：sidecar 模式（观测集群+被观测集群），receiver 模式备选",
+        "多集群配置：thanos query 多 endpoint + external label cluster",
+        "Global view：Grafana dashboard 加 cluster variable 一套看所有集群",
+        "分布式追踪历史：X-Trace(2007)→Dapper(2010)→Zipkin(2012)→SkyWalking(2015)→OpenTracing(2015)→Jaeger(2017)→OpenTelemetry(2019)→Datadog/Tempo(2020)/SigNoz(2021)",
+        "分布式追踪核心原理：trace ID + span ID + 上下文传递",
+        "OpenTelemetry：标准非实现，三合一原理（trace ID 关联日志/指标/追踪）",
+        "OTel 架构：SDK → collector → 第三方后端；SDK 集成 vs 无侵入采集",
+        "Python SDK 集成示例：trace（grpc 发 Tempo）、log（带 trace_id/span_id）、metric（带 trace_id 注释）",
+        "OTel 渐进式集成的尴尬：日志→指标→trace 分期演进"
+      ],
+      "key_terms": [
+        "TSDB retention：Prometheus 本地存储保留时间（默认短，约 10 天级）",
+        "remote write/remote read：Prometheus 远程读写协议（HTTP，未来 gRPC）",
+        "M3DB：Uber 开源的分布式时序库（推模型，运维复杂）",
+        "Cortex：拉模型，支持缓存，网络问题可能丢数据",
+        "Thanos：Prometheus 长期存储+多集群方案（block 存对象存储）",
+        "sidecar：与 Prometheus 同 pod，查询 2 小时内数据 + 上传 block",
+        "query：实现 Prometheus API 的查询汇总器（fan-out + merge + 去重）",
+        "store gateway：对象存储查询网关",
+        "compact：压缩与下采样组件（有状态，不可随意伸缩）",
+        "下采样：原始块→5 分钟块→1 小时块，空间换时间，重新聚合",
+        "step 参数：PromQL 查询分辨率控制",
+        "minTime/maxTime：store gateway 时间分片参数",
+        "external label：多集群标识（如 cluster=prod）",
+        "global view：一套 Grafana 查所有集群",
+        "trace ID / span ID：分布式追踪核心标识",
+        "OpenTelemetry：日志/指标/追踪统一标准（CNCF）",
+        "三合一原理：通过 trace ID 将 log/metric/trace 关联"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "下采样量化分析（17万样本/2G/1分20秒→300ms/9MB）与 12 倍分辨率洞察为独到整理，多集群 global view 方案完整可复现，历史脉络可查证；是全课最接近原创贡献的一讲",
+      "warning_signals": [
+        "precise_data_no_source",
+        "no_counter_example"
+      ],
+      "connects_to": ["01", "02", "04"],
+      "connects_to_reason": "承接 01/02 的 Prometheus 采集与告警，为 04 的 OTel 实战提供大规模存储与多集群背景",
+      "claimed_data_points": [
+        {
+          "claim": "kube-prometheus-stack 中 TSDB retention 默认 10 天",
+          "context": "长期存储挑战",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "block 压缩约 12 倍（官方数据）",
+          "context": "查询分辨率与压缩",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "从 block 解压指标约 10-43 纳秒/样本",
+          "context": "查询分辨率与压缩",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "30 天查询需处理约 17 万个样本点（10s 抓取间隔）",
+          "context": "查询分辨率计算示例",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "查询 1 年指标需解压约 2G 数据、耗时约 1 分 20 秒",
+          "context": "查询分辨率计算示例",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "下采样后 30 天/1 年查询均约 300ms、9MB",
+          "context": "下采样效果",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "Uber 内部 4000+ 微服务使用 Jaeger",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "X-Trace 2007 年加州伯克利提出",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Google 2010 年发表 Dapper 论文",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Zipkin 2012 年 Twitter 开源（基于 B3 header）",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "SkyWalking 2015 年开源并成为 Apache 顶级项目",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "OpenTracing 2015 年诞生并捐赠 CNCF",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Jaeger 2017 年 Uber 开源、2018 年捐赠 CNCF",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "OpenTracing 与 Google OpenCensus 于 2019 年合并为 OpenTelemetry",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "Datadog 2019 年发布（APM/追踪 Saa S 产品）",
+          "context": "分布式追踪历史",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "Grafana Tempo 2020 年发布",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "SigNoz 2021 年发布（Datadog 开源替代）",
+          "context": "分布式追踪历史",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "title": "OpenTelemetry 概述与用法",
+      "module": "第二章：OpenTelemetry 和可观测性大规模生产实践",
+      "module_index": 1,
+      "source_file": "第二章：OpenTelemetry 和可观测性大规模生产实践/2. Opentelmetry 概述与用法/2. Opentelmetry 概述与用法.md",
+      "word_count": 33108,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "OK好我们今天的直播就正式开始了我们今天的整整个的直播会跟大家把open term try这一块给介绍完然后其实我们上节课在open terror TY这一块其实我们讲了一部分内容对吧可能有些同学上节课没有来听那老师在这里我们简单的来把我们上节课这个关于open table相关的这个内容我们简单的来过一遍首先这个分布式追踪的发展历史其实这里大家只是做了解就好了只不过这里大家要知道几个点是说这里有几",
+      "last_200_words": "的所以如果你现在的这个规模里面已经涉及到了这个多集群就是你希望能够把一些工作负载调度到不同的集群里的时候尤其是做这个灾备的时候因为你的这个集群可能不同地域的那你说这个栽培希望你希望做这个HPA对吧HPA的时候也让它调度到不同的集群里面扩容的时候扩到不同集群里面去的时候那你就要关注我们下一节课讲的这个多余痘肌群的这个内容了好我们今天的课程就先到这里我们下周三下周三再跟大家来去做分享OK好各位同学再见",
+      "headings": [
+        "OTel 回顾：历史要点、两种集成方式、收益评估（小型团队收益有限）",
+        "OTel 三合一原理：trace ID 关联 log/metric/trace",
+        "环境搭建：kube-prometheus-stack + Loki + Tempo + 示例应用（python SDK + 自动注入两套）",
+        "SDK 集成之 trace：service.name + APP 属性 + grpc 发 Tempo",
+        "SDK 集成之 log：log 格式带 trace_id/span_id（instrument 自动填充）",
+        "SDK 集成之 metric：指标输出携带 #trace_id 注释（OpenMetrics 规范）",
+        "查看示例应用 metrics 输出与服务日志（trace_id 对应）",
+        "Grafana 配置：Loki data source 派生字段（正则提取 trace_id）+ 关联 Tempo",
+        "Grafana 配置：Prometheus data source 关联 Tempo（exemplar 显示）",
+        "Grafana 配置：Tempo traces-to-log（APP 变量拼 logQL）",
+        "查询实验一：日志 → 分布式调用（loki 点 trace ID → tempo）",
+        "查询实验二：指标 → 分布式调用（prometheus exemplar → tempo）",
+        "查询实验三：分布式调用 → 日志（tempo 点 log 图标 → loki）",
+        "自动集成方式：环境变量 + opentelemetry-instrument 启动器",
+        "自动集成支持语言：.NET/Java/JS/PHP/Python（指标无法自动注入）",
+        "SDK vs 自动集成对比：源码改动/定制性/启动器",
+        "EBPF 介绍：内核级 hook system call、无侵入采集",
+        "EBPF 示例：hello world（system call 事件）与 ring buffer 读数据（BCC 库）",
+        "EBPF vs OpenTelemetry：能力矩阵对比（trace 目前 EBPF 无法实现），可互补",
+        "Q&A：trace ID 传递机制、无 trace ID 排查、Grafana dashboard 市场、EBPF 调试"
+      ],
+      "key_terms": [
+        "OpenTelemetry（OTel）：日志/指标/追踪统一标准（CNCF），非实现",
+        "trace ID：一次完整请求的全局唯一 ID",
+        "span ID：单个微服务调用的标识，span 内含上下文/状态码/耗时",
+        "OTLP：OTel 导出协议（本课用 gRPC）",
+        "Tempo：Grafana 生态的分布式追踪后端",
+        "derived field：Loki data source 派生字段（正则提取 trace_id）",
+        "exemplar：Prometheus 指标样例关联（指标→trace）",
+        "traces-to-log：Tempo 反向关联日志查询",
+        "opentelemetry-instrument：自动注入启动器",
+        "EBPF：内核级程序执行机制（BCC 库，Python 封装）",
+        "ring buffer：内核环形缓冲区数据读取",
+        "OpenMetrics：# trace_id 注释规范"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "三数据源 trace ID 互跳配置是全课最稀缺的可复现资产，三个查询实验完整；但环境搭建演示占比高、自动注入部分较浅",
+      "warning_signals": [
+        "demo_inflation"
+      ],
+      "connects_to": ["01", "03"],
+      "connects_to_reason": "落实 01 的三大支柱心智模型与 03 的 OTel 原理，用 trace ID 打通 Loki/Prometheus/Tempo",
+      "claimed_data_points": [
+        {
+          "claim": "Grafana dashboard 市场约有 7000+ 个 dashboard",
+          "context": "Q&A：构建 Grafana 大盘",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "BCC 项目约 516 个贡献者",
+          "context": "Q&A：EBPF 资源推荐",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "OTel 自动注入支持 5 种语言：.NET/Java/JavaScript/PHP/Python",
+          "context": "自动集成方式",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    }
+  ]
+}

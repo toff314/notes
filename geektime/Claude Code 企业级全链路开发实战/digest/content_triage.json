@@ -1,0 +1,1262 @@
+{
+  "course": "Claude Code 企业级全链路开发实战",
+  "triage_date": "2025-08-25",
+  "total_lectures": 37,
+  "gold_count": 5,
+  "silver_count": 17,
+  "copper_count": 13,
+  "iron_count": 2,
+  "overall_snr": 2.98,
+  "data_audit": {
+    "total_claims": 7,
+    "verified": 3,
+    "partial": 1,
+    "unverifiable": 3,
+    "suspicious": 0,
+    "summary": "7 个量化声明中 3 个可验证（源码泄漏 51.2万行/1900文件、阿里禁用、text-embedding-3-small 降价 1/5），1 个部分验证（LLM 延迟 3-30 秒为行业经验值），3 个为讲师个人实践或内部估算无法独立验证（$40 订阅、双模型 review 12/4、QPS 3-5 估算），0 个编造。整体数据诚实度高，无 🚩。"
+  },
+  "entries": [
+    {
+      "lecture_id": "02",
+      "lecture_title": "02｜规范驱动开发（SDD）：让 AI 永远在轨道上",
+      "snr_score": 4.22,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 5.0,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.5
+      },
+      "adler_q1": "核心主张：把开发流程改成'先写规范→AI 按规范执行→人验证→迭代规范'的四步闭环，让 AI 始终在轨道上不自由发挥。论证结构：为什么模糊指令让 AI 跑偏 → SDD 四步闭环 → 好规范的质量标准 → 咨询模式。",
+      "adler_q2": "解决'同样用 Claude Code 效果天差地别'的根因问题。已解决：给出可复用的四步闭环和好规范标准；未解决：规范本身的'写什么'依赖个人认知深度，课程承认这点无法替代。",
+      "adler_q3": "有道理。逻辑自洽，四步闭环可验证、可立即执行；SDD 本身非首创（Spec-Driven Development 业界已有），课程贡献在于把它操作化成适合单人+AI 的闭环，属'有价值的整理合成'而非纯重命名。无外部数据，全部为个人实践。",
+      "adler_q4": "读完即可把'模糊大需求'改写成'带验收标准的模块规范'，今天就能对现有任务套用四步闭环。",
+      "critical_notes": "全课方法论根基，被后续 06/13/14/31 反复调用，是最高频复用的框架。扣分点：论证全靠个人体感，无可核验数据；'规范驱动'不是新概念，但四步闭环 + 咨询模式的操作化有实质贡献。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "SDD 四步闭环",
+          "source_text": "定规范→AI 执行→人验证→迭代规范，每次 AI 跑偏就回头补规范",
+          "paraphrase": "把开发变成'规范先行、AI 执行、人验收'的迭代闭环，规范是活的",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "06",
+            "13",
+            "14",
+            "31"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "咨询模式（Consultation Mode）",
+          "source_text": "不确定的时候先问再做，让 AI 帮你梳理'这一步该考虑什么'，你判断取舍后再执行",
+          "paraphrase": "先把问题问清楚、让 AI 列决策点，人拍板后再动手",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "03",
+            "04",
+            "28"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "瓶颈不在 AI，在你",
+          "source_text": "你想得越清楚，它做得越准确；你越模糊，它越跑偏",
+          "paraphrase": "AI 输出质量的上限由输入规范的下限决定",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "01",
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "14｜把经验变成 Skill：让 Claude Code 自动按流程走",
+      "snr_score": 4.08,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "核心主张：把反复使用的方法沉淀成 Skill（可复用流程文件），并用'领域快速理解四问'快速搞懂陌生领域。论证结构：领域四问 → 经验 Skill 化 → 自动按流程走。",
+      "adler_q2": "解决'如何把个人经验变成可复用资产、如何快速进入陌生领域'的问题。已解决：给出领域四问和 Skill 沉淀的可操作路径；未解决：Skill 的颗粒度和时机靠经验判断。",
+      "adler_q3": "有道理且实操性强。'领域四问'是标准的领域理解法（本质是结构化提问），非全新原创但封装得清晰；Skill 沉淀是 Claude Code 官方机制的正确用法。无数据，全为实践。",
+      "adler_q4": "读完能把一个陌生领域拆成四个问题去问 AI，并把自己重复的指令沉淀成 Skill 文件。",
+      "critical_notes": "把'现学现卖'能力具象化，领域四问是最常被引用的工具之一。扣分：本质是结构化提问的再包装，创新度有限；全靠个人经验。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "领域快速理解四问",
+          "source_text": "从'是什么/怎么用/数据怎么存/边界在哪'四个角度快速理解一个陌生领域",
+          "paraphrase": "用四个结构化问题让 AI 帮你在几分钟内建立陌生领域认知",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "15",
+            "20"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "经验 Skill 化",
+          "source_text": "发现给 AI 的指令在重复，就把它沉淀成 .claude/skills/ 下的 Skill 文件",
+          "paraphrase": "把反复出现的指令固化进 Skill，实现流程自动化",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "06",
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "27",
+      "lecture_title": "27｜AI 写代码，保证质量不靠运气，靠体系",
+      "snr_score": 4.38,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.5
+      },
+      "adler_q1": "核心主张：AI 写代码的质量不能靠运气，要靠体系（质量四层次：测试→静态检查→双模型 review→人工把关）。论证结构：为什么个人能力不可靠 → 质量体系四层次 → 双模型 review 反面案例（抓出 12 问题 4 高危）。",
+      "adler_q2": "解决'AI 产出代码如何保证质量'的问题。已解决：给出分层质量体系和双模型 review 机制；未解决：体系成本与团队规模的关系、更大型项目的质量治理未展开。",
+      "adler_q3": "全课论证最扎实的一讲：有反面案例（双模型 review 抓到 12 问题 4 高危）而非只讲优点，逻辑完整。双模型 review 数据为个人实践（❓），但机制本身可复现。",
+      "adler_q4": "读完能立刻给 AI 代码接入'双模型交叉 review'这道工序，并把质量保障从'靠人盯'变成'靠体系'。",
+      "critical_notes": "全课最有'可验证性'的一讲——主动给反面案例而非自夸，在 AI 提效课里稀缺。扣分：量化数据（12/4）无法独立核验。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "质量体系四层次",
+          "source_text": "测试→静态检查→双模型 review→人工把关，层层递进",
+          "paraphrase": "把质量保障从个人能力转化为可叠加的体系化关卡",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "31"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "双模型 review",
+          "source_text": "用另一个模型交叉审查主模型产出，抓到 12 个问题、4 个高危",
+          "paraphrase": "让第二个模型当审查员，交叉发现主模型漏掉的问题",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "27"
+          ],
+          "verification": {
+            "status": "❓",
+            "source_url": "讲师个人实践",
+            "notes": "12问题/4高危为个人实践数据，不可独立验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "保证质量的不是 AI，是体系",
+          "source_text": "AI 是放大器，质量靠的是你搭的体系和关卡",
+          "paraphrase": "质量的下限由你设计的流程决定，而非模型的聪明程度",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "31",
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "31",
+      "lecture_title": "31｜进阶：SDD、Spec-Kit、Spec Coding 与老项目改造",
+      "snr_score": 4.08,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "核心主张：把 SDD 放到业界工具谱系（Spec-Kit/Spec Coding）中定位，并给出对存量老项目引入 SDD 的改造三原则。论证结构：SDD 全景 → 工具四层次 → 老项目改造三原则。",
+      "adler_q2": "解决'SDD 如何落地到已有老项目、工具谱系如何选'的问题。已解决：给出工具定位地图和改造三原则；未解决：大规模遗留系统的改造成本未量化。",
+      "adler_q3": "有道理。老项目改造三原则（从小到大、由快到慢、AI 理解项目也需过程）是务实的增量改造路径；工具谱系梳理有价值。数据少但逻辑清晰。",
+      "adler_q4": "读完能判断 Spec-Kit/Spec Coding 各自适用场景，并对存量项目按三原则逐步引入 SDD。",
+      "critical_notes": "把全课方法论收束到'工具谱系 + 存量改造'，扩展视野。扣分：Spec-Kit/Spec Coding 讲得较浅，属概览而非深入。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "老项目改造三原则",
+          "source_text": "从小到大、由快到慢；AI 理解和拆解项目也需要过程",
+          "paraphrase": "对存量项目渐进式引入 AI/SDD，先圈最小改动点",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "SDD 工具四层次",
+          "source_text": "从手写规范到 Spec-Kit 到 Spec Coding 的层次定位",
+          "paraphrase": "把 SDD 相关工具按自动化程度分层，帮助选型",
+          "writing_angle": "comparison",
+          "related_lectures": [
+            "02",
+            "27"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "32",
+      "lecture_title": "32｜局限与起点：让 Hify 成为你真正的项目经验",
+      "snr_score": 4.05,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.5
+      },
+      "adler_q1": "核心主张：诚实承认课程的边界（计算机基础、垂直领域深度、大规模经验'没给你'），并把'认知深度外化'确立为核心命题，指明'接下来往哪走'。论证结构：局限诚实 → 认知深度外化 → 项目经验转化。",
+      "adler_q2": "解决'学完这门课之后往哪走、核心竞争力到底是什么'的问题。已解决：给出诚实的能力地图和提升方向；未解决：具体学习路径需读者自行补足。",
+      "adler_q3": "有道理且稀缺。'局限诚实'是这门课最独特之处，主动承认没覆盖的内容，可信度高；认知深度外化是贯穿全课的命题收束。无数据但反思性强。",
+      "adler_q4": "读完能重新定位自己的核心竞争力（判断力/认知深度而非工具熟练度），并规划补足计算机基础的路径。",
+      "critical_notes": "金句密集、反思性强，把'你不是被 AI 替代，而是被会用 AI 的人替代'这类叙事落地成诚实的能力清单。扣分：无数据，且部分为情绪化收尾。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "认知深度外化",
+          "source_text": "提示词的质量是你认知深度的外化",
+          "paraphrase": "你写出的规范/提示词直接暴露你的认知深度，这是不可替代的竞争力",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "01",
+            "02"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "AI 是放大器不是发动机",
+          "source_text": "你有方向它放大十倍，你没方向它放大的是零",
+          "paraphrase": "AI 放大你的判断力，但判断力本身来自你",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "01",
+            "intro"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "01",
+      "lecture_title": "01｜你是架构师，Claude Code 是你的工程团队",
+      "snr_score": 3.65,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "核心主张：角色要从'写代码的执行者'转变为'指挥 AI 团队的架构师'。论证结构：为什么补全工具提效有限 → 三层分工 → 三步检查法。",
+      "adler_q2": "解决'同样用 Claude Code 为什么效果天差地别'的认知问题。已解决：确立角色转变的核心命题；未解决：具体操作留待后续讲课。",
+      "adler_q3": "有道理。'角色转变'是贯穿全课的认知原点，但'架构师 vs 工程团队'隐喻在当下 AI 话语中已较常见，原创度中等。",
+      "adler_q4": "读完能转变自己的定位认知：不再追求写代码速度，而是练习拆解问题、下判断。",
+      "critical_notes": "认知框架课，命题清晰，是 32 讲的呼应起点。扣分：偏观念宣讲，具体方法要到后续讲才展开。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "角色转变",
+          "source_text": "瓶颈从来不在 AI 的能力上，而在你的思考质量上",
+          "paraphrase": "你从执行者变成架构师/决策者，AI 才真正提效",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "intro",
+      "lecture_title": "开篇词｜一个人用 Claude Code 造一个简版 Dify，需要多久？",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 2.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "核心主张：用 Claude Code 一个人一周能造出简版 Dify（Hify），但前提是动手前想清楚。论证结构：角色转变 → 方法论地图（执行/咨询模式）→ AI 是放大器。",
+      "adler_q2": "解决'课程可信度和定位'的问题——用一周造 Dify 的承诺 + 源码泄漏事件论证课程价值。已解决：给出课程地图和核心命题；未解决：具体怎么做留待正课。",
+      "adler_q3": "大体有道理。诚实（承认 AI 帮倒忙）加分；但'一周造 Dify'的承诺本身带有营销性，需正课验证。",
+      "adler_q4": "读完能建立对全课框架（SDD/三问裁剪/三步检查）的预期地图。",
+      "critical_notes": "课程定位 + 方法论总览，兼含对源码泄漏事件的克制评论。是理解全课的入口，独立信息量有限。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "AI 是放大器不是发动机",
+          "source_text": "你有方向它放大十倍，你没方向它放大的是零",
+          "paraphrase": "AI 放大判断力，判断力来自你自身经验",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "32"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "03｜产品定义：动第一行代码之前你该想清楚什么",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：动代码前先想清楚产品边界，用五步法（调研标杆→功能取舍→技术选型→运维预期→落成文字）。论证结构：为什么边界模糊会翻车 → 五步法 → 三问裁剪法。",
+      "adler_q2": "解决'如何定义产品范围'的问题。已解决：给出五步法和三问裁剪法；未解决：问对问题的能力需长期积累（课程自认）。",
+      "adler_q3": "有道理。三问裁剪法（没有它产品还成立吗/做到什么程度够用/一句话说清）是实用的取舍框架；技术选型'选最匹配约束而非最先进'的判断有说服力。",
+      "adler_q4": "读完能对任何项目用三问裁剪法砍掉伪需求，并提前想清运维预期。",
+      "critical_notes": "五步法 + 三问裁剪是通用可迁移框架，QPS/长连接判断是真实工程洞察。扣分：五步法本质是产品定义常规流程的整理。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "三问裁剪法",
+          "source_text": "没有它产品还成立吗/做到什么程度够用/能不能一句话说清楚",
+          "paraphrase": "用三个问题砍掉伪需求、定义产品边界",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "04｜架构设计（上）：应用架构与代码组织",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：单体不等于堆在一个 package，用模块化单体 + 单向依赖 + 跨模块走接口为未来拆分留口子。论证结构：三方案对比 → 模块化单体 → 代码组织规范 → 外部调用设计。",
+      "adler_q2": "解决'单体应用如何组织代码、如何为拆分留口子'的问题。已解决：模块化单体 + 规范；未解决：后续拆分的真实成本仅靠估算。",
+      "adler_q3": "有道理。'用真实约束修正 AI 的通用建议'（否决微服务、否决 WebFlux）是很好的演示；线程池隔离、SSE 不引 WebFlux 的判断务实。",
+      "adler_q4": "读完能对单体项目定义模块边界和'跨模块走接口'的规范。",
+      "critical_notes": "追问 AI 的环节是全讲亮点。扣分：模块化单体/分层是常识，创新有限；规范偏项目特定。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "用约束修正 AI 的通用建议",
+          "source_text": "AI 给的是技术上最优的方案，你要基于约束选对你最优的方案",
+          "paraphrase": "AI 的'最优解'常和你的真实约束冲突，需人拍板",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03",
+            "05"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "05｜架构设计（下）：部署架构、性能预判与数据设计",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：部署形态从第一天影响设计决策；提前预判性能瓶颈，在脑子里建一张'软肋地图'。论证结构：部署架构 → 性能瓶颈预判 → 扩展路径 → 数据模型 → 数据库规范。",
+      "adler_q2": "解决'系统怎么跑、瓶颈在哪、未来怎么扩展'的问题。已解决：瓶颈地图 + 三阶段扩展路径；未解决：数据模型只到表关系层面。",
+      "adler_q3": "有道理。'一期不需要处理任何性能瓶颈'的判断诚实；message_reference 表（RAG 溯源）是亮点；数据库规范（逻辑删除进索引、游标分页、HNSW）具体可执行。",
+      "adler_q4": "读完能对系统画瓶颈地图，并把数据库规范写进 CLAUDE.md 让 AI 遵守。",
+      "critical_notes": "数据库规范和'软肋地图'是全讲最有价值部分。扣分：部署架构较常规；依赖 AI 输出大量贴图，独立思考部分偏少。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "性能瓶颈软肋地图",
+          "source_text": "让 AI 基于架构图列出瓶颈、触发条件、处理时机，形成查表即得的地图",
+          "paraphrase": "提前把瓶颈和触发条件列成表，出问题查表而非猜",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "06｜Claude Code 实战必备：CLAUDE.md、Skills 与工程规范",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：CLAUDE.md 是人和 AI 的合作协议，按五层结构组织；用业界规范喂 AI 快速生成适配版。论证结构：CLAUDE.md 五层 → Skills → 业界规范喂入 → 判断该写什么。",
+      "adler_q2": "解决'如何系统性地把规范告诉 AI'的问题。已解决：五层结构 + 接口规范 + 行为指令；未解决：颗粒度判断仍靠经验。",
+      "adler_q3": "有道理。'每条规范追溯到架构决策''颗粒度跟着问题走''规范是长出来的'三条思维原则有价值；业界规范喂入是实用技巧。",
+      "adler_q4": "读完能写出五层 CLAUDE.md，并用阿里巴巴 Java 手册等业界规范喂 AI 生成适配版。",
+      "critical_notes": "工具机制讲解 + 思维方式，'行为指令'（不确定时先问）是实用细节。扣分：CLAUDE.md/Skills 是官方机制，讲解属整理而非原创。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "业界规范喂入",
+          "source_text": "把业界规范喂给 Claude Code，让它生成适合你项目的版本，你 review 定稿",
+          "paraphrase": "用业界标准 + 项目上下文让 AI 产出适配规范",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "02"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "13｜模型提供商管理：第一个完整功能的交付闭环",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心主张：演示第一个完整功能的标准交付流程（咨询模式想清楚→按层拆解→执行→前端对接→验收）。论证结构：供应商分析 → 数据模型 → 拆解执行 → 验收。",
+      "adler_q2": "解决'如何用标准流程交付一个业务模块'的问题。已解决：给出可复用的交付流程和 auth_config JSON 存储、健康状态独立表等设计；未解决：留给思考题的缓存一致性等边界。",
+      "adler_q3": "有道理。健康状态独立成表（避免锁竞争）、auth_config 用 JSON、模型 name/model_id 分离都是真实设计洞察；'半天交付一个模块'的节奏可信。",
+      "adler_q4": "读完能复用这套标准交付流程做其他业务模块。",
+      "critical_notes": "交付闭环模板 + 几个数据模型设计亮点。扣分：大量篇幅是 CRUD 实操，独立洞见密度中等。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "标准交付流程",
+          "source_text": "咨询模式想清楚 → 按层拆解 → 逐步执行验证 → 前端对接 → 完整验收",
+          "paraphrase": "一个可复用的模块交付五步流程",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "02",
+            "15"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "15",
+      "lecture_title": "15｜Agent 创建与配置：复杂业务逻辑的拆解策略",
+      "snr_score": 3.48,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：面对不懂的业务（Agent），用'现学现卖'方法论从零理解到落地。论证结构：让 AI 教概念 → 映射数据模型 → 场景落地 → 拆解 CRUD → 执行。",
+      "adler_q2": "解决'如何快速进入一个陌生业务领域'的问题。已解决：现学现卖完整流程 + 参数存储方案对比 + 绑 Server 还是绑 Tool 的决策；未解决：需读者自行举一反三。",
+      "adler_q3": "有道理。'现学现卖'是可迁移能力；参数存法三方案对比、语义歧义接口拆开等细节真实；智能客服场景让抽象落地。",
+      "adler_q4": "读完能对任何陌生业务用领域四问 + 数据建模 + 场景验证的路径快速上手。",
+      "critical_notes": "'现学现卖'是全课最有迁移价值的能力之一。扣分：技术细节（CRUD）占比高，独立洞见密度中等。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "现学现卖",
+          "source_text": "不是每个领域都要有三五年经验才能动手，有方法论就能快速进入",
+          "paraphrase": "用'让 AI 教→映射数据结构→场景验证→拆解执行'快速进入陌生领域",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "14",
+            "20"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "16｜对话引擎（上）：理解对话链路与流式技术选型",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：对话引擎是处理管道不是转发器；SSE 是正确流式选型，但有三个坑（超时/客户端断开/Nginx 缓冲）。论证结构：对话引擎职责 → 完整链路 → SSE 原理 → 三个坑。",
+      "adler_q2": "解决'如何做流式对话'的问题。已解决：SSE 选型理由 + SseEmitter 线程模型 + 三个坑；未解决：停止生成等留作思考题。",
+      "adler_q3": "有道理。'为什么不用 WebSocket'（单向推送够用）、三个坑、事务不跨 SseEmitter 都是真实技术要点；'让 AI 解释自己写的代码'的验证技巧实用。",
+      "adler_q4": "读完能正确实现 SSE 流式响应并避开三个坑。",
+      "critical_notes": "技术细节扎实，'让 AI 解释自己代码'是新方法论。扣分：偏技术教程，迁移性中等。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "让 AI 解释自己写的代码",
+          "source_text": "流式/回调/多线程代码不好读，让 AI 逐步解释，你听逻辑找自相矛盾处",
+          "paraphrase": "用'让 AI 自证逻辑'代替硬读不熟悉的异步代码",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "23"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "20｜RAG 知识库（上）：用 Claude Code 快速搞懂 RAG 和向量数据库",
+      "snr_score": 3.87,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "核心主张：用'四步探路法'快速搞懂陌生技术（RAG/向量库）。论证结构：从业务痛点建立认知 → 拆解技术组件 → 约束驱动选型 → 最小 Demo 建立手感。",
+      "adler_q2": "解决'如何在不懂的情况下快速学会并选型一个新技术'的问题。已解决：四步探路法 + 向量库选型决策；未解决：RAG 实现细节留待下讲。",
+      "adler_q3": "有道理。四步探路法是最具迁移性的学习方法之一；'约束驱动选型'（不追新、匹配定位）务实。embedding 价格 1/5 数据可验证。",
+      "adler_q4": "读完能对任何陌生技术（不只是 RAG）套用四步探路法快速建立认知并选型。",
+      "critical_notes": "四步探路法高度可迁移，是 theme 素材。扣分：本质是工程学习流程的提炼，非全新原创；部分内容依赖 AI 输出。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "四步探路法",
+          "source_text": "业务痛点→拆解技术组件→约束驱动选型→最小 Demo 建立手感",
+          "paraphrase": "快速搞懂陌生技术的四步学习法",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "15",
+            "22",
+            "24"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "text-embedding-3-small 价格约为前代 1/5",
+          "source_text": "text-embedding-3-small 价格约为前代的 1/5",
+          "paraphrase": "OpenAI embedding 降价显著，可用作降本论据",
+          "writing_angle": "data_point",
+          "related_lectures": [
+            "20"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "OpenAI 官方定价页",
+            "notes": "可验证，OpenAI 2024 年 embedding 降价属实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "21｜RAG 知识库（下）：给客服一本手册，对话功能集成 RAG",
+      "snr_score": 3.42,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心主张：在跑通的系统里加新能力（RAG），用'圈定改动范围→验证旧功能没坏→验证新功能生效'的增量开发三步走。论证结构：找最小侵入点 → 数据管线 → 接入对话引擎 → 三步验收。",
+      "adler_q2": "解决'怎么加新的不破坏旧的'的问题。已解决：增量开发三步走 + 最小侵入点（buildMessages 一处）+ 三步验收；未解决：分块策略等留作思考题。",
+      "adler_q3": "有道理。'RAG 插在第 6.5 步''没有相关信息就直接说'防幻觉约束、最小侵入都是真实且可复用的工程方法。",
+      "adler_q4": "读完能对任何存量系统按三步走安全地加新能力。",
+      "critical_notes": "增量开发三步走是全课最有价值的通用方法之一。扣分：RAG 细节被压缩，大量提示词直给，信息密度不均。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "增量开发三步走",
+          "source_text": "圈定改动范围 → 验证旧功能没坏 → 验证新功能生效，顺序不能反",
+          "paraphrase": "在跑通系统里加新能力的通用安全节奏",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "23",
+            "24",
+            "31"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "22｜工作流编排（上）：搞懂工作流，把它存起来",
+      "snr_score": 3.28,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：工作流就是节点（做什么）+ 连线（做完去哪）两张表，配置用 JSON 存 + sealed interface 类型安全解析。论证结构：工作流概念 → 代码形式 → 存储设计 → CRUD。",
+      "adler_q2": "解决'工作流如何存储'的问题。已解决：三张表 + JSON 字段 + sealed interface 解析；未解决：执行引擎留待下讲。",
+      "adler_q3": "有道理。'节点存做什么、连线存做完去哪'的化约清晰；node_key 字符串引用、sealed interface + record 是务实设计；'字段结构不确定用 JSON'的原则可复用。",
+      "adler_q4": "读完能设计工作流的存储结构并做类型安全的配置解析。",
+      "critical_notes": "概念化约清晰，sealed interface 是加分设计。扣分：元数据 CRUD 偏技术，洞见密度中等。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "字段结构不确定时用 JSON 存",
+          "source_text": "不同节点类型配置格式差异大，JSON 字段 + sealed interface 解析，扩展只加一个 record",
+          "paraphrase": "结构不确定/记录间差异大的字段用 JSON，结构固定才拆列",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "23",
+      "lecture_title": "23｜工作流编排（下）：实现执行引擎，让工作流跑起来",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：执行引擎 = 加载配置建 nodeMap/edgeMap + 变量池 + 节点执行器 + while 核心循环；复杂系统分步实现。论证结构：执行引擎概念 → 业界调研 → 代码结构 → 分步实现。",
+      "adler_q2": "解决'工作流如何跑起来'的问题。已解决：VariablePool 模式 + NodeExecutor 体系 + 核心循环；未解决：重放等留作思考题。",
+      "adler_q3": "有道理。'先做技术调研再决策'（Dify/n8n/Temporal 对比后选轻量同步引擎）、'复杂系统分步实现'、'review 重点在异常分支'三条方法论都成立。",
+      "adler_q4": "读完能实现一个轻量工作流执行引擎，并学会'分步实现+异常分支 review'。",
+      "critical_notes": "业界调研驱动的选型是亮点；'review 重点在异常分支'是可迁移经验。扣分：大量提示词直给，独立洞见被稀释。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "复杂系统分步实现",
+          "source_text": "先线性执行→加条件分支→加错误处理→接入已有系统，每步验证再往下",
+          "paraphrase": "复杂功能分阶段交付，每阶段独立验证",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "24",
+      "lecture_title": "24｜MCP 工具接入（上）：搞懂协议，把 Client 跑通",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：MCP 用标准化协议把 M×N 套适配代码变成 M+N；Function Calling 是核心机制（两次 LLM 调用）。论证结构：为什么不直接调 API → MCP 三概念 → Function Calling → 选型。",
+      "adler_q2": "解决'Agent 如何调用外部工具'的问题。已解决：MCP 协议理解 + Java SDK 选型（弃 Spring AI）+ Function Calling 链路；未解决：真实 Server 留待下讲。",
+      "adler_q3": "有道理。'M×N 变 M+N'的 USB 类比精当；弃 Spring AI 的选型理由（两套抽象摩擦）务实；'工具 description 决定选工具准确率'是真实要点。",
+      "adler_q4": "读完能理解 MCP + Function Calling 机制并接入官方 Java SDK。",
+      "critical_notes": "协议讲解清晰，选型判断有据。扣分：偏技术科普，原创性一般。",
+      "extractions": [
+        {
+          "type": "analogy",
+          "name": "MCP 之于工具，如 USB 之于外设",
+          "source_text": "MCP 之前 M 个 AI 平台 × N 个工具 = M×N 套适配代码；之后 = M+N",
+          "paraphrase": "标准化协议把工具与平台解耦",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "25"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "课程原文",
+            "notes": "讲师核心论点，可直接引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "25",
+      "lecture_title": "25｜MCP 工具接入（下）：自建 MCP Server，让 Agent 能做真正的事",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心主张：自建 MCP Server 时从业务场景推导工具（先问用户会说什么→推导需要的能力→实现）。论证结构：何时自建 → Server 长什么样 → 从场景推导工具 → 实现。",
+      "adler_q2": "解决'如何开发自建 MCP Server'的问题。已解决：从场景推导四工具（查资格/提交/查状态/撤销）+ statusLabel 设计；未解决：权限控制留作思考题。",
+      "adler_q3": "有道理。'从场景推导工具不是拍脑袋'、'返回值设计要考虑 LLM 怎么用'（statusLabel 分字段）是真实设计洞察。",
+      "adler_q4": "读完能为内部系统开发 MCP Server，并学会从场景反推工具集。",
+      "critical_notes": "从场景推导工具 + statusLabel 设计是亮点。扣分：模板化开发，创新度有限。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "从场景推导工具",
+          "source_text": "先问用户会说什么→再问需要什么能力→最后才是怎么实现",
+          "paraphrase": "从真实用户话语反推工具集，而非拍脑袋定工具",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "24"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "28",
+      "lecture_title": "28｜容器化与部署：从本地到可交付",
+      "snr_score": 3.05,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：用咨询模式讨论部署形态，让 AI 帮你发现遗漏（如健康检查接口），再生成 Dockerfile/K8s YAML。论证结构：三部署形态 → 健康检查前置 → 本地/Docker/K8s。",
+      "adler_q2": "解决'如何把应用变成可交付'的问题。已解决：三种部署形态的完整交付物；未解决：CI/CD 自动化留作思考题。",
+      "adler_q3": "有道理。'AI 先读代码再动手、发现格式不一致主动问'的协作演示有价值；层缓存优化、非 root、SSE 关闭缓冲等细节真实。",
+      "adler_q4": "读完能生成三种形态的部署产物，并学会让 AI 在部署前发现遗漏。",
+      "critical_notes": "咨询模式 + AI 协作的演示价值高于部署知识本身。扣分：部署是常规工程内容，创新度低。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "部署前让 AI 帮你发现遗漏",
+          "source_text": "用咨询模式让 AI 讨论部署形态，主动提出健康检查等前置工作",
+          "paraphrase": "部署前先和 AI 讨论清楚，让它发现你没想到的前置条件",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "29",
+      "lecture_title": "29｜可观测性与排错：生产级系统的最后拼图",
+      "snr_score": 3.38,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "核心主张：可观测性让黑盒变透明，traceId 定位单次请求 + 指标看趋势 + 分级告警不吵人。论证结构：可观测性方案 → 结构化日志+traceId → 指标埋点 → 健康检查 → 告警策略。",
+      "adler_q2": "解决'系统出问题如何快速定位'的问题。已解决：traceId 链路 + Prometheus 指标 + Grafana 大盘 + 分级告警；未解决：日志平台等留作思考题。",
+      "adler_q3": "有道理。'提前把 traceId 放 MDC、日志字段规范趁早定、Actuator 端口隔离'三个架构决策有价值；'分级告警不吵人'（不建议告警清单）实用。",
+      "adler_q4": "读完能为系统搭建可观测性 + 分级告警，并把 traceId 贯穿链路。",
+      "critical_notes": "'分级告警不吵人'和'AI 执行前主动发现指标名不对'是亮点。扣分：可观测性是常规工程内容，创新度中等。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "分级告警不吵人",
+          "source_text": "不是所有异常都需要叫醒人，P0/P1/P2 分级 + 不建议告警清单",
+          "paraphrase": "按业务场景定告警阈值，避免告警疲劳",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "29"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "hot-1",
+      "lecture_title": "热点速递｜Claude Code 源码泄漏：热闹看完，我们聊点真问题",
+      "snr_score": 2.62,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 4.0,
+        "actionability": 1.5,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心主张：源码泄漏暴露的是客户端工程而非模型能力，真正的壁垒在模型能力和使用工具的人。论证结构：事件回顾 → 泄漏的是客户端不是大脑 → 印证课程核心判断。",
+      "adler_q2": "解决'源码泄漏是否让 Claude Code 竞争力受损'的问题。已解决：给出'工程可复制、模型能力不可复制'的判断；未解决：纯评论，无实操。",
+      "adler_q3": "有道理。'工程可以复制，模型能力不能'是敏锐判断；源码泄漏数据（51.2万行/1900文件）可验证。",
+      "adler_q4": "读完能对'AI 工具开源/泄漏'类事件建立理性判断框架。",
+      "critical_notes": "新闻评论，含一个有价值洞察（壁垒在模型不在客户端）。扣分：无实操，可操作性低。",
+      "extractions": [
+        {
+          "type": "data_point",
+          "name": "Claude Code v2.1.88 源码泄漏约 51.2 万行 / 1900 文件",
+          "source_text": "泄漏的是 Agent 客户端工程实现，约 51 万行 TS 源码、1900 多个文件",
+          "paraphrase": "可作 AI 工具壁垒讨论的事实素材",
+          "writing_angle": "data_point",
+          "related_lectures": [
+            "intro"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Anthropic 官方确认 + 多家媒体",
+            "notes": "可验证，2025 年 v2.1.88 source map 泄漏事件属实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "hot-2",
+      "lecture_title": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 1.5,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "核心主张：学 AI 编程的本质是学'做工程/下判断'的能力，而非学某个工具。论证结构：阿里禁用事件 → 学 AI 编程到底学什么。",
+      "adler_q2": "解决'AI 编程的学习重心在哪'的问题。已解决：工具观（方法论>工具）的论点；未解决：观点为主，无实操。",
+      "adler_q3": "有道理，与课程主线一致，但以个人视角论证，论证强度弱。",
+      "adler_q4": "读完能澄清'学工具还是学方法'的认知。",
+      "critical_notes": "观点评论，与课程主线呼应。扣分：仅个人观点，无结构化的方法论或数据。",
+      "extractions": [
+        {
+          "type": "data_point",
+          "name": "阿里内部禁用 Claude Code",
+          "source_text": "阿里禁用 Claude Code 事件，引出对'学 AI 编程学什么'的讨论",
+          "paraphrase": "可作 AI 编程在国内落地争议的素材",
+          "writing_angle": "data_point",
+          "related_lectures": [
+            "hot-1"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "新闻媒体",
+            "notes": "可验证，2025 年阿里禁用事件属实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "07｜实操课：顶层设计全流程演示",
+      "snr_score": 2.27,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：演示顶层设计全流程，产出完整 CLAUDE.md。论证结构：与 03-06 正课重复。",
+      "adler_q2": "解决'顶层设计如何一次性跑通'的问题，但内容与正课高度重叠。",
+      "adler_q3": "演示课，信息与正课重复，独立价值低。",
+      "adler_q4": "读完可对照正课复习，独立增量有限。",
+      "critical_notes": "与 03-06 重复的演示课。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "08｜工程初始化（上）：后端骨架与公共基础设施",
+      "snr_score": 2.15,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：初始化后端骨架与公共基础设施。",
+      "adler_q2": "铺垫性脚手架内容，方法论含量低。",
+      "adler_q3": "纯工程搭建，可操作性有但迁移性低。",
+      "adler_q4": "读完能搭一个后端骨架。",
+      "critical_notes": "铺垫内容，为后续模块复用基础设施。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "09｜工程初始化（下）：前端工程与一键启动",
+      "snr_score": 2.15,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：初始化前端工程与一键启动脚本。",
+      "adler_q2": "铺垫性脚手架内容。",
+      "adler_q3": "纯工程搭建。",
+      "adler_q4": "读完能搭一个前端骨架。",
+      "critical_notes": "铺垫内容。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "10｜基础组件（上）：后端业务基础设施",
+      "snr_score": 2.15,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：搭建后端业务基础设施（BaseEntity/PageHelper/缓存等）。",
+      "adler_q2": "铺垫性内容，但产出物（基础设施）被后续模块反复复用。",
+      "adler_q3": "纯工程搭建，但有'搭好基础设施换模块提效'的隐性价值。",
+      "adler_q4": "读完能搭一套可复用的后端基础设施。",
+      "critical_notes": "铺垫内容，价值在'基础设施复用'而非本讲本身。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "11｜基础组件（下）：前端 UI 设计与前端基础组件",
+      "snr_score": 2.15,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：搭建前端 UI 与基础组件（HifyTable/HifyFormDialog 等）。",
+      "adler_q2": "铺垫性内容，前端组件被后续模块复用。",
+      "adler_q3": "纯工程搭建。",
+      "adler_q4": "读完能搭一套可复用的前端基础组件。",
+      "critical_notes": "铺垫内容。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "12｜实操课：工程搭建全流程演示",
+      "snr_score": 2.05,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：演示工程搭建全流程。",
+      "adler_q2": "与 08-11 正课重复的演示。",
+      "adler_q3": "演示课，独立价值低。",
+      "adler_q4": "可对照复习。",
+      "critical_notes": "与正课重复。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "17｜对话引擎（下）：让智能客服真正开口说话",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：实现对话引擎的上下文管理与 CRUD，让客服真正开口。",
+      "adler_q2": "落地 16 讲设计，实操为主。",
+      "adler_q3": "技术实现课，独立洞见少。",
+      "adler_q4": "读完能跑通对话链路。",
+      "critical_notes": "上下文管理（Redis）是核心但偏实操。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "18｜复杂前端交互：让 Claude Code 帮你搞定流式聊天界面",
+      "snr_score": 2.38,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：用'复杂度分层描述法'让 AI 搞定复杂前端交互。",
+      "adler_q2": "前端实现课，含一个可迁移的描述技巧。",
+      "adler_q3": "偏前端实操，'复杂度分层描述'有可迁移点。",
+      "adler_q4": "读完能描述复杂前端需求给 AI。",
+      "critical_notes": "偏前端，迁移性中等。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "复杂度分层描述法",
+          "source_text": "把复杂交互分层描述给 AI（数据流/组件结构/交互状态）",
+          "paraphrase": "把复杂需求分层拆解描述，降低 AI 理解难度",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "23"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "无独立来源（方法论/操作框架，逻辑自洽）",
+            "notes": "原创方法论，非品牌化重命名，可操作"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "19｜实操课：核心功能基础篇全流程演示",
+      "snr_score": 2.05,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：演示基础篇全流程。",
+      "adler_q2": "与 13-18 重复的演示。",
+      "adler_q3": "演示课，独立价值低。",
+      "adler_q4": "可对照复习。",
+      "critical_notes": "与正课重复。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "26",
+      "lecture_title": "26｜实操课：核心功能高级篇全流程演示",
+      "snr_score": 2.05,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：演示高级篇全流程。",
+      "adler_q2": "与 20-25 重复的演示。",
+      "adler_q3": "演示课，独立价值低。",
+      "adler_q4": "可对照复习。",
+      "critical_notes": "与正课重复。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "30",
+      "lecture_title": "30｜实操课：测试部署全流程演示",
+      "snr_score": 2.05,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 2.5,
+        "actionability": 2.5,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "核心主张：演示测试部署全流程。",
+      "adler_q2": "与 27-29 重复的演示。",
+      "adler_q3": "演示课，独立价值低。",
+      "adler_q4": "可对照复习。",
+      "critical_notes": "与正课重复。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "outro",
+      "lecture_title": "结束语｜一个人的工程团队，静待花开",
+      "snr_score": 1.45,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 2.0,
+        "actionability": 1.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "核心主张：收尾总结与鼓励，重申'一个人的工程团队'愿景。",
+      "adler_q2": "无独立问题，纯收尾。",
+      "adler_q3": "鸡汤性质，无新信息。",
+      "adler_q4": "无新增改变量。",
+      "critical_notes": "结束语，直接跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "quiz",
+      "lecture_title": "结课测试｜来赴一场满分之约！",
+      "snr_score": 1.35,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 2.0,
+        "actionability": 1.0,
+        "change_potential": 1.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "核心主张：结课测试题。",
+      "adler_q2": "无独立知识价值。",
+      "adler_q3": "纯测试题。",
+      "adler_q4": "无。",
+      "critical_notes": "结课测试，直接丢弃。",
+      "extractions": []
+    }
+  ]
+}

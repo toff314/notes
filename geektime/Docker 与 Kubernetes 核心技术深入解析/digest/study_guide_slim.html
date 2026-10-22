@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Docker 与 Kubernetes 核心技术深入解析 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Docker 与 Kubernetes 核心技术深入解析</a><a href="README.html">《Docker 与 Kubernetes 核心技术深入解析》消化索引（digest README）</a></div>
+<h1>Docker 与 Kubernetes 核心技术深入解析 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p><strong>Kubernetes 是一台&quot;声明式期望→控制器收敛&quot;的机器</strong>：你只声明&quot;我要什么&quot;（Spec），控制器（Controller Manager/kubelet/调度器）通过 watch-队列-worker 不断把真实状态（Status）拉向期望——理解了这个模式，所有组件（调度器、控制器、kube-proxy、甚至 operator）都是同一个骨架的变体。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>Raft 选主+日志复制</strong>：Follower 超时未收心跳→拉票→多数同意成 Leader；写操作必须经 Leader、多数确认才 commit；etcd 集群用奇数节点（3 容忍 1 坏、5 容忍 2 坏）。</li><li><strong>request≠limit 超售</strong>：request 给调度器锁定最少需求、limit 给 cgroup 设上限，差值即超售空间——资源利用率来自业务高峰错峰共享。</li><li><strong>负载均衡=修改数据包头</strong>：把虚拟 IP 的目标换成真实服务器地址；四种技术（NAT/新建连接/DR/隧道）只是&quot;怎么改&quot;的变体；切流要依赖 LB（流量必经），不能依赖 DNS（TTL 缓存滞后）。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>list 请求务必带 resourceVersion</strong>（信任 API Server 缓存），否则穿透到 etcd，大集群会堵死共享 gRPC 连接（L16 故障案例）。</li><li><strong>API Server 的 health check 要真实探测依赖存活</strong>（如 etcd 实质健康），只看端口可达会在故障时&quot;假健康&quot;并引发大规模误驱逐（L17）。</li><li><strong>容器启动命令不要用 bash/sh 封装</strong>——会吞掉 SIGTERM 使优雅终止失效；单容器单应用+tini，日志走 stdout（L33）。</li><li><strong>给容器设 PID/连接等资源限额</strong>，防止&quot;应用炸弹&quot;（无限制 Pod 耗尽节点资源后循环摧毁整个集群）（L26）。</li><li><strong>生产环境 kube-proxy 用 IPVS 而非 iptables</strong>——iptables 概率链在后端多时规则爆炸且全量刷新（L36）。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><strong>Pod 里定义 1 个容器，节点上实际跑 2 个进程</strong>——多出的 pause 容器（Sandbox）是一个永不退出的&quot;空&quot;底座，网络挂在它上面而非应用容器上；应用进程随便崩溃重启，网络身份不丢。这是 Pod 网络稳定性的基石（L28）。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值</strong>（3.42/5，🥇6 讲金矿）——这是一门稀缺的&quot;生产故障叙事型&quot;原理课：Raft/调度/网络等机制讲得清、可验证，且大量故障案例（list 穿透、假健康误驱逐、重试风暴、SIGTERM 被吞）是文档里找不到的踩坑经验。但需注意：约 1/4 内容为教程/文档复述（铜矿），过半量化数据为讲师内部经验（❓），引用时须标注&quot;据讲师称&quot;；零基础者应先装好集群再读。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

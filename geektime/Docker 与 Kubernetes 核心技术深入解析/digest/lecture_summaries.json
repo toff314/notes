@@ -1,0 +1,1493 @@
+{
+  "course": "Docker 与 Kubernetes 核心技术深入解析",
+  "scan_date": "2026-08-31",
+  "total_lectures": 39,
+  "modules": [
+    {
+      "module_index": 0,
+      "module_name": "第一章：Docker 核心技术",
+      "lecture_count": 6,
+      "value_density": "medium-high"
+    },
+    {
+      "module_index": 1,
+      "module_name": "第二章：Kubernetes 架构原则和对象设计",
+      "lecture_count": 5,
+      "value_density": "medium-high"
+    },
+    {
+      "module_index": 2,
+      "module_name": "第三章：Kubernetes 控制平面组件：etcd",
+      "lecture_count": 6,
+      "value_density": "high"
+    },
+    {
+      "module_index": 3,
+      "module_name": "第四章：Kubernetes 控制平面组件：API Server",
+      "lecture_count": 8,
+      "value_density": "medium-high"
+    },
+    {
+      "module_index": 4,
+      "module_name": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "lecture_count": 7,
+      "value_density": "high"
+    },
+    {
+      "module_index": 5,
+      "module_name": "第六章：生命周期管理和服务发现",
+      "lecture_count": 7,
+      "value_density": "high"
+    }
+  ],
+  "lectures": [
+    {
+      "lecture_id": "01",
+      "title": "从系统架构谈起",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/1. 从系统架构谈起/1. 从系统架构谈起.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "从应用系统架构的演进谈起（单体→SOA→微服务），为理解容器与 Kubernetes 铺垫背景。",
+      "last_200_words": "给出选型建议（新业务先单体起步）与拆分原则（高内聚松耦合、拆分三要素、Istio 合并案例、点对点+API 网关）。",
+      "headings": [],
+      "key_terms": [
+        "单体架构",
+        "SOA/ESB",
+        "微服务",
+        "一服务一库",
+        "高内聚松耦合",
+        "API 网关",
+        "微服务拆分三要素"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "架构演进为常识性背景，但 Istio 合并案例与『升级痛苦=划分不对』有独立洞见；无量化数据。",
+      "warning_signals": [
+        "no_counter_example"
+      ],
+      "connects_to": [
+        "02",
+        "07"
+      ],
+      "connects_to_reason": "微服务架构演进为容器与 K8s 铺垫动机",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "02",
+      "title": "理解 Docker",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/2. 理解 Docker/2. 理解 Docker.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "从微服务需要独立网络身份切入，介绍 Docker 起源、容器与虚拟机对比及基础操作。",
+      "last_200_words": "演示 Docker 安装、docker run/ps/inspect/exec/cp、Dockerfile 构建全流程。",
+      "headings": [],
+      "key_terms": [
+        "Namespace",
+        "cgroups",
+        "Union FS",
+        "容器镜像",
+        "Dockerfile",
+        "端口映射"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "教程级对比与命令演示，『容器性能≈裸金属』等量化声明无出处；原理性内容在后续两讲展开。",
+      "warning_signals": [
+        "pure_setup",
+        "precise_data_no_source"
+      ],
+      "connects_to": [
+        "03",
+        "04"
+      ],
+      "connects_to_reason": "Docker 基本概念与操作，后续讲深入原理",
+      "claimed_data_points": [
+        {
+          "claim": "容器中运行的程序与主机性能相差不超过 1%",
+          "context": "容器vs虚拟机性能对比",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "虚拟机一台机器最多几十个实例，容器可跑几千个",
+          "context": "实例密度对比",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "title": "Docker 的核心技术（一）",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/3. Docker 的核心技术（一）/3. Docker 的核心技术（一）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "进入硬核部分：Namespace（隔离）与 cgroups（资源控制）两大内核技术，含原理、系统调用、CFS 调度器与两个动手实验。",
+      "last_200_words": "覆盖容器四大特性、Namespace 原理/系统调用/实操、cgroups 子系统/CPU 与内存控制实验、CFS 调度器与 cgroup driver 统一问题；Memory 实验留作业。",
+      "headings": [],
+      "key_terms": [
+        "task_struct/nsproxy",
+        "clone/setns/unshare",
+        "Network Namespace",
+        "cgroups",
+        "css_set",
+        "CPU Share vs CFS quota",
+        "vruntime",
+        "红黑树",
+        "可压缩/不可压缩资源",
+        "cgroupfs vs systemd"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "原理深入（CFS vruntime 公式、quota/period=核数）+CPU 压制实验（200%→10%）可复现验证；cgroup driver 坑是真实部署问题。",
+      "warning_signals": [
+        "source_code_walkthrough"
+      ],
+      "connects_to": [
+        "04",
+        "05",
+        "26"
+      ],
+      "connects_to_reason": "cgroups/Namespace 机制与调度器/资源模型呼应",
+      "claimed_data_points": [
+        {
+          "claim": "cfs_period_us 默认 100000 微秒、cfs_quota_us 默认 -1",
+          "context": "CPU 子系统实验",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "quota/period=分配的 CPU 核数（100000/100000=1 核、50000=0.5 核、10000=0.1 核）",
+          "context": "CPU 子系统实验",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "title": "Docker 的核心技术（二）",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/4. Docker 的核心技术（二）/4. Docker 的核心技术（二）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "揭晓 Docker 真正的创举：基于 OverlayFS 的分层文件系统，使面向应用打包成为可能。",
+      "last_200_words": "学习了 Docker 文件系统如何通过 OverlayFS 实现堆叠；预告下讲讲网络。",
+      "headings": [],
+      "key_terms": [
+        "UnionFS",
+        "Dockerfile 分层",
+        "Bootfs/Rootfs",
+        "Copy-on-Write",
+        "OverlayFS",
+        "OCI 标准",
+        "containerd",
+        "containerd-shim",
+        "控制面/数据面分离"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "写时复制/分层共享机制解释清晰；『Docker daemon 直接作为父进程导致升级重启全部容器』的架构演进洞见独立于文档。",
+      "warning_signals": [],
+      "connects_to": [
+        "03",
+        "06"
+      ],
+      "connects_to_reason": "文件系统技术与 Docker 引擎架构演进",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "05",
+      "title": "容器网络",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/5. 容器网络/5. 容器网络.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "看 Docker 四种网络模式区别，理解让容器模拟成虚拟机需要做哪些网络配置。",
+      "last_200_words": "手工配置 veth pair+bridge 复现 Docker 默认网络；Overlay/Underlay 跨主机方案与 VXLAN 抓包。",
+      "headings": [],
+      "key_terms": [
+        "CNM",
+        "None/Host/Container/Bridge 模式",
+        "veth pair",
+        "docker0",
+        "Overlay/Underlay",
+        "VXLAN/VTEP",
+        "Flannel"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "手工配置实验教学价值高、Overlay/Underlay 对比清晰；但内容多来自 Docker 标准文档，独立洞见有限。",
+      "warning_signals": [],
+      "connects_to": [
+        "30",
+        "36"
+      ],
+      "connects_to_reason": "容器网络机制与后续 CNI/kube-proxy 呼应",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "06",
+      "title": "Dockerfile 的最佳实践",
+      "module": "第一章：Docker 核心技术",
+      "module_index": 0,
+      "source_file": "第一章：Docker 核心技术/6. Dockerfile 的最佳实践/6. Dockerfile 的最佳实践.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "日常工作中如何构建与管理容器镜像、有哪些最佳实践；类比 Cloud-Init 引出 Dockerfile。",
+      "last_200_words": "以作业收尾：把 Go HTTP Server 做成镜像推送官方仓库，并用 nsenter 查看网络配置。",
+      "headings": [],
+      "key_terms": [
+        "12 Factor",
+        "构建上下文",
+        "层缓存",
+        "多段构建",
+        "FROM 选型",
+        "ADD vs COPY",
+        "EXPOSE 约定",
+        "ENTRYPOINT 面向应用",
+        "tini",
+        "镜像 Tag 三段式"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "构建上下文/RUN&&合并/VOLUME 陷阱/EXPOSE 真相/tini 信号传递等踩坑密度高；12 Factor 与 K8s 配置分离思想衔接。",
+      "warning_signals": [],
+      "connects_to": [
+        "33",
+        "37"
+      ],
+      "connects_to_reason": "镜像构建最佳实践与 Pod 配置注入/优雅终止衔接",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "07",
+      "title": "Kubernetes 架构基础（一）",
+      "module": "第二章：Kubernetes 架构原则和对象设计",
+      "module_index": 1,
+      "source_file": "第二章：Kubernetes 架构原则和对象设计/1. Kubernetes 架构基础（一）/1. Kubernetes 架构基础（一）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "回答 Kubernetes 为什么成为云原生标准：源自谷歌 Borg 的集群管理思想与声明式系统。",
+      "last_200_words": "理解了 Kubernetes 来源（Borg 开源）、声明式系统优势；预告下讲深入设计原则。",
+      "headings": [],
+      "key_terms": [
+        "Borg",
+        "Cell/Job/Task/Naming",
+        "在线/离线混布",
+        "WorstFit/BestFit",
+        "幂等性",
+        "可压缩/不可压缩资源",
+        "命令式 vs 声明式"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "Borg 架构与混布数据（98%/95%）可溯源至 Google Borg 论文；电视/空调遥控器类比讲透声明式；但为整理性内容。",
+      "warning_signals": [],
+      "connects_to": [
+        "08",
+        "09"
+      ],
+      "connects_to_reason": "Borg 思想是理解 K8s 设计原则的钥匙",
+      "claimed_data_points": [
+        {
+          "claim": "谷歌 98% 的服务器实现了在线/离线混布，95% 跑超过 25 个 task、4500 个线程",
+          "context": "Borg 混布量化数据",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "08",
+      "title": "Kubernetes 架构基础（二）",
+      "module": "第二章：Kubernetes 架构原则和对象设计",
+      "module_index": 1,
+      "source_file": "第二章：Kubernetes 架构原则和对象设计/2. Kubernetes 架构基础（二）/2. Kubernetes 架构基础（二）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "讲清标准 API 战略逻辑与三大能力对象（Node/Pod/Service），逐组件拆解控制面与联动链路。",
+      "last_200_words": "完整演示 Deployment→ReplicaSet→Pod→调度绑定→kubelet 加载链路。",
+      "headings": [],
+      "key_terms": [
+        "标准 API/事实标准",
+        "Node/Pod/Service",
+        "etcd watch",
+        "三个A",
+        "Mutating/Validating",
+        "Aggregator",
+        "Informer/Lister",
+        "最终一致性"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "信息密度高、架构链路完整；etcd 数据库+消息中间件双重角色、星型连接架构等解释清晰。",
+      "warning_signals": [],
+      "connects_to": [
+        "07",
+        "09",
+        "10"
+      ],
+      "connects_to_reason": "控制面组件全景，后续模块逐个深入",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "09",
+      "title": "了解 kubectl，深入理解 Kubernetes（一）",
+      "module": "第二章：Kubernetes 架构原则和对象设计",
+      "module_index": 1,
+      "source_file": "第二章：Kubernetes 架构原则和对象设计/3. 了解 kubectl，深入理解 Kubernetes（一）/3. 了解 kubectl，深入理解 Kubernetes（一）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "讲解 kubectl 常用操作、IaaS/PaaS/SaaS 演进以定位 Kubernetes、声明式系统设计原则与 kubeadm 装集群。",
+      "last_200_words": "带学员过完 kubeadm 集群安装教程，作业：按教程把集群装好。",
+      "headings": [],
+      "key_terms": [
+        "kubectl 转换器",
+        "kubeconfig/context",
+        "Event 对象",
+        "云=算力抽象",
+        "IaaS/PaaS/SaaS",
+        "声明式 API 幂等",
+        "condition 复用",
+        "复杂度线性",
+        "self-hosting",
+        "cgroup driver 一致性"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "声明式设计原则（复杂度线性、避免简单封装、对象组合）是官方文档之外的提炼；self-hosting 与 cgroup driver 坑真实。",
+      "warning_signals": [],
+      "connects_to": [
+        "08",
+        "10"
+      ],
+      "connects_to_reason": "设计原则与安装实践，为后续实验打基础",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "10",
+      "title": "深入理解 Kubernetes（二）",
+      "module": "第二章：Kubernetes 架构原则和对象设计",
+      "module_index": 1,
+      "source_file": "第二章：Kubernetes 架构原则和对象设计/4. 深入理解 Kubernetes（二）/4. 深入理解 Kubernetes（二）.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "拆解每个 Kubernetes 对象共通的属性组：TypeMeta、Metadata、Spec、Status。",
+      "last_200_words": "小结：对象共性（TypeMeta/Metadata 通用、Spec/Status 差异化）与 group 分层组织方式。",
+      "headings": [],
+      "key_terms": [
+        "GKV",
+        "Alpha/Beta/GA 版本演进",
+        "Namespace+Name 唯一性",
+        "Label/Annotation",
+        "Finalizer",
+        "ResourceVersion 乐观锁",
+        "Spec vs Status",
+        "selector"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "Finalizer 删除流程与乐观锁机制解释清楚，但内容为对象规范复述，官方文档高度覆盖。",
+      "warning_signals": [],
+      "connects_to": [
+        "09",
+        "11"
+      ],
+      "connects_to_reason": "对象模型为后续对象概览与 apimachinery 铺垫",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "11",
+      "title": "核心对象概览",
+      "module": "第二章：Kubernetes 架构原则和对象设计",
+      "module_index": 1,
+      "source_file": "第二章：Kubernetes 架构原则和对象设计/5. 核心对象概览/5. 核心对象概览.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "真正去看 Kubernetes 核心对象长什么样、如何设计、为什么这样设计。",
+      "last_200_words": "课后练习：创建 Ingress 依赖的 ConfigMap、Deployment，验证配置变更感知。",
+      "headings": [],
+      "key_terms": [
+        "Node/Capacity-Allocatable",
+        "Namespace/Finalizer",
+        "Pod 共享网络",
+        "探针三兄弟",
+        "ConfigMap",
+        "Secret/ServiceAccount",
+        "Service/selector",
+        "ReplicaSet/Deployment",
+        "StatefulSet",
+        "CRD"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "对象概览信息完整、探针/StatefulSet 身份等解释到位，但整体为对象遍历，独立洞见有限。",
+      "warning_signals": [],
+      "connects_to": [
+        "10",
+        "26",
+        "33"
+      ],
+      "connects_to_reason": "核心对象为调度/生命周期章节提供对象背景",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "12",
+      "title": "etcd 概要：主要功能及使用场景",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/1. etcd 概要：主要功能及使用场景/1. etcd 概要：主要功能及使用场景.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "etcd 是什么、核心能力（KV/Watch/Lease/CAS）与适用场景。",
+      "last_200_words": "总结：etcd 提供 KV 存储、Watch、Lease、CAS 机制，适用 KV 数据库、服务发现、消息发布订阅。",
+      "headings": [],
+      "key_terms": [
+        "分布式 KV 存储",
+        "Watch 推送",
+        "Lease 续约",
+        "CAS",
+        "2379/2380 端口"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "入门级概览，Watch/Lease/CAS 机制介绍清晰；性能数据（1000写/2000读）无 benchmark 出处。",
+      "warning_signals": [
+        "precise_data_no_source"
+      ],
+      "connects_to": [
+        "13",
+        "14"
+      ],
+      "connects_to_reason": "etcd 能力概览为 Raft 与实现章节铺垫",
+      "claimed_data_points": [
+        {
+          "claim": "etcd 最新数据每秒可支持约 1000 次写操作、2000 次读操作",
+          "context": "etcd 核心能力",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "13",
+      "title": "Raft 协议",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/2. Raft 协议/2. Raft 协议.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "用简短篇幅讲清 Raft 协议如何工作，以及不同场景（正常/Leader 故障/网络分区）下的行为。",
+      "last_200_words": "总结：Raft 核心就是选主和日志复制两个行为；预告看 etcd 如何实现。",
+      "headings": [],
+      "key_terms": [
+        "Quorum 多数同意",
+        "Follower/Candidate/Leader",
+        "Leader Election",
+        "Election Timeout 150-300ms",
+        "Term 任期",
+        "日志复制",
+        "奇数成员原则",
+        "网络分区少数派只读",
+        "Learner"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "原理讲解清晰、反直觉点成立（偶数节点无意义、少数派有 Leader 也写不进、Learner 先同步后投票）；为整理性内容但有教学提炼。",
+      "warning_signals": [],
+      "connects_to": [
+        "14",
+        "16"
+      ],
+      "connects_to_reason": "Raft 为 etcd 高可用与生产运维提供理论基础",
+      "claimed_data_points": [
+        {
+          "claim": "Election Timeout 默认在 150-300 毫秒之间随机取值",
+          "context": "选举机制",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "title": "etcd 如何实现 Raft 协议",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/3. etcd 如何实现 Raft 协议/3. etcd 如何实现 Raft 协议.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "看 etcd 如何做 Raft 的生产级工程实现：选举、日志复制、WAL、MVCC 存储与 watch。",
+      "last_200_words": "学习 etcd 数据存储完整链路（WAL、一致性模块、MVCC 模块），练习多版本控制操作。",
+      "headings": [],
+      "key_terms": [
+        "投票资格校验",
+        "Leader 完整性",
+        "WAL 预写日志",
+        "revision",
+        "MVCC 存储",
+        "match index",
+        "watchable store",
+        "1.5MB 包限制"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "工程实现细节扎实（WAL log-entry 字段、revision 与 K8s resourceVersion 对应、MVCC 以 revision 为 key）；1.5MB 限制可验证。",
+      "warning_signals": [],
+      "connects_to": [
+        "13",
+        "15",
+        "16"
+      ],
+      "connects_to_reason": "etcd 实现细节为高可用运维铺垫",
+      "claimed_data_points": [
+        {
+          "claim": "etcd 对单个数据包大小做限制约 1.5MB",
+          "context": "数据写入流程预检查",
+          "preliminary_status": "likely_ok"
+        }
+      ]
+    },
+    {
+      "lecture_id": "15",
+      "title": "构建高可用 etcd 集群",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/4. 构建高可用 etcd 集群/4. 构建高可用 etcd 集群.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "以实验为主演示：安全如何保证、高可用集群如何构建、数据如何备份。",
+      "last_200_words": "完整演示 mTLS 证书、三成员集群、snapshot 备份、删库 restore 恢复、配额写满 alarm 处理。",
+      "headings": [],
+      "key_terms": [
+        "mTLS",
+        "peer/client URL 隔离",
+        "snapshot save/restore",
+        "quota-backend-bytes",
+        "compact/defrag/alarm"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "实验流程清晰、磁盘满→alarm→拒写→defrag+disarm 的真实坑有价值；但内容以操作步骤为主。",
+      "warning_signals": [
+        "pure_setup"
+      ],
+      "connects_to": [
+        "14",
+        "16"
+      ],
+      "connects_to_reason": "构建与备份操作为生产运维章节铺垫",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "16",
+      "title": "高可用集群管理",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/5. 高可用集群管理/5. 高可用集群管理.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "生产系统高可用 etcd 集群的管理维护：operator/Helm、堆叠与外部、数量权衡、存储网络实践与增强备份。",
+      "last_200_words": "分享生产经验：operator/Helm 拉起方式、master 数量权衡、本地 SSD 实践、参数调优、30分钟快照+10秒增量备份方案。",
+      "headings": [],
+      "key_terms": [
+        "etcd-operator",
+        "CRD+Controller",
+        "堆叠 vs 外部 etcd",
+        "3/5 节点权衡",
+        "gRPC 连接复用",
+        "list 穿透",
+        "本地 SSD 最佳实践",
+        "心跳/选举超时调参",
+        "快照+增量备份"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "gRPC 连接复用+list 不带 resourceVersion 穿透导致 5000 节点故障的案例链完整；『性能不够就横向扩展』对 etcd 不成立的洞见；备份方案工程化。多个独立洞见+机制可验证。",
+      "warning_signals": [],
+      "connects_to": [
+        "13",
+        "14",
+        "17"
+      ],
+      "connects_to_reason": "etcd 生产运维金矿，故障案例在 17 讲延续",
+      "claimed_data_points": [
+        {
+          "claim": "默认心跳周期 100 毫秒、选举超时 1000 毫秒、选举超时=心跳 10 倍",
+          "context": "参数调优",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "心跳周期设为网络 RTT 的 0.5-1.5 倍、选举超时 RTT 10 倍",
+          "context": "参数调优经验值",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "5000 节点大集群 DaemonSet 每分钟 list 一次 pod，1 万 pod 一次 list 超 100MB",
+          "context": "故障案例",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "17",
+      "title": "etcd 常见问题及解决办法",
+      "module": "第三章：Kubernetes 控制平面组件：etcd",
+      "module_index": 2,
+      "source_file": "第三章：Kubernetes 控制平面组件：etcd/6. etcd 常见问题及解决办法/6. etcd 常见问题及解决办法.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "分享生产运维实际遇到的各种问题及解决办法：备份增强、安全性、查询对应关系、FMA 故障注入经典案例。",
+      "last_200_words": "作业：用 Bitnami 或 etcd-operator 构建 etcd 集群；强调健康检查避免灾难性故障。",
+      "headings": [],
+      "key_terms": [
+        "快照+事件流增量备份",
+        "落盘加密",
+        "乐观锁 409",
+        "FMA 故障注入",
+        "假健康误驱逐",
+        "API Server 自杀"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "FMA 案例（API Server health check 只看 etcd 端口可达、etcd 已 503 仍被当健康→40% 节点被误驱逐）是教科书级故障链；解决方案（health check 真实探测、API Server 自杀）独立于官方文档。",
+      "warning_signals": [],
+      "connects_to": [
+        "16",
+        "24"
+      ],
+      "connects_to_reason": "FMA 方法论与 API Server 高可用章节呼应",
+      "claimed_data_points": [
+        {
+          "claim": "5 节点 master 中 2 个 etcd 503 无响应，负载均衡使 40% 节点挂在假健康 API Server 上",
+          "context": "FMA 故障注入案例",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "18",
+      "title": "API Server 概念",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/1. Kubernetes 核心组件：API Server 概念/1. Kubernetes 核心组件：API Server 概念.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "API Server 是控制面 API 网关，需认证、鉴权、准入、限流四层自我保护。",
+      "last_200_words": "宏观上 API Server 是简单 REST server，展开后十余步复杂流转；预告逐环节深挖。",
+      "headings": [],
+      "key_terms": [
+        "认证/鉴权/准入/限流",
+        "唯一连接 etcd",
+        "Mutating/Validating",
+        "MaxInFlight",
+        "审计 Audit",
+        "Impersonation",
+        "kube-aggregator",
+        "Conversion"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "概念引入，四层职责与请求流转框架清晰；为后续章节目录性内容。",
+      "warning_signals": [],
+      "connects_to": [
+        "19",
+        "20",
+        "21",
+        "22",
+        "23"
+      ],
+      "connects_to_reason": "API Server 模块开篇",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "19",
+      "title": "API Server 认证机制",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/2. API Server 的认证机制/2. API Server 的认证机制.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "深入看 API Server 如何做认证：Insecure/Secure Port、X509、静态 token、ServiceAccount。",
+      "last_200_words": "用静态 token、X509、ServiceAccount 三个例子演示认证原理；预告 Webhook 集成。",
+      "headings": [],
+      "key_terms": [
+        "Insecure/Secure Port",
+        "X509 证书/CSR",
+        "静态 token",
+        "ServiceAccount JWT",
+        "Webhook 认证"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "demo 型讲解，『403 恰恰证明认证成功』、认证与授权分离的反直觉点清晰；但机制为官方文档复述。",
+      "warning_signals": [],
+      "connects_to": [
+        "20",
+        "21"
+      ],
+      "connects_to_reason": "认证机制为 Webhook 集成与授权章节铺垫",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "20",
+      "title": "基于 Webhook 的认证服务集成",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/3. 基于 Webhook 的认证服务集成/3. 基于 Webhook 的认证服务集成.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "如何基于 Webhook 把 Kubernetes 与企业认证平台集成，把集群打造成多租户开放平台。",
+      "last_200_words": "GitHub PAT 示例端到端演示；强调指数退避与熔断的事故教训。",
+      "headings": [],
+      "key_terms": [
+        "TokenReview",
+        "认证代理机制",
+        "token cache TTL",
+        "指数退避",
+        "circuit breaker",
+        "重试风暴"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "TokenReview 协议与代理机制讲解清楚；『无退避重试把自愈变成 DDoS』的事故复盘（Keystone 被打死）是独立洞见；但整讲教程性内容偏多。",
+      "warning_signals": [],
+      "connects_to": [
+        "19",
+        "21"
+      ],
+      "connects_to_reason": "Webhook 集成与认证/授权事故经验呼应",
+      "claimed_data_points": [
+        {
+          "claim": "token cache TTL 默认 2 分钟",
+          "context": "集成配置要点",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "300 个集群并发认证失败全部重试，Keystone 被请求堆积打死持续数小时",
+          "context": "重试风暴事故",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "21",
+      "title": "API Server 授权机制",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/4. API Server 的授权机制/4. API Server 的授权机制.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "认证之后能做什么：ABAC/RBAC、Role 模型、多租户权限规划与生产事故教训。",
+      "last_200_words": "总结：生产环境最常用 RBAC，理解 Role/ClusterRole/绑定模型与最小权限原则。",
+      "headings": [],
+      "key_terms": [
+        "ABAC/RBAC",
+        "Role/RoleBinding/ClusterRole",
+        "Subject/ServiceAccount/Group",
+        "多租户强弱隔离",
+        "cluster-admin 警示",
+        "namespace admin 自动化",
+        "update vs patch"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "事故教训真实（春节误删生产集群、只读权限救命、update→patch 权限坑）；强/弱隔离规划可操作；但 RBAC 模型本身为整理性内容。",
+      "warning_signals": [],
+      "connects_to": [
+        "19",
+        "20",
+        "24"
+      ],
+      "connects_to_reason": "授权机制与多租户集群构建衔接",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "22",
+      "title": "API Server 准入控制",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/5. API Server 的准入控制/5. API Server 的准入控制.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "准入控制两大目的（变形与校验）、配额管理场景、内置插件与 Mutating/Validating Webhook。",
+      "last_200_words": "生产实践：先看默认准入插件能否实现，需要扩展再走 Webhook。",
+      "headings": [],
+      "key_terms": [
+        "变形/校验",
+        "ResourceQuota",
+        "QoS Pod/BestEffort Pod",
+        "LimitRanger",
+        "Mutating/Validating Webhook",
+        "AdmissionReview",
+        "caBundle"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "ResourceQuota 演示与 Webhook 开发链路完整；但机制为官方文档复述，独立洞见有限。",
+      "warning_signals": [],
+      "connects_to": [
+        "18",
+        "24"
+      ],
+      "connects_to_reason": "准入控制为多租户配额管理提供机制",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "23",
+      "title": "API Server 限流方法",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/6. API Server 的限流方法/6. API Server 的限流方法.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "从传统限流算法讲到 MaxInFlight 全局限流，再深入 APF 多等级多队列精细化限流。",
+      "last_200_words": "总结：max-requests-inflight+max-mutating 配置总并发，APF 多优先级多队列把影响控制在局部。",
+      "headings": [],
+      "key_terms": [
+        "固定/滑动窗口",
+        "漏桶/令牌桶",
+        "MaxInFlight",
+        "APF",
+        "FlowSchema/PriorityLevel",
+        "Shuffle Sharding",
+        "Exempt"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "APF 机制（Shuffle Sharding 50 选 4 隔离坏用户）讲解清晰、设计动机充分；限流算法为常识整理。",
+      "warning_signals": [],
+      "connects_to": [
+        "18",
+        "24"
+      ],
+      "connects_to_reason": "限流保护与高可用 API Server 衔接",
+      "claimed_data_points": [
+        {
+          "claim": "--max-requests-inflight 默认 400、--max-mutating-requests-inflight 默认 200",
+          "context": "全局限流参数",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "集群 1000-3000 节点时全部并发设 1500、写并发设 500；3000+ 节点设 3000/1000",
+          "context": "压力测试推荐值",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "24",
+      "title": "高可用 API Server",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/7. 高可用 API Server/7. 高可用 API Server.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "API Server 高可用如何确保（冗余+负载均衡、缓存、统一入口），并组装多租户集群四大能力。",
+      "last_200_words": "方案串讲：高可用 API Server=冗余+LB；多租户=可信/资源/访问/配额隔离+NamespaceCreator 自动化。",
+      "headings": [],
+      "key_terms": [
+        "无状态 REST server",
+        "冗余部署+LB",
+        "WatchCache Ring Buffer",
+        "统一访问入口",
+        "多租户四大能力",
+        "NamespaceCreator 模式",
+        "Insecure 端口警告"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "WatchCache/统一入口/NamespaceCreator 模式有可操作性；但为方案串讲，多数概念前文已覆盖。",
+      "warning_signals": [],
+      "connects_to": [
+        "17",
+        "21",
+        "22"
+      ],
+      "connects_to_reason": "高可用与多租户组装为全书集成点",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "25",
+      "title": "API Server 运作机制，apimachinery 组件",
+      "module": "第四章：Kubernetes 控制平面组件：API Server",
+      "module_index": 3,
+      "source_file": "第四章：Kubernetes 控制平面组件：API Server/8. API Server 运作机制，apimachinery 组件/8. API Server 运作机制，apimachinery 组件.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "请求存入 etcd 前 API Server 内部发生了什么：GKV、版本转换、code generator、sub-resource。",
+      "last_200_words": "梳理 kube-apiserver 加载流程与对象定义步骤；预告 operator 模式将复用这些概念。",
+      "headings": [],
+      "key_terms": [
+        "apimachinery",
+        "External/Internal/Storage Version",
+        "conversion",
+        "code generator/deepcopy-gen",
+        "storage.go strategy",
+        "sub-resource pod/status",
+        "kubebuilder"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "源码走读类，External/Internal 双版本与 sub-resource『更新状态不更新 spec』解释有概念价值；对非研发读者性价比低。",
+      "warning_signals": [
+        "source_code_walkthrough"
+      ],
+      "connects_to": [
+        "10",
+        "27"
+      ],
+      "connects_to_reason": "对象实现机制与控制器框架/operator 呼应",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "26",
+      "title": "调度器 kube-scheduler",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/1. 调度器 kube-scheduler/1. 调度器 kube-scheduler.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "调度器职责与两阶段原理（Predicate/Priority）、超售、亲和反亲和、Taint/Toleration、PriorityClass 与运维问题。",
+      "last_200_words": "总结：调度器是最稳定、维护成本最低的组件；分享无熔断放大故障与应用炸弹两个运营问题。",
+      "headings": [],
+      "key_terms": [
+        "request/limit 超售",
+        "init container 资源计算",
+        "limit range",
+        "NodeSelector/NodeAffinity",
+        "PodAffinity/TopologyKey",
+        "Taint/Toleration 三效应",
+        "PriorityClass 抢占",
+        "应用炸弹",
+        "framework 扩展点"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "request≠limit 超售机制、Taint 三效应、PriorityClass 抢占、应用炸弹（fork 炸弹循环摧毁节点）均有独立洞见；大量实验验证；运维问题（节点正常≠可用、无熔断）是文档外经验。",
+      "warning_signals": [],
+      "connects_to": [
+        "03",
+        "11",
+        "27",
+        "33"
+      ],
+      "connects_to_reason": "资源模型与 Pod 生命周期/控制器衔接最紧密",
+      "claimed_data_points": [
+        {
+          "claim": "100 个节点并发创建 8000 个 Pod 总调度耗时约 2 分钟",
+          "context": "调度器压力测试",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "27",
+      "title": "控制器 Controller Manager",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/2. 控制器 Controller Manager/2. 控制器 Controller Manager.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "作为集群大脑的 Controller Manager：Informer/Lister 框架、工作队列最终一致性、控制器全家桶与 GC。",
+      "last_200_words": "以 Garbage Collector 收尾：ownerReference 父子关系与级联删除。",
+      "headings": [],
+      "key_terms": [
+        "Control Interface",
+        "Informer/Lister",
+        "work queue 去重",
+        "shared informer 框架",
+        "滚动升级 maxSurge/maxUnavailable",
+        "template hash",
+        "generateName",
+        "Job/StatefulSet/DaemonSet",
+        "ownerReference/GC"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "控制器模式讲解透彻（队列只放 key 的最终一致性落地）；滚动升级与 hash 机制清晰；但框架为整理性内容。",
+      "warning_signals": [],
+      "connects_to": [
+        "08",
+        "09",
+        "28"
+      ],
+      "connects_to_reason": "控制器模式贯穿 kubelet SyncLoop 与 operator",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "28",
+      "title": "kubelet 组件",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/3. kubelet 组件/3. kubelet 组件.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "运行在每个节点的代理：API 层+一组 Manager、SyncLoop、PLEG、Sandbox Container 与 Pod 加载流程。",
+      "last_200_words": "梳理 kubelet 框架、Pod 清单获取三种方式、Pod 创建流程与 Sandbox 意义；预告 CRI/CNI 细节。",
+      "headings": [],
+      "key_terms": [
+        "SyncLoop/Pod Worker",
+        "PLEG",
+        "静态 Pod/自注册",
+        "Sandbox Container(pause)",
+        "CRI/CNI/CSI 加载顺序",
+        "Dockershim 废弃真相",
+        "Admit 准入"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "『Pod 定义 1 容器、节点跑 2 进程』的 pause 底座解释反直觉且独立；PLEG 性能瓶颈与 GC 踩坑真实；组件讲解为主。",
+      "warning_signals": [],
+      "connects_to": [
+        "26",
+        "27",
+        "29",
+        "33"
+      ],
+      "connects_to_reason": "kubelet 承接 CRI/CNI/CSI 与 Pod 生命周期",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "29",
+      "title": "容器运行时接口 CRI",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/4. 容器运行时接口 CRI/4. 容器运行时接口 CRI.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "CRI 的来龙去脉（Docker 竞争史）、gRPC 本质、运行时分层与 OCI 标准、Docker→containerd 切换。",
+      "last_200_words": "梳理 Docker/containerd/CRI 区别与选型理由；作业：自行尝试运行时切换。",
+      "headings": [],
+      "key_terms": [
+        "CRI gRPC 服务",
+        "High/Low-Level Runtime",
+        "OCI 三类规范",
+        "Docker 内嵌 containerd",
+        "Runtime/Image Service",
+        "crictl",
+        "containerd vs CRI-O"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "Docker 与 Kubernetes 竞争史（Twitter 口水战）与『弃用 Docker 弃的是 dockerd』的解释有独立价值；选型结论清晰；其余为整理性内容。",
+      "warning_signals": [
+        "personal_anecdote_only"
+      ],
+      "connects_to": [
+        "04",
+        "28",
+        "30"
+      ],
+      "connects_to_reason": "运行时接口与容器技术/CNI 呼应",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "30",
+      "title": "容器网络接口 CNI",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/5. 容器网络接口 CNI/5. 容器网络接口 CNI.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "CNI 三类插件、运行机制、VXLAN/BGP 两种跨节点模式、Calico 组件与 IPAM 数据结构。",
+      "last_200_words": "总结：CNI 可执行文件调用机制、IPAM/主插件/metaplugin 分类、Calico 的 VXLAN/BGP 与 Route Reflector 解法。",
+      "headings": [],
+      "key_terms": [
+        "IPAM/主插件/metaplugin",
+        "exec 调用机制",
+        "VXLAN 封装",
+        "Calico Felix/BIRD/confd",
+        "IPPool/IPAMBlock/IPHandle",
+        "BGP mesh/RR",
+        "169.254.1.1 全1 MAC",
+        "Cilium/eBPF"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "Calico 全 1 MAC 虚拟网关、IPAM 三对象拆解、BGP mesh 指数膨胀→RR 星状化的分析均有独立洞见；生产选型经验（Calico BGP vs Cilium 内核门槛）文档外。",
+      "warning_signals": [],
+      "connects_to": [
+        "05",
+        "36",
+        "39"
+      ],
+      "connects_to_reason": "CNI 与容器网络/kube-proxy/案例章节网络链路贯通",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "31",
+      "title": "容器存储接口 CSI",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/6. 容器存储接口 CSI/6. 容器存储接口 CSI.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "存储驱动演进（in-tree→flexVolume→CSI）、CSI 三步流程、Pod 三种存储路径与生产实践。",
+      "last_200_words": "强调按存储类型划分 StorageClass；本地存储区分独占 local PV 与 LVM dynamic local volume。",
+      "headings": [],
+      "key_terms": [
+        "存储驱动演进",
+        "create/attach/mount",
+        "emptyDir/hostPath",
+        "StorageClass/PV/PVC",
+        "静态/动态供给",
+        "LVM/local PV",
+        "noisy neighbor"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "静态 vs 动态供给路径、noisy neighbor 权衡讲解清楚；但机制与概念为官方文档复述，独立洞见有限。",
+      "warning_signals": [],
+      "connects_to": [
+        "32"
+      ],
+      "connects_to_reason": "CSI 为 Rook 存储方案铺垫",
+      "claimed_data_points": [
+        {
+          "claim": "OverlayFS 与 Device Mapper 相比约有 20% 的性能提升",
+          "context": "存储驱动性能测试",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "32",
+      "title": "Rook 的工作原理",
+      "module": "第五章：Kubernetes 控制平面组件：调度器和控制器",
+      "module_index": 4,
+      "source_file": "第五章：Kubernetes 控制平面组件：调度器和控制器/7. Rook 的工作原理/7. Rook 的工作原理.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "CNCF 毕业项目 Rook——'一篮子'存储方案的工作原理与使用演示。",
+      "last_200_words": "总结 Rook 工作原理（operator 拉起控制面）与使用方式；建议按教程实践。",
+      "headings": [],
+      "key_terms": [
+        "Operator=CRD+Controller",
+        "Provisioner/plugin 分工",
+        "Unix socket+empty dir 通信",
+        "Discover 裸盘",
+        "CephCluster/pool/StorageClass"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "项目走读+演示为主；『两个容器通过 empty dir 共享 Unix socket 完成 IPC』的反直觉机制有价值；整体为第三方项目介绍。",
+      "warning_signals": [
+        "source_code_walkthrough"
+      ],
+      "connects_to": [
+        "31"
+      ],
+      "connects_to_reason": "Rook 是 CSI 章节的落地案例",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "33",
+      "title": "深入理解 Pod 的生命周期",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/1. 深入理解 Pod 的生命周期/1. 深入理解 Pod 的生命周期.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "云原生动态环境下 Pod 的完整生命周期：状态机、QoS、污点驱逐、探针、优雅终止与高可用策略。",
+      "last_200_words": "作业：把 Go HTTP server 融入优雅启动/终止、资源与 QoS、探活、配置分离等能力点。",
+      "headings": [],
+      "key_terms": [
+        "Pod 状态机",
+        "QoS Class 推导",
+        "污点驱逐 TolerationSeconds",
+        "三类探针",
+        "ReadinessGate",
+        "PostStart/PreStop",
+        "优雅终止三动作链",
+        "SIGTERM 被 shell 吞掉",
+        "高可用=冗余×故障域×优雅启停"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "信息密度全课最高：QoS 推导、300 秒容忍缓冲、Liveness/Readiness 默认值哲学、bash 吞 SIGTERM 破坏优雅终止（亲历）均为独立洞见与踩坑；可操作性极强。",
+      "warning_signals": [],
+      "connects_to": [
+        "06",
+        "26",
+        "28"
+      ],
+      "connects_to_reason": "Pod 生命周期与调度/优雅终止/应用上云贯通",
+      "claimed_data_points": [
+        {
+          "claim": "节点 Not Ready 默认 TolerationSeconds=300 秒",
+          "context": "污点驱逐",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "TerminationGracePeriodSeconds 默认 30 秒",
+          "context": "优雅终止",
+          "preliminary_status": "likely_ok"
+        },
+        {
+          "claim": "讲师团队把 TolerationSeconds 扩到 900 秒",
+          "context": "污点驱逐实践",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "34",
+      "title": "服务发现",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/2. 服务发现/2. 服务发现.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "服务发现与负载均衡技术全景：数据包格式、NAT/新建连接/DR/隧道、DNS TTL、进程内 vs sidecar LB。",
+      "last_200_words": "核心要点：理解数据包格式与『负载均衡=修改包头』的本质。",
+      "headings": [],
+      "key_terms": [
+        "负载均衡=改包头",
+        "NAT/Connection Tracking",
+        "新建 TCP 连接",
+        "DR 直接路由",
+        "隧道/GRE/IPIP",
+        "DNS A 记录轮循/TTL",
+        "进程内 vs sidecar LB",
+        "纵向/横向扩展"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "『负载均衡=修改数据包头』的总结与四种技术（NAT/新建连接/DR/隧道）的系统对比清晰；DNS TTL 弱化负载均衡的反直觉点成立。",
+      "warning_signals": [],
+      "connects_to": [
+        "35",
+        "36",
+        "39"
+      ],
+      "connects_to_reason": "负载均衡理论为 Service/kube-proxy/案例提供框架",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "35",
+      "title": "Service 对象",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/3. Service 对象/3. Service 对象.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "负载均衡理论在 Kubernetes 的落地：Service 的 selector、Endpoint/EndpointSlice、五种类型与 Topology。",
+      "last_200_words": "理解 Service 与 Pod 关系（Endpoint 中间表、就绪决定流量）；预告 kube-proxy 原理。",
+      "headings": [],
+      "key_terms": [
+        "selector 标签汇聚",
+        "Endpoint 中间表",
+        "就绪状态决定承接",
+        "EndpointSlice 切片",
+        "不带 selector 手工 Endpoint",
+        "五种 Service 类型",
+        "Service Topology"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "Endpoint 中间表类比、就绪/未就绪分类、不带 selector 接外部资源等机制讲解清楚；但对象语义为官方文档复述。",
+      "warning_signals": [],
+      "connects_to": [
+        "34",
+        "36",
+        "37"
+      ],
+      "connects_to_reason": "Service 对象为 kube-proxy/DNS 章节铺垫",
+      "claimed_data_points": [
+        {
+          "claim": "讲师见过单集群 23000 个 Pod 的应用",
+          "context": "大 Service 场景",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    },
+    {
+      "lecture_id": "36",
+      "title": "kube-proxy 组件",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/4. kube-proxy 组件/4. kube-proxy 组件.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "由谁、怎么样配置负载均衡：kube-proxy 的 iptables 概率链、IPVS 与虚 IP 本质。",
+      "last_200_words": "建议生产系统尽量用 IPVS；理解 iptables/IPVS 差异助决策。",
+      "headings": [],
+      "key_terms": [
+        "Netfilter/SKB",
+        "五元组/路由判决",
+        "DNAT/SNAT",
+        "KUBE-SERVICES 概率链",
+        "iptables 三大问题",
+        "IPVS/dummy 设备",
+        "kube-ipvs0",
+        "虚 IP 可转发不可寻址"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "iptables 33%/50%/100% 概率链解读、IPVS 需绑 dummy 设备的机制差异（为何 iptables 不用绑）解释清晰且文档少见；但为内核机制整理。",
+      "warning_signals": [],
+      "connects_to": [
+        "30",
+        "34",
+        "35"
+      ],
+      "connects_to_reason": "kube-proxy 承接负载均衡理论并衔接 DNS/Ingress",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "37",
+      "title": "DNS 原理和实践",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/5. DNS 原理和实践/5. DNS 原理和实践.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "用名字+DNS 发布服务：CoreDNS、FQDN、Headless/ExternalName、ndots 与 enableServiceLinks 踩坑。",
+      "last_200_words": "总结：DNS 是服务发现最有效机制，服务名+namespace 是全局唯一标识。",
+      "headings": [],
+      "key_terms": [
+        "CoreDNS 内存态",
+        "FQDN 域名拼接",
+        "A/PTR/SRV 记录",
+        "Headless 指向 Pod IP",
+        "ExternalName CNAME",
+        "ndots/search domain",
+        "enableServiceLinks 踩坑",
+        "split-horizon DNS"
+      ],
+      "initial_value_score": 4,
+      "initial_tier": "silver",
+      "initial_tier_rationale": "enableServiceLinks 踩坑（Service 太多→环境变量撑爆 runc 命令行→Pod 起不来）是文档外真实案例；ndots 机制讲解清楚。",
+      "warning_signals": [],
+      "connects_to": [
+        "35",
+        "38"
+      ],
+      "connects_to_reason": "DNS 与 Service/Ingress 构成服务发现完整链路",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "38",
+      "title": "Ingress 对象",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/6. Ingress 对象/6. Ingress 对象.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "Service 无法满足的高级需求：基于域名/路径/Header 的应用层路由，引出 Ingress 与 Ingress Controller。",
+      "last_200_words": "总结：Ingress 简单对象与灵活性的系统设计权衡；预告扩展方案（讲稿截断）。",
+      "headings": [],
+      "key_terms": [
+        "L4 vs L7",
+        "Ingress/Ingress Controller",
+        "TLS Termination",
+        "ingress class",
+        "Secret 证书约定",
+        "统一入口收敛 IP 消耗"
+      ],
+      "initial_value_score": 3,
+      "initial_tier": "copper",
+      "initial_tier_rationale": "L4/L7 本质差异、『七层转发让四层更简单（多服务共享一个 VIP）』的反直觉点清晰；但机制为文档复述。",
+      "warning_signals": [],
+      "connects_to": [
+        "34",
+        "37",
+        "39"
+      ],
+      "connects_to_reason": "Ingress 为案例章节（真实网络拓扑）铺垫",
+      "claimed_data_points": []
+    },
+    {
+      "lecture_id": "39",
+      "title": "案例分享：通过 Ingress 和 Service 完成一个网络拓扑",
+      "module": "第六章：生命周期管理和服务发现",
+      "module_index": 5,
+      "source_file": "第六章：生命周期管理和服务发现/7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑/7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑.digest.json",
+      "word_count": 0,
+      "has_audio": false,
+      "has_images": false,
+      "first_200_words": "真实项目：用 Ingress+Service 解决外部公网流量接入，构建高可用、跨地域多活网络拓扑。",
+      "last_200_words": "作业：把 Go HTTP 服务发布到集群外部；强调优雅与高可用。",
+      "headings": [],
+      "key_terms": [
+        "DNS TTL 切流陷阱",
+        "99/1 权重负载均衡",
+        "自建 Ingress Controller",
+        "硬件 LB 三大痛点",
+        "ECMP 横向扩展",
+        "IPVS Tunnel+DSR",
+        "BGP 路由宣告",
+        "边缘节点加速",
+        "140ms→40ms"
+      ],
+      "initial_value_score": 5,
+      "initial_tier": "gold",
+      "initial_tier_rationale": "完整真实项目叙事：DNS 摘除≠流量切换、99/1 权重、ECMP 多节点共享 VIP、DSR 回包直连、8 城 15 台服务器边缘加速均为可迁移工程方案；量化数据（4% 营收）为内部预测不可验证。",
+      "warning_signals": [],
+      "connects_to": [
+        "34",
+        "36",
+        "38"
+      ],
+      "connects_to_reason": "全书集成案例，负载均衡/CNI/Ingress 知识收敛",
+      "claimed_data_points": [
+        {
+          "claim": "跨大陆网络响应从 140ms 提升到 40ms",
+          "context": "边缘加速效果",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "每提升 100ms 响应时间对公司营收约 4% 的影响",
+          "context": "网络性能商业价值",
+          "preliminary_status": "needs_check"
+        },
+        {
+          "claim": "一套高配硬件负载均衡器约十几万美金、公司用几千对",
+          "context": "硬件 LB 痛点",
+          "preliminary_status": "needs_check"
+        }
+      ]
+    }
+  ]
+}

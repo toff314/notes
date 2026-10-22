@@ -1,0 +1,1001 @@
+{
+  "course": "LangChain实战课",
+  "triage_date": "2026-08-14",
+  "total_lectures": 29,
+  "gold_count": 1,
+  "silver_count": 10,
+  "copper_count": 13,
+  "iron_count": 5,
+  "overall_snr": 2.7,
+  "data_audit": {
+    "total_claims": 14,
+    "verified": 9,
+    "partial": 4,
+    "unverifiable": 1,
+    "suspicious": 0,
+    "summary": "14个量化声明中9个可验证（多为论文/项目出处，引用规范）、4个部分验证（课程发布时快照数据，现已失效）、1个无法验证（ReAct实战中搜索引擎返回的玫瑰价格$80.16，无原始出处）。无编造数据，讲师整体谨慎，但时效性数据需重新核实后方可引用。"
+  },
+  "entries": [
+    {
+      "lecture_id": "开篇词",
+      "lecture_title": "开篇词｜带你亲证AI应用开发的“奇点”时刻",
+      "snr_score": 1.65,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 1.0,
+        "actionability": 1.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "讲师自我介绍+课程定位+LangChain能做什么的预告，无实质内容",
+      "adler_q2": "解决的是课程营销问题，不是知识问题",
+      "adler_q3": "无论证，纯自我介绍和用例预告",
+      "adler_q4": "读完无收获，可跳过",
+      "critical_notes": "标准课程开篇词，含课程地图和用例预告，对理解课程结构略有帮助，但无知识含量。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "01",
+      "lecture_title": "01｜LangChain系统安装和快速入门",
+      "snr_score": 2.3,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.0,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "环境搭建+大模型基础概念（Text/Chat/Embedding三类模型）+OpenAI API调用",
+      "adler_q2": "解决上手环境问题；回避了模型选型的深层问题",
+      "adler_q3": "基础知识准确，但都是公开文档能查到的内容",
+      "adler_q4": "能搭起开发环境，但一次性的配置内容",
+      "critical_notes": "必要但非稀缺的环境配置课，Text/Chat/Embedding三类模型的划分是后续内容的地基，但本身是常识。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "02｜用LangChain快速构建基于“易速鲜花”本地知识库的智能问答系统",
+      "snr_score": 3.15,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "用一个完整的本地知识库问答项目（数据准备→分割→向量库→检索→生成）展示LangChain的端到端能力",
+      "adler_q2": "解决了“RAG应用长什么样“的直觉问题；未解决各步骤的原理（留待第15讲）",
+      "adler_q3": "项目可跑通，教学顺序“先体验后拆解“合理",
+      "adler_q4": "能跑通第一个RAG应用，建立整体认知",
+      "critical_notes": "教学设计优秀：先用完整项目建立直觉，再逐组件拆解。但内容本质是官方文档QA用例的中文化，无原创贡献。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "RAG五步流水线",
+          "source_text": "数据准备和载入→文本分割→向量数据库存储→相关信息获取→生成回答",
+          "paraphrase": "RAG应用可拆成加载、切分、向量化、检索、生成五步",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "15"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain官方文档 Document QA",
+            "notes": "与官方流程一致，可查证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "03｜模型I/O：输入提示、调用模型、解析输出",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "拆解LangChain的Model I/O三环节（提示模板/语言模型/输出解析），讲清LangChain相比直接调API的优势",
+      "adler_q2": "解决了“LangChain存在的意义“这一根本问题；未解决各组件的高级用法",
+      "adler_q3": "论证扎实，通过直接调API vs LangChain的对比说明框架价值，逻辑清晰",
+      "adler_q4": "理解LangChain核心抽象，为后续所有组件学习打地基",
+      "critical_notes": "全课地基。Model I/O三环节的抽象和“模板复用/模型切换/输出解析“四点优势总结到位，是理解LangChain的关键。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Model I/O 三环节",
+          "source_text": "把对模型的使用过程拆解成三块：输入提示(Format)、调用模型(Predict)、输出解析(Parse)",
+          "paraphrase": "任何LLM应用都可抽象为提示-调用-解析三步",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "04",
+            "07"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain官方文档 model_io",
+            "notes": "与官方抽象一致"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "LangChain框架价值=模板复用+模型切换",
+          "source_text": "模型可以自由选择、自主训练，而调用模型的框架往往是有章法、可复用的",
+          "paraphrase": "LangChain类比PyTorch/TensorFlow，是模型之上的可复用框架",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "06"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "类比合理但为作者观点"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "04｜提示工程（上）：用少样本FewShotTemplate和ExampleSelector创建应景文案",
+      "snr_score": 3.68,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 4.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "讲提示结构四要素+Few-Shot/Zero-Shot概念起源+FewShotPromptTemplate和语义相似度示例选择器",
+      "adler_q2": "解决了“如何高效给模型示例“的问题；未解决示例质量如何评估",
+      "adler_q3": "Few-Shot概念有3篇论文出处（Brown 2020/Vinyals 2016/Palatucci 2009），论证可查证",
+      "adler_q4": "掌握Few-Shot模板和语义选择器，能节省Token并提高回答质量",
+      "critical_notes": "Few-Shot思想起源讲得清楚（用爷爷教骑车类比），论文引用规范。提示结构四要素（指令/上下文/输入/输出指示器）是实用框架。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "提示结构四要素",
+          "source_text": "指令(Instruction)+上下文(Context)+提示输入(Prompt Input)+输出指示器(Output Indicator)",
+          "paraphrase": "好的提示=角色指令+背景知识+具体问题+输出格式引导",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "OpenAI GPT最佳实践 / 吴恩达提示工程课",
+            "notes": "与OpenAI六大策略一脉相承"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "语义相似度示例选择器",
+          "source_text": "example_selector根据语义相似度(余弦相似度)找到最相似的示例，避免把过多无关模板传给大模型以节省Token",
+          "paraphrase": "用向量相似度动态挑最相关Few-Shot示例",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "15"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain SemanticSimilarityExampleSelector",
+            "notes": "官方组件，可查证"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "05｜提示工程（下）：用思维链和思维树提升模型思考质量",
+      "snr_score": 3.85,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 5.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "讲CoT（思维链）和ToT（思维树）两个提示技术：Few-Shot CoT/Zero-Shot CoT的区别+ToT的搜索式推理",
+      "adler_q2": "解决了“如何引导模型深度推理“的问题；未解决CoT/ToT在工程中的成本与可靠性",
+      "adler_q3": "引用4篇原始论文（Jason Wei 2022/Kojima 2022/Yao 2023/Long 2023），出处可追溯，论证最扎实的一讲",
+      "adler_q4": "能立刻上手Zero-Shot CoT（'Let's think step by step'）和ToT模板",
+      "critical_notes": "全课学术含金量最高的一讲。“Let's think step by step“能提升推理的发现是反直觉且可验证的。但内容本质是论文观点的中文复述+鲜花案例，无原创框架。GSM8K”SOTA“表述缺乏具体数字。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Zero-Shot CoT",
+          "source_text": "在Zero-Shot CoT中，你只要简单地告诉模型'让我们一步步的思考(Let's think step by step)'，模型就能够给出更好的答案",
+          "paraphrase": "一句话魔法提示即可激发推理",
+          "writing_angle": "insight",
+          "related_lectures": [
+            "11"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Kojima et al. 2022 arXiv:2205.11916",
+            "notes": "原始论文可查证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "ToT思维树",
+          "source_text": "引导模型搜索一棵由连贯语言序列组成的思维树，与搜索算法(广度优先/深度优先)结合系统性地探索",
+          "paraphrase": "让模型同时探索多条推理路径再择优",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "11"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Yao 2023 arXiv:2305.10601 / Long 2023 arXiv:2305.08291",
+            "notes": "两篇论文可查证"
+          }
+        },
+        {
+          "type": "quote",
+          "name": "Agent本质是提示工程",
+          "source_text": "LangChain的核心组件Agent的本质就是进行好的提示工程，并大量地使用预置的FewShot和CoT模板",
+          "paraphrase": "代理的底层就是提示工程",
+          "writing_angle": "insight",
+          "related_lectures": [
+            "11",
+            "12"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "作者观点，与LangChain实现一致",
+            "notes": "从第12讲AgentExecutor源码可验证"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "GSM8K上CoT达到SOTA",
+          "source_text": "在GSM8K数学问题基准测试中，通过CoT指导后，大模型的表现可以达到当时最先进的准确性",
+          "paraphrase": "量化声明，需验证后方可引用",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "原始CoT论文 arXiv:2201.11903",
+            "notes": "表述模糊无具体数字，需查论文原始数据"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "tree-of-thoughts repo 3.3K stars",
+          "source_text": "把ToT算法导入你的大模型应用，目前3.3K颗星",
+          "paraphrase": "量化声明，需验证后方可引用",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "github.com/kyegomez/tree-of-thoughts",
+            "notes": "课程发布时快照，现已过时"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "06｜调用模型：使用OpenAI API还是微调开源Llama2/ChatGLM？",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲大模型发展史+预训练/微调范式+如何用HuggingFace和自定义LLM类接入开源模型",
+      "adler_q2": "解决了“如何接入非OpenAI模型“的问题；回避了“何时该选API何时该微调“（作者明说无标准答案）",
+      "adler_q3": "预训练+微调、量化（GGML/GPTQ）概念准确，Llama2实测对比有价值",
+      "adler_q4": "能接入开源/自定义模型，理解量化压缩",
+      "critical_notes": "实用的一讲。“预训练+微调“范式和量化概念讲得清楚，Llama2 7B量化版实测（中文差英文好）是诚实的对比。但“给Llama2打98.5分“是主观评价。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "开源模型7B与GPT-3.5的中文差距",
+          "source_text": "Llama经过量化之后，虽然仍读得懂中文，但是不会讲中文了…Llama2的英文表现真的非常完美，和GPT3.5差距不是很大",
+          "paraphrase": "7B开源模型中文能力明显弱于英文，选型要区分语言",
+          "writing_angle": "comparison",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "作者实测",
+            "notes": "个人实测，2023年时点，现已过时"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "自定义LLM类接入本地模型",
+          "source_text": "创建一个LLM的衍生类，实现_call方法接收输入返回响应，即可在LangChain中调用自己的模型",
+          "paraphrase": "继承LLM基类实现_call就能接入任何模型",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain LLM基类",
+            "notes": "官方扩展机制"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "大模型训练一次几百万美元",
+          "source_text": "训练一次的费用可达几百万美元",
+          "paraphrase": "量化声明，需验证后方可引用",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "估计值，无出处"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "07｜输出解析：用OutputParser生成鲜花推荐列表",
+      "snr_score": 2.85,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 4.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲三种输出解析器（Pydantic/OutputFixing/RetryWithError）的用法",
+      "adler_q2": "解决了“如何获得结构化输出“的问题",
+      "adler_q3": "三个解析器逐个演示，准确但偏教程",
+      "adler_q4": "能生成结构化JSON输出并自动修复错误",
+      "critical_notes": "实用教程，Pydantic解析器是生产常用，但无概念创新。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "08｜链（上）：写一篇完美鲜花推文？用SequencialChain链接不同的组件",
+      "snr_score": 2.75,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲Chain概念、LLMChain、链的五种调用方式、SequentialChain",
+      "adler_q2": "解决了“如何串联多个组件“的问题",
+      "adler_q3": "链的调用方式（run/predict/apply/generate）逐个演示，准确但冗长",
+      "adler_q4": "能组合多组件形成流水线",
+      "critical_notes": "教程级内容，链的调用方式逐一演示略显冗余。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "09｜链（下）：想学“育花”还是“插花”？用RouterChain确定客户意图",
+      "snr_score": 2.75,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲RouterChain根据用户意图路由到不同目标链",
+      "adler_q2": "解决了“意图分流“的问题",
+      "adler_q3": "意图识别路由演示，准确但偏教程",
+      "adler_q4": "能实现多意图分流",
+      "critical_notes": "路由链是意图识别的实用模式，但演示偏重。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "10｜记忆：通过Memory记住客户上次买花时的对话细节",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "讲对话链+四种记忆机制（Buffer/BufferWindow/Summary/SummaryBuffer）的原理和Token成本取舍",
+      "adler_q2": "解决了“如何让LLM记住对话且控制Token成本“的问题；未解决记忆与检索的融合",
+      "adler_q3": "四种记忆机制对比清晰，Token消耗的取舍逻辑有说服力",
+      "adler_q4": "能根据场景选择合适记忆机制，理解Token/记忆的权衡",
+      "critical_notes": "实用价值高的一讲。四种记忆机制的渐进式讲解（从全量到窗口到总结到混合）本身是一个很好的教学设计，Token成本取舍是工程关键。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "四种记忆机制权衡",
+          "source_text": "BufferMemory全量保存但Token线性增长；WindowMemory只记最近k轮；SummaryMemory用LLM总结省Token；SummaryBufferMemory混合两者",
+          "paraphrase": "记忆=存储量vs成本vs精确性的三角权衡",
+          "writing_angle": "comparison",
+          "related_lectures": [
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain memory模块",
+            "notes": "官方四种记忆机制"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "记忆机制=把历史塞进提示",
+          "source_text": "ChatGPT能记得你说过的话，正是因为它使用了记忆机制，把对话上下文作为提示的一部分传递",
+          "paraphrase": "所谓记忆就是每次把历史拼进prompt",
+          "writing_angle": "insight",
+          "related_lectures": [
+            "12"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LLM无状态特性",
+            "notes": "LLM本质无状态，公认事实"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "11｜代理（上）：ReAct框架，推理与行动的协同",
+      "snr_score": 4.0,
+      "tier": "gold",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 5.0,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
+      "adler_q1": "从CoT的幻觉缺陷出发，引出ReAct框架（观察-思考-行动），并用ZERO_SHOT_REACT_DESCRIPTION代理实战演示",
+      "adler_q2": "解决了“LLM如何自主调用工具解决超出知识范围的问题“；已解决核心原理，未解决多步推理的可靠性",
+      "adler_q3": "引用ICLR 2023 ReAct论文，论证可追溯；从CoT局限到ReAct的推导逻辑严密；实战代码可跑通",
+      "adler_q4": "认知跃迁：理解LLM如何从聊天Bot“飞升“为有手有脚的智能代理，能自己搭ReAct代理",
+      "critical_notes": "全课巅峰。ReAct是本课唯一完整交付“可查证论文+清晰推导+可跑通代码+认知跃迁“四要素的讲课。它不是原创框架，但把CoT→幻觉→ReAct的推导链条讲得最清楚。$80.16玫瑰价格是搜索返回结果，不能作为事实引用。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "ReAct框架",
+          "source_text": "ReAct框架的灵感来自'行动'和'推理'之间的协同：观察环境-进行思考-采取行动，即Reasoning-Acting",
+          "paraphrase": "让LLM边思考边行动，用工具解决知识外的问题",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "05",
+            "12",
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Yao et al. 2023 ICLR arXiv:2210.03629",
+            "notes": "原始论文可查证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "CoT的边界：解决不了幻觉",
+          "source_text": "仅仅应用思维链推理并不能解决大模型的固有问题：无法主动更新自己的知识，导致出现事实幻觉",
+          "paraphrase": "CoT只提升推理，不解决知识缺失，所以需要工具",
+          "writing_angle": "insight",
+          "related_lectures": [
+            "05"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LLM幻觉是公认问题",
+            "notes": "共识性观点"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "Bot到Agent的跃迁",
+          "source_text": "你的大模型现在从一个仅能通过内部知识对话的Bot，飞升为了一个有手有脚能使用工具的智能代理",
+          "paraphrase": "代理=模型+工具+自主决策循环",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "12",
+            "14"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain Agent抽象",
+            "notes": "框架定位准确"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "美国一打玫瑰均价$80.16",
+          "source_text": "平均一打玫瑰$80.16，夏威夷$108.33，宾夕法尼亚$66.15",
+          "paraphrase": "量化声明，需验证后方可引用",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "12"
+          ],
+          "verification": {
+            "status": "❓",
+            "source_url": "搜索引擎返回片段，无原始研究出处",
+            "notes": "禁止作为事实引用"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "12｜代理（中）：AgentExecutor究竟是怎样驱动模型和工具完成任务的？",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 4.0,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "深入AgentExecutor源码，逐句拆解ReAct提示模板，揭示Thought/Action/Observation循环的实现",
+      "adler_q2": "解决了“代理内部如何驱动模型和工具“的机制问题",
+      "adler_q3": "源码走读真实可验证，提示模板逐句拆解是难得的内核剖析，但大量重复拆解提示词导致表达冗余",
+      "adler_q4": "理解代理循环的底层实现，能自己设计ReAct提示词",
+      "critical_notes": "价值在于把ReAct提示模板完整呈现并逐句拆解（Question/Thought/Action/Action Input/Observation的完整格式），是全课难得的内核内容。但同样的提示词拆了三遍（三轮思考），表达效率低。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "ReAct提示模板全貌",
+          "source_text": "Use the following format: Question/Thought/Action/Action Input/Observation (可重复N次)...Thought: I now know the final answer/Final Answer",
+          "paraphrase": "代理循环的完整提示协议",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "11"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain AgentExecutor源码",
+            "notes": "从源码可验证"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "链vs代理的本质区别",
+          "source_text": "在链中，操作被硬编码；在代理中，语言模型被用作推理引擎来确定采取哪些操作及顺序",
+          "paraphrase": "链=固定流程，代理=LLM动态决策",
+          "writing_angle": "comparison",
+          "related_lectures": [
+            "08",
+            "11"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain核心设计理念",
+            "notes": "框架定位准确"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "13｜代理（下）：结构化工具对话、Self-Ask with Search以及Plan and execute代理",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲三种进阶代理：结构化工具对话、Self-Ask with Search、Plan and execute",
+      "adler_q2": "解决了“更复杂任务如何组织代理“的问题",
+      "adler_q3": "三种代理模式介绍准确，但偏演示，无深度对比",
+      "adler_q4": "扩宽代理模式认知，能根据任务选择代理类型",
+      "critical_notes": "有价值地扩宽了代理的形态（结构化工具/自问自答/先计划后执行），但每种都是浅尝辄止。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Plan and execute代理",
+          "source_text": "Plan and execute：先由计划代理制定计划，再由执行代理逐步执行",
+          "paraphrase": "计划与执行分离，先规划后行动",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "19"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain agent类型",
+            "notes": "官方代理模式"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "14｜工具和工具箱：LangChain中的Tool和Toolkits一览",
+      "snr_score": 2.6,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲工具和工具箱的概念+arXiv和Gmail两个演示",
+      "adler_q2": "解决了“代理有哪些武器可用“的问题",
+      "adler_q3": "工具清单是目录式列举，两个演示（arXiv/Gmail）有实操价值",
+      "adler_q4": "了解可用工具生态",
+      "critical_notes": "目录式内容，工具清单随时间过时快，两个演示（尤其Gmail需要Google Cloud配置）流程繁琐。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "15",
+      "lecture_title": "15｜检索增强生成：通过RAG助力鲜花运营",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "系统讲RAG全流程（文档加载→文本转换→嵌入→存储→检索→索引）+文本分割策略和向量库选型",
+      "adler_q2": "解决了“RAG各环节怎么做、怎么选“的问题；未解决检索质量的评估与优化",
+      "adler_q3": "文本分割策略（chunk大小/重叠、任务类型vs分块大小）和向量库选型六维度是实用干货",
+      "adler_q4": "能搭建完整RAG系统并做合理选型",
+      "critical_notes": "RAG全流程梳理最系统的一讲。“没有最好的向量数据库，只有最适合的“是清醒的判断。但检索质量评估缺失，是明显短板。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "RAG=为数据建地图",
+          "source_text": "RAG实际上是为非结构化数据创建了一个'地图'，查询被嵌入后在地图中寻找最匹配的位置",
+          "paraphrase": "RAG的核心是把数据向量化建索引再语义检索",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "02"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "RAG公认定义",
+            "notes": "行业共识"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "文本分割策略三考量",
+          "source_text": "LLM上下文限制、任务类型(细致任务用小块/全面任务用大块)、文本性质(结构强用大块/结构弱用小块)",
+          "paraphrase": "chunk大小的选择取决于上下文窗口+任务+文本结构",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "02"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "LangChain text splitter文档",
+            "notes": "工程实践共识"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "16｜连接数据库：通过链和代理查询鲜花信息",
+      "snr_score": 2.75,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲用Chain和Agent两种方式查询数据库（自然语言转SQL）",
+      "adler_q2": "解决了“如何用自然语言查结构化数据“的问题",
+      "adler_q3": "Chain vs Agent查库对比有价值，但演示偏简单",
+      "adler_q4": "能实现自然语言查库",
+      "critical_notes": "自然语言转SQL是实用场景，但只演示了单表查询，未涉及复杂join和SQL注入风险。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "17｜回调函数：在AI应用中引入异步通信机制",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "讲回调函数概念+LangChain Callback处理器+令牌计数器",
+      "adler_q2": "解决了“如何监控和异步处理“的问题",
+      "adler_q3": "回调概念是通用编程知识，令牌计数器实用但浅",
+      "adler_q4": "能用get_openai_callback统计Token成本",
+      "critical_notes": "回调是通用编程概念，本讲价值有限，令牌计数器是唯一实用点。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "18｜CAMEL：通过角色扮演脑暴一个鲜花营销方案",
+      "snr_score": 3.6,
+      "tier": "silver",
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 4.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
+      "adler_q1": "讲CAMEL多代理角色扮演框架，含Inception Prompting和任务指定代理，实战脑暴营销方案",
+      "adler_q2": "解决了“如何让AI自己生成引导、多代理协作“的问题",
+      "adler_q3": "引用KAUST论文（arXiv:2303.17760），Inception Prompting机制讲得透，代码可跑通",
+      "adler_q4": "能用多代理角色扮演做创意脑暴，理解“让AI自己提问“的价值",
+      "critical_notes": "多代理协作是本课前瞻性最强的内容之一。Inception Prompting（任务指定代理把模糊任务具体化）是实用技巧。但脑暴结果质量未做批判性评估。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "CAMEL角色扮演框架",
+          "source_text": "通过角色扮演促进交流代理之间的自主合作：不同AI代理扮演不同角色，通过互相交流完成任务",
+          "paraphrase": "让多个AI各扮一角互相对话完成任务",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "19"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "KAUST CAMEL arXiv:2303.17760",
+            "notes": "原始论文可查证"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "Inception Prompting任务具体化",
+          "source_text": "引入任务指定代理，因为非领域专家创建具体任务提示困难，让AI把模糊想法具体化",
+          "paraphrase": "先用一个代理把模糊需求翻译成可执行任务",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "04"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "CAMEL论文 inception prompting",
+            "notes": "论文提出"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "19｜BabyAGI：根据气候变化自动制定鲜花存储策略",
+      "snr_score": 2.83,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.5,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "讲AutoGPT/BabyAGI/HuggingGPT三个自主代理+BabyAGI的LangChain完整实现",
+      "adler_q2": "解决了“自主代理是什么、怎么实现“的问题",
+      "adler_q3": "三个项目有真实出处（AutoGPT/BabyAGI/HuggingGPT论文），但BabyAGI实现占了大量篇幅做源码走读，表达效率低",
+      "adler_q4": "理解自主代理的三代理结构（执行/任务创建/优先级）",
+      "critical_notes": "自主代理概念有价值，但6500字中近一半是源码逐行堆砌。三代理（execution/task_creation/prioritization）结构是核心洞察，值得保留。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "BabyAGI三代理结构",
+          "source_text": "驱动任务的是三个代理：执行代理execution_agent、任务创建代理task_creation_agent、优先级设置代理prioritization_agent",
+          "paraphrase": "自主代理=执行+生成新任务+排优先级三循环",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "BabyAGI GitHub",
+            "notes": "真实开源项目"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "Auto-GPT Star半年150K",
+          "source_text": "Auto-GPT Star数量半年飙升到了150K",
+          "paraphrase": "量化声明，需验证后方可引用",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "github.com/Significant-Gravitas/AutoGPT",
+            "notes": "课程发布时快照，现已过时"
+          }
+        }
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "20｜部署一个鲜花网络电商的人脉工具（上）",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.0,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "人脉工具第一步：用微博Agent和SerpAPI找大V、爬取资料",
+      "adler_q2": "解决了一个具体业务工具的开发，但通用性低",
+      "adler_q3": "微博爬虫源码走读，与LangChain关系较弱，多为定制爬取逻辑",
+      "adler_q4": "能复现一个微博人脉工具，但迁移价值有限",
+      "critical_notes": "项目实战的上下集，微博爬虫占大量篇幅，LangChain核心价值体现有限。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "21｜部署一个鲜花网络电商的人脉工具（下）",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.0,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "人脉工具第三步到第五步：生成介绍文章、输出解析、Flask部署",
+      "adler_q2": "完成人脉工具部署",
+      "adler_q3": "作者自认“程序不够鲁棒“，坦诚但反映演示级质量",
+      "adler_q4": "能跑通完整工具，但鲁棒性需自己补",
+      "critical_notes": "作者在思考题承认程序对玫瑰/野菊花会出错，是难得的诚实，但正说明内容停留在演示级。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "22｜易速鲜花聊天客服机器人的开发（上）",
+      "snr_score": 2.7,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "聊天机器人开发：基础对话→加记忆→加检索，三步递进",
+      "adler_q2": "解决了“如何综合运用前文学到的组件“的问题",
+      "adler_q3": "整合价值大于新知价值，三步递进设计清晰",
+      "adler_q4": "能把Memory+RAG整合进一个聊天机器人",
+      "critical_notes": "作为综合复习有价值，但本质是前文组件的重新组装，无新概念。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "23",
+      "lecture_title": "23｜易速鲜花聊天客服机器人的开发（下）",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 2.0,
+        "expression_efficiency": 3.0
+      },
+      "adler_q1": "用Streamlit和Gradio两种方案部署聊天机器人",
+      "adler_q2": "解决了“如何把聊天机器人上线“的问题",
+      "adler_q3": "两个部署框架的教程，准确但浅",
+      "adler_q4": "能快速部署一个Web聊天机器人",
+      "critical_notes": "部署教程，Streamlit/Gradio对比有参考价值，但纯教程。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "结束语",
+      "lecture_title": "结束语｜人生的价值就在于创造",
+      "snr_score": 1.3,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.0,
+        "change_potential": 1.5,
+        "expression_efficiency": 2.0
+      },
+      "adler_q1": "结课感悟，无技术内容",
+      "adler_q2": "不解决知识问题",
+      "adler_q3": "鸡汤，无论证",
+      "adler_q4": "可跳过",
+      "critical_notes": "纯结课感悟。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "结课测试",
+      "lecture_title": "结课测试｜来赴一场满分之约",
+      "snr_score": 1.0,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.0,
+        "verifiability": 1.0,
+        "actionability": 1.0,
+        "change_potential": 1.0,
+        "expression_efficiency": 1.0
+      },
+      "adler_q1": "20道结课测试题的入口",
+      "adler_q2": "检验学习成果",
+      "adler_q3": "无内容",
+      "adler_q4": "可跳过",
+      "critical_notes": "测试题入口，无正文。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "加餐LCEL",
+      "lecture_title": "直播加餐｜LangChain表达式语言LCEL初探",
+      "snr_score": 1.1,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 1.0,
+        "actionability": 1.0,
+        "change_potential": 1.0,
+        "expression_efficiency": 1.0
+      },
+      "adler_q1": "LCEL直播的PPT和视频链接",
+      "adler_q2": "不解决知识问题（无正文）",
+      "adler_q3": "无正文内容，仅链接",
+      "adler_q4": "可跳过，看直播回放",
+      "critical_notes": "仅有“你将获得“列表和视频/PPT链接，无文字内容。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "加餐LangSmith",
+      "lecture_title": "直播加餐｜LangChain的Tracing、Debug和LangSmith平台解读",
+      "snr_score": 1.1,
+      "tier": "iron",
+      "score_breakdown": {
+        "originality": 1.5,
+        "verifiability": 1.0,
+        "actionability": 1.0,
+        "change_potential": 1.0,
+        "expression_efficiency": 1.0
+      },
+      "adler_q1": "LangSmith直播的PPT和视频链接",
+      "adler_q2": "不解决知识问题（无正文）",
+      "adler_q3": "无正文内容，仅链接",
+      "adler_q4": "可跳过，看直播回放",
+      "critical_notes": "仅有“你将获得“列表和视频/PPT链接，无文字内容。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "加餐LangGraph",
+      "lecture_title": "热点加餐：用LangGraph和A2A实现货币兑换Agent",
+      "snr_score": 2.9,
+      "tier": "copper",
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 3.0,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 2.5
+      },
+      "adler_q1": "讲LangGraph（有状态图式Agent编排）和A2A协议，实现货币兑换Agent",
+      "adler_q2": "解决了“LangChain之后Agent编排的下一步“的问题，但明显是新课推广",
+      "adler_q3": "LangGraph/A2A是真实技术趋势，但开篇即宣传新课《MCP & A2A前沿实战》，且大量源码走读",
+      "adler_q4": "了解LangGraph和A2A的趋势方向",
+      "critical_notes": "技术方向（LangGraph、A2A）有前瞻性，但动机是新课引流，内容偏源码走读，价值打了折扣。",
+      "extractions": []
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "id": "theme-003",
+  "theme": "AI 项目失败的第一原因是选题，不是技术：一套从立项评估到评测监控的生产交付方法论",
+  "source_lectures": [
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40"
+  ],
+  "lecture_tiers": {
+    "gold": 2,
+    "silver": 4,
+    "copper": 1
+  },
+  "narrative_arc": {
+    "act1_problem": "AI 项目失败的真相不是'模型不准、幻觉太多'，而是选题错了——用正确的技术解决错误的问题。MIT NANDA 报告 95% 的企业 GenAI 试点未产生可测量影响，Gartner 报告 50% GenAI 项目失败，BCG 报告 74% 企业无法扩展价值。Klarna 用 AI 客服替代 700 人后又被追着重新招聘，因为客服工作一半是'情感劳动'——AI 替代不了的场景，技术再强也白搭。而且 AI 系统一旦上线，失败是沉默的：HTTP 200 正常返回、仪表盘全绿，但质量已经悄悄崩了。",
+    "act2_method": "课程给出一套从立项到持续迭代的完整闭环。立项前（34 课）：需求挖掘三法 + 四问过滤器 + AI 适用性评估表（5 维 25 分），把'感觉上的痛点'变成可协商的数字；区分 AI-enabled（把现有工作做得更好）与 AI-native（做人力从来做不到的事）。原型与评测（35-36 课）：三问工作法定义成功标准，四环节评测流水线（评测集→执行→打分→汇总），识别 pass@k 与 pass^k 的'合法作弊'陷阱。上线与迭代（37-39 课）：AI CICD 五阶段流水线、六层监控指标体系、消耗率告警（噪声减 90%）、数据飞轮把线上失败回流成 eval case。核心方法论：质量必须可量化，量化必须可持续运行。",
+    "act3_critique": "这套交付方法论的数据可信度是全课最高的（行业报告和新闻案例均可追溯），但仍需批判性看待：评估表依赖主观打分（'规模效应易高估、错误容忍度易低估'本身就是经验判断）；35/37/39 三讲偏产品方法论和工程整合，深度低于 34/36/38；40 课组织进化部分滑向管理鸡汤。最根本的边界是：这套框架回答的是'AI-enabled'这半张地图，而讲师自己承认 AI-native 这半张地图'需要的不是更好的扫描工具，而是不同的提问方式'——那恰恰是最有价值、也最没有方法论可循的部分。"
+  },
+  "title_idea": "为什么你公司的 AI 项目都失败了？四个机构报告指向同一个答案：选题错了",
+  "type": "methodology",
+  "search_keywords": [
+    "AI project failure rate enterprise",
+    "AI use case ROI evaluation framework",
+    "LLM eval pipeline grading criteria",
+    "pass@k pass^k agent evaluation",
+    "AI monitoring burn rate alert",
+    "data flywheel AI iteration",
+    "AI-native vs AI-enabled"
+  ],
+  "visualization_hints": [
+    "ECharts 柱状图：MIT/Gartner/BCG/RAND 四机构 AI 失败率对比",
+    "Mermaid 流程图：需求挖掘三法 → 四问 → 评估表 → 评测 → 监控的完整闭环",
+    "ECharts 雷达图：AI 适用性评估表 5 维度评分"
+  ],
+  "controversy_hooks": [
+    "Klarna 用 AI 替代客服又反悔，是不是说明'AI 提效'叙事本身有问题？",
+    "pass@k 汇报好数字、用户体验 pass^k——评测指标的选择是不是一种'合法作弊'？",
+    "95% 试点失败是行业报告，但那些不失败的 5% 到底做对了什么？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "MIT NANDA 95% / Gartner 50% / BCG 74% / RAND 80% → 真实公开报告",
+      "Google Bard 股价跌 7.7%、DPD、Air Canada 案例 → 真实新闻",
+      "MT-bench LLM-judge 三偏差（75%/91.3%/25%）→ 论文可查",
+      "Klarna 700 客服替代 → 真实新闻"
+    ],
+    "avoid_claims": [
+      "55% 企业大规模 AI 替代后后悔 — 调查来源不明 (⚠️)",
+      "prompt caching miss 导致 $38,000 AWS 账单 — 轶事 (❓)",
+      "Claude Code 六周沉默退化、$37,901.73 账单 — 具体数值待核实 (⚠️)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：失败的第一原因是选题",
+      "立项评估：三法+四问+评估表",
+      "评测体系：四环节流水线",
+      "上线监控：六层指标体系",
+      "边界：AI-native 这半张地图怎么走"
+    ],
+    "min_score": 55
+  }
+}

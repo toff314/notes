@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《架构设计合理性实战》学习指南</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">架构设计合理性实战</a><a href="README.html">《架构设计合理性实战》消化索引（digest README）</a></div>
+<h1>《架构设计合理性实战》学习指南</h1>
+<blockquote><p>一句话价值总结：一套可复用的架构设计三阶段流程（前期定诉求、中期选方案、后期写文档），</p><p>配一个 2014 年真实消息队列自研案例完整演示，学完能立刻用&quot;利益干系人六方清单 + 备选方案优先级排序&quot;改造自己的架构实践。</p></blockquote>
+<h2>课程画像</h2>
+<ul><li>讲师：华仔（架构实战营模块3，资深架构师，自称 P9 级别）</li><li>适合人群：想从&quot;凭感觉画架构&quot;升级为&quot;按流程做架构&quot;的初中级架构师；被&quot;PPT架构师&quot;困扰、想知道详细架构怎么写的技术负责人；做技术选型常被&quot;领导拍板/综合打分&quot;绑架的开发者</li><li>不适合人群：只想要某个具体技术（如 Kafka）使用手册的读者（本课无技术实操）；没有任何架构实践、缺乏模块1/2前置知识（4R 定义、复杂度分类）的新手</li><li>投入时间：推荐 3 小时（6 讲 176 分钟视频 + 复盘笔记）</li><li>价值密度：⭐⭐⭐⭐ (3.56/5)（🥇1 🥈5；无灌水讲，但约 20% 为开场/回顾/测验模板）</li></ul>
+<h2>阅读路线</h2>
+<h3>路线 A：快速浏览（30 分钟）</h3>
+<p>只需读以下 N 节课：</p>
+<ul><li>[06] 消息队列备选架构选择和细化实战 — 理由：全课精华落点，完整演示评估与细化</li><li>[02] 架构设计前期应该怎么做？ — 理由：六方干系人框架是全课最可操作的产出</li></ul>
+<h3>路线 B：深度阅读（2 小时）</h3>
+<p>在读路线 A 的基础上，补充：</p>
+<ul><li>[03] 架构设计中期应该怎么做？ — 理由：备选方案设计与&quot;优先级排序评估法&quot;的方法论来源</li><li>[04] 架构设计后期应该怎么做？ — 理由：三类文档划分 + 文档模板，直接可抄</li></ul>
+<h3>路线 C：时间充裕（5 小时）</h3>
+<ul><li>[01] 架构师只需要写PPT么？ — 理由：4R 判别标准 + 三阶段流程地图（体系总览）</li><li>[05] 消息队列备选架构设计实战 — 理由：案例背景与 4 个备选方案，为 L06 提供上下文</li></ul>
+<h2>核心知识地图（按主题重组，非原课程顺序）</h2>
+<pre class="mermaid">flowchart TD
+    subgraph 阶段一[&quot;前期 · 澄清不确定性（L02）&quot;]
+        A1[识别六方利益干系人] --&gt; A2[分组诉求&lt;br/&gt;时间/成本/范围/质量]
+        A2 --&gt; A3[诉求排序&lt;br/&gt;取舍原则+影响力原则]
+        A3 --&gt; A4[识别复杂度&lt;br/&gt;高性能/高可用/可扩展/成本...]
+    end
+
+    subgraph 阶段二[&quot;中期 · 设计并选择备选架构（L03/L05/L06）&quot;]
+        B1[头脑风暴&lt;br/&gt;架构模式 × 技术选型排列组合] --&gt; B2[红线筛选&lt;br/&gt;约束一票否决]
+        B2 --&gt; B3[4R 设计 3-5 个备选方案]
+        B3 --&gt; B4[360度环评 多维度评估]
+        B4 --&gt; B5[维度优先级排序 逐级筛选]
+    end
+
+    subgraph 阶段三[&quot;后期 · 细化与文档（L04）&quot;]
+        C1[架构规范&lt;br/&gt;协议/格式/框架] --&gt; C3[详细架构设计文档&lt;br/&gt;背景+约束 / 总体+详细 / 质量+演进]
+        C2[质量设计&lt;br/&gt;可测试/可维护/可观测/安全] --&gt; C3
+    end
+
+    A4 --&gt; B1
+    B5 --&gt; C1
+    B5 --&gt; C2
+
+    style 阶段一 fill:#e8f4fd
+    style 阶段二 fill:#e6f7e6
+    style 阶段三 fill:#fff7e6
+
+    subgraph 驱动[&quot;贯穿：架构师三能力（L01）&quot;]
+        D1[判断能力&lt;br/&gt;确定性思维] 
+        D2[拆解能力&lt;br/&gt;创造性思维]
+        D3[取舍能力&lt;br/&gt;系统性思维]
+    end
+    D1 -.驱动.-&gt; 阶段一
+    D2 -.驱动.-&gt; 阶段二
+    D3 -.驱动.-&gt; 阶段二</pre>
+<h3>主题一：架构师的真实角色与思维底座（来源：L01）</h3>
+<p><strong>一句话总结</strong>：架构师不是写 PPT 的，也不是纯技术的，而是&quot;业务与技术的桥梁&quot;，其核心职责是消除不确定性、降低复杂性。</p>
+<p><strong>关键框架</strong>（三能力 + 三思维）：</p>
+<ul><li>判断能力 → 确定性思维：把&quot;大量/海量/很高&quot;逼问成具体数字（100万还是1亿？），澄清环节就是干这个的。</li><li>拆解能力 → 创造性思维：基于已掌握的技术做排列组合，知识面越宽，能设计出的备选方案越多。</li><li>取舍能力 → 系统性思维：决策要有逻辑推导链条，不能拍脑袋&quot;我觉得&quot;——案例中 H5 vs Native 的三点论证（核心体验定位 / 创业需快速验证 / 多端迁移成本）就是系统思维的模板。</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>判断任务边界：用&quot;是否影响 4R&quot;（Rank 层级 / Role 角色 / Relation 关系 / Rule 规则）区分架构设计与方案设计——加接口、加字段、类拆分是方案设计；改分层、微服务拆分合并、引入消息队列是架构设计（来源：第1讲）。</li><li>决策前自检三点论：技术方案的取舍至少给&quot;核心体验、验证成本、演进成本&quot;三个可反驳的理由，而不是一句&quot;我觉得好&quot;（来源：第1讲）。</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;架构师是业务跟技术之间的桥梁，反过来也容易两头不讨好。&quot; — 第1讲</p></blockquote>
+<h3>主题二：前期——利益干系人分析与诉求排序（来源：L02，案例应用 L05）</h3>
+<p><strong>一句话总结</strong>：架构设计前期的本质不是画图，而是&quot;有人的地方就有江湖&quot;——盘清六方干系人、给诉求排优先级、处理冲突。</p>
+<p><strong>关键框架</strong>（六方干系人 + 排序三步法）：</p>
+<ul><li>六方清单：投资者（内部老板/外部金主，关注成本时间竞争力）、监管者（政府合规投诉/媒体披露，一票定生死）、构建者（开发测试，关注技术复杂度）、维护者（运维/依赖系统，关注可维护高可用）、使用者（用户/下游系统，关注易用高可用）、评估者（评测/监控，关注可观测可测试）。注意：干系人可以是&quot;其他系统&quot;。</li><li>排序三步：① 按时间/成本/范围/质量分组 → ② 按&quot;取舍原则（业务目标优先）+ 影响力原则（监管者&gt;投资者&gt;评估者&gt;使用者&gt;构建者&gt;维护者）&quot;排序 → ③ 沟通（差异性诉求点对点、冲突性诉求拉会 PK 或老板拍板，架构师必须给出技术分析不能坐山观虎斗）。</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>项目开工前画一张六方干系人表：每方列出 1-3 条具体诉求，标注诉求归属维度（时间/成本/范围/质量）（来源：第2讲）。</li><li>识别&quot;伪老板&quot;：澳X通案例证明 P10 的考核诉求可能敌不过监管的合规卡点——排序看影响力而非职位（来源：第2讲）。</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;出钱的都是爸爸，监管的都是大爷。是大爷厉害还是爸爸厉害？肯定是监管。&quot; — 第2讲</p></blockquote>
+<h3>主题三：中期——备选架构设计与评估选择（来源：L03，实战 L05/L06）</h3>
+<p><strong>一句话总结</strong>：设计 3-5 个有明显差异的备选架构（架构模式 × 技术选型），用&quot;360度环评 + 维度优先级排序&quot;选出落地方案——合适的才是最好的。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>设计三步骤：头脑风暴（排列组合）→ 红线筛选（监管/成本硬约束一票否决）→ 4R 设计（基于核心场景细化）。</li><li>评估反模式：❌&quot;领导选&quot;（领导未必懂，出了事甩锅）❌&quot;综合打分&quot;（维度一视同仁，加权求和掩盖关键差异）。</li><li>评估正模式：360度环评（性能/复杂度/成本/可运维性/可靠性/人力等多维度）→ 维度优先级排序 → 逐级一票否决。</li><li>实战演示（L06）：消息队列 4 方案，可用性一票否决全自研（存储不可控），可维护性一票否决 Kafka（Scala 栈无法嵌入运维体系）与 MetaQ（机房隔离三年不互通），最终选自研集群+MySQL 存储。</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>选型时强制产出 ≥3 个方案：少于 3 个说明思维狭隘（技术宽度不够），多于 5 个差异变小、取舍变难（来源：第3讲）。</li><li>用比较学习法补技术宽度：新学一个技术，与相似方案做 6 维对比（集群/并发/持久化/性能/数据结构/高可用），追问差异的设计动机——解决&quot;背了 API 却不会用&quot;（来源：第3讲）。</li><li>评估先定优先级再打分：问自己&quot;这轮选型哪个维度一票否决&quot;——性能？合规？可维护性？（来源：第3/6讲）。</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;评估的时候不要用打分，也不要用谁的优点多就用谁的，而是按照维度的优先级进行排序。&quot; — 第3讲</p><p>&quot;橘生淮南则为橘，生于淮北则为枳。&quot; — 第6讲</p></blockquote>
+<h3>主题四：后期——详细架构与文档写作（来源：L04）</h3>
+<p><strong>一句话总结</strong>：备选架构只是&quot;给老板的电梯稿&quot;，后期要把细化成可指导开发的详细架构，写成三部分式文档。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>三类文档：备选架构文档（给老板/干系人，讲模式选型方向）、详细架构文档（给下一级架构师/开发，含规范与质量设计）、方案设计文档（开发自写，具体接口参数）。</li><li>PPT 架构师的本质：只做备选架构、跳过详细架构（口头禅&quot;细节不关注&quot;）——文档无法指导开发，被吐槽是必然。</li><li>文档三部分模板：① 业务背景+约束限制（约束越多越好，缩小设计空间）→ ② 总体架构（Rank/Role/Relation，用系统边界黑盒图）+ 详细架构（Rule，用序列图/白盒图）→ ③ 质量设计（可测试/可维护/可观测/安全）+ 演进规划（分期）。</li><li>细化颗粒度范例：ZooKeeper 一句话&quot;Follower 将写请求转发给 Leader&quot;→ 详细到 TCP 连接、Jute 序列化、请求头字节布局（来源：官方文档，✅可查证）。</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>写文档直接套三部分骨架，用系统边界黑盒图（外部交互）和白盒图（内部角色×外部角色）各补一张（来源：第4讲）。</li><li>细化时先定公共规范（统一框架、接口公共包头、响应时间约束），具体接口参数留给方案设计阶段（来源：第4讲）。</li></ol>
+<h3>主题五：实战洞察——重复造轮子与评估纠错（来源：L05/L06）</h3>
+<p><strong>一句话总结</strong>：开源不是免费午餐，&quot;不契合团队技术栈与运维体系&quot;时自研反而更优；同时评估结论要留出错余地。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>重复造轮子的判断：当开源方案的语言栈（Erlang/Scala）团队无法维护、无法嵌入已有运维体系、业务场景不匹配时，自研成本更低。&quot;不造轮子&quot;不是绝对律令，要有判断力。</li><li>绩效现实约束：合适原则 ≠ 可以明显落后——自研性能 4000 vs Kafka 40000，向老板讲&quot;合适原则&quot;没有说服力；至少要做到量级接近。</li><li>评估会出错：MetaQ&quot;可定制&quot;&quot;接入成本低&quot;两条理由事后被证伪（小业务拿不到集团定制资源、接入运行系统隐性成本高）——评估结论需要主动压力测试。</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>自研冲动先算三笔账：团队能否维护自研产物（语言栈）、能否嵌入运维体系、成熟周期是否可接受（存储类组件 6 个月出初版、2-3 年才稳）——业务功能难度 1 vs 存储系统难度 100（来源：第5/6讲，难度数字为讲师比喻 🚩，仅作量级参考）。</li><li>评估表收尾前加一栏&quot;这个结论可能错在哪&quot;：逐条标注最可能被证伪的假设（来源：第6讲）。</li></ol>
+<h2>可忽略内容</h2>
+<ul><li>[05] 消息队列备选架构设计实战（信噪比 3.1，接近铜边界）：前半为案例背景铺垫，方法论全部复用前讲。可只读&quot;4 个备选方案&quot;小节，其余可跳。</li><li>每讲固定的开场回顾、结尾思维导图复述、测验题与助教提醒段落（约 20% 篇幅）可直接跳过。</li><li>第4讲后半&quot;架构设计文档写作&quot;的逐段讲解较拖沓，对照三部分模板直接抄即可，无需逐字听。</li></ul>
+<h2>延伸阅读</h2>
+<ul><li>相关书籍：《从零开始学架构》（华仔，本课程方法论体系的完整版）、《大厂晋升指南》（华仔）；项目管理视角可读 PMBOK 的干系人管理章节（六方框架的同源理论）。</li><li>相关论文/文档：Apache ZooKeeper 官方文档（协议与包头设计，课程 L04 案例来源）、Prometheus 官方架构文档（系统边界白盒图范例）、Redis/Memcached 官方文档（比较学习法素材）。</li><li>相关概念：build vs buy 决策框架、RICE/权重评估与多准则决策（MCDA）、stakeholder analysis（干系人权力-利益矩阵）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide.md">study_guide.md</a></footer>
+</div></body></html>

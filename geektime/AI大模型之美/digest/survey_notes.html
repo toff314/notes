@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：AI大模型之美</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">AI大模型之美</a><a href="README.html">《AI大模型之美》消化索引（digest README）</a></div>
+<h1>课程通览：AI大模型之美</h1>
+<h2>基本信息</h2>
+<ul><li>模块数：6</li><li>总讲数：34（含开篇词、导读、结束语、结课测试、3 讲直播加餐）</li><li>总时长：约 390 分钟（正课 27 讲 + 加餐 3 讲）</li><li>讲师：徐文浩（曾创办 AI 聊天机器人公司，前拼多多工程师）</li><li>课程定位：面向工程师/产品经理的「大模型应用开发」实操课，用 OpenAI API + 开源库（LangChain、llama-index、HuggingFace）从零搭应用，不涉及模型数学原理</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong> 一门&quot;零机器学习基础也能上手&quot;的 LLM 应用开发课。核心主张：大模型把 AI 应用开发的门槛从&quot;训练模型&quot;降到&quot;组合接口&quot;，你只需要掌握 Completion、Embedding 两个核心接口 + 提示语设计 + 一套开源工具链，就能做出情感分析、聊天机器人、语义搜索、语音/图像应用。主线是&quot;用接口而非训练&quot;。</li><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong> 想解决&quot;非 ML 背景的人如何进入 AI 应用开发&quot;的问题。已解决：给出了从情感分析→聊天机器人→RAG（第二大脑）→Agent→多模态的完整可跑通路径，代码可直接复现。未解决：课程成稿于 2023 年初（GPT-3.5 时代），几乎所有 API 和开源库（LangChain/llama-index）的用法均已过时，需读者自行迁移；回避了模型原理、prompt 工程的系统性方法论，也回避了&quot;何时不该用 LLM&quot;的负面讨论。</li></ul>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>课前必读</td><td>2</td><td>开篇/学习方法</td><td>低</td></tr><tr><td>基础知识篇</td><td>8</td><td>Completion/Embedding 基础任务</td><td>中</td></tr><tr><td>实战提高篇（一）</td><td>10</td><td>RAG、LangChain、Agent</td><td>高（核心模块）</td></tr><tr><td>实战提高篇（二）</td><td>9</td><td>语音/图像多模态</td><td>中</td></tr><tr><td>结束语</td><td>2</td><td>结课/测试</td><td>低</td></tr><tr><td>直播加餐</td><td>3</td><td>更新：Function Call、JSON 模式</td><td>中</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>开篇词</td><td>GPT来了，跑步迎接AI爆发</td><td>时代号召</td><td>⭐</td><td>纯鸡汤+个人经历</td></tr><tr><td>导读</td><td>让AI成为贴身助理</td><td>学习方法</td><td>⭐⭐</td><td>有些实用技巧，偏泛</td></tr><tr><td>01</td><td>重新出发，学会和AI说话</td><td>API Key/Jupyter</td><td>⭐</td><td>纯环境配置</td></tr><tr><td>02</td><td>无需机器学习做情感分析</td><td>LLM vs ML</td><td>⭐⭐⭐</td><td>有洞察的对比</td></tr><tr><td>03</td><td>巧用提示语做聊天机器人</td><td>prompt 工程</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>04</td><td>GPT-3胜在哪里</td><td>模型对比</td><td>⭐⭐</td><td>演示型对比</td></tr><tr><td>05</td><td>善用Embedding分类</td><td>Embedding+分类</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>06</td><td>ChatGPT快速做个AI应用</td><td>Gradio/成本</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>07</td><td>文本聚类与摘要</td><td>聚类/摘要</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>08</td><td>文本改写和内容审核</td><td>logit_bias/审核</td><td>⭐</td><td>API 走读</td></tr><tr><td>09</td><td>语义检索</td><td>Embedding搜索/FAISS</td><td>⭐⭐⭐</td><td>RAG 原语+冷启动</td></tr><tr><td>10</td><td>Llama Index读一本书</td><td>第二大脑/RAG</td><td>⭐⭐⭐</td><td>可复用设计模式</td></tr><tr><td>11</td><td>开源模型节约成本</td><td>成本/数据安全</td><td>⭐⭐⭐</td><td>有实用动机</td></tr><tr><td>12</td><td>AI写Excel插件</td><td>AI辅助编程</td><td>⭐⭐</td><td>演示型</td></tr><tr><td>13</td><td>AI写测试，多步提示语</td><td>CoT/多步prompt</td><td>⭐⭐⭐</td><td>可迁移技巧+抓真bug</td></tr><tr><td>14</td><td>LangChain链式调用</td><td>LangChain入门</td><td>⭐⭐</td><td>库教程</td></tr><tr><td>15</td><td>LLMChain连Google和计算器</td><td>外部工具</td><td>⭐⭐⭐</td><td>解决LLM数理弱点</td></tr><tr><td>16</td><td>LangChain记忆力</td><td>memory 类型</td><td>⭐⭐</td><td>库教程</td></tr><tr><td>17</td><td>中介与特工Agent</td><td>Agent/ReAct/MRKL</td><td>⭐⭐⭐</td><td>可验证概念</td></tr><tr><td>18</td><td>流式生成与微调</td><td>fine-tune</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>19</td><td>Whisper+ChatGPT听播客</td><td>语音识别</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>20</td><td>TTS语音合成</td><td>语音合成</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>21</td><td>DID和PaddleGAN数字人</td><td>数字人</td><td>⭐⭐</td><td>演示型</td></tr><tr><td>22</td><td>HuggingFace一键部署</td><td>HF/Endpoint</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>23</td><td>OpenClip图片说什么</td><td>CLIP多模态</td><td>⭐⭐⭐</td><td>零样本分类概念</td></tr><tr><td>24</td><td>Stable Diffusion</td><td>扩散模型架构</td><td>⭐⭐⭐</td><td>生成vs搜索的区分</td></tr><tr><td>25</td><td>ControlNet骨架</td><td>可控生成</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>26</td><td>Visual ChatGPT边聊边画</td><td>Task Matrix/Agent编排</td><td>⭐⭐⭐</td><td>源码走读但有洞见</td></tr><tr><td>27</td><td>Midjourney用户体验</td><td>产品设计原则</td><td>⭐⭐⭐</td><td>可迁移产品思维</td></tr><tr><td>结束语</td><td>通往AGI的船票</td><td>结课</td><td>⭐</td><td>纯鸡汤</td></tr><tr><td>结课测试</td><td>来赴一场满分之约</td><td>测试题</td><td>⭐</td><td>无内容</td></tr><tr><td>直播加餐</td><td>6个月重新认识LLM</td><td>视频</td><td>⭐</td><td>无正文</td></tr><tr><td>加餐一</td><td>JSON模式和Fingerprint</td><td>稳定输出/seed</td><td>⭐⭐⭐</td><td>实用技术</td></tr><tr><td>加餐二</td><td>Function Calling</td><td>原生工具调用</td><td>⭐⭐⭐</td><td>实用技术+描述准确性</td></tr></table>
+<h2>整体印象</h2>
+<ul><li>课程主线：<strong>&quot;用接口而非训练&quot;</strong>——把大模型能力拆成 Completion（生成）+ Embedding（检索）两个原语，再叠加提示语工程、RAG、Agent、多模态四条应用路径。</li><li>最大亮点：第 10 讲&quot;第二大脑&quot;（即后来的 RAG）设计模式、第 13 讲&quot;多步提示语/思维链&quot;可迁移技巧——这两讲有独立于源码的、至今仍有效的洞见。</li><li>明显水份：开篇词/结束语/导读的鸡汤、结课测试、直播加餐（视频无正文）、第 01 讲纯环境配置、以及大量已经过时的库 API 教程。</li><li>独特之处：是国内极早期（2023 年初）系统讲 LLM 应用开发的中文课，历史价值大于现时工具价值；&quot;第二大脑&quot;&quot;多步提示语&quot;&quot;Function Calling 描述准确性&quot;等概念在当时的稀缺性高。</li><li><strong>形式/内容判断</strong>：这门课约 60% 是&quot;教怎么用某个库/API&quot;（会过时的事实知识），30% 是可迁移的方法论（RAG 模式、多步提示、Agent 编排、产品设计原则），10% 是鸡汤/填充。整体偏&quot;事实+教程&quot;而非&quot;思维方式&quot;，但少数几讲确有可迁移的思维贡献。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

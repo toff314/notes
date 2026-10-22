@@ -1,0 +1,52 @@
+[
+  {
+    "order": 0,
+    "title": "第一章：从零构建可观测性",
+    "title_safe": "第一章：从零构建可观测性",
+    "articles": [
+      {
+        "id": "901811",
+        "title": "1. 从零构建可观测性（一）",
+        "title_safe": "1. 从零构建可观测性（一）",
+        "time": "02:48:51",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "901812",
+        "title": "2. 从零构建可观测性（二）",
+        "title_safe": "2. 从零构建可观测性（二）",
+        "time": "02:02:03",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "第二章：OpenTelemetry 和可观测性大规模生产实践",
+    "title_safe": "第二章：OpenTelemetry 和可观测性大规模生产实践",
+    "articles": [
+      {
+        "id": "901813",
+        "title": "1. 可观测性大规模生产实践",
+        "title_safe": "1. 可观测性大规模生产实践",
+        "time": "02:39:11",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "901814",
+        "title": "2. Opentelmetry 概述与用法",
+        "title_safe": "2. Opentelmetry 概述与用法",
+        "time": "01:58:38",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  }
+]

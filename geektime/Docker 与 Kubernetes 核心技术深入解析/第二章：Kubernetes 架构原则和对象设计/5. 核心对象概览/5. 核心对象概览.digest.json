@@ -1,0 +1,294 @@
+{
+  "lecture": "5. 核心对象概览",
+  "source": "/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第二章：Kubernetes 架构原则和对象设计/5. 核心对象概览/5. 核心对象概览.txt",
+  "intro": "回顾上一讲 Kubernetes 对象的共性——TypeMeta 定义对象是什么、Metadata 定义对象是谁、Spec 是用户输入的期望、Status 是控制器更新的状态；本节目标：真正去看 Kubernetes 最核心的一批对象都长什么样、如何设计、为什么这样设计。",
+  "segments": [
+    {
+      "start": "1",
+      "end": "1",
+      "topic": "Node 对象：集群管理中的计算节点",
+      "points": [
+        "Node 就是计算节点，对应 Kubernetes 集群管理能力——把一堆计算节点放到同一个集群里，每个计算节点就是一个 Node 对象",
+        "集群管理最关心两类信息：节点健康状况（属于状态）和计算能力（CPU/Memory/GPU 有多少，也是状态）；用户需要输入的配置极少",
+        "演示：kubectl get node（Node 的短名是 no），集群只有一个节点时可 get no 查看其属性",
+        "对象结构拆解：TypeMeta 部分 apiVersion 是 v1——Node 属于 core group，用 v1 单独表示；其他非 core group 一般用「Group 名/版本」表示",
+        "Metadata 部分：Label 定义机器属性（CPU 架构、操作系统、hostname、角色）；Annotation 是额外扩展属性，例如 Calico（本地集群 CNI 插件）想在节点上写属性但没地方放，就写入 Annotation",
+        "Spec 部分非常短：只需配置 podCIDR——即这个节点上的 Pod 能用哪个子网分配 IP，供 IPAM 使用",
+        "Status 部分信息最丰富：Address（IP、主机名）；Capacity 与 Allocatable（Capacity 代表节点上总共的硬件资源，Allocatable 代表 Kubernetes 实际能用多少，两者有差异，原因后面讲解）；Condition 代表节点具体健康状态（kubelet 是否 Ready、CNI 插件是否就绪、内存/硬盘是否充足、PID 是否够用等）",
+        "Status 还包含节点上的镜像列表（哪些镜像、什么版本、多大）以及 kubelet 版本、容器运行时版本、操作系统版本，可用于审计全集群（例如检查 kubelet 升级是否成功）",
+        "结论：Node 对象的大部分信息都在 Status 里",
+        "Condition 最终决定节点整体健康状况；节点不健康时 Kubernetes 可能采取措施确保节点不被压垮"
+      ],
+      "tradeoffs": [
+        "Capacity vs Allocatable 的差异：节点硬件资源不一定全部给 Kubernetes 用，Allocatable 才是 K8s 真正可分配的量——这是易混淆点",
+        "Annotation 是 K8s 官方留给外部组件（如 CNI 插件）写扩展信息的标准位置，而不是给用户存业务数据"
+      ],
+      "turning_points": [
+        "core group 的 apiVersion 直接用 v1 表示，而非「group/version」形式"
+      ]
+    },
+    {
+      "start": "2",
+      "end": "2",
+      "topic": "Namespace 对象：集群内的虚拟目录与隔离边界",
+      "points": [
+        "Namespace 可以理解成一个个虚拟目录：没有它时集群里所有对象堆叠在一起，例如一个集群可能跑 20 万个 Pod，全放同一 namespace 会让管理非常麻烦",
+        "有了 Namespace 可以把对象组织起来：20 万个 Pod 可能属于 1 万个或 5000 个应用，可为每个应用建一个 Namespace；操作对象时只需面向对应业务/部门的 Namespace",
+        "通过权限控制（RBAC）可以控制谁能读/改/删某个 Namespace 内的对象，实现多用户共享同一集群但互不干扰",
+        "Namespace 是 cluster-scoped（非 namespace 对象）：它是集群第一层对象，属于整个集群，所以其 Metadata 中没有 namespace 属性；演示 kubectl get namespace 可看到 default namespace",
+        "Namespace 的 Spec 里只有一个 finalizers 字段，值为 kubernetes",
+        "Finalizer 语义（与上讲的 Metadata.finalizers 一致）：Namespace 被删除时不立即消失，处于逻辑删除状态；Kubernetes 的 Namespace controller 会先扫描并删除其中所有子对象，全部清理干净后才真正删除 Namespace",
+        "Status 表示 Namespace 是活着的"
+      ],
+      "tradeoffs": [
+        "删除 Namespace 是级联清理过程：必须先清空子对象才能删掉 Namespace，操作前应意识到这点"
+      ],
+      "turning_points": [
+        "历史演进：finalizers 最早出现在 Namespace 的 Spec 里，后来社区发现应用场景越来越多，才把它提升到 Metadata 层，使所有对象都支持该能力；Namespace 的 Spec.finalizers 作为历史保留仍然存在",
+        "Namespace 本身是全局对象，不含 namespace 属性——「没有 namespace 属性即 cluster-scoped」这一判定规则"
+      ]
+    },
+    {
+      "start": "3",
+      "end": "3",
+      "topic": "Pod 对象（概念）：基本调度单元与应用组织单元",
+      "points": [
+        "Pod 词源：豆荚——豆子被豆荚包裹成一体的意象；Dolphin Pod——海豚小队一起活动、形影不离",
+        "Pod 本身是容器的组合，一个 Pod 可包含多个容器定义；这组容器紧密相关，可以共享 PID/IPC/Network/UTS Namespace",
+        "共享规则：默认共享网络 Namespace；其他 Namespace 默认不共享，但可通过属性控制共享",
+        "微服务构建方式：把不同目标的组件构建成不同容器镜像，若它们为完成同一业务目的而紧密相关，就用 Pod 组织到一起",
+        "Pod 是 Kubernetes 里的基本调度单元：申请资源时会先计算每个容器所需资源的总和，再向 Kubernetes 要资源；同时是应用的（基本）组织单元",
+        "最小 Pod 示例：TypeMeta（apiVersion/kind: Pod）+ Metadata（name）+ Spec.containers 数组（每项填 image 名）",
+        "演示：kubectl run nginx 一条命令即可创建名为 nginx 的 Pod；kubectl get pod 看到运行后，通过 kubectl get ... -o wide 拿到 IP 即可直接访问，应用部署即完成"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "为什么用 Pod 组织应用：容器是镜像级复用/隔离的粒度，Pod 才是面向业务目的的组合单元与调度单位",
+        "同 Pod 多容器共享网络 Namespace——这为 sidecar 等模式提供了基础"
+      ]
+    },
+    {
+      "start": "4",
+      "end": "4",
+      "topic": "配置注入：12 要素的代码与配置分离在 Pod 中的落地",
+      "points": [
+        "12 要素原则：应用代码和配置要分离——构建容器镜像时只把源代码编译成可执行文件并打包进镜像，配置通过外部注入（volume mount 或环境变量）传给应用读取",
+        "好处：生产环境做配置变更不需要重新打镜像、不需要走完整 CI/CD 流水线（重打镜像=发版本，过程很重）；改配置文件只是改属性，例如 Java 应用调整 Concurrent GC 参数可动态调整且很安全",
+        "环境变量注入的三种来源：直接定义值（如 env: hello=world）；valueFrom fieldRef 从 Pod 的 Metadata.name 取当前 Pod 名作为环境变量；从 ConfigMap 的某个键取值（configMapKeyRef）；从 Secret 的某个键取值（secretKeyRef）",
+        "进入容器后用 env 命令可查看操作系统全部环境变量",
+        "写数据需要存储：任何 Pod 都有 Volume/VolumeMount 属性；emptyDir 类型本质是在主机上该 Pod 所在数据目录里开辟一个新目录并挂载进容器，容器写数据实际写入主机目录",
+        "Volume 支持多种类型：ConfigMap、Secret 本身也是一种 Volume 类型；还有 emptyDir、hostPath，以及常见的 NFS、S3 等"
+      ],
+      "tradeoffs": [
+        "代码与配置分离的权衡：配置变更成本低（可直接改生产）vs 镜像重打成本高（要走流水线发版本）——这正是把配置外置的根本动机",
+        "Volume 类型多样（emptyDir/hostPath/NFS/S3/ConfigMap/Secret），按场景选择；hostPath 等与主机绑定的类型需注意安全性"
+      ],
+      "turning_points": [
+        "fieldRef 让 Pod 能把自身元数据（如名字）注入成环境变量，实现自引用",
+        "ConfigMap/Secret 既可作为环境变量数据源，也可作为挂载进容器的 Volume 类型"
+      ]
+    },
+    {
+      "start": "5",
+      "end": "5",
+      "topic": "Pod 网络与资源限制、三种健康探针的概念",
+      "points": [
+        "网络：Pod 是多容器组合的最小调度与资源分配单元；多容器时共享同一网络 Namespace（回归 Linux namespace 概念），第一个容器可通过 loopback 访问第二个容器",
+        "资源限制：定义 Pod 时除了指定镜像，还可定义需要多少 CPU、多少 Memory；资源声明影响两件事——调度器找一个满足需求的节点做调度；对真正运行的容器进程做资源配额限制，由 Linux cgroups 认领配置并通过配置 cgroups 限制可用资源",
+        "就绪控制：Pod 启动后可能在初始化，初始化进程还不能接收网络流量，需要控制 Pod 状态告诉系统「还没就绪」",
+        "自动化健康检查动机：应用跑着跑着没响应、出现大量 503，实例已不能正常工作；原生命运时代靠人工排查重启，Kubernetes 提供自动化机制解决",
+        "Liveness Probe（存活探针）：探测 Pod 是否还活着，探测失败则认为容器未正常运行，会重启容器进程",
+        "Readiness Probe（就绪探针）：探测容器进程是否已就绪、能否接收流量；就绪才接收流量，不就绪不接收",
+        "Startup Probe（启动探针）：启动过程中以更低频次做健康检查，例如先每 1 分钟或 5 分钟做一次，直到应用 ready 后再切到 Liveness Probe——防止启动过程中频繁探测给应用造成更大压力导致起不来"
+      ],
+      "tradeoffs": [
+        "资源声明双重作用：既指导调度（选节点）又约束运行时（cgroups 限额），两者都需要在创建 Pod 时正确设置",
+        "Startup Probe 存在的意义：启动期用低频探测避免误杀/施压，成熟后切换高频 Liveness——健康检查频率本身就是权衡",
+        "Readiness 与 Liveness 职责分离：前者管流量接收，后者管进程存活与重启，混用会导致流量抖动或无法自愈"
+      ],
+      "turning_points": [
+        "同 Pod 多容器通过 loopback 互相访问（共享网络 Namespace 的直接推论）",
+        "cgroups 是资源配额最终落地机制：用户声明 → 调度 → 进程配额 → cgroups 限制"
+      ]
+    },
+    {
+      "start": "6",
+      "end": "6",
+      "topic": "健康检查演示：Deployment 模板中的 readinessProbe 与三种探测方式",
+      "points": [
+        "回顾对象联动：Deployment 创建后 Deployment Controller 创建 ReplicaSet，ReplicaSet Controller 再创建 Pod；从 Deployment 能看到最终的 Pod 模板",
+        "演示 Pod 模板内容：image 用 CentOS；command 改写启动命令为 tail -f /dev/null，让前台保持阻塞状态（否则 CentOS 会退出）",
+        "配置 readinessProbe：periodSeconds=5（每 5 秒做一次健康检查）；方式为 exec，执行 cat /tmp/health——文件存在则返回码 0（健康检查通过），文件不存在则返回失败码（检查失败）",
+        "演示结果：Pod 已 Running 但 READY 显示 0/1（1 个容器 0 个就绪）；进入容器 cat /tmp/health 文件不存在，健康检查失败，容器被认为不就绪；touch 该文件后再看，Pod 变为 1/1 就绪",
+        "就绪与否最终决定 Pod 是否接收用户请求——这是健康检查的意义",
+        "健康检查的多种方式：Exec（执行命令）；TCP socket 检查端口是否活着（如应用跑在 8080 端口）；HTTP GET 真正调用业务端口上的健康检查 URI（如 /healthz）",
+        "TCP 端口活着不代表业务正常（应用可能已死掉或初始化未完成）；所以要求微服务都开放一个健康检查 URI，配合探针判断就绪与否"
+      ],
+      "tradeoffs": [
+        "TCP socket 探测的局限：端口存活 ≠ 业务正常，需要 HTTP 健康检查 URI 做更真实的判定",
+        "tail -f 阻塞前台是让容器保持运行的小技巧，否则入口进程退出容器即退出"
+      ],
+      "turning_points": [
+        "探针判定机制：健康检查命令的返回码（0=通过，非 0=失败）决定容器就绪状态",
+        "「为什么每个微服务都要写健康检查 URI」——为了配合 Kubernetes 探针机制实现自动化就绪判定"
+      ]
+    },
+    {
+      "start": "7",
+      "end": "7",
+      "topic": "ConfigMap：配置文件外置挂载与三种创建方式",
+      "points": [
+        "外挂存储最常见的场景不是要大空间，而是把配置文件从外部 mount 进容器（配置不构建进镜像），这就是 ConfigMap 的用途",
+        "演示：kubectl create configmap 用 --from-file 读取 game.properties 文件生成 ConfigMap；key 是文件名，value 是文件全部内容——这是最常用方式，不管文件内容是不是 key-value（YAML/JSON/XML 都行）",
+        "--from-env-file 与 --from-file 的差异：前者会解析文件里的所有 key-value 作为 ConfigMap 的键值对，并忽略带注释的行；后者不解析，整文件以文件名为 key",
+        "直接创建：--from-literal 可逐对传入 key=value（示例 special.how=very、special.type=charm），同样生成 ConfigMap 键值对",
+        "使用方式：ConfigMapVolumePod 中定义 volume（类型 configMap）+ volumeMount 挂载到容器内 /etc/config 目录；容器启动执行 ls /etc/config 能看到目录下生成两个文件（special.how、special.type）",
+        "应用启动时去对应路径读文件即可完成整个应用的配置与启动"
+      ],
+      "tradeoffs": [
+        "--from-file vs --from-env-file 行为差异（是否解析内容、注释是否忽略）是常见易错点，需按配置格式选择",
+        "ConfigMap 以文件形式挂载（文件名=key，文件内容=value），应用按约定路径读取"
+      ],
+      "turning_points": [
+        "配置变更感知的入口：后续练习将验证改 ConfigMap 后重启 Pod 是否感知变更"
+      ]
+    },
+    {
+      "start": "8",
+      "end": "8",
+      "topic": "Secret 与 ServiceAccount：敏感信息保护与 Pod 身份",
+      "points": [
+        "Secret 与 ConfigMap 非常相近，也是键值对；区别是 Secret 会把 value 用 base64 编码，肉眼无法一眼看出内容",
+        "base64 是对称编码可解码，并不安全——它只是第一层简单保护；Secret 的安全依赖另外两层：权限控制（对 Secret 有更高权限要求，甚至管理员也不让看用户的 Secret，只有真正有权限的人能读）；存储加密（配置 etcd 落盘加密后，即使读 etcd 数据也读不到真实内容）",
+        "Secret 一般用来存用户 token、密码、证书等信息",
+        "ServiceAccount：创建每个 Namespace 时 Kubernetes 自动创建一个 default 的 ServiceAccount；它对应一个 Secret，内含 namespace 名、token、ca",
+        "Pod 启动时默认被分配 default ServiceAccount，并把对应的 Secret 通过 volume mount 挂进 Pod；Pod 内要与 API Server 通信时，读取挂进来的 token 和 ca，以该 token 身份与 API Server 通信",
+        "API Server 据此知道请求来自哪个 namespace 的哪个 ServiceAccount，从而做权限管理；也可以创建自定义 ServiceAccount，启动 Pod 时指定它去跟 API Server 通信"
+      ],
+      "tradeoffs": [
+        "「base64 是加密所以安全」是误区：真正的防线是权限控制 + etcd 落盘加密",
+        "Secret 的保密性依赖管控强度而非编码方式——需要更高的访问权限门槛"
+      ],
+      "turning_points": [
+        "ServiceAccount 是 Pod 与 API Server 通信的默认身份凭据（token + ca 自动挂载），权限管理的起点",
+        "Secret 三层防护：base64 混淆（防肉眼）→ RBAC 权限控制 → etcd 加密存储（防落盘泄露）"
+      ]
+    },
+    {
+      "start": "9",
+      "end": "9",
+      "topic": "Service：给变化的 Pod IP 一个静态访问入口",
+      "points": [
+        "问题：部署应用会创建一堆 Pod，但 Pod 的 IP 是会变的，不能直接把 Pod IP 交给客户访问；发布服务还需要给客户一个静态访问入口，由 Service 实现",
+        "机制：每个集群节点上有 kube-proxy 对象（进程），它 watch Service 的变化并配置负载均衡；每创建一个 Service，默认就分配一个 Cluster IP，通过 Cluster IP 访问服务",
+        "演示：先创建 nginx Pod，再用 kubectl expose pod nginx 把 Pod 发布成服务（声明服务 80 端口访问）；查看 Service 细节可见自动分配的 Cluster IP 与端口映射——Service 的 80 端口映射到 Pod 的 80 端口，之后即可通过 Cluster IP 访问 nginx",
+        "Service 与后端 Pod 的关联靠 selector：Service 里定义 selector: run=nginx；label 是过滤查询条件，label 常与 selector 配合出现，selector 过滤出 run=nginx 的 Pod 作为后端"
+      ],
+      "tradeoffs": [
+        "Pod IP 漂移不可直接面向客户，必须经 Service 提供稳定入口——这是 Service 存在的根本原因",
+        "selector 匹配的是 label 集合，Pod 的 label 必须与 Service selector 一致才能被纳管"
+      ],
+      "turning_points": [
+        "kube-proxy 监听 Service 变化并配置负载均衡——Service 背后的实现机制（本讲先观察现象，service 内部实现后续展开）"
+      ]
+    },
+    {
+      "start": "10",
+      "end": "10",
+      "topic": "ReplicaSet 与 Deployment：无状态应用的高可用与滚动升级",
+      "points": [
+        "生产系统不鼓励创建裸 Pod：Pod 一旦被删除就消失；Pod 一旦分配到某个节点就与节点产生绑定关系，节点故障时 Kubernetes 会自动驱逐（删除）Pod，Pod 生命周期不可控——所以不为生产应用建裸 Pod",
+        "高可用靠副本：ReplicaSet 声明 Pod 模板 + 副本数，由 Kubernetes 保证永远有这么多副本；例如 RS 声明 1 个副本，Pod 被驱逐后 controller manager 发现「需要 1 个现在是 0 个」，就会创建新 Pod 并被重新调度运行",
+        "Deployment 是 Kubernetes 管控无状态应用最重要的对象；每次版本升级（v1→v2）本质上是一次部署",
+        "工作原理：Deployment 创建时先计算当前 Pod 模板的哈希，按该哈希创建 ReplicaSet，并按 replicas 数量设置副本数，RS 再创建 Pod——第一次部署完成",
+        "版本更新：改 image（如 v1→v2）→ 模板字符串变化 → 哈希变化 → Deployment Controller 以新哈希建新 ReplicaSet，逐渐让新版本 RS 涨副本、老版本 RS 减副本，从而把应用从老版本滚动升级到新版本",
+        "升级策略细节后续课程展开；所有例子在 GitHub 文档里，建议 clone 下来自己做测试"
+      ],
+      "tradeoffs": [
+        "裸 Pod 的问题：与节点绑定、节点故障即被驱逐且消失——生命周期不可控，这是不用裸 Pod 的根本原因",
+        "Deployment 通过模板哈希驱动 RS 换代：哈希是版本识别依据，镜像变更触发哈希变化进而滚动升级"
+      ],
+      "turning_points": [
+        "Deployment → ReplicaSet → Pod 的三层对象联动与哈希驱动的滚动升级机制",
+        "副本级（ReplicaSet）是「声明式自我修复」的体现：期望数恒定，控制器补足差值"
+      ]
+    },
+    {
+      "start": "11",
+      "end": "11",
+      "topic": "StatefulSet：有状态应用的有序副本与独立存储",
+      "points": [
+        "有状态应用（如 ZooKeeper）：每个 instance 有唯一标识 ID、独特 IP、可能还有独特存储；这类应用无法用 Deployment 控制，Kubernetes 提供 StatefulSet",
+        "共性：与 Deployment 一样有 Pod 模板、replicas 数量",
+        "差异一（身份标识）：StatefulSet 的每个 Pod 名字不是随机的，而是按编号走（0、1、2 顺序）；每个对象身份唯一——删掉 0 会补 0；Deployment 创建的 Pod 名字随机、每个 Pod 等价、不管对象差异性",
+        "差异二（数据存储）：StatefulSet 允许定义 volumeClaimTemplate，每个 Pod 可有自己单独的存储；Deployment 不允许",
+        "差异三（升级策略）：StatefulSet 有滚动升级、分片升级、onDelete 升级；Deployment 只是滚动升级（按百分比）",
+        "onDelete 策略：不删老版本不换新版本——因为 StatefulSet 多用于存储数据场景，自动升级前需要手工做数据备份/数据迁移，删掉老版本后才会换上新的",
+        "分片升级：可指定升到哪里就停下来，一片一片升级，确保升级过程中应用不出问题",
+        "扩容与缩容方向：由 1 调到 3 时按小标号到大标号（0→1→2）创建；删除时是反向动作"
+      ],
+      "tradeoffs": [
+        "有状态 vs 无状态的本质差异（身份/存储）决定了 Deployment 与 StatefulSet 的选择",
+        "onDelete/分片升级的动机：数据场景下升级必须先做备份与迁移，不能盲目滚动"
+      ],
+      "turning_points": [
+        "StatefulSet 副本「删谁补谁」（身份固定）vs Deployment 副本「等价替换」（名字随机）——这是两者最关键的行为差异"
+      ]
+    },
+    {
+      "start": "12",
+      "end": "12",
+      "topic": "Job / CronJob / DaemonSet / PV / PVC：短时作业、每节点作业与持久存储",
+      "points": [
+        "Deployment、StatefulSet 面向长周期在线服务（一直跑着）；短时作业也受支持：Job 创建后执行一次；CronJob 按定义的时间执行——为一次性批处理、AI 运算等场景提供支撑",
+        "DaemonSet：集群可能有 5000 个节点，管理员需要在每个节点上执行某些作业时，希望每个节点跑一个 Pod；创建 DaemonSet 对象时它会看集群有多少节点，为每个节点都创建一个 Pod 并直接调度上去",
+        "DaemonSet 场景举例：异常检测、日志收集；CSI 插件（要在每个节点上做网络配置）也是 DaemonSet 部署",
+        "外挂存储：Pod 需要外挂存储时，Kubernetes 提供 PV（Persistent Volume）与 PVC（Persistent Volume Claim），在讲 CSI 时会扩展讲解"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "对象家族按生命周期与调度粒度分类：长周期在线服务（Deployment/StatefulSet）、短时作业（Job/CronJob）、每节点必达（DaemonSet）"
+      ]
+    },
+    {
+      "start": "13",
+      "end": "13",
+      "topic": "CRD：平台的无限扩展机制与课后练习",
+      "points": [
+        "Kubernetes 的扩展灵活性：内置对象无法完全满足需求时可以对平台无限扩展，扩展的可能性来自 CRD（CustomResourceDefinition）",
+        "类比：CRD 就像数据库里的开表——定义新对象的 schema；CRD 本身描述的是另一个 Kubernetes 扩展对象：属于哪个 group、什么对象、什么版本、它的 spec 长什么样、status 长什么样",
+        "定义好 CRD 后，新对象注册进集群即可使用；基于 CRD 可以把一切想管理的对象都纳管到 Kubernetes 平台里",
+        "社区大量项目依赖 CRD：装好 Calico 后可以看到 Calico 本身就有很多 CRD 对象，可去看看这些对象加深认识",
+        "课后练习（Module 4 示例）：一个 Ingress Deployment 的 spec 已准备好——Ingress 类似 Nginx 这种反向代理软件，主要做 HTTP 请求导流（也支持其他协议）；Ingress 的配置来自另一个 ConfigMap",
+        "练习步骤：1) 把那个 ConfigMap 建出来，再建 Deployment，访问 Ingress 实例理解它是如何加载 ConfigMap 的；2) 修改 ConfigMap（如改监听端口），重启 Pod，观察 Pod 是否感知到 ConfigMap 变更并生效"
+      ],
+      "tradeoffs": [
+        "CRD 是双刃剑：极大扩展平台能力，但也引入大量自定义对象（如 Calico 的 CRD 群），需要理解其 spec/status 约定"
+      ],
+      "turning_points": [
+        "CRD 把 Kubernetes 从「容器编排平台」升级为「通用控制平面」——一切可声明对象皆可纳管，这是平台扩展性的根基"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "对象共性四要素（回顾）：TypeMeta 定义对象是什么；Metadata 定义对象是谁；Spec 是用户的期望（往往由用户输入）；Status 是对象的状态（一般由控制器更新）。TypeMeta 与 Metadata 是所有对象共有，Spec 每个对象不一样 [intro]",
+    "Node 就是计算节点；对 Node 对象来说，大部分信息都在 Status 里 [段1]",
+    "Annotation 是对象的扩展属性；Label 定义对象属性，是过滤查询条件，常与 selector 配合出现 [段1/段9]",
+    "Capacity 代表节点上有多少硬件资源，Allocatable 代表 Kubernetes 实际能用多少——两者有差异 [段1]",
+    "Namespace 可以理解成一个个虚拟目录；Namespace 本身是 cluster-scoped（全局对象），Metadata 中没有 namespace 属性 [段2]",
+    "Finalizer 的意义：对象被删除时不会立即消失，处于逻辑删除状态；Namespace 删除前由其 controller 先清理所有子对象 [段2]",
+    "Pod 是容器的组合、Kubernetes 里的基本调度单元和应用组织单元；一组容器默认共享网络 Namespace，可共享 PID/IPC/Network/UTS Namespace；申请资源时按所有容器资源总和计算 [段3]",
+    "12 要素制造原则：应用代码和配置分离——镜像只打包可执行文件，配置通过 volume mount 或环境变量外部注入，生产改配置不必重新打镜像走流水线 [段4]",
+    "Liveness Probe 探测 Pod 是否还活着，失败则重启容器进程；Readiness Probe 探测是否就绪、能否接收流量；Startup Probe 在启动过程中以更低频次做健康检查，就绪后再切到 Liveness [段5]",
+    "ConfigMap 把外部配置文件 mount 到容器内当配置文件使用；--from-file 以文件名为 key、文件内容为 value（不解析），--from-env-file 解析文件内键值对（忽略注释） [段7]",
+    "Secret 与 ConfigMap 类似但 value 用 base64 编码；安全依赖权限控制与 etcd 落盘加密，用于存 token、密码、证书 [段8]",
+    "ServiceAccount：Kubernetes 为每个 namespace 自动创建 default 的 ServiceAccount，对应含 token/ca 的 Secret；Pod 启动默认挂载它，以该身份与 API Server 通信并接受权限管理 [段8]",
+    "Service 为 Pod（IP 会变）提供静态访问入口，默认分配 Cluster IP；通过 selector（label 过滤）关联后端 Pod；kube-proxy watch Service 变化并配置负载均衡 [段9]",
+    "ReplicaSet 声明 Pod 模板 + 副本数，由 Kubernetes（controller manager）保证永远有这么多副本，是应用高可用的基础 [段10]",
+    "Deployment 是管控无状态应用最重要的对象：计算 Pod 模板哈希 → 按哈希建 ReplicaSet → RS 建 Pod；镜像变更使哈希变化 → 新 RS 涨副本、老 RS 减副本，实现滚动升级 [段10]",
+    "StatefulSet 支撑有状态应用：副本身份唯一（编号从 0 开始，删谁补谁），支持 volumeClaimTemplate 独立存储，升级策略有滚动/分片/onDelete；扩容按 0→1→2 顺序，删除为反向 [段11]",
+    "Job 是一次性短时作业，CronJob 按时间执行；DaemonSet 保证每个节点上跑一个 Pod（异常检测、日志收集、CSI 插件） [段12]",
+    "CRD 可以理解为数据库里的开表：描述另一个 Kubernetes 扩展对象的 group/版本/spec/status，定义后注册进集群即可用，是平台无限扩展的根基 [段13]"
+  ],
+  "closing": "本节小结：核心对象概览——Node 承载集群管理、Namespace 提供虚拟目录隔离、Pod 是基本调度单元、ConfigMap/Secret 支撑配置与敏感信息、Service 提供静态访问入口、ReplicaSet/Deployment 保障无状态应用高可用与滚动升级、StatefulSet 支撑有状态应用、Job/CronJob/DaemonSet 覆盖短时与每节点作业、PV/PVC 提供持久存储、CRD 支撑平台无限扩展。课后练习：在 Module 4 示例中创建 Ingress 所依赖的 ConfigMap，再创建对应 Deployment 并访问 Ingress 实例，理解它如何加载 ConfigMap；随后修改 ConfigMap（如监听端口）并重启 Pod，观察 Pod 是否感知到配置变更并生效。"
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：Claude Code 企业级全链路开发实战</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 企业级全链路开发实战</a><a href="README.html">《Claude Code 企业级全链路开发实战》消化索引（digest README）</a></div>
+<h1>课程通览：Claude Code 企业级全链路开发实战</h1>
+<h2>基本信息</h2>
+<ul><li>模块数：10（含热点速递、开篇词、结课测试等附属模块）</li><li>总讲数：37</li><li>总时长：约 6 小时（正课 32 讲 + 附属内容）</li><li>讲师：Robert（十多年基础设施/后端经验）</li><li>课程定位：用 Claude Code 从零造一个&quot;简版 Dify&quot;（Hify，AI Agent 开发平台），全程演示 AI 原生开发的方法论</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong></li></ul>
+<p>一门&quot;用 AI 工具做工程&quot;的方法论课，载体是用 Claude Code 从零构建 Hify（简版 Dify）的完整项目：认知框架 → 顶层设计 → 工程搭建 → 核心功能（Provider/Agent/对话/RAG/工作流/MCP）→ 测试部署 → 复盘。核心主张是：<strong>瓶颈不在 AI，在人</strong>；贯穿全课的方法是<strong>规范驱动开发（SDD）</strong>，即先定规范、再让 AI 按规范执行、人验证、迭代规范。</p>
+<ul><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong></li></ul>
+<p>解决&quot;同样用 Claude Code，效果天差地别&quot;的问题。作者给出的答案是：角色转变（你是架构师，AI 是工程团队）+ 方法论（SDD、咨询模式、领域四问、任务拆解、质量体系）。已解决：给出了一套可复用的工程方法论和完整项目骨架；未解决/回避：计算机基础厚度、垂直领域深度、大规模系统经验——作者在 32 讲诚实承认这些&quot;没给你&quot;，并把它变成&quot;接下来往哪走&quot;的路线图。</p>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>热点速递</td><td>2</td><td>源码泄漏、阿里禁用、工具观</td><td>低</td></tr><tr><td>开篇词</td><td>1</td><td>课程定位、一周造 Dify</td><td>中</td></tr><tr><td>认知篇</td><td>2</td><td>角色定位、SDD 方法论</td><td>高</td></tr><tr><td>顶层设计篇</td><td>5</td><td>产品定义、架构、CLAUDE.md</td><td>高</td></tr><tr><td>工程搭建篇</td><td>5</td><td>骨架、基础组件、UI</td><td>中低</td></tr><tr><td>核心功能交付：基础篇</td><td>7</td><td>Provider、Skill、Agent、对话</td><td>中高</td></tr><tr><td>核心功能交付：高级篇</td><td>7</td><td>RAG、工作流、MCP</td><td>中高</td></tr><tr><td>测试与部署篇</td><td>4</td><td>质量体系、部署、可观测性</td><td>高</td></tr><tr><td>高阶与复盘</td><td>2</td><td>SDD 落地全景、局限与起点</td><td>高</td></tr><tr><td>结束语 &amp; 结课测试</td><td>2</td><td>总结、测试</td><td>低</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>01</td><td>你是架构师，Claude Code 是你的工程团队</td><td>角色、三层分工、三步检查法</td><td>⭐⭐⭐</td><td>认知框架清晰</td></tr><tr><td>02</td><td>规范驱动开发（SDD）</td><td>SDD 四步闭环、规范质量标准</td><td>⭐⭐⭐</td><td>全课根基，可操作</td></tr><tr><td>03</td><td>产品定义</td><td>五步法、三问裁剪法</td><td>⭐⭐</td><td>实用取舍框架</td></tr><tr><td>04</td><td>架构设计（上）</td><td>模块化单体、线程池隔离</td><td>⭐⭐</td><td>常规但实用</td></tr><tr><td>05</td><td>架构设计（下）</td><td>部署架构、数据库规范</td><td>⭐⭐</td><td>常规但实用</td></tr><tr><td>06</td><td>CLAUDE.md、Skills 与工程规范</td><td>工具机制、业界规范喂入</td><td>⭐⭐</td><td>工具讲解</td></tr><tr><td>07</td><td>实操课：顶层设计全流程演示</td><td>完整 CLAUDE.md</td><td>⭐⭐</td><td>演示课，含完整产物</td></tr><tr><td>08-12</td><td>工程搭建篇</td><td>骨架、组件、UI</td><td>⭐</td><td>实操铺垫</td></tr><tr><td>13</td><td>模型提供商管理</td><td>首个交付闭环</td><td>⭐⭐</td><td>演示+方法论</td></tr><tr><td>14</td><td>把经验变成 Skill</td><td>领域四问、Skill 沉淀</td><td>⭐⭐⭐</td><td>核心方法论深化</td></tr><tr><td>15</td><td>Agent 创建与配置</td><td>拆解策略、领域四问</td><td>⭐⭐</td><td>可复用方法</td></tr><tr><td>16</td><td>对话引擎（上）</td><td>SSE、流式选型、三个坑</td><td>⭐⭐</td><td>有技术细节</td></tr><tr><td>17</td><td>对话引擎（下）</td><td>上下文、CRUD</td><td>⭐</td><td>实操</td></tr><tr><td>18</td><td>复杂前端交互</td><td>复杂度分层描述法</td><td>⭐</td><td>偏前端</td></tr><tr><td>19</td><td>实操课：基础篇演示</td><td>演示</td><td>⭐</td><td>演示课</td></tr><tr><td>20</td><td>RAG（上）</td><td>四步探路法、向量库选型</td><td>⭐⭐⭐</td><td>可迁移方法论</td></tr><tr><td>21</td><td>RAG（下）</td><td>数据管线、集成改动</td><td>⭐⭐</td><td>实操</td></tr><tr><td>22-23</td><td>工作流编排</td><td>元数据、执行引擎</td><td>⭐⭐</td><td>实操</td></tr><tr><td>24-25</td><td>MCP 工具接入</td><td>协议、自建 Server</td><td>⭐⭐</td><td>实操</td></tr><tr><td>26</td><td>实操课：高级篇演示</td><td>演示</td><td>⭐</td><td>演示课</td></tr><tr><td>27</td><td>AI 写代码，保证质量靠体系</td><td>质量四层次、双模型 review</td><td>⭐⭐⭐</td><td>论证最扎实的一讲</td></tr><tr><td>28</td><td>容器化与部署</td><td>Docker、K8s</td><td>⭐⭐</td><td>实操</td></tr><tr><td>29</td><td>可观测性与排错</td><td>traceId、Prometheus</td><td>⭐⭐</td><td>实操</td></tr><tr><td>30</td><td>实操课：测试部署演示</td><td>演示</td><td>⭐</td><td>演示课</td></tr><tr><td>31</td><td>SDD/Spec-Kit/Spec Coding/老项目改造</td><td>工具四层次、改造三原则</td><td>⭐⭐⭐</td><td>扩展视野，可操作</td></tr><tr><td>32</td><td>局限与起点</td><td>认知深度外化、Vibe Coding</td><td>⭐⭐⭐</td><td>金句密集，反思性强</td></tr><tr><td>开篇词/热点速递/结束语/结课测试</td><td>—</td><td>定位/观点/总结</td><td>⭐</td><td>附属内容</td></tr></table>
+<h2>整体印象</h2>
+<ul><li>课程主线：一条明线（从零造 Hify）+ 一条暗线（AI 原生开发方法论），暗线才是真正的交付物。</li><li>最大亮点：方法论密度高且自洽，SDD 闭环、领域四问、四步探路法、质量体系四层次、老项目改造三原则，彼此咬合，不是散装技巧堆砌。</li><li>明显水份：实操课（07/12/19/26/30）与对应正课高度重复，占 5 讲；工程搭建篇（08-11）是铺垫性脚手架内容。</li><li>独特之处：讲师有意识地做&quot;批判性诚实&quot;——明确说&quot;做不到/没给你/个人体感&quot;，并给出反面案例（双模型 review 抓出 12 个问题 4 个高危），这在&quot;AI 提效课&quot;里稀缺。</li><li><strong>形式/内容判断</strong>：这门课更多在&quot;教思维方式&quot;（可迁移的方法论），而非&quot;堆砌事实知识&quot;（Hify 具体代码是载体，不是目的）。这决定了它的保质期——工具会过时，方法不会。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

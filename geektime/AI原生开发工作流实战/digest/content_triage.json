@@ -1,0 +1,734 @@
+{
+  "course": "AI原生开发工作流实战",
+  "triage_date": "2026-08-14",
+  "total_lectures": 28,
+  "gold_count": 4,
+  "silver_count": 20,
+  "copper_count": 2,
+  "iron_count": 2,
+  "overall_snr": 3.2,
+  "data_audit": {
+    "total_claims": 13,
+    "verified": 2,
+    "partial": 6,
+    "unverifiable": 4,
+    "suspicious": 1,
+    "summary": "课程以工具教程和方法论为主，量化声明密度低。13个量化声明中仅2个可追溯官方出处（Anthropic的16-Agent C编译器实验、agentskills.io/AGENTS.md开放标准），6个为随工具版本变化的演示数据（版本号、184任务、23测试用例、31.2MB镜像），4个为无出处的精确百分比（80%编码时间、70%维护时间），1个为营销性夸大（'领先业界90%开发者'）。核心数据风险是'精确数字无出处'（precise-data-no-source）模式，以及把环境特定的演示输出当成普遍结论。"
+  },
+  "entries": [
+    {
+      "lecture_id": "intro",
+      "lecture_title": "开篇词｜AI工作流革命：重新定义软件工程师的每一天",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {"originality": 4.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 4.0, "expression_efficiency": 4.0},
+      "adler_q1": "提出AI协作的'三大摩擦力'（上下文/工作流/认知），并给出AI原生开发三大支柱（可执行规范、持久化上下文、可编排行动）与工程师三重角色转变。",
+      "adler_q2": "要解决'AI助理无法升级为AI同事'的根本障碍。已解决：框架性地定义问题和解法路径；未解决：三大支柱均需后续22讲展开；回避：未讨论落地的成本与失败风险。",
+      "adler_q3": "三大摩擦力归纳准确，是真实痛点；三大支柱是对业界实践（spec-kit、AGENTS.md、MCP）的提炼，非原创但有整合价值。四类缺陷中'分析不完整'较明显——只讲愿景不讲代价。",
+      "adler_q4": "提供了一张课程全景图，让我在动手前明确'为什么学这些'，建立'规范/上下文/行动'三分的认知坐标系。",
+      "critical_notes": "作为总纲，框架性强，'三大摩擦力'是全书最凝练的问题定义。但属于概念整合，无外部数据支撑，'80%时间编码'等数字无出处。适合快速浏览建立地图，不必精读。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "AI协作三大摩擦力",
+          "source_text": "上下文摩擦力：我们花费大量精力去'告诉'AI它本应'知道'的事情；工作流摩擦力：AI给出的只是一段文本，它无法直接运行一次go test；认知摩擦力：我们的大脑在两种截然不同的模式间高频切换。",
+          "paraphrase": "阻碍AI协作升级的三个根本障碍：反复搬运上下文、AI无法直接执行验证、心流被打断。",
+          "writing_angle": "opinion",
+          "related_lectures": ["01", "06"],
+          "verification": {"status": "✅", "source_url": "无独立来源，为作者原创归纳", "notes": "概念性框架，属经验归纳，可作为问题定义引用"}
+        },
+        {
+          "type": "framework",
+          "name": "AI原生开发三大支柱",
+          "source_text": "可执行的规范(Specs)是工作流的'灵魂'；持久化的上下文是'记忆'；可编排的行动是'手脚'。",
+          "paraphrase": "AI原生开发的三个支点：spec.md定义做什么、CLAUDE.md等提供记忆、Slash Command/Hooks/MCP提供行动力。",
+          "writing_angle": "methodology",
+          "related_lectures": ["02", "06", "08"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "对业界实践的提炼，结构清晰可用于课程地图"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "flash-agent-teams",
+      "lecture_title": "前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 4.0, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 2.5},
+      "adler_q1": "介绍Claude Code 2.1.32的Agent Teams实验特性，用'16个Claude写C编译器'案例论证多智能体协同的极限，并演示Todo全栈应用的团队协作。",
+      "adler_q2": "要回答'多Agent能否突破单Agent上下文瓶颈'。已解决：给出Team Lead+Teammates架构与最佳实践；未解决：仍是实验特性，生产落地不确定。",
+      "adler_q3": "核心论证依赖Anthropic官方C编译器实验，有可追溯出处，可信度较高；但Todo演示大量依赖截图，实操价值受版本影响。",
+      "adler_q4": "让我看到'人机组织管理'的范式雏形，理解Subagent(串行)与Agent Teams(并行)的本质区别。",
+      "critical_notes": "加餐性质。C编译器实验数据（16 Agent、20亿token、10万行）是少数可追溯官方的硬数据，值得保留；但Agent Teams是实验特性，教程部分易过时。",
+      "extractions": [
+        {
+          "type": "data_point",
+          "name": "16个Claude Agent重写C编译器",
+          "source_text": "在消耗了约20亿输入Token后，这个Agent团队写出了一个10万行代码的编译器，可以编译SQLite、Redis、PostgreSQL，甚至可以在x86、ARM、RISC-V架构上成功编译Linux 6.9内核。",
+          "paraphrase": "Anthropic用16个并行Claude Code Agent、约20亿token，从零写出10万行Rust的C编译器，可编译Linux 6.9内核。",
+          "writing_angle": "case_study",
+          "related_lectures": ["14"],
+          "verification": {"status": "✅", "source_url": "https://www.anthropic.com/engineering/building-c-compiler", "notes": "有Anthropic官方engineering博客可追溯，数据可信"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "flash-skills-spec",
+      "lecture_title": "前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法",
+      "snr_score": 4.2,
+      "tier": "gold",
+      "score_breakdown": {"originality": 5.0, "verifiability": 3.0, "actionability": 5.0, "change_potential": 4.0, "expression_efficiency": 4.0},
+      "adler_q1": "追踪Agent Skills从'私有方言'到agentskills.io行业标准的演进，提出四条高阶编写心法（同理心、description攻击性、确定性剥离、Eval-Driven），并给出'用AI创造Skill'的终极建议。",
+      "adler_q2": "要解决'如何写出能被AI精准触发且可靠执行的Skill'。已解决：给出可操作的四条心法+实战；未解决：心法以个人经验为主，缺乏量化评测数据。",
+      "adler_q3": "心法一（放弃MUST恐吓式写法、改用解释Why的共情式写法）是反直觉且有说服力的观点；心法三（确定性剥离给脚本）是工程上正确的原则。但论证以个人经验为主，缺对照实验。",
+      "adler_q4": "直接改变我写Prompt的方式：从命令式约束转向解释Why；并让我意识到Skill本身需要Eval测试。",
+      "critical_notes": "全课意外之喜，反直觉观点密度高。'Skill是代码，代码必须有测试'的Eval-Driven视角，把Prompt工程提升为'技能工程'，是真正的思想增量。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "放弃MUST/NEVER恐吓式Prompt，改用共情式写法",
+          "source_text": "把AI当作一个绝顶聪明但暂时缺乏公司业务上下文的新入职高级同事。不仅要告诉它'怎么做'，更要向它解释'为什么'。当遇到未定义的突发状况时，它会基于你传达的核心价值观做出最优的变通。",
+          "paraphrase": "死板的MUST/NEVER约束会让AI在边缘场景崩溃；解释业务背景和Why，AI反而能在突发状况下做出正确变通。",
+          "writing_angle": "opinion",
+          "related_lectures": ["13", "08"],
+          "verification": {"status": "⚠️", "source_url": "无独立来源，作者个人实践", "notes": "反直觉但缺对照实验，可作观点引用，不宜作事实陈述"}
+        },
+        {
+          "type": "technique",
+          "name": "确定性剥离：LLM管控制流，脚本管数据流",
+          "source_text": "千万别用LLM去做确定性的计算！高质量的Skill架构一定是'LLM负责控制流与意图理解，脚本负责数据流与确定性执行'。",
+          "paraphrase": "把正则清洗、Git命令提取等确定性逻辑写成脚本，让LLM只做意图理解，省Token且鲁棒。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["13"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工程上正确的架构原则，可放心作为方法论引用"}
+        },
+        {
+          "type": "technique",
+          "name": "Eval-Driven：给Skill写客观断言测试",
+          "source_text": "好的断言：'技能执行日志中显示调用了附带的lint.sh脚本'；或'针对用户未说明的数据库选项，技能在其输出报告中明确提出了[NEEDS CLARIFICATION]标记'。",
+          "paraphrase": "测试Skill要断言'规范表达的质量'（是否调用脚本、是否标记歧义），而非断言'AI代码能否跑通'这种易受偶发因素影响的实现。",
+          "writing_angle": "methodology",
+          "related_lectures": ["19"],
+          "verification": {"status": "⚠️", "source_url": "无独立来源", "notes": "方法论正确但属个人工作流，无数据支撑"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "01",
+      "lecture_title": "01｜范式演进：从\"人机协作\"到\"AI原生\"，你的角色变了吗？",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 4.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 4.0, "expression_efficiency": 3.0},
+      "adler_q1": "提出'AI-开发者集成成熟度模型'（L1外部知识库→L4自主工程师），论证'价值栈倒转'，引出工程师三重角色转变。",
+      "adler_q2": "要回答'AI时代工程师的角色如何变化'。已解决：给出清晰的L1-L4定位模型；未解决：模型无数据支撑，L4边界模糊；回避：未讨论岗位消失等尖锐问题。",
+      "adler_q3": "L1-L4分层是常见概念（AI工具成熟度）的新颖命名组合，'价值栈倒转'有洞察力但属定性断言。'70-80%时间编码'无出处。",
+      "adler_q4": "提供定位自身处境的标尺，明确'精通L3、触及L4'的目标，为后续学习锚定方向。",
+      "critical_notes": "成熟的入门框架，但'AI-开发者集成成熟度模型'有acronym_branding嫌疑（L1/L2/L3/L4），且全程无反面案例。价值在于角色转变的定性描述。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "AI-开发者集成成熟度模型 L1-L4",
+          "source_text": "L1外部知识库、L2嵌入式副驾驶、L3原生工作流智能体、L4自主软件工程师。本专栏定位是'精通L3，触及L4'。",
+          "paraphrase": "把AI与开发的集成关系分为四级成熟度，主流实践在L2，目标在L3（人监督下的工作流智能体）。",
+          "writing_angle": "methodology",
+          "related_lectures": ["02", "03"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "原创命名框架，无外部验证，可作认知框架引用但需注明"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "02",
+      "lecture_title": "02｜核心引擎：AI原生开发第一性原理——规范驱动开发",
+      "snr_score": 4.2,
+      "tier": "gold",
+      "score_breakdown": {"originality": 4.0, "verifiability": 4.0, "actionability": 4.0, "change_potential": 5.0, "expression_efficiency": 4.0},
+      "adler_q1": "论证SDD是AI原生开发的'第一性原理'：直面'失落的翻译'问题，提出'权力反转'（规范取代代码成为真理之源），用'编译意图'隐喻串联四阶段工作流。",
+      "adler_q2": "要解决'意图与实现之间的信息损耗'这个困扰行业数十年的矛盾。已解决：给出完整的SDD四阶段与spec-kit实现；未解决：坦承100%自动化SDD仍有门槛。",
+      "adler_q3": "'失落的翻译'是软件工程经典命题，'权力反转'是真正有洞见的重新表述；四阶段（spec/plan/tasks/implement）可操作且引用了GitHub spec-kit佐证。逻辑自洽，无知识性错误。",
+      "adler_q4": "颠覆我对'文档是代码的附属'的默认认知，让我理解'维护规范而非代码'的范式转变，是可迁移到任何Agent的底层思想。",
+      "critical_notes": "课程的理论核心与最高价值一讲。'权力反转'与'编译意图'两个隐喻精准，四阶段工作流清晰可落地。唯一保留：SDD的边界（长上下文注意力衰减、多团队一致性）在正文未充分展开，需靠答疑补充。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "权力反转：规范成为真理之源",
+          "source_text": "在SDD范式中，不再是文档服务于代码，而是代码服务于规范。那份结构化的、无歧义的、可被机器理解的规范，取代了代码，成为了项目唯一的真理之源。",
+          "paraphrase": "SDD的核心：从'代码是真理、文档是指南'倒转为'规范是真理、代码是渲染产物'。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "18", "19"],
+          "verification": {"status": "✅", "source_url": "https://github.com/github/spec-kit", "notes": "概念源自GitHub spec-kit的spec-driven开发理念，可查证"}
+        },
+        {
+          "type": "framework",
+          "name": "SDD四阶段工作流",
+          "source_text": "意图定义(spec.md)→技术规划(plan.md)→任务分解(tasks.md)→自动化实现(code)。AI Agent扮演需求编译器、方案编译器、任务编译器、代码编译器。",
+          "paraphrase": "把模糊想法经过四级'编译'逐步固化为可执行代码，每一级产出愈发具体的结构化文档。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "18", "19", "22"],
+          "verification": {"status": "✅", "source_url": "https://github.com/github/spec-kit/blob/main/spec-driven.md", "notes": "与spec-kit官方流程一致，可查证"}
+        },
+        {
+          "type": "analogy",
+          "name": "编译意图：AI Agent是编译器",
+          "source_text": "这里的'编译'指的是一个由AI驱动的、将高层级、模糊的、非结构化的人类意图，逐步转换、细化，并最终固化为低层级、精确的、结构化的机器可执行指令的全过程。",
+          "paraphrase": "把AI比作多级编译器，把人类意图编译为代码，开发者负责提供高质量'源代码'（规范）并监督每级结果。",
+          "writing_angle": "methodology",
+          "related_lectures": ["17", "18"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "隐喻性表述，作为类比素材极佳"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "03",
+      "lecture_title": "03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？",
+      "snr_score": 3.0,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "对比Claude Code/Gemini CLI/Codex CLI三大命令行Agent的设计哲学，论证为何聚焦Claude Code，并给出'客户端+国产模型'的成本平替方案。",
+      "adler_q2": "要回答'为何命令行Agent是AI原生开发最佳载体、为何选Claude Code'。已解决：给出'执行深度+集成自由度'论据；未解决：工具快速迭代，结论易过时。",
+      "adler_q3": "三大工具设计哲学的归纳（工作流引擎/上下文专家/安全助手）清晰有洞察，但基于公开资料，未附具体评测数据；作者也坦承'未来功能趋同'。",
+      "adler_q4": "理解'生于终端、能力无界'是命令行Agent的核心优势，掌握技术选型的思考框架。",
+      "critical_notes": "有价值但时效性强。'Hungry for Tokens'成本警告是务实提醒，'客户端+国产模型'方案对国内开发者有直接价值。适合快速浏览，不适合沉淀为长期结论。",
+      "extractions": [
+        {
+          "type": "comparison",
+          "name": "三大Coding Agent设计哲学",
+          "source_text": "Claude Code为'自治'而生的'工作流引擎'；Gemini CLI是灵活的'对话式上下文引擎'；Codex CLI是安全第一的'精准编辑助手'。",
+          "paraphrase": "三个主流命令行Agent定位迥异：自主工作流引擎、上下文专家、安全编辑助手。",
+          "writing_angle": "comparison",
+          "related_lectures": [],
+          "verification": {"status": "⚠️", "source_url": "基于公开资料与社区共识", "notes": "定性对比无数据支撑，且随版本快速变化，引用需标注时效"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "04",
+      "lecture_title": "04｜环境搭建：为Claude Code接入国产大模型",
+      "snr_score": 2.5,
+      "tier": "copper",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 2.0, "expression_efficiency": 2.5},
+      "adler_q1": "讲解Claude Code客户端安装、'车身与引擎分离'理念、五级分层配置体系，以及国产模型接入。",
+      "adler_q2": "要解决'低成本高可用地搭建AI原生开发环境'。已解决：给出完整安装配置步骤；未解决：版本快速迭代需自行调整。",
+      "adler_q3": "'车身与引擎分离'是准确的概念，五级分层配置是有用的知识点；但整体是纯环境搭建，内容随版本贬值快。",
+      "adler_q4": "让我理解settings.json分层配置的优先级，这是后续所有配置操作的认知前提。",
+      "critical_notes": "纯环境搭建（pure_setup），信噪比低，但'车身与引擎分离'和'五级分层配置'两个概念值得保留，其余可跳过。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "车身与引擎分离",
+          "source_text": "车身是Claude Code命令行程序（负责交互、文件操作、上下文管理）；引擎是背后真正进行语言理解和代码生成的大模型。",
+          "paraphrase": "Agent客户端（工具/工作流）与LLM（大脑）解耦，可替换引擎而保留客户端能力。",
+          "writing_angle": "methodology",
+          "related_lectures": ["03"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "架构层面的准确表述"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "05",
+      "lecture_title": "05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.5, "verifiability": 2.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解@（上下文注入）与!（Shell执行）两大核心交互，提出'眼+手'心智模型，并演示组合形成'感知-行动'闭环。",
+      "adler_q2": "要解决'如何与Agent结构化交互'。已解决：给出@/!的完整用法与实战；未解决：内容偏教程，大量demo输出。",
+      "adler_q3": "'眼+手'心智模型是好的类比，'提议-审批机制'是安全核心；但论证以工具演示为主，外部支撑不足。",
+      "adler_q4": "让我掌握与任何Coding Agent对话的通用语言，尤其是@的Git感知和!的输出即上下文。",
+      "critical_notes": "教程级内容，哲学包装提升了一点价值。核心可提取的是'@=感知、!=行动'的认知模型和'提议-审批'安全机制，其余是操作演示。",
+      "extractions": [
+        {
+          "type": "analogy",
+          "name": "AI的两只手：@感知、!行动",
+          "source_text": "@代表上下文（Context），是AI用来'感知'世界的眼睛和耳朵；!代表行动（Action），是AI用来'改造'世界的双手。",
+          "paraphrase": "用眼+手类比统一理解@（注入上下文）和!（执行Shell）两大交互。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["06", "08"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "类比性认知模型，简洁准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "06",
+      "lecture_title": "06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md",
+      "snr_score": 3.5,
+      "tier": "silver",
+      "score_breakdown": {"originality": 4.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解CLAUDE.md的长期记忆机制（四级分层加载、递归向上+动态向下发现、@导入），并引入AGENTS.md作为跨Agent行业标准。",
+      "adler_q2": "要解决'AI的失忆症'——让项目知识持久化。已解决：给出完整的上下文分层与生命周期管理；未解决：AGENTS.md生态仍在演进。",
+      "adler_q3": "'巴别塔困境'→AGENTS.md标准的行业趋势判断有前瞻性；四级分层与monorepo级联是扎实的机制讲解。部分内容依赖工具截图。",
+      "adler_q4": "让我掌握'把团队工程文化代码化'的方法，尤其是分层加载与@导入的模块化组织。",
+      "critical_notes": "上下文工程的核心一讲，'短期vs长期记忆'的区分和AGENTS.md行业趋势是增量。但字数偏大（22k+），模板部分有冗余。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "四级分层加载与monorepo级联上下文",
+          "source_text": "Claude Code会从外到内加载企业→项目→用户→模块四级CLAUDE.md；递归向上查找+动态向下发现实现按需加载上下文。",
+          "paraphrase": "通过分层加载和'向上预加载、向下动态加载'，构建既全面又省Token的级联上下文体系。",
+          "writing_angle": "methodology",
+          "related_lectures": ["07", "16"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工具机制讲解，准确"}
+        },
+        {
+          "type": "insight",
+          "name": "AGENTS.md：从项目私约到行业标准",
+          "source_text": "AGENTS.md的愿景正是要打破'巴别塔'，成为一个跨Agent的行业标准：为AI Agent创建一个专属的、标准化的README.md。",
+          "paraphrase": "各Agent各写各的XX.md会导致配置碎片化，AGENTS.md旨在成为跨工具通用标准。",
+          "writing_angle": "opinion",
+          "related_lectures": ["flash-skills-spec"],
+          "verification": {"status": "✅", "source_url": "无独立来源，AGENTS.md为社区开放倡议", "notes": "行业趋势判断，AGENTS.md标准确实存在且被多家支持"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "07",
+      "lecture_title": "07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”",
+      "snr_score": 3.7,
+      "tier": "silver",
+      "score_breakdown": {"originality": 4.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 4.0, "expression_efficiency": 3.0},
+      "adler_q1": "辨析CLAUDE.md（操作手册）与constitution.md（根本大法）的定位差异，解读spec-kit'开发九章'，给出Go项目定制宪法与'机制+引导'双保障。",
+      "adler_q2": "要解决'如何约束AI的架构决策而非仅告诉它怎么做'。已解决：给出宪法的三差异（抽象层级/强制力/可变性）与合宪性审查机制；未解决：开发九章直接源自spec-kit。",
+      "adler_q3": "'宪法>指南'的层级关系、NON-NEGOTIABLE否决权是有洞察力的抽象；'机制+引导'双保障可操作。但核心思想源自spec-kit，非原创。",
+      "adler_q4": "让我理解'道'与'术'的分工，学会把团队的架构哲学固化为AI必须遵循的铁律。",
+      "critical_notes": "接近'道'层面的一讲，'宪法vs手册'的三维差异（抽象层级、强制力、可变性）是清晰的辨析框架。价值接近gold，但'开发九章'内容源自spec-kit，拉低了独创性。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "宪法vs手册的三维差异",
+          "source_text": "抽象层级不同（CLAUDE.md低层具体，constitution.md高层抽象）；强制力不同（指导性vs绝对否决权）；可变性不同（易变vs高度稳定）。",
+          "paraphrase": "用抽象层级、强制力、可变性三个维度区分'操作手册'与'原则契约'。",
+          "writing_angle": "methodology",
+          "related_lectures": ["06", "16"],
+          "verification": {"status": "✅", "source_url": "概念源自GitHub spec-kit", "notes": "辨析框架清晰，可放心引用"}
+        },
+        {
+          "type": "technique",
+          "name": "合宪性审查的机制+引导双保障",
+          "source_text": "机制保障：plan.md模板含Constitution Check门禁章节，强制AI逐条打勾；引导保障：CLAUDE.md中提醒AI先读宪法再提计划。",
+          "paraphrase": "把抽象宪法落地为可执行的审查门禁，双重保障AI遵循原则。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["18"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "可操作性强，方法论正确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "08",
+      "lecture_title": "08｜自定义指令：精通Slash Commands，打造你的私人命令集",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 2.0, "actionability": 5.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解内置指令与自定义Slash Command，重点演示$ARGUMENTS/$1参数、Frontmatter元数据、嵌入!命令，并用/review-go-code实战收尾。",
+      "adler_q2": "要解决'高频工作流如何封装复用'。已解决：给出完整模板与参数系统；未解决：偏教程，思想增量有限。",
+      "adler_q3": "'从使用者到指令设计师'的角色转变是好的视角，Frontmatter的allowed-tools最小权限是安全亮点；但整体是官方功能复述。",
+      "adler_q4": "让我能立即上手把团队的代码审查流程封装成可复用指令。",
+      "critical_notes": "可操作性强（5分），模板完整可直接照抄，但独创性一般。'嵌入!命令实现上下文自动化准备'是值得保留的技巧。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "在Slash Command中嵌入!命令",
+          "source_text": "你可以在指令模板内部嵌入!前缀的Shell命令。当指令被调用时，这些Shell命令会首先被执行，其输出结果会替换掉命令本身，成为喂给AI的上下文。",
+          "paraphrase": "指令里嵌!命令，调用时先执行命令、把输出注入上下文，实现'上下文的自动化准备'。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["05"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工具机制，准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "09",
+      "lecture_title": "09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解Claude Code安全模型两大支柱：权限体系（四大模式+deny/allow/ask规则）与沙箱机制（bwrap文件/网络隔离），提出'安全YOLO模式'。",
+      "adler_q2": "要解决'如何信任AI在本地自由操作'。已解决：给出'默认不信任、逐步授权'的可落地配置；未解决：安全策略依赖工具，跨Agent需重学。",
+      "adler_q3": "'权限防范已知的未知，沙箱防范未知的未知'的区分精准；Bash前缀匹配可被绕过的提醒很务实。整体是官方功能系统化复述。",
+      "adler_q4": "让我建立'最小权限+沙箱'的安全配置基线，敢于在生产项目中使用AI。",
+      "critical_notes": "安全是AI原生的底线，讲解扎实，'安全YOLO模式'（沙箱+bypassPermissions）是实用的高级技巧。但内容以官方功能复述为主。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "权限防已知的未知，沙箱防未知的未知",
+          "source_text": "权限体系防范的是'已知的未知'，而沙箱防范的是'未知的未知'。它深入到操作系统层面，为AI的所有高风险操作构建数字囚笼。",
+          "paraphrase": "权限规则依赖预设清单，沙箱用OS隔离兜底，两者互补构成完整安全防线。",
+          "writing_angle": "opinion",
+          "related_lectures": ["10"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "安全架构的准确区分，可引用"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "10",
+      "lecture_title": "10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解Checkpointing的'影子Git快照'原理、/rewind三种回退模式，并明确其边界（不跟踪Bash副作用、不是Git替代品）。",
+      "adler_q2": "要解决'AI改错后的反悔机制'。已解决：给出/rewind三种模式与适用场景；未解决：边界限制需依赖权限规则兜底。",
+      "adler_q3": "'重构的恐惧'痛点描述真实，三种回退模式的心智模型清晰；边界辨析（不跟踪Bash副作用）避免了过度依赖。",
+      "adler_q4": "让我敢于让AI做大规模重构实验，因为随时可无痛回退。",
+      "critical_notes": "实操完整，'只回退代码/只回退对话/全部回退'三模式的适用场景辨析是本讲精华，边界说明诚实。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "/rewind三种回退模式",
+          "source_text": "Rewind code只回退代码保留对话；Rewind conversation只回退对话保留代码；Rewind code and conversation全部回退。",
+          "paraphrase": "按'改错了代码还是说错了指令'选择不同回退粒度，是精细的协作反悔机制。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["22"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工具机制，准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "11",
+      "lecture_title": "11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解Hooks事件驱动机制（PreToolUse/PostToolUse等事件），用自动格式化与主分支保护两个实战演示。",
+      "adler_q2": "要解决'从用户调用到事件触发的自动化'。已解决：给出完整Hook配置与脚本；未解决：调试Hook成本较高。",
+      "adler_q3": "'人驱动vs事件驱动'的哲学区分清晰；PreToolUse一票否决是安全利器；两个实战脚本完整可复用。",
+      "adler_q4": "让我理解如何把'规范'变成永远在线的自动守护进程，而非文档里的空话。",
+      "critical_notes": "事件驱动的自动化哲学有价值，主分支保护的Python脚本是亮点。整体仍是官方机制讲解。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "PreToolUse Hook一票否决",
+          "source_text": "PreToolUse Hook可以接收到AI即将调用的工具名称和参数，并通过返回非零退出码来'一票否决'这次操作。",
+          "paraphrase": "在工具调用前拦截，用exit code 2阻止危险操作（如main分支直接修改），并反馈给AI让其调整。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["09"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工具机制，准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "12",
+      "lecture_title": "12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.0},
+      "adler_q1": "讲解MCP协议三角色（Host/Client/Server）、三大能力（Tools/Resources/Prompts），用Go手写stdio服务器和GitHub远程集成两个实战演示。",
+      "adler_q2": "要解决'AI如何连接外部系统'。已解决：给出完整协议理解与两端实战；未解决：依赖生态成熟度。",
+      "adler_q3": "'认证解耦'（密钥在Host侧注入，模型不接触）是深刻的安全洞察；Go手写MCP服务器让人理解协议底层。",
+      "adler_q4": "让我理解MCP作为'AI的RPC协议'的本质，掌握连接内部系统的能力。",
+      "critical_notes": "实操扎实（完整Go代码），'认证解耦'是安全亮点，是MCP标准'统一物理接口'的清晰讲解。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "MCP认证解耦",
+          "source_text": "整个过程中，AI大模型本身完全不接触任何敏感的API Key或Token。认证凭证的配置发生在主机（Claude Code）侧，安全地注入到运行环境。",
+          "paraphrase": "MCP把认证从模型解耦到Host层，模型只产生'调用意图'，密钥永不进入模型上下文。",
+          "writing_angle": "opinion",
+          "related_lectures": ["15"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "MCP安全模型核心，准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "13",
+      "lecture_title": "13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力",
+      "snr_score": 4.4,
+      "tier": "gold",
+      "score_breakdown": {"originality": 5.0, "verifiability": 4.0, "actionability": 5.0, "change_potential": 4.0, "expression_efficiency": 4.0},
+      "adler_q1": "论证Agent Skills是'能力涌现的关键'：区分指令(祈使句)与技能(陈述句)，详解'渐进式披露'三层模型，辨析Skills/Commands/Subagents，演示把Slash Command升维为Skill。",
+      "adler_q2": "要解决'通用Agent如何优雅装备领域专业知识'（既不每个领域训模型，也不撑爆CLAUDE.md）。已解决：给出渐进式披露的标准化封装范式。",
+      "adler_q3": "'渐进式披露'三层模型（发现层/触发层/执行层）是精妙的架构设计，有官方PDF Skill佐证；'指令是祈使句、技能是陈述句'的区分一针见血。逻辑严密，无知识性错误。",
+      "adler_q4": "让我理解'编程AI'的范式跃迁：从写一次性Prompt，到构建可发现、可组合、可复用的能力库。",
+      "critical_notes": "与02并列为课程思想内核。渐进式披露是解决'上下文瓶颈vs专业深度'矛盾的优雅答案，'指令→技能'的升维实战展示了能力封装范式的转折。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "渐进式披露三层模型",
+          "source_text": "Level 1元数据（发现层，只注入name/description）；Level 2核心指令（触发层，语义匹配后即时加载SKILL.md主体）；Level 3+辅助资源（执行层，按需加载脚本与文档）。",
+          "paraphrase": "用'只注入索引、按需加载指令、深度加载资源'三层策略，让AI知识库无限扩展而工作记忆保持轻量。",
+          "writing_angle": "methodology",
+          "related_lectures": ["flash-skills-spec"],
+          "verification": {"status": "✅", "source_url": "Anthropic官方Skill规范与document-skills-pdf示例", "notes": "官方文档化机制，可查证"}
+        },
+        {
+          "type": "insight",
+          "name": "指令(祈使句)与技能(陈述句)的本质区别",
+          "source_text": "指令如Slash Command是'祈使句'，由用户发起明确告诉AI去做这件事；技能Skill是'陈述句'，向AI自我介绍'我是一种能做某件事的能力'。",
+          "paraphrase": "Slash Command是用户被动调用，Skill是模型主动发现调用——从'命令'到'声明'的转变是智能涌现的关键。",
+          "writing_angle": "opinion",
+          "related_lectures": ["08", "14", "20"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "准确的认知区分，是理解能力封装体系的关键"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "14",
+      "lecture_title": "14｜智能分身：精通Subagent，为复杂任务创建专家AI",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "论证单一Agent在多目标任务中的'精神分裂'瓶颈，讲解Subagent的独立上下文机制、基因字段与五条最佳实践。",
+      "adler_q2": "要解决'复杂任务需要多专家协同'。已解决：给出Subagent定义与三种调用编排模式；未解决：多智能体编排仍在早期。",
+      "adler_q3": "'上下文压缩与关注点分离'的论证清晰；独立上下文是Subagent与Skills/Commands的核心区别，抓得准。五条最佳实践（先让AI创造、保持专注、最小权限）有参考价值。",
+      "adler_q4": "让我掌握'组建AI专家团队'的原子能力，理解链式编排的流水线思维。",
+      "critical_notes": "多智能体概念的清晰落地，'独立上下文'是理解三种能力扩展（Command/Skill/Subagent）差异的钥匙。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "Subagent的核心是独立上下文隔离",
+          "source_text": "每个Subagent都有自己独立的内存空间，工作时不会读取也不会污染主会话的对话历史。这从根本上解决了上下文污染。",
+          "paraphrase": "Subagent与Skill/Command的本质区别是上下文隔离与深度专注，可并行推理且互不干扰。",
+          "writing_angle": "methodology",
+          "related_lectures": ["13", "flash-agent-teams"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "准确的概念辨析"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "15",
+      "lecture_title": "15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "讲解Headless模式把AI变为'可编程函数'，详解-p参数、stdin/stdout、--output-format json，用日志分析脚本和GitHub Actions两个实战收尾。",
+      "adler_q2": "要解决'AI如何脱离交互式外壳被脚本/CI调用'。已解决：给出完整的自动化接口方案。",
+      "adler_q3": "'f(输入)=输出'的函数化隐喻清晰；json输出提供可审计的执行日志是工程关键；两个实战完整。",
+      "adler_q4": "让我掌握把AI嵌入自动化管道的'最后一公里'，理解AI作为Shell工具链过滤器的用法。",
+      "critical_notes": "AI原生开发的'最后一公里'，json结构化输出+CI集成是核心增量。偏教程但有工程价值。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "--output-format json实现可审计AI调用",
+          "source_text": "json格式输出包含完整执行过程、Token消耗、成本等元数据，可以用jq解析.result/.total_cost_usd/.subtype。",
+          "paraphrase": "用结构化JSON输出让AI调用可编程、可审计、可监控，是集成进CI的前提。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["21", "22"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "工具机制，准确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "16",
+      "lecture_title": "16｜顶层设计：构建你的AI原生开发“驾驶舱”",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "论证'AI协作框架'的价值（沉淀经验/统一标准/赋能团队），给出项目级(.claude/)与用户级(~/.claude/)框架全景，并初始化Go项目框架。",
+      "adler_q2": "要解决'如何把零散AI能力整合为体系'。已解决：给出可复制的框架目录结构与Git管理策略。",
+      "adler_q3": "'游击战→体系作战'的比喻生动；框架纳入版本控制是团队协作的关键实践；整合性强但无新增概念。",
+      "adler_q4": "让我获得一张把前面所有能力组织起来的总图，可直接复制到团队项目。",
+      "critical_notes": "实战篇地基，价值在于'整合'而非'创新'。框架全景图是全课的可操作地图，PR审查场景推演展示了各能力如何协同。",
+      "extractions": [
+        {
+          "type": "framework",
+          "name": "AI协作框架全景：项目级vs用户级",
+          "source_text": "项目级框架(./)是团队共享资产应提交Git；用户级框架(~/)是个人专属不提交。commands/skills/agents/hooks/settings.json各司其职。",
+          "paraphrase": "用'团队共享vs个人专属'两层框架组织所有AI能力，纳入版本控制成为可传承的核心资产。",
+          "writing_angle": "methodology",
+          "related_lectures": ["06", "07", "08", "13", "14"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "整合性框架，工程上正确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "17",
+      "lecture_title": "17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 4.0, "expression_efficiency": 3.0},
+      "adler_q1": "演示需求编译的四步Prompt（角色设定→头脑风暴→最终确认→生成目录），把模糊想法编译成spec.md。",
+      "adler_q2": "要解决'如何把模糊需求结构化'。已解决：给出完整可复用的Prompt链；未解决：依赖AI的提问质量。",
+      "adler_q3": "'需求编译器'的角色定位准确；'做减法'（明确拒绝PR diff、图片下载）是需求澄清的关键技巧；Token不进--参数是安全细节。四步Prompt可直接复用。",
+      "adler_q4": "让我掌握用角色设定+多轮头脑风暴把模糊想法变成可执行规范的完整话术。",
+      "critical_notes": "实战价值高，完整Prompt链可直接照抄，'做减法'的MVP思维和安全细节是亮点。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "需求澄清的'做减法'与闭环Prompt",
+          "source_text": "明确拒绝复杂度（PR diff、重试机制）对MVP价值不大；在回答完问题的同时直接下达生成spec.md指令，避免再多一轮对话。",
+          "paraphrase": "需求澄清要主动砍非MVP需求，并在最终确认轮闭环生成spec.md，减少往返。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["02", "18"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "可操作技巧，工程上正确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "18",
+      "lecture_title": "18｜计划与任务：将规范“编译”为plan.md与tasks.md",
+      "snr_score": 3.2,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0},
+      "adler_q1": "演示把spec.md编译为plan.md（架构师角色，含合宪性审查）与tasks.md（技术组长角色，180+原子任务）。",
+      "adler_q2": "要解决'WHAT到HOW再到ACTIONS的翻译'。已解决：给出完整Prompt与合宪性审查机制。",
+      "adler_q3": "'合宪性审查'门禁是把宪法落地为流程的关键；原子化任务+[P]并行标记+奇数测试偶数实现的TDD编排是亮点；'人工审查是唯一保障'的提醒诚实。",
+      "adler_q4": "让我掌握'运筹帷幄'阶段的Prompt模板，理解计划审查的重要性。",
+      "critical_notes": "编译三部曲中段，'合宪性审查'和'[P]并行标记'是核心增量，但184任务等演示数据不宜当普遍结论引用。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "合宪性审查门禁与[P]并行标记",
+          "source_text": "plan.md模板含Constitution Check门禁，强制AI逐条对照宪法打勾；tasks.md用[P]标记无依赖任务可并行。",
+          "paraphrase": "把宪法审查变成plan.md的强制流程节点，用并行标记为多Agent协同铺路。",
+          "writing_angle": "methodology",
+          "related_lectures": ["07", "19"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "流程设计正确，可操作"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "19",
+      "lecture_title": "19｜编码与测试：AI驱动的TDD与框架能力的协同作战",
+      "snr_score": 4.6,
+      "tier": "gold",
+      "score_breakdown": {"originality": 5.0, "verifiability": 4.0, "actionability": 5.0, "change_potential": 5.0, "expression_efficiency": 4.0},
+      "adler_q1": "演示AI驱动的TDD红-绿-重构循环，提炼两条黄金法则（坚持TDD防'自洽幻觉'、维护意图单一来源），并展示Git Worktree并行开发。",
+      "adler_q2": "要解决'如何保证AI生成代码的正确性'。已解决：给出TDD作为验证锚点的完整方法论与Bug归属判断法则。",
+      "adler_q3": "'自洽幻觉'（让AI同时写代码和测试会生成配合错误逻辑的测试）是极其深刻的洞察；'意图偏差改Spec、实现错误改代码'的二分法解决了SDD落地最实际的困惑。逻辑严密，有真实TDD演示佐证。",
+      "adler_q4": "彻底改变我对'AI生成代码为什么还要TDD'的认知，掌握判断Bug归属的决策规则。",
+      "critical_notes": "课程最高价值一讲。两条黄金法则把'为什么AI时代还要TDD'讲透了，'意图单一来源'是SDD落地的关键决策规则。实战演示充分（编译错误自愈、命名冲突、Mock重构）。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "坚持TDD是为了防止AI的自洽幻觉",
+          "source_text": "如果你让它同时生成代码和测试，它很有可能生成一段逻辑错误的业务代码，然后紧接着生成一个配合这个错误逻辑的测试用例。结果就是测试全绿，你以为一切正常，但实际上功能完全是错的。",
+          "paraphrase": "AI最擅长自圆其说，同时生成代码和测试会产出'自洽但错误'的结果；先写测试并由人审查，才能建立AI无法逾越的验证锚点。",
+          "writing_angle": "opinion",
+          "related_lectures": ["02", "18"],
+          "verification": {"status": "⚠️", "source_url": "无独立来源，作者经验总结", "notes": "深刻的反直觉洞察，论证为经验性而非实验性，可作观点引用"}
+        },
+        {
+          "type": "framework",
+          "name": "意图的单一来源：意图偏差改Spec，实现错误改代码",
+          "source_text": "如果是意图偏差（没想清楚），必须回到源头修改spec.md；如果是实现错误（没写对），直接让AI修复代码。只有当Bug源于意图偏差时才改Spec。",
+          "paraphrase": "判断Bug归属：业务逻辑漏洞改spec.md重新生成，代码实现错误直接修代码，维护'规范是真理之源'的权威。",
+          "writing_angle": "methodology",
+          "related_lectures": ["qa", "22"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "SDD落地的关键决策规则，逻辑自洽，与答疑呼应"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "20",
+      "lecture_title": "20｜协同与审查：调用框架中的/review指令，实现标准化审查",
+      "snr_score": 3.4,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5},
+      "adler_q1": "演示AI交叉审查、/commit自动提交、PR描述生成，并辨析Slash Command与Skill的'确定性vs自主性'选择原则。",
+      "adler_q2": "要解决'本地代码到高质量PR的转化'。已解决：给出标准化的审查/提交/PR三件套。",
+      "adler_q3": "'AI生成→AI审查'闭环是质量保障核心；'标准流程用指令、探索任务用技能'的辨析精准地解释了为何SDD中首选Slash Command。",
+      "adler_q4": "让我理解确定性环节（审查/提交）应追求可重复性而非自主性。",
+      "critical_notes": "'确定性vs自主性'的辨析是隐藏的好观点，解释了为什么工程交付环节反而用更'笨'的Slash Command。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "标准流程用Slash Command，探索任务用Skill",
+          "source_text": "Slash Command代表'流程的确定性'，在Code Review、Commit这些必须执行的环节需要AI绝对服从；Agent Skill代表'探索的自主性'，适合开放式任务。",
+          "paraphrase": "SDD的标准化环节追求确定性和可重复性，所以用命令式Slash Command而非自主发现的Skill。",
+          "writing_angle": "opinion",
+          "related_lectures": ["08", "13"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "准确的工具选择原则，可引用"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "21",
+      "lecture_title": "21｜构建与交付：扩展框架能力，实现自动化构建与CI/CD",
+      "snr_score": 2.4,
+      "tier": "copper",
+      "score_breakdown": {"originality": 2.0, "verifiability": 2.0, "actionability": 3.0, "change_potential": 2.5, "expression_efficiency": 2.5},
+      "adler_q1": "演示AI生成Dockerfile/Makefile/CI流水线，并把DevOps能力封装回Slash Command。",
+      "adler_q2": "要解决'自动化构建交付'。已解决：给出DevOps配置生成方案；未解决：大段源码走读，核心思想少。",
+      "adler_q3": "大量贴出Dockerfile/Makefile源码，信息密度低；核心增量仅是'把新能力沉淀回框架'的闭环思想。",
+      "adler_q4": "让我理解'沉淀与复用'的闭环：能力生成后应封装回框架供团队复用。",
+      "critical_notes": "信噪比较低，大段Dockerfile/Makefile源码走读（demo_inflation），核心思想只有'能力沉淀回框架'一点，可直接看小结。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "22",
+      "lecture_title": "22｜维护与重构：AI赋能的系统“体检”与“外科手术”",
+      "snr_score": 3.3,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.0},
+      "adler_q1": "演示遗留系统三大场景：Headless根因诊断（AI验尸官）、Checkpointing安全重构（外科手术）、知识库同步（update-docs）。",
+      "adler_q2": "要解决'AI在存量代码维护中的价值'。已解决：给出诊断/重构/知识同步三场景完整流程。",
+      "adler_q3": "'从0到1到从1到N'的角色升维（执行者→智能分析师）有洞察；根因分析的Prompt构造（角色/任务/上下文/输出要求）可复用；Checkpointing实战验证了其真实价值。",
+      "adler_q4": "让我掌握把AI用于遗留系统诊断、安全重构和文档反向同步的具体方法。",
+      "critical_notes": "实战篇收官，三大场景覆盖了软件生命周期最耗时的部分。'70%时间维护'数字无出处是唯一硬伤。",
+      "extractions": [
+        {
+          "type": "technique",
+          "name": "根因分析Prompt构造法",
+          "source_text": "PROMPT包含：角色（代码验尸官）、任务（精准定位/根因分析/修复建议/预防措施）、上下文来源（stdin+@源码）、输出要求（Markdown报告）。",
+          "paraphrase": "用'角色+四步任务+上下文+输出格式'构造诊断类Prompt，配管道和@注入源码与日志。",
+          "writing_angle": "tutorial",
+          "related_lectures": ["15"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "可复用的Prompt结构，工程上正确"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "quiz",
+      "lecture_title": "结课测试｜来赴一场满分之约！",
+      "snr_score": 1.0,
+      "tier": "iron",
+      "score_breakdown": {"originality": 1.0, "verifiability": 1.0, "actionability": 1.0, "change_potential": 1.0, "expression_efficiency": 1.0},
+      "adler_q1": "纯结课测试题入口。",
+      "adler_q2": "无实质内容。",
+      "adler_q3": "无可分析内容。",
+      "adler_q4": "无学习价值。",
+      "critical_notes": "纯测试题入口，跳过。",
+      "extractions": []
+    },
+    {
+      "lecture_id": "ending",
+      "lecture_title": "结束语｜未来已来，欢迎来到人机共生的软件工程新纪元",
+      "snr_score": 1.6,
+      "tier": "iron",
+      "score_breakdown": {"originality": 1.5, "verifiability": 1.0, "actionability": 2.0, "change_potential": 2.0, "expression_efficiency": 2.0},
+      "adler_q1": "回顾课程'道→术→道'结构，展望'长程自主'开发闭环，叮嘱成为'冲浪者'。",
+      "adler_q2": "无新增知识，属展望和总结。",
+      "adler_q3": "'长程自主闭环'的愿景描述有画面感，但'领先90%开发者'是营销性夸大。",
+      "adler_q4": "无新增可操作内容，可跳过。",
+      "critical_notes": "展望+鸡汤性质（opening_closing_only），'长程自主闭环'愿景可作文章结尾意象，但无实质学习内容。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "长程自主的开发闭环",
+          "source_text": "从需求确认开始，到编码、测试、审查、部署、运行反馈，再回到重构的高度自动化、能够自我修复的闭环。",
+          "paraphrase": "SDD的终局愿景：AI从规划到部署监控自我修复的无人值守闭环。",
+          "writing_angle": "opinion",
+          "related_lectures": ["02", "21"],
+          "verification": {"status": "❓", "source_url": "无独立来源", "notes": "愿景展望，不可作事实引用"}
+        }
+      ]
+    },
+    {
+      "lecture_id": "qa",
+      "lecture_title": "精彩答疑｜建立AI原生世界世界观",
+      "snr_score": 3.1,
+      "tier": "silver",
+      "score_breakdown": {"originality": 3.0, "verifiability": 3.0, "actionability": 3.0, "change_potential": 3.5, "expression_efficiency": 3.0},
+      "adler_q1": "以Q&A形式补充几个关键概念：损耗左移、约束型vs信息型上下文、一个任务一个会话、反向同步等。",
+      "adler_q2": "要解决正文遗留的落地困惑（多人团队一致性、长上下文、何时开新会话）。已解决：给出务实的工程答案。",
+      "adler_q3": "'损耗左移'（SDD把信息损耗控制在成本最低阶段）是对'失落的翻译'的精彩补充；'约束型vs信息型上下文'澄清了规范与上下文的边界；'一个任务一个会话'是实用经验。",
+      "adler_q4": "澄清了SDD落地的几个真实困惑，尤其是'反向同步'和'损耗左移'这两个概念可直接迁移。",
+      "critical_notes": "答疑质量意外地高，补充了正文缺失的落地细节。'损耗左移'和'约束型vs信息型上下文'值得纳入学习指南。",
+      "extractions": [
+        {
+          "type": "insight",
+          "name": "SDD即损耗左移",
+          "source_text": "SDD并不能从物理上'消灭'信息损耗，而是将损耗控制在成本最低的阶段。用'思考的成本'置换了'返工的成本'。",
+          "paraphrase": "SDD的价值不是消灭信息损耗，而是把损耗暴露在改Markdown而非改几千行代码的廉价阶段。",
+          "writing_angle": "opinion",
+          "related_lectures": ["02", "19"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "对'失落的翻译'的精彩补充，可作核心观点引用"}
+        },
+        {
+          "type": "framework",
+          "name": "约束型上下文vs信息型上下文",
+          "source_text": "规范是约束型上下文（AI行为的护栏和红线，决定产出合规性）；普通上下文是信息型上下文（AI完成任务的素材，决定产出正确性）。",
+          "paraphrase": "把上下文分为'约束型'（宪法/规范，管合规）与'信息型'（代码/素材，管正确），厘清规范与上下文的边界。",
+          "writing_angle": "methodology",
+          "related_lectures": ["07", "06"],
+          "verification": {"status": "✅", "source_url": "无独立来源", "notes": "清晰的认知框架，可引用"}
+        }
+      ]
+    }
+  ]
+}

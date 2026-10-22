@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manager 的行为（由 SOP 指导，不是 Python 编排）：</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../README.html">geektime</a><a href="../../README.html">企业级多智能体设计实战</a><a href="../README.html">模块四：协作与设计模式，掌握5大架构设计模式</a><a href="README.html">29｜项目实战4：Agent 小队完成真实项目需求</a></div>
+<p>欢迎回来！上一节课，我们建立了数字员工团队的自我进化机制——三层日志、五问复盘、三档 HITL 审批，让 Agent 做完项目后能自动发现不足、生成改进提案、分级落地。至此，模块四的四大机制全部就位。</p>
+<p>但学完 25 到 28 课，你心里大概率有一个问题：<strong>这四个机制拉在一起，真的能协作完成一个项目吗？</strong> 单看每个机制都说得通——角色分工清晰、邮箱能传话、人能介入、做完能复盘。可四个机制同时在线的时候，哪些地方需要补胶水代码？补多少？会不会一拼就散？</p>
+<p>今天就来验证。我们把 25-28 课的所有机制装配成一个四人数字员工团队（Manager / PM / RD / QA），端到端跑一个真实的 toC 项目。不是示意图，不是伪代码——是一个能接飞书消息、分派任务、在沙盒里写代码跑测试、交付产品、完成自我复盘的完整系统。</p>
+<p>这节课代码量非常大，课上主要帮你建立全局理解，课下还是要回去跑起来、看代码。我们提供了完整的 README 和大量测试用例——跑一遍 E2E 测试，比读十遍课文理解更深。</p>
+<blockquote><p>💡 课程说明：本节完整代码位于 <code>code/xiaopaw-team/</code>。核心代码在 <code>xiaopaw_team/</code> 目录下，角色配置和 Skill 文件在 <code>workspace/</code> 目录下。</p></blockquote>
+<hr>
+<h2>一、模块四回顾：从四个机制到一个团队</h2>
+<p>先快速回顾这四节课各自解决了什么问题：</p>
+<img src="images/img_000.png" alt="">
+<table><tr><th>课</th><th>机制</th><th>解决的问题</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>25</td><td>团队角色体系</td><td>谁做什么——四层框架（soul / agent / memory / user）定义分工和行为边界</td></tr><tr><td>26</td><td>任务链与信息传递</td><td>怎么传话——文件邮箱三态机 + 共享工作区</td></tr><tr><td>27</td><td>Human as 甲方</td><td>人在哪里——三个介入点 + 单一接口原则</td></tr><tr><td>28</td><td>自我进化</td><td>怎么变好——三层日志 + 五问复盘 + 三档 HITL 审批</td></tr></table>
+<p>每一课解决一个维度，但<strong>单点能力不等于系统能力</strong>。你在公司里也见过：招了四个优秀的人，但协作一团糟——不是能力问题，是拼装问题。拼装过程中的&quot;接缝&quot;才是真正的工程挑战。</p>
+<p>今天的任务就是：<strong>找到这些接缝、补上胶水代码、跑通全流程</strong>。</p>
+<p>我们的 Demo 产品是小爪子日记（PawDiary）——一个宠物日记 toC 单页网站，FastAPI 后端 + SQLite + 单文件前端。产品本身不复杂，重点是验证团队协作流程。</p>
+<hr>
+<h2>二、架构设计：三层继承与零编排</h2>
+<p>29 课的代码不是从头写的，而是在 22 课 <code>xiaopaw-with-memory</code> 的骨架上叠加了一层。这是我们从第 11 课就坚持的设计原则：<strong>每次只加一层，绝不重写</strong>。</p>
+<img src="images/img_001.png" alt="">
+<pre><code>L3 团队协作层（29 课新增）
+  ├── 4 个 Role Crew：Manager + PM + RD + QA
+  ├── 8 个 Python Tools：SendMail / ReadInbox / MarkDone /
+  │                      CreateProject / AppendEvent / SendToHuman /
+  │                      ReadShared / WriteShared
+  ├── File Mailbox：三态机（unread → in_progress → done），FileLock 并发安全
+  ├── Event Log：append-only events.jsonl，单 writer（Manager）
+  ├── feishu_bridge：CheckpointStore + 5 分类 classify()
+  └── tasks_store：SendMail 自动 schedule_wake + heartbeat 错峰
+
+L2 记忆层（22 课继承，原样复用）
+  ├── Bootstrap：读 workspace/{role}/soul.md + agent.md + memory.md + user.md
+  ├── ctx.json / raw.jsonl：跨 session 持久化
+  └── pgvector 语义检索（可选）
+
+L1 基础设施层（17 课继承，原样复用）
+  └── FeishuListener + Runner + SkillLoader + Sub-Crew + AIO-Sandbox + CronService</code></pre>
+<p>L1 和 L2 一行代码没改。29 课的全部工程增量都在 L3。</p>
+<p><strong>核心创新：零 Python 编排。</strong>传统多 Agent 系统会写一个 Python 编排器——<code>if stage == &quot;design&quot;: call_pm(); elif stage == &quot;implement&quot;: call_rd()</code>。这种方式把流程逻辑写死在代码里，每改一步流程就要改代码。</p>
+<p>我们的方案：把流程逻辑写在 SOP Skill 里（自然语言），让 Manager LLM 读了 SOP 就知道下一步该做什么。代码只管“发邮件 = 叫人”。</p>
+<p>自驱动循环是这样的：</p>
+<pre><code>SendMailTool._run()
+  → mailbox.send_mail(to=&quot;pm&quot;, ...)       # 写文件到 PM 的收件箱
+  → tasks_store.schedule_wake(&quot;pm&quot;)        # 注册 1 秒后唤醒 PM
+    → CronService 检测到 tasks.json 变更（热加载）
+      → dispatch(InboundMessage routing_key=&quot;team:pm&quot;)
+        → Runner._pick_agent_fn(&quot;team:pm&quot;)
+          → PM Agent kickoff → read_inbox → 处理任务 → send_mail 回 Manager
+            → Manager 被唤醒 → 读 SOP → 决定下一步 → send_mail …（循环）</code></pre>
+<p>发邮件 = 叫人。没有一行 Python 代码规定“PM 做完了该轮到 RD”——这个决策完全由 Manager 读 SOP 后自主判断。流程要改？改 SOP Skill 里的自然语言就行，代码不用动。</p>
+<h3>项目目录总览</h3>
+<p>在看具体代码之前，先整体感受一下项目的文件分布：</p>
+<pre><code>code/xiaopaw-team/
+├── xiaopaw_team/                       # Python 代码（接缝 + 基础设施）
+│   ├── main.py                         # 进程入口：build_agent_fn_map + register_heartbeats
+│   ├── runner.py                       # routing_key 分派 + wake 去重
+│   ├── agents/
+│   │   ├── build.py                    # TeamMemoryAwareCrew + build_team_agent_fn 工厂
+│   │   ├── config/
+│   │   │   ├── agents.yaml             # orchestrator + skill_agent 人设配置
+│   │   │   └── tasks.yaml              # main_task + skill_task 契约定义
+│   │   └── models.py                   # MainTaskOutput Pydantic schema
+│   ├── tools/
+│   │   ├── team_tools.py               # 8 个 BaseTool（508 行，核心胶水）
+│   │   ├── feishu_bridge.py            # CheckpointStore + 5 分类 classify（243 行）
+│   │   ├── mailbox.py                  # 三态状态机（177 行）
+│   │   ├── event_log.py                # append-only events.jsonl（158 行）
+│   │   ├── workspace.py                # OWNER_BY_PREFIX 权限隔离（137 行）
+│   │   ├── self_score.py               # 5 维加权自评（131 行）
+│   │   ├── skill_loader.py             # RoleScopedSkillLoaderTool（47 行）
+│   │   └── _skill_loader_base.py       # 基类 SkillLoaderTool（22课继承）
+│   ├── cron/
+│   │   ├── service.py                  # CronService + mtime hot-reload
+│   │   └── tasks_store.py              # write-then-rename + FileLock API
+│   ├── memory/                         # 22 课记忆层（原样复用）
+│   └── feishu/                         # Listener + Sender + Downloader
+│
+├── workspace/                          # 配置层（角色身份 + Skills + 协作协议）
+│   ├── manager/                        # Manager 角色（soul + agent + memory + user + 13 Skills）
+│   ├── pm/                             # PM 角色（soul + agent + memory + user + 5 Skills）
+│   ├── rd/                             # RD 角色（soul + agent + memory + user + 7 Skills）
+│   ├── qa/                             # QA 角色（soul + agent + memory + user + 8 Skills）
+│   └── shared/
+│       ├── team_protocol.md            # 团队协作通用约定（所有角色 Bootstrap 时注入）
+│       ├── skills/                     # 2 个共享 Skill 模板
+│       └── projects/                   # 运行时项目产物
+│
+├── tests/
+│   ├── unit/                           # 快速单测（无需 LLM）
+│   ├── integration/                    # 集成测试（真实 FS，无 LLM）
+│   │   └── e2e_full/                   # 8 个 E2E（真实 Qwen + 沙盒）
+│   └── fixtures/
+│
+├── config.yaml.template                # 配置模板
+└── sandbox-docker-compose.yaml         # AIO-Sandbox 容器定义</code></pre>
+<p>两部分的职责完全分离：<code>xiaopaw_team/</code> 只管&quot;接缝&quot;和基础设施，<code>workspace/</code> 只管&quot;角色定义&quot;和&quot;业务逻辑&quot;。新增角色不需要改 Python 代码——只需要在 <code>workspace/</code> 下加一个角色目录。</p>
+<hr>
+<h2>三、代码拆解：拼装的接缝</h2>
+<p>理解了架构，我们来看具体改了什么代码。29 课的工程增量不在业务逻辑——<strong>业务逻辑全在 35 个 Skill 里</strong>。Python 代码只解决拼装问题：路由分派、邮箱唤醒、角色隔离、事件溯源、消息分类、自评量化、Agent 工厂、角色 Bootstrap。</p>
+<img src="images/img_002.png" alt="">
+<h3>3.1 接缝一：main.py — 四角色启动与全局锁</h3>
+<blockquote><p>📁 <code>xiaopaw_team/main.py</code>（214 行）</p></blockquote>
+<p>22 课只有一个 agent_fn，29 课要启动四个。核心变化在 <code>build_agent_fn_map</code>：</p>
+<pre><code>ROLES = (&quot;manager&quot;, &quot;pm&quot;, &quot;rd&quot;, &quot;qa&quot;)
+
+def build_agent_fn_map(*, workspace_root, ctx_dir, sandbox_url,
+                       cron_tasks_path, sender, db_dsn=&quot;&quot;):
+    m = {}
+    team_lock = asyncio.Lock()
+    for role in ROLES:
+        fn = build_team_agent_fn(
+            role=role,
+            workspace_root=workspace_root,
+            ctx_dir=ctx_dir,
+            sender=sender,
+            db_dsn=db_dsn,
+            sandbox_url=sandbox_url,
+            cron_tasks_path=cron_tasks_path,
+        )
+        fn = wrap_with_lock(fn, team_lock)  # 所有角色串行
+        m[role] = fn
+    return m</code></pre>
+<p><strong>为什么要全局锁？</strong> CrewAI 的 <code>@before_llm_call</code> hook 注册在全局 event bus 上。如果 PM 和 QA 并发跑，PM 的 hook 会 fire on QA 的 LLM call——导致 PM 的 system prompt 里出现 QA 的 soul.md。全局锁代价是牺牲微并行，但保证了正确性。Demo 项目体量小，串行不构成瓶颈。</p>
+<p>另一个细节是<strong>错峰心跳</strong>——四个角色的 heartbeat 间隔 7 秒启动，避免四个 Agent 同时醒来抢锁：</p>
+<pre><code>HEARTBEAT_STAGGER_MS = (0, 7_000, 14_000, 21_000)
+
+def register_heartbeats(tasks_path, *, interval_ms=30_000,
+                        stagger_ms=HEARTBEAT_STAGGER_MS):
+    for idx, role in enumerate(ROLES):
+        tasks_store.schedule_heartbeat(
+            tasks_path, role=role,
+            interval_ms=interval_ms,
+            first_delay_ms=stagger_ms[idx % len(stagger_ms)],
+        )</code></pre>
+<h3>3.2 接缝二：runner.py — routing_key 分派与唤醒去重</h3>
+<blockquote><p>📁 <code>xiaopaw_team/runner.py</code>（229 行）</p></blockquote>
+<p>22 课的 Runner 只有一条路：所有消息进同一个 agent_fn。29 课要按 routing_key 前缀把消息分给不同角色：</p>
+<pre><code>TEAM_PREFIX = &quot;team:&quot;
+
+def _pick_agent_fn(routing_key, agent_fn_map, default_fn):
+    if agent_fn_map:
+        if routing_key.startswith(TEAM_PREFIX):
+            role = routing_key[len(TEAM_PREFIX):]
+            if role in agent_fn_map:
+                return agent_fn_map[role]
+            raise ValueError(f&quot;no agent_fn for team role: {role}&quot;)
+        if &quot;manager&quot; in agent_fn_map:
+            return agent_fn_map[&quot;manager&quot;]
+    if default_fn is not None:
+        return default_fn
+    raise RuntimeError(&quot;no agent_fn available&quot;)</code></pre>
+<p>规则很简单：<code>team:pm</code> 走 PM，<code>team:rd</code> 走 RD，飞书来的 <code>p2p:*</code> 消息统一给 Manager（单一接口原则，27 课讲过）。还有一个<strong>唤醒去重</strong>逻辑——如果某个角色的队列里已经有一条 pending 的 wake 消息，新来的 wake 就丢弃，避免 heartbeat + new_mail 双触发：</p>
+<pre><code>async def dispatch(self, inbound):
+    if _is_wake_message(inbound) and self._has_pending_wake(inbound.routing_key):
+        logger.debug(&quot;dedup wake: routing_key=%s&quot;, inbound.routing_key)
+        return
+    # ... 入队 + 启动 worker</code></pre>
+<h3>3.3 接缝三：team_tools.py — 8 个团队协作工具</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/team_tools.py</code>（508 行）</p></blockquote>
+<p>这是 L3 团队协作层最大的一个文件，定义了 8 个 <code>BaseTool</code> 子类：</p>
+<table><tr><th>工具</th><th>name</th><th>谁能用</th><th>核心功能</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>SendMailTool</td><td>send_mail</td><td>全角色</td><td>写邮箱 + <strong>自动注册唤醒</strong></td></tr><tr><td>ReadInboxTool</td><td>read_inbox</td><td>全角色</td><td>读未读邮件，原子标记 in_progress</td></tr><tr><td>MarkDoneTool</td><td>mark_done</td><td>全角色</td><td>标记邮件处理完毕</td></tr><tr><td>ReadSharedTool</td><td>read_shared</td><td>全角色</td><td>读项目共享文件</td></tr><tr><td>WriteSharedTool</td><td>write_shared</td><td>全角色</td><td>写共享文件（<strong>受角色权限约束</strong>）</td></tr><tr><td>CreateProjectTool</td><td>create_project</td><td>Manager</td><td>创建项目目录树 + 初始化邮箱</td></tr><tr><td>AppendEventTool</td><td>append_event</td><td>Manager</td><td>事件溯源（append-only）</td></tr><tr><td>SendToHumanTool</td><td>send_to_human</td><td>Manager</td><td>飞书出站消息（单一接口保证）</td></tr></table>
+<p><code>SendMailTool</code> 是整个自驱动循环的核心，做两件事——写邮箱 + 注册唤醒：</p>
+<pre><code>class SendMailTool(BaseTool):
+    name: str = &quot;send_mail&quot;
+    description: str = &quot;向团队成员发送一条邮件。发送后自动唤醒收件角色。&quot;
+
+    def _run(self, to, type, subject, content, project_id, **_):
+        msg_id = mailbox.send_mail(
+            mailbox_dir, to=to, from_=self._from_role,
+            type_=type, subject=subject,
+            content=content, project_id=project_id,
+        )
+        job_id = tasks_store.schedule_wake(
+            self._cron_tasks_path,
+            role=to, reason=&quot;new_mail&quot;, delay_ms=1000,
+            project_id=project_id,
+        )
+        return json.dumps({
+            &quot;errcode&quot;: 0, &quot;msg_id&quot;: msg_id,
+            &quot;scheduled_wake&quot;: job_id, &quot;to&quot;: to,
+        })</code></pre>
+<p><strong>发邮件自动叫人</strong>——Agent 不需要知道&quot;发完邮件还要通知调度器唤醒对方&quot;，<code>SendMailTool</code> 内部就做了。这消灭了所有显式的流程编排代码。</p>
+<p><code>SendToHumanTool</code> 是 Manager 的专属工具，支持六种 <code>kind</code>——<code>info</code>、<code>checkpoint_request</code>、<code>proposal_review</code>、<code>delivery</code>、<code>evolution_report</code>、<code>error_alert</code>，每种 kind 自动写入对应的事件记录。飞书发送在独立 daemon thread 里执行 <code>asyncio.run()</code>，避免阻塞主事件循环。</p>
+<h3>3.4 接缝四：mailbox.py — 三态状态机</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/mailbox.py</code>（177 行）</p></blockquote>
+<p>邮箱是 26 课的三态状态机，用 FileLock 保护并发读写：</p>
+<pre><code>unread ──ReadInbox──→ in_progress ──MarkDone──→ done
+  │                      │
+  └─ FileLock 保护 ──────┘</code></pre>
+<p>邮件类型有严格的枚举约束——14 种合法类型：```python VALID_TYPES = { &quot;task_assign&quot;, &quot;task_done&quot;, &quot;review_request&quot;, &quot;review_done&quot;, &quot;clarification_request&quot;, &quot;clarification_answer&quot;, &quot;error_alert&quot;, &quot;checkpoint_response&quot;, &quot;retro_trigger&quot;, &quot;retro_report&quot;, &quot;retro_approved&quot;, &quot;retro_rejected&quot;, &quot;retro_applied&quot;, &quot;retro_apply_failed&quot;, }</p>
+<p>def send_mail(mailbox_dir, *, to, from_, type_, subject, content, project_id): if type_ not in VALID_TYPES: raise ValueError(f&quot;invalid type: {type_!r}&quot;) msg = { &quot;id&quot;: f&quot;msg-{uuid.uuid4().hex[:8]}&quot;, &quot;from&quot;: from_, &quot;to&quot;: to, &quot;type&quot;: type_, &quot;subject&quot;: subject, &quot;content&quot;: content, &quot;project_id&quot;: project_id, &quot;timestamp&quot;: iso_utc_now(), &quot;status&quot;: &quot;unread&quot;, } with FileLock(str(lock_path)): messages = json.loads(inbox.read_text() or &quot;[]&quot;) messages.append(msg) inbox.write_text(json.dumps(messages, ensure_ascii=False, indent=2)) return msg[&quot;id&quot;] ``<code>三态设计防止重复消费——Agent 读取后立即标记 </code>in_progress`，即使被重复唤醒也不会重读同一封邮件。</p>
+<h3>3.5 接缝五：workspace.py — 按角色隔离写权限</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/workspace.py</code>（137 行）</p></blockquote>
+<p>四个角色共享一个项目目录，但不能乱写。权限在 Python 工具层用前缀白名单强制：</p>
+<pre><code>OWNER_BY_PREFIX: dict[str, set[str]] = {
+    &quot;needs/&quot;:   {&quot;manager&quot;},
+    &quot;design/&quot;:  {&quot;pm&quot;},
+    &quot;tech/&quot;:    {&quot;rd&quot;},
+    &quot;code/&quot;:    {&quot;rd&quot;},
+    &quot;qa/&quot;:      {&quot;qa&quot;},
+}
+FORBIDDEN_PREFIXES = (&quot;mailboxes/&quot;, &quot;events.jsonl&quot;)
+
+def check_write(role, rel_path):
+    _check_path_traversal(rel_path)
+    if any(rel_path.startswith(fp) for fp in FORBIDDEN_PREFIXES):
+        raise PermissionError(&quot;use dedicated tools for mailbox/events&quot;)
+    if rel_path.startswith(&quot;reviews/&quot;):
+        m = REVIEWS_PATTERN.match(rel_path)
+        if m and m.group(2) != role:
+            raise PermissionError(f&quot;{role} 不能以 {m.group(2)} 身份写评审&quot;)
+        return
+    for prefix, owners in OWNER_BY_PREFIX.items():
+        if rel_path.startswith(prefix):
+            if role not in owners:
+                raise PermissionError(f&quot;{role} cannot write {rel_path}&quot;)
+            return</code></pre>
+<p>PM 只能写 <code>design/</code>，RD 只能写 <code>tech/</code> 和 <code>code/</code>，QA 只能写 <code>qa/</code>。评审文件 <code>reviews/</code> 有独立校验——只能以自己角色名义写。<code>mailboxes/</code> 和 <code>events.jsonl</code> 必须走专用工具，不能直接写。</p>
+<p>这不是靠&quot;在 prompt 里告诉 Agent 不要乱写&quot;——是在 Python 工具层硬性拦截，Agent 调了也写不进去。</p>
+<h3>3.6 接缝六：feishu_bridge.py — 消息分类与 Checkpoint 持久化</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/feishu_bridge.py</code>（243 行）</p></blockquote>
+<p>27 课讲了 Human as 甲方的三个介入点，但&quot;人的回复到底怎么交给 Manager 处理&quot;这个问题还没落地。<code>feishu_bridge.py</code> 就是这个落地方案，做两件事：<strong>分类</strong>和<strong>跟踪</strong>。</p>
+<p><strong>分类函数</strong><code>classify()</code> 把人类输入分成 5 类：</p>
+<table><tr><th>分类</th><th>触发条件</th><th>处理</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>checkpoint_response</td><td>有 pending checkpoint + 用户回复&quot;批准/拒绝&quot;</td><td>Manager 走 handle_checkpoint_reply Skill</td></tr><tr><td>new_requirement</td><td>无 pending，包含&quot;帮我做/开发一个&quot;等关键词</td><td>走 SOP 阶段 1</td></tr><tr><td>sop_cocreate</td><td>包含&quot;流程/标准/工作流&quot;等关键词</td><td>走 sop_cocreate_guide Skill</td></tr><tr><td>clarification_answer</td><td>包含&quot;回答/澄清&quot;等关键词</td><td>补充信息给 Manager</td></tr><tr><td>need_discussion</td><td>兜底</td><td>Manager 自行判断</td></tr></table>
+<p>分类优先级：飞书卡片 callback &gt; 文本匹配 checkpoint_id &gt; 有 pending 时的决策词匹配 &gt; 关键词分类 &gt; 兜底。</p>
+<p><code>CheckpointStore</code> 用 JSONL 文件持久化 pending checkpoint，跨唤醒生存。Manager 发了 <code>checkpoint_request</code> 后，等用户回复可能是几小时甚至几天后。Agent 进程可能已经重启过多次。CheckpointStore 保证 Manager 被唤醒时还能找到之前 pending 的 checkpoint 上下文，而不是重新问用户&quot;你要改什么&quot;。</p>
+<pre><code>class CheckpointStore:
+    def register(self, *, routing_key, project_id, kind, question,
+                 checkpoint_id=None) -&gt; str:
+        cid = checkpoint_id or f&quot;ckpt-{uuid.uuid4().hex[:8]}&quot;
+        entry = {&quot;checkpoint_id&quot;: cid, &quot;routing_key&quot;: routing_key,
+                 &quot;project_id&quot;: project_id, &quot;kind&quot;: kind,
+                 &quot;question&quot;: question, &quot;created_at_ms&quot;: _now_ms(),
+                 &quot;resolved_at_ms&quot;: None}
+        # JSONL 追加 + FileLock 保护
+        ...
+        return cid
+
+    def pending_for_routing_key(self, routing_key) -&gt; list[PendingCheckpoint]:
+        # 返回该用户下所有未 resolve 的 checkpoint
+        ...
+
+    def resolve(self, checkpoint_id) -&gt; bool:
+        # 追加 resolved marker，幂等
+        ...</code></pre>
+<h3>3.7 接缝七：event_log.py + self_score.py — 事件溯源与量化自评</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/event_log.py</code>（158 行）+ <code>self_score.py</code>（131 行）</p></blockquote>
+<p><strong>事件流</strong> 是项目的&quot;不可篡改日志&quot;——append-only JSON Lines，只有 Manager 能写。每条事件包含 <code>action</code> 枚举校验（<code>requirements_drafted</code>、<code>task_assigned</code>、<code>delivered</code> 等），保证事件链可信。Manager 用 <code>read_project_state</code> Skill 读事件流来判断项目处于哪个阶段。</p>
+<p><strong>自评分</strong> 是 28 课复盘机制的量化落地——5 维加权打分：</p>
+<table><tr><th>维度</th><th>权重</th><th>含义</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>completeness</td><td>0.20</td><td>模板字段全填</td></tr><tr><td>self_review</td><td>0.30</td><td>自查清单通过率</td></tr><tr><td>hard_constraints</td><td>0.20</td><td>SKILL.md 硬约束合规</td></tr><tr><td>clarity</td><td>0.15</td><td>下游可用性</td></tr><tr><td>timeliness</td><td>0.15</td><td>时间/重试次数</td></tr></table>
+<p>自评分嵌入 <code>task_done</code> 邮件中，Manager 据此决定是否需要插入团队评审。</p>
+<h3>3.8 Agent 工厂：build.py — 每角色一个 Crew</h3>
+<blockquote><p>📁 <code>xiaopaw_team/agents/build.py</code>（360 行）</p></blockquote>
+<p>这是 22 课 <code>MemoryAwareCrew</code> 的团队版。核心类 <code>TeamMemoryAwareCrew</code> 用 <code>@CrewBase</code> 装饰，每次 kickoff 创建新实例（防状态污染）：</p>
+<pre><code>@CrewBase
+class TeamMemoryAwareCrew:
+    def __init__(self, *, role, workspace_root, session_id,
+                 user_message, routing_key, ctx_dir, db_dsn,
+                 history_all, sandbox_url, cron_tasks_path,
+                 sender, verbose, step_callback,
+                 prune_keep_turns=10):
+        self.role = role
+        self._role_workspace = workspace_root / role
+        self._skills_dir = self._role_workspace / &quot;skills&quot;
+        # ... 其他初始化</code></pre>
+<p>关键是 <code>orchestrator()</code> 方法——它构造每个角色的 Agent，包含三步注入：```python @agent def orchestrator(self) -&gt; Agent: cfg = dict(_load_yaml(_CONFIG_DIR / &quot;agents.yaml&quot;)[&quot;orchestrator&quot;])</p>
+<h1>1. Bootstrap：读 workspace/{role}/soul.md + agent.md + memory.md + user.md</h1>
+<p>bootstrap = build_bootstrap_prompt(self._role_workspace)</p>
+<h1>2. 注入 shared/team_protocol.md</h1>
+<p>shared_protocol = self._workspace_root / &quot;shared&quot; / &quot;team_protocol.md&quot; if shared_protocol.exists(): protocol_text = shared_protocol.read_text(encoding=&quot;utf-8&quot;) bootstrap = f&quot;{bootstrap}\n\n&lt;team_protocol&gt;\n{protocol_text}\n&lt;/team_protocol&gt;&quot; cfg[&quot;backstory&quot;] = bootstrap</p>
+<h1>3. 构造 role-scoped 工具集</h1>
+<p>tools = [ RoleScopedSkillLoaderTool( role=self.role, skills_dir=self._skills_dir,          # workspace/{role}/skills/ ... ), IntermediateTool(), ]</p>
+<h1>注入团队协作 Python Tools</h1>
+<p>if self._cron_tasks_path is not None: tools.extend(build_role_tools( role=self.role, workspace_root=self._workspace_root, cron_tasks_path=self._cron_tasks_path, sender=self._sender, )) return Agent(**cfg, llm=AliyunLLM(model=&quot;qwen3.6-max-preview&quot;), tools=tools, verbose=self._verbose) ``<code> </code>build_role_tools<code> 按角色分配工具——全角色共有 5 个（SendMail / ReadInbox / MarkDone / ReadShared / WriteShared），Manager 额外 3 个（CreateProject / AppendEvent / SendToHuman）：</code>`<code>python def build_role_tools(*, role, workspace_root, cron_tasks_path, sender=None): common = [ SendMailTool(workspace_root=workspace_root, cron_tasks_path=cron_tasks_path, from_role=role), ReadInboxTool(workspace_root=workspace_root, role=role), MarkDoneTool(workspace_root=workspace_root, role=role), ReadSharedTool(workspace_root=workspace_root, role=role), WriteSharedTool(workspace_root=workspace_root, role=role), ] if role == &quot;manager&quot;: return common + [ CreateProjectTool(workspace_root=workspace_root), AppendEventTool(workspace_root=workspace_root), SendToHumanTool(workspace_root=workspace_root, sender=sender), ] return common </code>`<code>注意 </code>sender<code> 只传给 Manager——其他角色的 </code>SendToHumanTool` 为 None，架构上保证了单一接口原则。</p>
+<h3>3.9 RoleScopedSkillLoaderTool：角色隔离的 Skill 加载</h3>
+<blockquote><p>📁 <code>xiaopaw_team/tools/skill_loader.py</code>（47 行）</p></blockquote>
+<p>22 课的 <code>SkillLoaderTool</code> 用模块级全局变量存储 <code>skills_dir</code>。四角色并发时会互相覆盖——PM 加载的 Skill 可能读到 QA 的目录。<code>RoleScopedSkillLoaderTool</code> 解决了这个问题：</p>
+<pre><code>class RoleScopedSkillLoaderTool(_BaseSkillLoaderTool):
+    _role: str = PrivateAttr(default=&quot;&quot;)
+
+    def __init__(self, *, role, skills_dir, sandbox_skills_mount,
+                 session_id=&quot;&quot;, sandbox_url=&quot;&quot;, routing_key=&quot;&quot;,
+                 history_all=None):
+        self._role = role
+        super().__init__(
+            skills_dir=skills_dir,           # workspace/{role}/skills/
+            sandbox_mount=sandbox_skills_mount,
+            ...
+        )</code></pre>
+<p>关键改动只有一个：把 <code>skills_dir</code> 从全局变量变成实例变量，绑定到 <code>workspace/{role}/skills/</code>。这样 Manager 只能看到 Manager 目录下的 13 个 Skill，PM 只能看到 PM 目录下的 5 个 Skill。这是从单 Agent → 多 Agent 的关键修复。</p>
+<h3>代码接缝总结</h3>
+<table><tr><th>#</th><th>接缝</th><th>文件</th><th>行数</th><th>解决的拼装问题</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>1</td><td>全局锁 + 错峰心跳</td><td>main.py</td><td>214</td><td>4 角色共存不串台</td></tr><tr><td>2</td><td>routing_key 分派</td><td>runner.py</td><td>229</td><td>消息路由到正确角色 + 唤醒去重</td></tr><tr><td>3</td><td>8 个团队工具</td><td>team_tools.py</td><td>508</td><td>发邮件 = 叫人，零编排</td></tr><tr><td>4</td><td>三态邮箱</td><td>mailbox.py</td><td>177</td><td>FileLock 并发安全 + 防重复消费</td></tr><tr><td>5</td><td>前缀权限隔离</td><td>workspace.py</td><td>137</td><td>共享目录不越权</td></tr><tr><td>6</td><td>消息分类 + Checkpoint</td><td>feishu_bridge.py</td><td>243</td><td>人类回复正确路由 + 跨唤醒生存</td></tr><tr><td>7</td><td>事件溯源 + 自评量化</td><td>event_log.py + self_score.py</td><td>289</td><td>项目进度可追踪 + 质量可量化</td></tr><tr><td>8</td><td>Agent 工厂</td><td>build.py</td><td>360</td><td>每角色一个 Crew + Bootstrap</td></tr><tr><td>9</td><td>角色 Skill 隔离</td><td>skill_loader.py</td><td>47</td><td>SkillLoader 实例级绑定</td></tr></table>
+<p>9 个接缝、10 个 Python 文件、约 2200 行代码。业务逻辑全在 35 个 Skill 里。接下来，我们看拼装好之后跑起来是什么样。</p>
+<hr>
+<h2>四、完整演示：从 SOP 到交付的六个阶段</h2>
+<p>了解了代码改动，现在看实际运行效果。我们先看 35 个 Skill 的全景分布，再跟着一个完整项目走一遍六个阶段。</p>
+<h3>4.0 Skill 全景地图</h3>
+<p>35 个 SKILL.md 按角色分布如下：</p>
+<table><tr><th>角色</th><th>专属 Skill</th><th>共享副本</th><th>合计</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td><strong>Manager</strong></td><td>sop_feature_dev(主SOP)、sop_cocreate_guide、sop_write、list_available_sops、requirements_guide、requirements_write、read_project_state、check_review_criteria、handle_checkpoint_reply、team_retrospective、review_proposal</td><td>mailbox_ops、self_score</td><td>13</td></tr><tr><td><strong>PM</strong></td><td>product_design、review_tech_design_from_pm</td><td>mailbox_ops、self_score、self_retrospective</td><td>5</td></tr><tr><td><strong>RD</strong></td><td>tech_design、code_impl、review_product_design_from_rd、review_test_design</td><td>mailbox_ops、self_score、self_retrospective</td><td>7</td></tr><tr><td><strong>QA</strong></td><td>test_design、test_run、review_product_design_from_qa、review_tech_design_from_qa、review_code</td><td>mailbox_ops、self_score、self_retrospective</td><td>8</td></tr><tr><td><strong>shared</strong></td><td>—</td><td>self_retrospective（模板）、self_score（模板）</td><td>2</td></tr></table>
+<p>Manager 有 13 个 Skill，因为它承担了全局调度 + 用户接口 + 复盘协调三重职责。PM / RD / QA 各自只需要&quot;做自己的活 + 评审别人的活 + 复盘自己&quot;。</p>
+<p>Skill 类型分布：<strong>reference 31 个</strong>（LLM 读取后自行推理执行）、<strong>task 4 个</strong>（<code>code_impl</code>、<code>test_run</code>、<code>mailbox_ops</code>——Sub-Crew 在沙盒执行）。只有一个 Skill 标记了 <code>kind: sop</code>——<code>sop_feature_dev</code>。</p>
+<h3>4.1 阶段 0-1：SOP 共创与需求澄清</h3>
+<p><strong>阶段 0：SOP 共创（可选，一次性）</strong></p>
+<p>团队开始工作之前，可以先定制工作流程。用户在飞书对 Manager 说：我想让团队按我们公司的流程来做，<code>feishu_bridge.classify()</code> 识别出 <code>sop_cocreate</code> 类别，Manager 加载 <code>sop_cocreate_guide</code>。</p>
+<p>这个 Skill 引导 Manager 分 3-4 轮与用户对话，逐步覆盖六个维度：<strong>Goal（目标）→ Stages（阶段）→ Roles（角色）→ Artifacts（产物）→ Checkpoints（人类审批点）→ Retrospective（复盘触发）</strong>。每轮最多问两个维度，Goal 必须在 Stages 之前确定。</p>
+<p>六维全覆盖后，Manager 加载 <code>sop_write</code>（也是 reference skill），按模板把对话结果序列化成一个新的 SKILL.md 文件保存到 <code>workspace/manager/skills/</code> 目录。</p>
+<blockquote><p>🧠 为什么 SOP 是 reference skill 而不是 task skill？第 16 课讲过——task skill 由 Sub-Crew 一次性执行，结束就退出。SOP 需要 Manager 在整个项目生命周期里持续参考，所以必须是 reference。<code>kind: sop</code> 是额外标记，让 SkillLoader 能区分&quot;这是一个 SOP&quot;和&quot;这是一个普通的 reference skill&quot;。</p></blockquote>
+<p><strong>阶段 1：需求澄清</strong></p>
+<p>用户在飞书发消息：&quot;帮我做一个宠物日记网站，能记录每天的猫猫状态。&quot; <code>feishu_bridge.classify()</code> 识别出 <code>new_requirement</code> 类别。</p>
+<p>Manager 被唤醒后，第一步加载 <code>read_project_state</code>——这是 Manager soul.md 的 NEVER 清单要求的（&quot;绝不在不读 read_project_state 的情况下开始新 kickoff&quot;）。这个 Skill 按 10 条信号从上到下匹配，判断项目阶段（<code>no_project</code> / <code>requirements</code> / <code>product_design</code> / … / <code>delivered</code>）。判断逻辑基于三个来源：events.jsonl 最新事件、4 个邮箱状态、共享文件是否存在。</p>
+<p>确认是新需求后，Manager 加载主 SOP <code>sop_feature_dev</code>，再加载 <code>requirements_guide</code> 按四个维度（goal / boundary / constraint / risk）评估需求完整度。如果有缺口，通过 <code>SendToHuman</code> 在飞书问用户补充细节。</p>
+<p>需求明确后，Manager 一气呵成做三件事：</p>
+<pre><code># Manager 的行为（由 SOP 指导，不是 Python 编排）：
+# 1. 创建项目——初始化完整目录树 + 4 个邮箱 + events.jsonl
+create_project(project_id=&quot;paw_diary&quot;, project_name=&quot;小爪子日记&quot;,
+               needs_content=&quot;## 项目目标\n...&quot;)
+
+# 2. 发 checkpoint 让用户确认需求
+send_to_human(routing_key=&quot;p2p:{user_open_id}&quot;,
+              message=&quot;需求确认：...&quot;,
+              kind=&quot;checkpoint_request&quot;,
+              project_id=&quot;paw_diary&quot;,
+              checkpoint_id=&quot;req_v1&quot;)
+
+# 3. 记录事件
+append_event(project_id=&quot;paw_diary&quot;,
+             action=&quot;requirements_drafted&quot;, payload={...})</code></pre>
+<p><code>create_project</code> 调用 <code>workspace.init_project_tree()</code>，初始化完整的目录结构：<code>needs/</code>、<code>design/</code>、<code>tech/</code>、<code>code/</code>、<code>qa/defects/</code>、<code>reviews/</code>、<code>mailboxes/</code>（含 4 个空 JSON）、<code>logs/l2_task/</code>、<code>events.jsonl</code>。</p>
+<p>用户在飞书回复&quot;批准&quot;，<code>feishu_bridge.classify()</code> 检测到有 pending checkpoint + 决策词&quot;批准&quot;，返回 <code>(checkpoint_response, &quot;req_v1&quot;)</code>。Manager 加载 <code>handle_checkpoint_reply</code>，按 <code>reply_class × checkpoint.kind</code> 矩阵决定下一步——approve 则推进到阶段 2，revise 则更新需求文档重发 checkpoint。</p>
+<h3>4.2 阶段 2：PM 产品设计</h3>
+<p>Manager 读完 SOP，知道下一步是产品设计。它调用 <code>send_mail</code>：</p>
+<pre><code>send_mail(to=&quot;pm&quot;, type=&quot;task_assign&quot;,
+          subject=&quot;产品设计 (第 1 轮)&quot;,
+          content={&quot;scope&quot;: &quot;需求文档在 needs/requirements.md&quot;},
+          project_id=&quot;paw_diary&quot;)</code></pre>
+<p>SendMail 内部自动注册 <code>schedule_wake(&quot;pm&quot;)</code>，1 秒后 CronService 唤醒 PM。</p>
+<p>PM 被唤醒后，执行 <code>team_protocol.md</code> 里定义的 <strong>kickoff 两步法</strong>：①从 wake 消息 <code>__wake__:new_mail:paw_diary</code> 提取 project_id；②调用 <code>read_inbox(project_id)</code> 读自己邮箱。</p>
+<p>PM 读到 Manager 的 task_assign 邮件，加载 <code>product_design</code>（reference skill），按 <strong>6 节模板</strong>产出产品设计文档：产品概述、用户场景（至少 3 个）、数据模型、API 契约、验收标准（可机械检验的）、约束与边界。</p>
+<p>完成后，PM 先加载 <code>self_score</code> 自评——5 维度加权打分，然后发 task_done 邮件回 Manager：</p>
+<pre><code>send_mail(to=&quot;manager&quot;, type=&quot;task_done&quot;,
+          subject=&quot;产品设计完成 (第 1 轮)&quot;,
+          content={
+              &quot;deliverables&quot;: [&quot;design/product_spec.md&quot;],
+              &quot;self_score&quot;: {&quot;overall&quot;: 0.82, &quot;breakdown&quot;: {...}},
+          },
+          project_id=&quot;paw_diary&quot;)
+mark_done(&quot;paw_diary&quot;, &quot;&lt;task_assign_msg_id&gt;&quot;)</code></pre>
+<p>Manager 被唤醒，读邮件，加载 <code>check_review_criteria</code> 按 5 条 OR 判据判断是否需要交叉评审（影响级别 high+ / self_score &lt; 0.70 / hard_constraints &lt; 0.80 / 新手期 &lt; 3 次 / 15% 随机审计）。如果命中任一条，Manager 给 RD 和 QA 发 review_request 邮件。</p>
+<h3>4.3 阶段 3：RD 技术实现</h3>
+<p>Manager 按 SOP 先给 RD 发<strong>技术方案设计</strong>任务。RD 加载 <code>tech_design</code>（reference skill），按 6 节模板产出技术设计文档：技术栈选型（FastAPI + SQLAlchemy 2.0 + SQLite）、分层架构、数据库 Schema、API 实现要点、测试策略、依赖清单。</p>
+<p>技术设计完成后，Manager <strong>再单独发一条</strong> task_assign 让 RD 写代码——这是 SOP 和 tasks.yaml 里都强调的硬规则：</p>
+<pre><code># sop_feature_dev 中的阶段切换硬规则：
+| 当前 task_done 来自 | 下一 task_assign | 必须独立发送 |
+|-------------------|-----------------|-----------|
+| PM（含 product_spec.md） | to=rd &quot;技术方案设计&quot; | ✅ |
+| RD（含 tech_design.md）  | to=rd &quot;代码实现&quot;     | ✅ 单独再发 |
+| RD（含 code/main.py）    | to=qa &quot;测试设计&quot;     | ✅ |
+| QA（含 test_plan.md）    | to=qa &quot;测试执行&quot;     | ✅ 单独再发 |</code></pre>
+<p>为什么拆成两步？因为实测发现，一条消息让 RD 同时做&quot;技术设计 + 代码实现&quot;时，Agent 容易漏做后半部分。拆成两步，每步聚焦一个任务，成功率显著提高。</p>
+<p>RD 加载 <code>code_impl</code>（task skill——Sub-Crew 在沙盒里执行），步骤很具体：</p>
+<pre><code>Step 1 — 读技术方案
+  sandbox_execute_bash cmd=&quot;cat /workspace/shared/projects/{pid}/tech/tech_design.md&quot;
+
+Step 2 — 建五层目录
+  mkdir -p .../code/{routers,services,models,schemas,tests}
+
+Step 3 — 按 tech_design 写代码
+  必需文件：main.py / database.py / models/*.py / schemas/*.py /
+           routers/*.py / services/*.py / tests/test_*.py / requirements.txt
+
+Step 4 — 跑测试
+  cd .../code &amp;&amp; pip install -r requirements.txt -q &amp;&amp; \
+  python -m pytest -x --cov=. --cov-report=term
+
+Step 5 — 失败修复（≤ 3 轮）
+  读 stderr 最后 30 行 → 定位失败原因 → 改代码（不改测试）→ 重跑
+
+Step 6 — 记 metrics + 发 task_done</code></pre>
+<p><strong>Critical Rules</strong>：①禁 uvicorn 长进程——测试一律 <code>httpx.Client(app=app)</code>；②覆盖率 &lt; 70% 不交付；③失败最多重试 3 次。</p>
+<p>注意 <code>code_impl</code> 的执行方式是混合的——代码在沙盒里跑（<code>sandbox_execute_bash</code>），但邮件在宿主机发（Python Tool <code>send_mail</code>）。因为邮箱文件在宿主机 filesystem，不在沙盒容器里。</p>
+<h3>4.4 阶段 4-5：QA 测试与交付</h3>
+<p>Manager 按同样的模式先给 QA 发<strong>测试设计</strong>任务，再发<strong>测试执行</strong>任务。QA 加载 <code>test_design</code>（reference skill）产出 <code>qa/test_plan.md</code>，再加载 <code>test_run</code>（task skill）在沙盒里跑 pytest。</p>
+<p>如果发现缺陷——这是最能体现零编排价值的场景：</p>
+<pre><code>QA 发现 3 个测试失败
+  → QA 按 test_run Skill 指引：每个失败写一份缺陷文件到 qa/defects/defect_{id}.md
+  → QA 自主决定给 RD 发邮件
+    → send_mail(to=&quot;rd&quot;, type=&quot;task_assign&quot;,
+                subject=&quot;缺陷修复 (第 1 轮)&quot;, ...)
+      → RD 被自动唤醒 → 读 QA 的缺陷描述 → 修复 → 发 task_done 回 QA
+        → QA 被唤醒 → 再次验证 → 全部 pass → 发 task_done 回 Manager</code></pre>
+<p><strong>没有任何 Python 代码预设了QA 发现 bug 要通知 RD这个逻辑。</strong> QA Agent 读了 <code>test_run</code> Skill 里的指引（&quot;如果有 fail，给 RD 发缺陷修复邮件&quot;），自主做出了这个决策。编排逻辑在 Skill 的自然语言里，不在 Python 里。</p>
+<p>所有测试通过后，Manager 进入<strong>阶段 5 交付</strong>——通过 <code>send_to_human(kind=&quot;delivery&quot;)</code> 把交付汇报发到飞书，用户 approve 后记录 <code>delivered</code> 事件。</p>
+<h3>4.5 阶段 6：团队复盘与进化</h3>
+<p>交付不是终点。Manager 读 SOP 知道 delivered 之后要触发复盘——给 PM、RD、QA 各发一封 <code>retro_trigger</code> 邮件。</p>
+<p>每个角色被唤醒后加载 <code>self_retrospective</code>（reference skill），执行 28 课讲的<strong>五问分析</strong>：①我做了什么？②哪个任务效果差？③差在哪一步？④当时发生了什么？⑤怎么改？</p>
+<p>每条改进提案必须包含 <code>before_text</code>（当前文本）和 <code>after_text</code>（替换文本）锚点，以及 <code>target_file</code>（要修改的文件路径）。Manager 加载 <code>review_proposal</code> 按 depth 分档预审：</p>
+<table><tr><th>档位</th><th>改动对象</th><th>审批方式</th><th>频率限制</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>自动</td><td>memory.md</td><td>Agent 自动执行 + Manager 闸门</td><td>每天 ≤ 3 条</td></tr><tr><td>中审</td><td>skill / agent / SOP</td><td>Manager 预审 + Human 飞书批准</td><td>批量合并一次 checkpoint</td></tr><tr><td>重审</td><td>soul.md / code</td><td>Human 必审 + 红旗标记</td><td>逐条确认</td></tr></table>
+<p>Human 批准后，角色收到 <code>retro_approved</code> 邮件，按 <code>team_protocol.md</code> 规则<strong>机械执行</strong>文本替换——纯 <code>str.replace(before_text, after_text)</code>，不需要 LLM 判断。下一次项目，Skill 就已经更新了。<strong>进化不是抽象概念，是真的改了文件。</strong></p>
+<hr>
+<h2>五、如何跑起来</h2>
+<p>说实话，这节课的代码量实在太大了，课上讲代码不如你自己跑起来看效果。这一节给你完整的启动指南。</p>
+<h3>5.1 环境准备</h3>
+<table><tr><th>依赖</th><th>版本</th><th>用途</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>Python</td><td>3.11+</td><td>主语言</td></tr><tr><td>Docker + docker-compose</td><td>最新</td><td>AIO-Sandbox 容器</td></tr><tr><td>Qwen API Key</td><td>Aliyun DashScope</td><td>LLM</td></tr><tr><td>（可选）pgvector</td><td>—</td><td>语义检索；不用可留 db_dsn=&quot;&quot;</td></tr></table>
+<pre><code># 1. 进入项目 + 装依赖
+cd code/xiaopaw-team
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e .
+
+# 2. 配置
+cp config.yaml.template config.yaml
+# 编辑 config.yaml 填入飞书凭证（或留空用 --no-feishu）
+export QWEN_API_KEY=sk-xxxxxxxxxxxx
+
+# 3. 启动沙盒
+docker-compose -f sandbox-docker-compose.yaml up -d
+curl http://localhost:8029/  # 验证 200</code></pre>
+<p><strong>模型选择很重要</strong>：建议使用 Qwen 3.6 max-preview（<code>qwen3.6-max-preview</code>）。用原来的 Qwen max 跑这个项目基本一步一坑——基础模型的指令遵循能力直接决定了多 Agent 团队能不能跑通。</p>
+<h3>5.2 两种运行模式</h3>
+<p><strong>Mode A：不接飞书（推荐首次）</strong></p>
+<pre><code>python -m xiaopaw_team.main --no-feishu</code></pre>
+<p>进程启动后等 heartbeat 或通过测试直接 dispatch 消息。</p>
+<p><strong>Mode B：完整生产模式</strong></p>
+<pre><code>python -m xiaopaw_team.main</code></pre>
+<p>进程启动 4 个 role agent_fn + CronService + FeishuListener，等用户 @机器人。</p>
+<h3>5.3 跑测试——最推荐的学习方式</h3>
+<p><strong>如果你不想通过飞书引导整个流程，直接跑测试就能看到项目是怎么运转的。</strong></p>
+<pre><code># 1. 快测（143 个，&lt;20s，不用 LLM）
+pytest tests/unit tests/integration -m &quot;not e2e and not e2e_full&quot; -v
+# 预期：143 passed, 9 deselected
+
+# 2. 自驱动 handshake（验证 Manager→PM 邮件唤醒，5s，不用 LLM）
+pytest tests/integration/test_autonomous_handshake.py -v
+
+# 3. E2E 基线：TC-F-001（真实 Qwen + 沙盒，约 13 min）
+pytest tests/integration/e2e_full/test_tc_f_001_happy_path.py -v -m e2e_full -s</code></pre>
+<p>E2E 基线跑完后你会看到完整的 6 阶段产物：``<code>plain workspace/shared/projects/todo-mvp/├── needs/requirements.md          ← Manager 起草├── design/product_spec.md         ← PM 写├── tech/tech_design.md            ← RD 写├── code/*.py                      ← RD 实现 + 单测├── qa/test_plan.md                ← QA 设计├── qa/test_report.md              ← QA 执行报告├── events.jsonl                   ← 完整事件链└── mailboxes/{manager,pm,rd,qa}.json  ← 邮件历史</code>`<code> <strong>注意</strong>：</code>WorkspaceSafeguard` 会在 teardown 时自动还原 workspace/ 到初始状态。如果想看产物，可以在测试过程中 cat 对应文件，或在 test 结束前加断点。</p>
+<h3>5.4 E2E 变体——6 个分支场景</h3>
+<p>除了基线 happy path，我们还写了 6 个变体测试，覆盖不同的分支路径：</p>
+<table><tr><th>变体</th><th>测试目标</th><th>实测结果</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>tc_f_001_happy_path</td><td>基线：6 阶段全链路</td><td>✅ PASSED（qwen3-max, 13min）</td></tr><tr><td>tc_f_002_review_loop</td><td>PM 产品设计插入团队评审</td><td>🟡 核心产出完成，QA 阶段超时</td></tr><tr><td>tc_f_003_qa_defect_rd_fix</td><td>QA 发现 defect → RD 修复循环</td><td>🟡 21 文件代码 + 前端完成</td></tr><tr><td>tc_f_004_checkpoint_revise</td><td>用户对需求 checkpoint 回 revise</td><td>🟡 PM 2 轮设计含迭代</td></tr><tr><td>tc_f_005_retrospective</td><td>交付后复盘 + 进化分档审批</td><td>🟡 代码 + 测试完成，retro 超时</td></tr><tr><td>tc_f_006_code_fail_recovery</td><td>RD pytest 失败 → 读 stderr 自愈</td><td>🟡 17 failed 成功触发</td></tr><tr><td>tc_f_007_sop_cocreate_first</td><td>先共创 SOP 再跑功能开发</td><td>✅ PASSED（qwen3.6-max-preview）</td></tr></table>
+<p>🟡 标记的变体在 60-90 分钟 timeout 内未走完全部阶段，但核心 6 阶段产物都已生成。失败点集中在长对话后 LLM &quot;只说不做&quot;（回复确认文字而不调工具）。配合更强模型（GPT-4o / Opus 4.5）可进一步提升稳定性。</p>
+<hr>
+<h2>六、代码学习路线</h2>
+<p>课后自学建议按这个顺序阅读代码，每一步先看文件再跑对应测试：</p>
+<h3>第一步：零编排的自驱动循环</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/tools/team_tools.py</code>（搜索 <code>SendMailTool</code>）+ <code>xiaopaw_team/cron/tasks_store.py</code>（搜索 <code>schedule_wake</code>）</p>
+<p><strong>理解</strong>：SendMail → schedule_wake → CronService → dispatch → Agent kickoff。没有中心化 Python orchestrator，&quot;发邮件 = 自动唤醒对方&quot;。</p>
+<h3>第二步：邮箱三态机</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/tools/mailbox.py</code></p>
+<p><strong>理解</strong>：<code>unread → in_progress → done</code>，<code>in_progress</code> 状态的存在防止了重复消费。所有读-改-写操作 FileLock 保护。</p>
+<h3>第三步：事件流与共享工作空间</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/tools/event_log.py</code> + <code>workspace.py</code></p>
+<p><strong>理解</strong>：事件流是单 writer（Manager only），保证事件链可信。共享工作空间用前缀 ACL 实现写权限隔离。</p>
+<h3>第四步：四个角色的身份设计</h3>
+<p><strong>读</strong>：<code>workspace/manager/</code>、<code>pm/</code>、<code>rd/</code>、<code>qa/</code> 下的 <code>soul.md</code> + <code>agent.md</code></p>
+<p><strong>理解</strong>：soul.md 是不可变的核心价值观（含 NEVER 清单），team_protocol.md 在 Bootstrap 时注入所有角色。Manager 三个独占工具体现单一接口原则。</p>
+<h3>第五步：RoleScopedSkillLoaderTool</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/tools/skill_loader.py</code> + <code>_skill_loader_base.py</code></p>
+<p><strong>理解</strong>：22 课全局变量 → 29 课实例变量。这是从单 Agent → 多 Agent 的关键修复。</p>
+<h3>第六步：Runner 路由与并发控制</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/runner.py</code></p>
+<p><strong>理解</strong>：<code>p2p:*</code> 走 Manager，<code>team:pm/rd/qa</code> 走对应角色。全局 Lock 因为 CrewAI Hook 在全局事件总线上，并发执行会交叉污染 Session。</p>
+<h3>第七步：六阶段 SOP</h3>
+<p><strong>读</strong>：<code>workspace/manager/skills/sop_feature_dev/SKILL.md</code></p>
+<p><strong>理解</strong>：SOP 是 Skill（文本），不是代码。Manager 按文本指令推进，阶段间的&quot;推进&quot;就是 <code>send_mail(to=下一角色, type=&quot;task_assign&quot;)</code>。</p>
+<h3>第八步：Human as 甲方机制</h3>
+<p><strong>读</strong>：<code>xiaopaw_team/tools/feishu_bridge.py</code></p>
+<p><strong>理解</strong>：<code>classify()</code> 5 类分流 + <code>CheckpointStore</code> JSONL 持久化。跨唤醒生存是关键——Manager 重启后还能找到 pending checkpoint。</p>
+<h3>第九步：自我进化闭环</h3>
+<p><strong>读</strong>：<code>workspace/shared/skills/self_retrospective/SKILL.md</code> + <code>workspace/manager/skills/review_proposal/SKILL.md</code></p>
+<p><strong>理解</strong>：改进提案带 <code>before_text</code> / <code>after_text</code> 锚点，机械执行纯文本替换，不依赖 LLM 判断。可重复可审计。</p>
+<h3>学习检查清单</h3>
+<ul><li>[ ]  零编排的&quot;自驱动循环&quot;是什么？（SendMail → schedule_wake → CronService → dispatch → Agent kickoff）</li></ul>
+<ul><li>[ ]  邮箱三态机为什么需要 <code>in_progress</code> 状态？（防止重复消费）</li></ul>
+<ul><li>[ ]  Manager 为什么有三个独占工具？（单一接口原则）</li></ul>
+<ul><li>[ ]  RoleScopedSkillLoaderTool 解决了什么问题？（全局变量在多角色并发时竞争）</li></ul>
+<ul><li>[ ]  为什么用全局 asyncio.Lock？（CrewAI Hook 注册在全局事件总线，并发会交叉污染）</li></ul>
+<ul><li>[ ]  Owner-by-prefix ACL 的规则？（needs/ → Manager, design/ → PM, tech/+code/ → RD, qa/ → QA）</li></ul>
+<ul><li>[ ]  自我进化为什么用&quot;机械执行&quot;？（before_text/after_text 纯文本替换，可重复可审计）</li></ul>
+<hr>
+<h2>七、常见问题</h2>
+<p><strong>Q: Manager 不派活，只给用户回文字？</strong></p>
+<p>Manager LLM 偶现&quot;只说不做&quot;（回复&quot;已分派&quot;但不实际调 send_mail）。检查 <code>sop_feature_dev/SKILL.md</code> 的 critical rules 里有没有&quot;必须调 send_mail 工具&quot;约束，以及 <code>team_protocol.md</code> 的&quot;防只说不做&quot;约束。若仍不稳定，重跑一次或切换到更强模型。</p>
+<p><strong>Q: 怎么看 Manager 当前在干啥？</strong></p>
+<p>运行时产物都在 <code>workspace/shared/projects/{project_id}/</code>——<code>events.jsonl</code> 是事件流，<code>mailboxes/<em>.json</code> 是 4 个角色邮箱。会话记录在 <code>data/ctx/s-</em>.jsonl</code>。</p>
+<p><strong>Q: 沙盒为什么不用 local Python？</strong></p>
+<p><code>code_impl</code> 和 <code>test_run</code> 需要运行 bash + pytest，必须隔离（防污染开发机 + 支持任意 pip install）。写文件类 skill（product_design / tech_design / review_*）用宿主机 Python Tools，不走沙盒。</p>
+<p><strong>Q: E2E 测试会污染我的 workspace 吗？</strong></p>
+<p>不会。<code>WorkspaceSafeguard</code> 在 setup 时 rsync 整目录到备份，teardown 时还原。即使 Agent 误改了 skill 文件也会被还原。</p>
+<p>**Q: <code>OpenAI API call failed: 401</code> 一直在 log 里刷？</p>
+<p>那是 CrewAI 的 <code>_summarize_chunk</code>（上下文压缩）默认调 OpenAI，我们用 Qwen 不影响主流程，是良性噪声。</p>
+<hr>
+<h2>八、课程总结</h2>
+<p>模块四完整走完了。回顾五节课的路径：</p>
+<table><tr><th>课</th><th>解决的问题</th><th>关键产物</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>25</td><td>谁做什么</td><td>四层框架 soul / agent / memory / user</td></tr><tr><td>26</td><td>怎么传话</td><td>文件邮箱三态机 + 共享工作区</td></tr><tr><td>27</td><td>人在哪里</td><td>三个介入点 + 单一接口原则</td></tr><tr><td>28</td><td>怎么变好</td><td>三层日志 + 五问复盘 + 三档审批</td></tr><tr><td>29</td><td>能不能跑</td><td>零编排装配 + 端到端验证</td></tr></table>
+<p>三个最值得记住的工程洞察：</p>
+<ol><li><strong>SOP 是操作系统</strong>：不是文档而是 <code>kind: sop</code> 的 reference skill，Manager 每次 kickoff 都加载它来决策。要改流程？改 SOP 的自然语言，不改 Python。代码里没有一行 <code>if stage == X</code>。</li></ol>
+<ol><li><strong>发邮件 = 叫人</strong>：<code>SendMailTool</code> 内置 <code>schedule_wake</code>，消灭了所有显式的流程编排代码。QA 发现 bug 给 RD 发邮件——这个决策不在代码里，在 Skill 的自然语言里。</li></ol>
+<ol><li><strong>代码只管接缝</strong>：35 个 Skill 承载了全部业务逻辑，10 个 Python 文件（约 2200 行）只解决路由、唤醒、邮箱、权限、事件、分类、自评、Agent 工厂、Skill 隔离九个接缝。新增角色只需要加 <code>workspace/{role}/</code> 目录 + Skill 文件，接缝代码改动极小。</li></ol>
+<p>从第 23 课到第 29 课，我们从零设计了一个完整的数字员工团队。不是 demo 级别的概念验证——是真的能接飞书消息、分派任务、在沙盒里写代码跑测试、交付产品、自我改进的系统。</p>
+<blockquote><p><strong>下节课预告</strong>：团队能跑了，但能不能稳定跑？模块五&quot;企业级加固&quot;从可观测性开始——用 Guardrails 加护栏，用 Langfuse 做全链路追踪，让你知道数字员工团队在干什么、干得好不好。我们下节课见！</p></blockquote>
+<hr>
+<h2>课后思考</h2>
+<ol><li><strong>扩展题</strong>：如果团队需要新增一个&quot;UI 设计师&quot;角色，你需要改哪些文件？提示：接缝代码只需要在 <code>main.py</code> 的 <code>ROLES</code> 元组加一项，<code>workspace.py</code> 的 <code>OWNER_BY_PREFIX</code> 加 <code>&quot;ui/&quot;</code> 前缀；剩下的工作全在 <code>workspace/ui_designer/</code> 目录下——soul.md + agent.md + Skills。感受一下改动量的分布。</li></ol>
+<ol><li><strong>设计题</strong>：当前 4 个角色共享一把全局锁（<code>build.py</code> 的 <code>wrap_with_lock</code>），是因为 CrewAI 的 <code>@before_llm_call</code> 全局事件总线限制。如果未来这个问题修复了，你会怎么改 <code>main.py</code> 来支持 PM 和 QA 并行工作？提示：只需要把 <code>team_lock</code> 改成 per-role 的锁，或者直接去掉 <code>wrap_with_lock</code>。</li></ol>
+<ol><li><strong>反思题</strong>：回顾整个模块四（25-29 课），你觉得哪个机制对你自己的业务场景最有价值？如果只能先落地一个，你会选哪个？为什么？</li></ol>
+<p>欢迎在评论区分享你的真实案例，我们下一讲见！</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="29｜项目实战4：Agent 小队完成真实项目需求.md">29｜项目实战4：Agent 小队完成真实项目需求.md</a></footer>
+</div></body></html>

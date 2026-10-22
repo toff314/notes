@@ -1,0 +1,310 @@
+[
+  {
+    "order": 0,
+    "title": "开篇词",
+    "title_safe": "开篇词",
+    "articles": [
+      {
+        "id": "924817",
+        "title": "开篇词｜AI工作流革命：重新定义软件工程师的每一天",
+        "title_safe": "开篇词｜AI工作流革命：重新定义软件工程师的每一天",
+        "time": "12:37",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "前沿技术速递",
+    "title_safe": "前沿技术速递",
+    "articles": [
+      {
+        "id": "944630",
+        "title": "前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”",
+        "title_safe": "前沿技术速递｜Agent Teams：打造你的第一支“虚拟研发团队”",
+        "time": "09:27",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "952631",
+        "title": "前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法",
+        "title_safe": "前沿技术速递｜告别“方言”：全面解析 Agent Skills 行业标准与高阶编写心法",
+        "time": "14:37",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "概念篇：建立AI原生世界观",
+    "title_safe": "概念篇：建立AI原生世界观",
+    "articles": [
+      {
+        "id": "924970",
+        "title": "01｜范式演进：从\"人机协作\"到\"AI原生\"，你的角色变了吗？",
+        "title_safe": "01｜范式演进：从'人机协作'到'AI原生'，你的角色变了吗？",
+        "time": "13:07",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "924983",
+        "title": "02｜核心引擎：AI原生开发第一性原理——规范驱动开发",
+        "title_safe": "02｜核心引擎：AI原生开发第一性原理——规范驱动开发",
+        "time": "14:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "925952",
+        "title": "03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？",
+        "title_safe": "03｜群雄并起：扫描命令行AI Agent生态，我们为何聚焦Claude Code？",
+        "time": "14:24",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "基础篇：掌握与AI伙伴协作的通用语言",
+    "title_safe": "基础篇：掌握与AI伙伴协作的通用语言",
+    "articles": [
+      {
+        "id": "926085",
+        "title": "04｜环境搭建：为Claude Code接入国产大模型",
+        "title_safe": "04｜环境搭建：为Claude Code接入国产大模型",
+        "time": "13:16",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "926845",
+        "title": "05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行",
+        "title_safe": "05｜核心交互模型：所有Agent的通用语言——上下文注入与Shell执行",
+        "time": "13:45",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "927870",
+        "title": "06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md",
+        "title_safe": "06｜上下文的艺术（上）：详解CLAUDE.md与AGENTS.md",
+        "time": "21:58",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "928328",
+        "title": "07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”",
+        "title_safe": "07｜上下文的艺术（下）：用 constitution.md 为AI注入项目“宪法”",
+        "time": "10:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "928747",
+        "title": "08｜自定义指令：精通Slash Commands，打造你的私人命令集",
+        "title_safe": "08｜自定义指令：精通Slash Commands，打造你的私人命令集",
+        "time": "16:48",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "进阶篇：将AI锻造成你的专属能力",
+    "title_safe": "进阶篇：将AI锻造成你的专属能力",
+    "articles": [
+      {
+        "id": "928995",
+        "title": "09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”",
+        "title_safe": "09｜安全基石（上）：用权限控制与沙箱为AI戴上“安全镣铐”",
+        "time": "17:41",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "929875",
+        "title": "10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力",
+        "title_safe": "10｜安全基石（下）：Checkpointing，获得让AI“时光倒流”的超能力",
+        "time": "10:59",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "931222",
+        "title": "11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发",
+        "title_safe": "11｜事件驱动：详解Hooks机制，让AI在关键节点自动触发",
+        "time": "13:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "931875",
+        "title": "12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统",
+        "title_safe": "12｜终极扩展：深入MCP服务器，将AI连接到任何内外部系统",
+        "time": "19:34",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "933778",
+        "title": "13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力",
+        "title_safe": "13｜智能涌现的基石：精通Agent Skills，为AI植入专家能力",
+        "time": "19:39",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "934402",
+        "title": "14｜智能分身：精通Subagent，为复杂任务创建专家AI",
+        "title_safe": "14｜智能分身：精通Subagent，为复杂任务创建专家AI",
+        "time": "20:01",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "934472",
+        "title": "15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI",
+        "title_safe": "15｜编程接口：驾驭Headless模式，将AI能力集成到脚本与CI",
+        "time": "10:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "实战篇：在真实项目中重塑工程实践",
+    "title_safe": "实战篇：在真实项目中重塑工程实践",
+    "articles": [
+      {
+        "id": "934781",
+        "title": "16｜顶层设计：构建你的AI原生开发“驾驶舱”",
+        "title_safe": "16｜顶层设计：构建你的AI原生开发“驾驶舱”",
+        "time": "17:37",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "935801",
+        "title": "17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md",
+        "title_safe": "17｜需求与设计：在框架中演练，从模糊想法到清晰的spec.md",
+        "time": "09:42",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "936334",
+        "title": "18｜计划与任务：将规范“编译”为plan.md与tasks.md",
+        "title_safe": "18｜计划与任务：将规范“编译”为plan.md与tasks.md",
+        "time": "09:03",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "936339",
+        "title": "19｜编码与测试：AI驱动的TDD与框架能力的协同作战",
+        "title_safe": "19｜编码与测试：AI驱动的TDD与框架能力的协同作战",
+        "time": "17:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "937176",
+        "title": "20｜协同与审查：调用框架中的/review指令，实现标准化审查",
+        "title_safe": "20｜协同与审查：调用框架中的-review指令，实现标准化审查",
+        "time": "10:51",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "937182",
+        "title": "21｜构建与交付：扩展框架能力，实现自动化构建与CI/CD",
+        "title_safe": "21｜构建与交付：扩展框架能力，实现自动化构建与CI-CD",
+        "time": "09:03",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "937756",
+        "title": "22｜维护与重构：AI赋能的系统“体检”与“外科手术”",
+        "title_safe": "22｜维护与重构：AI赋能的系统“体检”与“外科手术”",
+        "time": "13:29",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "title": "结束语&测试题",
+    "title_safe": "结束语&测试题",
+    "articles": [
+      {
+        "id": "937777",
+        "title": "结课测试｜来赴一场满分之约！",
+        "title_safe": "结课测试｜来赴一场满分之约！",
+        "time": "00:38",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "938180",
+        "title": "结束语｜未来已来，欢迎来到人机共生的软件工程新纪元",
+        "title_safe": "结束语｜未来已来，欢迎来到人机共生的软件工程新纪元",
+        "time": "07:46",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 7,
+    "title": "精彩答疑",
+    "title_safe": "精彩答疑",
+    "articles": [
+      {
+        "id": "940979",
+        "title": "精彩答疑｜建立AI原生世界世界观",
+        "title_safe": "精彩答疑｜建立AI原生世界世界观",
+        "time": "18:32",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  }
+]

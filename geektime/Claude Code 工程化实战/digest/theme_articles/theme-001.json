@@ -1,0 +1,66 @@
+{
+ "id": "theme-001",
+ "theme": "多 Agent 不是越复杂越好：何时升级、选哪种模式、代价有多大——一套从单 Agent 到多 Agent 的工程决策框架",
+ "source_lectures": [
+  "04",
+  "03",
+  "07",
+  "08",
+  "hot-05"
+ ],
+ "lecture_tiers": {
+  "gold": 1,
+  "silver": 4,
+  "copper": 0
+ },
+ "narrative_arc": {
+  "act1_problem": "2026 年的 AI 工程圈，多 Agent 架构是最被滥用的流行词：项目还没跑通就上 Supervisor+Sub-Agent，理由是'看起来更先进、更专业'。但每增加一个 Agent，就增加一层调试复杂度、一份 token 成本和一个失败点——Anthropic 官方数据显示多 Agent 的 token 消耗约是普通对话的 15 倍。真实问题不是'怎么用多 Agent'，而是'我该不该用、什么时候用、用哪种模式、代价能否承受'。",
+  "act2_method": "课程给出了一条完整的决策链。第一步（04 讲，金矿）：升级触发信号——上下文管理挑战（多个能力领域的知识塞不进单一 prompt）与分布式开发需求（多团队各自拥有 Agent）；升级决策树：单一领域+工具<5+上下文<50K 用单 Agent，工具>10 用 Skills，多领域独立上下文用 Sub-Agents，多步骤状态流转用 Handoffs，跨数据源并行查询用 Router。第二步（03/07 讲）：子代理内部再细分——只读型（审查）、高噪声型（日志/测试）、并行探索（独立任务）、流水线编排（依赖任务），判断标准是'独立→并行，依赖→流水线'。第三步（08 讲）：当 workers 需要互相通信、互相挑战结论（锚定偏见、多假设验证）时，才升级到 Agent Teams 的竞争假设/分层评审模式。第四步（hot-05 讲）：当流程稳定、值得被命名复用、需要大规模并发时，把控制流从 Claude 上下文搬进 Workflow 脚本——控制流位置是编排架构的终极判据。",
+  "act3_critique": "这套框架的边界在哪里？其一，数据可信度分层：90.2% 性能提升与 15x token 成本可追溯到 Anthropic 官方多 Agent 研究系统博客（✅），40% token 节省来自 LangChain 测试图表转述（⚠️ 无法细查），升级决策树的 50K tokens 阈值是讲师经验值（❓）。其二，时效性：Agent Teams（实验性默认关闭）与 Workflow（research preview）均为未稳定功能，框架可用但具体 API 会变。其三，对立面缺失：课程全程无'何时该用 RAG/纯工具链替代 Agent'的反例，也没有讲师自己的实测数据——'先加工具再加 Agent'的铁律应该被理解为'结构优先'而非'Agent 禁止'。其四，成本测算不足：15x 放大效应只说了适合高价值任务，但没给出'多高的价值才值 15 倍成本'的量化标尺。"
+ },
+ "title_idea": "90.2% 的提升和 15 倍的代价：多 Agent 架构到底该不该上？——一份从单 Agent 到多 Agent 的决策手册",
+ "type": "comparison",
+ "search_keywords": [
+  "multi-agent architecture selection",
+  "sub-agents vs agent teams",
+  "LangChain multi-agent patterns",
+  "Anthropic multi-agent research system",
+  "agent orchestration workflow",
+  "token cost multi-agent",
+  "supervisor pattern agents",
+  "handoffs router agent design"
+ ],
+ "visualization_hints": [
+  "Mermaid 决策树流程图：单Agent→触发信号→四模式（Sub-Agents/Skills/Handoffs/Router）→Teams/Workflow 的升级路径",
+  "ECharts 双轴柱状图：Anthropic 多 Agent 性能提升 90.2% vs token 成本 15x 的收益-代价对比",
+  "表格：四种模式的上下文隔离/并行能力/复杂度/适用场景对比矩阵（04 讲模式速查表）"
+ ],
+ "controversy_hooks": [
+  "多 Agent 是 2026 年最大的过度设计——'先加工具再加 Agent'的铁律为什么被普遍无视？",
+  "90.2% 提升 vs 15x 成本：这笔交易在什么场景下才划算？课程没给出量化标尺",
+  "Agent Teams 和 Workflow 都是未稳定功能，教材级的整理是否过早？",
+  "上下文隔离 vs 并行：多 Agent 的第一价值到底是哪个？（课程主张隔离优先，与主流'并行提升效率'叙事相反）"
+ ],
+ "verification_gate": {
+  "verified_claims": [
+   "Anthropic 多 Agent 研究系统比单 Agent 提升 90.2%、token 消耗约 15 倍 → Anthropic 官方工程博客 multi-agent-research-system（✅）",
+   "95% 性能波动归因：token 使用 80% + 工具调用与模型选型 15% → Anthropic 官方博客（✅）",
+   "四种模式（Sub-Agents/Skills/Handoffs/Router）与'先单 Agent 后工具再多 Agent'建议 → LangChain 官方架构选型指南（✅）",
+   "多领域查询中上下文隔离模式（Sub-Agent/Router）节省 40%+ token → LangChain 测试图表（⚠️ 转述，标注来源）"
+  ],
+  "avoid_claims": [
+   "升级决策树的'工具<5 个、上下文<50K tokens'阈值 — 讲师经验值（❓），不引用为事实",
+   "Agent Teams 的 token 成本'显著高于'单会话 — 无量化数据（❓），仅作定性表述",
+   "任何关于 OpenClaw/具体第三方 Agent 的性能数据 — 本主题不涉及，避免跨讲混入未验证声明"
+  ]
+ },
+ "quality_rubric_hints": {
+  "required_sections": [
+   "问题定义：过早引入多 Agent 的常见误区",
+   "核心原理：触发信号 + 四模式 + 决策树",
+   "实操方法：升级路径与生产四挑战应对",
+   "边界与批判：数据可信度分层、时效性、对立面缺失"
+  ],
+  "min_score": 52
+ }
+}

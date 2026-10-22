@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI大模型之美 — 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">AI大模型之美</a><a href="README.html">《AI大模型之美》消化索引（digest README）</a></div>
+<h1>AI大模型之美 — 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p>大模型应用开发 = 「用接口替代训练」：把 Completion（生成）+ Embedding（检索）两个原语组合起来，再叠加 RAG、Agent、多模态三条路径，就能零机器学习基础做出 AI 应用。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>第二大脑（RAG）</strong>：先把外部资料建索引，提问时先检索再让 AI 基于检索结果回答，解决幻觉和时效性。</li><li><strong>多步提示语（CoT）</strong>：把复杂任务拆成「解释→规划→生成→校验」，每步输出作为下一步输入，效果远超单次提问。</li><li><strong>Agent / ReAct</strong>：让 AI 在 Thought-Action-Observation 循环里自主选择工具，工具描述即「契约」。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li>零样本分类：算标签词 embedding，与文本向量比余弦相似度定类别（L02）。</li><li>语义搜索：query 和文档都转向量，按相似度排序，突破关键词匹配（L09）。</li><li>用代码补数理短板：让 AI 写 Python 代码、交解释器执行（L15）。</li><li>AST 语法检查：对 AI 生成代码跑 ast.parse，失败就重新生成（L13）。</li><li>稳定输出三件套：response_format=json_object + temperature=0 + 固定 seed（加餐一）。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><code>temperature=0</code> 并不能让输出一致，只是缩小随机性；要真正复现输出，还需固定 <code>seed</code> 并比对 <code>system_fingerprint</code>。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>部分值得</strong> — 只读 [10]「第二大脑」、[13]「多步提示语」、[17]「Agent」、[27]「产品三原则」四讲（约 30 分钟）即可拿到 80% 价值；其余 30 讲大多是会过时的库教程和鸡汤，跳过不亏。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

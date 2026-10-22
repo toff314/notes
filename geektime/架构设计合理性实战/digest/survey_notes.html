@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：架构设计合理性实战</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">架构设计合理性实战</a><a href="README.html">《架构设计合理性实战》消化索引（digest README）</a></div>
+<h1>课程通览：架构设计合理性实战</h1>
+<blockquote><p>⚠️ 正文来源说明：本课程各章节目录下的 .md 文件为 47 字节占位符（内容为 <code>&lt;!--[[[...u]]]--&gt;</code>），</p><p>未下载到文字稿正文。实际正文来自同名 <code>_sub0.vtt</code> 字幕转录（讲师完整口述），</p><p>已转换为 <code>_transcript.txt</code> 后作为分析正文。视频为 .mp4，images 目录为空。</p></blockquote>
+<h2>基本信息</h2>
+<ul><li>模块数：1</li><li>总讲数：6</li><li>总时长：约 176 分钟（36:00 + 29:38 + 23:54 + 28:53 + 28:00 + 29:45）</li><li>讲师：华仔（&quot;架构实战营模块3&quot;，资深架构师，自称 P9 级别，著有《大厂晋升指南》等）</li><li>课程定位：面向架构师的<strong>架构设计全流程方法论课</strong>——前期（利益干系人+复杂度）、中期（备选方案设计+评估选择）、后期（详细架构+文档写作），并以一个 2014 年游戏公司消息队列自研案例贯穿验证。</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong></li></ul>
+<p>课程以作者自有的&quot;面向复杂度的架构设计环&quot;为骨架（模块1/2 提出的 4R 架构定义 + 架构三原则），把架构设计拆成前期/中期/后期三阶段：前期澄清不确定性与识别复杂度（核心是利益干系人分析六方框架与诉求排序），中期设计 3-5 个备选架构并用&quot;360度环评+维度优先级排序&quot;选出落地方案，后期把备选架构细化为可指导开发的详细架构并写成三部分式架构设计文档。后两讲用一个真实消息队列自研案例完整演示全流程。核心主张：<strong>架构师的核心职责是消除不确定性和降低复杂性，而&quot;合适的才是最好的&quot;是贯穿始终的选型准则</strong>。</p>
+<ul><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong></li><li>想解决：① 架构师角色被误读为&quot;PPT架构师&quot;——回答架构师到底做什么；② 架构设计无流程可依——给出可执行的三阶段流程与每阶段输出物；③ 选型拍脑袋——给出备选方案设计（头脑风暴-红线-4R）与评估（优先级排序）的方法；④ 详细架构/文档写不出来——给出三类文档区分、文档三部分结构、可直接套用的模板。</li><li>已解决：三阶段流程、六方干系人框架、3-5 备选方案、优先级排序评估法、文档模板均有完整讲解与案例演示，可操作性高。</li><li>未解决/回避：① 复杂度分析本身（高性能/高可用/可扩展等）只引用模块2结论，本模块不展开，需前置知识；② 所有量化判断（短信转化率、存储系统 6 个月/100 倍、Kafka 性能量级）均无外部来源，只能作为讲师经验参考；③ 案例是 2014 年的单一成功案例，未展示&quot;评估选择后仍失败的&quot;完整反面样本（虽然 L06 有局部评估纠错）；④ 验证阶段（架构落地后的反馈闭环）只在 L01 一笔带过，无实操。</li></ul>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>如何保证设计出合理的架构？</td><td>6</td><td>架构师定位 / 三阶段流程 / 利益干系人 / 备选方案 / 详细架构 / 消息队列实战</td><td>高</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>01</td><td>架构师只需要写PPT么？</td><td>架构师画像、三能力三思维、4R、三阶段总览</td><td>⭐⭐⭐</td><td>作者方法论体系总览，两个真实决策案例（短信转化率、H5 vs Native），有细节但为后续展开的&quot;地图&quot;</td></tr><tr><td>02</td><td>架构设计前期应该怎么做？</td><td>利益干系人、六方框架、诉求排序</td><td>⭐⭐⭐</td><td>六方干系人框架完整可操作，澳X通案例含监管现实，金句密度高</td></tr><tr><td>03</td><td>架构设计中期应该怎么做？</td><td>备选方案、头脑风暴、红线、360度环评、优先级排序</td><td>⭐⭐⭐</td><td>设计+评估方法论清晰，比较学习法可迁移，批判了&quot;领导选/综合打分&quot;两种错误</td></tr><tr><td>04</td><td>架构设计后期应该怎么做？</td><td>三类文档、详细架构、PPT架构师、文档模板</td><td>⭐⭐⭐</td><td>三类文档划分有实质贡献，ZooKeeper/Prometheus 官方案例可查证</td></tr><tr><td>05</td><td>消息队列备选架构设计实战</td><td>案例背景、干系人诉求、4备选方案、重复造轮子</td><td>⭐⭐</td><td>案例铺垫+4方案设计，&quot;重复造轮子&quot;与&quot;绩效驱动的性能冗余&quot;观点有启发性，半讲为背景</td></tr><tr><td>06</td><td>消息队列备选架构选择和细化实战</td><td>评估、优先级筛选、事后纠错、细化模板</td><td>⭐⭐⭐</td><td>全课精华落点：优先级一票否决完整演示、评估纠错、细化设计可复现</td></tr></table>
+<h2>整体印象</h2>
+<ul><li>课程主线：架构设计 = 面向复杂度的三阶段流程（前/中/后期），由&quot;消除不确定性、降低复杂性&quot;驱动，配 4R 定义与三原则。</li><li>最大亮点：L06 消息队列评估实战——把前面全部框架串成一个真实案例，且包含<strong>评估结论事后被证伪</strong>的自我修正，这在同类课程中少见；L02 六方干系人框架是可直接落地的清单工具。</li><li>明显水份：每讲约 20-25% 为开场回顾、结尾思维导图复述、测验题与助教提醒（课程商业化模板）；无任何外部论文/报告引用，全部量化声明为讲师经验。</li><li>独特之处：贯穿案例（2014 年游戏业务被阿里收购、6 人中间件团队自研消息队列）细节真实、决策链条完整，非编造 Demo。</li><li><strong>形式/内容判断</strong>：这门课本质是&quot;教思维方式与决策方法&quot;的方法论课，而非事实知识堆砌。学到的是一套可复用的架构决策流程（怎么分析干系人、怎么设计备选、怎么选、怎么细化），而非某个具体技术的使用手册。技术细节（Netty/ZooKeeper/MySQL 主从）只是载体。</li></ul>
+<h2>价值预判总结</h2>
+<ul><li>6 讲中 5 讲达到 ⭐⭐⭐（L01-L04、L06），1 讲 ⭐⭐（L05，案例铺垫）。</li><li>无 ⭐ 级灌水讲（无纯环境配置/鸡汤课）；课程浓缩，无源码走读。</li><li>主要风险信号：全课 <code>personal_anecdote_only</code>（无外部验证）、L01 无反面案例、L04 有源码级细节（ZooKeeper 包头）但非走读、L05 有 demo_inflation 嫌疑（案例铺垫）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

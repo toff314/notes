@@ -1,0 +1,129 @@
+{
+  "lecture": "1. etcd 概要：主要功能及使用场景",
+  "source": "1. etcd 概要：主要功能及使用场景.txt",
+  "duration_min": 21.9,
+  "intro": "从本模块开始逐个深入 Kubernetes 控制平面组件（etcd、API Server、Controller Manager 等）的原理与生产实践，本讲作为 etcd 专题的概要介绍，覆盖 etcd 是什么、核心能力与适用场景。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "02:30",
+      "topic": "模块引入与 etcd 是什么",
+      "points": [
+        "后续课程会逐个深入 Kubernetes 控制平面组件（etcd、API Server、Controller Manager 等）的原理、日常操作、生产配置与常见问题",
+        "etcd 名称受 Linux /etc 目录启发（ETCD Distribution），定位是构建分布式的配置管理产品，本质是一个分布式键值对（KV）存储",
+        "单节点 KV 存储实现简单，但节点故障即数据丢失；组成集群多副本冗余才能保证数据安全",
+        "一旦成为分布式系统就涉及如何保证数据一致性的问题，etcd 一致性的指导理论就是 Raft 协议"
+      ],
+      "tradeoffs": [
+        "单节点 KV 存储靠定期备份保数据，备份周期内损失的数据无法找回，数据时效性要求越高越难以接受"
+      ],
+      "turning_points": [
+        "分布式存储的代价：用多副本冗余换数据安全，但引入了'如何保证一致性'这一核心难题"
+      ]
+    },
+    {
+      "start": "02:30",
+      "end": "05:00",
+      "topic": "etcd 核心能力概览",
+      "points": [
+        "键值对存储：保存 key-value 的映射关系",
+        "Watch 监听机制：类似 HTTP GET 但多加 watch 参数，除返回当前值外还保持长连接，之后该对象所有变更以事件形式推送，不需要轮询",
+        "使用简单：本身是一个简单的 REST server，操作就是一个 REST call；有认证鉴权机制，组件间可基于双向 SSL（mTLS）保证传输安全",
+        "高性能：最新数据每秒可支持约 1000 次写操作、2000 次读操作",
+        "Lease 续约机制：写键值对时可给其设定生命周期（如 30 秒），需持续续约保持有效，超时未续约键值对自动消失"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Watch 用'推送'替代'轮询'，是 etcd 区别于普通 KV 数据库的关键设计"
+      ]
+    },
+    {
+      "start": "05:00",
+      "end": "08:00",
+      "topic": "三大使用场景：KV 数据库、服务发现、消息发布订阅",
+      "points": [
+        "场景一：作为键值对存储（数据库）使用",
+        "场景二：服务发现（利用 Lease 续约机制）：服务提供者把自己的 IP 和服务名写入 etcd 并持续续约，服务消费者从注册中心拉取有效 endpoint 建立调用关系；与 Spring Cloud 等应用场景一致",
+        "场景三：消息发布与订阅（利用 Watch 长连接与事件推送）：生产者更新/创建/删除键时，etcd 以 put/add、modify、delete 事件推送给消费者，etcd 从而成为消息中间件，可用于分布式异步系统"
+      ],
+      "tradeoffs": [
+        "服务发现依赖续约机制：中间链路或自身出问题导致续约失败，注册信息会自动失效，这正是该模式实现失效剔除的边界条件"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "08:00",
+      "end": "10:30",
+      "topic": "为什么用 KV 存储与演示环境搭建",
+      "points": [
+        "KV 存储轻量：单 key 单 value，查询开销小，性能通常比关系型数据库快",
+        "支持动态存储：可放内存也可放硬盘，通过多节点冗余存储保证数据安全",
+        "演示环境：本机 kubeadm 部署的 Kubernetes 自带 etcd 已占用默认端口，因此新起 etcd 需要改监听端口（client 端口 2379、peer 通信端口 2380，前面加 1 变成 12379/12380 避开冲突）",
+        "etcd 启动很简单：直接执行 etcd 命令即可，默认就是单实例集群"
+      ],
+      "tradeoffs": [
+        "端口冲突是本地练习的常见坑：Kubernetes 自带 etcd 以 host network=true 运行在主机 Namespace 中，已占用 2379/2380 默认端口"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "10:30",
+      "end": "14:30",
+      "topic": "etcdctl 基本操作演示",
+      "points": [
+        "etcdctl member list 查看集群成员（单实例集群只有一个 member）",
+        "put key value 写入数据，get key 读取数据，读写就是这么简单",
+        "get --prefix 做前缀模糊查询（如查询所有以 '/' 开头的 key）；注意斜杠本身是 key 的一部分",
+        "--keys-only 参数只列出 key 不显示 value",
+        "watch 命令监听对象变化（如 watch --prefix 监听所有以 '/' 开头的键值变化），变更实时推送"
+      ],
+      "tradeoffs": [
+        "前缀查询时斜杠属于 key 内容而非路径分隔符，容易产生误解"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "14:30",
+      "end": "18:00",
+      "topic": "Lease 租约机制与 CAS 机制",
+      "points": [
+        "Lease（租约）：创建 Lease 对象并设置生命周期（如 30 秒），写键值对时与之关联；Lease 未被 renew 到期后该键值对自动消失",
+        "CAS（Compare-And-Swap 原子比较交换）：构建一致性系统时常用，修改内存值时带一个前置条件，条件满足才执行",
+        "CAS 支持 pre-exist（值是否存在）、pre-value（当前值是否为指定值）、pre-index 等条件",
+        "例如'如果当前值是 1 就改成 2'需要 if + set 两条指令并加锁保证原子性，而 CAS 用单条指令加 pre-value 条件即可完成",
+        "CAS 在 etcd 做选主（分布式锁）时被广泛采用"
+      ],
+      "tradeoffs": [
+        "普通读-改-写需要加锁，CAS 用单条指令消除竞态，是分布式原子操作的基础"
+      ],
+      "turning_points": [
+        "租约把'临时数据'变成一等公民，是服务发现场景的核心机制"
+      ]
+    },
+    {
+      "start": "18:00",
+      "end": "21:54",
+      "topic": "etcd 生态、业界应用与总结",
+      "points": [
+        "etcd 自带 etcdctl 命令行工具（类似 kubectl，把请求转换成 REST 调用）；Go、Java、Python 等语言都有官方客户端库",
+        "Kubernetes 的 API Server 通过 go-etcd 库与 etcd 交互",
+        "Kubernetes 是 etcd 最大的用户；etcd 在 eBay、腾讯等公司被广泛应用于各业务场景（除集群管理外也用于业务键值存储）",
+        "总结：etcd 提供的 KV 存储、Watch、Lease、CAS 等机制使其成为流行的分布式键值框架"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "原来用 Zookeeper 保存键值的场景可以考虑直接用 etcd 替代——Kubernetes 平台上已经运行着 etcd"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "etcd 是一个分布式的键值对（KV）存储，名称 ETCD Distribution 受 Linux /etc 目录启发，目标是构建分布式的配置管理产品",
+    "etcd 最核心的是如何保证数据的一致性，这一致性的指导理论就是 Raft 协议，etcd 是 Raft 协议的一个实现",
+    "Watch 机制：客户端获取当前值的同时保持长连接，之后该对象所有变更（put/add、modify、delete）都会以事件形式推送，无需轮询",
+    "Lease（租约）：写键值对时可设定生命周期（如 30 秒），需持续续约（renew）保持有效，超时未续约该键值对自动消失",
+    "CAS（Compare-And-Swap 原子比较交换）：通过 pre-exist / pre-value / pre-index 等前置条件，用单条指令完成带条件的原子修改",
+    "etcd 每秒可支持约 1000 次写操作、2000 次读操作",
+    "etcd 默认有两类端口：client 端口（2379）供客户端连接，peer 端口（2380）供集群 member 之间通信"
+  ],
+  "closing": "对 etcd 的基本介绍到此结束：它是分布式 KV 存储，提供 KV 存储、Watch 监听、Lease 续约、CAS 等机制，适用 KV 数据库、服务发现、消息发布订阅等场景；预告下一讲学习 Raft 协议以及 etcd 如何遵从 Raft 协议保证数据安全。"
+}

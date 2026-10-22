@@ -1,0 +1,312 @@
+[
+  {
+    "order": 0,
+    "title": "开篇词",
+    "title_safe": "开篇词",
+    "articles": [
+      {
+        "id": "699363",
+        "title": "开篇词｜带你亲证AI应用开发的“奇点”时刻",
+        "title_safe": "开篇词｜带你亲证AI应用开发的“奇点”时刻",
+        "time": "17:23",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "启程篇",
+    "title_safe": "启程篇",
+    "articles": [
+      {
+        "id": "699400",
+        "title": "01｜LangChain系统安装和快速入门",
+        "title_safe": "01｜LangChain系统安装和快速入门",
+        "time": "27:44",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "699436",
+        "title": "02｜用LangChain快速构建基于“易速鲜花”本地知识库的智能问答系统",
+        "title_safe": "02｜用LangChain快速构建基于“易速鲜花”本地知识库的智能问答系统",
+        "time": "16:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "基础篇",
+    "title_safe": "基础篇",
+    "articles": [
+      {
+        "id": "699451",
+        "title": "03｜模型I/O：输入提示、调用模型、解析输出",
+        "title_safe": "03｜模型I-O：输入提示、调用模型、解析输出",
+        "time": "18:30",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "700699",
+        "title": "04｜提示工程（上）：用少样本FewShotTemplate和ExampleSelector创建应景文案",
+        "title_safe": "04｜提示工程（上）：用少样本FewShotTemplate和ExampleSelector创建应景文案",
+        "time": "20:29",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "701505",
+        "title": "05｜提示工程（下）：用思维链和思维树提升模型思考质量",
+        "title_safe": "05｜提示工程（下）：用思维链和思维树提升模型思考质量",
+        "time": "14:34",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "702140",
+        "title": "06｜调用模型：使用OpenAI API还是微调开源Llama2/ChatGLM？",
+        "title_safe": "06｜调用模型：使用OpenAI API还是微调开源Llama2-ChatGLM？",
+        "time": "21:42",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "702846",
+        "title": "07｜输出解析：用OutputParser生成鲜花推荐列表",
+        "title_safe": "07｜输出解析：用OutputParser生成鲜花推荐列表",
+        "time": "23:19",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "703296",
+        "title": "08｜链（上）：写一篇完美鲜花推文？用SequencialChain链接不同的组件",
+        "title_safe": "08｜链（上）：写一篇完美鲜花推文？用SequencialChain链接不同的组件",
+        "time": "10:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "703556",
+        "title": "09｜链（下）：想学“育花”还是“插花”？用RouterChain确定客户意图",
+        "title_safe": "09｜链（下）：想学“育花”还是“插花”？用RouterChain确定客户意图",
+        "time": "18:18",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "704183",
+        "title": "10｜记忆：通过Memory记住客户上次买花时的对话细节",
+        "title_safe": "10｜记忆：通过Memory记住客户上次买花时的对话细节",
+        "time": "17:32",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "707191",
+        "title": "11｜代理（上）：ReAct框架，推理与行动的协同",
+        "title_safe": "11｜代理（上）：ReAct框架，推理与行动的协同",
+        "time": "14:32",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "708048",
+        "title": "12｜代理（中）：AgentExecutor究竟是怎样驱动模型和工具完成任务的？",
+        "title_safe": "12｜代理（中）：AgentExecutor究竟是怎样驱动模型和工具完成任务的？",
+        "time": "22:34",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "708511",
+        "title": "13｜代理（下）：结构化工具对话、Self-Ask with Search以及Plan and execute代理",
+        "title_safe": "13｜代理（下）：结构化工具对话、Self-Ask with Search以及Plan and execute代理",
+        "time": "19:20",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "应用篇",
+    "title_safe": "应用篇",
+    "articles": [
+      {
+        "id": "709523",
+        "title": "14｜工具和工具箱：LangChain中的Tool和Toolkits一览",
+        "title_safe": "14｜工具和工具箱：LangChain中的Tool和Toolkits一览",
+        "time": "18:30",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "712147",
+        "title": "15｜检索增强生成：通过RAG助力鲜花运营",
+        "title_safe": "15｜检索增强生成：通过RAG助力鲜花运营",
+        "time": "26:25",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "713462",
+        "title": "16｜连接数据库：通过链和代理查询鲜花信息",
+        "title_safe": "16｜连接数据库：通过链和代理查询鲜花信息",
+        "time": "14:45",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "713685",
+        "title": "17｜回调函数：在AI应用中引入异步通信机制",
+        "title_safe": "17｜回调函数：在AI应用中引入异步通信机制",
+        "time": "13:25",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "714249",
+        "title": "18｜CAMEL：通过角色扮演脑暴一个鲜花营销方案",
+        "title_safe": "18｜CAMEL：通过角色扮演脑暴一个鲜花营销方案",
+        "time": "18:13",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "718074",
+        "title": "19｜BabyAGI：根据气候变化自动制定鲜花存储策略",
+        "title_safe": "19｜BabyAGI：根据气候变化自动制定鲜花存储策略",
+        "time": "15:26",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "实战篇",
+    "title_safe": "实战篇",
+    "articles": [
+      {
+        "id": "718402",
+        "title": "20｜部署一个鲜花网络电商的人脉工具（上）",
+        "title_safe": "20｜部署一个鲜花网络电商的人脉工具（上）",
+        "time": "15:18",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "718592",
+        "title": "21｜部署一个鲜花网络电商的人脉工具（下）",
+        "title_safe": "21｜部署一个鲜花网络电商的人脉工具（下）",
+        "time": "10:24",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "719239",
+        "title": "22｜易速鲜花聊天客服机器人的开发（上）",
+        "title_safe": "22｜易速鲜花聊天客服机器人的开发（上）",
+        "time": "10:45",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "719462",
+        "title": "23｜易速鲜花聊天客服机器人的开发（下）",
+        "title_safe": "23｜易速鲜花聊天客服机器人的开发（下）",
+        "time": "15:13",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "结束语 & 结课测试",
+    "title_safe": "结束语 & 结课测试",
+    "articles": [
+      {
+        "id": "719508",
+        "title": "结束语｜人生的价值就在于创造",
+        "title_safe": "结束语｜人生的价值就在于创造",
+        "time": "06:11",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "719658",
+        "title": "结课测试｜来赴一场满分之约",
+        "title_safe": "结课测试｜来赴一场满分之约",
+        "time": "00:28",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "title": "加餐分享",
+    "title_safe": "加餐分享",
+    "articles": [
+      {
+        "id": "742389",
+        "title": "直播加餐｜LangChain表达式语言LCEL初探",
+        "title_safe": "直播加餐｜LangChain表达式语言LCEL初探",
+        "time": "00:39",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "743391",
+        "title": "直播加餐｜LangChain的Tracing、Debug和LangSmith平台解读",
+        "title_safe": "直播加餐｜LangChain的Tracing、Debug和LangSmith平台解读",
+        "time": "00:38",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "889985",
+        "title": "热点加餐：用LangGraph和A2A实现货币兑换Agent",
+        "title_safe": "热点加餐：用LangGraph和A2A实现货币兑换Agent",
+        "time": "15:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  }
+]

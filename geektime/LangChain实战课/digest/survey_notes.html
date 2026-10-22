@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程通览：LangChain实战课</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">LangChain实战课</a><a href="README.html">《LangChain实战课》消化索引（digest README）</a></div>
+<h1>课程通览：LangChain实战课</h1>
+<h2>基本信息</h2>
+<ul><li>模块数：7（开篇词 / 启程篇 / 基础篇 / 应用篇 / 实战篇 / 结束语&amp;结课测试 / 加餐分享）</li><li>总讲数：29</li><li>总时长：约 7 小时 20 分钟（音频为主，无视频）</li><li>讲师：黄佳（新加坡科研局研究员，《零基础学机器学习》《数据分析咖哥十话》作者）</li><li>课程定位：以&quot;易速鲜花&quot;电商为贯穿案例，逐个拆解 LangChain 六大核心组件（Model I/O、提示工程、链、记忆、代理、工具/检索）的实战教程</li></ul>
+<h2>Adler 两问（检视阅读阶段必答）</h2>
+<ul><li><strong>Q1: 这门课整体讲了什么？</strong></li></ul>
+<p>这是一门面向开发者的 LangChain 入门到进阶教程。课程用一个贯穿始终的虚构鲜花电商&quot;易速鲜花&quot;作为业务背景，按&quot;环境搭建 → 组件逐个击破（模型I/O、提示模板、链、记忆、代理、工具、RAG）→ 综合实战（人脉工具、聊天机器人）&quot;的路径，把 LangChain 的核心抽象讲清楚。每一讲都遵循&quot;概念原理 → 论文/出处 → LangChain 代码实战 → 思考题&quot;的固定结构。</p>
+<ul><li><strong>Q2: 作者想要解决什么问题？解决了多少？</strong></li></ul>
+<p>作者想解决的是&quot;如何从零上手用 LangChain 开发 LLM 应用&quot;的问题。<strong>已解决</strong>：LangChain 各组件的概念、API 用法、以及它们如何组合成完整应用的路径，讲得非常清楚且代码可跑通。<strong>部分解决</strong>：提示工程、ReAct 代理、RAG 等关键概念引用了原始论文，但停留在&quot;介绍+复现&quot;层面，未深入工程化细节（如评估、成本优化、生产部署的鲁棒性）。<strong>回避</strong>：模型微调/训练的深度、RAG 的检索质量评估与优化（只列了工具清单未给评测方法论）、以及 LangChain 快速迭代导致的 API 过时问题（课程内容基于 2023 年的 LangChain 版本，多处 API 已废弃）。</p>
+<h2>模块地图</h2>
+<table><tr><th>模块</th><th>讲数</th><th>主题词</th><th>预期价值密度</th></tr><tr><td>开篇词</td><td>1</td><td>课程营销、LangChain 定位</td><td>低</td></tr><tr><td>启程篇</td><td>2</td><td>环境搭建、RAG 快速体验</td><td>中</td></tr><tr><td>基础篇</td><td>11</td><td>Model I/O、提示工程、链、记忆、代理</td><td>高</td></tr><tr><td>应用篇</td><td>6</td><td>工具、RAG、数据库、回调、CAMEL、BabyAGI</td><td>中</td></tr><tr><td>实战篇</td><td>4</td><td>人脉工具、聊天机器人（项目串联）</td><td>中</td></tr><tr><td>结束语 &amp; 结课测试</td><td>2</td><td>鸡汤、测试题</td><td>低</td></tr><tr><td>加餐分享</td><td>3</td><td>LCEL、LangSmith、LangGraph</td><td>低</td></tr></table>
+<h2>章节标题矩阵</h2>
+<table><tr><th>编号</th><th>标题</th><th>核心关键词</th><th>初判价值</th><th>初步印象</th></tr><tr><td>开篇词</td><td>带你亲证AI应用开发的&quot;奇点&quot;时刻</td><td>课程营销、LangChain 定位</td><td>⭐</td><td>开场白，有课程地图</td></tr><tr><td>01</td><td>LangChain系统安装和快速入门</td><td>环境搭建、大模型基础、OpenAI API</td><td>⭐⭐</td><td>环境配置 + 基础概念</td></tr><tr><td>02</td><td>用LangChain快速构建&quot;易速鲜花&quot;本地知识库问答</td><td>RAG 快速体验</td><td>⭐⭐⭐</td><td>完整端到端项目，有框架图</td></tr><tr><td>03</td><td>模型I/O：输入提示、调用模型、解析输出</td><td>PromptTemplate、OutputParser</td><td>⭐⭐⭐</td><td>核心框架，LangChain 本质</td></tr><tr><td>04</td><td>提示工程（上）：FewShotTemplate和ExampleSelector</td><td>Few-Shot、语义选择器</td><td>⭐⭐⭐</td><td>有论文出处，概念清晰</td></tr><tr><td>05</td><td>提示工程（下）：思维链和思维树</td><td>CoT、ToT</td><td>⭐⭐⭐</td><td>引用多篇论文，可操作</td></tr><tr><td>06</td><td>调用模型：OpenAI API还是微调开源Llama2/ChatGLM</td><td>预训练+微调、HuggingFace、量化</td><td>⭐⭐</td><td>比较型，有实用价值</td></tr><tr><td>07</td><td>输出解析：用OutputParser生成鲜花推荐列表</td><td>Pydantic 解析器</td><td>⭐⭐</td><td>教程级，实用</td></tr><tr><td>08</td><td>链（上）：SequencialChain</td><td>Chain、LLMChain</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>09</td><td>链（下）：RouterChain</td><td>路由链、意图识别</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>10</td><td>记忆：Memory记住对话细节</td><td>四种 Memory 对比</td><td>⭐⭐⭐</td><td>对比清晰，有实用取舍</td></tr><tr><td>11</td><td>代理（上）：ReAct框架</td><td>ReAct、推理+行动</td><td>⭐⭐⭐</td><td>核心概念，有论文，全课巅峰</td></tr><tr><td>12</td><td>代理（中）：AgentExecutor运行机制</td><td>源码走读、Thought/Action/Observation</td><td>⭐⭐⭐</td><td>源码走读但讲透提示秘密</td></tr><tr><td>13</td><td>代理（下）：结构化工具/Self-Ask/Plan-execute</td><td>三种进阶代理</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>14</td><td>工具和工具箱：Tool和Toolkits一览</td><td>arXiv、Gmail 工具箱</td><td>⭐</td><td>目录式列举</td></tr><tr><td>15</td><td>检索增强生成：RAG助力鲜花运营</td><td>文档加载、嵌入、向量库、检索器</td><td>⭐⭐⭐</td><td>RAG 全流程，选型建议</td></tr><tr><td>16</td><td>连接数据库：链和代理查询鲜花信息</td><td>SQL Chain/Agent</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>17</td><td>回调函数：异步通信机制</td><td>Callback、令牌计数</td><td>⭐⭐</td><td>教程级</td></tr><tr><td>18</td><td>CAMEL：角色扮演脑暴营销方案</td><td>CAMEL、Inception Prompting</td><td>⭐⭐⭐</td><td>有论文，多代理框架</td></tr><tr><td>19</td><td>BabyAGI：气候变化制定存储策略</td><td>AutoGPT/BabyAGI/HuggingGPT</td><td>⭐⭐</td><td>概念 + 大量源码走读</td></tr><tr><td>20</td><td>人脉工具（上）</td><td>微博 Agent、SerpAPI</td><td>⭐</td><td>项目实战源码</td></tr><tr><td>21</td><td>人脉工具（下）</td><td>爬取、输出解析、部署</td><td>⭐</td><td>项目实战源码</td></tr><tr><td>22</td><td>聊天客服机器人（上）</td><td>ConversationChain+Memory+RAG</td><td>⭐⭐</td><td>综合串联</td></tr><tr><td>23</td><td>聊天客服机器人（下）</td><td>Streamlit/Gradio 部署</td><td>⭐</td><td>部署教程</td></tr><tr><td>结束语</td><td>人生的价值就在于创造</td><td>鸡汤</td><td>⭐</td><td>结课感悟</td></tr><tr><td>结课测试</td><td>来赴一场满分之约</td><td>20 道测试题</td><td>⭐</td><td>纯测试</td></tr><tr><td>加餐LCEL</td><td>LangChain表达式语言初探</td><td>仅有PPT/视频链接</td><td>⭐</td><td>无正文，纯链接</td></tr><tr><td>加餐LangSmith</td><td>Tracing/Debug/LangSmith解读</td><td>仅有PPT/视频链接</td><td>⭐</td><td>无正文，纯链接</td></tr><tr><td>加餐LangGraph</td><td>LangGraph和A2A货币兑换Agent</td><td>LangGraph、A2A</td><td>⭐⭐</td><td>有正文，但推广新课</td></tr></table>
+<h2>整体印象</h2>
+<ul><li><strong>课程主线</strong>：以&quot;易速鲜花&quot;为统一业务背景，从 Model I/O 出发，逐层爬升到链 → 记忆 → 代理（ReAct）→ 工具 → RAG，最后用两个综合项目串联所有组件。</li><li><strong>最大亮点</strong>：第 05（CoT/ToT）、11（ReAct）、12（AgentExecutor）三讲构成一个完整的&quot;提示工程 → 推理驱动行动 → 自主代理&quot;认知升级链，且均引用了可追溯的原始论文（Jason Wei 2022、Yao 2023 ICLR 等），是全课信噪比最高的部分。</li><li><strong>明显水份</strong>：开篇词/结束语/结课测试是标准课程包装；直播加餐（LCEL、LangSmith）只有 PPT 和视频链接，无正文价值；实战篇 20/21 两讲是大量微博爬虫源码走读。</li><li><strong>独特之处</strong>：&quot;易速鲜花&quot;贯穿案例是本课最大的教学创新，把枯燥的框架 API 用统一的业务叙事串联，降低了认知负担。但代价是几乎每个例子都绕不开花，业务场景单一，缺乏失败案例和工程边界讨论。</li><li><strong>形式/内容判断</strong>：这门课更多是<strong>&quot;教工具用法&quot;而非&quot;教思维方式&quot;</strong>。真正涉及思维升级的只有提示工程（CoT/ReAct）和代理（ReAct）两讲。其余 80% 内容是 LangChain 官方文档的&quot;中文复述 + 鲜花例子&quot;，属于&quot;学一次能上手、但复用价值随时间衰减&quot;的工具型内容。</li></ul>
+<h2>数据可信度初判</h2>
+<p>讲师引用规范（每讲末尾都附延伸阅读和论文链接），未见明显编造。但有两类需注意：① 时效性数字（Auto-GPT 150K stars、tree-of-thoughts 3.3K stars、训练费用几百万美元）为课程发布时快照，现已失效；② ReAct 实战中&quot;美国一打玫瑰 $80.16&quot;是搜索引擎返回结果，无原始出处，不能作为事实引用。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="survey_notes.md">survey_notes.md</a></footer>
+</div></body></html>

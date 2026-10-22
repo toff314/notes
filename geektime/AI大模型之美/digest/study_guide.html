@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI大模型之美 学习指南</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">AI大模型之美</a><a href="README.html">《AI大模型之美》消化索引（digest README）</a></div>
+<h1>AI大模型之美 学习指南</h1>
+<blockquote><p>一句话课程价值：一门「零机器学习基础也能上手」的 LLM 应用开发课，核心思想是「用接口替代训练」，把大模型能力拆成 Completion（生成）+ Embedding（检索）两个原语，再叠加提示语工程、RAG、Agent、多模态四条应用路径。真正的精华只有「第二大脑（RAG）」和「多步提示语（CoT）」两讲，其余多为会过时的库教程。</p></blockquote>
+<h2>课程画像</h2>
+<ul><li>讲师：徐文浩（前拼多多工程师，创办过 AI 聊天机器人公司）</li><li>适合人群：2023 年前后想快速上手 LLM 应用开发、又不想啃数学的工程师/产品经理；想了解「RAG/Agent/多模态」早期思想脉络的人</li><li>不适合人群：已熟悉 RAG/LangChain/Function Calling 的现代开发者（库 API 全部过时）；想系统学 LLM 原理或 prompt 工程理论的人</li><li>投入时间：推荐 2 小时（只读金矿+银矿），不必全读</li><li>价值密度：⭐⭐⭐ (2.79/5)</li></ul>
+<h2>阅读路线</h2>
+<h3>路线 A：快速浏览（30 分钟）</h3>
+<p>只需读以下 4 讲：</p>
+<ul><li>[10] AI连接外部资料库 — 理由：全课核心「第二大脑/RAG」设计模式，可独立成篇</li><li>[13] 让AI帮你写测试 — 理由：多步提示语/思维链可迁移技巧，含真实 bug 案例</li><li>[17] 让AI做决策 Agent — 理由：Agent/ReAct 概念，可追溯 MRKL 论文</li><li>[27] 从Midjourney开始 — 理由：AIGC 产品三原则，独立于技术栈</li></ul>
+<h3>路线 B：深度阅读（2 小时）</h3>
+<p>在路线 A 基础上补充银矿：</p>
+<ul><li>[02] 情感分析 — 理由：传统 ML vs LLM 的对照，理解「用接口替代训练」</li><li>[09] 语义检索 — 理由：RAG 的检索原语 + 冷启动推荐洞察</li><li>[15] LLMChain 连 Google/计算器 — 理由：工具增强 LLM 思想，Agent 前置</li><li>[23] OpenClip — 理由：文本-图像同向量空间，多模态基石</li><li>[24] Stable Diffusion — 理由：「生成 vs 搜索」的本质区分 + 三模块架构</li><li>[加餐一] JSON 模式和 Fingerprint — 理由：稳定输出的工程三件套</li><li>[加餐二] Function Calling — 理由：原生工具调用 + 「描述即契约」洞察</li></ul>
+<h3>路线 C：时间充裕（5 小时）</h3>
+<p>路线 A + B 全部，再加铜矿里的教程级章节（03/05/06/07/14/16/18/19/22/25）补全工具链实操。</p>
+<h2>核心知识地图（按主题重组，非原课程顺序）</h2>
+<h3>主题一：两个原语——Completion 与 Embedding</h3>
+<p><strong>一句话总结</strong>：全课所有应用都建立在这两个接口之上，理解它们就理解了「用接口替代训练」的根基。</p>
+<p><strong>关键框架</strong>：Completion 负责「生成」（续写、聊天、摘要、改写），Embedding 负责「检索」（把文本映射成向量，用余弦相似度度量语义距离）。传统 NLP 任务（分类、聚类、搜索）可被 Embedding 相似度「降维」成几行代码。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>零样本分类：算「好评/差评」标签词的 embedding，与评论向量比余弦相似度，差值定正负（来源：第 02 讲）</li><li>语义搜索：query 和文档都转向量，按相似度排序（来源：第 09 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;我们只需要简单利用大语言模型里面知道的「好评」和「差评」的概念信息，就能判断出它从未见过的评论到底是好评还是差评。&quot; — 第 02 讲</p></blockquote>
+<h3>主题二：第二大脑 / RAG——先搜索后提示</h3>
+<p><strong>一句话总结</strong>：课程最核心的方法论，准确预见了后来主导行业的 RAG 范式。</p>
+<p><strong>关键框架</strong>：大模型有两类知识——「世界知识」（训练语料里已含的）和「上下文知识」（推理时临时提供的）。第二大脑模式 = 先把外部资料建索引 → 提问时先检索相关片段 → 再让 AI 基于检索结果回答。这解决了幻觉和时效性两大问题。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 llama-index（或现代 RAG 框架）三行代码建索引、问答（来源：第 10 讲）</li><li>树状摘要：分片小结→对小结再小结，突破单次 token 上限（来源：第 10 讲）</li><li>冷启动推荐：无行为数据时用商品名语义相似度做推荐（来源：第 09 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;通过先将外部的资料库索引，然后每次提问的时候，先从资料库里通过搜索找到有相关性的材料，然后再通过 AI 的语义理解能力让 AI 基于搜索到的结果来回答问题。&quot; — 第 10 讲</p></blockquote>
+<h3>主题三：多步提示语 / 思维链</h3>
+<p><strong>一句话总结</strong>：复杂任务不能「一股脑塞给 AI」，要拆成可逐步验证的中间步骤，这是 CoT 的前身。</p>
+<p><strong>关键框架</strong>：把任务拆成「解释代码 → 规划用例 → 生成代码 → 语法检查」四步，每步的输出作为下一步的上下文，最后加 AST 校验兜底。分步提示能让 AI 主动考虑边界条件（负数/None/超时），直接贴代码则只会得到覆盖不全的答案。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 AST（ast.parse）校验 AI 生成代码的语法，失败则重新生成（来源：第 13 讲）</li><li>生成测试用例后检查数量，太少则追加提示语让其补充边界用例（来源：第 13 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;如果我们只是直接把代码往 ChatGPT 里一贴，虽然也能生成测试用例，但是那些测试用例就比较欠考虑，不会涵盖各种边角的情况。&quot; — 第 13 讲</p></blockquote>
+<h3>主题四：工具调用 / Agent</h3>
+<p><strong>一句话总结</strong>：LLM 不擅计算、缺实时信息，解法是「让 AI 调用确定性代码/外部 API」，Agent 是让 AI 自主选择工具的抽象。</p>
+<p><strong>关键框架</strong>：Agent 的 ReAct 循环 = Thought → Action → Action Input → Observation，直到 Final Answer。工具（Tool）的 description 就是「契约」——AI 只看描述（不读实现）决定调用，描述写错会直接导致调用错误。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用代码补数理短板：让 AI 写 Python 代码、再交解释器执行（来源：第 15 讲）</li><li>用 max_iterations、return_direct 控制 Agent 的重试与直返（来源：第 17 讲）</li><li>Function Call 原生工具调用：tools 参数声明函数 + JSON Schema 描述参数（来源：加餐二）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;想要让 function call 获得一个准确而有效的结果，对 function 的准确描述和命名就非常重要了。&quot; — 加餐二</p></blockquote>
+<h3>主题五：多模态——文本图像同向量空间</h3>
+<p><strong>一句话总结</strong>：CLIP 把文本和图片映射到同一向量空间，是零样本分类、以图搜图、文生图的共同基石。</p>
+<p><strong>关键框架</strong>：Stable Diffusion 三模块 = CLIP 文本编码 + UNet/Scheduler 去噪 + VAE 解码。文生图是「生成」而非「检索」——用「宇航员从未在太空骑过马」即可证明。Visual ChatGPT（Task Matrix）复用 Agent 机制，让 LLM 调度视觉模型实现聊天式改图。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>零样本图像分类：列出类别文本名 + softmax 算概率（来源：第 23 讲）</li><li>以图搜图：图片转向量 + FAISS 索引（来源：第 23 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;我们画的是在 Stable Diffusion 里非常经典的一张「宇航员在太空骑马」的图片……是为了证明我们并不是通过「搜索」的方式找到一张已经存在的图片。&quot; — 第 24 讲</p></blockquote>
+<h3>主题六：产品设计与工程化</h3>
+<p><strong>一句话总结</strong>：AIGC 产品的护城河在「数据飞轮」而非模型本身；工程上要靠 JSON 模式 + seed 保证稳定输出。</p>
+<p><strong>关键框架</strong>：AIGC 产品三原则 = 用户社区（降门槛）+ 及时反馈（留用户）+ 数据飞轮（用户操作即标注）。工程上「temperature=0 不等于输出一致」，还需固定 seed + 比对 fingerprint。</p>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>用 response_format=json_object 强制 JSON 输出（来源：加餐一）</li><li>temperature=0 + 固定 seed + system_fingerprint 实现可复现（来源：加餐一）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;用户社区、及时反馈以及建立数据飞轮是 AIGC 类应用必不可少的组成部分。&quot; — 第 27 讲</p></blockquote>
+<h2>可忽略内容</h2>
+<p>以下章节可以直接跳过（信噪比 &lt; 2.0）：</p>
+<ul><li>[开篇词] 跑步迎接AI爆发 — 营销式开场白</li><li>[01] 学会和AI说话 — 纯环境配置（API Key/Jupyter）</li><li>[结束语] 通往AGI的船票 — 结课鸡汤</li><li>[结课测试] 来赴一场满分之约 — 仅测试链接</li><li>[直播加餐] 6个月重新认识LLM — 视频无正文</li></ul>
+<p>以下铜矿章节若时间有限也可跳过（均为会过时的库教程）：</p>
+<ul><li>[04] GPT-3胜在哪里、[08] 文本改写与审核、[12] Excel插件、[14] LangChain链式调用、[16] LangChain记忆、[18] 微调、[19-22] 语音与部署、[25] ControlNet</li></ul>
+<h2>延伸阅读</h2>
+<ul><li>论文：Lewis et al. 2020《Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks》（RAG 源头）</li><li>论文：AI21 Labs《MRKL Systems》（arXiv 2205.00445，Agent 源头）</li><li>论文：Rombach et al. 2022《High-Resolution Image Synthesis with Latent Diffusion Models》（Stable Diffusion）</li><li>文档：OpenAI Cookbook（多步提示语、可复现输出两个例子均有出处）</li><li>现代替代：LangChain/LlamaIndex 官方最新文档（课程中 API 已全部废弃）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide.md">study_guide.md</a></footer>
+</div></body></html>

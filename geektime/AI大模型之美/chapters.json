@@ -1,0 +1,350 @@
+[
+  {
+    "order": 0,
+    "title": "课前必读",
+    "title_safe": "课前必读",
+    "articles": [
+      {
+        "id": "641701",
+        "title": "开篇词｜GPT来了，跑步迎接AI爆发的时代",
+        "title_safe": "开篇词｜GPT来了，跑步迎接AI爆发的时代",
+        "time": "14:41",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "641726",
+        "title": "导读｜从今天开始，让AI成为你的贴身助理",
+        "title_safe": "导读｜从今天开始，让AI成为你的贴身助理",
+        "time": "11:17",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "基础知识篇：探索大型语言模型的能力",
+    "title_safe": "基础知识篇：探索大型语言模型的能力",
+    "articles": [
+      {
+        "id": "641742",
+        "title": "01｜重新出发，让我们学会和AI说话",
+        "title_safe": "01｜重新出发，让我们学会和AI说话",
+        "time": "09:33",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "642179",
+        "title": "02｜无需任何机器学习，如何利用大语言模型做情感分析？",
+        "title_safe": "02｜无需任何机器学习，如何利用大语言模型做情感分析？",
+        "time": "11:22",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "642197",
+        "title": "03｜巧用提示语，说说话就能做个聊天机器人",
+        "title_safe": "03｜巧用提示语，说说话就能做个聊天机器人",
+        "time": "10:04",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "642224",
+        "title": "04｜新时代模型性能大比拼，GPT-3到底胜在哪里？",
+        "title_safe": "04｜新时代模型性能大比拼，GPT-3到底胜在哪里？",
+        "time": "12:56",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "643889",
+        "title": "05｜善用Embedding，我们来给文本分分类",
+        "title_safe": "05｜善用Embedding，我们来给文本分分类",
+        "time": "11:58",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "643915",
+        "title": "06｜ChatGPT来了，让我们快速做个AI应用",
+        "title_safe": "06｜ChatGPT来了，让我们快速做个AI应用",
+        "time": "12:13",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "644544",
+        "title": "07｜文本聚类与摘要，让AI帮你做个总结",
+        "title_safe": "07｜文本聚类与摘要，让AI帮你做个总结",
+        "time": "09:17",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "644790",
+        "title": "08｜文本改写和内容审核，别让你的机器人说错话",
+        "title_safe": "08｜文本改写和内容审核，别让你的机器人说错话",
+        "time": "12:28",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "实战提高篇（一）：利用NLP技术完成高级任务",
+    "title_safe": "实战提高篇（一）：利用NLP技术完成高级任务",
+    "articles": [
+      {
+        "id": "644795",
+        "title": "09｜语义检索，利用Embedding优化你的搜索功能",
+        "title_safe": "09｜语义检索，利用Embedding优化你的搜索功能",
+        "time": "10:30",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "645305",
+        "title": "10｜AI连接外部资料库，让Llama Index带你阅读一本书",
+        "title_safe": "10｜AI连接外部资料库，让Llama Index带你阅读一本书",
+        "time": "15:10",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "646363",
+        "title": "11｜省下钱买显卡，如何利用开源模型节约成本？",
+        "title_safe": "11｜省下钱买显卡，如何利用开源模型节约成本？",
+        "time": "12:37",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "646801",
+        "title": "12｜让AI帮你写个小插件，轻松处理Excel文件",
+        "title_safe": "12｜让AI帮你写个小插件，轻松处理Excel文件",
+        "time": "13:31",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "646980",
+        "title": "13 ｜让AI帮你写测试，体验多步提示语",
+        "title_safe": "13 ｜让AI帮你写测试，体验多步提示语",
+        "time": "11:27",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "646987",
+        "title": "14｜链式调用，用LangChain简化多步提示语",
+        "title_safe": "14｜链式调用，用LangChain简化多步提示语",
+        "time": "08:11",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "647827",
+        "title": "15｜深入使用LLMChain，给AI连上Google和计算器",
+        "title_safe": "15｜深入使用LLMChain，给AI连上Google和计算器",
+        "time": "11:22",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "648167",
+        "title": "16｜Langchain里的“记忆力”，让AI只记住有用的事儿",
+        "title_safe": "16｜Langchain里的“记忆力”，让AI只记住有用的事儿",
+        "time": "10:51",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "648461",
+        "title": "17｜让AI做决策，LangChain里的“中介”和“特工”",
+        "title_safe": "17｜让AI做决策，LangChain里的“中介”和“特工”",
+        "time": "12:45",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "648466",
+        "title": "18｜流式生成与模型微调，打造极致的对话体验",
+        "title_safe": "18｜流式生成与模型微调，打造极致的对话体验",
+        "time": "11:57",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "实战提高篇（二）：大型语音与图像模型的应用",
+    "title_safe": "实战提高篇（二）：大型语音与图像模型的应用",
+    "articles": [
+      {
+        "id": "649832",
+        "title": "19｜Whisper+ChatGPT：请AI代你听播客",
+        "title_safe": "19｜Whisper+ChatGPT：请AI代你听播客",
+        "time": "10:12",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "650449",
+        "title": "20｜TTS与语音合成：让你的机器人拥有声音",
+        "title_safe": "20｜TTS与语音合成：让你的机器人拥有声音",
+        "time": "10:28",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "651666",
+        "title": "21｜DID和PaddleGAN：表情生动的数字人播报员",
+        "title_safe": "21｜DID和PaddleGAN：表情生动的数字人播报员",
+        "time": "11:15",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "652734",
+        "title": "22｜再探HuggingFace：一键部署自己的大模型",
+        "title_safe": "22｜再探HuggingFace：一键部署自己的大模型",
+        "time": "14:59",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "653489",
+        "title": "23｜OpenClip：让我们搞清楚图片说了些什么",
+        "title_safe": "23｜OpenClip：让我们搞清楚图片说了些什么",
+        "time": "13:30",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "654414",
+        "title": "24｜Stable Diffusion：最热门的开源AI画图工具",
+        "title_safe": "24｜Stable Diffusion：最热门的开源AI画图工具",
+        "time": "10:53",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "655496",
+        "title": "25｜ControlNet：让你的图拥有一个“骨架”",
+        "title_safe": "25｜ControlNet：让你的图拥有一个“骨架”",
+        "time": "09:40",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "656099",
+        "title": "26｜Visual ChatGPT是如何做到边聊边画的？",
+        "title_safe": "26｜Visual ChatGPT是如何做到边聊边画的？",
+        "time": "14:00",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "656941",
+        "title": "27｜从Midjourney开始，探索AI产品的用户体验",
+        "title_safe": "27｜从Midjourney开始，探索AI产品的用户体验",
+        "time": "12:12",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "结束语",
+    "title_safe": "结束语",
+    "articles": [
+      {
+        "id": "658213",
+        "title": "结束语｜送你一张通往未来“通用人工智能”时代的船票",
+        "title_safe": "结束语｜送你一张通往未来“通用人工智能”时代的船票",
+        "time": "09:03",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "658216",
+        "title": "结课测试｜来赴一场满分之约！",
+        "title_safe": "结课测试｜来赴一场满分之约！",
+        "time": "00:28",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "直播加餐",
+    "title_safe": "直播加餐",
+    "articles": [
+      {
+        "id": "720151",
+        "title": "直播加餐｜6个月过去了，重新认识大语言模型",
+        "title_safe": "直播加餐｜6个月过去了，重新认识大语言模型",
+        "time": "01:12:30",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": false
+      },
+      {
+        "id": "752438",
+        "title": "加餐一｜让你的GPT稳定输出，JSON模式和Fingerprint",
+        "title_safe": "加餐一｜让你的GPT稳定输出，JSON模式和Fingerprint",
+        "time": "10:02",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      },
+      {
+        "id": "778704",
+        "title": "加餐二｜不用Langchain也能调用函数，一起来学Function Calling",
+        "title_safe": "加餐二｜不用Langchain也能调用函数，一起来学Function Calling",
+        "time": "11:22",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": false
+      }
+    ]
+  }
+]

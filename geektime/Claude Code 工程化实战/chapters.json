@@ -1,0 +1,332 @@
+[
+  {
+    "order": 0,
+    "title": "开篇词",
+    "title_safe": "开篇词",
+    "articles": [
+      {
+        "id": "942422",
+        "title": "开篇词｜共生而非替代：极客和 AI 的共舞",
+        "title_safe": "开篇词｜共生而非替代：极客和 AI 的共舞",
+        "time": "10:47",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "942937",
+        "title": "直播回放｜不止 Skills，1 小时带你解锁 Claude Code 高级用法",
+        "title_safe": "直播回放｜不止 Skills，1 小时带你解锁 Claude Code 高级用法",
+        "time": "01:05",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "热点加餐（随技术趋势动态更新）",
+    "title_safe": "热点加餐（随技术趋势动态更新）",
+    "articles": [
+      {
+        "id": "954122",
+        "title": "热点加餐｜从 OpenClaw 到 OpenCode：拆解爆款 Agent 的设计密码与工程范式",
+        "title_safe": "热点加餐｜从 OpenClaw 到 OpenCode：拆解爆款 Agent 的设计密码与工程范式",
+        "time": "41:20",
+        "has_video": false,
+        "has_audio": false,
+        "has_attachment": true
+      },
+      {
+        "id": "958033",
+        "title": "热点加餐｜Harness 架构深度解析",
+        "title_safe": "热点加餐｜Harness 架构深度解析",
+        "time": "15:20",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "963248",
+        "title": "真相大白：源码泄露事故带来的架构验证与工程启示",
+        "title_safe": "真相大白：源码泄露事故带来的架构验证与工程启示",
+        "time": "23:10",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "965745",
+        "title": "热点加餐｜AI 工程范式 3.0：Harness Engineering 到底革新了什么？",
+        "title_safe": "热点加餐｜AI 工程范式 3.0：Harness Engineering 到底革新了什么？",
+        "time": "01:28:30",
+        "has_video": true,
+        "has_audio": false,
+        "has_attachment": true
+      },
+      {
+        "id": "983820",
+        "title": "热点加餐｜Workflow：编排载体的第三种选择",
+        "title_safe": "热点加餐｜Workflow：编排载体的第三种选择",
+        "time": "17:04",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "基础篇",
+    "title_safe": "基础篇",
+    "articles": [
+      {
+        "id": "942438",
+        "title": "01｜登台远望：Claude Code 底层技术全景导览",
+        "title_safe": "01｜登台远望：Claude Code 底层技术全景导览",
+        "time": "17:44",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "942948",
+        "title": "02｜过目不忘：Claude Code 记忆系统与 CLAUDE.md",
+        "title_safe": "02｜过目不忘：Claude Code 记忆系统与 CLAUDE.md",
+        "time": "11:16",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "子代理（Sub-Agents）",
+    "title_safe": "子代理（Sub-Agents）",
+    "articles": [
+      {
+        "id": "943368",
+        "title": "03｜分而治之：Sub-Agents 的核心概念与应用价值",
+        "title_safe": "03｜分而治之：Sub-Agents 的核心概念与应用价值",
+        "time": "18:11",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "943942",
+        "title": "04｜量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南",
+        "title_safe": "04｜量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南",
+        "time": "21:55",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "944205",
+        "title": "05｜明察秋毫 ：构建只读型安全审计子代理",
+        "title_safe": "05｜明察秋毫 ：构建只读型安全审计子代理",
+        "time": "15:46",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "944525",
+        "title": "06｜去芜存菁 ：高噪声任务处理——测试运行器与日志分析器",
+        "title_safe": "06｜去芜存菁 ：高噪声任务处理——测试运行器与日志分析器",
+        "time": "10:11",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "945070",
+        "title": "07｜百舸争流：多任务并行探索与流水线编排",
+        "title_safe": "07｜百舸争流：多任务并行探索与流水线编排",
+        "time": "17:20",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "945358",
+        "title": "08｜群策群力：Agent Teams 多会话协作架构",
+        "title_safe": "08｜群策群力：Agent Teams 多会话协作架构",
+        "time": "13:18",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "945359",
+        "title": "加餐｜子代理专题总结 & 春节练习",
+        "title_safe": "加餐｜子代理专题总结 & 春节练习",
+        "time": "04:37",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Skills 技能系统",
+    "title_safe": "Skills 技能系统",
+    "articles": [
+      {
+        "id": "945937",
+        "title": "09｜触类旁通：SKILL.md 结构与触发机制",
+        "title_safe": "09｜触类旁通：SKILL.md 结构与触发机制",
+        "time": "20:02",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "946297",
+        "title": "10｜令行禁止：任务型 Skills （斜杠命令 /Command）实战",
+        "title_safe": "10｜令行禁止：任务型 Skills （斜杠命令 -Command）实战",
+        "time": "12:02",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "946847",
+        "title": "11｜循序渐进：渐进式披露架构设计",
+        "title_safe": "11｜循序渐进：渐进式披露架构设计",
+        "time": "18:24",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "947718",
+        "title": "12｜珠联璧合：Skills 与 SubAgent 配合实战",
+        "title_safe": "12｜珠联璧合：Skills 与 SubAgent 配合实战",
+        "time": "11:14",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "948037",
+        "title": "13｜纲举目张：Skills 架构定位与高级能力",
+        "title_safe": "13｜纲举目张：Skills 架构定位与高级能力",
+        "time": "13:57",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "952321",
+        "title": "14｜星火燎原：从 Claude Code 到行业开放标准",
+        "title_safe": "14｜星火燎原：从 Claude Code 到行业开放标准",
+        "time": "14:42",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "952329",
+        "title": "加餐｜Skills 专题总结",
+        "title_safe": "加餐｜Skills 专题总结",
+        "time": "07:04",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "核心机制和组件",
+    "title_safe": "核心机制和组件",
+    "articles": [
+      {
+        "id": "953022",
+        "title": "15｜防微杜渐：Hooks 事件驱动自动化",
+        "title_safe": "15｜防微杜渐：Hooks 事件驱动自动化",
+        "time": "19:31",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "954158",
+        "title": "16｜未雨绸缪：Hooks 高级模式与工程实践",
+        "title_safe": "16｜未雨绸缪：Hooks 高级模式与工程实践",
+        "time": "21:38",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "955015",
+        "title": "17｜海纳百川：MCP 协议与外部工具连接",
+        "title_safe": "17｜海纳百川：MCP 协议与外部工具连接",
+        "time": "16:31",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "957210",
+        "title": "18｜庖丁解牛：Tools 工具系统内核剖析",
+        "title_safe": "18｜庖丁解牛：Tools 工具系统内核剖析",
+        "time": "12:08",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "title": "工程化进阶",
+    "title_safe": "工程化进阶",
+    "articles": [
+      {
+        "id": "959884",
+        "title": "19｜无人值守：Headless 模式与 CI/CD 集成",
+        "title_safe": "19｜无人值守：Headless 模式与 CI-CD 集成",
+        "time": "21:24",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "964160",
+        "title": "20｜有章可循：Rules 规则系统深度剖析",
+        "title_safe": "20｜有章可循：Rules 规则系统深度剖析",
+        "time": "09:44",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "965077",
+        "title": "21｜登堂入室 ：通过Agent SDK 掌控 Claude Code",
+        "title_safe": "21｜登堂入室 ：通过Agent SDK 掌控 Claude Code",
+        "time": "18:30",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "966254",
+        "title": "22｜得心应手：Agent SDK 高级应用",
+        "title_safe": "22｜得心应手：Agent SDK 高级应用",
+        "time": "21:25",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "966900",
+        "title": "23｜化零为整：Plugins 插件打包与分发",
+        "title_safe": "23｜化零为整：Plugins 插件打包与分发",
+        "time": "19:41",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 7,
+    "title": "结束语 & 结课测试",
+    "title_safe": "结束语 & 结课测试",
+    "articles": [
+      {
+        "id": "967306",
+        "title": "结束语｜时代飞速更迭，你我携手同行",
+        "title_safe": "结束语｜时代飞速更迭，你我携手同行",
+        "time": "06:24",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "967370",
+        "title": "结课测试｜来赴一场满分之约！",
+        "title_safe": "结课测试｜来赴一场满分之约！",
+        "time": "00:35",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  }
+]

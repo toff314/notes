@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《如何成为学习高手》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">如何成为学习高手</a><a href="README.html">《如何成为学习高手》消化索引（digest README）</a></div>
+<h1>《如何成为学习高手》消化索引（digest README）</h1>
+<blockquote><p>本目录是《如何成为学习高手》（讲师：冷冷）的结构化消化产物，生成于 2026-08-14。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/如何成为学习高手/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/如何成为学习高手/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、逐幕评价。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、数据审计。引用任何课程数据前必查。</li><li><strong><code>theme_articles/</code></strong>（若存在）— 可直接成文的主题深挖素材包。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕评价+ROI评估）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>记忆的底层逻辑：主动加工</td><td>机读</td></tr><tr><td><code>theme_articles/theme-002.json</code></td><td>自律的真相：他律&gt;自律</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（6主题重组）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5分钟速览</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣+数据审计</td><td>机读</td></tr><tr><td><code>concept_map.mermaid</code></td><td>概念关系图</td><td>机读/渲染</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 acts / overall_assessment</li><li>读 <code>content_triage.json</code> 的 data_audit</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件，按主题选一篇</li><li>读其 narrative_arc / verification_gate</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong></li><li>按其 source_lectures 对应路径读讲课原文核对引文</li></ol>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文路径</th></tr><tr><td>03</td><td>掌握考试思维：成为一个特别会考试的人</td><td><code>/home/yuanwu/geektime/output/如何成为学习高手/模块一 底层思维/03｜掌握考试思维：成为一个特别会考试的人/03｜掌握考试思维：成为一个特别会考试的人.md</code></td></tr><tr><td>07</td><td>我考北大中文系时，15 天背下 10 门专业课的连点成线法</td><td><code>/home/yuanwu/geektime/output/如何成为学习高手/模块二 高效学习/07｜我考北大中文系时，15 天背下 10 门专业课的连点成线法/07｜我考北大中文系时，15 天背下 10 门专业课的连点成线法.md</code></td></tr><tr><td>08</td><td>高效记忆的根本方法：主动思考和加工 &amp; 组块化记忆</td><td><code>/home/yuanwu/geektime/output/如何成为学习高手/模块二 高效学习/08｜高效记忆的根本方法：主动思考和加工 &amp; 组块化记忆/08｜高效记忆的根本方法：主动思考和加工 &amp; 组块化记忆.md</code></td></tr></table>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
+<ul><li>「15天背下10门专业课」（第07讲标题，❓ 个人声明无来源）</li><li>「高三第三次月考从550分涨到650多分」（第04讲，❓ 个人孤证）</li><li>「考研英语提前45分钟交卷」（第05讲，❓ 个人孤证）</li><li>「5分钟起步法来自卡尔顿大学拖延心理学研究小组」（第12讲，⚠️ 名称系转述）</li><li>「李笑来朋友20000单词=每年40000美元奖学金」（第19讲，⚠️ 转述无法验证）</li><li>「6小时工作制是最合适的」（第15讲，❓ 个人经验数字无依据）</li></ul>
+<h2>元信息</h2>
+<ul><li>消化评分：3.5/5（🥇3 🥈16 🥉5 ⛏️0）</li><li>总讲数：24，其中 gold 3 / silver 16 / copper 5 / iron 0</li><li>主题深挖文：2 篇（theme-001 记忆、theme-002 自律）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

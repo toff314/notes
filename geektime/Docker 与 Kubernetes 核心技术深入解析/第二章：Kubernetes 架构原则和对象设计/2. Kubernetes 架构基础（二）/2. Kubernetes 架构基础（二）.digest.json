@@ -1,0 +1,225 @@
+{
+  "lecture": "2. Kubernetes 架构基础（二）",
+  "source": "/home/yuanwu/geektime/output/Docker 与 Kubernetes 核心技术深入解析/第二章：Kubernetes 架构原则和对象设计/2. Kubernetes 架构基础（二）/2. Kubernetes 架构基础（二）.txt",
+  "intro": "承接上一讲\"声明式系统\"：Kubernetes 构建于声明式系统之上，把所有被管对象抽象成标准 API，与云厂商联合背书成为云计算事实标准。本讲先讲清这一战略逻辑与三大能力对应的对象（Node/Pod/Service），再逐个展开核心组件（API Server、etcd、Controller Manager、Scheduler、kubelet、kube-proxy）的职责与运作原理，最后用 nginx Deployment 创建过程演示控制面接力、调度绑定与节点加载的完整联动链路。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "04:00",
+      "topic": "标准 API 与事实标准：Kubernetes 的战略高地",
+      "points": [
+        "Kubernetes 构建于声明式系统之上，把所有被管对象（计算节点、服务、作业）全部抽象成一个个标准 API",
+        "抽象成标准 API 后发挥\"定标准\"的长处：与 AWS、微软、腾讯等主要云厂商联合背书，大家都在遵循同一规范，从而成为事实标准",
+        "事实标准一旦形成很难被取代：往后看 10 年、20 年，任何技术迭代都只是小范围迭代，无法对标准做出根本性撼动，因此作者坚定看好 Kubernetes 未来相当长一段时间的发展",
+        "Kubernetes 已经占领云计算领域的高地，未来世界已经被这层标准定义清楚"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "关键判断：Kubernetes 占领的是\"标准\"的高地，标准价值远超具体技术实现，技术更迭无法撼动标准本身"
+      ]
+    },
+    {
+      "start": "04:00",
+      "end": "08:30",
+      "topic": "三大能力对应的对象：Node / Pod / Service",
+      "points": [
+        "集群管理：把一个个计算节点抽象成 Node 对象",
+        "作业调度：把要发布到集群的在线服务等任务抽象成 Pod；Pod 是基本调度单元，用户可在 Pod 里定义运行哪个容器、需要多少资源，即把作业的资源需求和最终要跑什么应用在 Pod 中定义清楚",
+        "服务发现：用户定义 Service 对象，一旦创建 Kubernetes 就完成负载均衡配置与域名配置，类似 Borg 的 Naming Service，因此 Kubernetes 也是一个服务发现平台",
+        "此处只做感性认识，具体对象定义后续章节展开"
+      ],
+      "tradeoffs": [],
+      "turning_points": []
+    },
+    {
+      "start": "08:30",
+      "end": "13:00",
+      "topic": "总体架构：Cluster、API Server 与 etcd 的 watch 模式",
+      "points": [
+        "架构与 Borg 一脉相承：一个 Cluster 分管理节点（master）和 worker 节点（作业节点）",
+        "API Server 是简单的 REST server：接受所有外部请求（命令行、浏览器都转成 REST 调用），本身逻辑简单、没有太多业务逻辑，把请求直接存到自己的数据库（etcd）即结束",
+        "etcd 是集群的分布式键值存储：支持 watch 模式——get 对象时加 watch 参数，get 完成后连接不断，客户端与服务器保持长连接，所请求对象任何后续变化都由 etcd 主动以事件形式推送给客户端；因此它既是数据库又是消息中间件",
+        "API Server 与 etcd 双向工作：既把数据推到 etcd，也接收 etcd 推送的对象变更并转发出去，使整个系统联动起来",
+        "所有组件都只连接 API Server（组件之间不互相通信）：请求发给 API Server，做认证授权校验后存 etcd，对象变化再由 API Server 推送驱动其他组件"
+      ],
+      "tradeoffs": [
+        "etcd 同时承担\"数据库+消息中间件\"双重角色，对象变更可广播给所有组件，但也要求所有组件必须绕行 API Server 这一中心"
+      ],
+      "turning_points": [
+        "星型连接架构：API Server 是唯一中心枢纽，靠\"接收-存储-推送\"的消息机制驱动整个系统变化"
+      ]
+    },
+    {
+      "start": "13:00",
+      "end": "17:30",
+      "topic": "控制面组件分工：Scheduler、kubelet 与 Controller Manager",
+      "points": [
+        "Scheduler 调度器：用户创建 Pod 的请求被 API Server 接收后告知调度器有调度需求；调度依据是 Pod 需要多少资源（需求）和当前集群资源利用状况",
+        "每个节点上的 kubelet 上报节点健康状态和资源使用情况，数据经 API Server 存入 etcd，Scheduler 因此掌握整个集群所有节点的资源利用情况",
+        "完成调度即把 Pod 与节点信息做绑定（更新 Pod 的 nodeName 属性到 etcd 保存），随后各节点 kubelet 检查与自己节点相关的 Pod，发现新 Pod 就启动容器",
+        "Controller Manager 管理一堆控制器（Deployment 控制器、ReplicaSet 控制器等），面向不同对象做整个集群的自动化配置：如用户建 Service 后要配域名、配负载均衡（节点上的 kube-proxy 负责配负载均衡）",
+        "API Server 没有业务逻辑：只要你有权限、请求合法它就存一下；请求被存下来后集群具体怎么动由 Controller Manager 决定"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "分工本质：API Server 只管\"存\"，Controller Manager 决定\"怎么做\"，Scheduler 专职\"调度\""
+      ]
+    },
+    {
+      "start": "17:30",
+      "end": "22:00",
+      "topic": "节点组件与容器生态标准化：kube-proxy / cAdvisor / CRI-CNI-CSI",
+      "points": [
+        "kubelet：上报当前节点的健康状态和资源需求，维护当前节点所有 Pod 的生命周期",
+        "kube-proxy：发布 Service 时负责配置负载均衡",
+        "cAdvisor：收集容器进程的健康状况和资源用量（CPU、memory 等），通过容器技术以很低成本构建一套监控系统",
+        "容器启动统一走标准接口：CRI（容器运行时）、CNI（容器网络）、CSI（容器存储），使容器监控、进程管理变简单，整个云平台标准化",
+        "控制面回顾：与 Borg 一样，集群可达 5000 节点规模，选 3-5 台节点作为管理节点，运行控制面组件：API Server（REST server）、etcd（分布式数据库）、Controller Manager（控制器集合、集群大脑）、Scheduler（专职调度）"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "CRI/CNI/CSI 三大标准接口是\"容器生态标准化\"的落点：运行时全部从标准容器接口控制面拉起，云平台因此标准化"
+      ]
+    },
+    {
+      "start": "22:00",
+      "end": "26:30",
+      "topic": "实操查看控制面组件：kube-system 与核心组件 vs addons",
+      "points": [
+        "通过 kubeadm 安装的 Kubernetes 集群默认把控制面组件装在 kube-system 命名空间；kubectl get pods -n kube-system 即可看到 etcd、api-server、controller-manager、scheduler、kube-proxy 等控制平面组件",
+        "核心控制组件的意义：API Server 没起来，集群 API 网关不可用、请求无处可发；至少这四类核心组件起来，集群才具备基本能力，附加功能（addons）才能加载进来",
+        "每个 worker 节点上有两个组件：kubelet（管理 Pod 生命周期）和 kube-proxy（配负载均衡）"
+      ],
+      "tradeoffs": [
+        "核心组件是集群的\"生死线\"：API Server 起不来请求无处可发，集群基本能力不成立，addons 无从谈起"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "26:30",
+      "end": "31:00",
+      "topic": "etcd 深入：Raft 协议、监听机制与实操查看",
+      "points": [
+        "etcd 是 CoreOS 开发的分布式键值存储项目，基于 Raft 协议（实现细节后面章节深入讲）",
+        "分布式存储必须解决两件事：①选主——通过一致性投票选出一个 leader，所有写操作经 leader 执行，否则多个 member 同时接受写会产生冲突；②日志复制——leader 把写操作下发给其他节点并保证同步，从而从数据上保证整个存储的一致性",
+        "etcd 支持监听机制，因此也是一个消息中间件",
+        "实操：kubectl exec 进 etcd pod，用 etcdctl --endpoints 连接本机 2379 端口，get --prefix=/ 列出当前集群所有对象在 etcd 中的存储路径；对象以 gRPC/protobuf 形式存储，直接查看会有乱码",
+        "etcdctl watch 可监听对象变化：命令保持长连接，任何对象发生变更都会通知客户端"
+      ],
+      "tradeoffs": [
+        "有状态集群（etcd）加减成员需要改配置、代价高（协商对象变了，如三人协商变四人）；无状态组件（API Server）可随意横向扩展——这是有状态/无状态应用的本质差异"
+      ],
+      "turning_points": [
+        "Raft 解决一致性的两件事：选主（保证写操作一致）+ 日志复制（保证数据同步）"
+      ]
+    },
+    {
+      "start": "31:00",
+      "end": "34:30",
+      "topic": "API Server 展开：无状态扩展、三个 A、准入两阶段与缓存",
+      "points": [
+        "API Server 是无状态 REST server，扩展简单：跑三个实例不够就加一个实例，前面配负载均衡即可横向扩展",
+        "三个 A：认证（Authentication，你是谁——确保请求客户端合法，支持自带机制 + Webhook 对接企业认证平台）、授权（Authorization，你能否做——校验操作权限，支持 RBAC + 自写 Webhook）、准入（Admission，本次操作是否合法——不符合 Kubernetes 规范则挡掉）",
+        "准入分两个阶段：Mutating（变形——在请求存到 etcd 前给对象加属性/改某些值，方便做平台层动作）和 Validating（校验——校验变形后的对象是否还合法，如校验对象名字长度不能超过 10，超了就挡掉）",
+        "认证、授权、准入是三道门，任何一道不过，请求就被废弃，不会存到 etcd",
+        "API Server 是唯一与 etcd 通信的组件，维护一份数据缓存：读操作命中缓存直接返回，请求不会发到 etcd，缓解 etcd（性能不佳的分布式键值库）的海量读压力"
+      ],
+      "tradeoffs": [
+        "Mutating 先变形、Validating 后校验的顺序设计：变形后的对象仍需重新校验合法性",
+        "API Server 加缓存是为 etcd 性能兜底——不缓存则海量读请求会压垮 etcd"
+      ],
+      "turning_points": [
+        "三个 A 是 API 网关的三个关卡：认证→授权→准入，任何一道不过请求即被废弃"
+      ]
+    },
+    {
+      "start": "34:30",
+      "end": "37:30",
+      "topic": "API Server 完整处理链路与扩展点（Rate Limit / Audit / Aggregator）",
+      "points": [
+        "完整链路：REST Handler 注册（为不同对象注册 handler）→ 认证（支持通过 Webhook 定义 Web 认证服务，转发到企业认证平台）→ Rate Limit 限流（自我保护，防止并发请求把 API Server 打死）→ Audit 审计（记录任何对象操作日志，如谁删了对象，供日后安全审查）→ 授权（RBAC + 自写 Webhook）→ Aggregator → Mutating/Validating（均可通过 Webhook 配置扩展）→ etcd",
+        "Aggregator 类似 Nginx 反向代理做路由：标准 Kubernetes 对象走默认 API Server，Mutating/Validating 继续往下走；额外扩展对象则把请求转发到你独立部署的 Aggregator API Server（AA），其后逻辑与默认一致",
+        "认证、授权、准入、Aggregator 每个环节都支持 Webhook 或独立部署扩展，这是 API Server 可扩展性的关键设计"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Aggregator 是 Kubernetes 扩展性的关键机制：像 Nginx 一样按路径路由，自定义对象可部署独立 API Server（AA）处理"
+      ]
+    },
+    {
+      "start": "37:30",
+      "end": "41:00",
+      "topic": "Controller Manager：期望状态、最终一致性与失败重试",
+      "points": [
+        "Controller Manager 是让整个集群变成声明式系统并保证\"用户期望与真实状态一致\"的大脑：监控 API Server，管理很多控制器，不同控制器负责不同职责",
+        "所有控制器遵循同样规范：先读用户抽象对象的期望状态（Desired State）→ 做真实配置 → 确保系统真实状态与期望状态保持一致；这次配置出错就自动重试",
+        "不断重试的机制最终达到最终一致性（Eventual Consistency）：如创建需要 4 个 CPU 的 Pod 而当前集群没有任何节点能满足，Pod 就处于 Pending 状态持续尝试，直到别的作业退出释放资源或新节点加入满足需求，调度器自动调度并启动",
+        "最终一致性的含义：你不需要显式重试，只要告诉平台期望，剩下的事情交给系统",
+        "传统系统迁移的不适应性：传统\"要三个实例，起不来就算失败\"的思维需调整为声明式思维；可通过设置超时时间（如半小时内还没跑起来就报错）对接原有失败处理系统"
+      ],
+      "tradeoffs": [
+        "最终一致性意味着\"提交请求≠立即生效\"，需要接受 Pending 与等待；对失败处理要求高的系统要自己加超时/失败检测来对接旧系统"
+      ],
+      "turning_points": [
+        "反直觉点：Pod 卡在 Pending 不是故障，而是系统\"永远在努力直到达成\"——用户只需声明期望，系统持续重试直至满足"
+      ]
+    },
+    {
+      "start": "41:00",
+      "end": "43:30",
+      "topic": "控制器框架：Code Generator / Informer / Lister 与生产者-消费者模型",
+      "points": [
+        "Code Generator 会为每个对象生成访问框架代码，核心是 Controller Interface，分为两部分：Lister 和 Informer",
+        "Informer：监听某个对象，对象发生增/删/改等写动作时生成新 Event，控制器通过 Add / Delete / Update 回调处理事件",
+        "控制器是生产者-消费者模型：生产者（Informer 的 handler）监听对象事件并把对象 key 放进队列；消费者（多个 worker）不停从队列取 key 做处理",
+        "Lister：所有 Kubernetes 对象 list-watch 后会在客户端存一份缓存，Lister 提供接口直接从客户端缓存获取对象，无需访问 API Server",
+        "Informer 内部机制：Share Informer 通过 list-watch 关注对象（先 list 返回当前全部对象，再以长连接关注后续变更）；Reflector 按给定对象类型把 API Server 返回的序列化 JSON/protobuf 反序列化成对应对象（反射机制）；对象经 DeltaFIFO 队列后存入 ThreadSafeStore；无论 listed 还是 watched 到的事件变化都经 handler 触发处理"
+      ],
+      "tradeoffs": [
+        "Lister 客户端缓存降低 API Server 压力，但拿到的是缓存状态而非实时状态——以一致性换性能"
+      ],
+      "turning_points": [
+        "Informer 是 Kubernetes 组件间\"监听-响应\"协作的标准化骨架：list-watch + 事件回调 + 队列消费，理解它即理解所有控制器的工作方式"
+      ]
+    },
+    {
+      "start": "43:30",
+      "end": "45:34",
+      "topic": "对象协同演示：Deployment → ReplicaSet → Pod → 调度绑定 → kubelet 加载",
+      "points": [
+        "创建 nginx Deployment 对象：包含 template（Pod 模板：用 nginx 作为镜像、副本数 1）；kubectl 先读 ~/.kube/config（API Server 地址 + 客户端认证信息）再把请求发到 API Server",
+        "API Server 完成认证/授权/准入后存 etcd → Deployment Controller 解析 deployment，创建 ReplicaSet（副本集）对象 → 副本集同样经三个 A 存 etcd → ReplicaSet Controller watch 到后解析并创建 Pod 对象",
+        "刚创建的 Pod 的 nodeName 属性为空（未调度、未与任何节点产生绑定关系）→ Scheduler 监听 Pod 后找现有集群可用节点并绑定（describe 可见 default-scheduler 事件：successfully assigned pod 到 node1）",
+        "绑定后节点上的 kubelet 加载 Pod：通过 CRI 拉起容器进程、CNI 配置网络、CSI 挂载存储，完成整个 Pod 应用的加载",
+        "Scheduler 工作原理三阶段：Predict（过滤——把资源不足、端口冲突等不满足需求的节点先过滤掉）→ 评分（按不同维度、不同权重给剩余节点打分，选分数最高的节点）→ Bind（把节点和 Pod 产生绑定关系）",
+        "kube-proxy：Service 发布后配置负载均衡；addons 以普通 Pod 形式运行：CoreDNS（集群域名服务）、Ingress Controller（入口流量）、Metrics Server（资源监控）、Dashboard（图形界面）、日志采集等"
+      ],
+      "tradeoffs": [
+        "多控制器接力（Deployment→ReplicaSet→Pod）是分层解耦的代价：每层都要经 API Server 落库，但换来每个环节可独立扩展与恢复"
+      ],
+      "turning_points": [
+        "一条 kubectl create/apply 命令背后是\"控制面接力 + 调度绑定 + 节点加载\"的完整链路——声明式系统的直观演示"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "标准 API / 事实标准：Kubernetes 把所有被管对象抽象成标准 API，并与 AWS、微软、腾讯等大厂联合背书，成为云计算事实标准；标准一旦形成，任何技术迭代都无法撼动其根本",
+    "Node：Kubernetes 对集群中计算节点的抽象，对应集群管理能力",
+    "Pod：Kubernetes 的基本调度单元，定义运行哪个容器、需要多少资源，对应作业调度能力",
+    "Service：Kubernetes 的服务发现对象，创建后自动完成负载均衡配置与域名配置，类似 Borg 的 Naming Service",
+    "API Server：控制面的 REST 网关，接受所有外部请求，做认证/授权/准入，存储到 etcd，是唯一与 etcd 通信的组件并维护数据缓存",
+    "etcd：CoreOS 开发的基于 Raft 协议的分布式键值存储，既是数据库又支持 watch 监听成为消息中间件",
+    "Raft：分布式一致性协议，通过选主（leader 处理所有写操作）+ 日志复制（leader 下发写操作并保证同步）保证数据一致性",
+    "Controller Manager：控制器的集合（Deployment 控制器、ReplicaSet 控制器等），读取期望状态（Desired State）并保证真实状态与之一致，是整个集群的大脑",
+    "最终一致性（Eventual Consistency）：提交请求后系统持续重试直至达成期望状态，如 Pod 在资源不足时保持 Pending 等待条件满足；用户只需声明期望，剩下交给系统",
+    "三个 A：认证（Authentication，你是谁）→ 授权（Authorization，你能否做）→ 准入（Admission，本次操作是否合法），API Server 的三道门，任何一道不过请求即被废弃",
+    "Mutating / Validating Admission：准入控制的两个阶段，前者对请求对象变形（加属性/改值），后者校验变形后对象是否合法（如对象名长度不超过 10）",
+    "Aggregator：API Server 中类似 Nginx 反向代理的路由组件，把自定义扩展对象的请求转发到独立部署的 Aggregator API Server（AA）",
+    "Informer / Lister：Code Generator 生成的对象访问框架，Informer 监听对象事件（生产者），worker 消费事件（消费者），Lister 提供客户端缓存读取（list-watch 后在客户端缓存对象）",
+    "Informer 内部链路：Share Informer 通过 list-watch 关注对象，Reflector 用反射机制把 JSON/protobuf 反序列化为对应对象，经 DeltaFIFO 队列存入 ThreadSafeStore，事件经 handler 触发",
+    "CRI / CNI / CSI：容器运行时的三大标准接口——容器运行时（Container Runtime Interface）、容器网络（Container Network Interface）、容器存储（Container Storage Interface），使容器生态标准化",
+    "核心组件 vs addons：核心控制面组件（API Server、etcd、Controller Manager、Scheduler）不起则集群基本能力不成立；CoreDNS、Ingress Controller、Metrics Server、Dashboard、日志采集等 addons 以普通 Pod 形式加载",
+    "Scheduler 三阶段：Predict（过滤不满足需求的节点，如资源不足、端口冲突）→ 评分（按不同维度、权重打分选最高分）→ Bind（节点与 Pod 产生绑定关系）"
+  ],
+  "closing": "本节主要了解 Kubernetes 核心组件的架构原则，并逐个看了核心组件（API Server、etcd、Controller Manager、Scheduler、kubelet、kube-proxy）长什么样、大概怎么运作，以及控制面对象创建（Deployment→ReplicaSet→Pod→调度绑定→kubelet 加载）的完整联动链路。"
+}

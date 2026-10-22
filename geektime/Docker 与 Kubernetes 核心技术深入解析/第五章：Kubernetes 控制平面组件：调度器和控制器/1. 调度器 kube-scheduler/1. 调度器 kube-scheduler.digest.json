@@ -1,0 +1,170 @@
+{
+  "lecture": "1. 调度器 kube-scheduler",
+  "source": "1. 调度器 kube-scheduler.txt",
+  "duration_min": 69.68,
+  "intro": "承接上一讲：API Server 只是认证、鉴权、准入后存进 etcd 的无业务逻辑 REST server，那么是什么让 Kubernetes 集群变成高度自动化的平台？答案是控制平面组件（调度器、Controller Manager、kubelet）以及被抽象出的 CRI/CNI/CSI 接口，本讲先深入调度器的职责、策略与实验。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "08:00",
+      "topic": "什么是调度：调度器的定义与职责边界",
+      "points": [
+        "用户创建 Pod 时只声明镜像和资源需求（CPU/Memory/存储/SSD/GPU 等特征），对底层节点拓扑无感知；调度器负责补齐这部分决策。",
+        "调度器监听 API Server 上所有计算节点的健康与资源占用信息，形成集群全局视图；同时接收用户的 Pod 调度请求。",
+        "调度器通过既定算法寻找最佳节点，本质动作就是把 Pod 的 nodeName 字段填上；nodeName 为空即表示该 Pod 需要被调度。",
+        "调度器本质也是一个控制闭环（Control Loop）：watch Pod 与节点状态 → 决策 → 结果回写 API Server。"
+      ],
+      "tradeoffs": [
+        "调度只决定'绑到哪台节点'，不负责真正拉起容器——启动由 kubelet 完成，职责单一才能保持稳定。"
+      ],
+      "turning_points": [
+        "云原生自动化平台的驱动者不是 API Server，而是控制平面组件。"
+      ]
+    },
+    {
+      "start": "08:00",
+      "end": "15:00",
+      "topic": "调度要考虑的因素：公平性、优先级、资源效率、QoS 与数据本地化",
+      "points": [
+        "公平性：同一调度优先级下先到先服务；不同优先级可插队，优先级越高越优先调度。",
+        "资源高效利用：多维度资源（CPU/内存/存储）如何平衡是调度器难题——例如内存大 CPU 少的请求，调度后若节点内存耗尽而 CPU 闲置就是浪费。",
+        "QoS 与超售：业务常夸大资源申请（只要 1 CPU 却申请 10），完全按申请锁定会拉低集群利用率；通过 request 与 limit 的差异实现超售（overcommit）。",
+        "亲和/反亲和：微服务场景下 A、B 服务紧密相关，部署到同一节点可把网络调用变成本机调用，提升稳定性与性能。",
+        "数据本地化：若节点上已有目标镜像则优先调度，省去拉镜像的时间与集群磁盘占用，加快容器启动。"
+      ],
+      "tradeoffs": [
+        "超售的前提是各业务高峰低谷错峰；若同时高峰，超售会引发资源竞争，需要 QoS 与驱逐兜底。",
+        "多维资源平衡是调度器长期难题，简单的单资源判断会导致局部资源碎片化浪费。"
+      ],
+      "turning_points": [
+        "申请资源不等于真实消耗——业务会夸大需求，调度器必须用超售策略在'满足基本需求'与'控制资源上限'之间取平衡。"
+      ]
+    },
+    {
+      "start": "15:00",
+      "end": "22:00",
+      "topic": "调度两阶段原理与常用预选/优选策略",
+      "points": [
+        "任何调度器（OpenStack Nova、Mesos、Kubernetes）都是两阶段：Filter（Kubernetes 叫 Predicate，把不满足需求的节点过滤掉）→ Score（Kubernetes 叫 Priority，对剩余节点按因素打分排序，取数组 index 0 的节点）。",
+        "每个考虑因素都是插件：预选阶段逐个执行 Predicate 插件，如 PodFitsPorts（检查宿主机端口是否被占用）、PodFitsResources（CPU/内存是否满足）、NodeSelector（节点 Label 匹配）。",
+        "优选阶段常用策略：SelectorSpreadPriority（同一 Service/Deployment 的多个 Pod 尽量分散到不同节点）、LeastRequestedPriority（优先调度到请求资源少的节点）、BalancePriority（平衡各节点资源使用率）。",
+        "亲和性相关优选：A 服务部署时寻找已运行 B 服务的节点，使二者同节点。"
+      ],
+      "tradeoffs": [
+        "调度器支持自定义策略插件，社区默认版本扩展插件为空，生产可按需扩展。"
+      ],
+      "turning_points": [
+        "Predict 后剩 10 台节点并不直接选，还要经过打分排序——'能满足'与'最合适'是两层问题。"
+      ]
+    },
+    {
+      "start": "22:00",
+      "end": "31:00",
+      "topic": "实验一：request 与 limit 的超售原理；临时存储与 init container",
+      "points": [
+        "request 语义：Pod 最少需要的资源，给调度器用，调度时被锁定（节点连 100m 都没有则不可调度）；limit 语义：应用最多可用资源，给 cgroup 用，通过 Linux cgroup 限制配额。",
+        "CPU 单位：1m = 1/1000 个 CPU，1000m = 1 CPU，100m = 0.1 CPU。",
+        "超售效果：4 CPU 节点若按 limit 调度最多 4 个 Pod；按 100m request 调度可放 40 个 Pod，高峰低谷错峰即可共享资源。",
+        "实验验证：把 request 改成 100 CPU 后 Pod 一直 Pending，describe 显示节点没有足够 CPU。",
+        "临时存储（ephemeral-storage）限制不基于 cgroup，而是 kubelet 定时获取磁盘使用情况、超限后对 Pod 进行驱逐。",
+        "init container：主容器启动前顺序执行的初始化容器（如 Istio 配 iptables、一次性获取 token 写入共享卷）；资源计算规则——init 容器取所有 init 容器中的资源需求最大值，主容器取需求累加和，两者取较大值作为 Pod 调度资源需求。"
+      ],
+      "tradeoffs": [
+        "约定 request < limit；若把 request 设成与 limit 相同且过大，会浪费资源甚至导致 Pod 永远 Pending。",
+        "init container 是顺序执行（数组顺序），与主容器并发启动不同；配置多个 init 容器时要注意总启动耗时。"
+      ],
+      "turning_points": [
+        "request 与 limit 一个是调度依据、一个是配额依据，二者不一致正是超售机制的核心设计。"
+      ]
+    },
+    {
+      "start": "31:00",
+      "end": "38:30",
+      "topic": "LimitRange 与 NodeSelector 实验",
+      "points": [
+        "LimitRange：Namespace 级别的对象，为未声明资源的容器注入 default 值、或限定 Pod 资源申请范围；创建 Pod 时对每个容器逐一注入，整个 Pod 资源需求 = default 值 × 容器数量。",
+        "实验验证：无资源声明的 Deployment 配上 LimitRange 后，生成的 Pod 自动带上 request 256m/limit 512m（init 容器与主容器都会注入）。",
+        "NodeSelector：给节点打 Label（如 disktype=SSD），Pod 里指定 NodeSelector 做精确强匹配；无匹配 Label 时 Pod 保持 Pending（describe 显示 0/1 nodes available），打上 Label 后立即调度。"
+      ],
+      "tradeoffs": [
+        "NodeSelector 是强引用关系，只有'打 Label + 选 Label'一种语义，缺少软性表达能力，后被节点亲和性取代。"
+      ],
+      "turning_points": [
+        "资源声明不是必填项——不想声明的用户可以交给 LimitRange 统一兜底，这正是 Namespace 级治理的手段。"
+      ]
+    },
+    {
+      "start": "38:30",
+      "end": "48:00",
+      "topic": "亲和性：Node Affinity 与 Pod Affinity/反亲和",
+      "points": [
+        "Node Affinity 是 NodeSelector 的扩展：硬亲和 Required（在 Predicate 预选阶段强制满足，语义与 NodeSelector 一致）与软亲和 Preferred（在 Priority 打分阶段尽量满足，weight 属性控制打分权重）。",
+        "Pod Affinity 找的是运行中 Pod 的 Label（而非节点 Label），通过节点间接建立两个 Pod 之间的关联；TopologyKey 界定作用范围（Zone 可用区、Region 数据中心、Hostname 节点自身，可自定义 Rack）。",
+        "实验：两个副本 Pod 配反亲和（A=B 标签亲和 + app=nginx 反亲和）时，第一个 Pod 起来后第二个 Pod 无法调度，证明反亲和会阻止同 Deployment 副本落在同一节点。",
+        "反亲和的价值：若同 Deployment 三个副本挤在同一节点，节点硬件/网络故障会导致整个应用同时失效，必须用反亲和分散副本保证可用性。",
+        "弱亲和（Preferred）语义弱于 NodeSelector：有匹配节点则优先，没有也可调度到其他节点，应用场景更广（实验：把 Label 改成 SSD1 后软亲和 Pod 仍能调度）。"
+      ],
+      "tradeoffs": [
+        "Pod 亲和/反亲和是通过节点间接关联的间接关系，语义绕、易误解，配置前要仔细推演。",
+        "打分是综合的：不仅看亲和性，还要叠加资源、节点承载等条件算总分，亲和性高不代表一定被选中。"
+      ],
+      "turning_points": [
+        "反亲和不是'性能优化'而是'高可用手段'——把鸡蛋分散到不同的故障域篮子里。"
+      ]
+    },
+    {
+      "start": "48:00",
+      "end": "56:30",
+      "topic": "Taint 污点与 Toleration 容忍：概念、三类 Effect 与生产场景",
+      "points": [
+        "Taint 是比 Label 更强的节点隔离手段：节点打上 key=value:effect 污点后，只有带对应 Toleration 的 Pod 才能被调度上来。",
+        "三类 Effect：NoSchedule（无对应容忍则不可调度）、PreferNoSchedule（无容忍则尽量不调度、评分靠后）、NoExecute（无容忍则驱逐，TolerationSeconds 定义驱逐宽限时间）。",
+        "生产场景：大数据/GPU/高内存节点打污点不让普通业务共享；节点误混入业务后打 NoExecute 污点排空节点再回收；公有云多租户按租户划分计算节点池。",
+        "Kubernetes 自身也用污点：节点不健康时打 node.kubernetes.io/unhealthy 污点，Effect 为 NoExecute，默认 tolerationSeconds 600 秒后驱逐节点上所有 Pod。",
+        "运营踩坑：用户忘记给 Pod 打 Toleration 导致业务起不来（describe 可排查）；用户自行查询集群污点信息并私自加 Toleration 抢占资源（只能靠审计与权限收敛管控）。"
+      ],
+      "tradeoffs": [
+        "Taint 信息默认可查询，隔离是'流程上'的而非强制的，防止私自容忍需要做审计与 API 权限控制。"
+      ],
+      "turning_points": [
+        "Label 只是分类标记，Taint+Toleration 才是'必须带通行证才能上节点'的强制隔离机制。"
+      ]
+    },
+    {
+      "start": "56:30",
+      "end": "69:41",
+      "topic": "调度优先级 PriorityClass、多调度器生态、运维问题与代码走读",
+      "points": [
+        "PriorityClass 自 Kubernetes 1.8 引入、现默认启用：value 越大优先级越高；globalDefault 为未指定级别的 Pod 提供默认级别；支持抢占（preemption）——高优 Pod 无资源时驱逐低优 Pod 抢回资源。",
+        "业务定级实践：支付、用户前端等在线关键业务定为一级，支撑类平台定为低级，资源竞争时高优优先保障。",
+        "多调度器生态：离线/批处理场景有 Volcano（华为）、TKE 调度器（腾讯）等，支持 gang scheduling（一次调度一组、全部满足才调度）；Pod 用 schedulerName 指定调度器，不指定则用 default-scheduler。",
+        "性能数据：100 节点并发创建 8000 个 Pod，总调度耗时约 2 分钟（含亲和反亲和判断）。",
+        "运维问题一：调度器无熔断，单节点故障（应用起不来但节点状态正常）会把问题放大——Pod 反复调度到该节点又删除，一两个坏节点对用户就是整个集群不可用。",
+        "运维问题二：应用炸弹——单个 Pod 的 PID/文件句柄/连接泄漏耗尽节点资源，节点变 NotReady 后被排空，Pod 又去破坏下一个节点形成连环故障；新版本用 Pod 级 PID 限制等参数防扩散。",
+        "代码走读：调度器 framework 接口含 QueueSort（按 PriorityClass 排队）、PreFilter（计算 Pod 资源需求）、Filter（遍历插件过滤）、PostFilter、PreScore/Score（如弱亲和语法解析与打分）、Bind（更新 Pod 的 nodeName 完成绑定）。"
+      ],
+      "tradeoffs": [
+        "抢占机制本身'不公平'——高优永远抢低优，需要业务方认可分级治理。",
+        "批处理调度器虽强，但一个集群跑多个调度器会增加运维复杂度，按场景选择而非堆叠。"
+      ],
+      "turning_points": [
+        "优先级解决'资源紧张时谁先上'，抢占解决'没资源时谁能把别人挤下去'；而缺少熔断会让单点故障演变成集群级灾难。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "调度器职责：读取用户 Pod 配置、监听集群所有计算节点的健康与资源信息，通过既定算法寻找最佳节点并完成 Pod 与节点的绑定——本质是把 Pod 的 nodeName 字段填上；nodeName 为空即表示需要调度。",
+    "调度两阶段原理：Predicate（预选/Filter）把不满足需求的节点过滤掉，Priority（优选/Score）对剩余备选节点打分排序，得分最高的节点（数组 index 0）成为最终调度目标。",
+    "request 与 limit：request 是 Pod 最少需要的资源，给调度器使用并被锁定；limit 是应用最多可用资源的配额，给 cgroup 使用；request<limit 的差异是实现超售（overcommit）的机制。",
+    "CPU 单位：1m = 1/1000 个 CPU，1000m = 1 CPU。",
+    "init container 资源计算规则：Kubernetes 遍历所有 init 容器取资源需求最大值、对所有主容器资源需求求和，再取两者中的较大值作为整个 Pod 的调度资源需求；init 容器按数组顺序串行执行。",
+    "LimitRange：Namespace 级别的对象，为未声明资源的 Pod 注入默认资源或限定资源申请范围；创建 Pod 时对每个容器逐一注入 default 值。",
+    "NodeSelector：节点打 Label、Pod 指定 NodeSelector 进行强匹配，只允许调度到带指定 Label 的节点。",
+    "Node Affinity：NodeSelector 的扩展，硬亲和 RequiredDuringScheduling 在预选阶段强制满足，软亲和 PreferredDuringScheduling 在打分阶段尽量满足并用 weight 控制权重。",
+    "Pod Affinity：通过运行中 Pod 的 Label 匹配、经节点间接建立两个 Pod 之间的关联关系，TopologyKey（Zone/Region/Hostname）界定作用范围；反亲和（Anti-Affinity）用于把副本分散到不同故障域。",
+    "Taint（污点）与 Toleration（容忍）：节点级强制隔离机制；Effect 三类——NoSchedule（不可调度）、PreferNoSchedule（尽量不调度）、NoExecute（直接驱逐，TolerationSeconds 定义宽限时间）。",
+    "PriorityClass：调度优先级对象，value 越大优先级越高，globalDefault 提供默认级别，支持抢占（preemption）驱逐低优 Pod。",
+    "schedulerName：Pod 指定使用哪个调度器，不指定则使用默认调度器；一个集群可同时运行在线 default-scheduler 与离线批处理调度器（如 Volcano、TKE 调度器）。"
+  ],
+  "closing": "收尾总结：通过一系列实验理解了调度器在资源超售（request/limit）、NodeSelector、节点亲和性、Pod 亲和/反亲和、弱亲和、Taint/Toleration、PriorityClass 等场景下的实际行为；通过代码走读看懂调度器 framework 的实现（QueueSort → PreFilter/Filter/PostFilter → PreScore/Score → Bind）；并分享了集群运营中调度器无熔断导致故障放大、应用炸弹破坏节点等真实问题。最后强调：调度器能力单一，是整个集群运行中最稳定、维护成本最低的组件之一。"
+}

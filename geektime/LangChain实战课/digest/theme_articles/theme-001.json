@@ -1,0 +1,58 @@
+{
+  "id": "theme-001",
+  "theme": "从 CoT 到 ReAct：大模型如何从“只会聊天“进化成“能动手做事“的智能代理",
+  "source_lectures": ["05", "11", "12", "13", "19"],
+  "lecture_tiers": {
+    "gold": 1,
+    "silver": 3,
+    "copper": 1
+  },
+  "narrative_arc": {
+    "act1_problem": "大语言模型有两个与生俱来的缺陷：一是知识有截止日期，训练完就不再更新；二是会一本正经地胡说八道（幻觉）。思维链 CoT 能让模型推理得更准，但它解决的是“想得更清楚“，而不是“知道得更多“——当问题超出模型知识范围，再强的推理也答不对。这就逼出一个根本问题：能不能让模型不再只靠脑子里的存量知识，而是像人一样，遇到不会的就去查、去算、去调用工具？",
+    "act2_method": "答案是把“推理“和“行动“缝合起来。课程给出的演进链是：CoT（第05讲，用中间推理步骤提升推理质量，Zero-Shot 版本只需一句“Let's think step by step“）→ 但 CoT 解决不了幻觉 → ReAct（第11讲，Reasoning+Acting 协同，让 LLM 在“观察-思考-行动“的循环里自主调用搜索、计算器等外部工具）→ AgentExecutor 如何用一段提示模板驱动这个循环（第12讲，Question/Thought/Action/Observation 的完整协议）→ 更复杂的代理形态（第13讲：结构化工具对话、Self-Ask with Search、Plan-and-execute）→ 自主代理（第19讲：BabyAGI 用“执行+任务创建+优先级“三个代理实现自我驱动的任务循环）。贯穿始终的一个洞察是：**代理的本质就是提示工程**——所谓 ReAct，不过是把一段精心设计的提示词反复喂给模型。",
+    "act3_critique": "这套方法论有明确的边界。第一，ReAct 让模型自主决策操作序列，但决策本身可能出错（选错工具、陷入循环），多步推理的可靠性没有保证，Auto-GPT 就常因“分心或陷入循环“而失败。第二，成本不可控：每一步思考-行动都消耗 Token，BabyAGI 的六轮循环里任务列表膨胀到 18 项，实际完成度存疑。第三，评估困难——课程的代理实战只是“跑通演示“，没有对输出质量、召回率、幻觉率做任何量化评估。数据可信度方面，课程中“美国一打玫瑰 $80.16“这类精确数字是搜索引擎返回的片段，无原始出处，不能当作事实引用；而 ReAct、CoT、ToT 的原始论文均可追溯。真正值得写进文章的，是 CoT 到 ReAct 这条认知跃迁链本身，而不是课程里那些演示级的鲜花案例。"
+  },
+  "title_idea": "别再说 LLM 只会聊天了：从 CoT 到 ReAct，看大模型如何长出“手和脚”",
+  "type": "methodology",
+  "search_keywords": [
+    "ReAct prompting LLM",
+    "Chain of Thought vs ReAct",
+    "LLM hallucination tool use",
+    "LangChain agent ReAct implementation",
+    "reasoning acting synergy language model",
+    "autonomous agents BabyAGI"
+  ],
+  "visualization_hints": [
+    "Mermaid 流程图：CoT → 幻觉问题 → ReAct(观察-思考-行动循环) → 自主代理，展示认知演进链",
+    "Mermaid 序列图：AgentExecutor 的三轮 Thought/Action/Observation 循环（搜索→计算→输出答案）",
+    "ECharts 对比表：CoT / ReAct / BabyAGI 三者的能力边界（能否推理、能否调用工具、能否自我驱动）"
+  ],
+  "controversy_hooks": [
+    "反直觉：最有效的提示技巧不是复杂模板，而是一句大白话'Let's think step by step'",
+    "争议：Auto-GPT/BabyAGI 被追捧为'AGI 起点'，但现实中常常陷入循环、成本失控，是泡沫还是趋势？",
+    "质疑：所谓'智能代理'不过是被包装的提示工程——代理的“智能“有多少来自模型本身，多少来自精心设计的提示词？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "ReAct 论文 → Yao et al. 2023 ICLR, arXiv:2210.03629",
+      "CoT 论文 → Jason Wei et al. 2022 NeurIPS",
+      "Zero-Shot CoT 论文 → Kojima et al. 2022 arXiv:2205.11916",
+      "ToT 论文 → Yao 2023 arXiv:2305.10601 / Long 2023 arXiv:2305.08291",
+      "链 vs 代理的区别 → 链硬编码操作，代理由 LLM 动态决定操作序列（LangChain 官方定位）"
+    ],
+    "avoid_claims": [
+      "美国一打玫瑰平均价 $80.16、夏威夷 $108.33、宾夕法尼亚 $66.15 — 搜索引擎返回片段，无原始出处 (❓)",
+      "Auto-GPT Star 数半年飙升 150K — 课程发布时快照，现已失效 (⚠️)",
+      "tree-of-thoughts repo 3.3K stars — 时效性数据 (⚠️)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：LLM 的幻觉与知识截止",
+      "核心原理：CoT 到 ReAct 的演进逻辑",
+      "实操方法：ReAct 提示模板与代理搭建",
+      "边界与批判：可靠性、成本、评估缺失"
+    ],
+    "min_score": 52
+  }
+}

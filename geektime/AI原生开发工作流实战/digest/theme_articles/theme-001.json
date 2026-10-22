@@ -1,0 +1,54 @@
+{
+  "id": "theme-001",
+  "theme": "规范驱动开发（SDD）：为什么「代码不再是真理，规范才是」——AI 时代软件工程的第一性原理",
+  "source_lectures": ["02", "17", "18", "19", "22", "qa"],
+  "lecture_tiers": {"gold": 2, "silver": 4, "copper": 0},
+  "narrative_arc": {
+    "act1_problem": "软件开发数十年存在一个根本矛盾：意图与实现之间的鸿沟——'失落的翻译'。产品经理把想法翻译成 PRD，架构师翻译成设计文档，开发者再翻译成代码，每一层翻译都引入信息损耗和歧义，而文档与代码最终脱节、文档腐烂。传统方法（敏捷、UML）始终默认'文档是指南、代码是真理'，无法根除这个问题。AI 时代给了彻底颠覆这个前提的机会：当 AI 能以极低成本把规范翻译成代码，'维护规范而非代码'才第一次变得可行。",
+    "act2_method": "SDD 的核心是'权力反转'：规范取代代码成为项目唯一真理之源（Single Source of Truth）。课程给出可落地的方法：① 四阶段编译链——意图定义（spec.md，只讲 WHAT/WHY，与技术解耦）→ 技术规划（plan.md，讲 HOW，含'合宪性审查'门禁）→ 任务分解（tasks.md，原子化、带 [P] 并行标记、奇数测试偶数实现）→ 自动化实现；② 项目宪法 constitution.md 约束 AI 的架构决策（测试先行、简单性、反过度抽象）；③ AI 扮演四级'编译器'（需求/方案/任务/代码编译器）。跨讲了 17（需求编译）、18（方案与任务编译）、19（TDD 实现）三讲，形成一个从模糊想法到可运行代码的完整闭环。",
+    "act3_critique": "这套方法论有三个边界：① SDD 并不能'消灭'信息损耗，只是'损耗左移'——把损耗暴露在改 Markdown 而非改几千行代码的廉价阶段（这是答疑里最诚实的补丁）；② 长上下文注意力衰减是未解难题，spec/plan/tasks 分层本身就是应对策略，但 184 个原子任务的 tasks.md 依然考验 AI 的执行鲁棒性；③ 多人团队一致性落地难（'人性本懒'，没人愿意为小修小补改 spec），需要 CI 卡点 + 定期让 AI 反向同步 spec 的兜底。数据可信度方面：四阶段流程与 GitHub spec-kit 官方一致（✅可查证），但'184 任务''23 测试用例'等演示数据不可当普遍结论引用；'意图偏差改 spec、实现错误改代码'的二分法是经验规则（⚠️）而非实验结论。最尖锐的质疑是：当规范本身成为需要维护的庞大文档时，是否只是把'代码债'换成了'规范债'？"
+  },
+  "title_idea": "AI 时代软件工程的第一性原理：为什么你要停止维护代码，开始维护规范",
+  "type": "methodology",
+  "search_keywords": [
+    "spec-driven development",
+    "spec-kit GitHub",
+    "specification as single source of truth",
+    "lost in translation software development",
+    "AI code generation spec plan tasks",
+    "constitution.md AI coding",
+    "TDD AI hallucination prevention"
+  ],
+  "visualization_hints": [
+    "Mermaid流程图：SDD 四阶段编译链（模糊想法→spec.md→plan.md→tasks.md→代码，标注 AI 的四种编译器角色）",
+    "ECharts对比图：传统开发循环（Code→Test→Refactor）vs SDD 循环（Spec→Generate→Validate）的半径差异",
+    "对比表格：'改代码' vs '改规范' 在需求变更/修 Bug/技术重构三种场景下的成本差异"
+  ],
+  "controversy_hooks": [
+    "SDD 是否只是把'代码债'换成了'规范债'？当 spec.md 本身膨胀到几千行，谁来维护规范的规范？",
+    "让 AI 同时生成代码和测试会产生'自洽幻觉'——这是对'AI 提效'最反直觉的警告",
+    "多人团队里'没人愿意改 spec'是人性问题而非技术问题，SDD 的落地障碍可能不在 AI 而在组织"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "SDD 四阶段流程与 GitHub spec-kit 官方 spec-driven.md 一致 → https://github.com/github/spec-kit",
+      "constitution.md 概念源自 GitHub spec-kit 项目 → spec-kit 的 spec-driven 说明文档",
+      "Anthropic 16-Agent C 编译器实验（可作多 Agent 潜力佐证）→ https://www.anthropic.com/engineering/building-c-compiler"
+    ],
+    "avoid_claims": [
+      "'维护与重构占 70% 工作时间' — 无出处 (❓)",
+      "'传统模式 80% 时间花在编码' — 无出处 (❓)",
+      "'184 个原子任务 / 22 个 [P] 并行任务' — 单次演示输出，非普遍结论 (⚠️)",
+      "'领先业界 90% 开发者' — 营销性夸大 (🚩)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：失落的翻译与文档腐烂",
+      "核心原理：权力反转与编译意图",
+      "实操方法：四阶段编译链与合宪性审查",
+      "边界与批判：损耗左移、规范债质疑、多人落地难题"
+    ],
+    "min_score": 55
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "lecture": "6. etcd 常见问题及解决办法",
+  "source": "6. etcd 常见问题及解决办法.txt",
+  "duration_min": 23.9,
+  "intro": "上一讲分享了生产环境运维和优化 etcd 的经验与数据备份的初步方案；本讲分享生产运维中实际遇到的各种问题及解决办法，包括备份方案增强、etcd 安全性、API Server 与 etcd 的查询对应关系，以及故障注入测试（FMA）发现的经典案例。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "04:00",
+      "topic": "备份方案考量与工具对比",
+      "points": [
+        "etcdctl snapshot save：可以一次性把整个 etcd dump 出来，效率高，但会占用硬盘空间、导致磁盘暴涨",
+        "社区曾有备份方案：watch API Server 的 event 做回放——能把整个集群的细节变动都拉下来，但回放时对 Subresource（如 Pod 的 status）无法恢复，只能拿到 spec",
+        "对 etcd 来说关注所有 etcd 写入的 event 就能记录整个集群的所有变更，于是采用'snapshot + 事件流增量'的两回合方案",
+        "备份频度权衡：间隔太长数据丢失多，太短对 etcd 压力大；可以配合 AutoDefrag 自动定期清理磁盘"
+      ],
+      "tradeoffs": [
+        "备份频度是'可接受的数据丢失量'与'对 etcd 集群的压力'之间的平衡"
+      ],
+      "turning_points": [
+        "纯快照有磁盘暴涨问题，事件流回放也有 status 无法恢复的局限——组合方案互补"
+      ]
+    },
+    {
+      "start": "04:00",
+      "end": "08:30",
+      "topic": "增强备份实现：snapshot + 增量事件流",
+      "points": [
+        "在 backup 的 sidecar 中写一个 etcd watch client，监听 snapshot 之后 revision 之后的所有变更（类似 WAL 的增量）",
+        "每 1 分钟或 10 秒把增量事件写入 remote volume",
+        "restore 流程：先通过 restore 对象拉取 30 分钟频度的快照，再从 remote volume 拉取增量，在快照基础上把增量 replay 出来",
+        "结果：既减少了 snapshot 频次，又保证了数据实效性——生产系统现在就采用这个方案"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "'30 分钟快照 + 10 秒增量'成为生产级备份的标配组合"
+      ]
+    },
+    {
+      "start": "08:30",
+      "end": "12:00",
+      "topic": "etcd 安全性：通信加密与数据落盘加密",
+      "points": [
+        "peer 与 peer 之间、client 的通信加密：用 cfssl 生成 peer 和 client 证书，启动集群或访问集群时都要携带（前讲已演示）",
+        "数据落盘加密：Kubernetes 对象落盘时可通过非对称加密保存，即使通过 etcd 这一端导出数据，拿到的也是加密数据",
+        "encryption configuration 配置哪些对象需要加密：通常是 secret（存用户的密码、证书、token 等信息）",
+        "provider 定义使用什么加密算法（如 AES 等非对称加密），数据保存后没有密钥无法解开，保证数据安全性"
+      ],
+      "tradeoffs": [
+        "数据加密保证安全，但需要妥善管理密钥；TLS/加密都有额外计算开销"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "12:00",
+      "end": "16:30",
+      "topic": "API Server 与 etcd 的查询对应关系与乐观锁",
+      "points": [
+        "查询路径组装：API Server 前缀 + group/version（pod 属于 core group 所以 group 信息不用体现，只写 v1）+ namespace + 对象名，REST 调用与 etcd 调用后缀一一对应",
+        "revision → resource version：任何对象（单个或 list）都带 resource version；get 加 watch 参数并指定 resource version 表示从某个版本开始监听，只要没有 compact，历史信息存在就能返回",
+        "分页查询：kubectl 对 list 默认加 limit=500，返回前 500 条并带 continue token；下次查询携带 continue token 与上次接续，返回下一批",
+        "乐观锁回顾：两个进程基于同一旧 revision 修改同一对象，先到的请求成功使 revision 增长，后到的请求基于老 revision 被拒绝，返回 409 Conflict；客户端有责任拉取新版本重新修改",
+        "单个对象的 resource version = 对象的 modify revision（最后修改时的 revision）；不同对象共用同一个全局自增的 revision 序列",
+        "list 的 resource version 是 list 响应生成时的版本"
+      ],
+      "tradeoffs": [
+        "list 不加 resource version = 不信任 API Server 缓存 → 穿透到 etcd（前讲案例）；label 过滤在 API Server 端做，etcd 无过滤能力依然全量返回数据，这些是最容易出问题的点"
+      ],
+      "turning_points": [
+        "revision 增长后旧版本请求 409，客户端负责拉新重试——这是乐观锁在 etcd 上的完整机制"
+      ]
+    },
+    {
+      "start": "16:30",
+      "end": "20:30",
+      "topic": "常见问题与 FMA 故障注入测试案例",
+      "points": [
+        "频繁 Leader Election、etcd 分裂：因为想通过网络存储挂 etcd member 减少备份需求，但 remote member 永远跟不上就分裂出去，被证明不可行",
+        "API Server 链路阻塞案例回顾：DaemonSet 不停 list pod 导致链路阻塞、节点状态上不来",
+        "FMA（Failure Mode Analysis）故障测试：主动给控制面组件制造故障，测试业务应用是否受影响——核心目的是控制面（etcd、API Server）怎么死都不要影响业务",
+        "案例一：5 节点 master 中把 2 个 etcd 弄到 503 无响应，但 API Server 的 health check 只看 etcd 的 2379 端口是否可达，端口通就认为健康",
+        "负载均衡使 40% 节点挂在两个'假健康'的 API Server 上；节点状态上报写不进去 → 节点掉线 → controller manager 误认为 40% 节点坏了 → 大规模驱逐这 40% 节点上的 pod → 业务剧烈受影响",
+        "最怕的故障模式：节点其实是伪故障（控制面组件坏了），业务本来无损却被强制驱逐迁移"
+      ],
+      "tradeoffs": [
+        "伪故障的代价：节点没坏却被误驱逐，40% 的 pod 被强制迁移，业务遭受剧烈影响"
+      ],
+      "turning_points": [
+        "health check 只看端口通不通的缺陷：etcd 已 503 但端口仍可达，API Server 误以为健康"
+      ]
+    },
+    {
+      "start": "20:30",
+      "end": "23:54",
+      "topic": "网络分区案例、解决方案与总结作业",
+      "points": [
+        "案例二（网络分区）：多数节点选出新 Leader 继续工作；少数派无主、写入 no response，但 API Server 还活着，节点依然连着它 → 节点状态上报失败掉线 → node lifecycle controller 清除 40% 的 pod → 集群动荡",
+        "解决方案：给 API Server 增强 health check——不仅看 etcd 端口，还要真实探测 etcd 是否活着；etcd 无响应时 API Server 自杀，节点会自动重新连到其他健康的 API Server 上恢复状态",
+        "启示：健康检查在微服务世界里非常重要，不配好健康检查可能引发灾难性故障",
+        "作业：用 Bitnami（支持较新版本、较容易）或 etcd-operator 构建一个 etcd 集群，深入理解高可用 etcd 集群的自动化管理"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "health check 不只是'端口通不通'，要真实探测依赖组件存活——这是避免灾难性误驱逐的关键"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "etcd 备份的两种基本手段：snapshot（一次性 dump 整个 etcd，效率高但占用硬盘空间、磁盘易暴涨）与事件流增量（watch 所有写入 event 记录变更再回放）",
+    "社区 watch API Server event 的回放备份方案有局限：对 Subresource（如 Pod 的 status）只能拿到 spec，status 无法恢复",
+    "etcd 增强备份方案：backup sidecar 中运行 etcd watch client，监听 snapshot 之后 revision 之后的所有变更，每 10 秒把增量写入 remote volume；恢复时先拉取 30 分钟频度快照再 replay 增量",
+    "etcd 数据落盘支持非对称加密：encryption configuration 指定需加密对象（通常为 secret——存密码、证书、token），provider 定义加密算法（如 AES），数据被导出也无法解读",
+    "Kubernetes 对象查询路径 = API Server 前缀 + group/version + namespace + 对象名，与 etcd 中的 key 后缀一致",
+    "任何对象的 resource version = 其 modify revision（最后修改时的 revision），不同对象共用同一全局自增序列；list 的 resource version 是响应生成时的版本",
+    "分页查询：kubectl 对 list 默认 limit=500，返回结果带 continue token，携带 token 可继续获取下一批",
+    "乐观锁：基于旧 revision 的修改请求会被拒绝并返回 409 Conflict，客户端需拉取新版本重新修改",
+    "list 不带 resource version 会穿透 API Server 到 etcd；label 过滤在 API Server 端完成，etcd 无过滤能力仍会全量返回数据",
+    "FMA（Failure Mode Analysis）故障注入测试发现：API Server 的 health check 只看 etcd 2379 端口可达性，端口通但 etcd 已 503 时仍认为健康，导致 40% 节点状态上报失败被误判下线并触发大规模 pod 驱逐；解决方法是 health check 真实探测 etcd 存活，etcd 不可用时 API Server 自杀"
+  ],
+  "closing": "分享了生产运维中遇到的各类问题与解决办法（备份增强、数据落盘加密、分页与乐观锁、故障案例），强调健康检查对避免灾难性故障的重要性；作业：用 Bitnami 或 etcd-operator 构建一个 etcd 集群，深入理解高可用 etcd 集群的自动化管理。"
+}

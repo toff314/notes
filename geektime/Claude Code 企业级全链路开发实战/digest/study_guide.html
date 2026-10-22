@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code 企业级全链路开发实战 · 学习指南</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 企业级全链路开发实战</a><a href="README.html">《Claude Code 企业级全链路开发实战》消化索引（digest README）</a></div>
+<h1>Claude Code 企业级全链路开发实战 · 学习指南</h1>
+<blockquote><p>一门&quot;用 AI 工具做工程&quot;的方法论课：载体是 Claude Code 从零造简版 Dify（Hify），真正的交付物是一套可复用的工程方法论。核心命题——<strong>瓶颈不在 AI，在你</strong>。</p></blockquote>
+<h2>课程画像</h2>
+<ul><li>讲师：Robert（一线大厂基础设施，10 年+ 经验）</li><li>适合人群：会用 AI 编程工具但提效有限的开发者；想系统性掌握&quot;AI 原生开发&quot;方法论的工程师；希望把 AI 工具从&quot;补全&quot;升级为&quot;协作&quot;的人</li><li>不适合人群：只想学 Claude Code 具体指令/快捷键的工具操作者；对 Spring Boot/Vue 技术栈完全不熟的人；已深度实践过 Spec-Driven Development 的老手（方法论大部分不新鲜）</li><li>投入时间：快速浏览 30 分钟（5 节金矿）；深度阅读 2 小时（金矿+银矿）；时间充裕 5 小时（全部）</li><li>价值密度：⭐⭐⭐（课程整体信噪比 2.98/5，但 5 节金矿讲达 4.0+，是真正值得精读的部分）</li></ul>
+<h2>阅读路线</h2>
+<h3>路线 A：快速浏览（30 分钟）</h3>
+<p>只需读以下 5 节金矿课：</p>
+<ul><li>[02] 规范驱动开发（SDD）— 全课方法论根基，四步闭环</li><li>[14] 把经验变成 Skill — 领域四问 + 经验沉淀</li><li>[27] AI 写代码保证质量靠体系 — 论证最扎实，质量四层次 + 双模型 review</li><li>[31] SDD/Spec-Kit/Spec Coding/老项目改造 — 工具谱系 + 改造三原则</li><li>[32] 局限与起点 — 认知深度外化，能力地图收束</li></ul>
+<h3>路线 B：深度阅读（2 小时）</h3>
+<p>在读路线 A 基础上，补充银矿课中的方法论高密度讲：</p>
+<ul><li>[01] 你是架构师 — 角色转变的认知原点</li><li>[03] 产品定义 — 三问裁剪法、五步法</li><li>[15] Agent 创建与配置 — &quot;现学现卖&quot;能力</li><li>[20] RAG（上）— 四步探路法</li><li>[21] RAG（下）— 增量开发三步走</li><li>[23] 工作流编排（下）— 技术调研驱动选型、分步实现</li></ul>
+<h3>路线 C：时间充裕（5 小时）</h3>
+<p>读全部 gold + silver（22 节），跳过 5 节实操演示课和 08-12 工程脚手架。</p>
+<h2>核心知识地图（按主题重组，非原课程顺序）</h2>
+<h3>主题一：认知与角色——你是架构师，不是打字员</h3>
+<p><strong>一句话总结</strong>：AI 编程的价值上限由你的判断力决定，先完成&quot;从执行者到架构师&quot;的角色转变，AI 才能真正提效。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>三层分工：架构师定方向 → AI 做实现 → 人做验证</li><li>认知深度外化：你写出的规范/提示词直接暴露你的认知深度，这是不可替代的竞争力</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>拿到需求先想清楚边界再动手，别直接让 AI 开写（来源：第 01 讲）</li><li>每天做最多的事从&quot;写代码&quot;切换为&quot;拆解问题&quot;（来源：开篇词）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;AI 是放大器，不是发动机。你有方向它放大十倍，你没方向它放大的是零。&quot; — 开篇词/第 32 讲</p></blockquote>
+<h3>主题二：SDD 规范驱动开发——让 AI 永远在轨道上</h3>
+<p><strong>一句话总结</strong>：把开发流程改成&quot;先写规范 → AI 执行 → 人验证 → 迭代规范&quot;的四步闭环，规范是活的。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>SDD 四步闭环 + 咨询模式（不确定先问再做）+ 好规范的验收标准</li><li>CLAUDE.md 五层结构：项目上下文 → 架构规范 → 代码组织 → 部署/数据库 → 接口+行为指令</li></ul>
+<pre class="mermaid">flowchart LR
+  A[定规范&lt;br/&gt;写 CLAUDE.md/模块规范] --&gt; B[AI 执行&lt;br/&gt;按规范生成代码]
+  B --&gt; C[人验证&lt;br/&gt;三步检查法]
+  C --&gt;|跑偏了| D[迭代规范&lt;br/&gt;补上遗漏的规矩]
+  D --&gt; A
+  C --&gt;|通过了| E[交付闭环]
+  A -.-&gt;|不确定时| F[咨询模式&lt;br/&gt;先让 AI 列决策点]
+  F --&gt; A</pre>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>把&quot;模糊大需求&quot;改写成&quot;带验收标准的模块规范&quot;，一次做对（来源：第 02 讲）</li><li>用五层结构写 CLAUDE.md，每条规范都要能追溯到一个架构决策（来源：第 06 讲）</li><li>用业界规范（阿里 Java 手册等）喂 AI 生成适配版，而非从零手写（来源：第 06 讲）</li><li>对存量老项目按&quot;从小到大、由快到慢&quot;三原则逐步引入 SDD（来源：第 31 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;规范是活的，每次 AI 跑偏，问自己是不是规范没覆盖到，然后补上。&quot; — 第 02 讲</p></blockquote>
+<h3>主题三：陌生领域快速上手——现学现卖 + 四步探路法</h3>
+<p><strong>一句话总结</strong>：不必在每个领域都熬三五年，用&quot;领域四问&quot;和&quot;四步探路法&quot;就能快速进入并落地一个陌生技术或业务。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>领域快速理解四问：是什么 / 怎么用 / 数据怎么存 / 边界在哪</li><li>四步探路法：业务痛点 → 拆解技术组件 → 约束驱动选型 → 最小 Demo 建立手感</li><li>现学现卖闭环：让 AI 教概念 → 映射成数据结构 → 用具体场景验证 → 拆解执行</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>接到不懂的业务，先让 AI 用领域四问教你，再设计数据模型（来源：第 14/15 讲）</li><li>学陌生技术时先让 AI 做业界调研，基于调研结果决策，而非凭感觉拍方案（来源：第 20/23 讲）</li></ol>
+<h3>主题四：增量开发与质量体系——加新不破坏旧，质量靠体系</h3>
+<p><strong>一句话总结</strong>：在跑通的系统里加新能力用&quot;增量开发三步走&quot;；AI 写代码的质量靠分层体系而非运气。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>增量开发三步走：圈定改动范围 → 验证旧功能没坏 → 验证新功能生效（顺序不能反）</li><li>质量体系四层次：测试 → 静态检查 → 双模型 review → 人工把关</li><li>双模型 review：让第二个模型交叉审查主模型产出</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>给存量系统加功能时，指令里显式写&quot;只改哪个方法、不改 Controller 层&quot;锁死扩散边界（来源：第 21 讲）</li><li>给 AI 代码接入双模型 review 工序，把质量从&quot;靠人盯&quot;变成&quot;靠体系&quot;（来源：第 27 讲）</li><li>复杂功能分步实现（先线性→加分支→加错误处理→接入），review 精力放在异常分支（来源：第 23 讲）</li></ol>
+<p><strong>金句</strong>：</p>
+<blockquote><p>&quot;保证质量的不是 AI，是体系。&quot; — 第 27 讲</p></blockquote>
+<h3>主题五：工程落地细节——产品定义、架构、数据、部署</h3>
+<p><strong>一句话总结</strong>：真正的工程判断藏在细节里——边界取舍、瓶颈预判、数据库规范、SSE 的坑、可观测性。</p>
+<p><strong>关键框架</strong>：</p>
+<ul><li>三问裁剪法：没有它产品还成立吗 / 做到什么程度够用 / 能不能一句话说清</li><li>性能瓶颈软肋地图：让 AI 列出瓶颈、触发条件、处理时机，出问题查表</li><li>增量开发的第五次复用：SSE 三个坑（超时/客户端断开/Nginx 缓冲）、事务不跨 SseEmitter</li></ul>
+<p><strong>可操作方法</strong>：</p>
+<ol><li>动代码前用三问裁剪法砍掉伪需求（来源：第 03 讲）</li><li>数据库规范写进 CLAUDE.md（逻辑删除进索引、游标分页、HNSW 索引）（来源：第 05 讲）</li><li>部署前用咨询模式让 AI 帮你发现遗漏（如健康检查接口）（来源：第 28 讲）</li><li>告警分级 P0/P1/P2 + &quot;不建议告警清单&quot;，避免告警疲劳（来源：第 29 讲）</li></ol>
+<h2>可忽略内容</h2>
+<p>以下章节可以直接跳过（信噪比 &lt; 2.5，纯演示/脚手架/收尾）：</p>
+<ul><li>[07/12/19/26/30] 五节实操演示课 — 与对应正课内容高度重复</li><li>[08/09/10/11] 工程搭建篇 — 脚手架铺垫，价值在&quot;基础设施复用&quot;而非本讲本身</li><li>[17/18] 对话引擎下 / 复杂前端交互 — 实操为主，独立洞见少</li><li>[开篇词/热点速递×2/结束语/结课测试] 附属内容 — 定位、评论、收尾、测试</li></ul>
+<h2>延伸阅读</h2>
+<ul><li><strong>书籍</strong>：《Building a Second Brain》（Tiago Forte，本技能方法论源头）、《如何阅读一本书》（Mortimer Adler）</li><li><strong>工具/规范</strong>：GitHub Spec Kit、阿里巴巴 Java 开发手册、Google Java Style Guide、OpenAI 官方 Function Calling 文档</li><li><strong>技术</strong>：MCP（Model Context Protocol）官方规范、pgvector 的 HNSW 索引文档</li><li><strong>知乎选题</strong>：见 <code>theme_articles/</code> 目录下的三篇主题深挖素材（SDD 方法论全景 / 角色重构 / 陌生技术探路法）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide.md">study_guide.md</a></footer>
+</div></body></html>

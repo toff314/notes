@@ -47,6 +47,6 @@ while IFS= read -r -d '' md; do
   python3 scripts/md2html.py "$rel" -o "$dir" --name "$name" --title "$title" --nav "$nav"
   n=$((n + 1))
 done < <(find . \( -name .git -o -name .cache -o -name scripts -o -name raw \) -prune \
-            -o -name '*.md' -print0 | sort -z)
+            -o -type f -name '*.md' -print0 | sort -z)
 
 echo "== 完成：渲染 $n 个 .md =="

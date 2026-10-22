@@ -1,0 +1,56 @@
+{
+  "id": "theme-001",
+  "theme": "「第二大脑」：大模型如何接上自己的知识库——RAG 思想的早期完整表述",
+  "source_lectures": ["09", "10", "11", "15", "17", "bonus2"],
+  "lecture_tiers": {
+    "gold": 1,
+    "silver": 5,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "大语言模型有两个致命短板：一是「幻觉」——问它训练语料之外的事实性问题（尤其中文），它容易一本正经地胡编；二是「时效性」——它不知道训练截止日期之后的世界，问昨天的球赛比分只会得到「我不知道」。用户真正想要的，是让模型回答「自己公司内部数据、实时资讯」这类它从未见过的内容。这就是「如何让 LLM 接上外部知识」这个 RAG 时代最核心的问题。",
+    "act2_method": "课程给出了一个三段式设计模式，讲师称之为「第二大脑」：①先把外部资料向量化、建成索引（第 09 讲用 Embedding 余弦相似度做语义搜索，突破关键词匹配，还能做冷启动推荐）；②提问时先从索引里检索最相关的片段（第 09 讲的 FAISS 加速、第 11 讲的开源 sentence-transformers 替代方案）；③把检索结果拼进提示语，让 AI「只根据上下文、不凭先验」作答（第 10 讲，用《藤野先生》验证——连「不相干问题答『不知道』」都能做到）。关键心智模型是第 10 讲提出的「世界知识（训练语料内建）vs 上下文知识（推理时临时提供）」二分。第 15/17 讲进一步把「检索」泛化成「工具调用」——不只是查索引，还能让 AI 写代码算算术、调 HTTP 拿实时天气、最终演进为 Agent 自主选工具，加餐二则落到 OpenAI 原生的 Function Call。",
+    "act3_critique": "这套方法有明确的边界：①「先搜索后提示」并未根治幻觉，它只是把「编造」转移成了「检索失败」——检索不到或检索错了，AI 依然会基于错误上下文一本正经地错答，第 11 讲用《朝花夕拾》实测暴露了开源小模型 128 token 上下文导致的「检索片段信息不足」；②它只适合「内容固定、可预先索引」的场景，实时高频数据（天气、股价）需要第 15 讲的工具调用而非静态索引；③数据可信度需谨慎：「GPT-3 中文语料不到 1%」这一支撑性论断无精确出处（❓），「检索+生成」的效果高度依赖 embedding 质量和 chunk 切分，课程对此几乎未展开。最终判断：RAG 模式被后续 3 年验证为正确方向（Lewis et al. 2020 的 RAG、2023 后的向量数据库浪潮），但这门课的贡献是「思想早于命名」——它在 RAG 成为行业术语之前，就用「第二大脑」把整套逻辑讲清楚了。"
+  },
+  "title_idea": "RAG 的源头，藏在一门 2023 年的中文课里：什么是「第二大脑」模式？",
+  "type": "methodology",
+  "search_keywords": [
+    "Retrieval-Augmented Generation Lewis 2020",
+    "vector database semantic search FAISS",
+    "embedding cosine similarity retrieval",
+    "LLM hallucination mitigation retrieval",
+    "LlamaIndex LangChain RAG tutorial",
+    "function calling tool use LLM"
+  ],
+  "visualization_hints": [
+    "Mermaid流程图：外部资料 → Embedding向量化 → 向量索引(FAISS) → 提问时检索Top-K → 拼入Prompt → LLM生成答案（三段式第二大脑模式）",
+    "ECharts对比图：关键词搜索(倒排索引) vs 语义搜索(向量相似度) 在「同义词/歧义词」场景下的召回差异",
+    "Mermaid概念图：世界知识 vs 上下文知识 的二分，及其对应「微调 vs 检索」两条技术路线"
+  ],
+  "controversy_hooks": [
+    "「先搜索后提示」真的是解决了幻觉，还是只是把编造换成了检索错误？——Bing/ChatGPT 早期翻车的本质",
+    "RAG 这个词 2023 年才火，但这门课在 RAG 成为术语之前就用「第二大脑」讲清楚了同一套逻辑——思想先于命名，是否说明中文技术圈也输出了原创洞察？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "RAG 范式已被 Lewis et al. 2020《Retrieval-Augmented Generation》确立并验证 → 论文可查",
+      "「先检索后生成」能正确回答私有文档问题（《藤野先生》问「学医老师是谁」答对、问「林黛玉与贾宝玉关系」答「不知道」）→ 第10讲代码demo可复现",
+      "语义搜索突破关键词匹配（搜「自然淡雅背包」命中「小清新百搭斜挎包」）→ 第9讲demo可复现",
+      "MRKL（arXiv 2205.00445）与 Function Calling 是工具调用的两条路线 → 论文/官方文档可查"
+    ],
+    "avoid_claims": [
+      "「GPT-3 训练语料中中文占比不到 1%」— 无精确出处（❓），绝不能当作确切数据引用",
+      "「text-davinci-003 比 gpt-3.5-turbo 贵十倍」— 近似数且模型已废弃（⚠️），不具引用价值",
+      "开源小模型 128 token 上下文 — 仅适用于 paraphrase-multilingual-mpnet-base-v2 这一具体模型（✅可验证但不可泛化）"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义（LLM 的幻觉与时效性短板）",
+      "核心原理（第二大脑三段式 + 世界知识/上下文知识二分）",
+      "实操方法（向量化→索引→检索→生成，附现代工具映射）",
+      "边界与批判（检索失败的转移、静态索引的局限、数据可信度）"
+    ],
+    "min_score": 52
+  }
+}

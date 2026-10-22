@@ -1,0 +1,122 @@
+{
+  "lecture": "5. DNS 原理和实践",
+  "source": "5. DNS 原理和实践.txt",
+  "duration_min": 23.38,
+  "intro": "上一讲讲了 kube-proxy 用 iptables/IPVS 配置负载均衡（每个节点规则一致，形成集群级分布式负载均衡）；本节回答：Service 的 ClusterIP/nodePort 仍会随重建变化，如何用更持久的\"名字\"发布服务——即 CoreDNS 的域名服务发现原理与实践。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "05:00",
+      "topic": "分布式负载均衡与服务唯一标识",
+      "points": [
+        "kube-proxy 运行在每个节点且按同样规则配置负载均衡，因此同一集群任意节点访问 A→B 行为一致，相当于在客户端这层直接完成负载均衡，无需额外负载均衡器再做 NAT",
+        "Service 没有 Pod 那样的生命周期概念，但一旦重建，ClusterIP/nodePort 会变化，发布出去的地址依旧有风险",
+        "Service 的全局唯一键 = service 名 + namespace：名字不变，多次重建后仍是同一个 Service，因此比 ClusterIP/nodePort 更可信",
+        "由此引出用 DNS（域名）发布服务：由 CoreDNS 实现"
+      ],
+      "tradeoffs": [
+        "ClusterIP/nodePort 相对 Pod IP 稳定但仍非永久，面向外部的服务发布应基于名字（DNS）而非地址",
+        "服务重建后旧 A 记录被删除、按新 IP 重建，DNS 永远知道域名该指向哪"
+      ],
+      "turning_points": [
+        "客户端侧分布式负载均衡：数据包在发出时就已完成整个负载均衡，无需集中式 NAT 设备"
+      ]
+    },
+    {
+      "start": "05:00",
+      "end": "10:30",
+      "topic": "CoreDNS 原理与域名记录生成",
+      "points": [
+        "CoreDNS 是基于内存的 DNS（不落盘；早期 Kubernetes DNS 落盘导致效率差）；集群启动时启动空 DNS 服务，由内置控制器读取集群全部 Service/Endpoint/Pod 信息生成记录",
+        "域名模式（FQDN）：<service名>.<namespace>.svc.<cluster-domain>（默认 cluster.local），A 记录指向该 Service 的 ClusterIP",
+        "普通 Service（ClusterIP/NodePort/LoadBalancer 都有 ClusterIP）生成 A 记录（域名→ClusterIP）、PTR 记录（反向：地址→域名）、SRV 记录（端口相关）",
+        "headless service（clusterIP: None）：kube-proxy 不做任何转发（无 ClusterIP），DNS 为其创建 A 记录直接指向各 Pod IP，访问 headless 的 FQDN 直达 Pod",
+        "ExternalName：在本地 DNS 创建 CNAME，访问本地别名最终转到外部真实域名"
+      ],
+      "tradeoffs": [
+        "headless service 是\"直连 Pod IP\"的服务发现，与普通 Service 的\"虚拟 IP 转发\"是两种思路",
+        "域名只要 Service 名与 namespace 不变就不变，是比 ClusterIP 更稳定的入口"
+      ],
+      "turning_points": [
+        "CoreDNS 不是人工配置的 DNS 服务器，而是\"控制器自动刷记录的内存 DNS\""
+      ]
+    },
+    {
+      "start": "10:30",
+      "end": "13:30",
+      "topic": "Pod 侧 DNS 配置：ClusterFirst 与 resolv.conf",
+      "points": [
+        "Pod 属性 dnsPolicy 默认 ClusterFirst：不设置时创建 Pod 会写入 /etc/resolv.conf，指定 nameserver 为 kube-dns Service 的 IP（实验中为 10.96.0.10，kube-system 下 kube-dns Service，后端是两个 CoreDNS Pod：内存域名服务器 + 刷记录的控制器）",
+        "resolv.conf 三部分：nameserver（域名查询去处）、search（搜索域）、ndots（短名判定阈值）",
+        "实验：toolbox Pod 内 curl nginx-basic.default.svc.cluster.local（服务名.namespace.svc.cluster.local）可解析并访问到 nginx Service"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Pod 的 DNS 查询地址（10.96.0.10）本身也是一个 Service，由 kube-proxy 规则转发到 CoreDNS Pod"
+      ]
+    },
+    {
+      "start": "13:30",
+      "end": "18:00",
+      "topic": "搜索域与 ndots：长短名解析规则",
+      "points": [
+        "search 域 + ndots 配合使用：ndots=5 时，提供的域名点数少于 5 个视为短名，按 search 域顺序逐一追加后缀查询",
+        "实验：只写 nginx-basic（短名）→ 先查 nginx-basic.default.svc.cluster.local；加 namespace（如 nginx-basic.default）→ 依次查 default.svc.cluster.local、svc.cluster.local",
+        "实用结论：同 namespace 内访问只需服务名（短名）；跨 namespace 加 namespace 名；也可只写 svc.cluster.local 层级或全名",
+        "另一种服务发现机制：环境变量。Pod 启动时 kubelet 读取当前 namespace 所有已存在 Service 的地址端口，以环境变量注入（如 KUBERNETES_SERVICE_HOST 等）"
+      ],
+      "tradeoffs": [
+        "短名解析依赖 search 域逐级拼接，全限定名（FQDN）最省查询次数",
+        "环境变量方式只能发现 Pod 启动时已存在的 Service，且属\"当前 namespace 快照\""
+      ],
+      "turning_points": [
+        "ndots=5 是\"短名\"的判定阈值，理解它才能解释长短名解析行为差异"
+      ]
+    },
+    {
+      "start": "18:00",
+      "end": "21:00",
+      "topic": "enableServiceLinks 的坑：环境变量过多导致 Pod 起不来",
+      "points": [
+        "enableServiceLinks 默认 true：所有 Service 信息以环境变量形式注入 Pod",
+        "踩坑案例：同 namespace 建几千个 Service 后 Pod 建不出来——容器启动命令（CRI/runc 的 env 参数）过长超过 Linux 参数长度限制，尾部被截断导致命令不完整、容器起不来",
+        "解决：不依赖环境变量获取服务信息时设 enableServiceLinks: false，此后 namespace 里建多少 Service 都不影响 Pod 启动"
+      ],
+      "tradeoffs": [
+        "环境变量注入服务信息的便利性与规模上限之间存在直接冲突，数千 Service 的 namespace 必须显式关闭",
+        "若仍需环境变量方式，需拆分 namespace 或减小 Service 数量"
+      ],
+      "turning_points": [
+        "问题根因不是 Kubernetes 本身，而是 Linux 对进程启动参数长度的限制被环境变量撑爆"
+      ]
+    },
+    {
+      "start": "21:00",
+      "end": "23:23",
+      "topic": "自定义 DNS 策略与企业内外统一 DNS 实践",
+      "points": [
+        "自定义 DNS：dnsPolicy: None + dnsConfig（对应 resolv.conf 的 nameserver、search domain、options），用于自带 nameserver/search domain 的用户",
+        "eBay 实践：Pod IP 全局可路由，Service 内外皆可访问（如 headless service）；实现内外统一 DNS——集群内部由 CoreDNS 配置，集群外部建企业 DNS 控制器（行为类似 CoreDNS，但配置企业 DNS）",
+        "效果：浏览器（外部）与集群内部客户端访问同一域名；LoadBalancer 类型内部指向 ClusterIP、外部指向 LB IP，同一域名在不同位置解析到不同地址但入口一致",
+        "总结：DNS 是最有效的服务发现手段——service 名 + namespace 确定即全局唯一，无论创建多少次访问入口不变，比 ClusterIP/nodePort 更可信"
+      ],
+      "tradeoffs": [
+        "内外统一 DNS 的代价：需要自建并维护企业 DNS 控制器（对 CoreDNS 行为做外部扩展）",
+        "同一域名内外解析到不同 IP 依赖客户端所在网络环境选择不同 DNS 服务器"
+      ],
+      "turning_points": [
+        "服务发现的核心思想：用\"名字\"（service+namespace）而不是\"地址\"（IP/端口）作为服务的持久唯一标识"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "CoreDNS：基于内存的 DNS（不落盘），由内置控制器读取集群 Service/Endpoint/Pod 信息自动生成记录",
+    "Service FQDN 模式：<service名>.<namespace>.svc.<cluster-domain>（默认 cluster.local）",
+    "普通 Service（ClusterIP/NodePort/LoadBalancer）A 记录指向 ClusterIP；headless service 的 A 记录直接指向 Pod IP；ExternalName 生成 CNAME 别名",
+    "dnsPolicy 默认 ClusterFirst：Pod 的 /etc/resolv.conf 将 nameserver 指向 kube-dns Service IP（实验中 10.96.0.10），后端为 CoreDNS Pod",
+    "search 域 + ndots=5：短名（点数<5）按 search 域顺序拼接（<ns>.svc.cluster.local → svc.cluster.local → cluster.local）查询",
+    "enableServiceLinks 默认 true：Service 地址端口以环境变量注入 Pod；namespace 内 Service 过多会使容器启动命令超长（Linux 参数长度限制）导致 Pod 无法创建，可设 false 关闭",
+    "服务唯一可信标识：service 名 + namespace（比 ClusterIP/nodePort 更持久、更可信）"
+  ],
+  "closing": "结论收尾：DNS 是把\"名字\"这一全局唯一标识解析为访问入口的最有效手段，比 ClusterIP/nodePort 更可信；结合 eBay 内外统一 DNS 实践，强调同一域名 + 不同位置的 DNS 服务器即可统一内外访问入口。"
+}

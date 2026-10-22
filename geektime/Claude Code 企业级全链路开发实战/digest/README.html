@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Claude Code 企业级全链路开发实战》消化索引（digest README）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">Claude Code 企业级全链路开发实战</a><a href="README.html">《Claude Code 企业级全链路开发实战》消化索引（digest README）</a></div>
+<h1>《Claude Code 企业级全链路开发实战》消化索引（digest README）</h1>
+<blockquote><p>本目录是《Claude Code 企业级全链路开发实战》（讲师：Robert）的结构化消化产物，生成于 2025-08-25。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>写作前必读（按优先级）</h2>
+<ol><li><strong><code>course_review.json</code></strong> — 课程判决、逐幕评价、who_should_read/skip。任何写作任务先读它定位基调。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣（金/银/铜/铁）、数据审计。引用任何课程数据前必查。</li><li><strong><code>theme_articles/</code></strong> — 三篇可直接成文的主题深挖素材包（SDD 方法论全景 / 角色重构 / 陌生技术探路法）。</li></ol>
+<h2>产出物总表</h2>
+<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（三幕评价 + 整体判决）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>SDD 规范驱动开发方法论全景</td><td>机读</td></tr><tr><td><code>theme_articles/theme-002.json</code></td><td>角色重构：从写代码到做决策</td><td>机读</td></tr><tr><td><code>theme_articles/theme-003.json</code></td><td>陌生技术探路法</td><td>机读</td></tr><tr><td><code>study_guide.md</code></td><td>完整学习指南（按主题重组 + Mermaid 图）</td><td>人读</td></tr><tr><td><code>study_guide_slim.md</code></td><td>5 分钟速览</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记（Adler 两问 + 模块地图）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要（37 讲机器数据）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣 + 数据审计</td><td>机读</td></tr></table>
+<h2>写作任务指引</h2>
+<h3>写课程评论文</h3>
+<ol><li>读 <code>course_review.json</code> 的 <code>narrative_structure.acts</code> 和 <code>overall_assessment</code></li><li>读 <code>content_triage.json</code> 的 <code>data_audit</code>，核对引用的数据可信度</li></ol>
+<h3>写主题深挖文</h3>
+<ol><li>列出 <code>theme_articles/</code> 全部文件，按主题选一篇</li><li>读其 <code>narrative_arc</code>（三幕）/ <code>verification_gate</code> / <code>controversy_hooks</code></li><li><strong><code>verification_gate.avoid_claims</code> 中的内容绝对禁止写进文章</strong></li><li>按其 <code>source_lectures</code> 对应路径读讲课原文核对引文</li></ol>
+<h3>写学习指南文</h3>
+<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架）</li><li>读 <code>content_triage.json</code> 的 <code>entries</code> 获取逐讲分级</li></ol>
+<h2>金矿讲课导航（可逐字引用）</h2>
+<table><tr><th>讲</th><th>标题</th><th>原文绝对路径</th></tr><tr><td>02</td><td>规范驱动开发（SDD）</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/认知篇/02｜规范驱动开发（SDD）：让 AI 永远在轨道上/02｜规范驱动开发（SDD）：让 AI 永远在轨道上.md</code></td></tr><tr><td>14</td><td>把经验变成 Skill</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/核心功能交付：基础篇/14｜把经验变成 Skill：让 Claude Code 自动按流程走/14｜把经验变成 Skill：让 Claude Code 自动按流程走.md</code></td></tr><tr><td>27</td><td>AI 写代码保证质量靠体系</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/测试与部署篇/27｜AI 写代码，保证质量不靠运气，靠体系/27｜AI 写代码，保证质量不靠运气，靠体系.md</code></td></tr><tr><td>31</td><td>SDD/Spec-Kit/老项目改造</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/高阶与复盘/31｜进阶：SDD、Spec-Kit、Spec Coding 与老项目改造/31｜进阶：SDD、Spec-Kit、Spec Coding 与老项目改造.md</code></td></tr><tr><td>32</td><td>局限与起点</td><td><code>/home/yuanwu/geektime/output/Claude Code 企业级全链路开发实战/高阶与复盘/32｜局限与起点：让 Hify 成为你真正的项目经验/32｜局限与起点：让 Hify 成为你真正的项目经验.md</code></td></tr></table>
+<h2>数据可信度警示</h2>
+<p>以下声明<strong>禁止</strong>作为事实引用（❓ 无法验证 / ⚠️ 部分验证）：</p>
+<ul><li>双模型 review 抓出 12 个问题、4 个高危（第 27 讲，❓ 讲师个人实践，无独立来源）</li><li>Claude 订阅约 $40/月（第 32 讲语境，❓ 个人陈述，无法精确定位）</li><li>Hify 峰值 QPS 3-5（第 03 讲，❓ 基于假设的内部估算，无实测）</li><li>LLM 单次响应延迟 3-30 秒（第 03 讲，⚠️ 行业经验值，非精确数据）</li></ul>
+<blockquote><p>本课无 🚩 编造数据。可放心引用的 ✅ 数据：源码泄漏 51.2 万行/1900 文件、阿里禁用 Claude Code、text-embedding-3-small 价格约前代 1/5。</p></blockquote>
+<h2>元信息</h2>
+<ul><li>消化评分：2.98/5（🥇金矿 5 · 🥈银矿 17 · 🥉铜矿 13 · ⛏️铁矿 2）</li><li>总讲数：37</li><li>讲师：Robert</li><li>课程定位：用 Claude Code 从零造简版 Dify（Hify），教&quot;用 AI 做工程&quot;的方法论</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

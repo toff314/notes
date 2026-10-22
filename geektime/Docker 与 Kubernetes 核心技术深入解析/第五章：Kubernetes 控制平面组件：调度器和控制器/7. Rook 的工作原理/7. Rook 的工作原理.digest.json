@@ -1,0 +1,101 @@
+{
+  "lecture": "7. Rook 的工作原理",
+  "source": "7. Rook 的工作原理.txt",
+  "duration_min": 27.58,
+  "intro": "承接上一讲的 StorageClass/PV/PVC：本讲介绍 CNCF 已毕业的存储项目 Rook，讲解它作为 Kubernetes 上'一篮子存储方案'的工作原理——Operator 如何拉起 Ceph 控制面、CSI Provisioner 与 Node Agent 如何分工协作，并通过创建 100Mi 块存储的 demo 演示 Rook 的完整使用链路。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "06:30",
+      "topic": "Rook 定位与整体架构：Operator 模式与 CSI driver",
+      "points": [
+        "Rook 是 CNCF 已毕业项目，面向 CSI 存储驱动，定位是 Kubernetes 上的'一篮子存储解决方案'，支持 Ceph、NFS、EdgeFS、Cassandra、CockroachDB 等多种存储，野心是成为 Kubernetes 上的存储标准。",
+        "Rook 支持自动部署、启动、分配、扩缩容、备份（栽培）等能力。",
+        "架构核心是 Rook Operator：operator 模式 = CRD + Controller，以 Deployment 形式运行，利用 controller-runtime 框架实现 CRD 并基于 CRD 创建相关资源（如 Ceph 集群、pool 等对象），负责监控与拉起整个控制平面，是 Rook 的大脑。",
+        "Rook 分为 provisioner 部分与 CSI driver 部分：Rook agent 是老的 in-tree/flex volume 方式，现在更多通过 Ceph CSI driver 实现。"
+      ],
+      "tradeoffs": [
+        "Rook 支持多种存储但实际生产以 Ceph 为主，选择过多反而要评估每个存储的成熟度。"
+      ],
+      "turning_points": [
+        "Rook 本身不实现存储，而是把成熟的存储系统（Ceph）用 Operator 模式'搬进'Kubernetes——CRD + Controller 管理其生命周期。"
+      ]
+    },
+    {
+      "start": "06:30",
+      "end": "12:30",
+      "topic": "安装流程与裸盘发现机制",
+      "points": [
+        "安装步骤（教程在 module7/CSI/Rook 目录）：给虚拟机加一块裸盘 → 重启 → 下载 Rook 代码 → 进入 examples/ceph 目录 → 创建 Rook 所需 CRD 与 operator Pod → 创建 CephCluster 的 CRD → operator 拉起整个控制面 → 创建 StorageClass，Rook 即 ready。",
+        "控制面组件：Rook operator（大脑，其余组件基本由它拉起）、Ceph monitor/mgr/osd、discover 服务等；针对 RBD 块存储，核心是两个 Pod：provisioner（Deployment，集中控制器）与 rbd plugin（DaemonSet，与 kubelet 协同）。",
+        "裸盘发现机制：Rook discover 服务通过 lsblk 命令查询当前节点上未被使用的裸盘，再通过 ceph-volume inventory 命令把空盘挂载成 Ceph 可用的 OSD——挂上新盘后启动 Ceph，裸盘被自动发现并变成块存储。",
+        "控制面拉起后自动创建 Ceph RBD 与 CephFS 两类 CSI driver（get csidriver 可见）。"
+      ],
+      "tradeoffs": [
+        "Rook 需要物理裸盘才能创建 OSD，虚拟化环境要先加盘再做实验。"
+      ],
+      "turning_points": [
+        "Rook 把'磁盘初始化'也自动化了：lsblk 发现 + ceph-volume 接管，裸盘即插即用。"
+      ]
+    },
+    {
+      "start": "12:30",
+      "end": "19:00",
+      "topic": "Provisioner 工作原理：通用 CSI 框架 + 特定存储驱动",
+      "points": [
+        "Provisioner Pod 内有 6 个容器：前几个是通用镜像（k8s.gcr.io/sig-storage/csi-provisioner 等 CSI 通用框架，所有存储通用），最后是 Ceph 专属的 cephcsi 驱动——通用逻辑与特定存储逻辑运行在同一 Pod 内。",
+        "工作原理：通用 csi-provisioner 监听 PVC 创建事件，判断 PVC 的 storageClass 是否对应本 CSI driver，是则把请求通过 unix socket 转给 cephcsi，由 Ceph 专属代码调用 Ceph API 真正创建 volume（如 rbd create image）。",
+        "socket 通信机制：provisioner 容器 mount 了一个 socket dir（emptyDir + medium=Memory，不落盘），两侧容器共享 /csi 路径下的 socket 文件；provisioner 通过 --csi-provisioner-socket 参数读到该地址，把通用处理完的请求发过去。",
+        "类比 CNI：loopback 等通用逻辑由 CNI 官方提供、各厂商只实现差异化部分；CSI 同理——创建/扩容/attach/snapshot 等通用流程由 CSI 框架包好，厂商只实现调用存储 API 的特定逻辑。"
+      ],
+      "tradeoffs": [
+        "Provisioner Pod 容器多（6 个）是设计使然而非冗余：通用框架与特定驱动通过内存 emptyDir 共享 socket 通信。"
+      ],
+      "turning_points": [
+        "CSI 插件是'双容器协同'：一个 Pod 里通用 provisioner 干监听与调度、cephcsi 干存储 API 调用，彼此靠共享 socket 目录解耦。"
+      ]
+    },
+    {
+      "start": "19:00",
+      "end": "23:00",
+      "topic": "Node Agent：node-driver-registrar 与 kubelet 集成",
+      "points": [
+        "Rook-agent（rbd-csi daemonset）运行在每台节点，负责把卷 mount 进容器；Pod 内有 3 个容器：node-driver-registrar（把 CSI socket 路径注册给 kubelet）、cephcsi driver（实现具体 mount 操作）等。",
+        "注册机制：node-driver-registrar 通过 kubelet registration pass 把 CSI socket 地址（如 /var/lib/kubelet/plugins/rook-ceph.rbd.csi.ceph.com/）注册给 kubelet；kubelet 在 Pod 启动流程的 volume attach & mount 阶段，按卷的 CSI driver 名字查既定路径（/var/lib/kubelet/plugins/<driver-name>/csi.sock）把 mount 请求发到对应 socket。",
+        "与 provisioner 同理，registrar 与 cephcsi 通过共享的 CSI socket 目录（emptyDir）通信。",
+        "整个 CSI 工作流：用户建 PVC → 通用 provisioner 调 cephcsi 创建卷并建 PV → attach 使卷与节点绑定 → Pod 启动时 kubelet 按 driver 名发请求 → 节点侧 cephcsi 完成 mount。"
+      ],
+      "tradeoffs": [
+        "排障时要知道 kubelet 是按'driver 名字拼 socket 路径'的既定约定寻址，注册失败会导致 Pod 挂载一直等待。"
+      ],
+      "turning_points": [
+        "kubelet 不认识任何存储厂商，它只认一个约定：/var/lib/kubelet/plugins/<CSI driver 名>/csi.sock——厂商只要把 socket 放对位置就完成了与 kubelet 的集成。"
+      ]
+    },
+    {
+      "start": "23:00",
+      "end": "27:35",
+      "topic": "使用演示与 Ceph 相关 CRD 抽象",
+      "points": [
+        "使用流程：用户先看集群有哪些 StorageClass（发现 rook-ceph-block）→ 创建 100Mi 的 PVC（storageClass=rook-ceph-block）→ Rook 监听到后调 CSI driver 在 Ceph 存储上创建 100Mi 块、生成 PV 并与 PVC 绑定 → 用户创建 nginx Pod，声明 volume 引用该 PVC 并 mount 到 /mnt/rook → Pod Running 后 /mnt/rook 即为 Ceph 块存储。",
+        "Rook 为 Ceph 抽象出的 CRD 层次：CephCluster（最上层，代表一组控制平面组件：monitor、mgr、osd、discover 等）→ CephBlockPool（存储池，一个 CephCluster 可有多个 pool，不同 pool 定义不同故障域与副本数，如测试环境 replicas=1、生产环境 replicas=3）→ StorageClass（rook-ceph-block，由 operator 注册）。",
+        "Rook 的演进：老的 Rook agent（flex volume 方式）已逐步被 Ceph CSI driver 取代。"
+      ],
+      "tradeoffs": [
+        "副本数/故障域在 CephBlockPool 配置，生产规划（replicas=3、故障域隔离）要在创建 pool 时定好，事后调整成本高。"
+      ],
+      "turning_points": [
+        "用户视角的 Rook 使用极其简单（看 StorageClass→建 PVC→Pod 引用），复杂性全被 Rook 的 CRD 与控制面封装在底层。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "Rook：CNCF 已毕业的存储项目，面向 CSI 存储驱动，提供 Ceph、NFS、EdgeFS、Cassandra、CockroachDB 等一篮子存储方案。",
+    "Operator 模式：CRD + Controller；Rook Operator 以 Deployment 运行、利用 controller-runtime 框架，通过 CRD 创建资源并监控、拉起整个存储控制平面。",
+    "Rook 发现机制：discover 服务用 lsblk 发现节点裸盘，用 ceph-volume inventory 把空盘挂载成 Ceph OSD。",
+    "CSI Provisioner 分工：通用 csi-provisioner（监听 PVC、通用流程）与 cephcsi（调用 Ceph API 创建真实卷）运行在同一 Pod，通过 emptyDir（medium=Memory）共享的 unix socket 通信。",
+    "node-driver-registrar：节点侧把 CSI socket 路径注册给 kubelet；kubelet 按 /var/lib/kubelet/plugins/<driver-name>/csi.sock 的既定约定把 mount 请求发给对应 CSI driver。",
+    "Ceph CRD 抽象：CephCluster（monitor/mgr/osd/discover 控制面）→ CephBlockPool（故障域与副本数，测试 replicas=1、生产 replicas=3）→ StorageClass（rook-ceph-block，用户可见入口）。"
+  ],
+  "closing": "收尾总结：本讲解释了 Rook 的工作原理——Operator 用 CRD+Controller 拉起 Ceph 控制平面，discover 服务自动发现裸盘，CSI Provisioner（通用框架+cephcsi 双容器经 socket 通信）创建卷、Node Agent 经 node-driver-registrar 与 kubelet 集成完成挂载，并通过创建 100Mi 块存储的 demo 演示了完整使用链路与 CephCluster/CephBlockPool/StorageClass 的对象抽象；最后提供了一份 CNI/Calico 网络平面数据包流转的参考资料链接供深入阅读。"
+}

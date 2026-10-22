@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《架构设计合理性实战》— 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">架构设计合理性实战</a><a href="README.html">《架构设计合理性实战》消化索引（digest README）</a></div>
+<h1>《架构设计合理性实战》— 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p><strong>架构设计 = 三阶段流程：前期盘干系人定诉求、中期设计 3-5 个备选方案并用&quot;维度优先级排序&quot;选择、后期细化成文档交付开发——选型的唯一标准是&quot;合适&quot;，不是&quot;最牛&quot;。</strong></p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>六方利益干系人框架</strong>（L02）：投资者/监管者/构建者/维护者/使用者/评估者——用一张清单盘全所有诉求方（干系人可以是&quot;其他系统&quot;），诉求按影响力排序：监管者 &gt; 投资者 &gt; 评估者 &gt; 使用者 &gt; 构建者 &gt; 维护者。</li><li><strong>备选架构设计与评估</strong>（L03/L06）：头脑风暴（架构模式×技术选型排列组合）→ 红线一票否决 → 设计 3-5 个差异方案；评估不用综合打分，用&quot;维度优先级排序&quot;逐级一票否决（如可用性→可维护性→成本）。</li><li><strong>三类文档划分</strong>（L04）：备选架构文档（给老板）、详细架构文档（给开发，含规范+质量）、方案设计文档（开发自写）——PPT 架构师 = 只做备选、跳过详细。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>判边界</strong>：改动是否影响 4R（层级/角色/关系/规则）？是=架构设计，否=方案设计。</li><li><strong>逼数字</strong>：把业务方&quot;大量/海量/性能要高&quot;追问成具体数字（100万还是1亿？TPS 1000 还是 1万）。</li><li><strong>强制 ≥3 个备选方案</strong>：少于 3 个说明你技术宽度不够；方案间必须有架构模式或技术选型的明显差异。</li><li><strong>比较学习法</strong>：学新技术与相似方案做 6 维对比（集群/并发/持久化/性能/数据结构/高可用），追问差异动机。</li><li><strong>评估表加纠错栏</strong>：每条评估结论标注&quot;可能错在哪&quot;，主动压力测试（案例中&quot;可定制&quot;&quot;接入成本低&quot;两条都被证伪）。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><strong>老板的诉求未必排第一</strong>（L02/L05）：澳X通案例中 P10 为考核要求 1 个月上线，实际因监管 6 个月才上线；消息队列案例中老板最关心的&quot;成本&quot;被架构师排到第三（可用性第一、可维护性第二）。架构师的职责是给出基于业务与技术的排序，而不是听职位最高的。</p>
+<h2>值不值得花时间？</h2>
+<p><strong>值</strong> — 176 分钟换一套可直接落地的架构决策流程：六方干系人清单、备选方案设计与优先级评估、文档三部分模板，且含一个真实案例完整演示 + 罕见的&quot;评估结论事后纠错&quot;自我批判。主要水分是每讲 20% 的开场回顾/测验模板，量化数据（短信转化率、存储难度 100 倍等）全部为讲师经验，引用需标注。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>

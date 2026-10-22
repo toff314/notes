@@ -1,0 +1,130 @@
+{
+  "lecture": "7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑",
+  "source": "7. 案例分享：通过 Ingress 和 Service 完成一个网络拓扑.txt",
+  "duration_min": 29.75,
+  "intro": "本节分享讲师参与过的真实项目（eBay）：用 Ingress 与 Service 解决外部公网流量接入，构建跨地域多活数据中心 + 基于 Linux 软件负载均衡（IPVS + BGP/ECMP + Envoy）的全球边缘加速网络拓扑，并给出量化收益。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "05:00",
+      "topic": "案例背景与目标网络拓扑",
+      "points": [
+        "真实项目目标：通过 Ingress 和 Service 完成高可用网络拓扑——至少多副本（如 3 副本）+ 跨地域多活数据中心，一个数据中心故障时应用不受影响或影响极小",
+        "局部设计（单数据中心）：关键应用 ≥3 副本，之上搭一层负载均衡：LoadBalancer 类型 Service，由 service controller 为每个 Service 配置外部负载均衡器并把分配的 VIP 写回 Service 地址",
+        "访问 LB VIP 的请求由负载均衡器转发到后端 Pod"
+      ],
+      "tradeoffs": [
+        "每个 Service 独立 LB VIP 是高成本方案，后文正是为优化此方案展开"
+      ],
+      "turning_points": [
+        "多活设计的第一性约束：单副本必然单点故障，副本数之上还要跨地域"
+      ]
+    },
+    {
+      "start": "05:00",
+      "end": "10:30",
+      "topic": "DNS TTL 的故障放大与双层 LB 秒级切换",
+      "points": [
+        "直接挂 DNS 的问题：管理员把主路由器弄坏后（网络维护事故），客户端缓存 DNS 记录仍持续向坏线路的 LB VIP 发请求——DNS 切流量切不走，时长从几分钟到几十分钟不等，故障被放大",
+        "解决方案：在本地 LB VIP 之上再加一层 LB，该层同时指向本地 DC 的 LB VIP 与其他数据中心的 LB VIP；应用故障时在 LB 层把线切掉（所有数据包都经过 LB，一切即生效），故障恢复从分钟级变成秒级（几秒内解决）",
+        "网络效率权衡：本地一定快、远端一定慢，故用权重负载均衡——99% 流量进本地、1% 流量出远端，既保证 99% 流量高效，又保证本地线路故障时可秒级切换到其他数据中心"
+      ],
+      "tradeoffs": [
+        "DNS 层切流受 TTL 制约不可控；LB 层切流秒级可控，代价是多一跳与本地/远端流量权重权衡",
+        "99/1 权重牺牲 1% 的请求效率换取秒级故障切换能力"
+      ],
+      "turning_points": [
+        "关键洞察：DNS 是\"查询时\"生效、LB 是\"每包都经过\"生效——故障切换必须放在数据面（LB）而非控制面（DNS）"
+      ]
+    },
+    {
+      "start": "10:30",
+      "end": "15:00",
+      "topic": "自建 Ingress Controller 的动机：硬件 LB 的三大问题",
+      "points": [
+        "原有方案依赖大量硬件负载均衡器：成本高（一套高端负载均衡器十几万美金，公司用几千套成本极高）",
+        "硬件 LB 通常主备运行：只有主承接流量、备设备无流量，全公司一半设备闲置，设备利用率极低",
+        "采购不灵活：从发现需求到采购、上架、配置可用要一两个季度；疫情期间流量暴涨却买不到设备（工厂停产），只能拆东墙补西墙",
+        "探索方向：基于通用 Linux 技术（Software Load Balancer）完成整个网络接入"
+      ],
+      "tradeoffs": [
+        "硬件 LB 的三个痛点：成本、主备闲置、采购周期长——全部指向\"用软件替换\"",
+        "自建 Ingress Controller 需要自研并维护，是团队能力与基础设施投入的权衡"
+      ],
+      "turning_points": [
+        "硬件（主备、采购周期）与软件（可横向扩展、按需扩容）的根本差异驱动了这次重构"
+      ]
+    },
+    {
+      "start": "15:00",
+      "end": "21:00",
+      "topic": "四层接入架构：IPAM、IPVS 隧道、BGP 宣告与 ECMP",
+      "points": [
+        "网络接入拆解为四件事：DNS 配置（每域名独立 VIP + DNS 指向）、路由规则（让基础设施知道 IP 往哪走）、四层负载均衡规则（外部请求转集群内请求）、七层代理配置（Ingress Pod 转发）",
+        "自建 Ingress Controller 是编排器：watch Ingress/Secret/Service/Endpoint 对象，worker 从队列取 Ingress 完成 FQDN 配置、DNS 配置与 Ingress 更新",
+        "四层实现：用户建独立域名的 Ingress → 判定需要新 VIP → 在系统控制面（Ingress namespace）创建用户不可见的 Service → 自研 Service Controller（ELB Director）watch 该 Service → IPAM（IP Allocation Manager）从有效 CIDR 分配独立 VIP → 通过 Netlink 配置 IPVS 规则（VIP1→Ingress Pod 列表）",
+        "转发模式用 Tunneling（IP-over-IP）：不直接改原始包头，而是在原始包外加一层 IP 头（SourceIP=Pod IP、Destination=L7 Pod IP）",
+        "路由宣告：节点跑 BIRD 以 BGP 模式与机架 ToR 交换机建立长连接交换路由，节点启动即宣告可接受的 IP 段",
+        "横向扩展：多个 L4 节点宣告同一 IP 段，路由器用 ECMP（等开销多路径）按源 IP 组哈希把流量分散到各 L4 节点，实现可横向扩展的四层接入层"
+      ],
+      "tradeoffs": [
+        "用 Tunneling（IP-over-IP）而非 NAT 做四层转换，与 iptables/IPVS 的 NAT 模式是不同的技术选择",
+        "ECMP 按\"源 IP 组\"哈希分发，粒度是会话级而非逐包级，需接受该分发特征"
+      ],
+      "turning_points": [
+        "ELB Director + IPAM + BIRD(BGP) + ECMP 构成完整的软件四层接入栈，全部基于 Linux 内核能力"
+      ]
+    },
+    {
+      "start": "21:00",
+      "end": "25:00",
+      "topic": "七层 Envoy 与完整数据流（含 DSR 回包）",
+      "points": [
+        "七层：L7 组件生成 Envoy 配置（解析 Ingress spec），请求被 Envoy 按配置转发到对应后端 Pod",
+        "完整数据流：客户端(66.1) → 目标 VIP(10.1) → 路由器（全局 BGP 知道 IP 归属）→ ToR 交换机（BGP next-hop + ECMP 哈希）→ L4 节点（IPVS 转发）→ 原始包外层再封一层 IP 头 → L7 Pod 的 tun0 设备解封装外层包 → Envoy 处理",
+        "回包路径：响应因外层 IP-over-IP 头已去掉、只剩内层包（SourceIP=客户端 IP），直接走默认路由返回客户端——即 DSR（Direct Server Return）：入站流量走 L4，响应不走 L4 直回客户端"
+      ],
+      "tradeoffs": [
+        "DSR 减轻 L4 节点回程压力，但要求后端能直接路由到客户端（集群内网可达场景）",
+        "IP-over-IP 封装增加每个包的头部开销，换来的是无需改写源/目标地址的转发灵活性"
+      ],
+      "turning_points": [
+        "L4 入站封装、L7 解封装、响应直返：三个阶段各司其职，构成完整的软件接入数据面"
+      ]
+    },
+    {
+      "start": "25:00",
+      "end": "29:45",
+      "topic": "全球边缘加速落地与量化收益、模块作业",
+      "points": [
+        "问题背景：访问海外站点慢源于跨大陆网络——TCP 三次握手单次单向超 100ms（三次约 300ms），HTTPS 还要 4 次 TLS 握手，共六七次双向交互；慢在光速物理极限",
+        "互联网路径不确定性：示例——从珀斯（澳大利亚）访问美国数据中心的路径绕经中国、德国再到美国，而从墨尔本访问则直连悉尼→洛杉矶（快得多）",
+        "方案：分析业务访问量聚集城市，首批选 8 个城市部署边缘 POP 数据中心，每个 POP 仅 15 台服务器、建 Kubernetes 集群并部署前述 Ingress 方案，把 eBay 网络接入规则全转成 Ingress 规则",
+        "DNS 地域推送：把域名与其地域附近的 VIP 映射推给本地域名提供商（如中国用户解析到香港 VIP）；边缘节点与主数据中心通过可控的私有骨干网（专线）连接，边缘做 TLS 卸载后以 HTTP 访问主数据中心（HTTP 握手效率远高于 HTTPS）",
+        "逐步缩小 CDN 合作范围：静态内容从 CDN 缓存逐步迁移到自有 POP 节点缓存，但 DDoS 防护等能力 CDN 仍强，至今未完全移除（渐进迁移过程）",
+        "量化收益：跨大陆网络响应从 140ms 提升到 40ms；预测每提升 100ms 响应时间，公司整体营收约增加 4%",
+        "模块作业：把 HTTP server 部署到 Kubernetes，用 Service 和 Ingress 发布到集群外部——考虑高可用（副本）、用证书保证 HTTP server 安全、基于不同 Endpoint/路径（L3 入口）把请求转向不同地址"
+      ],
+      "tradeoffs": [
+        "边缘加速依赖私有骨干网（可控但成本高），与公网 CDN（灵活但不可控）之间是渐进迁移关系",
+        "边缘 TLS 卸载换握手效率，代价是边缘与骨干网之间的明文传输（依赖专线可信）",
+        "DDoS 防护等安全能力短期无法自建，CDN 无法完全去掉"
+      ],
+      "turning_points": [
+        "用\"把访问入口放在用户附近 + 私有骨干网可控传输\"对抗光速与公网路径不确定性，是边缘加速的核心思想"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "高可用拓扑：每数据中心 ≥3 副本 + LoadBalancer 类型 Service（service controller 配置外部 LB 并写回 VIP）",
+    "DNS TTL 故障放大：客户端缓存旧记录，DNS 摘线后流量仍发往坏线路（几分钟到几十分钟）；在本地 LB VIP 之上再加一层 LB 可秒级切流",
+    "权重负载均衡：99% 流量走本地、1% 走远端，兼顾 99% 高效与秒级故障切换",
+    "自建 Ingress Controller = 编排器：watch Ingress/Secret/Service/Endpoint，负责 DNS 配置、四层（IPVS）配置、七层（Envoy）配置",
+    "四层实现：ELB Director（watch Service、IPAM 分配 VIP、Netlink 配置 IPVS）；转发模式为 Tunneling（IP-over-IP：原始包外加一层 IP 头）而非 NAT",
+    "BGP/BIRD：节点与 ToR 交换机建立 BGP 会话宣告可承载的 IP 段；ECMP（等开销多路径）让多个 L4 节点按源 IP 组哈希横向扩展",
+    "DSR（Direct Server Return）：入站流量经 L4，响应包由后端直接回客户端（IP-over-IP 外层头已剥离、内层 SourceIP 为客户端 IP）",
+    "量化结论：跨大陆网络响应从 140ms 降至 40ms；每提升 100ms 响应约带来 4% 营收提升",
+    "边缘加速：8 城市 POP（各 15 台服务器）建 Kubernetes 集群 + Ingress 方案，边缘 TLS 卸载后经私有骨干网以 HTTP 访问主数据中心；DNS 记录按地域推送给本地域名提供商"
+  ],
+  "closing": "收尾布置模块作业：将 HTTP server 部署到 Kubernetes，用 Service 和 Ingress 发布到集群外部，重点考虑应用高可用（副本）、用证书保证 HTTP Server 的 HTTPS 安全、基于不同路径（Endpoint）把请求转向不同地址；并预告模块总结，强调作业对理解整个 Kubernetes 体系的重要性。"
+}

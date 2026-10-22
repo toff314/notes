@@ -1,0 +1,376 @@
+[
+  {
+    "order": 0,
+    "title": "热点速递",
+    "title_safe": "热点速递",
+    "articles": [
+      {
+        "id": "993830",
+        "title": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+        "title_safe": "热点速递｜从阿里禁用 Claude Code 说起，聊聊我们学 AI 编程到底在学什么？",
+        "time": "06:16",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "title": "开篇词",
+    "title_safe": "开篇词",
+    "articles": [
+      {
+        "id": "973962",
+        "title": "开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？",
+        "title_safe": "开篇词｜怎么用 Claude Code 改好一个跑了几年的老项目？",
+        "time": "09:32",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "title": "方法论：夯实基础",
+    "title_safe": "方法论：夯实基础",
+    "articles": [
+      {
+        "id": "974062",
+        "title": "01｜老项目改造的真实链路：从接手到交付，人到底做了什么？",
+        "title_safe": "01｜老项目改造的真实链路：从接手到交付，人到底做了什么？",
+        "time": "11:51",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "974095",
+        "title": "02｜Claude Code 进来后：哪一步变了，哪一步没变？",
+        "title_safe": "02｜Claude Code 进来后：哪一步变了，哪一步没变？",
+        "time": "09:44",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "974663",
+        "title": "03｜理解、约束、验证：让 AI 可信的三层控制",
+        "title_safe": "03｜理解、约束、验证：让 AI 可信的三层控制",
+        "time": "11:02",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "975241",
+        "title": "04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？",
+        "title_safe": "04｜AI 编程工具全景：武器库里有什么，什么时候拿哪一件？",
+        "time": "10:36",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "975267",
+        "title": "05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景",
+        "title_safe": "05｜业界在做什么？2026 年 AI + 老项目改造的学术与工程全景",
+        "time": "15:37",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "title": "了解项目：掌握实践路径",
+    "title_safe": "了解项目：掌握实践路径",
+    "articles": [
+      {
+        "id": "975378",
+        "title": "06｜了解项目的八步心法：从 README 到核心链路",
+        "title_safe": "06｜了解项目的八步心法：从 README 到核心链路",
+        "time": "12:42",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "975826",
+        "title": "07｜安装画图工具：给 Claude Code 装上画图 Skill",
+        "title_safe": "07｜安装画图工具：给 Claude Code 装上画图 Skill",
+        "time": "11:43",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "975832",
+        "title": "08｜俯视项目全景：用提示词画出架构图、模块图、依赖图",
+        "title_safe": "08｜俯视项目全景：用提示词画出架构图、模块图、依赖图",
+        "time": "10:49",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "976182",
+        "title": "09｜接口和数据模型：让 AI 产出生成接口清单和 Schema",
+        "title_safe": "09｜接口和数据模型：让 AI 产出生成接口清单和 Schema",
+        "time": "09:08",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "976338",
+        "title": "10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识",
+        "title_safe": "10｜老项目的 CLAUDE.md 怎么写？从五份资产到一份项目常识",
+        "time": "09:42",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "976622",
+        "title": "11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能",
+        "title_safe": "11｜老项目的 Skill 怎么挖？把重复流程变成可复用的技能",
+        "time": "13:11",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "976978",
+        "title": "12｜实操课：完整摸清一个陌生项目的全流程演示",
+        "title_safe": "12｜实操课：完整摸清一个陌生项目的全流程演示",
+        "time": "19:14",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 4,
+    "title": "运行和测试：编译、测试、建立护栏",
+    "title_safe": "运行和测试：编译、测试、建立护栏",
+    "articles": [
+      {
+        "id": "977524",
+        "title": "13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过",
+        "title_safe": "13｜让 AI 当你的环境工程师：依赖、编译、启动、冒烟一把过",
+        "time": "12:34",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "977594",
+        "title": "14｜摸清现有测试：能跑通吗？覆盖度怎样？",
+        "title_safe": "14｜摸清现有测试：能跑通吗？覆盖度怎样？",
+        "time": "10:51",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "978185",
+        "title": "15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为",
+        "title_safe": "15｜补出一套兜底测试：让 AI 用 Characterization Test 锁住行为",
+        "time": "15:29",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "978235",
+        "title": "16｜实操课：给一个老项目建立完整改造前护栏的全流程演示",
+        "title_safe": "16｜实操课：给一个老项目建立完整改造前护栏的全流程演示",
+        "time": "29:14",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 5,
+    "title": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+    "title_safe": "需求改造：给 Spring AI Alibaba Admin 加新功能",
+    "articles": [
+      {
+        "id": "978446",
+        "title": "17｜从一句话需求到需求文档：让 AI 帮你拆需求",
+        "title_safe": "17｜从一句话需求到需求文档：让 AI 帮你拆需求",
+        "time": "16:32",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "978730",
+        "title": "18｜从需求文档到改造方案：让 AI 帮你把改造想透",
+        "title_safe": "18｜从需求文档到改造方案：让 AI 帮你把改造想透",
+        "time": "16:50",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "979207",
+        "title": "19｜执行改造（上）：后端开发跑通测试",
+        "title_safe": "19｜执行改造（上）：后端开发跑通测试",
+        "time": "15:44",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "979519",
+        "title": "20｜执行改造（下）：前端开发和接口对接",
+        "title_safe": "20｜执行改造（下）：前端开发和接口对接",
+        "time": "09:26",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "979914",
+        "title": "21｜实操课：一次完整改造的全流程演示 + 验收复盘",
+        "title_safe": "21｜实操课：一次完整改造的全流程演示 + 验收复盘",
+        "time": "33:39",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "title": "阶段总结复盘",
+    "title_safe": "阶段总结复盘",
+    "articles": [
+      {
+        "id": "980363",
+        "title": "22｜核心五问：这门课的思路是如何解决问题的？",
+        "title_safe": "22｜核心五问：这门课的思路是如何解决问题的？",
+        "time": "11:23",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "980760",
+        "title": "23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面",
+        "title_safe": "23｜换个功能再跑一遍：从 0 到 1 加一个 Overview 页面",
+        "time": "10:04",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 7,
+    "title": "二次开发：基于 Hermes Agent 做自动化测试",
+    "title_safe": "二次开发：基于 Hermes Agent 做自动化测试",
+    "articles": [
+      {
+        "id": "981376",
+        "title": "24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent",
+        "title_safe": "24｜建立学习框架：用 AI 快速拆解学习 Hermes Agent",
+        "time": "13:08",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "981710",
+        "title": "25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案",
+        "title_safe": "25｜两次翻译：把“基于 Hermes Agent 的自动化测试”拆成技术方案",
+        "time": "19:55",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "981915",
+        "title": "26｜跑通 Hermes Agent：Hello World 之后再回看方案",
+        "title_safe": "26｜跑通 Hermes Agent：Hello World 之后再回看方案",
+        "time": "11:39",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "982924",
+        "title": "27｜让代码长出来：用提示词驱动写 Skill 套件",
+        "title_safe": "27｜让代码长出来：用提示词驱动写 Skill 套件",
+        "time": "16:45",
+        "has_video": false,
+        "has_audio": true,
+        "has_attachment": true
+      },
+      {
+        "id": "983171",
+        "title": "28｜跑通系统：填业务层，看见混沌测试真的跑起来",
+        "title_safe": "28｜跑通系统：填业务层，看见混沌测试真的跑起来",
+        "time": "08:25",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "983185",
+        "title": "29｜实操：从一句话需求到 7×24 系统的全流程演示",
+        "title_safe": "29｜实操：从一句话需求到 7×24 系统的全流程演示",
+        "time": "42:44",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 8,
+    "title": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+    "title_safe": "挑战开源：给 Rust 写的 Agent 通信协议贡献代码",
+    "articles": [
+      {
+        "id": "983624",
+        "title": "30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产",
+        "title_safe": "30｜第一个 PR：在 AI 时代，开源 commit 依然是简历最值钱的资产",
+        "time": "14:47",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "983928",
+        "title": "31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活",
+        "title_safe": "31｜第二个 PR：让 AI 当你的 Rust 助教，搞定有难度的活",
+        "time": "12:08",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "984669",
+        "title": "32｜实操：挑战开源的全流程演示和我的开源经验",
+        "title_safe": "32｜实操：挑战开源的全流程演示和我的开源经验",
+        "time": "40:09",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  },
+  {
+    "order": 9,
+    "title": "总结复盘",
+    "title_safe": "总结复盘",
+    "articles": [
+      {
+        "id": "984929",
+        "title": "33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目",
+        "title_safe": "33｜改造 SOP：三种形式、一套打法，把整门课带回你自己的项目",
+        "time": "10:02",
+        "has_video": false,
+        "has_audio": true
+      }
+    ]
+  },
+  {
+    "order": 10,
+    "title": "结束语 & 结课测试",
+    "title_safe": "结束语 & 结课测试",
+    "articles": [
+      {
+        "id": "985076",
+        "title": "结束语｜少年依旧",
+        "title_safe": "结束语｜少年依旧",
+        "time": "03:50",
+        "has_video": false,
+        "has_audio": true
+      },
+      {
+        "id": "985257",
+        "title": "结课测试｜来赴一场满分之约！",
+        "title_safe": "结课测试｜来赴一场满分之约！",
+        "time": "00:22",
+        "has_video": false,
+        "has_audio": false
+      }
+    ]
+  }
+]

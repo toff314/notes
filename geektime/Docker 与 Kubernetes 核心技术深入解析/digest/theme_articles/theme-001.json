@@ -1,0 +1,65 @@
+{
+  "id": "theme-001",
+  "theme": "etcd 高可用不是'3 节点集群'那么简单——从 Raft 原理到生产故障的完整落地路径",
+  "source_lectures": [
+    "13",
+    "14",
+    "16",
+    "17"
+  ],
+  "lecture_tiers": {
+    "gold": 2,
+    "silver": 2,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "很多教程教你'搭一个 3 节点 etcd 集群'就算高可用了，但生产环境里 etcd 故障的根源几乎不在'节点数量不够'：list 请求穿透堵死 gRPC 连接、网络存储让 member 掉队、API Server 假健康引发大规模误驱逐、磁盘写满后恢复顺序错误——这些才是真实的'高可用杀手'。为什么 Raft 明明保证了数据一致，集群还是会在生产上出大事？",
+    "act2_method": "先把 Raft 的约束讲透（L13/L14）：选主+日志复制的多数确认机制决定了 3/5 节点容错、偶数节点无意义、网络分区少数派只读、新成员用 Learner 先同步后投票。再讲 etcd 的生产约束（L16/L17）：etcd 横向扩展反而降低写入性能；API Server 是唯一客户端且同 group 共用 gRPC 连接，list 不带 resourceVersion 会穿透到 etcd；数据盘必须本地 SSD 独立盘；备份用'30 分钟快照+10 秒增量'；最后用 FMA 故障注入暴露'health check 只看端口'的假健康缺陷，并给出'真实探测依赖存活、异常即自杀'的修复方案。",
+    "act3_critique": "这套方法论有明确边界：①故障案例的规模数值（40% 节点、100MB list、5000 节点）均为讲师内部环境，不可独立验证（❓），只能当方向参考；②Raft 调参经验值（心跳=RTT 的 0.5-1.5 倍、选举超时 10 倍）是工程经验而非官方规范；③'快照+增量'备份方案需要自研 sidecar 客户端，复杂度高，小集群用官方 snapshot 定时备份即可；④课程基于 etcd 3.x，需对照官方文档确认当前版本参数。整体上，'机制可验证、数值靠经验'是引用时必须守住的底线。"
+  },
+  "title_idea": "etcd 高可用的 5 个反直觉真相：为什么加节点没用，为什么 3 节点集群也会被 40% 的 Pod 误驱逐",
+  "type": "methodology",
+  "search_keywords": [
+    "etcd 高可用",
+    "Raft 协议 选主",
+    "etcd list 穿透 resourceVersion",
+    "etcd FMA 故障注入",
+    "etcd 快照 增量备份",
+    "etcd 网络存储 本地SSD",
+    "API Server 健康检查",
+    "etcd alarm no space"
+  ],
+  "visualization_hints": [
+    "Mermaid 时序图：list 请求穿透 API Server→etcd→gRPC 连接阻塞→节点状态上报失败→误驱逐的故障链",
+    "Mermaid 流程图：30 分钟快照 + 10 秒增量事件的备份与恢复路径",
+    "表格：3/5 节点容错对比（1/3/5 节点的性能、容错、运维压力）"
+  ],
+  "controversy_hooks": [
+    "『加一个节点并不能提升容错，还可能引入平票风险』——与'越多越稳'的直觉相反",
+    "『etcd 横向扩展反而降低写入性能』——与常规分布式系统的扩展直觉相反",
+    "『端口通≠服务健康』——生产上大量 health check 都在自欺欺人"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "Election Timeout 默认 150-300ms 随机 → Raft 论文",
+      "etcd 单数据包约 1.5MB 限制 → etcd 官方文档",
+      "默认心跳 100ms/选举超时 1000ms → etcd 默认配置",
+      "kubectl list 默认 limit=500 且带 continue token → Kubernetes API 行为",
+      "磁盘写满→alarm no space→需 defrag+disarm 才能恢复写入 → etcd 行为"
+    ],
+    "avoid_claims": [
+      "40% 节点被误驱逐、100MB list、5000 节点故障规模 — 讲师内部环境数据 (❓)，仅作方向引用",
+      "心跳=RTT 的 0.5-1.5 倍、选举超时=RTT 10 倍 — 工程经验值 (❓)",
+      "list 穿透故障的'1 万 pod 一次 list 超 100MB'具体数值 — 内部环境 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：为什么 3 节点集群不算高可用",
+      "核心原理：Raft 选主/日志复制与 3/5 节点权衡",
+      "实操方法：list 防穿透、本地 SSD、快照+增量备份、health check 真实探测",
+      "边界与批判：数据可信度与方案适用场景"
+    ],
+    "min_score": 52
+  }
+}

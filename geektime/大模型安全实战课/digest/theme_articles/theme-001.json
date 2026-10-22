@@ -1,0 +1,53 @@
+{
+  "id": "theme-001",
+  "theme": "让大模型既'听话'又'可信'：行为对齐（RLHF/RLAIF/CA）与安全评估如何形成闭环",
+  "source_lectures": ["17", "29", "01", "26"],
+  "lecture_tiers": {
+    "gold": 1,
+    "silver": 2,
+    "copper": 1
+  },
+  "narrative_arc": {
+    "act1_problem": "企业接入大模型时遇到两个无法回避的追问：一是'模型守规矩的本质到底是什么'——同一句敏感话题，为什么豆包婉拒、DeepSeek 却表达立场？靠关键词封禁和系统提示词根本防不住语义层面的越界；二是'厂商说已消除有害倾向，我能信吗'——平台承诺是'底线防守'，拦得住显而易见的风险，却未必防得住结构性攻击、语义绕过和幻觉。两个问题指向同一个缺口：我们既没有机制让模型真正'内化'行为边界，也没有方法度量它到底安不安全。",
+    "act2_method": "课程给出的答案是两段式闭环。第一段是行为塑造（L17）：模型听话不靠代码，靠奖励信号。RLHF（人教）用人类偏好打分训练奖励模型，改变模型在争议场景中的行为方式；RLAIF（模型教）用 AI 审稿模型打分降低成本，但存在幻觉传播风险；Constitutional AI（规则教）把价值观前置为'宪法条款'，靠 self-critique and refinement 自我修正。三者组合：先用宪法设边界、再用人类反馈精修、再用 AI 反馈放大。第二段是行为度量（L29+L01+L26）：用 3H 框架（Helpful/Honest/Harmless）给出定性方向，用五大维度（提示注入防御/非法内容/幻觉率/隐私/审计合规）把安全拆成可测指标，用四模块评估实验室（攻击任务库→响应分析→评分面板→比对报告）把'信厂商'变成'有依据地信'，再用水印溯源（L26）把输出变成可追责的证据链。两段合起来，才是'让它听话'到'证明它可信'的完整闭环。",
+    "act3_critique": "这套方法论边界清晰但需警惕三点。其一，对齐永远只是'趋近'：RLHF 会继承标注者偏见（保守则畏首畏尾、激进则鲁莽），RLAIF 会把 AI 裁判的幻觉传染给主模型，Constitutional AI 依赖宪法质量——写太宽则无所适从、写太死则八股化，课程明确承认'行为对齐不等于绝对安全'。其二，评估维度是常见分类的整合而非原创，五大维度与 OWASP/OpenAI 系统卡高度同构，独创性有限；课程给出的量化指标（幻觉率/拒答正确率）只有清单没有基准数值，读者需自己补测试数据。其三，数据可信度存在短板：L17 的'模糊中立派 vs 正面肯定派'是用户可自行复测的观察（⚠️ 非正式评测，模型版本会更新），'医疗平台 RLAIF 案例'为讲师转述（❓）；L26 引用的'斯坦福 GrootLM'疑似虚构（🚩，写作时严禁引用）。建议读者以课程框架为骨架，用公开基准（HELM/SafetyBench/OWASP 测试集）自行建立实测基线后再下结论。"
+  },
+  "title_idea": "让大模型'听话'的三种技术，和一个被大多数人忽略的评估闭环",
+  "type": "methodology",
+  "search_keywords": ["RLHF", "RLAIF", "Constitutional AI", "AI alignment evaluation", "LLM safety benchmark", "3H framework", "prompt injection robustness", "hallucination rate evaluation", "model behavior control", "LLM red team"],
+  "visualization_hints": [
+    "Mermaid 流程图：对齐三机制选型决策树（预算充足→RLHF；规模大→RLAIF；价值观前置→CA；组合路线→宪法+RLHF+RLAIF 三段式）",
+    "ECharts 雷达图：五大安全评估维度在某国产模型上的雷达评分示例",
+    "Mermaid 时序图：评估闭环（攻击任务库→模型响应→分析引擎→评分面板→比对报告→选型决策）"
+  ],
+  "controversy_hooks": [
+    "RLAIF 是'AI 教 AI'，会不会让偏见无限自我复制？课程承认'AI 的偏见不能靠另一个 AI 纠正'，但仍在推荐组合使用——这是否自相矛盾？",
+    "3H（Helpful/Honest/Harmless）框架在'说真话 vs 不伤人'冲突时如何裁决？3H 内部本身就存在目标冲突，课程未展开。",
+    "模型厂商的'安全评分'能不能信？课程主张双重验证，但中小企业根本没有搭建评估实验室的资源——'有依据地信'是不是大厂特权？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "RLHF 三阶段机制与 Anthropic 3H 论文一致（arXiv:2204.05862）→ 可直接引用",
+      "Constitutional AI 出自 Anthropic 论文（arXiv:2212.08073）→ 可直接引用",
+      "OWASP LLM Top 10 / MITRE ATLAS / NIST AI RMF 为真实公开框架 → 可直接引用",
+      "OpenCompass（100+数据集）、HELM、SafetyBench、LLM Safety Leaderboard 为真实评估基准 → 可直接引用",
+      "GPT-4.5 系统卡披露安全评估数据（OpenAI 官方）→ 可直接引用"
+    ],
+    "avoid_claims": [
+      "'斯坦福 GrootLM 提出水印方法' — 疑似虚构引用 (🚩) 禁止引用",
+      "'AI 助手回答种族问题掉粉十万' — 无出处 (🚩) 禁止引用",
+      "'医疗平台用 RLAIF 让主模型变谨慎' — 讲师转述 (❓) 需标注'据讲师称'",
+      "'90% 诱导式攻击被切断' — 讲师内部演练 (❓) 需标注来源或弃用",
+      "'模糊中立派 vs 正面肯定派'实测分类 — 可复测但非正式评测 (⚠️) 引用时注明'课程实测，随模型版本变化'"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：模型为什么'不听话'（语义无边界 vs 系统无度量）",
+      "核心原理：RLHF/RLAIF/Constitutional AI 三种对齐机制的对比",
+      "实操方法：企业落地三要点（场景化打分/闭环反馈/可解释奖励）+ 四模块评估实验室搭建",
+      "边界与批判：三种机制的已知缺陷、评估维度的非原创性、数据可信度警示"
+    ],
+    "min_score": 55
+  }
+}

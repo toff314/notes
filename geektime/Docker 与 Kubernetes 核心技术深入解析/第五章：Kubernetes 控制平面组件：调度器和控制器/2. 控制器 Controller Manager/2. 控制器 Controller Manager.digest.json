@@ -1,0 +1,150 @@
+{
+  "lecture": "2. 控制器 Controller Manager",
+  "source": "2. 控制器 Controller Manager.txt",
+  "duration_min": 56.7,
+  "intro": "承接调度器：调度器本身也是一个控制闭环，可视为 Controller Manager 中一个专职做资源分配的控制器特例；本讲进入集群真正的大脑 Controller Manager，讲解声明式集群的驱动机制、控制器框架（Informer/WorkQueue）与 Deployment→ReplicaSet→Pod 的协作链。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "10:00",
+      "topic": "声明式集群与控制器框架：Informer/Lister 与事件机制",
+      "points": [
+        "API Server 是无逻辑的 REST server；让集群动起来、持续解读用户期望并让真实状态符合期望的驱动力是 Controller Manager——集群的大脑，也是声明式集群（declarative）的实现者。",
+        "通过 Code Generator 为任意 API 对象生成 DeepCopy、Conversion 等通用方法以及 ClientSet（Create/Delete/Get/List/Watch）；同时生成 Informer 与 Lister 两个控制接口。",
+        "Get+watch=true 是长连接：先返回满足查询条件的当前对象，随后连接不断、把后续变更推给客户端。",
+        "Lister 负责把当前状态发给客户端；Informer 是消息通知机制，包含三类事件：AddEvent（对象首次出现）、UpdateEvent（属性变更）、DeleteEvent（从 etcd 删除）。"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "声明式集群的本质：用户只给期望状态，控制器持续'解读期望 → 执行配置'让真实状态逼近期望。"
+      ]
+    },
+    {
+      "start": "10:00",
+      "end": "17:00",
+      "topic": "Work Queue 生产者-消费者模型：为什么队列里只放 key",
+      "points": [
+        "控制器标准模式：事件 handler 拿到对象后用 KeyFunc 计算 key（namespace/name，全局唯一），把 key 放入 RateLimitInterface 队列；队列另一端多个 worker（Kubernetes 多数控制器默认 5 个）消费，是标准的生产者-消费者模型。",
+        "worker 从队列取出 key 后通过 Lister 从本地缓存获取对象完整信息，不再直接请求 API Server。",
+        "为什么放 key 而不是完整对象：对象频繁变更时（如副本数一秒内 1→3→1 变十次），队列对已存在的 key 去重，最终只处理一次；worker 处理时取到的是最新状态，中间变化被忽略——这正是最终一致性（eventual consistency）的体现。",
+        "若每个事件都处理，控制器会被频繁变更拖垮；只处理 key 的最新期望，避免重复劳动。"
+      ],
+      "tradeoffs": [
+        "队列去重依赖'只放 key'设计；若放完整对象，每次变更都是不同对象，去重失效且内存占用大。",
+        "worker 处理是异步的，从 handler 到真正执行有延迟，控制器只能保证最终一致而非实时一致。"
+      ],
+      "turning_points": [
+        "最终一致性是 Kubernetes 控制器的设计哲学：中间过程不重要，只要处理到最新期望即可。"
+      ]
+    },
+    {
+      "start": "17:00",
+      "end": "23:00",
+      "topic": "Informer 内部机制：Reflector、DeltaFIFO 与 Indexer",
+      "points": [
+        "Informer 与 API Server 建立长连接做 list-watch；API Server 返回的是序列化字符串，需经 Reflector 通过反射解析 json tag 还原成 Go 对象。",
+        "反序列化后的对象进入 DeltaFIFO 队列（先入先出），取出后送往两个地方：完整对象存入 Indexer（线程安全的 store，维护对象与 key 的映射）；同时触发注册好的事件 handler（Add/Update/Delete），handler 把 key 放入 work queue。",
+        "后台 worker 持续消费 work queue，最终从 Indexer（store）取出完整对象完成配置管理。",
+        "几乎所有 Kubernetes 控制器（含调度器）都基于该 share informer 框架搭建，是理解控制器的关键基础设施。"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "Informer 的本地缓存（Indexer）让 worker 读对象不走 API Server，数据面与缓存配合是控制器高性能的关键。"
+      ]
+    },
+    {
+      "start": "23:00",
+      "end": "32:00",
+      "topic": "Deployment→ReplicaSet→Pod 协作链：六组件配合完成一次部署",
+      "points": [
+        "遵循高内聚松耦合原则，Kubernetes 把不同职责拆到不同对象：Deployment 描述一次部署行为（升级策略），ReplicaSet 定义无状态副本集（Pod 模板+副本数），Pod 是真正应用实例。",
+        "Deployment 默认值：rollingUpdate 滚动升级策略（maxSurge 25% 先起新版本、maxUnavailable 25% 即 25% 副本不 Ready 时部署暂停）与 revisionHistoryLimit（回滚版本数）；滚动升级让白天也能安全发版，不必半夜停机割接。",
+        "协作链：deployment controller 监听 Deployment 并创建 ReplicaSet → replicaset controller 监听 RS 并创建 Pod → 调度器发现未绑定 Pod 完成调度（填 nodeName）→ 该节点 kubelet 通过 CRI 拉容器、CNI 配网络、CSI 挂存储 → Pod Running 可访问；至少六个组件协作，有存储则更多。",
+        "Pod template hash：Deployment 对 Pod 模板做 hash，ReplicaSet 名字 = Deployment 名 + hash；Pod 用 generateName 以 RS 名字做前缀并由系统追加随机串保证唯一。",
+        "用户改镜像 tag 时 hash 变化 → 控制器认定这是一次新部署 → 创建新 RS 并滚动替换旧 RS。"
+      ],
+      "tradeoffs": [
+        "对象职责拆细带来协作链长、理解门槛高，但换来的是每个组件可独立演进、可单独调试。"
+      ],
+      "turning_points": [
+        "滚动升级（maxSurge/maxUnavailable）把'半夜停机割接'变成'随时可做的白天发版'，这是 Kubernetes 对运维方式最深刻的改变之一。"
+      ]
+    },
+    {
+      "start": "32:00",
+      "end": "38:00",
+      "topic": "滚动升级与副本扩缩的实验观察",
+      "points": [
+        "实验一：把 Deployment 镜像从 nginx 改成 nginx:latest（字符串变化即触发）：创建新 RS、新 Pod 起来、旧 Pod 删除，完成滚动升级；describe 事件可看到新 RS 被 scale up、旧 RS 被 scale down 到 0。",
+        "实验二：直接改 ReplicaSet 的 replicas 从 1 到 2，replicaset controller 发现少一个 Pod 自动补一个，保证副本数与期望一致。",
+        "RS 名称中的 hash 就是 pod template hash，直观体现了'模板变更=新部署'的设计。"
+      ],
+      "tradeoffs": [
+        "升级时若 maxUnavailable 控制不当，可能出现新旧版本并存窗口；生产要结合 readiness 探针控制节奏。"
+      ],
+      "turning_points": [
+        "即使 nginx 与 nginx:latest 本质是同一镜像，字符串变化也视为一次部署——Kubernetes 以 spec 内容（hash）而非语义判断变更。"
+      ]
+    },
+    {
+      "start": "38:00",
+      "end": "46:00",
+      "topic": "Controller Manager 中的控制器家族：Job、HPA、Service、DaemonSet、StatefulSet",
+      "points": [
+        "job controller：处理一次性计算任务，示例 job spec 定义 parallelism=2（并发两个 Pod）、completions=5（总共执行 5 次），完成后即结束。",
+        "HPA（HorizontalPodAutoscaler）controller 为 Pod 做自动扩缩容；service controller 配合外部负载均衡器（LB）确保 Service 存在。",
+        "DaemonSet：集群管理型应用（日志采集、监控、故障检查，如 CNI 插件 calico-node、kube-proxy）在集群每个节点上跑一个 Pod；DaemonSet 里没有副本数定义，期望副本数就是当前节点数。",
+        "StatefulSet controller 处理有状态副本集（如 ZooKeeper，每个实例有独立 Volume、固定名字），与无状态 ReplicaSet 不同。"
+      ],
+      "tradeoffs": [
+        "大量控制器集中在 Controller Manager 一个进程里，职责各不同但都遵循同一 informer+workqueue 框架，学习一个可套用到全部。"
+      ],
+      "turning_points": [
+        "DaemonSet 的副本数不是用户定义而是节点数决定的——'每节点一个'是它和 Deployment 的本质差异。"
+      ]
+    },
+    {
+      "start": "46:00",
+      "end": "52:30",
+      "topic": "NamespaceController 代码走读：删除前先清空内容",
+      "points": [
+        "Namespace 下的对象（Pod/Service/ConfigMap 等）是独立对象，删除 Namespace 时若不处理会留下孤立对象，所以必须有 NamespaceController 兜底。",
+        "流程：删除 Namespace 不是物理删除而是把 deletionTimestamp 置为当前时间（本质是 Update 事件）→ handler 把 Namespace key 入队 → worker 从 Lister 取对象 → DeleteAllContent 调用 DiscoverResource 枚举所有 API Group/对象并过滤出可删除资源，逐个删除属于该 Namespace 的内容，全部清空后 Namespace 才真正删除。",
+        "演示：controller-manager 入口 cmd/kube-controller-manager 中 StartNamespaceController，代码里注册 Add/Update handler、InqueueNamespace、SyncNamespaceFromKey、Namespace.ResourcesDeleter 等函数。"
+      ],
+      "tradeoffs": [
+        "依赖客户端 informer 缓存与发现机制（Discovery API），资源类型多时删除过程耗时较长（实验中一直卡在删除阶段）。"
+      ],
+      "turning_points": [
+        "看似简单的 Namespace 删除其实要枚举集群所有 API 对象，'先清内容再删 Namespace'是防止数据孤岛的保证。"
+      ]
+    },
+    {
+      "start": "52:30",
+      "end": "56:42",
+      "topic": "Garbage Collector 与 ownerReference 父子关系",
+      "points": [
+        "ownerReference：对象 metadata 中声明自己属于哪个父对象（API version、名字、UID）；Deployment 创建 ReplicaSet、ReplicaSet 创建 Pod，子对象都会带上指向父对象的 ownerReference，实现父子生命周期绑定。",
+        "garbage collector（GC）是 Controller Manager 中的一个控制器：graph builder 扫描集群所有对象按 ownerReference 构建父子关系图，collector 在删除父对象（如删除 Deployment）时据此级联清理子对象。",
+        "GC 生效的典型场景：删除 Deployment 对象时，其下 ReplicaSet 与 Pod 会被连带回收，不会遗留孤儿资源。"
+      ],
+      "tradeoffs": [],
+      "turning_points": [
+        "ownerReference 是 Kubernetes 资源级联删除的实现基础——不是靠名字约定，而是靠显式的父子引用关系图。"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "声明式集群：用户把期望状态交给集群，由 Controller Manager 持续解读期望并执行配置，使真实状态符合期望。",
+    "Informer 与 Lister：Code Generator 为控制器框架生成的两个接口；Lister 返回当前状态，Informer 是消息通知机制（Add/Update/Delete 三类事件）。",
+    "Work Queue：控制器把对象 key（namespace/name）放入限速队列（RateLimitInterface），多个 worker（默认 5 个）消费——标准的生产者-消费者模型；队列对已存在 key 去重，保证对象频繁变更时只处理最终状态。",
+    "最终一致性：控制器异步处理事件，中间变更被合并忽略，只保证真实状态最终符合最新期望。",
+    "Pod template hash：Deployment 对 Pod 模板内容做 hash 作为 ReplicaSet 名字后缀，模板变更即 hash 变更即一次新部署。",
+    "滚动升级策略：maxSurge 先起的新版本比例、maxUnavailable 允许的最大不可用比例，配合 revisionHistoryLimit 支持随时发版与回滚。",
+    "ownerReference：对象 metadata 中声明所属父对象（API version/名字/UID），是垃圾回收器构建父子关系图、实现级联删除的基础。",
+    "NamespaceController：删除 Namespace 前先通过 DiscoverResource 枚举并删除其下所有内容，防止孤立对象。",
+    "DaemonSet：期望副本数等于集群节点数，每个节点运行一个 Pod，适合日志采集、监控、CNI 插件等集群管理型应用。",
+    "Job：一次性任务对象，parallelism 控制并发数、completions 控制总完成次数。"
+  ],
+  "closing": "[疑似截断] 讲稿末尾正讲到'当我们要去删除 Deployment 对象的时候，我现在去做这个事情'——即在演示垃圾回收器如何随 Deployment 删除而级联清理 ReplicaSet 与 Pod 时中断，无自然收尾语，判断转录或切片截断。"
+}

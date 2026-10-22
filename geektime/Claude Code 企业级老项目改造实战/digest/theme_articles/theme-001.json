@@ -1,0 +1,35 @@
+{
+  "id": "theme-001",
+  "theme": "AI 时代改造老项目最需要的安全网是 Characterization Test——用'锁住现在实际做什么'对抗 AI 的'沉默行为偏移'",
+  "source_lectures": ["05", "14", "15", "19"],
+  "lecture_tiers": {"gold": 1, "silver": 1, "copper": 2},
+  "narrative_arc": {
+    "act1_problem": "老项目改造最常见的恐怖故事：AI 改一行代码，悄悄改坏了五行——没测试时，这个事实要等两周后对接方报 bug 才被发现。更隐蔽的是'沉默的行为偏移'（CodeGeeks Solutions 术语）：AI 改完代码，测试跑通、diff 看起来干净，但在某个没测到的路径上行为已经变了。AI 生成代码的能力远超它对代码正确性的判断能力，而老项目的'应该做什么'经常没人说得清，只有'现在实际做什么'是确定的。问题是：传统测试测的是'应该'，老项目的'应该'恰恰是缺失的，怎么办？",
+    "act2_method": "答案是 Michael Feathers 20 年前在《Working Effectively with Legacy Code》里提出的 Characterization Test，在 AI 时代重新成为刚需（05 讲业界综述+15 讲落地）。核心方法（15 讲）：①先让代码跑一遍，记录实际输入输出，把行为转成测试断言——锁住'现在实际做什么'，改造后只要行为没变就放心；②补测试按四档优先级：改造路径上的 Characterization > 核心链路集成 > 复杂逻辑单元 > 简单 CRUD（可不补）；③节奏控制：每批 1-3 个测试（最好 1 个），跑通一批 review 一批，防止整批不可信；④配 CI 自动跑，测试从'个人资产'变'团队级护栏'。执行侧（14/19 讲）：先摸清现有测试（摸底四步+缺口清单），改造前先锁住改造路径的行为（19 讲改造四原则第一步）。",
+    "act3_critique": "这套方法有明确出处（Feathers 2004 经典，✅可验证）且流程可复现，但它不是银弹。边界：①Characterization Test 锁住的是'现状'——如果现状本身就是 bug（历史包袱中确有问题行为），测试会把它固化成'契约'，未来修复要付出打破测试的摩擦成本，课程未讨论；②对非确定性行为（并发/时序/外部依赖）'先跑记录实际行为'很难稳定复现，课程未给锁法；③'AI 会用业务直觉补应该断言'是讲师应用级洞察（❓无实验数据），逻辑合理但需要读者在实践中验证；④课程效率声明（'30 分钟 CI 换上千次检查'）为讲师估算（❓）。适用判断：改造路径上、行为可确定、无人说得清逻辑的老代码，是这套方法的最佳场景。"
+  },
+  "title_idea": "AI 改老代码最大的风险不是写错，是'悄悄地改错'——用 20 年前的测试方法锁住它",
+  "type": "methodology",
+  "search_keywords": ["Characterization Test", "legacy code AI refactoring", "silent behavioral drift", "Michael Feathers working effectively with legacy code", "AI generated code testing", "characterization test AI", "改造前护栏 测试"],
+  "visualization_hints": [
+    "Mermaid 流程图：改造前锁行为（跑代码记录实际行为→转断言→改造→对比）",
+    "表格对比：传统测试（测应该）vs Characterization Test（测实际）的行为与风险差异"
+  ],
+  "controversy_hooks": [
+    "Characterization Test 会把现状 bug 固化成契约——锁行为与修 bug 的根本冲突怎么解？",
+    "'AI 补测试会写应该断言'的说法没有实验数据，是讲师个人经验还是普遍规律？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "Characterization Test 概念出自 Michael Feathers《Working Effectively with Legacy Code》(2004) → 书籍可查证 (✅)"
+    ],
+    "avoid_claims": [
+      "'30 分钟 CI 换上千次自动检查' — 讲师估算 (❓)",
+      "'AI 写测试=不再有借口拖延' — 修辞性结论 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": ["问题定义（沉默行为偏移）", "方法原理（锁现状而非锁应该）", "实操步骤（四档优先级+分批控量+CI）", "边界与批判（现状 bug 固化、非确定性行为）"],
+    "min_score": 55
+  }
+}

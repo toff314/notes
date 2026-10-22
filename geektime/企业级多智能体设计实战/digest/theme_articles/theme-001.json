@@ -1,0 +1,65 @@
+{
+  "id": "theme-001",
+  "theme": "多智能体协作的范式跃迁：从用完即抛的任务小队，到有身份、有记忆、能自我进化的数字员工团队",
+  "source_lectures": [
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28"
+  ],
+  "lecture_tiers": {
+    "gold": 4,
+    "silver": 2,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "单 Agent 面对复杂任务有三堵结构性墙——效果（上下文越长注意力越稀释）、性能（单点串行排队）、成本（Token 随任务规模线性增长）。上下文工程只能'在上下文范围内更好地工作'，解决不了'超出单点处理能力'的任务。更根本的问题是：哪怕用 Orchestrator 把任务拆给子 Agent 做完，那些子 Agent 完成任务就消散了——没有名字、没有记忆、不知道上次做过什么。分工解决了'怎么做事'，但没解决'做事的是谁'。",
+    "act2_method": "课程给出两条升级路径。第一层（23 课）：Orchestrator 范式，以'任务'而非'Agent'为视角，主 Agent 用 Task 对象精准传参、子 Agent 独立 Crew 隔离、结果传路径不传内容，三个设计分别击穿效果/性能/成本三堵墙。第二层（24-28 课）：把 Orchestrator 的临时小队升级为持久化数字员工团队——25 课三维隔离判断法+四层框架（Role Charter/soul/Memory/Skills）+NEVER 清单定义'谁该存在'；26 课共享工作区+邮箱三态状态机定义'怎么协作'；27 课 Human as 甲方三介入点定义'人怎么介入'；28 课五步闭环（记录→复盘→提案→落地→验证）定义'怎么越用越好'。核心隐喻：人类团队管理学的工程化移植。",
+    "act3_critique": "这套方法论边界清楚：数字员工团队适合长程、天级/周级的任务，而非一次性短程工单（那用 Orchestrator 就够）；协调成本会吃掉并发收益，有效 Agent 数量天花板约 2-3 个，'先少后多'是铁律。最大的软肋是数据——'独立验收 70% vs 10%''误差放大 17.2 倍''MAST 37% 误对齐'等关键论据均无原始出处，读者需自行降级为'讲师经验'。此外，整个模块四的验证停留在 demo 层，未给出真实生产系统的量化结果，'数字员工团队真的越用越好'这一核心主张缺乏严格评测支撑。"
+  },
+  "title_idea": "为什么你的多智能体总是散架：从 Orchestrator 到数字员工团队，中间差了一套协作协议",
+  "type": "methodology",
+  "search_keywords": [
+    "multi-agent orchestrator pattern",
+    "agent role design soul skill memory",
+    "agent mailbox state machine collaboration",
+    "human-in-the-loop agent approval",
+    "agent self-improvement reflection",
+    "digital employee agent team",
+    "agent reliability error amplification"
+  ],
+  "visualization_hints": [
+    "Mermaid 流程图：单 Agent 三堵墙 → Orchestrator 三设计 → 数字团队四机制的演进路径",
+    "Mermaid 状态机图：邮箱三态 unread→in_progress→done 与补单机制",
+    "ECharts 柱状图：多步链路可靠性的指数衰减（0.9^10 vs 0.99^10）"
+  ],
+  "controversy_hooks": [
+    "多智能体是不是被高估了？课程自己都说'有效 Agent 数量天花板 2-3 个'，那为什么市面上还在堆几十个 Agent 的 demo？",
+    "'Human as 甲方'和'完全自主'的张力：课程一边宣传自主，一边承认 LITL（谎言在循环中）——Agent 汇报可能是幻觉，人到底该信多少？"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "可靠性指数衰减 0.9^10≈35% vs 0.99^10≈90.4% → 基础概率计算",
+      "三态状态机/补单机制借鉴 AWS SQS Visibility Timeout → 公开文档机制",
+      "Reflexion (NeurIPS 2023) / Retroformer (ICLR 2024) 论文 → 可查"
+    ],
+    "avoid_claims": [
+      "Galileo+PwC 独立验收 70% vs 10% — 数值无原始报告 (⚠️)",
+      "Google DeepMind 无层级结构误差放大 17.2 倍 — 无出处 (❓)",
+      "Anthropic 1协调者+3-5专家提升 90%+ — 无出处 (❓)",
+      "MAST inter-agent 误对齐占失败模式 37% — 无出处 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：单 Agent 的三堵墙",
+      "Orchestrator 范式拆解",
+      "从任务小队到数字团队的四个机制",
+      "边界与批判：何时不该用多智能体",
+      "数据可信度说明"
+    ],
+    "min_score": 55
+  }
+}

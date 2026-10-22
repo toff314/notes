@@ -1,0 +1,125 @@
+{
+  "lecture": "3. 基于 Webhook 的认证服务集成",
+  "source": "3. 基于 Webhook 的认证服务集成.txt",
+  "duration_min": 25.45,
+  "intro": "本讲解决 Kubernetes 生产化落地的第一步——与集群外企业认证平台集成：讲解 Webhook 认证的原理（TokenReview 协议）、认证服务的代码实现、API Server 接入配置与端到端演示，并以 eBay 的真实事故复盘指数退避的重要性。",
+  "segments": [
+    {
+      "start": "00:00",
+      "end": "02:40",
+      "topic": "为什么做企业认证平台集成",
+      "points": [
+        "上一讲学习了内置认证插件（静态 token、X509、Service Account）的运作原理",
+        "当把 Kubernetes 集群落地到企业做生产化运维时，第一步往往是与企业内部认证平台集成",
+        "Kubernetes 是开放式平台，可通过认证集成、权限控制、配额管理把生产集群打造成多租户平台，让企业所有用户在同一平台内和平共处，提升公司整体效率",
+        "小集群（三五个人用）则没有必要做认证集成"
+      ],
+      "tradeoffs": [
+        "是否做企业认证集成取决于集群规模与多租户需求，小团队集群不必引入额外复杂度"
+      ],
+      "turning_points": [
+        "认证集成 + 权限控制 + 配额管理 = 多租户开放平台"
+      ]
+    },
+    {
+      "start": "02:40",
+      "end": "07:00",
+      "topic": "Webhook 认证原理与 TokenReview 协议",
+      "points": [
+        "Webhook 认证：在 API Server 之外运行一个认证服务，并对 API Server 做配置；API Server 自身没有能力认证用户时，把请求转发给外部服务代为认证",
+        "认证服务需要实现一个 POST 方法，遵循 Kubernetes 规范",
+        "核心协议对象：TokenReview——apiVersion 为 authentication.k8s.io/v1beta1，kind 为 TokenReview；该对象虽不面向终端用户，但 API Server 与 Webhook 集成时会将用户提交的 token 组装成 TokenReview 对象（spec 只有一个 token 属性）",
+        "API Server 通过 POST 把 TokenReview 发送到配置的认证服务地址；认证服务解析请求、做认证，认证通过后在 TokenReview 的 status 中填好：认证是否通过、用户名、UID、组",
+        "API Server 信任第三方认证服务的返回结果，据此决定请求接收还是拒绝"
+      ],
+      "tradeoffs": [
+        "Webhook 认证要求自行开发和维护外部认证服务，并严格遵循 TokenReview 协议（spec.token 入参、status 出参）"
+      ],
+      "turning_points": [
+        "TokenReview 是 API Server 与外部认证服务之间的标准化契约对象"
+      ]
+    },
+    {
+      "start": "07:00",
+      "end": "11:30",
+      "topic": "认证服务代码实现（以 GitHub 认证为代理）",
+      "points": [
+        "认证服务本质是一个 HTTP 服务器：注册 handler 处理发到特定路径（如 /oscar-auth）的请求，监听 3000 端口",
+        "handler 用 JSON decoder 把 API Server 发来的请求体解析为 TokenReview 对象；解析失败则返回认证失败",
+        "真正的用户校验可对接任意后端：公司有 LDAP Server 就写连接 LDAP 的校验逻辑，案例中用的是 GitHub Personal Access Token",
+        "实现思路：从 TokenReview 的 spec.token 取出 token，通过 GitHub 官方 client 把请求发给 GitHub 认证该 token 代表谁；GitHub 返回用户信息（如 login），再组装成 TokenReview.status（authenticated=true、userName 等）返回给 API Server——认证服务本质是一个中间代理/转换层"
+      ],
+      "tradeoffs": [
+        "认证服务是中间代理商：把 API Server 的 TokenReview 请求转换成后端认证平台（GitHub/LDAP/Keystone）的请求，再把结果组装回 Kubernetes 协议格式"
+      ],
+      "turning_points": [
+        "对接任何认证平台，只需开发一个实现 TokenReview 协议的 HTTP 服务"
+      ]
+    },
+    {
+      "start": "11:30",
+      "end": "16:40",
+      "topic": "API Server 接入配置与端到端演示",
+      "points": [
+        "配置步骤：编写 webhook config 文件（类似 kubeconfig，含 cluster 地址=本机 3000 端口认证路径、连接后端认证服务的 TLS 配置等），复制到主机目录，通过 hostPath volume 挂载进 API Server Pod，并用新参数（--oidc-token-webhook-config-file 类参数）告诉 API Server 读取该配置",
+        "操作习惯：修改前备份旧 API Server manifest，生产系统任何改动都要先备份以便恢复",
+        "Demo：在 GitHub 创建 Personal Access Token → 将其配置到 kubeconfig 的新用户（my-user1）→ kubectl get pod 时带该 token 访问 API Server → API Server 把请求转发给 webhook → webhook 收到 request 后转发给 GitHub → GitHub 返回 login（主讲人 GitHub 账号）→ webhook 通过 TokenReview.status 传回 API Server → API Server 认证出用户身份，但因未配权限，get 失败",
+        "端到端验证了 kubectl 与外部认证平台集成的完整链路"
+      ],
+      "tradeoffs": [
+        "改动 API Server manifest 前必须先备份，出问题才能恢复",
+        "认证通过但 get 失败是预期现象——外部认证只解决'你是谁'，权限仍需授权机制配置"
+      ],
+      "turning_points": [
+        "接入外部认证唯一要做的就是：开发认证服务 + 生成 config 并挂载给 API Server + 设置读取参数"
+      ]
+    },
+    {
+      "start": "16:40",
+      "end": "20:00",
+      "topic": "token cache TTL 与可对接的认证系统",
+      "points": [
+        "token cache TTL 默认 2 分钟：一次认证的有效期，TTL 内重复认证不会再次请求外部平台",
+        "每次认证都走外部平台会对认证系统造成较大压力，token 有效期往往设为几小时，配合 cache 可大幅提升认证效率、降低外部认证平台压力",
+        "外部对接的认证系统可以是任何系统，GitHub 只是一个例子：eBay 接的是 Keystone，很多公司接 LDAP 和 AD"
+      ],
+      "tradeoffs": [
+        "token cache TTL 是认证效率与外部平台压力之间的权衡旋钮",
+        "TTL 过短会放大对外部认证平台的请求量"
+      ],
+      "turning_points": []
+    },
+    {
+      "start": "20:00",
+      "end": "25:27",
+      "topic": "eBay 生产事故复盘：指数退避、重试风暴与自我保护",
+      "points": [
+        "背景：eBay 的 Kubernetes 平台与 Keystone 认证平台集成，所有超过 TTL 的认证请求都会发到 Keystone；Keystone 在无 Kubernetes 环境时每日请求很少",
+        "Kubernetes 是 Control Loop 设计：任何地方出错都会重试，集群数量大（几百到上万集群）时失败重试会对外部系统形成巨大压力，因此需要指数级退避（fallback）",
+        "指数退避做法：失败后等待 2 秒、4 秒、8 秒、16 秒、32 秒，重试次数越多等待越长——小问题几次重试内快速恢复，大问题不继续给外部系统添麻烦",
+        "事故根因：认证插件内使用第三方库 go-cloud（Go 语言封装的 Keystone 访问库），其中 renew token 的逻辑在认证服务返回错误时没有等待、立即重试，形成对认证服务器的攻击",
+        "后果：认证服务短暂故障被放大成超长时间故障——请求堆积导致 Keystone 无法恢复，过期 token 越积越多，攻击越来越大，数小时无法恢复",
+        "解决：Keystone 紧急加限流，API Server 侧加 circuit breaker（熔断），失败必须等待修复问题",
+        "教训：任何服务都要做自我保护，指数级等待（退避）在生产系统业务逻辑中一定不能忘记；并非所有组件都遵循该理念，自己写控制器/插件时容易遗漏"
+      ],
+      "tradeoffs": [
+        "指数退避在'重试时效性'与'降低外部系统影响'之间取得平衡",
+        "第三方库（如 go-cloud）不一定会做退避，接入外部系统代码时必须审查其重试行为",
+        "单一认证平台故障 + 无退避重试 = 请求风暴，把短暂故障变成数小时不可用"
+      ],
+      "turning_points": [
+        "反直觉点：Kubernetes 的 Control Loop 重试设计在没有退避保护时，反而会成为压垮外部认证系统的放大器",
+        "故障自愈设计理念：快速重试解决瞬时错误，指数退避避免放大持续故障"
+      ]
+    }
+  ],
+  "key_definitions": [
+    "Webhook 认证：在 API Server 之外运行认证服务，API Server 把用户 token 组装成 TokenReview 对象以 POST 方式转发给外部认证服务，由外部服务代为认证并返回结果。",
+    "TokenReview 协议：apiVersion 为 authentication.k8s.io/v1beta1，kind 为 TokenReview；spec 仅含 token 属性（入参），status 返回认证是否通过、用户名、UID、组（出参）。",
+    "token cache TTL：默认 2 分钟，指一次认证的有效期；TTL 内对同一 token 的认证不再请求外部认证平台，用于提升认证效率、降低外部平台压力。",
+    "指数退避（exponential backoff）：重试等待时间按 2s、4s、8s、16s、32s 指数增长，兼顾重试时效性与对外部系统的保护。",
+    "circuit breaker（熔断）：认证服务出现持续失败时切断请求，等待问题修复后再恢复，是服务的自我保护机制。",
+    "对接任意认证系统（Keystone、LDAP、AD、GitHub 等）只需实现 TokenReview 协议的一个 HTTP 服务 + 一份 webhook 配置挂载给 API Server。"
+  ],
+  "closing": "GitHub Webhook 认证代码可参考对应链接（从开源实现复制修改），CNCamp 的 GitHub 仓库中有完整配置，课下按步骤动手做一遍以深入理解。今天的课就到这里，谢谢。"
+}

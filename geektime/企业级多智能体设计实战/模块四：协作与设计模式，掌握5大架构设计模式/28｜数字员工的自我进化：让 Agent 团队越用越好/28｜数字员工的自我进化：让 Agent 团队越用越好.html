@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tools/mailbox_ops.py（第28课对第27课唯一的改动）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../README.html">geektime</a><a href="../../README.html">企业级多智能体设计实战</a><a href="../README.html">模块四：协作与设计模式，掌握5大架构设计模式</a><a href="README.html">28｜数字员工的自我进化：让 Agent 团队越用越好</a></div>
+<p>欢迎回来！上一节课，我们给数字员工团队装上了&quot;人类介入&quot;机制——在关键节点设置 checkpoint，让人类可以在必要时接管。此刻，我们的团队已经能自主运行、遇到问题会停下来请示人类，听起来很完整了。</p>
+<p>但我想问你一个问题：如果一个团队运行一年，第一天的工作质量和第三百六十五天的工作质量完全一样——你会怎么评价这个团队？答案很清楚：它没有在成长。对人类团队来说，这是危险信号；对数字团队来说，这是<strong>设计缺陷</strong>。</p>
+<img src="images/img_000.png" alt="">
+<p>今天是模块四的最后一课。我们要让数字团队从&quot;能跑&quot;变成&quot;越用越好&quot;——建立一套完整的自我进化机制。这套机制的核心不是日志怎么写、不是提案怎么落地，而是<strong>怎么做复盘</strong>——怎么从一堆运行数据里找到&quot;到底该改哪一行&quot;。</p>
+<hr>
+<h2>一、认知原点：自我进化到底是什么？</h2>
+<img src="images/img_001.png" alt="">
+<p><strong>数字团队的自我进化，本质就是人类团队复盘文化的工程化版本。</strong></p>
+<p>一个优秀的人类团队做完项目后会开复盘会，回顾哪些决策是对的、哪些步骤走了弯路、下次遇到类似情况该怎么办——然后把结论写进操作手册、改进流程、更新协作规范。</p>
+<p>数字团队做的是同一件事，只是用工程手段替代了人的记忆和判断：</p>
+<ul><li><strong>记录</strong>：用结构化日志取代人类的记忆</li></ul>
+<ul><li><strong>复盘</strong>：Agent 定期回看执行记录，定位失败根因</li></ul>
+<ul><li><strong>提案</strong>：把改进方案写成结构化文档，附带具体证据</li></ul>
+<ul><li><strong>落地</strong>：经人类审批后，机械地更新 soul / SOP / Skill 文件</li></ul>
+<ul><li><strong>验证</strong>：检查改进后指标是否真的上升</li></ul>
+<p>这五步构成一个闭环。闭环跑一圈，团队就比上一轮更好。</p>
+<p>你可能会问：这五步里，哪一步最难？</p>
+<p>答案是复盘。记录和落地都是工程基础设施，看代码就懂。但&quot;怎么从上千条日志里找到&#x27;到底该改哪一行&#x27;&quot;——这是方法论问题，也是今天的主菜。</p>
+<hr>
+<h2>二、为什么需要自我进化：跑起来只是及格线</h2>
+<p>团队上线了，能完成任务了——这只是及格线。没有自我进化机制时，三件事必然发生：</p>
+<p><strong>1. 同样的错误反复出现</strong></p>
+<p>PM Agent 每次生成设计文档都忘了检查移动端适配，第一次 checkpoint 被退回了，人类加了备注&quot;注意移动端&quot;。第二次又忘了。第三次还是——因为那条人类反馈从来没有被写进 PM 的 SOP，它像便利贴一样贴在对话历史里，等上下文窗口一刷新，就永远消失了。</p>
+<p><strong>2. 工具调用路径越来越冗余，但没人知道</strong></p>
+<p>系统上线之初，某个工具调用需要绕一个弯，因为当时另一个 API 还没接好。后来 API 接好了，但 Agent 的 Skill 没更新——它还是在绕弯，每次多消耗几秒和若干 token。没有日志记录具体执行路径，这个效率损耗永远不会被发现。</p>
+<p><strong>3. 协作设计的问题被误归因给个体</strong></p>
+<p>Manager 直觉上觉得 Dev Agent &quot;做得不好&quot;，但实际上是 PM 和 Dev 之间的交接文档格式定义不清晰——Dev 每次收到的信息不完整，只能反复询问澄清。没有结构化的协作分析，这类&quot;是协作设计的问题，不是某个人的问题&quot;的系统性缺陷，很难被发现。</p>
+<p>为什么不直接靠人类观察来发现这些问题？因为数字团队一天可能完成数百个任务，靠人工逐条检查是不现实的。真正的解法，是让系统自己把&quot;值得关注的信号&quot;提炼出来，再交给人类决策。</p>
+<hr>
+<h2>三、三层日志：复盘的原料</h2>
+<blockquote><p>🧠 <strong>回忆一下</strong>：第 25 课我们讲了 <code>DigitalWorkerCrew</code> 的 session 日志（<code>append_session_raw</code>），第 26 课建立了共享工作区和三态邮箱，第 27 课在 <code>human.json</code> 里设置了人类介入通道。今天的日志系统直接建立在这三课的基础上。</p></blockquote>
+<blockquote><p>💡 课程说明：本节代码已同步至 GitHub，地址：<a href="https://github.com/kid0317/crewai_mas_demo/blob/main/m4l28/">https://github.com/kid0317/crewai_mas_demo/blob/main/m4l28/</a></p></blockquote>
+<p>复盘需要原料，原料就是日志。但不是随便一种日志——我们需要按<strong>用途和生命周期</strong>分三层：</p>
+<img src="images/img_002.png" alt="">
+<table><tr><th>层级</th><th>记录什么</th><th>核心用途</th><th>写入方式</th><th>保留策略</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td><strong>L1 人类交互层</strong></td><td>每次人类纠正</td><td><strong>黄金数据</strong>——Agent 判断偏差的最直接信号</td><td>send_mail(to=human) 内自动追加</td><td>永久保留</td></tr><tr><td><strong>L2 任务-Agent 层</strong></td><td>每个任务一条摘要（含质量分）</td><td>定位&quot;哪些任务做得差&quot;</td><td>task_callback hook 自动写</td><td>保留 90 天</td></tr><tr><td><strong>L3 ReAct 循环层</strong></td><td>Agent 内部每步推理</td><td>定位&quot;差在哪一步&quot;</td><td><strong>复用</strong>第 25 课 session 日志</td><td>滚动 30 天</td></tr></table>
+<p>L2 的 <code>result_quality</code> 怎么打分？</p>
+<p>打分维度有很多种：旁路 LLM 拿到任务的输入输出后判断完成质量、统计 ReAct 循环中迭代次数和工具调用错误率、或者直接从 checkpoint 结果映射。最简单也最可靠的起步做法是第三种：人类批准 → 0.85，退回 → 0.4——不需要额外 LLM 调用、不需要复杂评估链，和 L1（人类纠正）天然一致。代码里是一个 <code>quality_scorer</code> 注入口（<code>task_callback</code> 的可选参数），你可以按业务需求替换评分逻辑，但<strong>起步建议用 checkpoint 映射，零额外调用、零幻觉风险</strong>。</p>
+<p>三层里最值钱的是 <strong>L1</strong>——每一次人类纠正都是黄金数据。Agent 自己觉得做得挺好，但人类说：不对，移动端方案呢——这条纠正比 Agent 自己的 10 条分析都有价值。</p>
+<p>为什么不合并成一层，按字段过滤就行？因为三层的<strong>生命周期完全不同</strong>：L1（人类纠正）稀缺宝贵，永久保留；L3（ReAct 细节）量最大，3 个月前的推理步骤对今天的复盘毫无用处。合并会让保留策略冲突——清了 L3 把 L1 也丢了，留了 L1 把 L3 存爆了。</p>
+<p><strong>L1 的写入是自动的</strong>——在第 27 课的 <code>send_mail()</code> 里加一行判断：凡是发给 <code>to=&quot;human&quot;</code> 的消息，就自动追加一份 L1 日志。调用方完全不感知，这是 AOP（面向切面编程）在 Agent 场景的典型落地。</p>
+<pre><code># tools/mailbox_ops.py（第28课对第27课唯一的改动）
+def send_mail(mailbox_dir, to, from_, type_, subject, content) -&gt; str:
+    # ... 原有写入逻辑不变 ...
+    # 💡 核心点：to=human 时自动写 L1 日志，调用方零感知
+    if to == &quot;human&quot;:
+        _write_l1_log(mailbox_dir, message)
+    return msg_id</code></pre>
+<p><strong>L3 不需要另建</strong>——第 25 课的 <code>DigitalWorkerCrew</code> 已经在每次 kickoff 后把完整的 LLM 消息序列写到 <code>sessions/&lt;session_id&gt;_raw.jsonl</code>。这就是 L3 数据。本课只加一个 <strong>task_id 索引</strong>（<code>sessions/index.jsonl</code>），让复盘能按任务切片回放，不重复建 callback、不漂移 schema。</p>
+<hr>
+<h2>四、复盘方法论：从&quot;出了问题&quot;到&quot;改哪一行&quot;</h2>
+<img src="images/img_003.png" alt="">
+<h3>4.1 复盘失败的两个层次</h3>
+<p>大多数人——包括 Agent——的复盘止步于两个层次：</p>
+<ul><li><strong>第一层</strong>：只知道&quot;出了问题&quot;。&quot;PM 的质量分偏低&quot;。然后呢？就没有然后了。</li></ul>
+<ul><li><strong>第二层</strong>：复述式反思。&quot;下次生成设计文档时要注意移动端适配&quot;——听起来像根因分析，但其实只是<strong>把失败过程重新描述了一遍</strong>。下次遇到不同类型的问题，这句话毫无帮助。</li></ul>
+<p>Reflexion 论文（NeurIPS 2023）对此有精确的诊断：<strong>犯错的 Agent 在评估自己的错误时，倾向于合理化而不是纠正</strong>——因为产生错误判断的偏好本身就在那里。Retroformer（ICLR 2024）进一步发现：自由文本反思会系统性地产生&quot;复述式反思&quot;，需要<strong>结构化约束</strong>来打破这个循环。</p>
+<h3>4.2 有效复盘的五个递进问题</h3>
+<p>有效复盘像漏斗：从上千条日志开始，一步步收窄，直到精确到&quot;改这个文件的这一段&quot;。这个漏斗有五层，每一层回答一个递进问题：</p>
+<table><tr><th>问题</th><th>数据源</th><th>输出</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td><strong>① 哪些任务做得差？</strong></td><td>L2 定量</td><td>最差的 N 条任务</td></tr><tr><td><strong>② 差在哪一步？</strong></td><td>L3 下钻</td><td>具体失败的 ReAct 步骤</td></tr><tr><td><strong>③ 人类怎么看？</strong></td><td>L1 交叉验证</td><td>人类纠正记录</td></tr><tr><td><strong>④ 根因是什么类型？</strong></td><td>枚举分类</td><td>4 种根因之一</td></tr><tr><td><strong>⑤ 改哪个文件的哪一段？</strong></td><td>精确改动</td><td>before/after_text 锚点替换</td></tr></table>
+<p>大多数复盘死在第 ④ 步——知道&quot;出了问题&quot;，但不知道&quot;根因是什么类型&quot;。于是写出&quot;下次注意移动端&quot;这样的复述式反思，然后什么都没改。</p>
+<p>第 ④ 步的解法是<strong>逼 Agent 做分类思考</strong>：<code>root_cause</code> 必须从枚举中选——<code>sop_gap</code>（SOP 缺步骤）/ <code>prompt_ambiguity</code>（提示词模糊）/ <code>ability_gap</code>（能力不足）/ <code>integration_issue</code>（集成问题）。枚举的目的不是穷尽所有原因，而是打破&quot;复述式反思&quot;的惯性，逼 Agent 把问题归到一个可操作的类别里。</p>
+<p>这套枚举的设计方法叫<strong>以终为始</strong>：先想清楚“我最终能改什么”，再反推根因分类。回想第 25 课的数字员工五层定义——soul、SOP、agent、memory、skill——决定一个数字员工是好是坏的全在这些 .md 文件里。那么复盘的根因分类，就应该直接映射到这些文件：</p>
+<table><tr><th>枚举值</th><th>含义</th><th>改动对象</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>sop_gap</td><td>流程缺步骤</td><td>agent.md / skills/*.md</td></tr><tr><td>prompt_ambiguity</td><td>指令模糊</td><td>soul.md</td></tr><tr><td>ability_gap</td><td>经验不足</td><td>memory.md</td></tr><tr><td>integration_issue</td><td>协作问题</td><td>agent.md 协作部分</td></tr></table>
+<p>Agent 一旦完成归因，就立刻知道要改哪个文件——从发现问题到定位改动的路径是确定的，不需要再做一轮&quot;这个根因对应哪种改动&quot;的推理。</p>
+<hr>
+<h2>五、自我复盘实战：用真实数据走一遍完整分析链</h2>
+<p>光讲方法论容易空洞，我们用课程代码里预置的真实数据（<code>seed_logs.py</code>）走一遍完整的自我复盘流程。</p>
+<img src="images/img_004.png" alt="">
+<h3>5.1 核心架构：Skill = 思考框架，CLI = 数据查询，Agent = 推理</h3>
+<p>在展开之前，先明确一个关键设计：<strong>复盘不是脚本流水线</strong>。</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  self_retrospective/SKILL.md（思考框架）                       │
+│  - 五个递进问题（非强制顺序）                                  │
+│  - root_cause 枚举约束                                        │
+│  - 输出格式要求（RetroOutput JSON）                           │
+└──────────────────────┬───────────────────────────────────────┘
+                       │ Agent 按需调用
+                       ▼
+┌──────────────────────────────────────────────────────────────┐
+│  tools/log_query.py（统一 CLI，纯数据查询）                    │
+│  stats / tasks / steps / l1 / all-agents                     │
+└──────────────────────┬───────────────────────────────────────┘
+                       │ Agent 推理分析
+                       ▼
+┌──────────────────────────────────────────────────────────────┐
+│  RetroOutput JSON（结构化产出）                                │
+│  - retrospective_report: 发现 + 证据                         │
+│  - improvement_proposals: root_cause + before/after_text     │
+└──────────────────────────────────────────────────────────────┘</code></pre>
+<p><strong>SKILL.md 只告诉 Agent &quot;要思考什么&quot;，不规定&quot;先查什么再查什么&quot;</strong>。Agent 自己判断需要哪些数据、按什么顺序查、查到什么程度够了。这是 Skill 和 Script 的本质区别——Script 规定动作序列，Skill 提供思考框架。</p>
+<h3>5.2 场景：PM 过去一周运行了 8 个任务</h3>
+<p><code>seed_logs.py</code> 模拟了&quot;团队已运行一周&quot;的场景：PM 执行了 8 个任务，其中 3 个产品设计文档任务被 checkpoint 退回，质量分偏低。</p>
+<p>下面模拟 PM Agent 加载 <code>self_retrospective</code> Skill 后的推理过程——注意这不是固定管线，而是 Agent 根据数据逐步深入的分析：</p>
+<img src="images/img_005.png" alt="">
+<p><strong>Agent 思考 ①：先看整体统计，了解大盘</strong></p>
+<pre><code>python3 tools/log_query.py stats --agent-id pm --days 7
+# → {&quot;task_count&quot;: 8, &quot;avg_quality&quot;: 0.68, &quot;failure_count&quot;: 3, &quot;human_correction_count&quot;: 3}</code></pre>
+<p>PM 8 条任务，平均质量 0.68，3 条失败，3 次人类纠正。有问题——需要下钻。</p>
+<p><strong>Agent 思考 ②：哪些任务做得差？拉低分任务列表</strong></p>
+<pre><code>python3 tools/log_query.py tasks --agent-id pm --days 7 --sort quality_asc --limit 3
+# → {&quot;tasks&quot;: [
+#      {&quot;task_id&quot;: &quot;t006&quot;, &quot;result_quality&quot;: 0.38, &quot;task_desc&quot;: &quot;用户注册设计迭代（移动端）&quot;},
+#      {&quot;task_id&quot;: &quot;t001&quot;, &quot;result_quality&quot;: 0.40, &quot;task_desc&quot;: &quot;用户登录功能产品设计文档&quot;},
+#      {&quot;task_id&quot;: &quot;t003&quot;, &quot;result_quality&quot;: 0.42, &quot;task_desc&quot;: &quot;产品设计文档v2（用户登录）&quot;}
+#   ]}</code></pre>
+<p>三条最差的全是<strong>设计文档</strong>类任务。模式出现了。</p>
+<p><strong>Agent 思考 ③：差在哪一步？下钻 ReAct 步骤</strong></p>
+<pre><code>python3 tools/log_query.py steps --task-id t001 --agent-id pm
+# → {&quot;task_id&quot;: &quot;t001&quot;, &quot;step_count&quot;: 3, &quot;steps&quot;: [
+#      {&quot;step_idx&quot;: 0, &quot;thought&quot;: &quot;读取需求文档...&quot;, &quot;action&quot;: &quot;read_requirements&quot;},
+#      {&quot;step_idx&quot;: 1, &quot;thought&quot;: &quot;开始撰写产品规格文档&quot;, &quot;action&quot;: &quot;write_document&quot;},
+#      {&quot;step_idx&quot;: 2, &quot;thought&quot;: &quot;文档完成，发送完成通知&quot;, &quot;action&quot;: &quot;send_mail&quot;}
+#   ]}</code></pre>
+<p>只有 3 步：读需求 → 生成文档 → 提交。<strong>没有&quot;检查移动端适配&quot;这一步</strong>——它从来没出现在 Agent 的执行路径里。</p>
+<p><strong>Agent 思考 ④：人类怎么看？交叉验证 L1</strong></p>
+<pre><code>python3 tools/log_query.py l1 --days 7 --keyword &quot;移动端&quot;
+# → {&quot;count&quot;: 2, &quot;records&quot;: [
+#      {&quot;subject&quot;: &quot;设计文档退回：t001&quot;, &quot;content&quot;: &quot;缺少移动端适配方案&quot;},
+#      {&quot;subject&quot;: &quot;设计文档退回：t006&quot;, &quot;content&quot;: &quot;未考虑桌面端/移动端差异&quot;}
+#   ]}</code></pre>
+<p>人类退回理由指向同一个问题：<strong>缺移动端适配</strong>。L1（人类纠正）验证了 L2/L3 的发现。</p>
+<p><strong>Agent 思考 ⑤：分类根因</strong></p>
+<p>到这里画面完整了。现在 Agent 必须回答：root_cause 是什么？</p>
+<p>如果是自由文本，LLM 大概率写：下次生成设计文档时要注意移动端适配——这是<strong>复述失败</strong>，不是根因。</p>
+<p>SKILL.md 的枚举约束逼 Agent 做分类思考：这不是 <code>ability_gap</code>（PM 不是不会写移动端方案），而是 <code>sop_gap</code>——<strong>product_design Skill 里根本没有&quot;检查移动端&quot;这一步</strong>。Agent 忠实地按 Skill 执行，Skill 缺了，Agent 就不会做。</p>
+<h3>5.3 最终产出：RetroOutput</h3>
+<img src="images/img_006.png" alt="">
+<p>分析完成后，Agent 产出一份结构化的 <code>RetroOutput</code> JSON：</p>
+<pre><code>{
+  &quot;retrospective_report&quot;: {
+    &quot;agent_id&quot;: &quot;pm&quot;,
+    &quot;period&quot;: &quot;2026-04-14 ~ 2026-04-20&quot;,
+    &quot;summary&quot;: &quot;设计文档任务质量偏低，根因是 product_design Skill 缺少移动端检查步骤&quot;,
+    &quot;findings&quot;: [{
+      &quot;pattern&quot;: &quot;3/8 任务被退回，全是设计文档类，退回原因均为缺少移动端适配&quot;,
+      &quot;evidence_task_ids&quot;: [&quot;t001&quot;, &quot;t003&quot;, &quot;t006&quot;]
+    }]
+  },
+  &quot;improvement_proposals&quot;: [{
+    &quot;root_cause&quot;: &quot;sop_gap&quot;,
+    &quot;target_file&quot;: &quot;skills/product_design/SKILL.md&quot;,
+    &quot;current_behavior&quot;: &quot;Skill 只写了&#x27;读需求→写文档&#x27;，未提及多端适配&quot;,
+    &quot;proposed_change&quot;: &quot;在写作原则中增加移动端适配检查步骤&quot;,
+    &quot;before_text&quot;: &quot;1. **需求来源**：从 `/mnt/shared/needs/requirements.md` 读取原始需求&quot;,
+    &quot;after_text&quot;: &quot;1. **需求来源**：从 `/mnt/shared/needs/requirements.md` 读取原始需求\n2. **多端检查**：如需求涉及用户界面，必须明确桌面端/移动端差异并分别设计&quot;,
+    &quot;expected_improvement&quot;: &quot;设计文档 checkpoint 通过率从 62% 提升至 85%+&quot;,
+    &quot;evidence&quot;: [&quot;t001&quot;, &quot;t003&quot;, &quot;t006&quot;]
+  }]
+}</code></pre>
+<p>注意 <code>before_text</code> / <code>after_text</code> 的设计：<strong>Agent 读目标文件的当前内容，找到要改的那段原文作为锚点，写出改后的完整文本</strong>。这个思路和 Cursor、Claude Code 等 AI coding 工具一致——LLM 产出&quot;改什么&quot;的意图（上下文锚点 + 替换文本），执行侧做精确匹配和替换。</p>
+<p>三个关键约束：</p>
+<ul><li><code>evidence</code> <strong>不允许空</strong>——人类审批时应点开日志 ID 查原始记录，而不是盲信 Agent 的分析。犯错的 Agent 对自己的错误会合理化，evidence 是独立于分析的原始数据。</li></ul>
+<ul><li><strong>一次最多 3 条提案</strong>——聚焦最重要的改进，不贪多。超过 3 条说明 Agent 在发散而不是聚焦。</li></ul>
+<ul><li><code>before_text</code> <strong>不允许空</strong>——逼 Agent 读文件、找到精确位置。不能说&quot;加个移动端检查&quot;就完了，必须指向具体哪段文字。</li></ul>
+<hr>
+<h2>六、团队复盘：自我复盘看不到的视野</h2>
+<img src="images/img_007.png" alt="">
+<p>自我复盘精度高——能下钻到具体哪个 ReAct 步骤失败。但它<strong>视野窄</strong>，只看自己的日志。</p>
+<p>团队复盘由 Manager 执行，看的是<strong>L1 全量 + 所有 Agent 的 L2 聚合</strong>——它能发现自我复盘看不到的东西：</p>
+<ul><li><strong>跨 Agent 的模式</strong>：也许不只 PM 有移动端问题，也许是 SOP 模板本身缺了这一步</li></ul>
+<ul><li><strong>协作设计问题</strong>：PM 和 Dev 之间的交接失败率最高，不是某个人的问题，是交接格式定义不清</li></ul>
+<ul><li><strong>瓶颈识别</strong>：PM 平均质量 0.68，Manager 平均 0.88——PM 是瓶颈</li></ul>
+<p>Manager 发现瓶颈 Agent 后，不做 L3 级深分析——那是 Agent 自己擅长的。Manager 做的是<strong>级联触发</strong>：发 <code>retro_trigger</code> 邮件给 PM，让 PM 启动自我复盘。各做各擅长的：<strong>自我复盘 = 精度（L3 深分析），团队复盘 = 视野（跨 Agent 分布）</strong>。</p>
+<p>团队复盘还有一个重要产出：<strong>周报发给人类</strong>。不只发改进提案等审批，也发完整的团队运行状况——哪些指标在改善、哪些还在恶化、上周批准的改进效果如何。人类对数字团队的信任，不是来自&quot;系统一直没出问题&quot;，而是来自&quot;系统能主动告诉我它在哪里有问题、在怎么改&quot;。</p>
+<hr>
+<h2>七、三档 HITL 审批：改动越深，审批越重</h2>
+<p>复盘产出了提案，提案要落地。但落地之前必须过一道关——<strong>人类审批</strong>。</p>
+<img src="images/img_008.png" alt="">
+<p>为什么不能让 Agent 自己落地？因为 <strong>soul 一旦改错，Agent 所有后续判断都会跟着偏——包括它下一次复盘对自己的评价</strong>。这是无法自我纠正的漂移。目标漂移的研究（Goal Drift, 2025）也证实了这一点：Agent 通过累积交互逐渐偏离初始目标，无需任何显式覆盖。</p>
+<p>但不分档的审批也不行——memory 级小改也走 3 天审批，Human 会绝望放弃；soul 级大改自动落地，系统就地失控。解法是按<strong>改动影响深度</strong>分三档：</p>
+<table><tr><th>档位</th><th>改动对象</th><th>HITL 方式</th><th>示例</th></tr><tr><td>:----</td><td>:----</td><td>:----</td><td>:----</td></tr><tr><td><strong>档 1</strong></td><td>memory</td><td>自动落地 + 硬闸门（3 条/天, 200 行上限）</td><td>memory.md 加一条&quot;遇到空字段主动问甲方&quot;</td></tr><tr><td><strong>档 2</strong></td><td>skill / SOP</td><td>Manager LLM 预审 + Human 批准</td><td>product_design 加一步&quot;检查移动端适配&quot;</td></tr><tr><td><strong>档 3</strong></td><td>soul / code</td><td>Human 必审 + 强制 Dry Run</td><td>调整 PM 的风格偏好、修改代码逻辑</td></tr></table>
+<p>档 1 的自动不是放权：<code>3 条/天</code> 是硬闸门（防止一天自动改 50 条 memory），<code>200 行上限</code> 对齐第 20 课的 bootstrap 记忆设计。超过闸门就降级到档 2。</p>
+<p>审批走邮箱闭环路由：<strong>PM → Manager → Human → Manager → PM</strong>。延续第 27 课的单一接口原则——PM 不直接联系 Human，Human 只有一个对接人（Manager）。</p>
+<hr>
+<h2>八、代码实践框架：旁路系统，只加文件不改架构</h2>
+<p>整套进化机制是<strong>旁路的</strong>——Manager 和 PM 该怎么跑还怎么跑，复盘是在它们跑完之后分析日志。</p>
+<img src="images/img_009.png" alt="">
+<p>第 27 课的代码零改动（除 <code>mailbox_ops.py</code> 加了 L1 自动写入一行），所有新增能力都是新文件：</p>
+<pre><code>m4l28/
+├── tools/
+│   ├── mailbox_ops.py                   # ⚡ L1 一行改动（to=human 时自动写 L1）
+│   ├── log_ops.py                       # 三层日志读写 Python 库
+│   └── log_query.py                     # ⚡ 统一日志查询 CLI（Agent 通过 bash 调用）
+├── schemas.py                           # RetroOutput + ImprovementProposal
+├── tools/proposal_ops.py               # 提案分档 + 闸门校验
+├── scheduler.py                         # 双条件触发（24h间隔 + ≥5条任务）
+├── seed_logs.py                         # 演示数据生成 + 工作区 baseline 重置
+├── baselines/                           # PM 文件基准版本（seed_logs 重置源）
+├── workspace/pm/skills/
+│   └── self_retrospective/SKILL.md      # ⚡ 纯思考框架（无脚本）
+└── workspace/manager/skills/
+    ├── team_retrospective/SKILL.md      # ⚡ 团队复盘思考框架
+    └── review_proposal/SKILL.md         # ⚡ 审批流程框架</code></pre>
+<p>注意这里<strong>没有 scripts/ 目录</strong>。Skill 只是 SKILL.md 一个文件——思考框架。查数据的能力由统一的 <code>log_query.py</code> CLI 提供，Agent 通过 bash 按需调用。端到端数据流路径：</p>
+<pre><code>seed_logs.py（生成7天模拟数据 + 重置工作区文件）
+    ↓
+Scheduler.tick()（24h间隔 + ≥5条任务 → 发 retro_trigger 邮件）
+    ↓
+PM 加载 self_retrospective Skill（思考框架）
+    ↓
+PM 调用 log_query CLI 查数据 → LLM 推理分析
+    ↓
+PM 产出 RetroOutput JSON → 发 retro_report 邮件给 Manager
+    ↓
+Manager 加载 review_proposal Skill → 按 target_file 分档
+    ↓
+Manager 转 Human 审批 → 发 retro_approved/rejected 邮件给 PM
+    ↓
+PM 收到 approved → 机械执行 before_text → after_text 替换
+    ↓
+PM 发 retro_applied 确认邮件 → 闭环完成</code></pre>
+<p><strong>分工的核心原则：LLM 负责看和想，机械操作负责做</strong>。Agent 分析日志、发现模式、分类根因、写出 before/after_text——这些是 LLM 擅长的语义理解和推理。但真正的文件替换是纯字符串匹配——找到 <code>before_text</code>，替换为 <code>after_text</code>。简单、确定、可验证。</p>
+<p>落地侧不需要专门的 Skill，PM 的 <code>agent.md</code> 里直接描述机械流程：读文件 → 找锚点 → 替换 → 写回。如果 <code>before_text</code> 在目标文件中找不到（文件已被其他改动修改过），PM 发 <code>retro_apply_failed</code> 邮件给 Manager 报错——不硬改，不猜测。</p>
+<hr>
+<h2>九、深入框架：为什么这样分层</h2>
+<p>把这套机制的外衣撕开，看看底层设计逻辑。</p>
+<h3>9.1 学术根基</h3>
+<p>从学术角度，本课是 <strong>Reflexion 模式（NeurIPS 2023）的异步批次版本</strong>：不更新模型权重，而是通过结构化反思生成&quot;经验&quot;，再把经验写回 soul/SOP 文件——下次 Agent 运行时，改进后的 SOP 就是新的行为约束。</p>
+<p>但 Reflexion 论文也指出了核心局限：<strong>犯同样错误的 Agent 在评估自己时倾向于合理化</strong>。我们的工程应对是三道防线：</p>
+<ol><li><strong>root_cause 枚举约束</strong>——打破&quot;复述式反思&quot;的惯性</li></ol>
+<ol><li><strong>L1 交叉验证</strong>——用人类纠正信号覆盖 Agent 自评偏差</li></ol>
+<ol><li><strong>evidence 强制非空</strong>——让人类审批时有能力绕过 Agent 分析，直接看原始数据</li></ol>
+<p>这三道防线的共同目标只有一个：<strong>Agent 负责发现改进点，Human 负责决定要不要改</strong>。打破这条线，系统就从工程坍缩成赌博。</p>
+<h3>9.2 为什么 Skill 不规定调用顺序</h3>
+<p>传统做法是把复盘写成脚本管线：<code>step1_stats.py → step2_filter.py → step3_drill.py → ...</code>——Agent 变成流水线操作工，丧失了判断力。</p>
+<p>我们的 <code>self_retrospective/SKILL.md</code> 只提供<strong>五个问题</strong>，不规定调用顺序。为什么？</p>
+<ul><li><strong>场景不同，路径不同</strong>。如果 Agent 上周全部任务质量都高，第 ① 步就结束了——不需要下钻。如果 L1 有大量纠正记录，可能先看 L1 再回头看 L2 更高效。</li></ul>
+<ul><li><strong>Agent 的判断力是资产</strong>。你不会给一个优秀的人类分析师一张&quot;先做 A 再做 B&quot;的流程图——你给他目标和数据源，让他自己决定怎么查。SKILL.md 提供的是思考框架，不是操作手册。</li></ul>
+<ul><li><strong>工具层只做数据查询</strong>。<code>log_query.py</code> 不帮你排序选 top-k（除非你主动传 <code>--sort</code>/<code>--limit</code>）。工具不做判断，判断留给 Agent。</li></ul>
+<h3>9.3 关键的工程分层</h3>
+<table><tr><th>任务</th><th>谁做</th><th>为什么</th></tr><tr><td>:----</td><td>:----</td><td>:----</td></tr><tr><td>看日志、发现模式、分类根因</td><td>LLM（Agent 推理）</td><td>LLM 擅长理解语义、做判断</td></tr><tr><td>提供数据</td><td>log_query.py CLI</td><td>纯查询，输出 JSON，不做判断</td></tr><tr><td>写出 before/after_text</td><td>LLM（Agent 产出）</td><td>LLM 读文件内容，写出锚点+替换文本</td></tr><tr><td>审批</td><td>Human（或 Manager LLM 预审）</td><td>防止自我纠正失效的最后一道闸</td></tr><tr><td>机械执行文本替换</td><td>PM Agent（收到 approved 后）</td><td>纯字符串匹配替换，找不到就报错</td></tr></table>
+<p>注意和 Cursor/Claude Code 等 AI coding 工具的相似性：<strong>LLM 产出&quot;改什么&quot;的意图（before/after_text），执行侧做精确 apply</strong>。LLM 不需要手写 unified diff（行号必偏移）、不需要算 SHA256（必编造）、不需要理解 git 操作。它只做自己擅长的事：读懂语义、做出判断。</p>
+<p>懂得这个分层，你可以把本课机制移植到任何 LLM 框架——它不依赖 CrewAI，核心是结构化日志 + 思考框架 Skill + 结构化提案 + 分档 HITL + 机械替换。</p>
+<hr>
+<h2>十、避坑指南：最佳实践与反模式</h2>
+<h3>🚫 严重破坏稳定性的反模式</h3>
+<p><strong>反模式 1：复述式反思代替根因分析</strong></p>
+<p><code>root_cause</code> 用自由文本而不是枚举，LLM 几乎总会写出“下次要注意移动端”这样的复述。Reflexion 论文的实验证实：犯错的 Agent 倾向合理化而不是纠正。<strong>解法：root_cause 必须从枚举中选，枚举逼出真正的分类思考。</strong></p>
+<p><strong>反模式 2：Agent 自动落地 soul/SOP 改进</strong></p>
+<p>最危险的反模式。soul 一旦改错，Agent 的所有判断都会跟着偏——包括它下一次复盘时对自己的评价。研究表明即便良性微调也能使安全拒绝率降低 70%（Safety Alignment Collapse, EMNLP 2025）。<strong>自动落地只能用在档 1（memory），且必须加硬闸门。</strong></p>
+<p><strong>反模式 3：样本不足强行复盘</strong></p>
+<p>基于 2-3 条任务的推断噪声极大。设定 <code>min_tasks=5</code>，不足直接跳过。更危险的是：低质量提案一旦通过审批，可能会把正常行为判断为&quot;问题&quot;，优化掉本来正确的东西。</p>
+<p><strong>反模式 4：自动审查误报侵蚀信任</strong></p>
+<p>提案太多、误报太高（有研究显示约 12.5% 误报率），团队逐渐停止审查——审批形同虚设。<strong>控制提案数量和质量，比控制审批流程更重要。</strong></p>
+<p><strong>反模式 5：补丁累积导致文件膨胀</strong></p>
+<p>每一轮复盘都往 soul / SOP / Skill 文件里打补丁。模型在复盘时倾向于“加规则”而不是“改规则”——半年后你的 product_design SKILL.md 从 20 行膨胀到 200 行，充满了互相矛盾的约束，最终不可治理。<strong>长期运行需要定期“小重构”：整理数字员工的 soul / SOP / agent 文件，合并重复规则、删除过时补丁，保持文件精简。</strong></p>
+<hr>
+<h3>💡 稳健落地的最佳实践</h3>
+<p><strong>最佳实践 1：提案必须附 Evidence</strong></p>
+<p><code>evidence</code> 强制非空，至少 1 条日志 ID。人类审批时应养成习惯：点开日志 ID 查原始记录，而不是直接信任 Agent 的分析摘要。<strong>建立信任的关键：让人类随时可验证 Agent 的判断。</strong></p>
+<p><strong>最佳实践 2：基于上下文匹配而非行号</strong></p>
+<p>生成改动时用上下文锚点匹配替代 diff 行号。OpenAI 为 GPT-4.1 专门推荐&quot;避免行号，清晰提供待替换代码及替换内容&quot;。<code>ImprovementProposal</code> 的 <code>before_text</code> / <code>after_text</code> 就是这个思路的落地——Agent 给锚点和替换文本，执行侧做精确匹配。</p>
+<p><strong>最佳实践 3：思考框架引导而非脚本管线</strong></p>
+<p>把复盘做成 Skill（思考框架）而不是脚本流水线。SKILL.md 给 Agent 问题和约束，不规定调用顺序——Agent 自己判断怎么查数据、怎么分析。研究表明结构化引导“显著减少 LLM 幻觉，同时保持每一步的灵活性”（Flow-of-Action, ACM 2025）。<strong>关键区别：Skill 提供该想什么，不规定该做什么。</strong></p>
+<p><strong>最佳实践 4：设置最大迭代限制 + 优雅退出</strong></p>
+<p>复盘循环必须有退出条件——防止“烧掉 $300 API 额度却什么都没返回”的无限循环。默认限制反思轮次（如 3 轮），附带显式退出：样本不足跳过、连续 2 次无改进则停止。</p>
+<p><strong>最佳实践 5：变更历史分条保留，支持单条回退</strong></p>
+<p>每条改进提案落地后，保留改前版本（<code>before_text</code>）和改后版本（<code>after_text</code>），按提案粒度分条存储——不要合并到一个大 diff 里。发现某条改进效果不好时，只回退那一条，不影响其他已验证的改进。这和 git 的“每个 commit 做一件事”原则一致：<strong>粒度越细，回退越安全</strong>。</p>
+<hr>
+<h2>总结</h2>
+<ul><li>我们定义了数字团队自我进化的本质——人类复盘文化的工程化版本，核心是<strong>五步闭环</strong>：记录 → 复盘 → 提案 → 落地 → 验证。</li></ul>
+<ul><li>我们设计了三层日志系统：<strong>L1（人类纠正，黄金数据，永久保留）</strong>、L2（任务摘要，定位瓶颈）、L3（复用第 25 课 session 日志 + task_id 索引，零重复写入）。</li></ul>
+<ul><li>我们建立了<strong>复盘的三层架构</strong>：Skill = 思考框架（五个递进问题 + root_cause 枚举）、CLI = 数据查询（log_query.py 统一入口）、Agent = 推理分析（LLM 看数据、发现模式、产出 before/after_text 改动）。核心方法论是<strong>五个递进问题的漏斗模型</strong>——从上千条日志收窄到精确的文件锚点替换。</li></ul>
+<ul><li>我们建立了<strong>三档 HITL 审批</strong>（memory 自动+闸门 / skill/SOP Manager 预审+Human 批准 / soul/code Human 必审+Dry Run），把 Human 的稀缺注意力匹配到改动的影响深度。</li></ul>
+<ul><li>至此，模块四完整收官：<strong>角色设计（25）→ 任务流转（26）→ 人类介入（27）→ 自我进化（28）</strong>——数字员工团队从&quot;能跑&quot;到&quot;越用越好&quot;的完整工程架构。</li></ul>
+<blockquote><p><strong>下节课预告：</strong> 既然角色、流转、介入、进化四大机制都就位了，那把它们拉在一起会怎样？<strong>下一节课——第 29 课项目实战</strong>，我们把 25-28 课的所有机制组装成一个完整的数字员工团队，end-to-end 地跑一遍。我们下节课见！</p></blockquote>
+<hr>
+<h2>课末学习活动</h2>
+<blockquote><p><strong>费曼检验</strong>：用一句话把&quot;Agent 自我复盘&quot;解释给一个没学过的同事听——不许用&quot;日志&quot;、&quot;复盘&quot;、&quot;schema&quot;这些词。</p></blockquote>
+<p><strong>思考题</strong>：</p>
+<p>本课的 <code>self_retrospective</code> Skill 用了 4 种 root_cause 枚举（sop_gap / prompt_ambiguity / ability_gap / integration_issue）。但这个枚举是为本课的演示场景设计的——在你自己的业务场景中：</p>
+<ol><li>这 4 种 root_cause 够用吗？你的场景需要增加哪些类型？</li></ol>
+<ol><li>如果增加太多枚举值，Agent 的分类准确性会不会下降？你会怎么平衡&quot;覆盖面&quot;和&quot;分类精度&quot;？</li></ol>
+<p>提示：从“每个枚举值是否指向一个明确的改进方向”角度思考——如果两个枚举值指向同一种改进，它们就应该合并。</p>
+<p>欢迎在评论区分享你的真实案例，我们下一讲见！</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="28｜数字员工的自我进化：让 Agent 团队越用越好.md">28｜数字员工的自我进化：让 Agent 团队越用越好.md</a></footer>
+</div></body></html>

@@ -1,0 +1,62 @@
+{
+  "id": "theme-002",
+  "theme": "Prompt 管不了 Agent 安全：为什么加固必须落在工程层，而不是写给模型的'道德指令'",
+  "source_lectures": [
+    "30",
+    "31",
+    "32"
+  ],
+  "lecture_tiers": {
+    "gold": 0,
+    "silver": 3,
+    "copper": 0
+  },
+  "narrative_arc": {
+    "act1_problem": "一个 Agent 团队在测试环境跑得好好的，上了生产就出事故：死循环烧掉 $70,000、权限被越权、密钥外泄。根因不是模型不够聪明，而是一个被普遍忽视的前提——'模型是完全不可信的'。让被监控对象自己报告监控数据，等于让考生自己批改试卷；在 System Prompt 里写'请控制成本不超过 $10'，Agent 会回复'好的'然后花掉 $50，因为它根本不知道每次调用多少钱。Agent 安全与 Chatbot 安全是两回事：Chatbot 注入最坏是说错话，Agent 注入能删文件、发请求、泄数据。",
+    "act2_method": "课程给出的答案是'全部落在工程层'，分三步（30-32 课）。第一步可观测：设计 5+2 事件体系 + Hook 骨架 + 两层配置，把零散 Hook 统一到一个中控系统，接 Langfuse 全链路追踪——先解决'看见'。第二步可靠：在 Hook 骨架上挂三个策略——重试（区分可重试的 429/5xx 和不可重试的 4xx）、循环检测（状态哈希去重，第 3 次重复就发现，比 max_iter=200 省 197 次）、成本围栏（代码层实时算账硬停止）。第三步安全：三层工具能力限制——沙箱限制执行范围、权限网关限制工具选择（Deny>Ask>Allow）、身份认证限制使用主体。共同原则：所有限制都是确定性代码/基础设施，无一靠 Prompt。",
+    "act3_critique": "这套'Prompt 是建议、Hook 是法律'的立场是对的，但课程的数据支撑薄弱：'629 次安全测试 80% 劫持率''确定性门控 80% vs 指令 20%''15% 云端 Skill 藏木马'等关键数字均无原始出处，读者只能当作讲师的经验判断而非可引用的数据。身份认证层仍是'展望性'——所有主流框架的 Agent 身份都是纯字符串，'沙箱即身份'（悟空方案）是方向而非落地标准。此外，确定性正则消毒有其边界：'宁可漏报也不能误杀'意味着它拦不住精心构造的对抗样本，加固永远是 reduce not eliminate。"
+  },
+  "title_idea": "给 Agent 写安全提示词是在自我欺骗：为什么'Prompt 是建议、Hook 才是法律'",
+  "type": "opinion",
+  "search_keywords": [
+    "agent prompt injection defense",
+    "LLM agent safety sandbox",
+    "agent observability hook framework",
+    "agent reliability retry loop detection",
+    "tool permission gateway deny allow",
+    "cost guardrail agent token budget"
+  ],
+  "visualization_hints": [
+    "Mermaid 流程图：5+2 事件体系对齐 Agent Turn 周期",
+    "Mermaid 决策图：Deny > Ask > Allow 权限决策流",
+    "ECharts 对比图：确定性门控 vs Prompt 指令的有效率对比（示意，需标注数据存疑）"
+  ],
+  "controversy_hooks": [
+    "安全圈共识是'模型不可信'，但商业产品都在靠 system prompt 做安全——到底谁错了？",
+    "确定性正则消毒'宁可漏报不误杀'，是不是等于承认它拦不住真正的对抗攻击？",
+    "Docker 到底算不算沙箱？课程说'Docker 共享内核，不是安全隔离'，但大多数人还在拿 Docker 当安全边界。"
+  ],
+  "verification_gate": {
+    "verified_claims": [
+      "Langfuse 开源 MIT 19K+ stars → GitHub 可查",
+      "Claude Code 权限模型 Deny>Ask>Allow → 公开文档",
+      "Cloudflare Sandbox Auth (2026) OIDC 短期 Token → 可查"
+    ],
+    "avoid_claims": [
+      "629 次安全测试 80% 劫持成功率 — 精确数值无来源，被反复引用 (🚩)",
+      "确定性门控 ~80% vs 指令 ~20% 四倍差距 — 无出处 (❓)",
+      "约 15% 云端 Skill 藏木马（悟空团队） — 无出处 (❓)",
+      "Agent 死循环 264 小时烧 $70,000+ — 轶事无出处 (❓)"
+    ]
+  },
+  "quality_rubric_hints": {
+    "required_sections": [
+      "问题定义：Agent 安全 ≠ 内容过滤",
+      "为什么 Prompt 管不了安全",
+      "三层工程防线拆解（观测/可靠/安全）",
+      "边界：确定性方案的局限",
+      "数据可信度声明"
+    ],
+    "min_score": 55
+  }
+}

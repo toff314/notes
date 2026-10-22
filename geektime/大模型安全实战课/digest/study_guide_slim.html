@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《大模型安全实战课》— 5 分钟速览</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../README.html">geektime</a><a href="../README.html">大模型安全实战课</a><a href="README.html">《大模型安全实战课》消化索引（digest README）</a></div>
+<h1>《大模型安全实战课》— 5 分钟速览</h1>
+<h2>如果你只记住一件事</h2>
+<p>大模型本身没有&quot;边界感&quot;，安全不是靠训好模型，而是靠 <strong>系统架构（三道门）+ 行为对齐（RLHF/RLAIF/CA）+ 数据治理（生命周期）+ 度量评估（五维）</strong> 四件事共同管住它。</p>
+<h2>3 个核心框架</h2>
+<ol><li><strong>三道门架构</strong>（L04）：输入控制门（过滤诱导）→ 上下文控制门（隔离污染）→ 输出审查门（兜底扫描），每次请求强制过三个检查点。</li><li><strong>对齐三机制</strong>（L17）：RLHF 人教（贵但稳）、RLAIF 模型教（快但有偏见传染）、Constitutional AI 规则教（前置价值观），组合使用形成闭环。</li><li><strong>投毒两方向</strong>（L07）：污染输出=全局变错，污染行为=埋触发词后门局部变脸；后者用&quot;诱导触发测试&quot;主动探测。</li></ol>
+<h2>5 个可操作方法</h2>
+<ol><li><strong>双层拦截中间件</strong>（L13）：黑名单关键词 + SBERT 余弦相似度&gt;0.75，串在模型 API 前。</li><li><strong>统一拒绝话术</strong>（L13）：拒绝时禁用&quot;系统设定/权限不足&quot;，防&quot;提示残影&quot;暴露策略轮廓。</li><li><strong>诱导触发测试</strong>（L07）：上线前用边缘诱导问题敲模型，异常顺从=后门激活信号。</li><li><strong>四模块评估实验室</strong>（L29）：攻击任务库→响应分析→评分面板→比对报告，选型时横向测模型。</li><li><strong>数据全链管控</strong>（L18/L16）：最小可访问 + 内部文档分级 + 样本来源可追溯，从源头拒绝毒数据。</li></ol>
+<h2>1 个反直觉观点</h2>
+<p><strong>厂商说&quot;模型已消除有害倾向&quot;不能信，但也不能全不信——协议层签 SLA、技术层做行为校验，双重验证后再采信</strong>（L29）。同理，多模态模型的安全机制无法从文本底座无损继承，图文组合就能绕过单模态防线（L27）。</p>
+<h2>值不值得花时间？</h2>
+<p>值得，但对口人群有门槛 — 这是目前少见的&quot;企业视角&quot;大模型安全全景课（整体 SNR 2.83/5，15 讲金/银矿占 39%）。如果你是部署大模型的技术/安全负责人，L17/L29/L07 三讲就值回票价；如果你是前沿研究者或纯小白，收获递减。<strong>建议按路线 A（40 分钟）先扫 4 讲，再决定是否深入。</strong></p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="study_guide_slim.md">study_guide_slim.md</a></footer>
+</div></body></html>
