@@ -374,12 +374,19 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     rows = []          # [(item_label, {col_idx|None: [link html]})]
     present = set()
 
+    def type_label(idx):
+        return columns[idx][0] if idx is not None and idx < len(columns) else None
+
     def add_doc(item_label, match_key, display, link):
         idx = classify_artifact(section_key, match_key)
         present.add(idx if idx is not None else "other")
         for it, cells in rows:
             if it == item_label:
-                cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(display)}</a>')
+                cell = cells.setdefault(idx, [])
+                text = display
+                if any(display in a for a in cell):
+                    text = match_key  # 同类型多份：用文件名区分
+                cell.append(f'<a href="{esc(link)}">{esc(text)}</a>')
                 return
         cells = {idx: [f'<a href="{esc(link)}">{esc(display)}</a>']}
         rows.append((item_label, cells))
@@ -392,11 +399,9 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
                 continue
             rel_file = os.path.join(item_dir_rel, f)
             no_ext = f[:-3] if f.endswith(".md") else f
-            if "/" in f or not f.endswith(".md"):
-                display = no_ext
-            else:
-                display = h1_of(os.path.join(item_abs, f), f[:-3])
-            add_doc(item_label, no_ext, display, href(rel_file if not f.endswith(".md") else rel_file))
+            idx = classify_artifact(section_key, no_ext)
+            display = type_label(idx) or no_ext
+            add_doc(item_label, no_ext, display, href(doc_href(rel_file)))
         idx_file = os.path.join(item_dir_rel, "index.html")
         if os.path.isfile(os.path.join(ROOT, idx_file)):
             add_doc(item_label, item_dir_rel.split(os.sep)[-1], "目录", href(item_dir_rel) + "/index.html")
@@ -407,8 +412,9 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
             continue
         rel_file = os.path.join(root_rel, f)
         no_ext = f[:-3] if f.endswith(".md") else f
-        display = h1_of(os.path.join(root_abs, f), f[:-3]) if f.endswith(".md") else no_ext
-        add_doc("（总览）", no_ext, display, href(rel_file))
+        idx = classify_artifact(section_key, no_ext)
+        display = type_label(idx) or no_ext
+        add_doc("（总览）", no_ext, display, href(doc_href(rel_file)))
 
     # 条目级产物
     for d in subs:
