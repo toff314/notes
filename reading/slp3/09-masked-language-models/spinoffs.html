@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</span> <span>/</span> <span class="cur">《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
 <article class="prose"><h1>《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
 <h2>候选一览</h2>
 <table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>为什么 BERT 不能续写：双向注意力的能力边界</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S1+S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>15% 的代价：从 BERT 到 RoBERTa 的效率账</td><td><code>write-tech-tutorial</code>（论文：）</td><td>S3+S4+S6</td><td>P0</td><td>专栏级</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>词级 90 分，实体级 50 分：NER 评估的隐形陷阱</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S1+S5+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>一个词被切成三瓣之后：WordPiece 与序列标注的对齐难题</td><td><code>write-tech-tutorial</code>（论文：）</td><td>S3+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>多语言模型的「口音」：词表重采样为何救不了低资源语言</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S2+S4+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>

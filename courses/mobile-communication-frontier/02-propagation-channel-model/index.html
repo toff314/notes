@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模） · Notes</title>
+<title>移动通信技术前沿 · 听课笔记 · 听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模） · Notes</title>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,8 +65,8 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <a href="../index.html">移动通信技术前沿 · 听课笔记</a> <span>/</span> <a href="index.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a> <span>/</span> <span class="cur">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</span></nav>
-<h1 class="title">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</h1><div class="prose"><h1>听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</h1>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记</span> <span>/</span> <span class="cur">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</span></nav>
+<h1 class="title">移动通信技术前沿 · 听课笔记 · 听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</h1><div class="prose"><h1>听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</h1>
 <h2>讲座元信息</h2>
 <ul><li>讲师：张欣（北京邮电大学 无线通信教研中心；授课属杨红老师团队）</li><li>日期：2026 秋　时长：4 学时（一次课）　来源：线下</li><li>（未提供 meta.json；讲师/日期据转写第 1 段与 PPT 封面页还原）</li><li>课型判定：<strong>学术内容课</strong>（依据：可独立成条的知识/概念 ≥ 12 个——建模三阶段、断点与衰减指数、宏蜂窝模型群、SPM、双线/多线模型、UTD、曼哈顿模型、慢衰时空相关性、射线追踪/FDTD、数字孪生、NTN 路损四分量、O2I 穿透、大气损耗与闪烁、A2G 两径模型、XL-MIMO 近场/瑞利距离、非平稳与 GSCM、通感一致性、WEI 四步、图像信道等）</li><li>课型判定补充：含大量公式/模型/标准号，属<strong>学术内容课</strong>（非实务操作课、非观点分享课）</li></ul>
 <h2>实际输入（必填 · G1 依据）</h2>

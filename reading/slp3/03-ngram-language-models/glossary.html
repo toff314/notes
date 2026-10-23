@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a> <span>/</span> <span class="cur">第 3 章 N-gram 语言模型 · 术语表</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</span> <span>/</span> <span class="cur">第 3 章 N-gram 语言模型 · 术语表</span></nav>
 <article class="prose"><h1>第 3 章 N-gram 语言模型 · 术语表</h1>
 <table><tr><th>术语</th><th>书上定义（缩引）</th><th>位置</th><th>我的话</th></tr><tr><td>语言模型（LM）</td><td>为每一个可能的下一个词赋予一个概率，或给出其概率分布</td><td>§3.1</td><td>给下一个符号打分并归一化的函数，可给整句打分</td></tr><tr><td>n-gram</td><td>n 个词的序列；也指用前 n−1 个词预测下一个词的概率模型</td><td>§3.1</td><td>同时是数据切片和建模假设，读时要分清</td></tr><tr><td>bigram</td><td>两个词的序列；用前一个词预测下一个词</td><td>§3.1.1</td><td>窗口为 1 的马尔可夫模型</td></tr><tr><td>trigram</td><td>以前面两个词为条件预测下一个词</td><td>§3.1.3</td><td>窗口为 2；数据够多时的常用阶数</td></tr><tr><td>马尔可夫假设</td><td>一个词的概率仅依赖于前 n−1 个词（bigram 时即前一个词）</td><td>§3.1.1</td><td>丢掉远处历史，换取可计数的上下文</td></tr><tr><td>最大似然估计（MLE）</td><td>用计数归一化估参，使训练集在该模型下的似然最大</td><td>§3.1.2</td><td>在已见数据上最不意外的参数</td></tr><tr><td>相对频率</td><td>某序列的观测频率除以前缀的观测频率</td><td>§3.1.2</td><td>MLE 的算术形式，就是计数相除</td></tr><tr><td>对数概率</td><td>在对数空间存储与计算概率，避免连乘下溢</td><td>§3.1.3</td><td>乘法变加法，按 token 累加打分</td></tr><tr><td>外在评估</td><td>把模型嵌入应用，依任务效果改善来评估</td><td>§3.2</td><td>验收：到底有没有用</td></tr><tr><td>内在评估</td><td>独立于应用、直接衡量模型质量</td><td>§3.2</td><td>筛选：像不像这门语言</td></tr><tr><td>训练集</td><td>用来学习模型参数的数据</td><td>§3.2</td><td>计数来源</td></tr><tr><td>开发集（devset）</td><td>最终测试前反复调参用的留出集，与测试集同分布</td><td>§3.2</td><td>给人迭代用，防止人手污染测试集</td></tr><tr><td>测试集</td><td>与训练集不重叠、用于最终评估的留出数据</td><td>§3.2</td><td>只跑一次，跑多了就漏信息</td></tr><tr><td>数据污染</td><td>测试集内容混入训练数据，导致评测虚高</td><td>§3.2</td><td>分数好看但不可复现的常见原因</td></tr><tr><td>困惑度（PPL）</td><td>测试集概率倒数的逐词几何平均</td><td>§3.3</td><td>平均在每个位置犹豫多少个等概率候选</td></tr><tr><td>分支因子</td><td>可以跟在任意一个词之后的下一个词的可能数目</td><td>§3.3.1</td><td>结构上的走法数，未按概率加权</td></tr><tr><td>平滑 / 折扣</td><td>从高频事件挪一点概率质量给未见事件</td><td>§3.6</td><td>给零计数留活路，代价是压低估已见项</td></tr><tr><td>拉普拉斯平滑</td><td>归一化前给所有 n-gram 计数加一</td><td>§3.6.1</td><td>加一平滑；分子加 1 分母必须加 V</td></tr><tr><td>加 k 平滑</td><td>把加一换成加分数 k</td><td>§3.6.2</td><td>少挪一点质量，k 在开发集上选</td></tr><tr><td>插值</td><td>把不同阶 n-gram 概率加权混合</td><td>§3.6.3</td><td>每次都混，权重和为 1</td></tr><tr><td>回退</td><td>高阶计数为零时退回低阶近似</td><td>§3.6.4</td><td>缺了才降级，会有&quot;台阶&quot;</td></tr><tr><td>愚蠢回退</td><td>不折扣、不归一化，按固定权重回退</td><td>§3.6.4</td><td>分数不是概率，常用 λ=0.4</td></tr><tr><td>留出语料</td><td>从训练数据中留出、用于设定插值权重的数据</td><td>§3.6.3</td><td>专门用来学 λ，不参与计数</td></tr><tr><td>熵</td><td>衡量不确定性的量，也是最优编码的比特下界</td><td>§3.7</td><td>平均需要多少比特描述一个决策</td></tr><tr><td>熵率</td><td>长序列每词的平均熵</td><td>§3.7</td><td>把整段熵除以长度</td></tr><tr><td>交叉熵</td><td>用模型分布编码真实分布时的平均编码长度</td><td>§3.7</td><td>永远不小于真实熵，越低越接近</td></tr><tr><td>采样</td><td>按模型给出的分布随机抽取下一个词</td><td>§3.4</td><td>让模型&quot;说话&quot;，暴露全部偏好</td></tr><tr><td>infini-gram</td><td>用后缀数组在推理时计算任意长度 n-gram 概率</td><td>§3.1.3</td><td>不预计算所有阶，查询时现算</td></tr></table></article>
 <footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>

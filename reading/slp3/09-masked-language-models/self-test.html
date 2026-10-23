@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 9 章 · 提取自测</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</span> <span>/</span> <span class="cur">《Speech and Language Processing》第 9 章 · 提取自测</span></nav>
 <article class="prose"><h1>《Speech and Language Processing》第 9 章 · 提取自测</h1>
 <blockquote><p><strong>提取自测协议（怎么用）</strong>：</p><p>1. <strong>遮住</strong> <code>book-notes.md</code>、<code>cards.md</code> 与一切答案，只留下下面的题目；</p><p>2. 合上书，口头或笔头作答，先写结构再补细节，不查资料；</p><p>3. 答不出的题记入「未掌握」，回看对应小节后<strong>隔一天再测</strong>，不要当场翻答案；</p><p>4. <strong>费曼检验</strong>：能不看笔记给外行讲清「为什么 BERT 不能续写」「为什么 NER 不能用词级准确率」= 真懂；</p><p>5. 教材型加一条：能独立重做图 9.4 的损失账、图 9.9 的 BIO 表、lab-03 的实体级评估 = 掌握。</p></blockquote>
 <h2>题目（12 题）</h2>

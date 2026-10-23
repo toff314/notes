@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <a href="../index.html">移动通信技术前沿 · 听课笔记</a> <span>/</span> <a href="index.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a> <span>/</span> <span class="cur">移动通信技术前沿 · 第 2 讲 电波传播与信道建模 · 听课笔记</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</span> <span>/</span> <span class="cur">移动通信技术前沿 · 第 2 讲 电波传播与信道建模 · 听课笔记</span></nav>
 <article class="prose"><h1>移动通信技术前沿 · 第 2 讲 电波传播与信道建模 · 听课笔记</h1>
 <blockquote><p><strong>本讲一句话</strong>：本讲以&quot;室外传播模型&quot;为主线，把信道建模的方法脉络（经验模型 → 统计模型 → 仿真/数据驱动）走一遍，再扩展到 NTN 非地面网络、A2G 无人机、5G/6G 大规模天线与&quot;AI 赋能信道建模&quot;；贯穿始终的是老师的一句方法论——<strong>难的不是解决问题，而是找到问题</strong>，以及传统模型在 AI 时代仍是&quot;兜底&quot;。</p><p><strong>结构</strong>：开门（为什么 + 方法论）→ 建模总脉络 → 室外概述 → 宏蜂窝模型群 → 微蜂窝/混合 → 慢衰与测量 → 仿真与数字孪生 → NTN → A2G → 5G/6G 天线 → AI 信道建模</p><p><strong>可疑处</strong>：转写术语 ASR 不稳（Sionna、SPM、Rayleigh、RIS 等），见 corrections.md</p><p><strong>备注</strong>：老师开头说明本课&quot;最后是 RIS 部分&quot;，但转写讲到 AI 信道建模即结束，未见专门 RIS 章节（见 corrections.md）</p></blockquote>
 <hr>

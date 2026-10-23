@@ -48,6 +48,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -203,41 +215,29 @@ def rel(cur_dir, target_dir):
     return os.path.relpath(target_dir, cur_dir)
 
 
-def build_record(section_key, section_label, sub, root_marker):
-    """L2 记录页（位于 <分区>/<记录>/index.html）+ L3 条目索引 + 全部内容页。
+def build_record(section_key, section_label, sub, root_marker, section_page_dir):
+    """生成记录的全部内容页与 L2 子目录索引；返回 (title, meta, block_html)。
 
-    root_marker 分区（geektime）内容根在 <记录>/digest，但记录页锚定在 <记录>/index.html。
-    返回 (title, meta) 供 L1 卡片使用。
+    记录不再拥有独立 L2 页——分区页直接平铺产物表格（DESIGN.md §三，压缩一级）。
+    section_page_dir：L1 分区页目录（链接以此算相对路径）。
     """
-    page_rel = os.path.join(section_key, sub)              # L2 页所在目录
+    page_rel = os.path.join(section_key, sub)              # 记录目录（geektime 下为课程目录）
     root_rel = record_root(section_key, sub, root_marker)  # 内容根
     root_abs = os.path.join(ROOT, root_rel)
-    if root_rel != page_rel:
-        stale = os.path.join(root_abs, "index.html")
-        if os.path.isfile(stale):
-            os.remove(stale)  # 旧版构建在内容根残留的索引页，避免与 L2 记录页双头
     readme_rel = os.path.join(root_rel, "README.md")
     title = h1_of(os.path.join(ROOT, readme_rel), sub)
     subs = list_dirs(root_abs)
     mds = [f for f in list_md(root_abs) if f != "README.md"]
 
-    # L2 记录页
-    cards, docs = [], []
-    for d in subs:
-        d_rel = os.path.join(root_rel, d)
-        n_md = len(list_md(os.path.join(ROOT, d_rel)))
-        n_sub = len(list_dirs(os.path.join(ROOT, d_rel)))
-        d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
-                        h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-        meta = f"{n_md} 份文档 · {n_sub} 个子目录" if n_sub else f"{n_md} 份文档"
-        cards.append((d_title, "", meta, index_href(page_rel, d_rel)))
-    for f in mds:
-        label = h1_of(os.path.join(ROOT, root_rel, f), f[:-3])
-        docs.append((label, rel(page_rel, os.path.join(root_rel, f[:-3])) + ".html"))
-    trail = [(section_label, section_key), (title, None)]
-    dir_index(page_rel, title, cards, docs, trail, intro_rel=readme_rel)
+    # 清理：记录目录不再放 L2 索引（旧构建产物）
+    stale = os.path.join(ROOT, page_rel, "index.html")
+    if os.path.isfile(stale):
+        os.remove(stale)
 
-    # L3 及以下：子目录索引与全部内容页（trail 全用根相对目录，链接随页深自动计算）
+    def href(target_dir_or_file):
+        return rel(section_page_dir, target_dir_or_file)
+
+    # ---- 内容页与子目录索引（trail 两级：分区 / 记录·条目）----
     def build_dir_index(d_rel, trail):
         d_abs = os.path.join(ROOT, d_rel)
         d_title = h1_of(os.path.join(d_abs, "README.md"),
@@ -252,13 +252,13 @@ def build_record(section_key, section_label, sub, root_marker):
         for f in [x for x in list_md(d_abs) if x not in ("README.md", "index.md")]:
             label = h1_of(os.path.join(ROOT, d_rel, f), f[:-3])
             docs.append((label, rel(d_rel, os.path.join(d_rel, f[:-3])) + ".html"))
-        dir_index(d_rel, d_title, cards, docs, trail + [(d_title, None)],
+        dir_index(d_rel, f"{title} · {d_title}", cards, docs, trail + [(d_title, None)],
                   intro_rel=os.path.join(d_rel, "README.md"))
         for d2 in list_dirs(d_abs):
             d2_rel = os.path.join(d_rel, d2)
             d2_title = h1_of(os.path.join(ROOT, d2_rel, "README.md"),
                              h1_of(os.path.join(ROOT, d2_rel, "index.md"), d2))
-            build_dir_index(d2_rel, trail + [(d_title, d_rel), (d2_title, None)])
+            build_dir_index(d2_rel, trail + [(f"{title} · {d_title}", d_rel)])
 
     def content_pages(dir_rel, trail):
         dir_abs = os.path.join(ROOT, dir_rel)
@@ -270,25 +270,49 @@ def build_record(section_key, section_label, sub, root_marker):
             d_rel = os.path.join(dir_rel, d)
             d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
                             h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-            content_pages(d_rel, trail + [(d_title, d_rel)])
+            content_pages(d_rel, trail + [(f"{title} · {d_title}", d_rel)])
 
     for d in subs:
         d_rel = os.path.join(root_rel, d)
         d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
                         h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-        base = [(section_label, section_key), (title, page_rel), (d_title, d_rel)]
-        build_dir_index(d_rel, base)
+        base = [(section_label, section_key), (f"{title} · {d_title}", None)]
+        build_dir_index(d_rel, [(section_label, section_key), (title, None)])
         content_pages(d_rel, base)
 
-    # 内容根直属的 md（README 已内嵌进 L2，仍生成独立页供直达）
     for f in list_md(root_abs):
         rel_md = os.path.join(root_rel, f)
         label = h1_of(os.path.join(ROOT, rel_md), f[:-3])
-        trail = [(section_label, section_key), (title, page_rel), (label, None)]
+        trail = [(section_label, section_key), (f"{title} · {label}" if f != "README.md" else title, None)]
         render_md(rel_md, trail)
 
+    # ---- L1 平铺区块：产物表格 ----
+    rows = []
+    for f in mds:
+        label = h1_of(os.path.join(ROOT, root_rel, f), f[:-3])
+        link = href(os.path.join(root_rel, f[:-3])) + ".html"
+        rows.append(("总览", f'<a href="{esc(link)}">{esc(label)}</a>'))
+    for d in subs:
+        d_rel = os.path.join(root_rel, d)
+        d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
+                        h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
+        links = []
+        for f in [x for x in list_md(d_rel) if x not in ("README.md", "index.md")]:
+            label = h1_of(os.path.join(ROOT, d_rel, f), f[:-3])
+            links.append(f'<a href="{esc(href(os.path.join(d_rel, f[:-3])))}.html">{esc(label)}</a>')
+        idx = os.path.join(d_rel, "index.html")
+        if os.path.isfile(os.path.join(ROOT, idx)):
+            links.insert(0, f'<a href="{esc(href(d_rel))}/index.html">目录</a>')
+        rows.append((d_title, " ".join(links) if links else '<span style="color:var(--muted)">—</span>'))
+
     meta = f"{len(subs)} 个条目 · {len(mds)} 份文档" if subs else f"{len(mds)} 份文档"
-    return title, meta
+    table = ('<div class="records"><table><thead><tr><th>条目</th><th>产物</th></tr></thead><tbody>'
+             + "".join(f'<tr><td class="item">{esc(it)}</td><td class="docs">{docs}</td></tr>'
+                       for it, docs in rows)
+             + "</tbody></table></div>")
+    block = (f'<section class="record-block"><h2>{esc(title)}</h2>'
+             f'<p class="meta">{esc(meta)}</p>{table}</section>')
+    return title, meta, block
 
 
 def build():
@@ -303,14 +327,13 @@ def build():
             rec_rel = record_root(key, sub, marker)
             if os.path.isfile(os.path.join(ROOT, rec_rel, "README.md")):
                 records.append(sub)
-        cards = []
+        blocks = []
         for sub in records:
-            rec_rel = record_root(key, sub, marker)
-            title = h1_of(os.path.join(ROOT, rec_rel, "README.md"), sub)
-            meta = build_record(key, label, sub, marker)
-            n_items = ""
-            cards.append((title, "", meta[1], f"{sub}/index.html"))
-        dir_index(key, label, cards, [], [(label, None)])
+            _, _, block = build_record(key, label, sub, marker, key)
+            blocks.append(block)
+        body_sec = f'<h1 class="title">{esc(label)}</h1><p class="sub">{esc(section_blurb(key))} · {len(records)} 条记录</p>' + "".join(blocks)
+        write(os.path.join(key, "index.html"),
+              page(label, crumb_html([(label, None)], key), body_sec))
         n_desc = f"{len(records)} 条记录"
         section_cards.append((label, section_blurb(key), n_desc, f"{key}/index.html"))
 

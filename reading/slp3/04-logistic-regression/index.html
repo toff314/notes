@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归 · Notes</title>
+<title>读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归 · Notes</title>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,8 +65,8 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a> <span>/</span> <span class="cur">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</span></nav>
-<h1 class="title">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</h1><div class="prose"><h1>读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</h1>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章）</span> <span>/</span> <span class="cur">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</span></nav>
+<h1 class="title">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</h1><div class="prose"><h1>读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</h1>
 <h2>书目元信息</h2>
 <ul><li>作者：Daniel Jurafsky &amp; James H. Martin</li><li>版次：第三版（中文译文，2026 年手头稿）</li><li>来源：<code>raw/04-logistic-regression.md</code>（英文对照：<code>raw/04-logistic-regression.dual.md</code>）</li><li>定位口径：中文版无印刷页码，全部用节号 <code>§x.y</code></li><li>阅读目标：理解（<code>raw/meta.json</code> 声明 <code>goal=理解</code>）</li><li><strong>书型判定：教材型</strong>。依据：章-节-知识点层级完整（§4.1–§4.16 及多个 <code>x.y.z</code> 子节）；含定义、公式（式 4.1–4.62）、例题（§4.3.1、§4.6.3）与章末练习（4.1–4.3）；术语密集且带章末小结。</li><li>交叉对照：<code>raw/</code> 未提供课堂笔记，未生成 <code>cross-check.md</code>。</li></ul>
 <h2>处理范围</h2>

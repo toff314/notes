@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a> <span>/</span> <span class="cur">《Speech and Language Processing》（第三版）第 6 章 神经网络 · 读书笔记</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：Speech and Language Processing（第 6 章 神经网络）</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第三版）第 6 章 神经网络 · 读书笔记</span></nav>
 <article class="prose"><h1>《Speech and Language Processing》（第三版）第 6 章 神经网络 · 读书笔记</h1>
 <blockquote><p><strong>本章一句话</strong>：神经网络把&quot;人工设计特征&quot;换成&quot;用单元堆出表示&quot;，而让这件事可训练的，是计算图上的反向传播。</p><p><strong>结构</strong>：先拆开单个单元（§6.1），用 XOR 说明为什么必须组合（§6.2），给出前馈网络的矩阵写法（§6.3），再落到 NLP 分类与嵌入输入（§6.4–§6.5），最后讲损失、梯度与训练技巧（§6.6）。</p><p><strong>可疑处</strong>：中文版公式在 PDF 转 Markdown 时有错位（如 §6.1 的求和下标、§6.6 的偏导分式），本笔记只摘录完整散文句，不摘公式碎片；训练细节（§6.6.4 末尾推导）书中留作练习。</p><p><strong>与我何干</strong>：过去我把&quot;深层网络&quot;当成更大的逻辑回归；这一章把增益拆成非线性、表示学习与反向传播三件事，正好解释我在文本分类里遇到的手工特征瓶颈。</p></blockquote>
 <p><strong>全章 takeaway（5 条）</strong></p>

@@ -28,6 +28,18 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .doc-link:hover{background:var(--accent-soft);color:var(--accent)}
 .doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
 .empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -53,7 +65,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 9 章 掩码语言模型 · 读书笔记</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 9 章 掩码语言模型 · 读书笔记</span></nav>
 <article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 9 章 掩码语言模型 · 读书笔记</h1>
 <blockquote><p><strong>本章一句话</strong>：把注意力掩码掀掉、把句子中间挖空，模型就被迫用左右两侧的信息重建缺失词，由此得到的编码器成为「理解型」任务的通用底座。</p><p><strong>结构</strong>：先立起编码器/解码器/编码器-解码器三分法 → 拆开双向注意力的实现（只删一个掩码）→ 用 MLM + NSP 训练 → 三种下游微调（序列、句对、序列标注）→ 以 NER 的 BIO、子词对齐与实体级评估收尾。</p><p><strong>可疑处</strong>：§9.3.1 的损失公式在抽取文本中被拆成多行（求和符号与 |M| 分母散落），我按上下文重建为非掩码位置求平均的负对数似然，并在 lab-02 用可运行的玩具实现验证口径；另 §9.5.2 图 9.9 的表格被压成一行，标签列需对照正文还原。</p><p><strong>与我何干</strong>：我调过 BERT 类模型做文本分类，却一直把「15% 掩码」当成超参数记住；这一章让我看清它同时是效率折扣与表示学习目标的折中，也解释了为什么编码器不适合直接拿来生成。</p></blockquote>
 <hr>
