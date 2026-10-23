@@ -487,6 +487,8 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
             no_ext = f[:-3] if f.endswith(".md") else f
             idx = classify_artifact(section_key, no_ext)
             display = type_label(idx) or no_ext
+            if f.endswith(".json"):  # json 产物保留后缀，与 md 内容页区分
+                display = f"{display}.json"
             add_doc(item_label, no_ext, display, href(doc_href(rel_file)))
         add_materials(item_label, item_abs, item_dir_rel)
         idx_file = os.path.join(item_dir_rel, "index.html")
@@ -503,6 +505,8 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
         no_ext = f[:-3] if f.endswith(".md") else f
         idx = classify_artifact(section_key, no_ext)
         display = type_label(idx) or no_ext
+        if f.endswith(".json"):
+            display = f"{display}.json"
         add_doc("（总览）", no_ext, display, href(doc_href(rel_file)))
 
     # 条目级产物
