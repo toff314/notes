@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>计算语言学基础 · 第 2 讲 词形态分析 · 疑问与自测</title>
+<title>计算语言学基础 · 第 2 讲 词形态分析 · 疑问与自测 · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">课程 · Courses</a><a href="../README.html">计算语言学基础 · 听课笔记</a><a href="README.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a></div>
-<h1>计算语言学基础 · 第 2 讲 词形态分析 · 疑问与自测</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <a href="../index.html">计算语言学基础 · 听课笔记</a> <span>/</span> <a href="index.html">听课笔记：计算语言学基础 · 第 2 讲 词形态分析</a> <span>/</span> <span class="cur">计算语言学基础 · 第 2 讲 词形态分析 · 疑问与自测</span></nav>
+<article class="prose"><h1>计算语言学基础 · 第 2 讲 词形态分析 · 疑问与自测</h1>
 <blockquote><p><strong>提取自测协议（怎么用这份自测）</strong>：</p><p>1. <strong>遮住</strong> <code>notes.md</code>，只看下面的问题；</p><p>2. 合上书与一切笔记，口头或笔头作答（答案须自己组织，不得复述原文）；</p><p>3. 答不出的进&quot;我没掌握&quot;，回看对应小节后再测一次；</p><p>4. 能讲给别人听 = 真懂（费曼标准）；讲不出的地方就是薄弱点。</p></blockquote>
 <h2>自测（合上书回答）</h2>
 <ol><li>绪论收尾里讲的&quot;两个里程碑&quot;分别指哪一年、各自发生了什么根本变化？ → 见 notes §2</li><li>自然语言领域为什么特别依赖&quot;公开评测&quot;？这和&quot;分词标准不统一&quot;有什么关系？ → 见 notes §3、§9</li><li>corpus 的词根为什么是&quot;尸体&quot;？这个比喻想说明语料的什么性质？ → 见 notes §5</li><li>处理一个语言任务，方法上要完成哪三件事？&quot;组合&quot;有哪三种结构、各配什么模型？ → 见 notes §5</li><li>英语断词为什么&quot;看起来平凡&quot;却仍麻烦？举出至少两类例外。 → 见 notes §6</li><li>词形还原除了&quot;降低词典规模&quot;，第二个、也是更重要的好处是什么？ → 见 notes §7</li><li>剖析（Parsing）与生成（Generation）是什么关系？为什么说词形分析本质是&quot;串到串&quot;？ → 见 notes §7、§8</li><li>词形态分析涉及哪三类知识？各自解决什么问题？ → 见 notes §8</li><li>FST 比 FSA 多了什么？给定 fox+N+PL，请说出经两个 FST 生成 foxes 的步骤。 → 见 notes §8</li><li>为什么汉语叫&quot;切分&quot;而不叫&quot;切词&quot;？赵元任/吕叔湘/王力/徐通锵各持什么看法？ → 见 notes §9</li><li>交集歧义（OA）和组合歧义（CA）的定义差别在哪？各举一例。 → 见 notes §10</li><li>真实歧义与伪歧义差别在哪？OOV 又分哪两类？ → 见 notes §10</li></ol>
@@ -50,7 +67,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <h2>PPT 有、转写未覆盖（需自己看课件补）</h2>
 <ul><li>【PPT】P53–P67：基于规则的切分——FMM 前向最大匹配（例&quot;语言学很重要&quot;、MaxLen 取值）、BMM 后向最大匹配、扩展 FMM 处理歧义、规则切分总结</li><li>【PPT】P60–P62：性能评估 P/R/F1、Baseline 与 Ceiling</li><li>【PPT】P68–P75：基于分类的切分（朴素贝叶斯、特征、极大熵 MaxEnt、深度表示）</li><li>【PPT】P76–P132：基于序标的切分（BIO/BIEO 标签集、HMM 五元组与 Viterbi、Baum-Welch、MEMM 与模型偏置、CRF 与特征模板模板、深度网络+CRF）</li><li>【PPT】P133–P145：SIGHAN 评测与数据集、跨领域与微博、SOTA（BERT-CRF）、&quot;汉语切分是否必要&quot;（[MengYX2019ACL]）</li><li>【PPT】P146–P165：子词分割（Subwords）——BPE token learner/parser、unigram LM、WordPiece；词 vs 子词</li><li>【PPT】02-2 P1–P29：最小编辑距离（Levenshtein、MED 动态规划、矩阵示例 execution→intention、汉语非字/非词错误、汉字形态距离 open question、Glyce 田字格 CNN）</li></ul>
 <h2>本课行动（从各节提炼）</h2>
-<ol><li>按平台&quot;倒数第一份是最新作业&quot;的顺序，规划 8 次阅读，<strong>11.30 24:00 前</strong>在云平台提交（验收：8 次提交齐全）</li><li>第 4 节轮到口头报告时，提前在群里告知老师；报告尽量结合自身工作场景</li><li>结合本次&quot;词形态分析&quot;，自查一个自身工作里的分词/检索/别字纠正场景，作为课程实践选题的备选</li></ol>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="questions.md">questions.md</a></footer>
-</div></body></html>
+<ol><li>按平台&quot;倒数第一份是最新作业&quot;的顺序，规划 8 次阅读，<strong>11.30 24:00 前</strong>在云平台提交（验收：8 次提交齐全）</li><li>第 4 节轮到口头报告时，提前在群里告知老师；报告尽量结合自身工作场景</li><li>结合本次&quot;词形态分析&quot;，自查一个自身工作里的分词/检索/别字纠正场景，作为课程实践选题的备选</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

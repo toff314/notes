@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第 4 章 · 提取自测</title>
+<title>《Speech and Language Processing》第 4 章 · 提取自测 · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a></div>
-<h1>《Speech and Language Processing》第 4 章 · 提取自测</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 4 章 · 提取自测</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 4 章 · 提取自测</h1>
 <blockquote><p><strong>提取自测协议（怎么用）</strong></p><p>1. <strong>遮住</strong> book-notes.md 与 cards.md，只看下面的问题；</p><p>2. 合上书和一切笔记，口头或笔头作答，先写结论再补理由；</p><p>3. 答不出的记为“未掌握”，回看对应小节后隔一天再测一次；</p><p>4. <strong>费曼检验</strong>：能向没学过机器学习的人讲清 sigmoid、交叉熵、softmax 三件事 = 真懂；</p><p>5. 教材型加一条：能独立做对 §4.6.3 的单步更新和练习 4.2/4.3 = 掌握。</p></blockquote>
 <h2>第 4 章自测（11 题）</h2>
 <ol><li>一个概率分类器由哪四个部分组成？各自解决什么问题？→ 见 book-notes §4.1｜卡 1</li><li>为什么线性得分 z 不能直接当概率？sigmoid 靠什么性质补上这一步？→ 见 book-notes §4.2｜卡 2</li><li>§4.3.1 的示例文档：6 个特征、权重 [2.5,−5.0,−1.2,0.5,2.0,0.7]、b=0.1，P(+|x) 约为多少？负词权重为什么绝对值更大？→ 见 book-notes §4.3｜卡 3</li><li>同一个模型、同一个样本，y=1 时损失 .36，y=0 时损失 1.2。这两个数字说明交叉熵在奖励什么、惩罚什么？→ 见 book-notes §4.5｜卡 4</li><li>初始 w=b=0、η=0.1、x=[3,2]、y=1，一步更新后的 w1、w2、b 各是多少？若改成 y=0、x=[2,5]，w2 往哪个方向动？→ 见 book-notes §4.6｜卡 14</li><li>为什么逻辑回归的梯度下降不担心局部最优？这个保证对神经网络还成立吗？→ 见 book-notes §4.6｜卡 6</li><li>softmax 与 sigmoid 是什么关系？为什么多分类要为每个类别单独准备一组权重？→ 见 book-notes §4.7｜卡 8</li><li>K 类交叉熵的求和为什么最后只剩 -log ŷ_c 一项？梯度长什么样？→ 见 book-notes §4.8｜卡 9</li><li>1000 封邮件、40 封垃圾、系统标 30 封其中 24 封正确：准确率、精确率、召回率、F1 各是多少？“全判非垃圾”的准确率又是多少？→ 见 book-notes §4.9｜卡 15</li><li>宏平均与微平均在什么情况下给出不同结论？三类样本量相同时还会不同吗？→ 见 book-notes §4.9.1｜卡 11</li><li>lab-02 中正则模型比无正则模型准确率高 6.7 个点，p 值却是 0.085。这为什么不算“统计显著”？p 值到底在问什么？→ 见 book-notes §4.11｜卡 13</li></ol>
@@ -46,7 +63,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <h2>未掌握（自测后更新）</h2>
 <ul><li>⬜ 第 5 题：先手算再对照 labs/lab-01/out/gradient_step.json，若符号反了回看 §4.6.1。</li><li>⬜ 第 9 题：易把 FP/FN 弄反，回看 §4.9 的混淆矩阵图。</li><li>⬜ 第 11 题：容易把“准确率更高”直接当成“更好”，回看 §4.11 的 2δ 规则。</li></ul>
 <h2>例题重做记录（教材型）</h2>
-<table><tr><th>例题</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>§4.6.3 单步梯度更新</td><td>✅</td><td>⬜</td><td>已能复现 (.15,.1,.05)；重做时要求不看公式写出梯度</td></tr><tr><td>练习 4.2 指标计算</td><td>✅</td><td>⬜</td><td>技巧性：先列 TP/FP/FN/TN 四格再套公式</td></tr><tr><td>练习 4.3 负样本更新</td><td>⬜</td><td>⬜</td><td>知识性：需确认误差符号 (ŷ−y) 与更新方向</td></tr></table>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="self-test.md">self-test.md</a></footer>
-</div></body></html>
+<table><tr><th>例题</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>§4.6.3 单步梯度更新</td><td>✅</td><td>⬜</td><td>已能复现 (.15,.1,.05)；重做时要求不看公式写出梯度</td></tr><tr><td>练习 4.2 指标计算</td><td>✅</td><td>⬜</td><td>技巧性：先列 TP/FP/FN/TN 四格再套公式</td></tr><tr><td>练习 4.3 负样本更新</td><td>⬜</td><td>⬜</td><td>知识性：需确认误差符号 (ŷ−y) 与更新方向</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

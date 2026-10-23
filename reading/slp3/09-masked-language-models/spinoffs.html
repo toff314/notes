@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<title>《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech） · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a></div>
-<h1>《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
 <h2>候选一览</h2>
 <table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>为什么 BERT 不能续写：双向注意力的能力边界</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S1+S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>15% 的代价：从 BERT 到 RoBERTa 的效率账</td><td><code>write-tech-tutorial</code>（论文：）</td><td>S3+S4+S6</td><td>P0</td><td>专栏级</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>词级 90 分，实体级 50 分：NER 评估的隐形陷阱</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S1+S5+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>一个词被切成三瓣之后：WordPiece 与序列标注的对齐难题</td><td><code>write-tech-tutorial</code>（论文：）</td><td>S3+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>多语言模型的「口音」：词表重采样为何救不了低资源语言</td><td><code>write-zhihu-tech</code>（观点：）</td><td>S2+S4+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
 <hr>
@@ -54,7 +71,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：WordPiece 与序列标注——词级标签如何落到子词，又怎么解回来</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§9.5.3「对于训练，我们只需把与每个词相关联的金标准标签分配给由它派生出的所有子词词元。」；同节「最简单的做法是使用与一个词的首个子词词元相关联的 argmax BIO 标签。」</li><li><strong>为什么</strong>：命中 <strong>S3 + S5</strong>。S3：涉及分词、标签复制、首子词解码、CRF 全局约束四层；S5：任何做中文/英文 NER 的工程都会遇到 <code>##</code> 前缀与词边界不一致。</li><li><strong>增益</strong>：① 相对本书：补上「训练与解码不对称」的后果分析——首子词错则整词错，中间子词错被掩盖；② 对读者：给出三种解码策略（首子词、平均、最大）的取舍表，可直接落进代码。</li><li><strong>素材种子</strong>：历史溯源（BPE → WordPiece → SentencePiece）｜人物（Schuster 与 Nakajima）｜原理（子词对齐、非法转移）｜争议（中文是否需要词级边界）</li><li><strong>缺口（下游必须自己搜）</strong>：教材未覆盖中文分词的字符级 BIO；需补中文 NER 的字符级实践与 <code>##</code> 之外的边界标记。</li><li><strong>体量建议</strong>：标准长文（约 4,000 字），以 lab-03 的可运行脚本为骨架。</li><li><strong>待核</strong>：❓ 不同 tokenizer 对 <code>Mt.</code> 的切分不一致，示例需按实际模型重跑。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
 <hr>
 <h3>5. 多语言模型的「口音」：词表重采样为何救不了低资源语言</h3>
-<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：多语言模型的「口音」——α=0.3 的词表重采样为什么只是止痛药</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§9.3.3「当语言数量变得非常庞大时，多语言模型就会表现出所谓的多语言诅咒」；同节「训练中数量庞大的英语使模型对低资源语言的表示略微更像英语」。</li><li><strong>为什么</strong>：命中 <strong>S2 + S4 + S6</strong>。S2：Conneau 等（2020）XLM-R 与 Papadimitriou 等（2023）「口音」研究均可溯源；S4：「重采样提升多语言性能」与「低资源表示仍被英语同化」形成反差；S6：XLM-R、mBERT、BLOOM 的多语言报告可查。</li><li><strong>增益</strong>：① 相对本书：区分「容量摊薄」与「表示同化」两种失效，说明前者可靠扩模型缓解、后者是数据分布问题；② 对读者：给出一张「多语言选型检查表」——词表覆盖率、每语言有效词元数、是否被英语主导。</li><li><strong>素材种子</strong>：历史溯源（mBERT → XLM-R → BLOOM）｜人物（Lample、Conneau）｜原理（α 重采样、词表容量）｜争议（多语言模型是否应拆成单语言专家）</li><li><strong>缺口（下游必须自己搜）</strong>：教材未给「口音」的量化指标；需补 Papadimitriou 等（2023）的实验设计与最新跟进。</li><li><strong>体量建议</strong>：标准长文（约 4,500 字），用式 9.5 的两组概率计算作为可验证入口。</li><li><strong>待核</strong>：❓ α=0.3 是否为当前主流默认，需查 XLM-R / mT5 等模型的实际配置。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
-</div></body></html>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：多语言模型的「口音」——α=0.3 的词表重采样为什么只是止痛药</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§9.3.3「当语言数量变得非常庞大时，多语言模型就会表现出所谓的多语言诅咒」；同节「训练中数量庞大的英语使模型对低资源语言的表示略微更像英语」。</li><li><strong>为什么</strong>：命中 <strong>S2 + S4 + S6</strong>。S2：Conneau 等（2020）XLM-R 与 Papadimitriou 等（2023）「口音」研究均可溯源；S4：「重采样提升多语言性能」与「低资源表示仍被英语同化」形成反差；S6：XLM-R、mBERT、BLOOM 的多语言报告可查。</li><li><strong>增益</strong>：① 相对本书：区分「容量摊薄」与「表示同化」两种失效，说明前者可靠扩模型缓解、后者是数据分布问题；② 对读者：给出一张「多语言选型检查表」——词表覆盖率、每语言有效词元数、是否被英语主导。</li><li><strong>素材种子</strong>：历史溯源（mBERT → XLM-R → BLOOM）｜人物（Lample、Conneau）｜原理（α 重采样、词表容量）｜争议（多语言模型是否应拆成单语言专家）</li><li><strong>缺口（下游必须自己搜）</strong>：教材未给「口音」的量化指标；需补 Papadimitriou 等（2023）的实验设计与最新跟进。</li><li><strong>体量建议</strong>：标准长文（约 4,500 字），用式 9.5 的两组概率计算作为可验证入口。</li><li><strong>待核</strong>：❓ α=0.3 是否为当前主流默认，需查 XLM-R / mT5 等模型的实际配置。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03：best-of-N 的收益上限与奖励噪声 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <a href="../../../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="../../index.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a> <span>/</span> <a href="../../index.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a> <span>/</span> <span class="cur">labs 索引：行动执行闭环</span> <span>/</span> <a href="../index.html">labs 索引：行动执行闭环</a> <span>/</span> <span class="cur">lab-03：best-of-N 的收益上限与奖励噪声</span> <span>/</span> <span class="cur">lab-03：best-of-N 的收益上限与奖励噪声</span></nav>
+<h1 class="title">lab-03：best-of-N 的收益上限与奖励噪声</h1><div class="prose"><h1>lab-03：best-of-N 的收益上限与奖励噪声</h1>
+<p><strong>对应</strong>：§8.3.3（奖励模型的 best-of-N 用途）、§8.4（学到的奖励只是真实奖励的带噪替代）。<strong>行动</strong>：<code>actions.md</code> 第 3 条。</p>
+<h2>目的</h2>
+<p>量化一个工程直觉：<strong>增大候选数 N 是否总能挑到更好的回答？</strong> 把奖励模型写成「真实质量 + 噪声」，测量三个量随 N 与噪声 σ 的变化：</p>
+<ol><li>被选中候选的<strong>期望真实质量</strong> <code>E[z_sel]</code>；</li><li><strong>选中真最优候选的概率</strong> <code>P(z_sel = max z)</code>；</li><li><strong>奖励高估</strong> <code>E[r_sel − z_sel]</code>，即奖励模型给选中项的分数比它的真实质量高多少。</li></ol>
+<h2>输入</h2>
+<ul><li>无外部数据，全部蒙特卡洛模拟，<code>numpy.random.default_rng(11)</code>。</li><li>每个提示采样 N 个候选，真实质量 <code>z ~ N(0,1)</code>；奖励模型打分 <code>r = z + ε</code>，<code>ε ~ N(0, σ²)</code>。</li><li><code>N ∈ {1,2,4,8,16,32,64,128}</code>，<code>σ ∈ {0, 0.25, 0.5, 1.0, 2.0}</code>，每个 (σ,N) 组合 4,000 次试验（每次批量 8 个提示以控制内存）。</li><li>按 <code>argmax r</code> 选一个候选，记录它的 <code>z</code>、<code>r</code> 与是否等于该组真实最大值。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 best_of_n.py</code></pre>
+<p>只依赖 numpy 2.4.6 + matplotlib 3.10.9；随机种子固定。本次运行退出码 0。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/metrics.json</code></td><td>5×8=40 行原始结果 + 每个 σ 的汇总</td></tr><tr><td><code>out/best_of_n.csv</code></td><td>同样的 40 行，便于表格工具读取</td></tr><tr><td><code>out/best_of_n.png</code></td><td>左：期望真实质量 vs N；右：P(选中真最优) vs N；每条线一个 σ</td></tr></table>
+<p>关键数值（本次运行）：</p>
+<table><tr><th>σ</th><th>N</th><th>期望真实质量</th><th>P(选中真最优)</th><th>奖励高估</th></tr><tr><td>---:</td><td>---:</td><td>---:</td><td>---:</td><td>---:</td></tr><tr><td>0</td><td>2</td><td>0.554</td><td>1.000</td><td>0.000</td></tr><tr><td>0</td><td>128</td><td>2.599</td><td>1.000</td><td>0.000</td></tr><tr><td>0.5</td><td>2</td><td>0.507</td><td>0.853</td><td>0.125</td></tr><tr><td>0.5</td><td>128</td><td>2.332</td><td>0.460</td><td>0.570</td></tr><tr><td>1.0</td><td>128</td><td>1.843</td><td>0.215</td><td>1.831</td></tr><tr><td>2.0</td><td>128</td><td>1.150</td><td>0.082</td><td>4.657</td></tr></table>
+<h2>结论</h2>
+<ol><li><strong>无噪声时，N 越大严格越好。</strong> σ=0 时 P(选中真最优) 恒为 1，期望真实质量从 N=1 的 0.006 单调升到 N=128 的 2.599；这是极值统计的教科书结果。</li><li><strong>有噪声时，期望真实质量仍随 N 上升，但增速被 σ 压住。</strong> σ=0.5、N=2→128，质量从 0.507 升到 2.332；σ=2 时只从 0.246 升到 1.150。噪声把&quot;多采样&quot;的边际收益越吃越少。</li><li><strong>P(选中真最优) 反而随 N 下降。</strong> σ=0.5 时从 N=2 的 0.853 降到 N=128 的 0.460；σ=2 时从 0.652 降到 0.082。N 越大，取最大值的样本越多，最大值越可能落在&quot;噪声高&quot;而不是&quot;质量高&quot;的候选上。</li><li><strong>奖励高估随 N 与 σ 放大。</strong> σ=2、N=128 时平均高估 4.657——奖励模型给选中项的分远高于它的真实质量。因此 best-of-N 上线前必须同时看&quot;真实质量&quot;和&quot;奖励高估&quot;，只看奖励分数会系统性乐观。</li></ol>
+<h2>局限</h2>
+<ul><li>真实质量与奖励噪声都假设为<strong>独立同分布高斯</strong>；真实 RM 的误差随提示、长度、领域变化，且与质量相关。</li><li>所有提示共享同一分布，没有提示难度分层；难提示上的选择偏差可能更严重。</li><li>真实 best-of-N 还要付 N 倍采样与打分成本，本实验没有建成本模型。</li><li>4,000 次试验对概率的估计有蒙特卡洛误差（约 ±0.01–0.02），趋势可信，小数点后第二位不宜过度解读。</li><li>「真最优」定义为该组 N 个候选中的最大值，不是全局最优回答；它衡量的是选择效率，不是绝对质量。</li></ul>
+<h2>反思</h2>
+<p>我原来以为 N 越大越接近&quot;最优&quot;，最多是收益递减。实验给出的反例更尖锐：σ=0.5 时，N 从 2 增到 128，被选中答案的平均真实质量确实从 0.51 升到 2.33，但&quot;它是不是这 N 个里最好的&quot;这一概率却从 0.85 掉到 0.46。两件事并不矛盾——极值让平均质量上升，噪声让&quot;选中最大值&quot;更容易被错误候选占据。</p>
+<p>这改变了我看 best-of-N 的方式：它是一个<strong>用算力换质量、同时用选择偏差换奖励高估</strong>的交易。上线前该问的不是&quot;N 能开多大&quot;，而是&quot;奖励噪声有多大、我能不能承受它带来的高估&quot;。</p></div><div class="grid"><a class="card" href="out/index.html"><h2>out</h2><div class="meta">0 份文档</div></a></div>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 疑问与自测</title>
+<title>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 疑问与自测 · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">课程 · Courses</a><a href="../README.html">移动通信技术前沿 · 听课笔记</a><a href="README.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a></div>
-<h1>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 疑问与自测</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <a href="../index.html">移动通信技术前沿 · 听课笔记</a> <span>/</span> <a href="index.html">听课笔记：移动通信技术前沿 · 第 2 讲（电波传播与信道建模）</a> <span>/</span> <span class="cur">移动通信技术前沿 · 第2讲（电波传播与信道建模）· 疑问与自测</span></nav>
+<article class="prose"><h1>移动通信技术前沿 · 第2讲（电波传播与信道建模）· 疑问与自测</h1>
 <blockquote><p><strong>提取自测协议（怎么用这份自测）</strong>：</p><p>1. <strong>遮住</strong> <code>notes.md</code>，只看下面的问题；</p><p>2. 合上一切材料，口头或笔头作答（答案须自己组织，不得复述原文）；</p><p>3. 答不出的进&quot;我没掌握&quot;，回看对应小节后再测一次；</p><p>4. 能讲给别人听 = 真懂（费曼标准）；讲不出的地方就是薄弱点。</p></blockquote>
 <h2>自测（合上书回答）</h2>
 <ol><li>老师为什么说&quot;难的是找到问题，不是解决问题&quot;？在 AI 辅助下&quot;换方法/换参数&quot;式创新的价值发生了什么变化？→ 见 notes §1</li><li>为什么说光通信、无线、铜线（数据中心互联）的边界在变模糊？老师举了哪些&quot;需求不来自普通用户升级手机&quot;的例子？→ 见 notes §1</li><li>信道建模的&quot;三阶段&quot;各自给的是什么（均值？分布？与环境一一对应）？为什么算力够、有感知需求后必须走到第三阶段？→ 见 notes §2</li><li>为什么&quot;接收强度随距离增大而减小&quot;这句话要打问号？老师给了哪两类&quot;例外&quot;？→ 见 notes §3</li><li>城区与郊区的断点（1km / 100m）差异说明了什么？为什么城区在某些情况下信号峰值反而更高？→ 见 notes §3</li><li>SPM 用什么思路算大尺度覆盖？它的误差来源是什么？算力不够时老师建议怎么补？→ 见 notes §4</li><li>Okumura 的&quot;峡谷/信道化效应&quot;对基站选址有什么现实意义？为什么老师说 Hata 类模型的统计&quot;大样本对、单次难说&quot;？→ 见 notes §4</li><li>为什么双线/多线模型&quot;能算强弱却不适合多天线/宽带系统&quot;？→ 见 notes §5</li><li>曼哈顿模型如何描述&quot;街道布局+室内外穿透&quot;？它假定的&quot;线性叠加、无快衰&quot;合理吗？→ 见 notes §5</li><li>为什么阴影衰落&quot;每台手机各生成一套&quot;是错的？&quot;最终极&quot;的生成方式是什么？→ 见 notes §6</li><li>室外测量要在哪三个尺度上做？各自对应什么物理现象？→ 见 notes §6</li><li>确定性仿真（射线追踪/FDTD）更准，为什么老师说&quot;其他场景太复杂&quot;还要用经验/统计模型？→ 见 notes §7</li><li>老师为什么说&quot;只要不跟真实网络连在一起，你的仿真就是假的&quot;？DT 的两个用处是什么？→ 见 notes §7</li><li>NTN 的路径损耗由哪几部分组成？为什么&quot;视距概率表&quot;跟环境有关、城区与郊区应不同？→ 见 notes §8</li><li>老师说&quot;哲学就是不能只看一个点&quot;——为什么&quot;吸收特别强的频点&quot;在抗干扰/感知场景反而有用？→ 见 notes §8</li><li>为什么说低空城市是&quot;最恶劣&quot;的场景？视距 vs 非视距各带来什么好处与坏处（干扰/定位/空间自由度）？→ 见 notes §9</li><li>无人机用毫米波做 payload、用低频做飞控，各是为什么？参考信号为什么要&quot;按空域高度分配&quot;？→ 见 notes §9</li><li>天线阵列变大、频率变高后，为什么传统统计模型不够用？近场/远场用什么量划分？→ 见 notes §10</li><li>什么是信道模型的&quot;非平稳性&quot;？GSCM 增强要求散射体怎么建模？&quot;通感一致性（consistency）&quot;指什么？→ 见 notes §10</li><li>WEI + AI 空口的&quot;四步&quot;是什么？为什么说它能把&quot;黑盒变成知识库&quot;？传统 CSI 会被替代吗？→ 见 notes §11</li><li>老师自己的&quot;图像信道&quot;工作，用多大的精度代价换来了几个数量级的算力？适合什么场景？→ 见 notes §11</li><li>为什么&quot;场景适应性&quot;是 AI 信道建模最难的关？&quot;环境天天在变&quot;与&quot;训练过拟合&quot;是什么关系？→ 见 notes §11</li></ol>
@@ -46,7 +63,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <h2>PPT 有、转写未覆盖（需自己看课件补）</h2>
 <ul><li>【PPT】第 10–18 页：Longley-Rice（两种模式、主要参数、4 种变化模式、Urban Factor）与 Durkin（菲涅尔区）——转写仅&quot;浏览模型群&quot;。</li><li>【PPT】第 19–32 页：Okumura 的地形参数与 5 个因子（h_ts/h_te/h_go、地面起伏高度、独立山区地形参数、混合陆地-海上参数）——转写只提&quot;修正因子&quot;。</li><li>【PPT】第 33–40 页：Hata / COST-231 Hata 的具体公式——转写未给公式。</li><li>【PPT】第 52–58 页：Egli、Carey、Bertoni-Xia、TIREM——转写未涉及。</li><li>【PPT】第 101–131 页：&quot;室外传播环境模拟（补充）&quot;（服务区模型、天线方向性、干扰载波隔离、WINNER 五种部署场景 InH/UMi/UMa/RMa/SMa）——转写只覆盖慢衰相关与移动模型。</li><li>【PPT】第 133–302 页：&quot;室内无线传播及覆盖&quot;整章（室内信道参数、60GHz、毫米波、E-band backhaul、室内 100GHz、V2V、VANET 移动模型）——转写仅点到&quot;室内覆盖痛点&quot;&quot;V2V/无人机仿真不闭环&quot;。</li><li>【PPT】第 303–330 页：NTN 各页公式/表格（PL=PLb+PLg+PLs+PLe、O2I 双对数正态、ITU-R 对流层闪烁算法）——转写只给结论。</li><li>【PPT】第 332–339 页：近场 MIMO 的瑞利距离公式、near-field beam split、distance-aware precoding、LDMA——转写只讲大意。</li><li>【PPT】第 353–361 页：WEI &quot;无线环境信息处理步骤&quot;逐页细节与&quot;面向任务的 WEI 6G AI2 验证&quot;——转写覆盖&quot;四步&quot;框架，细节未展开。</li></ul>
 <h2>待查（需要外部资料）</h2>
-<ul><li>3GPP TR 38.811（NTN 传播模型）——LOS 概率表、O2I 穿透、大气/闪烁损耗的标准化来源。</li><li>3GPP TR 38.901（含 WINNER 部署场景 InH/UMi/UMa/RMa/SMa，PPT 第 127–131 页引用 ITU-R M.2135）。</li><li>NVIDIA Sionna / Sionna RT 官方文档与&quot;用于数字孪生&quot;的综述出处。</li><li>《A Survey of Air-to-Ground Propagation Channel Modeling for Unmanned Aerial Vehicles》（IEEE COMST, 2019, VOL.21 NO.3）——PPT 第 322 页 AG 信道综述。</li><li>Mingyao Cui, Zidong Wu, ..., Linglong Dai, <em>Near-Field Communications for 6G</em>——PPT 第 332 页近场 MIMO 参考。</li><li>Stefan Schwarz, Stefan Pratschner, <em>Multiple Antenna Systems in Mobile 6G</em>（IEEE Com. Mag., 2024）——PPT 第 341 页 6G 多天线参考。</li><li>Jianhua Zhang, Yichen Cai, Li Yu, et al., <em>Four Steps Toward 6G AI-Enabled Air Interface: Wireless Environmental Information Sensing, Feature, Semantics...</em>——PPT 第 344 页 WEI/AI 空口参考（即笔记 §11 的&quot;四步走&quot;出处）。</li><li>3GPP SA1 文稿 S1-220094（2022.02，搜索关键词 &quot;ViWi&quot;）——PPT 第 329 页&quot;非射频感知信道&quot;出处。</li><li>60GHz 室内信道（Hirokazu Sawada et al., VTC 2010 Spring）、E-band（Hani Mehrpouyan et al., IEEE COMMAG 2014）、室内 100GHz（Thomas Kürner et al.）、V2V（David W. Matolak, IEEE Comm. Mag., 2008）、VANET 移动模型（Christoph Sommer, Falko Dressler, IEEE Comm. Mag., 2008）——PPT 第 254–299 页各&quot;补充&quot;页出处，本讲未展开。</li></ul>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="questions.md">questions.md</a></footer>
-</div></body></html>
+<ul><li>3GPP TR 38.811（NTN 传播模型）——LOS 概率表、O2I 穿透、大气/闪烁损耗的标准化来源。</li><li>3GPP TR 38.901（含 WINNER 部署场景 InH/UMi/UMa/RMa/SMa，PPT 第 127–131 页引用 ITU-R M.2135）。</li><li>NVIDIA Sionna / Sionna RT 官方文档与&quot;用于数字孪生&quot;的综述出处。</li><li>《A Survey of Air-to-Ground Propagation Channel Modeling for Unmanned Aerial Vehicles》（IEEE COMST, 2019, VOL.21 NO.3）——PPT 第 322 页 AG 信道综述。</li><li>Mingyao Cui, Zidong Wu, ..., Linglong Dai, <em>Near-Field Communications for 6G</em>——PPT 第 332 页近场 MIMO 参考。</li><li>Stefan Schwarz, Stefan Pratschner, <em>Multiple Antenna Systems in Mobile 6G</em>（IEEE Com. Mag., 2024）——PPT 第 341 页 6G 多天线参考。</li><li>Jianhua Zhang, Yichen Cai, Li Yu, et al., <em>Four Steps Toward 6G AI-Enabled Air Interface: Wireless Environmental Information Sensing, Feature, Semantics...</em>——PPT 第 344 页 WEI/AI 空口参考（即笔记 §11 的&quot;四步走&quot;出处）。</li><li>3GPP SA1 文稿 S1-220094（2022.02，搜索关键词 &quot;ViWi&quot;）——PPT 第 329 页&quot;非射频感知信道&quot;出处。</li><li>60GHz 室内信道（Hirokazu Sawada et al., VTC 2010 Spring）、E-band（Hani Mehrpouyan et al., IEEE COMMAG 2014）、室内 100GHz（Thomas Kürner et al.）、V2V（David W. Matolak, IEEE Comm. Mag., 2008）、VANET 移动模型（Christoph Sommer, Falko Dressler, IEEE Comm. Mag., 2008）——PPT 第 254–299 页各&quot;补充&quot;页出处，本讲未展开。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

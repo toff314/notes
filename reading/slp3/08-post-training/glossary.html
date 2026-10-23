@@ -1,46 +1,64 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第 8 章 · 术语表（24 条）</title>
+<title>《Speech and Language Processing》第 8 章 · 术语表（24 条） · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a></div>
-<h1>《Speech and Language Processing》第 8 章 · 术语表（24 条）</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 8 章 · 术语表（24 条）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 8 章 · 术语表（24 条）</h1>
 <blockquote><p>页码口径：中文译本无印刷页码，统一用节号定位。定义列是缩引，逐字原文见 <code>book-notes.md</code> 摘录区。</p><p>「我的话」刻意避开原句，用于自测时先回忆再核对。</p></blockquote>
 <table><tr><th>术语</th><th>书上定义（缩引）</th><th>节号</th><th>我的话</th></tr><tr><td>后训练</td><td>预训练之后的指令微调、偏好对齐与可验证奖励强化学习等阶段</td><td>§8.0</td><td>把&quot;会续写&quot;改造成&quot;会按要求办事&quot;的三段工序</td></tr><tr><td>基础模型</td><td>仅完成预训练、尚未经历任何后训练步骤的模型</td><td>§8.0</td><td>还没上过任何&quot;岗位培训&quot;的原始模型</td></tr><tr><td>指令微调</td><td>在指令—回答语料上继续训练，既学任务也提升遵循指令的一般能力</td><td>§8.1</td><td>拿任务说明书配标准答案，教模型看懂&quot;要你干什么&quot;</td></tr><tr><td>SFT（监督微调）</td><td>把带正确答案或回答的指令数据当作训练语料继续训练</td><td>§8.1</td><td>名字里的&quot;监督&quot;说的是标签现成，不是换了损失</td></tr><tr><td>微调</td><td>取预训练好的模型，在新数据上用交叉熵再跑若干轮</td><td>§8.1</td><td>在已有能力上做定向补课，可全参也可只动一部分</td></tr><tr><td>元学习</td><td>指令微调带来的、跨任务的一般遵循指令能力</td><td>§8.1</td><td>不只学会某几道题，而是学会&quot;怎么读题&quot;</td></tr><tr><td>PEFT</td><td>冻结多数参数、只更新一小部分的微调方式</td><td>§8.2</td><td>只给模型换几个零件，而不是整车重造</td></tr><tr><td>LoRA</td><td>冻结原权重矩阵、只训练一对低秩矩阵的参数高效方法</td><td>§8.2</td><td>用两个瘦长矩阵的乘积当&quot;补丁&quot;，贴在原权重旁</td></tr><tr><td>低秩分解</td><td>用 k×r 与 r×d 两个小矩阵近似 k×d 的更新量</td><td>§8.2</td><td>把一次大改动拆成&quot;先压到 r 维、再展开&quot;</td></tr><tr><td>偏好对齐</td><td>用人类或机器对输出优劣的判断来优化模型行为</td><td>§8.3</td><td>不教它怎么写，只告诉它&quot;这两份里哪份更好&quot;</td></tr><tr><td>基于偏好的学习</td><td>利用偏好判断提升已微调模型在诚实、有用、无害等特质上的表现</td><td>§8.3</td><td>把&quot;比较&quot;当作训练信号的一类方法总称</td></tr><tr><td>偏好对</td><td>同一提示下，被偏好输出优于另一输出的记法 (oi≻oj\</td><td>x)</td><td>§8.3.1</td><td>一次二选一的结果，连同它的前提提示一起存档</td></tr><tr><td>Bradley–Terry 模型</td><td>把两项偏好概率写成二者得分差的 logistic 函数</td><td>§8.3.2</td><td>假设每个候选有个隐藏分，谁分高谁赢，分差决定胜率</td></tr><tr><td>奖励</td><td>模型为给定提示和输出打出的标量分数</td><td>§8.3.3</td><td>一个可比较的&quot;好感度&quot;，只在同一提示内排序有意义</td></tr><tr><td>奖励模型</td><td>从 LLM 初始化、把语言建模头换成线性层、用偏好数据训练的打分器</td><td>§8.3.3</td><td>把成千上万次人工比较压缩成一个能实时打分的函数</td></tr><tr><td>策略</td><td>RL 框架中，预训练 LLM 所体现的概率语言模型</td><td>§8.4</td><td>给定前缀，决定下一个词概率分布的那套参数</td></tr><tr><td>参考策略</td><td>加 KL 约束时用作起点的原始模型 πref</td><td>§8.4</td><td>用来量&quot;走多远&quot;的那把固定尺子</td></tr><tr><td>KL 散度</td><td>衡量两个概率分布之间距离的量</td><td>§8.4</td><td>不是几何距离，而是&quot;用错分布要多付多少信息代价&quot;</td></tr><tr><td>β</td><td>调节 KL 惩罚项影响的超参数，DPO 中常取 0.01–0.1</td><td>§8.4、§8.4.2</td><td>同时当奖励缩放和 sigmoid 温度，不只是&quot;保守程度&quot;</td></tr><tr><td>配分函数</td><td>给定提示下对所有可能输出求和的归一化项 Z(x)</td><td>§8.4.2</td><td>让&quot;指数化的奖励&quot;变成一个合法概率分布的除项</td></tr><tr><td>DPO</td><td>用策略与参考策略的对数比直接优化偏好数据的办法</td><td>§8.4.2</td><td>不训打分器，直接把&quot;哪份更好&quot;变成二分类损失</td></tr><tr><td>隐式奖励</td><td>DPO 中由 β log(πθ/πref) 表示的奖励，无需单独模型</td><td>§8.4.2</td><td>奖励没有消失，只是藏进了两个策略的比值里</td></tr><tr><td>RLVR</td><td>在答案可明确验证的任务（编程、数学）上做强化学习</td><td>§8.0、§8.5</td><td>用程序判对错，而不是靠人或模型打分</td></tr><tr><td>best-of-N</td><td>从 N 个采样回答中用奖励模型挑一个更受偏好的</td><td>§8.3.3</td><td>广撒网再挑最好的，代价是 N 倍采样与打分</td></tr></table>
-<blockquote><p>易混提示：<strong>奖励</strong>是分数本身，<strong>奖励模型</strong>是产生分数的函数；<strong>显式奖励模型</strong>（RLHF/PPO 路线）与<strong>隐式奖励</strong>（DPO 路线）是同一目标的两个参数化。<strong>β</strong> 在 RLHF 目标里是 KL 权重，在 DPO 损失里还额外充当温度，不能只按&quot;越大越保守&quot;理解。</p></blockquote>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="glossary.md">glossary.md</a></footer>
-</div></body></html>
+<blockquote><p>易混提示：<strong>奖励</strong>是分数本身，<strong>奖励模型</strong>是产生分数的函数；<strong>显式奖励模型</strong>（RLHF/PPO 路线）与<strong>隐式奖励</strong>（DPO 路线）是同一目标的两个参数化。<strong>β</strong> 在 RLHF 目标里是 KL 权重，在 DPO 损失里还额外充当温度，不能只按&quot;越大越保守&quot;理解。</p></blockquote></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

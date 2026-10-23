@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<title>《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech） · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a></div>
-<h1>《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
 <h2>候选一览</h2>
 <table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>「国王−男人+女人≈王后」为什么经常不成立</td><td>write-zhihu-tech（Mode A）</td><td>S3+S4+S6</td><td>P0</td><td>标准长文（6000–8000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>词向量里的偏见：是照镜子还是放大镜</td><td>write-zhihu-tech（Mode A）</td><td>S4+S5+S6</td><td>P0</td><td>标准长文（6000–8000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>从共现计数到 PPMI-SVD：一次可复现的词向量实验</td><td>write-tech-tutorial（Mode A）</td><td>S1+S3+S6</td><td>P1</td><td>教程（5000–7000 字 + 代码）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>窗口大小就是你对「相似」的定义</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S5</td><td>P1</td><td>中篇（4000–5000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>为什么是余弦而不是点积：长度、词频与归一化的三重身份</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S6</td><td>P2</td><td>短评/中篇（3000–4500 字）</td><td>⬜ 未发布</td><td>待填</td></tr></table>
 <blockquote><p>筛选纪律：本章可延展点很多（历史注记、评估数据集、fasttext/GloVe 对比），最终只保留 5 条——标准是「书中讲而未透 + 有外部权威源可查 + 我有可运行的实验证据」。历史注记类（LSA 史、Wittgenstein）缺一手材料，暂不入候选。</p><p>标准编号：S1 书中讲而未透｜S2 可溯源的史·人｜S3 有技术纵深｜S4 有争议反差｜S5 有现实落点｜S6 有权威外部源可查（准入门槛）。</p></blockquote>
@@ -55,7 +72,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：调窗口大小不是在调参，是在选择你要哪一种「相似」</code></li><li><strong>书籍锚点</strong>：§5.7「当向量由短上下文窗口计算时，与目标词 w 最相似的词往往是词性相同的语义相似词」；同节 Hogwarts 在 ±2 与 ±5 下的近邻从「其他虚构学校」变成「Dumbledore、Malfoy、half-blood」。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S5</strong> —— ①S1：书中给结论与一个例子，但没有说明效应强度依赖语料规模；②S3：牵涉一阶/二阶共现、停用词、语料体裁；③S5：检索、推荐、聚类都直接受此影响，是能落地的工程选择。</li><li><strong>增益</strong>：① 相对本书：用 lab-03 的实测（top-10 平均 Jaccard 仅 0.27，短窗前排被虚词占据）指出该结论的适用条件；② 对读者：给出「按业务选窗口」的决策表（同义改写/主题聚类/句法类比各选什么），而不是一句「通常取 ±2 到 ±10」。</li><li><strong>素材种子</strong>：历史溯源 {Schütze 1992 的词义消歧窗口实验}｜人物 {Levy、Goldberg、Hamilton}｜原理 {一阶/二阶共现、动态窗口}｜争议 {短窗真的更「句法」吗}</li><li><strong>缺口（下游必须自己搜）</strong>：不同语料规模下窗口效应的定量曲线；中文（无空格、依赖分词）上的窗口定义差异。</li><li><strong>体量建议</strong>：中篇（现象 → 一阶/二阶 → 我的对照实验 → 语料依赖性 → 决策表）</li><li><strong>待核</strong>：❓ 「短窗偏句法」需要词性标注数据来验证，我的实验只观察了近邻内容，未做词性统计。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
 <hr>
 <h3>5. 为什么是余弦而不是点积：长度、词频与归一化的三重身份</h3>
-<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：向量检索里那个「除以模长」，到底除掉了什么</code></li><li><strong>书籍锚点</strong>：§5.4「作为相似度度量，这个原始点积存在一个问题：它偏爱长向量」；「更频繁出现的词往往与更多词共现……因此它们的向量更长」；「对于单位向量，点积与余弦相同」。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S6</strong> —— ①S1：书里只给一句「点积偏爱长向量」，没有区分「原始计数向量」与「PPMI/SVD 向量」；②S3：涉及 PMI 的对数压制、SVD 截断、方向归一化三处不同的「去长度」；③S6：Levy &amp; Goldberg 的 PPMI 分析、信息检索中的向量空间模型均可查。</li><li><strong>增益</strong>：① 相对本书：用 lab-04 实测「原始计数 r=0.72、PPMI-SVD r=0.25」，说明归一化不是一步而是三步；② 对读者：纠正「加个 normalize 就公平了」的工程直觉，给出排查长尾偏置的具体做法。</li><li><strong>素材种子</strong>：历史溯源 {Salton 的向量空间模型、idf}｜人物 {Salton、Spärck Jones}｜原理 {点积的几何、PMI 的对数、SVD 的低秩}｜争议 {内积检索（MIPS）为何仍流行}</li><li><strong>缺口（下游必须自己搜）</strong>：大规模向量库（FAISS/HNSW）中内积与余弦的等价变换细节；推荐系统里 popularity bias 的对照研究。</li><li><strong>体量建议</strong>：短评/中篇（一个反直觉现象 → 三层归一化 → 实测 → 工程建议）</li><li><strong>待核</strong>：❓ 我的相关系数基于 9,855 token 的技术语料，数值不可外推；正文需注明语料条件。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
-</div></body></html>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：向量检索里那个「除以模长」，到底除掉了什么</code></li><li><strong>书籍锚点</strong>：§5.4「作为相似度度量，这个原始点积存在一个问题：它偏爱长向量」；「更频繁出现的词往往与更多词共现……因此它们的向量更长」；「对于单位向量，点积与余弦相同」。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S6</strong> —— ①S1：书里只给一句「点积偏爱长向量」，没有区分「原始计数向量」与「PPMI/SVD 向量」；②S3：涉及 PMI 的对数压制、SVD 截断、方向归一化三处不同的「去长度」；③S6：Levy &amp; Goldberg 的 PPMI 分析、信息检索中的向量空间模型均可查。</li><li><strong>增益</strong>：① 相对本书：用 lab-04 实测「原始计数 r=0.72、PPMI-SVD r=0.25」，说明归一化不是一步而是三步；② 对读者：纠正「加个 normalize 就公平了」的工程直觉，给出排查长尾偏置的具体做法。</li><li><strong>素材种子</strong>：历史溯源 {Salton 的向量空间模型、idf}｜人物 {Salton、Spärck Jones}｜原理 {点积的几何、PMI 的对数、SVD 的低秩}｜争议 {内积检索（MIPS）为何仍流行}</li><li><strong>缺口（下游必须自己搜）</strong>：大规模向量库（FAISS/HNSW）中内积与余弦的等价变换细节；推荐系统里 popularity bias 的对照研究。</li><li><strong>体量建议</strong>：短评/中篇（一个反直觉现象 → 三层归一化 → 实测 → 工程建议）</li><li><strong>待核</strong>：❓ 我的相关系数基于 9,855 token 的技术语料，数值不可外推；正文需注明语料条件。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

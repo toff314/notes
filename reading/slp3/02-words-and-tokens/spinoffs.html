@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</title>
+<title>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题 · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a></div>
-<h1>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a> <span>/</span> <span class="cur">《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</h1>
 <blockquote><p>从本章筛出可送 <code>write-zhihu-tech</code> / <code>write-tech-tutorial</code> 的选题包。</p><p>锚点只是待核线索，下游必须独立搜索核实；不确定处标 ❓。</p></blockquote>
 <h2>候选一览</h2>
 <table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>中文为什么被大模型 tokenizer 切碎</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S4+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>BPE 不是语素发现器</td><td>write-zhihu-tech（Mode A）</td><td>S1+S4+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>从 ELIZA 到 GPT-4o：词元化五十年</td><td>write-tech-tutorial（Mode A）</td><td>S2+S3+S4</td><td>P1</td><td>专栏级</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>编辑距离为什么还是拼写纠错的地基</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S5+S6</td><td>P2</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>码点、字形与 UTF-8 的自同步</td><td>write-tech-tutorial（Mode A）</td><td>S1+S2+S6</td><td>P2</td><td>短评／标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
@@ -51,7 +68,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <h3>4. 编辑距离为什么还是拼写纠错的地基</h3>
 <ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：编辑距离为什么还是拼写纠错的地基——从 DP 到神经纠错的成本账</code></li><li><strong>书籍锚点</strong>：本书 §2.9「intention 与 execution 之间的距离为 5」；§2.9.1「每次插入或删除的代价为 1，且不允许替换」的版本。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S5 + S6</strong>。S1：书只讲算法与对齐，没有讲它在现代纠错产品中的位置；S3：可从 DP、加权代价、Damerau 扩展讲到神经纠错；S5：拼写纠错是搜索、输入法、IDE 的真实落点；S6：Gusfield (1997)、NIST sclite 等可查。</li><li><strong>增益</strong>：① 相对本书：把「距离 5 还是 8」的代价差异接到拼写纠错的候选排序上；② 对读者：知道什么时候该用编辑距离（可解释、低资源、需对齐），什么时候该换模型。</li><li><strong>素材种子</strong>：历史溯源（Levenshtein 1966、Wagner-Fischer 1974）｜人物（Bellman 命名动态规划的故事）｜原理（DP 与加权代价）｜争议（神经纠错是否还需要编辑距离）。</li><li><strong>缺口（下游必须自己搜）</strong>：主流输入法的纠错候选策略；Damerau-Levenshtein 的工业实现；键盘邻接代价表。</li><li><strong>体量建议</strong>：标准长文（约 5000 字）。</li><li><strong>待核</strong>：❓ 各家产品的纠错细节不公开，只能引用论文与开源实现。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
 <h3>5. 码点、字形与 UTF-8 的自同步</h3>
-<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：码点、字形与 UTF-8——为什么「一个字符」在计算机里有三种答案</code></li><li><strong>书籍锚点</strong>：本书 §2.3.1「码点并不指定字形」；§2.3.2「它是自同步的」与图 2.5 的位映射表。</li><li><strong>为什么</strong>：命中 <strong>S1 + S2 + S6</strong>。S1：书把 UTF-8 讲清了规则，但没展开「字形／码点／字素簇」的常见混淆；S2：Ken Thompson 与 Rob Pike 在餐垫上画出 UTF-8 的故事可查；S6：Unicode 核心规范、Python 文档可逐条核对。</li><li><strong>增益</strong>：① 相对本书：补上「字素簇」这一层，解释 emoji 组合与 len() 的差异；② 对读者：遇到乱码、截断、字符计数错误时，能定位到码点层还是字节层。</li><li><strong>素材种子</strong>：历史溯源（ASCII → Unicode → UTF-8）｜人物（Thompson／Pike）｜原理（变长编码、自同步、字素簇）｜争议（UTF-8 是否浪费中文空间）。</li><li><strong>缺口（下游必须自己搜）</strong>：Unicode 16.0 规范条文；各语言 len() 的语义差异；emoji ZWJ 序列的码点构成。</li><li><strong>体量建议</strong>：短评／标准长文（3000–5000 字）。</li><li><strong>待核</strong>：❓ 书中「15 万字符／168 种文字」为特定版本口径，需按最新 Unicode 版本更新。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
-</div></body></html>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：码点、字形与 UTF-8——为什么「一个字符」在计算机里有三种答案</code></li><li><strong>书籍锚点</strong>：本书 §2.3.1「码点并不指定字形」；§2.3.2「它是自同步的」与图 2.5 的位映射表。</li><li><strong>为什么</strong>：命中 <strong>S1 + S2 + S6</strong>。S1：书把 UTF-8 讲清了规则，但没展开「字形／码点／字素簇」的常见混淆；S2：Ken Thompson 与 Rob Pike 在餐垫上画出 UTF-8 的故事可查；S6：Unicode 核心规范、Python 文档可逐条核对。</li><li><strong>增益</strong>：① 相对本书：补上「字素簇」这一层，解释 emoji 组合与 len() 的差异；② 对读者：遇到乱码、截断、字符计数错误时，能定位到码点层还是字节层。</li><li><strong>素材种子</strong>：历史溯源（ASCII → Unicode → UTF-8）｜人物（Thompson／Pike）｜原理（变长编码、自同步、字素簇）｜争议（UTF-8 是否浪费中文空间）。</li><li><strong>缺口（下游必须自己搜）</strong>：Unicode 16.0 规范条文；各语言 len() 的语义差异；emoji ZWJ 序列的码点构成。</li><li><strong>体量建议</strong>：短评／标准长文（3000–5000 字）。</li><li><strong>待核</strong>：❓ 书中「15 万字符／168 种文字」为特定版本口径，需按最新 Unicode 版本更新。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

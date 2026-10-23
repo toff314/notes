@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 02 · 玩具 RAG + 问答评估 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <a href="../../../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="../../index.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a> <span>/</span> <a href="../../index.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a> <span>/</span> <span class="cur">Labs · 行动执行闭环</span> <span>/</span> <a href="../index.html">Labs · 行动执行闭环</a> <span>/</span> <span class="cur">Lab 02 · 玩具 RAG + 问答评估</span> <span>/</span> <span class="cur">Lab 02 · 玩具 RAG + 问答评估</span></nav>
+<h1 class="title">Lab 02 · 玩具 RAG + 问答评估</h1><div class="prose"><h1>Lab 02 · 玩具 RAG + 问答评估</h1>
+<ul><li><strong>对应行动</strong>：actions.md 第 3 条（⇄ book-notes §11.4–§11.6）</li><li><strong>脚本</strong>：<code>toy_rag_eval.py</code></li><li><strong>运行</strong>：<code>cd labs/lab-02 &amp;&amp; python3 toy_rag_eval.py</code></li><li><strong>产物</strong>：<code>out/per_question.csv</code>、<code>out/metrics.csv</code>、<code>out/summary.json</code>、<code>out/rag_compare.png</code></li></ul>
+<h2>设置（这是模拟，不是真实 LLM）</h2>
+<ul><li>20 条事实型问题，每题配一段含答案的短文（魔笛首演年份、卢浮宫所在城市……）。</li><li>另加 <strong>5 条同实体、错误事实的干扰段落</strong>，例如把《魔笛》首演说成 1786 年、把卢浮宫说成在里昂。它们模拟「检索到了看似相关但内容错误的来源」。</li><li>检索：BM25（k1=1.5, b=0.75）取 top-1。</li><li>阅读器：模板抽取器，直接取被检索段落记录里的答案字段，并附上该段落 id 作为引用。<strong>它不会推理，只会抄</strong>，因此本实验能把「检索错误」与「阅读错误」分开。</li><li>三个条件：</li></ul>
+<ol><li><code>closed_book</code>：假设参数里只记住 12/20 条，其余按同类型答案池编造，且<strong>不给引用</strong>；</li><li><code>open_book_top1</code>：检索 top-1 → 阅读器抽答案 + 引用；</li><li><code>open_book_oracle</code>：直接给金标准段落 → 同一个阅读器（隔离检索错误）。</li></ol>
+<h2>结果（实跑输出）</h2>
+<table><tr><th>条件</th><th>命中率</th><th>EM</th><th>字符 F1</th><th>引用率</th><th>引用正确率</th><th>有据答对率</th></tr><tr><td>闭卷</td><td>0.60</td><td>0.60</td><td>0.777</td><td>0.00</td><td>—</td><td>0.00</td></tr><tr><td>开卷 top-1</td><td>0.85</td><td>0.85</td><td>0.877</td><td>1.00</td><td>0.85</td><td>0.85</td></tr><tr><td>开卷（给对段落）</td><td>1.00</td><td>1.00</td><td>1.000</td><td>1.00</td><td>1.00</td><td>1.00</td></tr></table>
+<p>检索 Recall@1 = 0.85；开卷失败题：f02（卢浮宫→里昂）、f11（物种起源→华莱士）、f13（珠峰→中印边界），且这 3 题<strong>全部是「引用了错误来源」</strong>。</p>
+<h2>结论</h2>
+<ol><li><strong>开卷不是无条件更好</strong>：命中率从 0.60 升到 0.85，但剩下 0.15 的失败换了一种形态——从「没根据」变成「有根据但根据是错的」。后一种对用户更危险，因为引用看起来可信。</li><li><strong>引用率 ≠ 引用正确率</strong>：开卷条件引用率 100%，引用正确率只有 85%。只报前者会把这类失败完全掩盖。</li><li><strong>F1 会抬高闭卷成绩</strong>：闭卷命中率 0.60，F1 却有 0.777，因为错误答案与正确答案共享「年」「公里」一类词元。短事实题应同时报 EM。</li><li><strong>oracle 条件把所有损失归给检索</strong>：给对段落时全部答对，说明本实验的阅读器是完美的，85% 与 100% 之间的 15 个点全是检索造成。真实系统里阅读器也会错，那时需要第三个条件（给错段落但允许说「不知道」）来分离。</li></ol>
+<h2>反思</h2>
+<p>我原来把「加 RAG」默认当成准确率提升。这个实验让我看到更准确的说法是：RAG 把错误从「无据的自信」迁移成「有据的自信」，而后者更难被用户识别。真正该盯的指标不是最终的 EM，而是「引用是否支持答案」——它才是 RAG 独有的失效面。另外，我一开始把 <code>open_book_failures</code> 写成空列表，是因为 <code>build_corpus</code> 里把问题字段当成了答案；这类「字段顺序错」的 bug 在真实流水线里同样常见，评测脚本必须先打印几条样本人工看一眼。</p>
+<h2>已知局限</h2>
+<ul><li>闭卷的「记忆」是硬编码集合，不是真实模型的参数记忆，只能说明三类损失可以分开计量。</li><li>阅读器不做改写，答案字符串与标准答案同源，因此 EM 偏乐观。</li><li>干扰段落是人工构造的，比真实检索错误更「干净」。</li></ul></div><div class="grid"><a class="card" href="out/index.html"><h2>out</h2><div class="meta">0 份文档</div></a></div>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

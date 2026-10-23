@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>笔记架 Notes · 统一设计规范（DESIGN.md） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="index.html">笔记架首页</a> <span>/</span> <span class="cur">笔记架 Notes · 统一设计规范（DESIGN.md）</span></nav>
+<article class="prose"><h1>笔记架 Notes · 统一设计规范（DESIGN.md）</h1>
+<blockquote><p>本规范约束全站所有页面的视觉与信息架构。改样式先改这里，再改 <code>scripts/build.py</code> 中的 <code>STYLE</code>。</p></blockquote>
+<h2>一、设计定位</h2>
+<ul><li><strong>气质</strong>：青墨极简——纸感留白 + 单一青墨 accent，拒绝花哨；内容（笔记文字）是唯一主角。</li><li><strong>一致性</strong>：所有页面共用同一套导航、卡片、正文排版、配色；禁止页面自造样式。</li></ul>
+<h2>二、设计令牌</h2>
+<table><tr><th>令牌</th><th>值</th><th>用途</th></tr><tr><td><code>--ink</code></td><td><code>#1f2328</code></td><td>标题、正文主色</td></tr><tr><td><code>--muted</code></td><td><code>#6b7280</code></td><td>次级文字、meta</td></tr><tr><td><code>--line</code></td><td><code>#e5e7eb</code></td><td>边框、分割线</td></tr><tr><td><code>--accent</code></td><td><code>#1a6b5a</code>（青墨）</td><td>链接、hover 边、当前层级</td></tr><tr><td><code>--accent-soft</code></td><td><code>#e6f5f0</code></td><td>链接 hover 底色、tag</td></tr><tr><td><code>--canvas</code></td><td><code>#f6f7f9</code></td><td>页面背景</td></tr><tr><td><code>--card</code></td><td><code>#ffffff</code></td><td>卡片表面</td></tr></table>
+<ul><li>字体：系统栈（PingFang SC / Microsoft YaHei / sans-serif）；正文 <code>16px/1.8</code>；h1 <code>30px/700</code>，h2 <code>20px</code>，正文页 h1 <code>28px</code>。</li><li>圆角：卡片 <code>12px</code>，小元素 <code>8px</code>；卡片阴影仅 hover 时出现（<code>0 8px 24px rgba(26,107,90,.10)</code>）。</li><li>内容宽度：<code>max-width 1020px</code> 居中，页边距 <code>≥20px</code>。</li></ul>
+<h2>三、信息架构（2–3 级，全站统一）</h2>
+<pre><code>L0  index.html            四分区卡片（读书 / 课堂 / 会议 / 极客时间）
+L1  &lt;分区&gt;/index.html     记录卡：一门课一条、一本书一条、一场会议一条
+L2  &lt;分区&gt;/&lt;记录&gt;/index.html  记录页：README 摘要 + 条目卡（章/讲/议题/digest 产物目录）+ 文档链接
+L3  &lt;分区&gt;/&lt;记录&gt;/&lt;条目&gt;/index.html（按需）+ 所有 .md 的内容页（统一 .prose 排版）</code></pre>
+<ul><li><strong>一条记录一张卡</strong>：L1 卡片 = 标题 + 一行 meta（章节数/讲数/产物数），点击进入 L2。</li><li>每个含 md 或子目录的目录都必须有 <code>index.html</code>（构建脚本保证）。</li><li>面包屑（<code>.crumb</code>）全站常驻：笔记架首页 / 分区 / 记录 / [条目]；当前层级青墨高亮、不可点。</li></ul>
+<h2>四、组件</h2>
+<ol><li><strong>面包屑</strong>：14px，accent 链接 + <code> / </code> 分隔 + 当前级 plain。</li><li><strong>卡片 <code>.card</code></strong>：白底、1px <code>--line</code>、圆角 12、无下划线继承文字色；hover：边框变 accent、上浮 2px、出现阴影。</li><li><strong>卡片网格 <code>.grid</code></strong>：<code>repeat(auto-fill, minmax(280px, 1fr))</code>，gap <code>16px</code>——天然响应式。</li><li><strong>正文 <code>.prose</code></strong>：h1–h4 分级缩进；<code>table</code> 全宽、表头 <code>--accent-soft</code> 底色、横向滚动；<code>pre</code> 深色底（<code>#0e0f11</code> / <code>#d4d4d4</code> 文字）横向滚动；<code>img</code> 最大 100% 圆角 8；<code>blockquote</code> 左侧 3px accent 边 + 灰底。</li><li><strong>文档链接 <code>.doc-link</code></strong>：L2/L3 列表里的 md 条目，行高 44px 可点区。</li></ol>
+<h2>五、响应式</h2>
+<ul><li>移动优先（&lt; 640px）：单列卡片、<code>body</code> padding <code>20px 16px</code>、h1 26px、表格/代码横向滚动。</li><li>平板（≥ 640px）：双列卡片。</li><li>桌面（≥ 1024px）：内容宽 1020px，卡片最多 3–4 列（auto-fill 自适应）。</li><li>面包屑不换行截断，超出省略。</li></ul>
+<h2>六、构建约定</h2>
+<ul><li>唯一构建入口：<code>bash scripts/build-html.sh</code>（内部调用 <code>scripts/build.py</code>）。</li><li>md → html 复用 <code>scripts/md2html.py</code> 的 <code>convert()</code>；样式与壳由 <code>build.py</code> 统一注入（STYLE 内联，避免相对路径问题）。</li><li>排除：<code>.git/</code>、<code>.cache/</code>、<code>scripts/</code>、各级 <code>raw/</code>、隐藏文件。</li><li>新增分区：在 <code>build.py</code> 的 <code>SECTIONS</code> 注册（key=目录名，label=显示名，root=记录根目录解析）。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

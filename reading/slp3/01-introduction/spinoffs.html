@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<title>《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech） · Notes</title>
 <style>
-:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
-* { box-sizing: border-box; }
-body { margin:0; background:#f6f7f9; color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  line-height:1.85; font-size:16px; }
-.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
-  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
-h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
-h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
-h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
-p { margin:0 0 .9em; text-align:justify; }
-ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
-img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
-  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
-blockquote p { margin:.2em 0; }
-table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
-th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
-th { background:#f3f5f7; font-weight:600; }
-code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
-a { color:var(--accent); }
-hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
-pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
-pre code { background:none; padding:0; }
-pre.mermaid { background:#fff; text-align:center; }
-.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
-.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
-footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted); }
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
 </style>
-
-</head><body><div class="wrap">
-<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a></div>
-<h1>《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
 <blockquote><p>锚点均为<strong>待核线索</strong>：书可能过时，引用前须独立检索。优先级 P0 = 素材最足、最有反差，建议先写。</p></blockquote>
 <h2>候选一览</h2>
 <table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>预测下一个词，凭什么长出知识</td><td><code>write-zhihu-tech</code></td><td>S1+S4+S6</td><td>P0</td><td>标准长文（4000–6000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>从香农游戏到困惑度：模型在&quot;猜&quot;什么</td><td><code>write-tech-tutorial</code></td><td>S1+S3+S5</td><td>P0</td><td>教程（5000–8000 字 + 代码）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>NLP 的四次转向：一条被讲成直线的历史</td><td><code>write-zhihu-tech</code></td><td>S2+S4+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>BLEU 涨了，译文为什么更难读</td><td><code>write-zhihu-tech</code></td><td>S1+S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>当模型说&quot;我理解你&quot;：拟人化的接口与代价</td><td><code>write-zhihu-tech</code></td><td>S2+S4+S6</td><td>P1</td><td>短评/中篇</td><td>⬜ 未发布</td><td>待填</td></tr></table>
@@ -55,7 +72,8 @@ footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
 <ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点 + 小实验）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：BLEU 涨了，译文为什么更难读——代理指标、古德哈特定律与&quot;可被刷分&quot;的评估</code></li><li><strong>书籍锚点</strong>：§1.9.4「一个译文可能完全没有用到人工译文的词元，却依然非常出色。」；古德哈特定律引文</li><li><strong>为什么</strong>：命中 <strong>S1（书中点到为止）+ S4（强反差）+ S5（现实落点）</strong>。书只给了一句 Goodhart，没有演示&quot;指标如何被刷&quot;；lab-04 已用真实计算展示：集合 F1 下 6 组有 3 组选中词序打乱的重复串，按指标选的平均 adequacy 3.0，人工最优 5.0，相关系数 −0.59。</li><li><strong>增益</strong>：① 相对本书：把&quot;代理指标有风险&quot;从断言变成可复现实验，并区分&quot;指标实现漏洞&quot;与&quot;指标可被优化&quot;两类问题；② 对读者：拿到一份评估自查清单（顺序、重复、长度、测试集污染），能用在自家模型的发布门槛上。</li><li><strong>素材种子</strong>：历史溯源 BLEU（Papineni et al., 2002）与 chrF｜人物 Goodhart｜原理 n-gram 精度/ brevity penalty/集合 F1｜争议 LLM-as-judge 是否重蹈覆辙</li><li><strong>缺口（下游必须自己搜）</strong>：BLEU 原始论文的平滑与 brevity penalty 细节；真实 MT 评测上&quot;指标涨、人评不涨&quot;的公开案例；METR/HELM 等评估框架的最新做法。</li><li><strong>体量建议</strong>：标准长文；实验部分可直接复用 <code>labs/lab-04</code>，补一个 BLEU 版本做对照。</li><li><strong>待核</strong>：❓书中 chrF/BLEU/ROUGE 的章节指向（第 13 章）与版本；❓古德哈特原话的准确出处。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
 <hr>
 <h3>5. 当模型说&quot;我理解你&quot;：拟人化的接口与代价</h3>
-<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点/评论）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：当模型说&quot;我理解你&quot;——拟人化是接口，不是本体论承诺</code></li><li><strong>书籍锚点</strong>：§1.11 拟人化与意向立场；§1.10 谄媚性与情感依赖；§1.5 共同基础/澄清</li><li><strong>为什么</strong>：命中 <strong>S2（可溯源的概念史）+ S4（争议反差）+ S6（权威外部源）</strong>。书在最后一节才处理&quot;学习/理解&quot;这些词，且作者自己承认会继续用；这与 §1.10 的谄媚性、§1.5 的&quot;不会澄清&quot;形成一条未被显式串联的线：语言上的拟人化会塑造用户的期待与依赖。</li><li><strong>增益</strong>：① 相对本书：把 §1.11 的术语讨论与 §1.5/§1.10 的实证发现接起来，说明&quot;说法&quot;如何变成&quot;产品行为&quot;；② 对读者：提供一套改写练习与判断标准，在写作/产品文案中区分行为描述与机制主张。</li><li><strong>素材种子</strong>：历史溯源 Dennett 意向立场、ELIZA 效应｜人物 Weizenbaum、Dennett｜原理 意向立场/共同基础｜争议 谄媚性、情感依赖、去技能化</li><li><strong>缺口（下游必须自己搜）</strong>：ELIZA 效应的原始实验与复现；2024–2026 年青少年依恋/依赖的纵向研究；各厂商 system prompt 的公开文本差异。</li><li><strong>体量建议</strong>：短评到中篇（2500–4000 字）；以 3 个真实产品文案为例做改写对照。</li><li><strong>待核</strong>：❓书中 Weizenbaum (1966) 与 Dennett (2009) 的版本信息；❓&quot;Claude 系统提示数千 token&quot;的时效性。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
-<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
-源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
-</div></body></html>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点/评论）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：当模型说&quot;我理解你&quot;——拟人化是接口，不是本体论承诺</code></li><li><strong>书籍锚点</strong>：§1.11 拟人化与意向立场；§1.10 谄媚性与情感依赖；§1.5 共同基础/澄清</li><li><strong>为什么</strong>：命中 <strong>S2（可溯源的概念史）+ S4（争议反差）+ S6（权威外部源）</strong>。书在最后一节才处理&quot;学习/理解&quot;这些词，且作者自己承认会继续用；这与 §1.10 的谄媚性、§1.5 的&quot;不会澄清&quot;形成一条未被显式串联的线：语言上的拟人化会塑造用户的期待与依赖。</li><li><strong>增益</strong>：① 相对本书：把 §1.11 的术语讨论与 §1.5/§1.10 的实证发现接起来，说明&quot;说法&quot;如何变成&quot;产品行为&quot;；② 对读者：提供一套改写练习与判断标准，在写作/产品文案中区分行为描述与机制主张。</li><li><strong>素材种子</strong>：历史溯源 Dennett 意向立场、ELIZA 效应｜人物 Weizenbaum、Dennett｜原理 意向立场/共同基础｜争议 谄媚性、情感依赖、去技能化</li><li><strong>缺口（下游必须自己搜）</strong>：ELIZA 效应的原始实验与复现；2024–2026 年青少年依恋/依赖的纵向研究；各厂商 system prompt 的公开文本差异。</li><li><strong>体量建议</strong>：短评到中篇（2500–4000 字）；以 3 个真实产品文案为例做改写对照。</li><li><strong>待核</strong>：❓书中 Weizenbaum (1966) 与 Dennett (2009) 的版本信息；❓&quot;Claude 系统提示数千 token&quot;的时效性。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a> <span>/</span> <span class="cur">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</span></nav>
+<h1 class="title">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</h1><div class="prose"><h1>读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</h1>
+<h2>书目元信息</h2>
+<ul><li>书名：Speech and Language Processing (3rd ed.)｜作者：Daniel Jurafsky &amp; James H. Martin</li><li>本章：第 5 章 Embeddings（嵌入）｜中文译文</li><li>来源：<code>/home/yuanwu/books/slp3/zh/md/05-embeddings.md</code>（英文对照：<code>05-embeddings.dual.md</code>）</li><li>页码口径：<strong>中文版无印刷页码，统一用节号 §x.y 定位</strong>（raw/meta.json 明确要求）</li><li>阅读目标：理解（meta.json <code>goal=理解</code>；非应试，但仍按教材型做分拣与例题复算）</li><li><strong>书型判定：教材型</strong>。依据：章-节-知识点三级编号清晰；密集给出定义框（<code>&gt; 释义</code>）；§5.4 有可手算例题（cos(cherry,information)=.018）；§5.5.2 有完整损失与梯度推导；章末有小结与 3 道练习题、历史注记。</li><li>交叉对照：未提供课堂笔记（<code>raw/</code> 下无 <code>lecture-notes/</code>），故不产出 <code>cross-check.md</code>。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>覆盖小节</th><th>状态</th><th>说明</th></tr><tr><td>第 5 章</td><td>§5.1–§5.5.3、§5.6–§5.9、小结、历史注记、练习</td><td>✅ 本次完成</td><td>book-notes 拆为 11 个知识块（5.5 拆为「分类器与学习」与「其他静态嵌入」）</td></tr><tr><td>第 6 章 神经网络</td><td>—</td><td>⬜ 未处理</td><td>建议下次；本章 §5.5 已多次指向它</td></tr></table>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>/home/yuanwu/books/slp3/zh/md/05-embeddings.md</code></td><td>971 行 / 70,977 字节，中文译文全文；本次<strong>全文读完</strong></td></tr><tr><td>英文对照（核对用）</td><td><code>/home/yuanwu/books/slp3/zh/md/05-embeddings.dual.md</code></td><td>1,653 行；用于核对术语与实验语料（lab-03~05 的语料即取自其英文行）</td></tr><tr><td>元信息</td><td><code>/home/yuanwu/notes/reading/slp3/raw/05/meta.json</code></td><td><code>goal=理解</code>，注明「无印刷页码，引用用 §节号」</td></tr><tr><td>划线/摘录（可选）</td><td>未提供</td><td>无 highlights，故不产出「划线去向表」</td></tr></table>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th><th>规模</th></tr><tr><td><code>book-notes.md</code></td><td>逐节三区（摘录/思考/行动），11 个知识块 + 全章 takeaway + 分拣依据</td><td>11 块，每块 339–793 汉字</td></tr><tr><td><code>cards.md</code></td><td>永久卡片（概念卡/公式卡/例题卡）</td><td>14 张</td></tr><tr><td><code>self-test.md</code></td><td>提取自测协议 + 11 题 + 答案要点 + 例题重做记录</td><td>11 题</td></tr><tr><td><code>actions.md</code></td><td>5 条行动（含日期与验收）+ 错题归因表</td><td>5 条</td></tr><tr><td><code>spinoffs.md</code></td><td>衍生选题（3 送 write-zhihu-tech + 1 送 write-tech-tutorial 等）</td><td>5 条</td></tr><tr><td><code>glossary.md</code></td><td>教材术语表</td><td>38 条</td></tr><tr><td><code>labs/index.md</code> + <code>labs/lab-01…05/</code></td><td>行动执行闭环：脚本 + 真实产物 + 结论 + 反思</td><td>5 个 lab</td></tr></table>
+<h2>摘录忠实度说明</h2>
+<ul><li>60 条摘录全部用脚本逐条回溯校验：<code>q in 章节原文</code> → <strong>60/60 命中，0 处改写</strong>。</li><li>抽取文本存在断行（如「常见的做法是直接将两者相加，/ 用向量 wi + ci 表示词 i。」），凡跨行句一律改选单行内可完整引用的片段，<strong>未做任何拼接式改写</strong>。</li><li>公式区（式 5.21–5.27）在抽取文本中运算符与上下标错乱，摘录区不引用乱码公式；改在思考区说明「按上下文重建」，并由 <code>labs/lab-02</code> 的数值梯度校验（最大相对误差 3.2e-9）反向验证重建正确。</li></ul>
+<h2>labs 一览（真实运行，非编造）</h2>
+<table><tr><th>lab</th><th>主题</th><th>关键结果</th></tr><tr><td>lab-01</td><td>共现矩阵 + PPMI + 截断 SVD</td><td>复算书中余弦 0.017754 / 0.996321（书中 .018 / .996）；近邻与二维图</td></tr><tr><td>lab-02</td><td>从零实现 SGNS + 梯度校验 + 类比</td><td>梯度误差 3.2e-9；类比 15/20（3 seeds：0.75/0.75/0.70）</td></tr><tr><td>lab-03</td><td>窗口 ±2/±5/±10 对照（真实语料）</td><td>top-10 平均 Jaccard≈0.27；长窗更主题化但弱于书中</td></tr><tr><td>lab-04</td><td>点积 vs 余弦、频次 vs 向量范数</td><td>原始计数 r=0.722，PPMI-SVD r=0.247；点积/余弦排序仅对泛用词分歧大</td></tr><tr><td>lab-05</td><td>性别—属性偏差审计 + 置换检验</td><td>差值 +0.016 / −0.042，p=0.813 / 0.619 → 本语料不可复现</td></tr></table>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>理由</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>60/60 条脚本回溯命中，全部带 §；扣 1 分因中文版无印刷页码，只能给节号，定位精度低于页码</td></tr><tr><td>② 消化深度</td><td>8/10</td><td>每块 3–5 条【我】，含具体经验（检索召回的长尾偏置、日志共现失败）与真质疑（W 与 C 的冗余、PPMI 是否解决虚词）；部分 A1 仍偏概括</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>5 条均含日期 + 可检验验收，且全部执行完毕、产物落盘；扣 1 分因第 4 条范围略大</td></tr><tr><td>④ 卡片复用性</td><td>8/10</td><td>14 张一卡一主张、独立可读、带 § 出处、链接多指向真实卡片/lab；2 张链接仍为「待补」</td></tr><tr><td>⑤ 覆盖完整性</td><td>9/10</td><td>11 个知识块覆盖全部小节 + 小结 + 历史注记；无划线可丢；分拣依据写明；例题复算与错题归因齐备</td></tr><tr><td>⑥ 可复习性</td><td>8/10</td><td>11 题覆盖全部 ⭐ 与 🔴；含遮住作答协议、费曼检验、答案指向、例题重做表；题目仍以解释型为主，缺计算型限时题</td></tr><tr><td><strong>合计</strong></td><td><strong>51/60</strong></td><td>过门槛（≥42，单项均 ≥7）</td></tr></table>
+<h2>自检</h2>
+<pre><code>python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/05-embeddings --raw /home/yuanwu/notes/reading/slp3/raw/05</code></pre>
+<p>结果：<strong>FAIL=0，WARN=0</strong>（退出码 0）。机器无法判定的项（摘录回溯、同义改写、假行动语义、卡片独立可读、六维评分）已在上文逐项说明。</p></div><div class="grid"><a class="card" href="labs/index.html"><h2>labs · 行动执行闭环（lab-01 ~ lab-05）</h2><div class="meta">1 份文档</div></a></div><ul class="docs"><li><a class="doc-link" href="actions.html">《Speech and Language Processing》第 3 版 · 第 5 章 · 行动清单（4 条）<span class="arrow">→</span></a></li><li><a class="doc-link" href="book-notes.html">《Speech and Language Processing》（第 3 版）· 第 5 章 嵌入 · 读书笔记<span class="arrow">→</span></a></li><li><a class="doc-link" href="cards.html">《Speech and Language Processing》（第 3 版）· 第 5 章 · 永久卡片（14 张）<span class="arrow">→</span></a></li><li><a class="doc-link" href="glossary.html">《Speech and Language Processing》第 3 版 · 第 5 章 · 术语表<span class="arrow">→</span></a></li><li><a class="doc-link" href="self-test.html">《Speech and Language Processing》第 3 版 · 第 5 章 · 提取自测<span class="arrow">→</span></a></li><li><a class="doc-link" href="spinoffs.html">《Speech and Language Processing》第 3 版 · 第 5 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）<span class="arrow">→</span></a></li></ul>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

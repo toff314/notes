@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：Speech and Language Processing（第 1 章 引言） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章）</a> <span>/</span> <a href="index.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1 章 引言）</span></nav>
+<h1 class="title">读书笔记：Speech and Language Processing（第 1 章 引言）</h1><div class="prose"><h1>读书笔记：Speech and Language Processing（第 1 章 引言）</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第三版（草稿版）　来源：<code>raw/01-introduction.md</code></li><li>页码口径：中文译本无印刷页码，全部用 <strong>§节号</strong>（如 §1.6.3）定位</li><li>阅读目标：<strong>理解</strong>（<code>raw/meta.json</code> 的 <code>goal</code> 字段；非应试，不追考点）</li><li><strong>书型判定</strong>：<strong>教材型</strong>。依据：编号层级完整（§1.1–§1.11 及 §1.6.1–§1.6.4、§1.7.1、§1.9.1–§1.9.5）；每节有定义框（<code>language model</code>、<code>token</code>、<code>scaling laws</code> 等）；章末有 5 道练习；叙述围绕&quot;定义—机制—边界&quot;展开。</li><li>交叉对照：未提供课堂笔记（<code>raw/lecture-notes/</code> 不存在），本次不做书 ↔ 课堂对照。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>状态</th><th>本次/下次</th></tr><tr><td>第 1 章 引言（§1.0–§1.11 + 练习）</td><td>✅ 本次完成</td><td>—</td></tr><tr><td>第 2 章 Words and Tokens</td><td>⬜ 未处理</td><td>建议下次（衔接 §1.1 的 token 与 BPE）</td></tr><tr><td>第 3 章 N-gram Language Models</td><td>⬜ 未处理</td><td>建议与第 2 章连读（困惑度/平滑的正式定义）</td></tr></table>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>raw/01-introduction.md</code>（→ <code>/home/yuanwu/books/slp3/zh/md/01-introduction.md</code>）</td><td>中文全章，1,153 行；已全文读完</td></tr><tr><td>英文对照（核对用）</td><td><code>/home/yuanwu/books/slp3/zh/md/01-introduction.dual.md</code></td><td>中英对照；仅用于核对术语与为 labs 提供英文语料</td></tr><tr><td>划线摘录（可选）</td><td>未提供</td><td>无用户划线，因此无「划线去向表」</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>不做 cross-check</td></tr><tr><td>元信息（可选）</td><td><code>raw/meta.json</code></td><td>书名、章节源、阅读目标&quot;理解&quot;、页码口径</td></tr></table>
+<h2>产物清单</h2>
+<ul><li><code>book-notes.md</code>：主笔记，12 个知识节（§1.0–§1.11），每节三区，约 5,900 汉字（单节 418–593 字）</li><li><code>cards.md</code>：16 张永久卡片（概念卡 14 / 公式卡 2）</li><li><code>self-test.md</code>：10 道提取自测 + 协议 + 答案解析指向 + 例题重做记录</li><li><code>actions.md</code>：4 条行动（每条都有对应 lab）</li><li><code>spinoffs.md</code>：5 条衍生选题（2 条 P0 观点、1 条 P0 教程、2 条 P1）</li><li><code>glossary.md</code>：33 条术语（教材型推荐）</li><li><code>labs/</code>：4 个可运行实验，含脚本、真实产物（CSV/JSON/PNG）、结论与反思</li><li>lab-01 bigram 下词预测　lab-02 困惑度与平滑　lab-03 香农游戏　lab-04 代理指标与古德哈特</li></ul>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>65 条摘录全部逐字复制并用脚本回溯校验（0 处不符）；节号齐全，无 OCR 噪声</td></tr><tr><td>② 消化深度</td><td>9/10</td><td>每节 3 条【我】，含重述、具体关联与质疑；少处 A1 仍偏&quot;读书经验&quot;而非生活经验</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>4 条行动均有日期、对象与验收，且全部跑成 lab；缺少一条&quot;讲给别人听&quot;的费曼行动</td></tr><tr><td>④ 卡片复用性</td><td>9/10</td><td>一卡一主张、16 张均带出处与真实卡间链接；尚无跨书/跨笔记链接</td></tr><tr><td>⑤ 覆盖完整性</td><td>8/10</td><td>11 节 + 练习 1.1/1.2 已覆盖；练习 1.3–1.5 只在思考区回应，未单独成行动</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>10 题覆盖全部 ⭐ 节，含协议、遮住指令、答案解析与错题归因表</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>全部单项 ≥7，通过门槛</td></tr></table>
+<h2>阅读提示</h2>
+<ul><li>先读 <code>book-notes.md</code> 的章首与 §1.1–§1.2，建立&quot;下词预测→知识&quot;的主线；§1.4 可最后读，它不影响后面理解。</li><li>想动手：直接跑 <code>labs/index.md</code> 里的四个脚本；lab-01 与 lab-02 的落差（书中 all 0.44 vs 本地 <code>example</code> 0.147）是最值得记住的一课。</li><li>想复习：遮住笔记做 <code>self-test.md</code>，错题按 <code>actions.md</code> 的三类归因处理。</li></ul></div><div class="grid"><a class="card" href="labs/index.html"><h2>行动执行闭环（labs/index.md）</h2><div class="meta">1 份文档</div></a></div><ul class="docs"><li><a class="doc-link" href="actions.html">《Speech and Language Processing》第 1 章 · 行动清单（4 条）<span class="arrow">→</span></a></li><li><a class="doc-link" href="book-notes.html">《Speech and Language Processing》（第三版）第 1 章 引言 · 读书笔记<span class="arrow">→</span></a></li><li><a class="doc-link" href="cards.html">《Speech and Language Processing》第 1 章 · 永久卡片（16 张）<span class="arrow">→</span></a></li><li><a class="doc-link" href="glossary.html">《Speech and Language Processing》第 1 章 · 术语表<span class="arrow">→</span></a></li><li><a class="doc-link" href="self-test.html">《Speech and Language Processing》第 1 章 · 提取自测<span class="arrow">→</span></a></li><li><a class="doc-link" href="spinoffs.html">《Speech and Language Processing》第 1 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）<span class="arrow">→</span></a></li></ul>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
