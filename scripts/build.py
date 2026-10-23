@@ -24,6 +24,58 @@ SECTIONS = [
     ("geektime", "极客时间", "digest"),
 ]
 
+# 产物类型列：[(列名, [文件名关键词])]，按声明顺序排布；无内容的列自动隐藏
+ARTIFACT_COLUMNS = {
+    "reading": [
+        ("笔记", ["book-notes", "notes"]),
+        ("卡片", ["cards"]),
+        ("自测", ["self-test"]),
+        ("行动", ["actions"]),
+        ("验证", ["labs"]),
+        ("术语", ["glossary"]),
+        ("选题", ["spinoffs", "topics"]),
+    ],
+    "courses": [
+        ("主笔记", ["book-notes", "notes"]),
+        ("大纲", ["outline"]),
+        ("自测", ["self-test"]),
+        ("勘误", ["corrections"]),
+        ("选题", ["spinoffs", "topics"]),
+        ("卡片", ["cards"]),
+    ],
+    "meetings": [
+        ("纪要", ["notes", "minutes"]),
+        ("决策", ["decisions"]),
+        ("行动", ["actions"]),
+        ("待定", ["pending"]),
+        ("结转", ["carried"]),
+        ("勘误", ["corrections"]),
+        ("主题", ["themes", "matrix", "speakers"]),
+        ("选题", ["spinoffs", "topics"]),
+    ],
+    "geektime": [
+        ("一页纸", ["digest"]),
+        ("指南", ["study_guide"]),
+        ("精华卡", ["card"]),
+        ("讲摘", ["lecture_summaries"]),
+        ("分拣", ["content_triage"]),
+        ("评论文", ["course_review"]),
+        ("主题文", ["theme_articles"]),
+        ("概念图", ["concept_map"]),
+        ("通览", ["survey_notes"]),
+    ],
+}
+
+
+def classify_artifact(section_key, name):
+    """文件名 → 类型列下标；匹配不到返回 None（进"其他"列）。"""
+    low = name.lower()
+    for i, (_, keys) in enumerate(ARTIFACT_COLUMNS.get(section_key, [])):
+        if any(k in low for k in keys):
+            return i
+    return None
+
+
 STYLE = """
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -286,30 +338,58 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
         trail = [(section_label, section_key), (f"{title} · {label}" if f != "README.md" else title, None)]
         render_md(rel_md, trail)
 
-    # ---- L1 平铺区块：产物表格 ----
+    # ---- L1 平铺区块：产物表格（按类型分列）----
+    columns = ARTIFACT_COLUMNS.get(section_key, [])
+    # rows: item_label -> {col_idx|None("other"): [link html]}
     rows = []
+    present = set()
+
+    def add_doc(item_label, name_no_ext, link):
+        idx = classify_artifact(section_key, name_no_ext)
+        present.add(idx if idx is not None else "other")
+        for it, cells in rows:
+            if it == item_label:
+                cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(name_no_ext)}</a>')
+                return
+        cells = {}
+        cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(name_no_ext)}</a>')
+        rows.append((item_label, cells))
+
     for f in mds:
         label = h1_of(os.path.join(ROOT, root_rel, f), f[:-3])
-        link = href(os.path.join(root_rel, f[:-3])) + ".html"
-        rows.append(("总览", f'<a href="{esc(link)}">{esc(label)}</a>'))
+        add_doc("（总览）", label, href(os.path.join(root_rel, f[:-3])) + ".html")
     for d in subs:
         d_rel = os.path.join(root_rel, d)
         d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
                         h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-        links = []
-        for f in [x for x in list_md(d_rel) if x not in ("README.md", "index.md")]:
-            label = h1_of(os.path.join(ROOT, d_rel, f), f[:-3])
-            links.append(f'<a href="{esc(href(os.path.join(d_rel, f[:-3])))}.html">{esc(label)}</a>')
         idx = os.path.join(d_rel, "index.html")
         if os.path.isfile(os.path.join(ROOT, idx)):
-            links.insert(0, f'<a href="{esc(href(d_rel))}/index.html">目录</a>')
-        rows.append((d_title, " ".join(links) if links else '<span style="color:var(--muted)">—</span>'))
+            add_doc(d_title, "目录", href(d_rel) + "/index.html")
+        for f in [x for x in list_md(d_rel) if x not in ("README.md", "index.md")]:
+            label = h1_of(os.path.join(ROOT, d_rel, f), f[:-3])
+            add_doc(d_title, label, href(os.path.join(d_rel, f[:-3])) + ".html")
+
+    visible_cols = [(i, label) for i, label in enumerate(columns) if i in present]
+    has_other = "other" in present
+    head = "<tr><th>条目</th>" + "".join(f"<th>{esc(lb)}</th>" for _, lb in visible_cols)
+    if has_other:
+        head += "<th>其他</th>"
+    head += "</tr>"
+
+    def cell_html(cells, idx):
+        links = cells.get(idx)
+        return " ".join(links) if links else '<span style="color:var(--muted)">—</span>'
+
+    body_rows = "".join(
+        '<tr><td class="item">' + esc(it) + "</td>"
+        + "".join(f'<td class="docs">{cell_html(cells, i)}</td>' for i, _ in visible_cols)
+        + (f'<td class="docs">{cell_html(cells, "other")}</td>' if has_other else "")
+        + "</tr>"
+        for it, cells in rows)
 
     meta = f"{len(subs)} 个条目 · {len(mds)} 份文档" if subs else f"{len(mds)} 份文档"
-    table = ('<div class="records"><table><thead><tr><th>条目</th><th>产物</th></tr></thead><tbody>'
-             + "".join(f'<tr><td class="item">{esc(it)}</td><td class="docs">{docs}</td></tr>'
-                       for it, docs in rows)
-             + "</tbody></table></div>")
+    table = ('<div class="records"><table><thead>' + head + "</thead><tbody>"
+             + body_rows + "</tbody></table></div>")
     block = (f'<section class="record-block"><h2>{esc(title)}</h2>'
              f'<p class="meta">{esc(meta)}</p>{table}</section>')
     return title, meta, block
