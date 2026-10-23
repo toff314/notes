@@ -79,6 +79,28 @@ def short_label(dirname, h1):
     return dirname
 
 
+ASSET_DIR_RE = re.compile(r"(slides|ppt|课件|attachment|附件)", re.IGNORECASE)
+ASSET_FILE_RE = re.compile(r"\.(pdf|pptx?|key|docx?|xlsx?)$", re.IGNORECASE)
+
+
+def list_named_files(path, pattern=None):
+    """目录下文件（递归，相对 path，去扩展名前名）；pattern 限制扩展名，None 不限。"""
+    result = []
+    for cur, _dirs, files in os.walk(path):
+        for f in sorted(files):
+            if f.startswith("."):
+                continue
+            if pattern is None or pattern.search(f):
+                result.append(os.path.relpath(os.path.join(cur, f), path))
+    return sorted(result)
+
+
+def plain_names(files):
+    """文件列表 → 纯文本清单（不可点击）：去扩展名，用 、连接。"""
+    names = [os.path.splitext(os.path.basename(f))[0] for f in files]
+    return "、".join(names)
+
+
 def classify_artifact(section_key, name):
     """文件名 → 类型列下标；匹配不到返回 None（进"其他"列）。"""
     low = name.lower()
@@ -124,6 +146,9 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .record-block{margin:0 0 28px}
 .record-block h2{font-size:19px;margin:0 0 .15em}
 .record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -204,6 +229,19 @@ def list_docs(path, depth=0):
                 if f.endswith(DOC_EXTS) and not f.startswith("."):
                     files.append(f"{d}/{f}")
     return files
+
+
+def is_placeholder(path):
+    """占位模板（无真实内容）：含"未提供"，或全文很短且声明暂无/留空。不入表格。"""
+    try:
+        text = open(path, encoding="utf-8").read()
+    except OSError:
+        return False
+    head = text[:600]
+    if "未提供" in head:
+        return True
+    body = re.sub(r"[#>\-\*\s]", "", text)
+    return len(body) < 60 and ("暂无" in text or "留空" in text or "待补" in text)
 
 
 def doc_href(rel_file):
@@ -321,8 +359,17 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     root_abs = os.path.join(ROOT, root_rel)
     readme_rel = os.path.join(root_rel, "README.md")
     title = h1_of(os.path.join(ROOT, readme_rel), sub)
-    subs = list_dirs(root_abs)
+    all_subs = list_dirs(root_abs)
+    raw_here = [d for d in os.listdir(root_abs)
+                if d == "raw" and os.path.isdir(os.path.join(root_abs, d))] if os.path.isdir(root_abs) else []
+    asset_subs = [d for d in all_subs if ASSET_DIR_RE.search(d)]
+    raw_subs = raw_here
+    subs = [d for d in all_subs if d not in asset_subs]
     mds = [f for f in list_md(root_abs) if f != "README.md"]
+    for d in asset_subs:  # 旧构建在课件目录里生成的索引页随移除
+        stale = os.path.join(ROOT, root_rel, d, "index.html")
+        if os.path.isfile(stale):
+            os.remove(stale)
 
     # 清理：记录目录不再放 L2 索引（旧构建产物）
     stale = os.path.join(ROOT, page_rel, "index.html")
@@ -409,6 +456,8 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
         for f in list_docs(item_abs, depth=1):
             if f in ("README.md", "index.md"):
                 continue
+            if is_placeholder(os.path.join(item_abs, f)):
+                continue  # 占位模板不入表格（避免"点进去是一套空模板"）
             rel_file = os.path.join(item_dir_rel, f)
             no_ext = f[:-3] if f.endswith(".md") else f
             idx = classify_artifact(section_key, no_ext)
@@ -421,6 +470,8 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     # 记录级产物（总览行）
     for f in list_docs(root_abs):
         if f == "README.md":
+            continue
+        if is_placeholder(os.path.join(root_abs, f)):
             continue
         rel_file = os.path.join(root_rel, f)
         no_ext = f[:-3] if f.endswith(".md") else f
@@ -461,8 +512,28 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     meta = f"{len(subs)} 个条目 · {len(mds)} 份文档" if subs else f"{len(mds)} 份文档"
     table = ('<div class="records"><table><thead>' + head + "</thead><tbody>"
              + body_rows + "</tbody></table></div>")
+
+    assets_rows = []
+    for d in asset_subs:
+        files = list_named_files(os.path.join(ROOT, root_rel, d), ASSET_FILE_RE)
+        if files:
+            assets_rows.append(("课件 PPT", f"{len(files)} 份", plain_names(files)))
+    for d in raw_subs:
+        files = [f for f in list_named_files(os.path.join(ROOT, root_rel, d))
+                 if not re.search(r"(meta\.json|topics\.json|\.cache)", f)]
+        if files:
+            assets_rows.append(("素材 raw", f"{len(files)} 份", plain_names(files)))
+    assets_html = ""
+    if assets_rows:
+        rows_html = "".join(
+            f'<tr><td class="item">{esc(kind)}</td><td class="count">{esc(count)}</td>'
+            f'<td class="names">{esc(names)}</td></tr>'
+            for kind, count, names in assets_rows)
+        assets_html = ('<table class="records assets-table"><thead><tr><th>类别</th>'
+                       '<th>数量</th><th>清单（仅展示，不提供下载）</th></tr></thead><tbody>'
+                       + rows_html + "</tbody></table>")
     block = (f'<section class="record-block"><h2>{esc(title)}</h2>'
-             f'<p class="meta">{esc(meta)}</p>{table}</section>')
+             f'<p class="meta">{esc(meta)}</p>{table}{assets_html}</section>')
     return title, meta, block
 
 
