@@ -1,0 +1,60 @@
+[
+  {
+    "sentence": "We’re 350 dogs! Um, lunch?",
+    "tokens": [
+      "We",
+      "’re",
+      "␣350",
+      "␣dogs",
+      "!",
+      "␣Um",
+      ",",
+      "␣lunch",
+      "?"
+    ]
+  },
+  {
+    "sentence": "词元化是 NLP 的第一步。",
+    "tokens": [
+      "词元化是",
+      "␣NLP",
+      "␣的第一步",
+      "。"
+    ]
+  },
+  {
+    "sentence": "El niño comió nuez y jengibre.",
+    "tokens": [
+      "El",
+      "␣niño",
+      "␣comió",
+      "␣nuez",
+      "␣y",
+      "␣jengibre",
+      "."
+    ]
+  },
+  {
+    "sentence": "doesn't charge $10.40 — https://www.stanford.edu #nlproc",
+    "tokens": [
+      "doesn",
+      "'",
+      "t",
+      "␣charge",
+      "␣$",
+      "10",
+      ".",
+      "40",
+      "␣—",
+      "␣https",
+      "://",
+      "www",
+      ".",
+      "stanford",
+      ".",
+      "edu",
+      "␣#",
+      "nlproc"
+    ]
+  }
+]

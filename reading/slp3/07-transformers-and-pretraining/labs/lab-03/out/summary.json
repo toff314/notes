@@ -1,0 +1,208 @@
+{
+  "four_word_example": {
+    "words": [
+      "all",
+      "the",
+      "your",
+      "that"
+    ],
+    "logits": [
+      2.2,
+      1.2,
+      0.8,
+      0.1
+    ],
+    "probabilities": {
+      "0.2": [
+        0.9924,
+        0.0067,
+        0.0009,
+        0.0
+      ],
+      "1.0": [
+        0.5757,
+        0.2118,
+        0.142,
+        0.0705
+      ],
+      "2.0": [
+        0.4077,
+        0.2473,
+        0.2024,
+        0.1427
+      ]
+    }
+  },
+  "temperature_table": [
+    {
+      "tau": 0.05,
+      "max_prob": 0.9999999979381549,
+      "entropy_nats": 4.330427904231508e-08,
+      "effective_vocab": 1.00000004330428,
+      "argmax": "the",
+      "prob_sum": 0.9999999999999999
+    },
+    {
+      "tau": 0.1,
+      "max_prob": 0.9999537642786414,
+      "entropy_nats": 0.0005119792893830808,
+      "effective_vocab": 1.0005121103731491,
+      "argmax": "the",
+      "prob_sum": 1.0000000000000002
+    },
+    {
+      "tau": 0.2,
+      "max_prob": 0.992299818953578,
+      "entropy_nats": 0.048581513587089245,
+      "effective_vocab": 1.04978093974286,
+      "argmax": "the",
+      "prob_sum": 1.0000000000000002
+    },
+    {
+      "tau": 0.5,
+      "max_prob": 0.800474581336058,
+      "entropy_nats": 0.7610042912933267,
+      "effective_vocab": 2.1404247513826378,
+      "argmax": "the",
+      "prob_sum": 1.0
+    },
+    {
+      "tau": 1.0,
+      "max_prob": 0.469088604218063,
+      "entropy_nats": 1.673858917166487,
+      "effective_vocab": 5.3327066159978544,
+      "argmax": "the",
+      "prob_sum": 0.9999999999999997
+    },
+    {
+      "tau": 2.0,
+      "max_prob": 0.25639497139582634,
+      "entropy_nats": 2.125298788224063,
+      "effective_vocab": 8.37539958507794,
+      "argmax": "the",
+      "prob_sum": 1.0
+    },
+    {
+      "tau": 5.0,
+      "max_prob": 0.1521291636114734,
+      "entropy_nats": 2.273923784479275,
+      "effective_vocab": 9.717455306745467,
+      "argmax": "the",
+      "prob_sum": 1.0000000000000002
+    }
+  ],
+  "top_k_table": [
+    {
+      "k": 1,
+      "mass_before_renorm": 0.469088604218063,
+      "support": 1,
+      "entropy_nats": -0.0
+    },
+    {
+      "k": 2,
+      "mass_before_renorm": 0.6416566577976959,
+      "support": 2,
+      "entropy_nats": 0.5822031088882179
+    },
+    {
+      "k": 3,
+      "mass_before_renorm": 0.757332483417476,
+      "support": 3,
+      "entropy_nats": 0.9207112929479735
+    },
+    {
+      "k": 5,
+      "mass_before_renorm": 0.8849363332501655,
+      "support": 5,
+      "entropy_nats": 1.299687243042976
+    },
+    {
+      "k": 10,
+      "mass_before_renorm": 0.9999999999999997,
+      "support": 10,
+      "entropy_nats": 1.6738589171664873
+    }
+  ],
+  "top_p_table": [
+    {
+      "p": 0.5,
+      "support": 2,
+      "mass_before_renorm": 0.6416566577976959,
+      "entropy_nats": 0.5822031088882179
+    },
+    {
+      "p": 0.7,
+      "support": 3,
+      "mass_before_renorm": 0.757332483417476,
+      "entropy_nats": 0.9207112929479735
+    },
+    {
+      "p": 0.8,
+      "support": 4,
+      "mass_before_renorm": 0.8274934182434449,
+      "entropy_nats": 1.1329553502442415
+    },
+    {
+      "p": 0.9,
+      "support": 6,
+      "mass_before_renorm": 0.9274910913362154,
+      "entropy_nats": 1.4262609616037816
+    },
+    {
+      "p": 0.95,
+      "support": 7,
+      "mass_before_renorm": 0.9590164315030639,
+      "entropy_nats": 1.52396601974269
+    },
+    {
+      "p": 0.99,
+      "support": 9,
+      "mass_before_renorm": 0.9929657457998372,
+      "entropy_nats": 1.6435420117755528
+    },
+    {
+      "p": 1.0,
+      "support": 10,
+      "mass_before_renorm": 0.9999999999999998,
+      "entropy_nats": 1.6738589171664873
+    }
+  ],
+  "samples": {
+    "greedy": [
+      "the cat sat on the cat sat on the cat sat on the cat",
+      "the cat sat on the cat sat on the cat sat on the cat",
+      "the cat sat on the cat sat on the cat sat on the cat"
+    ],
+    "random": [
+      "a cat on the dog sat on a cat on a cat sat on",
+      "the dog sat on the mat . <bos> a dog sat on a cat",
+      "the mat . <bos> the cat sat on a dog sat on the cat"
+    ],
+    "temperature:0.5": [
+      "a cat sat on the cat sat on the dog sat on the dog",
+      "the dog sat on the dog sat on a dog sat on the cat",
+      "the dog sat on the cat sat on a dog sat on the cat"
+    ],
+    "temperature:1.5": [
+      "a cat on the dog sat on a cat on a cat sat on",
+      "the dog sat on the mat . <bos> a dog sat on a cat",
+      "the mat . <bos> the cat sat on a dog sat on the cat"
+    ],
+    "top_k:2": [
+      "a cat on the dog sat on a cat on a cat sat on",
+      "the cat sat on the dog sat on a dog sat on a cat",
+      "the dog sat on the cat sat on a dog sat on the cat"
+    ],
+    "top_p:0.9": [
+      "a cat on the dog sat on a cat on a cat sat on",
+      "the dog sat on the mat . <bos> a dog sat on a cat",
+      "the mat . <bos> the cat sat on a dog sat on the cat"
+    ]
+  },
+  "checks": {
+    "all_prob_sums_one": true,
+    "tau_to_zero_approaches_greedy": true,
+    "tau_above_one_flattens": true,
+    "top_k_1_equals_greedy": true
+  }
+}

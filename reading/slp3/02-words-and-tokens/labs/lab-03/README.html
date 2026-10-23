@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 03 · 正则预词元化审计</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 03 · 正则预词元化审计</a></div>
+<h1>Lab 03 · 正则预词元化审计</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 行动 3，验证 §2.6.9：在 BPE 之前，预词元化用正则决定「哪些地方不许合并」，并观察中英西混合文本的切分差异。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 pretokenize_lab.py</code></pre>
+<h2>实现说明</h2>
+<p>书中 GPT-2 模式使用 <code>regex</code> 库的 <code>\p{L}</code>／<code>\p{N}</code>。本环境未安装 <code>regex</code>，改用标准库 <code>re</code> 的近似写法：</p>
+<ul><li>字母：<code>[^\W\d_]+</code>（Unicode 字母，排除数字与下划线）</li><li>数字：<code>\d+</code></li><li>标点：<code>[^\s\w]+</code></li><li>空白：<code>\s+(?!\S)|\s+</code></li></ul>
+<p>其余分支（<code>’s|’t|’re|’ve|’m|’ll|’d</code>）与书中一致。</p>
+<h2>产物（<code>out/</code>）</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>pretokenization.json</code></td><td>4 条句子的逐词元切分（空格显示为 ␣）</td></tr><tr><td><code>pretokenization.csv</code></td><td>字符数、空白词数、词元数、词元/词</td></tr><tr><td><code>token_counts.png</code></td><td>正则切分与空白切分的词元数对比</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<table><tr><th>句子</th><th>空白切分</th><th>正则切分</th></tr><tr><td><code>We’re 350 dogs! Um, lunch?</code></td><td>5</td><td>9</td></tr><tr><td><code>词元化是 NLP 的第一步。</code></td><td>3</td><td>4</td></tr><tr><td><code>El niño comió nuez y jengibre.</code></td><td>6</td><td>7</td></tr><tr><td><code>doesn&#x27;t charge $10.40 — https://www.stanford.edu #nlproc</code></td><td>6</td><td>18</td></tr></table>
+<ul><li>书中例句被切成 <code>We | ’re | ␣350 | ␣dogs | ! | ␣Um | , | ␣lunch | ?</code>，与 §2.6.9 的展示一致。</li><li>中文句被切成 <code>词元化是 | ␣NLP | ␣的第一步 | 。</code>：<strong>中文连续字母段整段未切</strong>，因为近似模式把汉字当作连续字母。</li><li>混合句里 URL 被拆成 <code>␣https | :// | www | . | stanford | . | edu</code>，共 18 个词元，是空白切分的 3 倍。</li></ul>
+<h2>结论</h2>
+<p>预词元化不是「顺便切一下」，它直接决定 BPE 的合并边界：中文整段不切，后续 BPE 只能在这个大块内部合并；URL 被切碎，则让 <code>https</code>、<code>www</code>、<code>edu</code> 各自成为独立合并域。正则近似与 <code>regex</code> 的 <code>\p{L}</code> 在中文上行为不同，这也说明「照抄模式」必须核对库的语义。</p>
+<h2>反思</h2>
+<p>我原以为只要模式骨架一样，结果就会一样；实际中文整段未切，才意识到 <code>\p{L}</code> 与 <code>[^\W\d_]</code> 在多语言上的边界并不等价。做多语言 tokenizer 时，先验证预词元化的切分表，比直接调 BPE 参数更重要。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

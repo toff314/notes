@@ -1,0 +1,317 @@
+{
+  "baseline_expected_quality_N1": 0.00643515491927726,
+  "rows": [
+    {
+      "sigma": 0.0,
+      "N": 1,
+      "expected_true_quality": 0.00643515491927726,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 2,
+      "expected_true_quality": 0.5538916515772772,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 4,
+      "expected_true_quality": 1.0247183411010619,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 8,
+      "expected_true_quality": 1.4439580583696847,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 16,
+      "expected_true_quality": 1.7381701184428593,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 32,
+      "expected_true_quality": 2.068839977223734,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 64,
+      "expected_true_quality": 2.3541759260323003,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.0,
+      "N": 128,
+      "expected_true_quality": 2.598839238565177,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.0
+    },
+    {
+      "sigma": 0.25,
+      "N": 1,
+      "expected_true_quality": -0.013261455569859092,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": -0.006024580778309321
+    },
+    {
+      "sigma": 0.25,
+      "N": 2,
+      "expected_true_quality": 0.5280853313196132,
+      "prob_select_true_best": 0.92075,
+      "reward_overestimate": 0.04636828585258748
+    },
+    {
+      "sigma": 0.25,
+      "N": 4,
+      "expected_true_quality": 0.9863585819873006,
+      "prob_select_true_best": 0.85225,
+      "reward_overestimate": 0.062319537931695715
+    },
+    {
+      "sigma": 0.25,
+      "N": 8,
+      "expected_true_quality": 1.3640595004993747,
+      "prob_select_true_best": 0.803,
+      "reward_overestimate": 0.08663687117001476
+    },
+    {
+      "sigma": 0.25,
+      "N": 16,
+      "expected_true_quality": 1.7312629956669758,
+      "prob_select_true_best": 0.785,
+      "reward_overestimate": 0.10474419417328806
+    },
+    {
+      "sigma": 0.25,
+      "N": 32,
+      "expected_true_quality": 2.004599135389601,
+      "prob_select_true_best": 0.73075,
+      "reward_overestimate": 0.12896376983514626
+    },
+    {
+      "sigma": 0.25,
+      "N": 64,
+      "expected_true_quality": 2.291562798489814,
+      "prob_select_true_best": 0.71225,
+      "reward_overestimate": 0.13609379822302817
+    },
+    {
+      "sigma": 0.25,
+      "N": 128,
+      "expected_true_quality": 2.5308276674182006,
+      "prob_select_true_best": 0.6895,
+      "reward_overestimate": 0.14859503771886512
+    },
+    {
+      "sigma": 0.5,
+      "N": 1,
+      "expected_true_quality": 0.011907931763644295,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": 0.015018325811098094
+    },
+    {
+      "sigma": 0.5,
+      "N": 2,
+      "expected_true_quality": 0.5066438892261158,
+      "prob_select_true_best": 0.8525,
+      "reward_overestimate": 0.12492772211111816
+    },
+    {
+      "sigma": 0.5,
+      "N": 4,
+      "expected_true_quality": 0.904821006605037,
+      "prob_select_true_best": 0.75025,
+      "reward_overestimate": 0.22417007922973722
+    },
+    {
+      "sigma": 0.5,
+      "N": 8,
+      "expected_true_quality": 1.2842472181448787,
+      "prob_select_true_best": 0.65825,
+      "reward_overestimate": 0.3150949458694429
+    },
+    {
+      "sigma": 0.5,
+      "N": 16,
+      "expected_true_quality": 1.5778918642726822,
+      "prob_select_true_best": 0.593,
+      "reward_overestimate": 0.3913278605632655
+    },
+    {
+      "sigma": 0.5,
+      "N": 32,
+      "expected_true_quality": 1.8344075696733053,
+      "prob_select_true_best": 0.535,
+      "reward_overestimate": 0.46776244421595276
+    },
+    {
+      "sigma": 0.5,
+      "N": 64,
+      "expected_true_quality": 2.0962846728889635,
+      "prob_select_true_best": 0.48525,
+      "reward_overestimate": 0.5262934672966189
+    },
+    {
+      "sigma": 0.5,
+      "N": 128,
+      "expected_true_quality": 2.3320516985254343,
+      "prob_select_true_best": 0.4595,
+      "reward_overestimate": 0.5702470224869539
+    },
+    {
+      "sigma": 1.0,
+      "N": 1,
+      "expected_true_quality": -0.027770299672515188,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": -0.022482852575956204
+    },
+    {
+      "sigma": 1.0,
+      "N": 2,
+      "expected_true_quality": 0.42324090347655524,
+      "prob_select_true_best": 0.7515,
+      "reward_overestimate": 0.4088869095596723
+    },
+    {
+      "sigma": 1.0,
+      "N": 4,
+      "expected_true_quality": 0.7209567784663096,
+      "prob_select_true_best": 0.58525,
+      "reward_overestimate": 0.7254311728478192
+    },
+    {
+      "sigma": 1.0,
+      "N": 8,
+      "expected_true_quality": 1.015492963904432,
+      "prob_select_true_best": 0.45625,
+      "reward_overestimate": 1.0064282801737727
+    },
+    {
+      "sigma": 1.0,
+      "N": 16,
+      "expected_true_quality": 1.2639662994885532,
+      "prob_select_true_best": 0.38,
+      "reward_overestimate": 1.2268455174852946
+    },
+    {
+      "sigma": 1.0,
+      "N": 32,
+      "expected_true_quality": 1.4584181147213446,
+      "prob_select_true_best": 0.3125,
+      "reward_overestimate": 1.4664048569813388
+    },
+    {
+      "sigma": 1.0,
+      "N": 64,
+      "expected_true_quality": 1.6540088568392188,
+      "prob_select_true_best": 0.24975,
+      "reward_overestimate": 1.6662355133952318
+    },
+    {
+      "sigma": 1.0,
+      "N": 128,
+      "expected_true_quality": 1.8429501695373292,
+      "prob_select_true_best": 0.215,
+      "reward_overestimate": 1.831412576824682
+    },
+    {
+      "sigma": 2.0,
+      "N": 1,
+      "expected_true_quality": -0.009220433525571548,
+      "prob_select_true_best": 1.0,
+      "reward_overestimate": -0.007993037366768527
+    },
+    {
+      "sigma": 2.0,
+      "N": 2,
+      "expected_true_quality": 0.24572598319008676,
+      "prob_select_true_best": 0.6515,
+      "reward_overestimate": 1.001950425067089
+    },
+    {
+      "sigma": 2.0,
+      "N": 4,
+      "expected_true_quality": 0.46649850194740955,
+      "prob_select_true_best": 0.4295,
+      "reward_overestimate": 1.8578598059570155
+    },
+    {
+      "sigma": 2.0,
+      "N": 8,
+      "expected_true_quality": 0.6553748560724091,
+      "prob_select_true_best": 0.3,
+      "reward_overestimate": 2.5750227047378567
+    },
+    {
+      "sigma": 2.0,
+      "N": 16,
+      "expected_true_quality": 0.7937328989754449,
+      "prob_select_true_best": 0.218,
+      "reward_overestimate": 3.1713163998493856
+    },
+    {
+      "sigma": 2.0,
+      "N": 32,
+      "expected_true_quality": 0.9429203473408397,
+      "prob_select_true_best": 0.14725,
+      "reward_overestimate": 3.6699303972667554
+    },
+    {
+      "sigma": 2.0,
+      "N": 64,
+      "expected_true_quality": 1.0367004646928548,
+      "prob_select_true_best": 0.1035,
+      "reward_overestimate": 4.222814522308133
+    },
+    {
+      "sigma": 2.0,
+      "N": 128,
+      "expected_true_quality": 1.1504856370661425,
+      "prob_select_true_best": 0.082,
+      "reward_overestimate": 4.657305651305445
+    }
+  ],
+  "summary": {
+    "0": {
+      "best_true_quality": 2.598839238565177,
+      "gain_vs_N1": 2.5924040836458997,
+      "true_quality_at_N128": 2.598839238565177,
+      "reward_overestimate_at_N128": 0.0
+    },
+    "0.25": {
+      "best_true_quality": 2.5308276674182006,
+      "gain_vs_N1": 2.5243925124989235,
+      "true_quality_at_N128": 2.5308276674182006,
+      "reward_overestimate_at_N128": 0.14859503771886512
+    },
+    "0.5": {
+      "best_true_quality": 2.3320516985254343,
+      "gain_vs_N1": 2.325616543606157,
+      "true_quality_at_N128": 2.3320516985254343,
+      "reward_overestimate_at_N128": 0.5702470224869539
+    },
+    "1": {
+      "best_true_quality": 1.8429501695373292,
+      "gain_vs_N1": 1.836515014618052,
+      "true_quality_at_N128": 1.8429501695373292,
+      "reward_overestimate_at_N128": 1.831412576824682
+    },
+    "2": {
+      "best_true_quality": 1.1504856370661425,
+      "gain_vs_N1": 1.1440504821468653,
+      "true_quality_at_N128": 1.1504856370661425,
+      "reward_overestimate_at_N128": 4.657305651305445
+    }
+  }
+}

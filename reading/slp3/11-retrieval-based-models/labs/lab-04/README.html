@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 04 · BM25 的 k1 / b 网格扫描</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 04 · BM25 的 k1 / b 网格扫描</a></div>
+<h1>Lab 04 · BM25 的 k1 / b 网格扫描</h1>
+<ul><li><strong>对应行动</strong>：actions.md 第 4 条（⇄ book-notes §11.1.2）</li><li><strong>脚本</strong>：<code>bm25_sweep.py</code></li><li><strong>运行</strong>：<code>cd labs/lab-04 &amp;&amp; python3 bm25_sweep.py</code></li><li><strong>产物</strong>：<code>out/grid_mrr.csv</code>、<code>out/grid_r1.csv</code>、<code>out/grid_longwin.csv</code>、<code>out/summary.json</code>、<code>out/mrr_heatmap.png</code>、<code>out/b_curve.png</code></li></ul>
+<h2>设置</h2>
+<ul><li>16 篇短文档，每篇配 1 条查询，金标准是该短文档。</li><li>其中 8 篇另有一个「正文重复三遍 + 填充句」的长版本（同一主题的干扰项，词频更高、篇幅约 3–6 倍）。</li><li>若长版本排到第一，记为「长度归一化失效」。</li><li>网格：k1 ∈ {0, 0.5, 1.0, 1.5, 2.0, 3.0} × b ∈ {0, 0.25, 0.5, 0.75, 1.0}，指标 MRR 与 Recall@1。</li></ul>
+<h2>结果（实跑输出）</h2>
+<pre><code>best: k1=0.5, b=0.75 -&gt; MRR=0.793
+book setting k1=1.5,b=0.75 -&gt; MRR=0.793, R@1=0.750
+k1=0 flat across b: True
+long-doc win rate: b=0 -&gt; 0.56, b=1 -&gt; 0.00</code></pre>
+<p>MRR 网格（行=k1，列=b）：</p>
+<table><tr><th>k1 \ b</th><th>0.0</th><th>0.25</th><th>0.50</th><th>0.75</th><th>1.0</th></tr><tr><td>0.0</td><td>0.782</td><td>0.782</td><td>0.782</td><td>0.782</td><td>0.782</td></tr><tr><td>0.5</td><td>0.563</td><td>0.595</td><td>0.595</td><td>0.793</td><td>0.793</td></tr><tr><td>1.0</td><td>0.563</td><td>0.563</td><td>0.595</td><td>0.793</td><td>0.793</td></tr><tr><td>1.5</td><td>0.563</td><td>0.563</td><td>0.595</td><td>0.793</td><td>0.793</td></tr><tr><td>2.0</td><td>0.563</td><td>0.563</td><td>0.595</td><td>0.793</td><td>0.793</td></tr><tr><td>3.0</td><td>0.563</td><td>0.563</td><td>0.595</td><td>0.793</td><td>0.793</td></tr></table>
+<h2>结论</h2>
+<ol><li><strong>b 的效果是断崖式的</strong>：b=0 时长文档抢走 56% 的第一名，MRR 只有 0.563；b≥0.75 后长文档一次也没赢，MRR 升到 0.793。这直接印证书里「长文档天然占优」的说法。</li><li><strong>k1=0 时 b 完全失效</strong>：整行 0.782 不随 b 变化。因为 k1=0 把 tf 项约掉，长度归一化没有作用对象。这是「参数不正交」的干净例子。</li><li><strong>k1 在 1.2–3.0 区间几乎无差别</strong>（0.793 全同），只有 k1=0 与 k1≥0.5 跨过阈值不同。说明在这个语料上，重要的是「用不用词频」，而不是「用多少」。</li><li><strong>默认值与最优值接近</strong>：书建议 (1.5, 0.75) 与网格最优 (0.5, 0.75) 的 MRR 都是 0.793，差别只在 R@1 之外的排序细节。默认值在这个玩具语料上没有吃亏，但不能推出它在中文短文本上一定合适。</li></ol>
+<h2>反思</h2>
+<p>我原以为 b 是「微调旋钮」，可以从 0 慢慢加到 1 看渐变。实际得到的是一条断崖：0.5→0.75 之间 MRR 从 0.595 跳到 0.793。原因是干扰项的重复次数刚好落在饱和区之外，一旦开始归一化就被压下去。这让我对「调参看曲线」这件事更谨慎——曲线平缓可能只是因为测试集没覆盖到敏感区间。另一个意外是 k1=0 那一行：它提醒我，某些参数组合下某个参数是「死」的，扫参时必须先确认当前区域每个维度真的在起作用。</p>
+<h2>复现说明</h2>
+<p>语料与查询硬编码在 <code>BASE</code> 里；长版本按 <code>i % 2 == 0</code> 自动生成（8 篇）。修改 <code>FILLER</code> 的长度会改变断崖出现的位置，可用作敏感性检查。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

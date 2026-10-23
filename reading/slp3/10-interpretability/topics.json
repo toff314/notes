@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 10 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/10-interpretability",
+    "anchor": "第10章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch10-t1",
+      "title": "探针能读出信息，不等于模型用了它",
+      "angle": "观点：探针准确率 95% 也证明不了模型在用这个特征——可解码性与因果性的鸿沟",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 + S5 + S6 —— ①S4：大众与不少论文都把「线性探针能读出」当成「模型依赖」，书里明确切开两者，反差强；②S5：模型审计、合规解释、事故复盘都直接受这个混淆影响，是可落地的判断标准；③S6：Belinkov 2022、Hewitt & Liang 2019、Ravichander 等 2021 均可查。",
+      "sourceAnchor": "§10.2「虽然探针分析的成功表明信息编码在表示之中，但这并不证明模型使用了这些信息」；同节「探针不能过于强大」与随机标签对照（Belinkov 等，2017；Hewitt 与 Liang，2019）。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch10-t2",
+      "title": "logit lens：把大模型的中间层当草稿读",
+      "angle": "论文：不训练任何参数也能读中间层——logit lens 与 J-lens 的完整实现与失效条件",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书里给了定义、直觉和一张图，但没给实现细节（取哪一层、是否 layernorm、如何对齐 token 位置）；②S3：涉及解嵌入矩阵、残差流、雅可比近似、逐层 softmax，纵深足够；③S6：Nostalgebraist 2020 原帖、Gurnee 等 2026、以及 TransformerLens 文档均可查。",
+      "sourceAnchor": "§10.3「我们从 Transformer 的任意一层取出任意向量，假装它就是最终层之前的嵌入，直接把它乘以解嵌入层得到 logit」；同节「它隐含地假设较早层的表示与最终层处于同一个嵌入空间」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch10-t3",
+      "title": "为什么所有词向量都指向同一个方向",
+      "angle": "观点：余弦相似度在 BERT 里几乎失效——各向异性、异常维度与一次坐标校准",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书里讲了现象、成因与 z 分数补救，但没讲白化/去相关、也没讲补救的副作用；②S3：牵涉点积的维度加权、方差校准、高频词偏差，足够深；③S6：Ethayarajh 2019、Timkey & van Schijndel 2021、Zhou 等 2022 均可查。",
+      "sourceAnchor": "§10.1.2「任意两个随机选取的词的实例的嵌入都会有极高的余弦，甚至可能相当接近 1」；「这些异常维度具有非常大的量级和极高的方差」；「对向量进行标准化（z 分数标准化）」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch10-t4",
+      "title": "归纳头：两句示例为什么能教会模型",
+      "angle": "观点：不更新权重也能「学会」——归纳头如何用前缀匹配和复制解释上下文学习",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 + S4 + S6 —— ①S2：从 2021 年 Elhage 等的电路研究到 2022 年 Olsson 等的归纳头假说，人物与时间线清楚可溯；②S4：「模型在提示里学习」与「模型只是在做模式复制」是两种强烈冲突的叙事；③S6：Anthropic 的 Transformer Circuits 系列、Olsson 等 2022、Crosbie & Shutova 2022 均可查。",
+      "sourceAnchor": "§10.6「如果它在输入序列中看到模式 AB...A，就会预测后面跟着 B」；「消融后的模型在上下文学习上差得多」；同节对 ICL「无需对模型参数进行任何基于梯度的更新」的定义。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch10-t5",
+      "title": "稀疏自编码器与「字典假设」",
+      "angle": "论文：用稀疏自编码器拆解叠加——从字典假设到一次可复现的 λ 扫描",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中该节未展开，正好是「讲而未透」的极端情形；②S3：涉及叠加假设、L1 稀疏惩罚、字典学习、特征恢复度评估，纵深充分；③S6：Cunningham 等 2023、Bricken 等 2023、Anthropic 的 SAE 系列均可查。",
+      "sourceAnchor": "§10.4「稀疏自编码器」（书稿该节仅有标题，正文为空； 需以下游检索的公开文献补足，不得把本文当作对书中该节的复述）。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

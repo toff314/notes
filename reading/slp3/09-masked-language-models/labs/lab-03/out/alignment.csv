@@ -1,0 +1,7 @@
+words,tokens,word_bio,subtokens_bio
+Mt. Sanitas is in Sunshine Canyon .,Mt. San ##itas is in Sun ##shine Canyon .,B-LOC I-LOC O O B-LOC I-LOC O,B-LOC I-LOC I-LOC O O B-LOC B-LOC I-LOC O
+Jane Villanueva works at United Airlines Holding .,Jane Villan ##ueva works at United Air ##lines Hold ##ing .,B-PER I-PER O O B-ORG I-ORG I-ORG O,B-PER I-PER I-PER O O B-ORG I-ORG I-ORG I-ORG I-ORG O
+Tim Wagner spoke in Chicago .,Tim Wagner spoke in Chicago .,B-PER I-PER O O B-LOC O,B-PER I-PER O O B-LOC O
+AMR Corp. raised fares on Friday .,AMR Corp. raised fares on Friday .,B-ORG I-ORG O O O B-TIME O,B-ORG I-ORG O O O B-TIME O
+The Denver flight costs $6 .,The Den ##ver flight costs $6 .,O B-LOC O O B-MONEY O,O B-LOC B-LOC O O B-MONEY O
+Apple opened a store in Palo Alto .,Apple opened a store in Pa ##lo Alto .,B-ORG O O O O B-GPE I-GPE O,B-ORG O O O O B-GPE B-GPE I-GPE O

@@ -1,0 +1,4 @@
+system,title_recall@1
+tfidf,1.0000
+bm25,1.0000
+dense_ppmi_svd,0.7917

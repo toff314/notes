@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 10 章 · 行动清单（3 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）· 第 10 章 可解释性</a></div>
+<h1>《Speech and Language Processing》（第 3 版）· 第 10 章 · 行动清单（3 条）</h1>
+<blockquote><p>全部为 A2 级动作：动词 + 对象 + 截止时间 + 可检验的验收。三条都已在 <code>labs/</code> 中真实执行，产物落盘。</p><p>章节级的小任务（画层×词元表、手工 WSD、格式对照）见各节行动区，不重复列入这里。</p></blockquote>
+<h2>学习行动</h2>
+<ol><li><strong>在 2026-10-24 前</strong>用合成「上下文嵌入 + 隐藏属性」数据完成线性探针实验：扫描 5 个层 × 4 个属性（词性 / 时态 / 语义类 / 实体类），并加入随机标签基线与维度截断曲线（验收：<code>labs/lab-01/out/probe_by_layer.csv</code> 与 <code>dim_sweep.csv</code> 齐全，随机标签基线均值落在随机水平 ±3 个百分点内、单行最大偏差不超过 4pp，且至少两个属性在某一层显著高于基线；结论写入 lab README）。——来自 §10.2、§10.1.2</li><li><strong>在 2026-10-27 前</strong>在玩具残差流上分别实现 logit lens 与数值雅可比版 J-lens，覆盖「同一空间」与「中途换基」两种设定，记录每层 top-1 与正确答案排名（验收：<code>labs/lab-02/out/lens_rank.csv</code> 每层两列可对照，能指出 logit lens 在换基层失效而 J-lens 仍读出的具体行，并附一张排名曲线图）。——来自 §10.3</li><li><strong>在 2026-10-30 前</strong>在稀疏合成激活矩阵上训练稀疏自编码器，扫描 8 个 L1 系数 λ（0–2.0），报告重建误差、平均激活特征数 L0 与真特征恢复度（验收：<code>labs/lab-03/out/sae_lambda_sweep.csv</code> 含 MSE / L0 / 恢复度三组指标，图中有 MSE–λ 与 L0–λ 两条曲线，并按「L0 ≤ 6 中 MSE 最小」选定 λ=0.5，说明取舍理由与恢复度不足的含义）。——来自 §10.4（书稿该节仅有标题，本行动为缺口补白，不声称复现书中方法）</li></ol>
+<h2>错题归因（实验重跑失败时填）</h2>
+<table><tr><th>现象</th><th>归因类型</th><th>处理</th></tr><tr><td>探针在浅层就接近 100%，层间无差异</td><td>数据构造问题（信号泄漏到所有层）</td><td>回 lab-01 的 <code>make_layer</code> 检查各层信号强度参数，确认噪声随层变化</td></tr><tr><td>J-lens 与 logit lens 曲线完全重合</td><td>实现问题（未把换基矩阵纳入雅可比）</td><td>回 lab-02 检查 <code>jacobian</code> 与 <code>R2</code> 的乘法顺序，用有限差分对齐</td></tr><tr><td>SAE 的 L0 不随 λ 下降</td><td>优化问题（学习率过大或未收敛）</td><td>回 lab-03 降低步长、增加步数，先确认 λ=0 时 MSE 能降到噪声水平</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

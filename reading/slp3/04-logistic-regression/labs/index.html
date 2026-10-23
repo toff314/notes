@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>labs · 行动执行闭环</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a><a href="index.html">labs · 行动执行闭环</a></div>
+<h1>labs · 行动执行闭环</h1>
+<blockquote><p>环境：Python 3 + numpy 2.4.6 + matplotlib 3.10.9（仅标准库 + 这两个包）。</p><p>两个 lab 覆盖 <code>actions.md</code> 的 4 条行动；每条都留下可复现脚本、真实产物、结论与反思。</p></blockquote>
+<h2>总览</h2>
+<table><tr><th>行动</th><th>脚本</th><th>运行产物</th><th>结论一句话</th></tr><tr><td>1. 从零实现二分类逻辑回归</td><td><code>lab-01/logreg_binary.py</code></td><td><code>lab-01/out/weights.json</code>、<code>loss_curve.png</code>、<code>decision_boundary.png</code>、<code>training_log.csv</code></td><td>22 条样本上收敛到 w=[1.5131,−1.8113]、b=0.1646，损失 0.2550，准确率 0.909</td></tr><tr><td>2. 复现 §4.6.3 单步并做数值校验</td><td><code>lab-01/logreg_binary.py</code></td><td><code>lab-01/out/gradient_step.json</code></td><td>一步后 w=[0.15,0.10]、b=0.05；解析与数值梯度相对误差 ~1e-11</td></tr><tr><td>3. softmax 多分类 + 指标 + 超参扫描</td><td><code>lab-02/logreg_multiclass.py</code></td><td><code>lab-02/out/metrics.json</code>、<code>confusion_matrix.png</code>、<code>lr_comparison.<em></code>、<code>reg_comparison.</em></code></td><td>测试准确率 0.767，宏 F1 0.760、微 F1 0.767；α=0.1 时准确率最高 0.833</td></tr><tr><td>4. 配对自助检验</td><td><code>lab-02/logreg_multiclass.py</code></td><td><code>lab-02/out/bootstrap.json</code>、<code>bootstrap_hist.png</code></td><td>δ=0.0667、b=2000、p=0.085，按 0.01 阈值不显著</td></tr></table>
+<h2>运行方式</h2>
+<pre><code>cd labs/lab-01 &amp;&amp; python3 logreg_binary.py
+cd ../lab-02 &amp;&amp; python3 logreg_multiclass.py</code></pre>
+<p>两个脚本都使用 <code>matplotlib.use(&quot;Agg&quot;)</code>，无图形界面也能产出 PNG。</p>
+<hr>
+<h2>行动 1：从零实现二分类逻辑回归</h2>
+<ul><li><strong>脚本</strong>：<code>lab-01/logreg_binary.py</code>（sigmoid / 交叉熵 / 解析梯度 / 批量 GD）</li><li><strong>产物</strong>：<code>out/weights.json</code>（权重、偏置、逐条概率）、<code>out/loss_curve.png</code>、<code>out/decision_boundary.png</code>、<code>out/training_log.csv</code></li><li><strong>结论</strong>：正词权重 +1.5131、负词权重 −1.8113，符号与量级都符合 §4.3.1 的示例方向；损失从 ln2=0.693 单调降到 0.2550；训练准确率 0.909，两条歧义样本保留了误差。</li><li><strong>反思</strong>：教材公式直接照抄会在 z 很负时溢出，必须按符号分支实现稳定 sigmoid；另外“损失单调下降”不是因为数据干净，而是凸性 + 合适学习率的共同结果。</li></ul>
+<h2>行动 2：复现 §4.6.3 单步并做数值校验</h2>
+<ul><li><strong>脚本</strong>：<code>lab-01/logreg_binary.py</code> 中的 <code>numerical_gradient_check()</code></li><li><strong>产物</strong>：<code>out/gradient_step.json</code></li><li><strong>结论</strong>：初始 w=b=0、x=[3,2]、y=1 时，解析梯度为 (−1.5,−1.0,−0.5)，乘 η=0.1 取反得 w=[0.15,0.10]、b=0.05，与书中完全一致；中心差分数值梯度与解析梯度的相对误差约 1e-11。</li><li><strong>反思</strong>：手算时最容易漏掉“梯度要乘 x_j”，数值校验把这种错误立刻暴露出来；它也让我确认书中 OCR 错位的公式 4.26 实际含义就是 (ŷ−y)x_j。</li></ul>
+<h2>行动 3：softmax 多分类 + 指标 + 超参扫描</h2>
+<ul><li><strong>脚本</strong>：<code>lab-02/logreg_multiclass.py</code></li><li><strong>产物</strong>：<code>out/metrics.json</code>、<code>out/confusion_matrix.png</code>、<code>out/lr_comparison.png</code>、<code>out/lr_comparison.csv</code>、<code>out/reg_comparison.png</code>、<code>out/reg_comparison.csv</code></li><li><strong>结论</strong>：测试准确率 0.767，宏平均 P/R/F1 = 0.788/0.767/0.760，微平均 = 0.767/0.767/0.767；正类 20/20 全对，错误集中在中性类；lr=1.0 时损失反弹到 0.7777；L2 从 0 到 1.0 使 ‖W‖₂ 从 2.391 降到 0.440，最佳准确率出现在 α=0.1。</li><li><strong>反思</strong>：宏/微平均只差 0.007，说明这份数据类别均衡；一旦类别比例失衡，两者的分歧会被放大。学习率扫描也验证了“凸函数不等于随便选步长都收敛”。</li></ul>
+<h2>行动 4：配对自助检验</h2>
+<ul><li><strong>脚本</strong>：<code>lab-02/logreg_multiclass.py</code> 中的 <code>paired_bootstrap()</code></li><li><strong>产物</strong>：<code>out/bootstrap.json</code>、<code>out/bootstrap_hist.png</code></li><li><strong>结论</strong>：L2 模型（acc 0.833）对无正则模型（acc 0.767），δ=0.0667；b=2000 次有放回重采样中，按书中的 2δ 判据得到 p=0.085 &gt; 0.01，不能拒绝“两者一样好”。</li><li><strong>反思</strong>：6.7 个百分点的差距在 60 条测试样本上并不稳固；书里的 2δ 规则比“δ&gt;0”保守得多，报告结果时应该同时给出效应量与 p 值，而不是只报“更高”。</li></ul>
+<hr>
+<h2>未纳入 labs 的行动</h2>
+<p><code>actions.md</code> 中的“错题归因”属于学习记录，不需要代码，已在 self-test 的例题重做表中跟踪。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

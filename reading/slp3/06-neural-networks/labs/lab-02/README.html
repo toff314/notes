@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-02：嵌入 + MLP 文本分类（随机 vs 共现嵌入）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">lab-02：嵌入 + MLP 文本分类（随机 vs 共现嵌入）</a></div>
+<h1>lab-02：嵌入 + MLP 文本分类（随机 vs 共现嵌入）</h1>
+<p><strong>对应</strong>：§6.4（分类器）、§6.5（嵌入、池化、表示学习）。<strong>行动</strong>：<code>actions.md</code> 第 2 条。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 embedding_mlp.py</code></pre>
+<p>只依赖标准库 + numpy + matplotlib；随机种子固定为 <code>SEED=11</code>。</p>
+<h2>数据怎么构造（重要）</h2>
+<ul><li>73 个词的词表：14 个评价对象（movie/film/…）、8 个中性形容词、20 个情感词、少量功能词。</li><li><strong>训练句 240 条</strong>：只用 12 个情感词（good/great/… 与 bad/terrible/…），模板中性（&quot;the {对象} was {情感词}&quot; 等）。</li><li><strong>测试句 200 条</strong>：只用 8 个<strong>训练中从未出现</strong>的情感词（charming/enjoyable/lovely/impressive 与 clumsy/dismal/tedious/painful）。</li><li><strong>无标注语料 900 条</strong>：覆盖全部 20 个情感词，情感词只出现在带极性的子句里（正面配 love/recommend，负面配 hate/avoid），用于构造共现嵌入；测试句不参与。</li><li>两种嵌入都<strong>冻结</strong>，分类器结构、初始化、训练轮数完全相同；差异只来自输入表示。</li></ul>
+<p>这是一次受控对照，不是真实语料实验：模板语料刻意放大了&quot;分布相似 → 极性相似&quot;的信号，结论应理解为机制演示，而非效果排名。</p>
+<h2>方法</h2>
+<ol><li>共现嵌入：窗口 3 的对称共现计数 → PPMI → SVD 取前 16 维 → 行归一化。</li><li>随机嵌入：<code>N(0, 1/√16)</code>，同样 16 维，固定种子。</li><li>分类器：对句内词向量做平均池化 → 24 维 tanh 隐藏层 → 2 类 softmax；全批量梯度下降 400 轮，学习率 0.15，L2=1e-4。</li></ol>
+<h2>真实运行结果</h2>
+<table><tr><th>嵌入</th><th>held-out 准确率</th><th>训练末损失</th><th>混淆矩阵（行=真实，列=预测 neg/pos）</th></tr><tr><td>随机</td><td>0.315</td><td>0.4777</td><td>[[22, 67], [70, 41]]</td></tr><tr><td>PPMI+SVD</td><td>0.995</td><td>0.0289</td><td>[[89, 0], [1, 110]]</td></tr></table>
+<p>最近邻（共现空间）：</p>
+<ul><li><code>charming</code> → brilliant, lovely, great, superb, excellent</li><li><code>enjoyable</code> → good, excellent, impressive, superb, lovely</li><li><code>clumsy</code> → dismal, boring, awful, bad, dull</li><li><code>dismal</code> → clumsy, boring, bad, tedious, dull</li></ul>
+<p>产物：<code>out/metrics.json</code>、<code>out/predictions.csv</code>、<code>out/confusion_matrix.csv</code>、<code>out/accuracy.png</code>、<code>out/embedding_pca.png</code>。</p>
+<h2>结论</h2>
+<ol><li>同一分类器、同一随机种子，只换嵌入，held-out 准确率从 0.315 到 0.995（<code>out/metrics.json</code>）。差距几乎全部来自&quot;没见过的词能否落在正确的语义区域&quot;。</li><li>最近邻里，四个 held-out 词的邻居全部是同极性词，说明共现统计确实把极性编码进了向量；<code>out/embedding_pca.png</code> 中 held-out 正负词分居两侧。</li><li>随机嵌入低于 0.5 并不反常：held-out 词的向量与训练词无关，分类器学到的线性边界对它们是随机的；200 条测试句上的方差足以让它落到 0.3 附近。</li></ol>
+<h2>反思</h2>
+<p>我原来以为&quot;随机嵌入 + 可训练分类器&quot;至少能到 0.8，因为分类器总能在训练词上找到分界面。实测 0.315 让我意识到：<strong>分类器只能切它见过的表示空间</strong>，测试词不在这个空间里有意义的位置，切得再好也没用。这也解释了为什么书里反复强调&quot;表示学习&quot;而不是&quot;更强的分类头&quot;。</p>
+<p>另一个教训是数据设计。第一版语料里正负情感词出现在完全相同的模板中，PPMI 学到的只是&quot;它们在句法位置上一样&quot;，极性邻居全混在一起，准确率只有随机水平（约 0.5）。把极性上下文（love/hate）加进无标注语料后，共现才真正携带情感。分布假说不是自动成立的，<strong>共现的上下文必须与目标任务相关</strong>。</p>
+<h2>文件</h2>
+<ul><li><code>embedding_mlp.py</code>：数据构造、PPMI/SVD、分类器、出图</li><li><code>out/</code>：指标、预测、混淆矩阵、两张图</li><li><code>README.md</code>：本文件</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

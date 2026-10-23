@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a></div>
+<h1>读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第三版（中文译文）　来源：<code>raw/02/02-words-and-tokens.md</code></li><li>页码口径：本书中文译文无印刷页码，统一用节号（§x.y）定位。</li><li>阅读目标：理解（<code>raw/02/meta.json</code> 的 <code>goal</code> 为「理解」）。</li><li><strong>书型判定：教材型</strong>。依据：章—节—小节层级完整；定义密集（每节均有术语框）；含公式（Heaps 定律、编辑距离递推）、例题（intention→execution）、章末小结与 10 道习题。</li><li>交叉对照：未提供课堂笔记，故不产出 <code>cross-check.md</code>。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>状态</th><th>说明</th></tr><tr><td>第 2 章 词与词元</td><td>✅ 本次完成</td><td>§2.1–§2.9 全部处理，含历史注记与习题线索</td></tr><tr><td>第 1 章</td><td>⬜ 未处理</td><td>建议前序补读</td></tr><tr><td>第 3 章 N-gram 语言模型</td><td>⬜ 未处理</td><td>建议下次；与 §2.4 的困惑度口径直接衔接</td></tr></table>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>02-words-and-tokens.md</code></td><td>中文译文全文 1491 行，已通读；摘录逐字取自该文件</td></tr><tr><td>英文对照（可选）</td><td><code>02-words-and-tokens.dual.md</code></td><td>仅用于术语核对，未作为摘录来源</td></tr><tr><td>划线摘录（可选）</td><td>未提供</td><td>无 <code>highlights</code> 文件，故无划线去向表</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>不做书 ↔ 课堂对照</td></tr><tr><td>阅读目标</td><td><code>raw/02/meta.json</code></td><td><code>{&quot;goal&quot;:&quot;理解&quot;}</code>，按教材型 SQ3R 路径处理</td></tr></table>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th><th>规模</th></tr><tr><td><code>book-notes.md</code></td><td>主笔记：10 个知识节，逐节三区（摘录／思考／行动）</td><td>约 5000 汉字</td></tr><tr><td><code>cards.md</code></td><td>永久卡片：概念卡、公式卡、例题卡</td><td>14 张</td></tr><tr><td><code>self-test.md</code></td><td>提取自测：协议 + 9 题 + 例题重做记录</td><td>9 题</td></tr><tr><td><code>actions.md</code></td><td>行动清单</td><td>3 条</td></tr><tr><td><code>spinoffs.md</code></td><td>衍生选题（送 write-zhihu-tech / write-tech-tutorial）</td><td>5 条</td></tr><tr><td><code>glossary.md</code></td><td>术语表</td><td>26 条</td></tr><tr><td><code>labs/index.md</code></td><td>行动执行闭环</td><td>覆盖 3 条行动</td></tr><tr><td><code>labs/lab-01/</code></td><td>BPE 从零实现 + 压缩率图表</td><td>脚本 1、产物 6</td></tr><tr><td><code>labs/lab-02/</code></td><td>最小编辑距离 + 回溯对齐</td><td>脚本 1、产物 5</td></tr><tr><td><code>labs/lab-03/</code></td><td>正则预词元化审计</td><td>脚本 1、产物 3</td></tr></table>
+<h2>labs 关键结果</h2>
+<table><tr><th>Lab</th><th>真实产物</th><th>关键数字</th></tr><tr><td>lab-01 BPE</td><td><code>out/metrics.json</code>、<code>out/compression_curve.png</code></td><td>291 字符 → 210 词元（−27.84%），1.386 字符/词元</td></tr><tr><td>lab-02 编辑距离</td><td><code>out/dp_matrix_intention_execution.csv</code>、<code>out/edit_distance_matrix.png</code></td><td>intention→execution = 8，与书中图 2.20 一致</td></tr><tr><td>lab-03 预词元化</td><td><code>out/pretokenization.json</code>、<code>out/token_counts.png</code></td><td>书中例句 5 空白词 → 9 词元；混合句 6 → 18</td></tr></table>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>每条带 § 定位，全部逐字回原文校验通过；因无印刷页码只到节级，未给 10</td></tr><tr><td>② 消化深度</td><td>9/10</td><td>思考区均为自己的话，含具体经验（分词口径、len(emoji)、AT&amp;T 切分）与实质质疑</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>每条含动词、对象、时间与验收；labs 已实际执行并留产物</td></tr><tr><td>④ 卡片复用性</td><td>8/10</td><td>一卡一主张、独立可读、出处齐全，链接多为同章真实关联，未连到外部笔记</td></tr><tr><td>⑤ 覆盖完整性</td><td>9/10</td><td>§2.1–§2.9 全覆盖，含小结与习题线索；无划线可登记，已在输入表说明</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>9 题覆盖各节与 ⭐ 节，含提取协议、费曼检验、错题归因表</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>达标</td></tr></table>
+<h2>复现与自检</h2>
+<pre><code># labs
+cd labs/lab-01 &amp;&amp; python3 bpe_lab.py
+cd labs/lab-02 &amp;&amp; python3 edit_distance_lab.py
+cd labs/lab-03 &amp;&amp; python3 pretokenize_lab.py
+
+# 产物自检
+python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/02-words-and-tokens \
+  --raw /home/yuanwu/notes/reading/slp3/raw/02</code></pre>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

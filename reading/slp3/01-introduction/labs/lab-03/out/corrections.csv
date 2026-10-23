@@ -1,0 +1,129 @@
+index,char,context,guess,correct,guess_prob,true_prob,surprisal_bits,word,position,position_bucket,word_class
+0,t,  ,a,0,0.037037,0.037037,4.7549,the,0,first,function
+1,h, t,h,1,0.560976,0.560976,0.834,the,1,second,function
+2,e,th,e,1,0.627703,0.627703,0.6718,the,2,later,function
+3, ,he, ,1,0.627556,0.627556,0.6722,room,0,space,boundary
+4,r,e ,t,0,0.115474,0.029549,5.0807,room,1,second,content
+5,o, r,e,0,0.619048,0.10084,3.3099,room,2,later,content
+6,o,ro,m,0,0.281385,0.015152,6.0444,room,3,later,content
+7,m,oo,k,0,0.205607,0.046729,4.4195,,0,first,content
+8, ,om,p,0,0.362018,0.222552,2.1678,was,0,space,boundary
+9,w,m ,t,0,0.182156,0.055762,4.1646,was,1,second,function
+10,a, w,e,0,0.261194,0.093284,3.4222,was,2,later,function
+11,s,wa,s,1,0.27907,0.27907,1.8413,,0,first,content
+12, ,as, ,1,0.335,0.335,1.5778,not,0,space,boundary
+13,n,s ,a,0,0.165097,0.015865,5.978,not,1,second,function
+14,o, n,e,0,0.445545,0.234323,2.0934,not,2,later,function
+15,t,no,t,1,0.256684,0.256684,1.9619,,0,first,content
+16, ,ot,h,0,0.326087,0.211957,2.2382,very,0,space,boundary
+17,v,t ,t,0,0.15904,0.006002,7.3805,very,1,second,function
+18,e, v,e,1,0.405594,0.405594,1.3019,very,2,later,function
+19,r,ve, ,0,0.359375,0.286458,1.8036,very,3,later,function
+20,y,er, ,0,0.355822,0.036997,4.7565,,0,first,content
+21, ,ry, ,1,0.683168,0.683168,0.5497,light,0,space,boundary
+22,l,y ,t,0,0.130106,0.046899,4.4143,light,1,second,content
+23,i, l,a,0,0.374622,0.21148,2.2414,light,2,later,content
+24,g,li,k,0,0.219638,0.064599,3.9523,light,3,later,content
+25,h,ig,h,1,0.314815,0.314815,1.6674,light,4,later,content
+26,t,gh,t,1,0.557377,0.557377,0.8433,,0,first,content
+27, ,ht, ,1,0.547368,0.547368,0.8694,a,0,space,boundary
+28,a,t ,t,0,0.15904,0.151538,2.7222,,0,first,content
+29, , a,n,0,0.304476,0.215548,2.2139,small,0,space,boundary
+30,s,a ,s,1,0.134576,0.134576,2.8935,small,1,second,content
+31,m, s,e,0,0.168919,0.013514,6.2095,small,2,later,content
+32,a,sm,a,1,0.227273,0.227273,2.1375,small,3,later,content
+33,l,ma,n,0,0.334405,0.096463,3.3739,small,4,later,content
+34,l,al, ,0,0.485232,0.192686,2.3757,,0,first,content
+35, ,ll, ,1,0.316754,0.316754,1.6586,oblong,0,space,boundary
+36,o,l ,t,0,0.125186,0.052161,4.2609,oblong,1,second,content
+37,b, o,f,0,0.4375,0.025219,5.3093,oblong,2,later,content
+38,l,ob,a,0,0.304348,0.208696,2.2605,oblong,3,later,content
+39,o,bl,e,0,0.642857,0.020408,5.6147,oblong,4,later,content
+40,n,lo,w,0,0.245161,0.167742,2.5757,oblong,5,later,content
+41,g,on, ,0,0.42192,0.034918,4.8399,,0,first,content
+42, ,ng, ,1,0.6466,0.6466,0.6291,reading,0,space,boundary
+43,r,g ,t,0,0.178019,0.010836,6.528,reading,1,second,content
+44,e, r,e,1,0.619048,0.619048,0.6919,reading,2,later,content
+45,a,re, ,0,0.314318,0.097315,3.3612,reading,3,later,content
+46,d,ea,r,0,0.282828,0.103535,3.2718,reading,4,later,content
+47,i,ad, ,0,0.283582,0.104478,3.2587,reading,5,later,content
+48,n,di,n,1,0.233813,0.233813,2.0966,reading,6,later,content
+49,g,in,g,1,0.40678,0.40678,1.2977,,0,first,content
+50, ,ng, ,1,0.6466,0.6466,0.6291,lamp,0,space,boundary
+51,l,g ,t,0,0.178019,0.052632,4.2479,lamp,1,second,content
+52,a, l,a,1,0.374622,0.374622,1.4165,lamp,2,later,content
+53,m,la,n,0,0.449029,0.007282,7.1015,lamp,3,later,content
+54,p,am,p,1,0.333333,0.333333,1.585,,0,first,content
+55, ,mp,l,0,0.352518,0.007194,7.1189,on,0,space,boundary
+56,o,p ,i,0,0.161017,0.033898,4.8826,on,1,second,function
+57,n, o,f,0,0.4375,0.172149,2.5383,,0,first,content
+58, ,on, ,1,0.42192,0.42192,1.245,the,0,space,boundary
+59,t,n ,t,1,0.211415,0.211415,2.2419,the,1,second,function
+60,h, t,h,1,0.560976,0.560976,0.834,the,2,later,function
+61,e,th,e,1,0.627703,0.627703,0.6718,,0,first,content
+62, ,he, ,1,0.627556,0.627556,0.6722,desk,0,space,boundary
+63,d,e ,t,0,0.115474,0.029549,5.0807,desk,1,second,content
+64,e, d,e,1,0.288221,0.288221,1.7948,desk,2,later,content
+65,s,de,l,0,0.436893,0.062136,4.0084,desk,3,later,content
+66,k,es, ,0,0.493036,0.001393,9.4878,,0,first,content
+67, ,sk,s,0,0.316327,0.234694,2.0911,shed,0,space,boundary
+68,s,k ,a,0,0.171642,0.037313,4.7442,shed,1,second,content
+69,h, s,e,0,0.168919,0.11036,3.1797,shed,2,later,content
+70,e,sh,o,0,0.352941,0.111765,3.1615,shed,3,later,content
+71,d,he, ,0,0.627556,0.004444,7.8138,,0,first,content
+72, ,ed, ,1,0.672451,0.672451,0.5725,glow,0,space,boundary
+73,g,d ,t,0,0.176703,0.016782,5.897,glow,1,second,content
+74,l, g,e,0,0.337398,0.00813,6.9425,glow,2,later,content
+75,o,gl,i,0,0.37931,0.034483,4.858,glow,3,later,content
+76,w,lo,w,1,0.245161,0.245161,2.0282,,0,first,content
+77, ,ow, ,1,0.386957,0.386957,1.3698,on,0,space,boundary
+78,o,w ,t,0,0.133803,0.06338,3.9798,on,1,second,function
+79,n, o,f,0,0.4375,0.172149,2.5383,,0,first,content
+80, ,on, ,1,0.42192,0.42192,1.245,polished,0,space,boundary
+81,p,n ,t,0,0.211415,0.036174,4.7889,polished,1,second,content
+82,o, p,r,0,0.513201,0.09901,3.3363,polished,2,later,content
+83,l,po,n,0,0.216374,0.040936,4.6105,polished,3,later,content
+84,i,ol,l,0,0.181818,0.077922,3.6818,polished,4,later,content
+85,s,li,k,0,0.219638,0.077519,3.6893,polished,5,later,content
+86,h,is, ,0,0.559322,0.071563,3.8046,polished,6,later,content
+87,e,sh,o,0,0.352941,0.111765,3.1615,polished,7,later,content
+88,d,he, ,0,0.627556,0.004444,7.8138,,0,first,content
+89, ,ed, ,1,0.672451,0.672451,0.5725,wood,0,space,boundary
+90,w,d ,t,0,0.176703,0.054294,4.2031,wood,1,second,content
+91,o, w,e,0,0.261194,0.196517,2.3473,wood,2,later,content
+92,o,wo,r,0,0.795082,0.008197,6.9307,wood,3,later,content
+93,d,oo,k,0,0.205607,0.149533,2.7415,,0,first,content
+94, ,od,e,0,0.731118,0.066465,3.9113,but,0,space,boundary
+95,b,d ,t,0,0.176703,0.043435,4.525,but,1,second,function
+96,u, b,e,0,0.403084,0.099119,3.3347,but,2,later,function
+97,t,bu,t,1,0.484848,0.484848,1.0444,,0,first,content
+98, ,ut, ,1,0.480769,0.480769,1.0566,less,0,space,boundary
+99,l,t ,t,0,0.15904,0.036009,4.7955,less,1,second,content
+100,e, l,a,0,0.374622,0.154079,2.6983,less,2,later,content
+101,s,le, ,0,0.349174,0.080579,3.6335,less,3,later,content
+102,s,es, ,0,0.493036,0.110028,3.1841,,0,first,content
+103, ,ss,i,0,0.364532,0.256158,1.9649,on,0,space,boundary
+104,o,s ,a,0,0.165097,0.102132,3.2915,on,1,second,function
+105,n, o,f,0,0.4375,0.172149,2.5383,,0,first,content
+106, ,on, ,1,0.42192,0.42192,1.245,the,0,space,boundary
+107,t,n ,t,1,0.211415,0.211415,2.2419,the,1,second,function
+108,h, t,h,1,0.560976,0.560976,0.834,the,2,later,function
+109,e,th,e,1,0.627703,0.627703,0.6718,,0,first,content
+110, ,he, ,1,0.627556,0.627556,0.6722,shabby,0,space,boundary
+111,s,e ,t,0,0.115474,0.075816,3.7213,shabby,1,second,content
+112,h, s,e,0,0.168919,0.11036,3.1797,shabby,2,later,content
+113,a,sh,o,0,0.352941,0.135294,2.8858,shabby,3,later,content
+114,b,ha,t,0,0.427984,0.002058,8.9248,shabby,4,later,content
+115,b,ab,o,0,0.297297,0.005405,7.5314,shabby,5,later,content
+116,y,bb,e,0,0.068966,0.034483,4.858,,0,first,content
+117, ,by, ,1,0.745283,0.745283,0.4241,red,0,space,boundary
+118,r,y ,t,0,0.130106,0.022693,5.4616,red,1,second,content
+119,e, r,e,1,0.619048,0.619048,0.6919,red,2,later,content
+120,d,re, ,0,0.314318,0.0783,3.6748,,0,first,content
+121, ,ed, ,1,0.672451,0.672451,0.5725,carpet,0,space,boundary
+122,c,d ,t,0,0.176703,0.067127,3.897,carpet,1,second,content
+123,a, c,o,0,0.483784,0.206757,2.274,carpet,2,later,content
+124,r,ca,l,0,0.335484,0.035484,4.8167,carpet,3,later,content
+125,p,ar,e,0,0.243494,0.007435,7.0715,carpet,4,later,content
+126,e,rp,o,0,0.155172,0.017241,5.858,carpet,5,later,content
+127,t,pe,r,0,0.284483,0.00431,7.858,,0,first,content

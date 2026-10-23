@@ -1,0 +1,62 @@
+{
+  "setup": {
+    "n_facts": 20,
+    "n_distractors": 5,
+    "retrieved_passages_total": 25,
+    "remembered_by_closed_book": [
+      "f01",
+      "f02",
+      "f03",
+      "f04",
+      "f06",
+      "f08",
+      "f09",
+      "f11",
+      "f12",
+      "f15",
+      "f17",
+      "f19"
+    ],
+    "note": "阅读器为模板抽取器；闭卷记忆为模拟，不代表真实 LLM 行为"
+  },
+  "metrics": [
+    {
+      "condition": "closed_book",
+      "accuracy": 0.6,
+      "EM": 0.6,
+      "F1": 0.7772077922077922,
+      "citation_rate": 0.0,
+      "citation_precision": 0.0,
+      "grounded_accuracy": 0.0
+    },
+    {
+      "condition": "open_book_top1",
+      "accuracy": 0.85,
+      "EM": 0.85,
+      "F1": 0.8772727272727273,
+      "citation_rate": 1.0,
+      "citation_precision": 0.85,
+      "grounded_accuracy": 0.85
+    },
+    {
+      "condition": "open_book_oracle",
+      "accuracy": 1.0,
+      "EM": 1.0,
+      "F1": 1.0,
+      "citation_rate": 1.0,
+      "citation_precision": 1.0,
+      "grounded_accuracy": 1.0
+    }
+  ],
+  "retrieval_recall@1": 0.85,
+  "open_book_failures": [
+    "f02",
+    "f11",
+    "f13"
+  ],
+  "open_book_cited_wrong_source": [
+    "f02",
+    "f11",
+    "f13"
+  ]
+}

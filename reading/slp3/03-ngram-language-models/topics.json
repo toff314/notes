@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "第 3 章 N-gram 语言模型 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/03-ngram-language-models",
+    "anchor": "第3章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch03-t1",
+      "title": "从数数到预测下一个词：n-gram 与 GPT 是同一条路吗",
+      "angle": "观点：从 n-gram 到 GPT，语言模型七十年只做了一件事——给下一个词打分",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S5 + S6。书中明确说大模型\"仅仅通过被训练来预测即将出现的词\"就学到了语言知识（§3.1），但没展开\"为什么同一个目标函数能从计数走到注意力\"；n-gram 与神经网络常被写成两次革命（S4 反差），而现实是同一目标换了参数化（S5）；马尔可夫 1913、香农 1948、Jelinek 1975、Bengio 2006 都可查（S6）。",
+      "sourceAnchor": "SLP3 §3.1「更形式化地说，语言模型为每一个可能的下一个词赋予一个概率」；历史注记「马尔可夫（1913）……香农（1948）……Jelinek 与 Baker」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch03-t2",
+      "title": "困惑度为什么还没死",
+      "angle": "观点：困惑度没有过时——它只是从\"模型好坏\"退成了\"分布匹配度\"的体温计",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S5 + S6。书中给了定义、可比条件与\"内在不等于外在\"的警告，但没回答\"既然不可靠，为什么论文还在报\"（S1）；大模型时代困惑度常被视为过时指标，与它仍被用作数据筛选/领域适配信号形成反差（S4）；数据配比、领域继续预训练都用它做低成本监控（S5）；Pile、GPT-2/GPT-3 论文的评测口径可查（S6，需下游核实）。",
+      "sourceAnchor": "SLP3 §3.3「两个语言模型的困惑度只有在它们使用相同词表时才具有可比性」「困惑度的（内在）改进并不保证……（外在）改进」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch03-t3",
+      "title": "infini-gram 与后缀数组：n-gram 的\"免预计算\"复活",
+      "angle": "论文：infini-gram 如何用后缀数组把 n-gram 语言模型做成\"无限阶\"查询",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S2 + S3 + S5 + S6。书中只有三句话，没有讲后缀数组怎么支持\"任意长度计数\"（S1/S3）；这是 2024 年的新工作，有论文与开源实现可溯源（S2/S6）；对做 RAG、检索式语言模型的人有直接借鉴（S5）。",
+      "sourceAnchor": "SLP3 §3.1.3「infini-gram（∞-gram）项目（Liu et al., 2024）允许任意长度的 n-gram」「通过使用一种称为后缀数组的高效表示，在推理时快速计算」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch03-t4",
+      "title": "平滑的哲学：给没见过的世界留一点概率",
+      "angle": "观点：所有平滑都是在回答同一个问题——没见过的组合，凭什么给它概率？",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S3 + S4 + S5 + S6。书里并列了拉普拉斯、加 k、插值、回退，但没有把它们的\"概率质量从哪来、到哪去\"统一起来（S1/S3）；加一平滑在教科书中被当作基线，实际却常把已见事件压坏，形成\"简单 vs 有效\"的反差（S4）；这个思想可迁移到推荐冷启动、异常检测的零频问题（S5）；Gale & Church 1994、Chen & Goodman 1999 可查（S6）。",
+      "sourceAnchor": "SLP3 §3.6「任何有限的训练语料库都会遗漏一些完全可以接受的英语词序列」；§3.6.1–3.6.4 的四种方法",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch03-t5",
+      "title": "数据污染简史：测试集是怎么被\"看过\"的",
+      "angle": "论文：从 WSJ 到预训练语料——语言模型评测中的数据污染与去污染方法",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S2 + S4 + S6。书中给出定义与\"测试集只用一次\"的纪律，但没有讲工业界如何检测与去污染（S1/S3）；n-gram 时代查句子重复即可，大模型时代几乎无法穷尽，形成强烈反差（S4）；WSJ、Penn Treebank、Common Crawl 的去重实践都可查（S2/S6）。",
+      "sourceAnchor": "SLP3 §3.2「我们把这种情况称为在测试集上训练，或者也称为数据污染」「一旦我们确信模型已经就绪，我们只希望在测试集上运行模型一次」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

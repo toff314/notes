@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Labs · 行动执行闭环</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a><a href="index.html">Labs · 行动执行闭环</a></div>
+<h1>Labs · 行动执行闭环</h1>
+<blockquote><p><code>actions.md</code> 是「我要做什么」，本目录是「我真的做了，并看到结果」。</p><p>四条行动各对应一个 lab，全部用标准库 + numpy 2.4.6 + matplotlib 3.10.9 实跑。</p></blockquote>
+<table><tr><th>Lab</th><th>对应行动</th><th>脚本</th><th>主要产物</th><th>一句话结论</th></tr><tr><td>lab-01</td><td>行动 1：稀疏 vs 稠密检索</td><td><code>lab-01/sparse_vs_dense.py</code></td><td><code>out/metrics.csv</code>、<code>out/metrics.png</code>、<code>out/gap_analysis.png</code></td><td>玩具规模上 BM25（MRR 0.842）仍强于共现向量（0.739）</td></tr><tr><td>lab-02</td><td>行动 3：玩具 RAG 评估</td><td><code>lab-02/toy_rag_eval.py</code></td><td><code>out/metrics.csv</code>、<code>out/rag_compare.png</code></td><td>开卷命中率 0.60→0.85，但 3 次失败全是「引用了错来源」</td></tr><tr><td>lab-03</td><td>行动 2：复现 AP / 11 点插值</td><td><code>lab-03/pr_metrics.py</code></td><td><code>out/summary.json</code>、<code>out/pr_curve.png</code>、<code>out/interpolated_curve.png</code></td><td>AP=0.5972，与书 0.6 一致；插值表逐点误差 ≤0.01</td></tr><tr><td>lab-04</td><td>行动 4：BM25 参数网格</td><td><code>lab-04/bm25_sweep.py</code></td><td><code>out/grid_mrr.csv</code>、<code>out/mrr_heatmap.png</code>、<code>out/b_curve.png</code></td><td>b=0 时长文档抢走 56% 第一名；k1=0 时 b 失效</td></tr></table>
+<h2>逐条对应（G10）</h2>
+<h3>行动 1 → lab-01</h3>
+<ul><li><strong>验证的问题</strong>：在中文玩具语料上，字面匹配与共现向量检索谁更稳？稠密的收益需要什么前提？</li><li><strong>运行</strong>：<code>cd lab-01 &amp;&amp; python3 sparse_vs_dense.py</code></li><li><strong>关键输出</strong>：tfidf MRR 0.850 / bm25 0.842 / dense 0.739；标题查询 Recall@1 = 1.00 / 1.00 / 0.79。</li><li><strong>结论</strong>：稠密侧输在表示质量而非方法本身；书里没说破的前提是预训练规模与监督数据。</li><li><strong>反思</strong>：我曾把「语义向量」当成升级按钮，实验说明它只是换了匹配方式，没换信息量。</li></ul>
+<h3>行动 2 → lab-03</h3>
+<ul><li><strong>验证的问题</strong>：书上的 AP 与 11 点插值表能不能从定义一步步算出来？</li><li><strong>运行</strong>：<code>cd lab-03 &amp;&amp; python3 pr_metrics.py</code></li><li><strong>关键输出</strong>：AP = 0.5972（书 0.6）；<code>max_abs_diff_vs_book_table = 0.010</code>。</li><li><strong>结论</strong>：定义无隐藏步骤；插值确实偏乐观（召回 0.5 处实测 0.36–0.545，插值 0.625）。</li><li><strong>反思</strong>：用书上的表格当单元测试，比通读定义更能暴露理解偏差。</li></ul>
+<h3>行动 3 → lab-02</h3>
+<ul><li><strong>验证的问题</strong>：开卷一定比闭卷好吗？只看答案对错会漏掉什么？</li><li><strong>运行</strong>：<code>cd lab-02 &amp;&amp; python3 toy_rag_eval.py</code></li><li><strong>关键输出</strong>：闭卷 acc 0.60/F1 0.777；开卷 acc 0.85/引用率 1.00/引用正确率 0.85；给对段落 acc 1.00。</li><li><strong>结论</strong>：RAG 把「无据的自信」换成「有据的自信」；引用正确率是必须单独报的第三指标。</li><li><strong>反思</strong>：失败从「没引用」变成「引错源」，这是更隐蔽的失效模式。</li></ul>
+<h3>行动 4 → lab-04</h3>
+<ul><li><strong>验证的问题</strong>：k1 与 b 各自的作用能否在可观测指标上分开？</li><li><strong>运行</strong>：<code>cd lab-04 &amp;&amp; python3 bm25_sweep.py</code></li><li><strong>关键输出</strong>：b=0 长文档胜率 0.56、MRR 0.563；b≥0.75 胜率 0、MRR 0.793；k1=0 整行不变。</li><li><strong>结论</strong>：两个参数不正交；k1=0 时 b 没有作用对象，扫参前须确认维度有效。</li><li><strong>反思</strong>：b 的效果是断崖不是斜坡，曲线平缓可能只是测试集没覆盖敏感区间。</li></ul>
+<h2>环境与复现</h2>
+<pre><code>python3 -c &quot;import numpy, matplotlib; print(numpy.__version__, matplotlib.__version__)&quot;
+# 2.4.6 3.10.9
+for d in lab-01 lab-02 lab-03 lab-04; do (cd $d &amp;&amp; python3 *.py); done</code></pre>
+<p>所有脚本只读本地文件；lab-01 的背景语料路径不可用时自动回退到玩具语料，并在 <code>scores.json</code> 记录实际来源。图表用 Noto Sans CJK 字体（系统缺失时中文会显示为方框，数值不受影响）。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

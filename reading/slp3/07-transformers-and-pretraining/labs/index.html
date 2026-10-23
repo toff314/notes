@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Labs · 行动执行闭环（第 7 章）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a><a href="index.html">Labs · 行动执行闭环（第 7 章）</a></div>
+<h1>Labs · 行动执行闭环（第 7 章）</h1>
+<blockquote><p><code>actions.md</code> 是「我要做什么」，这里记录「我真的跑了，看到了什么」。</p><p>四条行动各对应一个 lab，编号一致；每条都留了脚本、运行命令、真实产物、结论与反思。</p></blockquote>
+<h2>总览</h2>
+<table><tr><th>Lab</th><th>对应行动</th><th>脚本</th><th>运行命令</th><th>产物目录</th><th>结果</th></tr><tr><td>lab-01</td><td>行动 1：缩放点积注意力 + 因果掩码 + 多头拼接</td><td><code>lab-01/attention_shapes.py</code></td><td><code>cd lab-01 &amp;&amp; python3 attention_shapes.py</code></td><td><code>lab-01/out/</code></td><td>✅ 全部断言通过</td></tr><tr><td>lab-02</td><td>行动 2：单层 Transformer 块预训练 + 位置嵌入消融</td><td><code>lab-02/tiny_transformer.py</code></td><td><code>cd lab-02 &amp;&amp; python3 tiny_transformer.py</code></td><td><code>lab-02/out/</code></td><td>✅ 损失降 94.2%</td></tr><tr><td>lab-03</td><td>行动 3：贪心 / 随机 / 温度 / top-k / top-p 解码</td><td><code>lab-03/decoding_sampling.py</code></td><td><code>cd lab-03 &amp;&amp; python3 decoding_sampling.py</code></td><td><code>lab-03/out/</code></td><td>✅ 4 项断言通过</td></tr><tr><td>lab-04</td><td>行动 4：12Ld² 参数账 + 困惑度 + 模型规模表</td><td><code>lab-04/param_perplexity.py</code></td><td><code>cd lab-04 &amp;&amp; python3 param_perplexity.py</code></td><td><code>lab-04/out/</code></td><td>✅ 恒等式成立</td></tr></table>
+<p><strong>环境</strong>：Python 3.12 + numpy + matplotlib（<strong>仅标准库 + numpy + matplotlib</strong>，无 PyTorch / 无自动微分）。四份 <code>out/run.log</code> 为本次实跑的完整 stdout，可用于对照复现。</p>
+<p><strong>总耗时</strong>：约 9 秒（lab-01 1.6s、lab-02 5.1s、lab-03 1.7s、lab-04 &lt;1s）。</p>
+<hr>
+<h2>lab-01 · 缩放点积注意力、因果掩码与多头拼接</h2>
+<ul><li><strong>对应行动</strong>：actions.md 第 1 条。</li><li><strong>目的</strong>：把 §7.1.1 与 §7.3 的公式落成可断言的 numpy 实现，验证三件事——行归一化、掩码只屏蔽未来、多头不增加注意力投影参数。</li><li><strong>输入</strong>：<code>N=6</code> 个词元、<code>d=8</code>、<code>A=2</code> 头（<code>dk=dv=4</code>），固定种子 7 的随机投影；另复制输入只改位置 3–5 做因果扰动测试。</li><li><strong>运行</strong>：<code>python3 attention_shapes.py</code>（1.6 秒）。</li><li><strong>产物</strong>：<code>out/checks.json</code>（全部断言与数值）、<code>out/attention_weights.csv</code>（第一头 6×6 权重）、<code>out/attention_heatmap.png</code>（无掩码 vs 因果掩码）、<code>out/run.log</code>。</li><li><strong>关键输出</strong>：</li><li>拼接与输出形状均 <code>[6, 8]</code>，与输入一致；每头权重 <code>[6, 6]</code>。</li><li>每行权重和最大误差 <code>1.11e-16</code>；掩码后上三角最大权重 <code>0.0</code>。</li><li>改动未来词元后，前三个输出最大差 <code>0.0</code>；不掩码时同样改动泄漏 <code>5.51</code>。</li><li>注意力投影参数：<code>A=2</code> 与 <code>A=1</code> 都是 <code>256</code>；FFN <code>512</code>；整块 <code>768 = 12d²</code>。</li><li><strong>结论</strong>：因果掩码必须在 softmax <strong>之前</strong>把未来分数设为 −∞，否则分母会包含未来位置；<code>dv=d/A</code> 使多头拼接宽度仍为 <code>d</code>，注意力投影总量约 <code>4d²</code>，与头数无关。这与 §7.3「掩码让每个位置都能当训练样本」直接对应。</li><li><strong>反思</strong>：原以为「掩码 = softmax 后清零」，跑完才看到那样破坏归一化。另一个反直觉点：多头买的是并行视角，不是参数预算。</li><li><strong>局限</strong>：随机权重，只能验证形状与因果性，不能说明注意力学到了什么语言学关系；<code>d=8</code> 的结论不能外推到真实模型。</li></ul>
+<h2>lab-02 · 位置嵌入 + 单层 Transformer 块（numpy 手写反向）</h2>
+<ul><li><strong>对应行动</strong>：actions.md 第 2 条。</li><li><strong>目的</strong>：把 §7.2–§7.5 装成一个能训练的最小系统（RMSNorm → 因果注意力 → 残差 → RMSNorm → ReLU 前馈 → 残差 → 绑定解嵌入），并检验位置嵌入是否真的进入计算。</li><li><strong>输入</strong>：4 个模板句循环 90 次构成的字符级语料（词表 14），上下文 <code>N=16</code>、<code>d=24</code>、<code>dff=48</code>、单头；参数 5,448；Adam(lr=0.01)、batch=32、700 步；80/20 划分。</li><li><strong>运行</strong>：<code>python3 tiny_transformer.py</code>（5.1 秒）。</li><li><strong>产物</strong>：<code>out/summary.json</code>、<code>out/training_log.csv</code>、<code>out/gradient_check.csv</code>（12 个参数点的解析 vs 数值梯度）、<code>out/loss_curve.png</code>、<code>out/samples.json</code>、<code>out/run.log</code>。</li><li><strong>关键输出</strong>：</li><li>初始训练损失 <code>2.745</code> → 结束 <code>0.159</code>，相对下降 <code>94.2%</code>；留出损失 <code>0.159</code>。</li><li>梯度校验最大相对误差 <code>9.94e-8</code>。</li><li>位置消融（留出损失）：学习式 <code>0.159</code>；置零 <code>1.965</code>；打乱 <code>3.075</code>。</li><li>贪心样例：<code>the mat. the dog sat on the log. a cat sat o</code>；温度 0.8 + top-5 样例：<code>the mat. the dog sat on the log. a cat sat on a mat. a dog sat o</code>。</li><li><strong>结论</strong>：极小重复语料上，单层块足以把下一字符损失压到 0.16；但这是「记住模板」，不是「学会英语」。位置表被置零或打乱后损失升 12–19 倍，说明 §7.4 的位置嵌入不是可有可无的补丁。梯度校验通过，排除了「损失下降来自反向传播写错」这一解释。</li><li><strong>反思</strong>：原以为位置嵌入去掉顶多小幅掉点；实测掉了十几倍。另一个教训：小模型 loss 很低先别兴奋，先看语料是否重复。</li><li><strong>局限</strong>：字符级、模板化语料，生成质量不代表语言能力；手写反向只校验了 12 个参数点；未做权重绑定消融与上下文长度消融（书中行动区提过，本 lab 未覆盖）。</li></ul>
+<h2>lab-03 · 贪心、温度、top-k 与 top-p 解码</h2>
+<ul><li><strong>对应行动</strong>：actions.md 第 3 条。</li><li><strong>目的</strong>：在固定分布上分离「模型」与「解码策略」，量化温度对最大概率/熵的影响，以及 top-k 与 top-p 截断依据的差别。</li><li><strong>输入</strong>：10 词 logits <code>[2.2, 1.2, 0.8, 0.3, 0.1, -0.2, -0.5, -0.9, -1.4, -2.0]</code>；四词示例 <code>all/the/your/that</code> 的 logits <code>[2.2, 1.2, 0.8, 0.1]</code>（复算练习 7.5）；生成用人工二元转移表，非训练模型。</li><li><strong>运行</strong>：<code>python3 decoding_sampling.py</code>（1.7 秒）。</li><li><strong>产物</strong>：<code>out/summary.json</code>、<code>out/decoding_metrics.csv</code>、<code>out/temperature_effect.png</code>、<code>out/top_p_retained.png</code>、<code>out/samples.json</code>、<code>out/run.log</code>。</li><li><strong>关键输出</strong>：</li><li>四词示例：τ=0.2 最大概率 <code>0.9924</code>，τ=1 <code>0.5757</code>，τ=2 <code>0.4077</code>；每组概率和误差 &lt;1e-12。</li><li>10 词分布：τ=0.05 最大概率 <code>0.999999998</code>、熵 <code>4.3e-8</code>；τ=1 最大概率 <code>0.469</code>、熵 <code>1.674</code> nat；τ=5 熵升到 <code>2.274</code>。</li><li>top-k=1 支持集 1 且与贪心一致；top-k=2 截断前质量 <code>0.642</code>，top-k=5 为 <code>0.885</code>。</li><li>top-p=0.5 保留 2 词（质量 <code>0.642</code>）；p=0.9 保留 6 词（<code>0.927</code>）；p=1.0 保留全部 10 词。</li><li>贪心 3 条样例完全相同（<code>the cat sat on the cat sat on ...</code>）；随机与 τ=1.5 出现不同路径。</li><li><strong>结论</strong>：温度只改 softmax 前的尺度：τ&lt;1 推尖、熵降；τ&gt;1 压平、熵升；τ→0 逼近贪心。top-k 是固定名额，top-p 是固定质量，后者候选数随分布形状自适应；组合使用等价于「先用 k 挡长尾垃圾，再用 p 适配置信度」，与 §7.6.4 一致。</li><li><strong>反思</strong>：原先把 top-p 的 p 理解成「保留百分之 p 的词」，跑完才纠正为「累计概率达到 p 的最小词集」。另一个意外：贪心在玩具转移表上会形成稳定循环，正好对应书里「确定性导致重复」。</li><li><strong>局限</strong>：人工转移表不是语言模型，生成文本只能比较策略差异，不能评价语言质量；未测束搜索；未使用图 7.17 的原始 logits（四词 logits 为自设近似）。</li></ul>
+<h2>lab-04 · 12Ld² 参数账、困惑度与模型规模表</h2>
+<ul><li><strong>对应行动</strong>：actions.md 第 4 条。</li><li><strong>目的</strong>：复算练习 7.1 的参数分解与练习 7.3 的困惑度，并把图 7.24 的六个模型转成可核对 CSV，回答「12Ld² 什么时候准、什么时候不准」。</li><li><strong>输入</strong>：练习 7.1 设定（<code>L=12, d=512, dff=4d=2048, dk=dv=d/A</code>）；练习 7.3 的四个条件概率 <code>.0001/.0002/.000005/.0000001</code>；图 7.24 的 GPT-2 XL、GPT-3、Qwen3-0.6B、Qwen3-32B、Llama 3.1 8B、Llama 3.1 405B 配置。</li><li><strong>运行</strong>：<code>python3 param_perplexity.py</code>（&lt;1 秒）。</li><li><strong>产物</strong>：<code>out/summary.json</code>、<code>out/param_table.csv</code>（模型 / L / d / A / dff / 报告参数量 / 12Ld² / 比值）、<code>out/param_check.png</code>（log 轴对比柱图）、<code>out/run.log</code>。</li><li><strong>关键输出</strong>：</li><li>注意力层 <code>4d² = 1,048,576</code>，前馈层 <code>2·d·dff = 2,097,152</code>，整块 <code>3,145,728</code>；<code>L=12</code> 总计 <code>37,748,736</code>，与 <code>12Ld²</code> <strong>完全相等</strong>（差值 0）。</li><li>注意力参数在 <code>A=1/4/8/16</code> 下均为 <code>1,048,576</code>，与头数无关；前馈占整块 <code>66.7%</code>。</li><li>练习 7.3：概率乘积 <code>1e-20</code>，<code>PPL = 100000</code>；由平均交叉熵 <code>11.5129</code> 取 exp 得 <code>100000.00000000001</code>，两路径差约 <code>1.5e-11 &lt; 1e-9</code>。</li><li>模型表比值：Llama 3.1 405B <code>1.002</code>（最准）→ GPT-3 <code>0.994</code> → GPT-2 XL <code>0.983</code> → Llama 3.1 8B <code>0.805</code> → Qwen3-32B <code>0.629</code> → Qwen3-0.6B <code>0.587</code>（偏差最大）。</li><li>偏差方向：小模型/新架构的 <code>12Ld²</code> <strong>低估</strong>报告参数量，缺口主要来自词表嵌入（<code>|V|·d</code>，Qwen3 词表 152K）、GQA 的 KV 投影、SwiGLU 的额外门控参数与偏置。</li><li><strong>结论</strong>：<code>12Ld²</code> 在「dff=4d、无 GQA、词表相对小」的老式配置上几乎精确（GPT-3 差 0.6%）；一旦词表变大或用 GQA/SwiGLU，就必须补上嵌入与门控项，否则会低估 20–40%。困惑度的两条计算路径数值一致，验证了「PPL = exp(平均交叉熵)」。</li><li><strong>反思</strong>：原来把 <code>12Ld²</code> 当成通用公式；跑完才知道它其实是「忽略嵌入 + 忽略偏置 + dff=4d」三个假设的产物。看到「0.6B」这类数字时，应先问含不含嵌入。</li><li><strong>局限</strong>：模型表配置抄自图 7.24，<strong>未与各模型官方卡逐一核对</strong>（书中本身声明是粗略近似）；<code>12Ld²</code> 未计偏置、LayerNorm、嵌入；练习 7.3 的概率是题目给定值，不是真实模型输出。</li></ul>
+<hr>
+<h2>与 actions.md 的对应检查</h2>
+<table><tr><th>actions.md 条目</th><th>是否落到 lab</th><th>证据</th></tr><tr><td>1. 实现注意力/掩码/多头并断言</td><td>✅ lab-01</td><td><code>out/checks.json</code> 的 <code>all_pass: true</code></td></tr><tr><td>2. 训练单层块并做位置消融</td><td>✅ lab-02</td><td><code>out/summary.json</code> 的 <code>loss</code> / <code>position_ablation_val_loss</code></td></tr><tr><td>3. 复算温度/top-k/top-p 并断言</td><td>✅ lab-03</td><td><code>out/summary.json</code> 的 <code>checks</code> 四项全 true</td></tr><tr><td>4. 参数账 + 困惑度 + 模型表</td><td>✅ lab-04</td><td><code>out/summary.json</code> 的 <code>matches: true</code> / <code>identity_holds: true</code></td></tr></table>
+<blockquote><p>行动区中另有「画数据流图」「合上书写出 8 节点」等纸面动作，不可脚本化，已在 book-notes 的行动区保留为复习动作，不计入 labs。</p></blockquote>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

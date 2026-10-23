@@ -1,0 +1,41 @@
+{
+  "k": 0.1,
+  "oov_rate": 0.0126,
+  "samples": [
+    {
+      "sentence": "<s> what time does ham open today </s>",
+      "tokens_scored": 8,
+      "logprob": -14.8684,
+      "prob": 3.489e-07,
+      "perplexity": 6.41
+    },
+    {
+      "sentence": "<s> we would like english food at noon </s>",
+      "tokens_scored": 9,
+      "logprob": -15.6285,
+      "prob": 1.632e-07,
+      "perplexity": 5.68
+    },
+    {
+      "sentence": "<s> i am looking for coffee there </s>",
+      "tokens_scored": 8,
+      "logprob": -15.7514,
+      "prob": 1.443e-07,
+      "perplexity": 7.16
+    },
+    {
+      "sentence": "<s> they need books tomorrow </s>",
+      "tokens_scored": 6,
+      "logprob": -19.609,
+      "prob": 3.047e-09,
+      "perplexity": 26.26
+    },
+    {
+      "sentence": "<s> i and the woman need green eggs on main street </s>",
+      "tokens_scored": 12,
+      "logprob": -31.8013,
+      "prob": 1.545e-14,
+      "perplexity": 14.16
+    }
+  ]
+}

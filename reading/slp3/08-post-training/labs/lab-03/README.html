@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03：best-of-N 的收益上限与奖励噪声</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a><a href="../index.html">labs 索引：行动执行闭环</a><a href="README.html">lab-03：best-of-N 的收益上限与奖励噪声</a></div>
+<h1>lab-03：best-of-N 的收益上限与奖励噪声</h1>
+<p><strong>对应</strong>：§8.3.3（奖励模型的 best-of-N 用途）、§8.4（学到的奖励只是真实奖励的带噪替代）。<strong>行动</strong>：<code>actions.md</code> 第 3 条。</p>
+<h2>目的</h2>
+<p>量化一个工程直觉：<strong>增大候选数 N 是否总能挑到更好的回答？</strong> 把奖励模型写成「真实质量 + 噪声」，测量三个量随 N 与噪声 σ 的变化：</p>
+<ol><li>被选中候选的<strong>期望真实质量</strong> <code>E[z_sel]</code>；</li><li><strong>选中真最优候选的概率</strong> <code>P(z_sel = max z)</code>；</li><li><strong>奖励高估</strong> <code>E[r_sel − z_sel]</code>，即奖励模型给选中项的分数比它的真实质量高多少。</li></ol>
+<h2>输入</h2>
+<ul><li>无外部数据，全部蒙特卡洛模拟，<code>numpy.random.default_rng(11)</code>。</li><li>每个提示采样 N 个候选，真实质量 <code>z ~ N(0,1)</code>；奖励模型打分 <code>r = z + ε</code>，<code>ε ~ N(0, σ²)</code>。</li><li><code>N ∈ {1,2,4,8,16,32,64,128}</code>，<code>σ ∈ {0, 0.25, 0.5, 1.0, 2.0}</code>，每个 (σ,N) 组合 4,000 次试验（每次批量 8 个提示以控制内存）。</li><li>按 <code>argmax r</code> 选一个候选，记录它的 <code>z</code>、<code>r</code> 与是否等于该组真实最大值。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 best_of_n.py</code></pre>
+<p>只依赖 numpy 2.4.6 + matplotlib 3.10.9；随机种子固定。本次运行退出码 0。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/metrics.json</code></td><td>5×8=40 行原始结果 + 每个 σ 的汇总</td></tr><tr><td><code>out/best_of_n.csv</code></td><td>同样的 40 行，便于表格工具读取</td></tr><tr><td><code>out/best_of_n.png</code></td><td>左：期望真实质量 vs N；右：P(选中真最优) vs N；每条线一个 σ</td></tr></table>
+<p>关键数值（本次运行）：</p>
+<table><tr><th>σ</th><th>N</th><th>期望真实质量</th><th>P(选中真最优)</th><th>奖励高估</th></tr><tr><td>---:</td><td>---:</td><td>---:</td><td>---:</td><td>---:</td></tr><tr><td>0</td><td>2</td><td>0.554</td><td>1.000</td><td>0.000</td></tr><tr><td>0</td><td>128</td><td>2.599</td><td>1.000</td><td>0.000</td></tr><tr><td>0.5</td><td>2</td><td>0.507</td><td>0.853</td><td>0.125</td></tr><tr><td>0.5</td><td>128</td><td>2.332</td><td>0.460</td><td>0.570</td></tr><tr><td>1.0</td><td>128</td><td>1.843</td><td>0.215</td><td>1.831</td></tr><tr><td>2.0</td><td>128</td><td>1.150</td><td>0.082</td><td>4.657</td></tr></table>
+<h2>结论</h2>
+<ol><li><strong>无噪声时，N 越大严格越好。</strong> σ=0 时 P(选中真最优) 恒为 1，期望真实质量从 N=1 的 0.006 单调升到 N=128 的 2.599；这是极值统计的教科书结果。</li><li><strong>有噪声时，期望真实质量仍随 N 上升，但增速被 σ 压住。</strong> σ=0.5、N=2→128，质量从 0.507 升到 2.332；σ=2 时只从 0.246 升到 1.150。噪声把&quot;多采样&quot;的边际收益越吃越少。</li><li><strong>P(选中真最优) 反而随 N 下降。</strong> σ=0.5 时从 N=2 的 0.853 降到 N=128 的 0.460；σ=2 时从 0.652 降到 0.082。N 越大，取最大值的样本越多，最大值越可能落在&quot;噪声高&quot;而不是&quot;质量高&quot;的候选上。</li><li><strong>奖励高估随 N 与 σ 放大。</strong> σ=2、N=128 时平均高估 4.657——奖励模型给选中项的分远高于它的真实质量。因此 best-of-N 上线前必须同时看&quot;真实质量&quot;和&quot;奖励高估&quot;，只看奖励分数会系统性乐观。</li></ol>
+<h2>局限</h2>
+<ul><li>真实质量与奖励噪声都假设为<strong>独立同分布高斯</strong>；真实 RM 的误差随提示、长度、领域变化，且与质量相关。</li><li>所有提示共享同一分布，没有提示难度分层；难提示上的选择偏差可能更严重。</li><li>真实 best-of-N 还要付 N 倍采样与打分成本，本实验没有建成本模型。</li><li>4,000 次试验对概率的估计有蒙特卡洛误差（约 ±0.01–0.02），趋势可信，小数点后第二位不宜过度解读。</li><li>「真最优」定义为该组 N 个候选中的最大值，不是全局最优回答；它衡量的是选择效率，不是绝对质量。</li></ul>
+<h2>反思</h2>
+<p>我原来以为 N 越大越接近&quot;最优&quot;，最多是收益递减。实验给出的反例更尖锐：σ=0.5 时，N 从 2 增到 128，被选中答案的平均真实质量确实从 0.51 升到 2.33，但&quot;它是不是这 N 个里最好的&quot;这一概率却从 0.85 掉到 0.46。两件事并不矛盾——极值让平均质量上升，噪声让&quot;选中最大值&quot;更容易被错误候选占据。</p>
+<p>这改变了我看 best-of-N 的方式：它是一个<strong>用算力换质量、同时用选择偏差换奖励高估</strong>的交易。上线前该问的不是&quot;N 能开多大&quot;，而是&quot;奖励噪声有多大、我能不能承受它带来的高估&quot;。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

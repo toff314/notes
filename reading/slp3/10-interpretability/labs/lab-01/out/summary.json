@@ -1,0 +1,36 @@
+{
+  "n_samples": 4000,
+  "n_layers": 5,
+  "dim": 64,
+  "cosine_raw_layer4": {
+    "layer": 4,
+    "condition": "raw",
+    "mean_cosine": 0.8875,
+    "p95_cosine": 0.9192
+  },
+  "cosine_zscore_layer4": {
+    "layer": 4,
+    "condition": "zscore",
+    "mean_cosine": -0.0003,
+    "p95_cosine": 0.2294
+  },
+  "best_layer_by_attr": {
+    "pos": {
+      "layer": 0,
+      "accuracy": 0.9992
+    },
+    "tense": {
+      "layer": 1,
+      "accuracy": 0.9967
+    },
+    "sem": {
+      "layer": 2,
+      "accuracy": 0.9867
+    },
+    "entity": {
+      "layer": 3,
+      "accuracy": 0.9808
+    }
+  },
+  "max_random_label_acc": 0.534
+}

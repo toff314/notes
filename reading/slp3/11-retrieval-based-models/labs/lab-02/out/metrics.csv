@@ -1,0 +1,4 @@
+condition,accuracy,EM,F1,citation_rate,citation_precision,grounded_accuracy
+closed_book,0.6,0.6,0.7772,0.0,0.0,0.0
+open_book_top1,0.85,0.85,0.8773,1.0,0.85,0.85
+open_book_oracle,1.0,1.0,1.0,1.0,1.0,1.0

@@ -1,0 +1,11 @@
+{
+  "lambda": 0.5,
+  "steps": 1000,
+  "n_test": 800,
+  "mean_subspace_overlap": 0.1566,
+  "median_subspace_overlap": 0.1583,
+  "p10_subspace_overlap": 0.1279,
+  "mean_best_feature_cosine": 0.3779,
+  "max_best_feature_cosine": 0.4915,
+  "frac_feature_cosine_gt_0.8": 0.0
+}

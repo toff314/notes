@@ -1,0 +1,98 @@
+[
+  {
+    "context": "a likes the bright dog .",
+    "target": "student",
+    "top1": "dog",
+    "top2": "cat",
+    "top3": "bright",
+    "p_target": 0.09714887475085188
+  },
+  {
+    "context": "the old car opens the canyon",
+    "target": ".",
+    "top1": ".",
+    "top2": "book",
+    "top3": "engine",
+    "p_target": 0.9999999975276448
+  },
+  {
+    "context": "a book under a dog .",
+    "target": "finds",
+    "top1": "watches",
+    "top2": "under",
+    "top3": "sees",
+    "p_target": 0.05921565856820683
+  },
+  {
+    "context": "the cat beside the book .",
+    "target": "quiet",
+    "top1": "red",
+    "top2": "cat",
+    "top3": "book",
+    "p_target": 0.062339589933722135
+  },
+  {
+    "context": "the student a quiet book .",
+    "target": "likes",
+    "top1": "watches",
+    "top2": "sees",
+    "top3": "opens",
+    "p_target": 0.03245567169019937
+  },
+  {
+    "context": "the watches near a book .",
+    "target": "dog",
+    "top1": "cat",
+    "top2": "red",
+    "top3": "book",
+    "p_target": 0.09386871423978685
+  },
+  {
+    "context": "a opens a small car .",
+    "target": "car",
+    "top1": "river",
+    "top2": "red",
+    "top3": "book",
+    "p_target": 0.09317325880059962
+  },
+  {
+    "context": "the dog the red student .",
+    "target": "under",
+    "top1": "watches",
+    "top2": "sees",
+    "top3": "student",
+    "p_target": 0.04530232210793113
+  },
+  {
+    "context": "a car near the car .",
+    "target": "finds",
+    "top1": "carries",
+    "top2": "finds",
+    "top3": "beside",
+    "p_target": 0.12059165762436155
+  },
+  {
+    "context": "the river finds under the canyon",
+    "target": ".",
+    "top1": ".",
+    "top2": "book",
+    "top3": "canyon",
+    "p_target": 0.9999999982763439
+  },
+  {
+    "context": "car opens beside the book .",
+    "target": "a",
+    "top1": "the",
+    "top2": "a",
+    "top3": "quiet",
+    "p_target": 0.4897462062964939
+  },
+  {
+    "context": "the opens the quiet engine .",
+    "target": "river",
+    "top1": "book",
+    "top2": "red",
+    "top3": "river",
+    "p_target": 0.10651068091105681
+  }
+]

@@ -1,0 +1,8 @@
+bucket,n_chars,corrections,correction_rate,mean_surprisal_bits
+class:boundary,25,7,0.2800,1.5176
+class:content,84,67,0.7976,3.8939
+class:function,19,12,0.6316,3.0826
+pos:first,26,17,0.6538,3.4946
+pos:later,52,41,0.7885,3.5627
+pos:second,25,21,0.8400,4.3814
+pos:space,25,7,0.2800,1.5176

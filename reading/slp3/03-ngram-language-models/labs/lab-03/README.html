@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03：把书中的数字重新算一遍</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a><a href="../index.html">labs · 行动执行闭环（第 3 章）</a><a href="README.html">lab-03：把书中的数字重新算一遍</a></div>
+<h1>lab-03：把书中的数字重新算一遍</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 第 3 条：不依赖书上的结论，用代码把本章可手算的例子全部重算并断言，作为&quot;例题重做 + 错题归因&quot;的证据。</p>
+<h2>覆盖的检查（20 条）</h2>
+<ol><li>I am Sam 语料的 6 个 bigram 概率：P(I|&amp;lt;s&amp;gt;)=2/3、P(Sam|&amp;lt;s&amp;gt;)=1/3、P(am|I)=2/3、P(&amp;lt;/s&amp;gt;|Sam)=1/2、P(Sam|am)=1/2、P(do|I)=1/3。</li><li><code>0.25×0.33×0.0011×0.5×0.68 = 0.000031</code> 的算术。</li><li>颜色模型 A（均匀）困惑度 = 3；B（0.8/0.1/0.1）在 red×4 + blue 上 = 1.89。</li><li>反转测试集（blue×4 + red）：A 仍为 3，B 升至 6.60。</li><li>八匹马分布熵 = 2 bit；均匀八选一 = 3 bit；2 bit 换算为 1.386 nat。</li><li>练习 3.5：不带 <code>&lt;/s&gt;</code> 时，2 词句与 3 词句的概率和都等于 1.0。</li><li>练习 3.12：91 个 0 + 各一个 1–9 的训练集，测试 <code>0 0 0 0 0 3 0 0 0 0</code> 的 unigram 困惑度 ≈ 1.725。</li><li>练习 3.4：修改语料上加一平滑 P(Sam|am) = 3/14 ≈ 0.214（V=11）。</li><li>练习 3.7：λ=0.5/0.5 插值 P(Sam|am) ≈ 0.413。</li></ol>
+<h2>运行</h2>
+<pre><code>python3 verify_book_numbers.py</code></pre>
+<p>脚本以 <code>assert</code> 风格的 <code>check()</code> 逐条判定，任一失败以退出码 1 结束。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/checks.json</code></td><td>20 条检查的 got/want/pass 与 <code>all_pass</code></td></tr><tr><td><code>out/bigram_iamsam.csv</code></td><td>I am Sam 语料的 bigram 计数与条件概率</td></tr><tr><td><code>out/exercise37.png</code></td><td>练习 3.4/3.7 的 MLE、加一、插值对比</td></tr></table>
+<h2>运行输出（末行）</h2>
+<pre><code>20/20 checks passed; out -&gt; .../labs/lab-03/out</code></pre>
+<h2>结论</h2>
+<ul><li>书中的关键数字全部可复现；最容易被忽略的是加一平滑的 V：练习 3.4 若不把 <code>&lt;s&gt;</code>、<code>&lt;/s&gt;</code> 计入词表，V 会算成 9，结果随之改变。</li><li>颜色模型的反转测试（B 从 1.89 升到 6.60）证明低困惑度只对特定测试分布成立。</li><li>练习 3.5 的&quot;两种长度概率和都为 1&quot;用代码枚举后非常直观：缺 <code>&lt;/s&gt;</code> 时模型把质量分给了每个长度层，而不是全局。</li></ul>
+<h2>反思</h2>
+<p>我原本以为这些例子只是算术，真正动手才发现错误几乎都出在&quot;计数口径&quot;：<code>&lt;s&gt;</code> 算不算、句末算不算、V 怎么数。以后做任何 n-gram 题，先画一张含边界符号的计数表，再代公式。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

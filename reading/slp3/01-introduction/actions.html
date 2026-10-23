@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 1 章 · 行动清单（4 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a></div>
+<h1>《Speech and Language Processing》第 1 章 · 行动清单（4 条）</h1>
+<blockquote><p>从本章行动区提炼的可执行项；每条 = 动词 + 对象 + 时间/验收。</p><p>执行记录与真实产物见 <code>labs/index.md</code>。</p></blockquote>
+<h2>学习行动（教材型）</h2>
+<ol><li><strong>10 月 24 日前</strong>用本章英文语料跑 <code>labs/lab-01/bigram_next_word.py</code>，导出 &quot;so long and thanks for&quot; 的下词前 12 名，并写一句解释：为什么 <code>example</code> 居首而书中的 <code>all</code> 不在榜上。</li></ol>
+<p>验收：<code>out/next_word.csv</code> 有 12 行数据，解释中必须点出&quot;bigram 只条件于最后一个词&quot;。</p>
+<ol><li><strong>10 月 25 日前</strong>跑 <code>labs/lab-02/perplexity.py</code>，把 4 种模型（unigram/bigram × 无平滑/加一）的困惑度抄进卡片，并解释 bigram 加一为何可能输给 unigram 加一。</li></ol>
+<p>验收：<code>out/perplexity.json</code> 中 4 个数值齐全，解释里出现&quot;词表 2381&quot;与&quot;语料 13116&quot;两个量。</p>
+<ol><li><strong>10 月 27 日前</strong>跑 <code>labs/lab-03/shannon_game.py</code>，统计首字母/第二字母/后续字母、功能词/实词六个桶的纠正率，写 3 句结论。</li></ol>
+<p>验收：<code>out/rates.csv</code> 六个桶齐全，结论中至少有一条与&quot;词首最难猜&quot;的直觉相反。</p>
+<ol><li><strong>10 月 28 日前</strong>跑 <code>labs/lab-04/proxy_goodhart.py</code>，记录&quot;按 overlap 选&quot;与&quot;按人工分最优&quot;的平均 adequacy，并为自己常做的评估写一条防刷分规则。</li></ol>
+<p>验收：两个均值写进笔记，规则必须写明&quot;检查什么&quot;（如顺序、长度、重复率）与触发后的动作。</p>
+<h2>错题归因（自测后填写）</h2>
+<blockquote><p>每次做完 <code>self-test.md</code>，把错题按三类归档，禁止只抄正确答案。</p><p>归因结果直接决定下一条行动，而不是笼统地&quot;再看一遍&quot;。</p></blockquote>
+<ul><li><strong>知识性</strong>（定义记错、公式条件漏）：回到对应 § 重读，并在 48 小时内用自己的话重写该卡片的 A 面。</li><li><strong>理解性</strong>（读懂了题但抓错关键词）：把题干关键词圈出来，补一条&quot;这题在问什么&quot;的旁注，再找一道同型题验证。</li><li><strong>技巧性</strong>（会但超时/算错）：限时 15 分钟重做同型题 2 道，记录用时与错误位置。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

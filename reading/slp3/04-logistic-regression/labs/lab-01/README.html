@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-01：从零实现二分类逻辑回归</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a><a href="../index.html">labs · 行动执行闭环</a><a href="README.html">lab-01：从零实现二分类逻辑回归</a></div>
+<h1>lab-01：从零实现二分类逻辑回归</h1>
+<p>对应 <code>actions.md</code> 第 1、2 条（§4.2 / §4.5 / §4.6 / §4.15）。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-01
+python3 logreg_binary.py</code></pre>
+<p>只依赖标准库 + numpy + matplotlib（Agg 后端，无显示环境也能跑）。</p>
+<h2>数据</h2>
+<p>22 条手工构造的迷你影评，2 个特征：</p>
+<ul><li><code>x1</code>：正向词典词计数</li><li><code>x2</code>：负向词典词计数</li><li><code>y</code>：1 正面 / 0 负面</li></ul>
+<p>其中两条故意歧义（<code>great acting, awful story</code> 标正、<code>dull start, lovely ending</code> 标负），避免数据完全可分导致权重无限增大。</p>
+<h2>做了什么</h2>
+<ol><li>实现数值稳定的 sigmoid（按 z 的符号分支，避免 <code>exp</code> 溢出）；</li><li>实现批平均交叉熵与解析梯度 <code>(X^T (ŷ-y))/m</code>；</li><li>用批量梯度下降训练 600 轮，学习率 0.5；</li><li>复现 §4.6.3 单步更新：<code>x=[3,2], y=1, w=b=0, η=0.1</code>；</li><li>用中心差分校验解析梯度。</li></ol>
+<h2>产物（out/）</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>loss_curve.png</code></td><td>600 轮训练损失</td></tr><tr><td><code>decision_boundary.png</code></td><td>两个特征平面上的样本与 p=0.5 分界线</td></tr><tr><td><code>weights.json</code></td><td>学到的权重、偏置、准确率、逐条预测概率</td></tr><tr><td><code>gradient_step.json</code></td><td>§4.6.3 单步结果 + 解析/数值梯度对比</td></tr><tr><td><code>training_log.csv</code></td><td>每轮 loss、准确率、权重</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<pre><code>documents: 22  features: 2
+learned weights: w=[1.5131, -1.8113]  b=0.1646
+final train loss: 0.2550  train accuracy: 0.909</code></pre>
+<p><code>gradient_step.json</code> 中：</p>
+<ul><li>解析梯度 <code>w=[-1.5, -1.0]</code>、<code>b=-0.5</code>；</li><li>数值梯度 <code>w=[-1.4999999999876223, -1.0000000000287557]</code>、<code>b=-0.5000000000143778</code>；</li><li>一步更新后 <code>w=[0.15, 0.1]</code>、<code>b=0.05</code>，与书中 §4.6.3 完全一致；</li><li>相对误差量级 <code>1e-11</code>，远小于 1e-6 的验收线。</li></ul>
+<h2>结论</h2>
+<ul><li>正词权重 1.51、负词权重 −1.81，符号符合“正向词支持正类、负向词反对正类”的直觉；</li><li>负向证据的绝对值更大，和书中 §4.3.1“负面词重要性约为正面词两倍”的例子方向一致；</li><li>损失从 <code>ln 2 ≈ 0.693</code> 单调降到 0.255，没有震荡，符合 §4.6 的凸性判断；</li><li>训练准确率 0.909 而非 1.0，说明两条歧义样本确实没有被硬拟合，模型保留了误差。</li></ul>
+<h2>反思</h2>
+<p>我原先以为“梯度下降就是调参”，跑完才注意到：单步更新里的 <code>(ŷ-y)</code> 在初始点恒为 −0.5，所以第一步的方向完全由输入特征决定。也正因为如此，正样本会让两个权重同时变正——书里那句“看到更多负例后 w2 才会变负”，在完整训练后的 <code>w2=-1.81</code> 上得到了验证。另一个意外是数值稳定：教材公式 <code>1/(1+exp(-z))</code> 直接照抄会在 z 很负时溢出，工程实现必须自己补分支。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

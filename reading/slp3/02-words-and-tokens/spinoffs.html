@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a></div>
+<h1>《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题</h1>
+<blockquote><p>从本章筛出可送 <code>write-zhihu-tech</code> / <code>write-tech-tutorial</code> 的选题包。</p><p>锚点只是待核线索，下游必须独立搜索核实；不确定处标 ❓。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>中文为什么被大模型 tokenizer 切碎</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S4+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>BPE 不是语素发现器</td><td>write-zhihu-tech（Mode A）</td><td>S1+S4+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>从 ELIZA 到 GPT-4o：词元化五十年</td><td>write-tech-tutorial（Mode A）</td><td>S2+S3+S4</td><td>P1</td><td>专栏级</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>编辑距离为什么还是拼写纠错的地基</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S5+S6</td><td>P2</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>码点、字形与 UTF-8 的自同步</td><td>write-tech-tutorial（Mode A）</td><td>S1+S2+S6</td><td>P2</td><td>短评／标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<hr>
+<h3>1. 中文为什么被大模型 tokenizer 切碎</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：中文为什么被大模型 tokenizer 切碎——词表分配、UTF-8 与多语言成本</code></li><li><strong>书籍锚点</strong>：本书 §2.4.3「西班牙语原文的 16 个词被编码成了 33 个词元」；§2.1「汉语、日语和泰语这类语言的书写系统根本没有正字法意义上的词」。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S4 + S6</strong>。S1：书只给了一个西班牙语例子，没有展开中文的量化；S3：可从 UTF-8 字节、BPE 合并顺序、词表配额三层讲清机制；S4：词表偏斜是工程取舍还是数据霸权，有真实争议；S6：Rust et al. (2021)、Ahia et al. (2023) 等可查。</li><li><strong>增益</strong>：① 相对本书：把「西班牙语 33 词元」的孤例扩成中英日多语对照，并给出可复现的 tiktokenizer 计数方法；② 对读者：能解释为什么同一段中文的 API 账单更高、上下文更短，以及选模型时该看 tokenizer 还是看参数。</li><li><strong>素材种子</strong>：历史溯源（BPE 从 Gage 1994 到 Sennrich 2016）｜人物（Karpathy 的 minbpe 讲座）｜原理（字节级 BPE 与词表配额）｜争议（低资源语言碎片化）。</li><li><strong>缺口（下游必须自己搜）</strong>：GPT-4o／Claude／Qwen 的实际中文 token 比；不同 tokenizer 的公开词表大小；中文分词标准（Treebank vs 北京大学）的差异数据。</li><li><strong>体量建议</strong>：标准长文（约 5000–7000 字）。</li><li><strong>待核</strong>：❓ 各模型 tokenizer 的具体词表构成未公开，只能以实测计数代替。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>2. BPE 不是语素发现器</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：BPE 不是语素发现器——频率压缩与语言学边界是两套证据</code></li><li><strong>书籍锚点</strong>：本书 §2.4.1「BPE 训练算法迭代地合并频繁相邻的词元」；§2.2「这一事实使得把语素用作跨语言词元化的标准变得非常困难」。</li><li><strong>为什么</strong>：命中 <strong>S1 + S4 + S5</strong>。S1：书明确说子词「通常与语素或词的大小相当」，但没有系统反驳「BPE 学到语素」的流行说法；S4：与「tokenizer 有语言学意义」的常见叙事相反；S5：直接关系到可解释性与安全审计的落点。</li><li><strong>增益</strong>：① 相对本书：把「大小相当」与「边界相同」拆开，给出反例（跨字符边界、高频词整体合并）；② 对读者：不再把 tokenizer 的切分当作语言结构证据，评估「模型是否理解词法」时少一个误区。</li><li><strong>素材种子</strong>：历史溯源（BPE 原为压缩算法）｜人物（Sennrich 把 BPE 引入 NMT）｜原理（贪心合并 vs 形态切分）｜争议（tokenizer-free 模型是否必要）。</li><li><strong>缺口（下游必须自己搜）</strong>：BPE 切分与人工语素标注的一致率实验；byte-level tokenizer 的非法 UTF-8 比例。</li><li><strong>体量建议</strong>：标准长文（约 5000 字）。</li><li><strong>待核</strong>：❓ 「一致率」类实验多为小语料，结论不宜外推。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>3. 从 ELIZA 到 GPT-4o：词元化五十年</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：从 ELIZA 到 GPT-4o——词元化五十年的三次转身</code></li><li><strong>书籍锚点</strong>：本书章首 ELIZA 对话与 §2.6.7 的 ELIZA 替换规则；历史注记「BPE 最初是 Gage (1994) 提出的一种文本压缩方法」。</li><li><strong>为什么</strong>：命中 <strong>S2 + S3 + S4</strong>。S2：Weizenbaum、Gage、Sennrich、Karpathy 都有可查史料；S3：从模式匹配到正则替换、再到 BPE 与 SuperBPE，技术有纵深；S4：ELIZA 的「假理解」与今天 tokenizer 的「假语素」形成有趣反差。</li><li><strong>增益</strong>：① 相对本书：把散落在章首、§2.6.7、历史注记里的线索串成一条演化链；② 对读者：理解「切分单位」如何从手写规则变成统计产物，以及每次转变解决了什么、又留下了什么。</li><li><strong>素材种子</strong>：历史溯源（1966 ELIZA、1994 BPE、2016 subword NMT）｜人物（Weizenbaum 的反思、Karpathy 的公开课）｜原理（模式匹配 → 正则 → 子词）｜争议（ELIZA 效应与拟人化）。</li><li><strong>缺口（下游必须自己搜）</strong>：ELIZA 原始代码与对话记录；Gage 1994 原文；SuperBPE／BoundlessBPE 论文细节。</li><li><strong>体量建议</strong>：专栏级（3–4 篇，每篇 4000–6000 字）。</li><li><strong>待核</strong>：❓ 书中所引年份与会议信息需逐条回原文核对。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>4. 编辑距离为什么还是拼写纠错的地基</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：编辑距离为什么还是拼写纠错的地基——从 DP 到神经纠错的成本账</code></li><li><strong>书籍锚点</strong>：本书 §2.9「intention 与 execution 之间的距离为 5」；§2.9.1「每次插入或删除的代价为 1，且不允许替换」的版本。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S5 + S6</strong>。S1：书只讲算法与对齐，没有讲它在现代纠错产品中的位置；S3：可从 DP、加权代价、Damerau 扩展讲到神经纠错；S5：拼写纠错是搜索、输入法、IDE 的真实落点；S6：Gusfield (1997)、NIST sclite 等可查。</li><li><strong>增益</strong>：① 相对本书：把「距离 5 还是 8」的代价差异接到拼写纠错的候选排序上；② 对读者：知道什么时候该用编辑距离（可解释、低资源、需对齐），什么时候该换模型。</li><li><strong>素材种子</strong>：历史溯源（Levenshtein 1966、Wagner-Fischer 1974）｜人物（Bellman 命名动态规划的故事）｜原理（DP 与加权代价）｜争议（神经纠错是否还需要编辑距离）。</li><li><strong>缺口（下游必须自己搜）</strong>：主流输入法的纠错候选策略；Damerau-Levenshtein 的工业实现；键盘邻接代价表。</li><li><strong>体量建议</strong>：标准长文（约 5000 字）。</li><li><strong>待核</strong>：❓ 各家产品的纠错细节不公开，只能引用论文与开源实现。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>5. 码点、字形与 UTF-8 的自同步</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：码点、字形与 UTF-8——为什么「一个字符」在计算机里有三种答案</code></li><li><strong>书籍锚点</strong>：本书 §2.3.1「码点并不指定字形」；§2.3.2「它是自同步的」与图 2.5 的位映射表。</li><li><strong>为什么</strong>：命中 <strong>S1 + S2 + S6</strong>。S1：书把 UTF-8 讲清了规则，但没展开「字形／码点／字素簇」的常见混淆；S2：Ken Thompson 与 Rob Pike 在餐垫上画出 UTF-8 的故事可查；S6：Unicode 核心规范、Python 文档可逐条核对。</li><li><strong>增益</strong>：① 相对本书：补上「字素簇」这一层，解释 emoji 组合与 len() 的差异；② 对读者：遇到乱码、截断、字符计数错误时，能定位到码点层还是字节层。</li><li><strong>素材种子</strong>：历史溯源（ASCII → Unicode → UTF-8）｜人物（Thompson／Pike）｜原理（变长编码、自同步、字素簇）｜争议（UTF-8 是否浪费中文空间）。</li><li><strong>缺口（下游必须自己搜）</strong>：Unicode 16.0 规范条文；各语言 len() 的语义差异；emoji ZWJ 序列的码点构成。</li><li><strong>体量建议</strong>：短评／标准长文（3000–5000 字）。</li><li><strong>待核</strong>：❓ 书中「15 万字符／168 种文字」为特定版本口径，需按最新 Unicode 版本更新。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

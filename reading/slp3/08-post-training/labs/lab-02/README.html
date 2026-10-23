@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-02：DPO 的 β 到底在控制什么</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a><a href="../index.html">labs 索引：行动执行闭环</a><a href="README.html">lab-02：DPO 的 β 到底在控制什么</a></div>
+<h1>lab-02：DPO 的 β 到底在控制什么</h1>
+<p><strong>对应</strong>：§8.4（KL 约束目标，式 8.7）、§8.4.2（DPO 推导与 β 的取值，式 8.8、8.10–8.13）。<strong>行动</strong>：<code>actions.md</code> 第 2 条。</p>
+<h2>目的</h2>
+<p>把书上「β 是控制 KL 惩罚项的超参数，通常取 0.01–0.1」这句话拆成三个可分别检验的问题：</p>
+<ol><li><strong>固定一对回答的对数概率比（margin）时，β 如何改变 DPO 损失与有效梯度？</strong> 验证 β 不只是&quot;越大越保守&quot;，它还充当 sigmoid 的温度。</li><li><strong>在式 8.7 的 KL 约束目标下，β 如何决定闭式最优策略离参考策略多远？</strong> 观察最优点的 DPO 损失是否随 β 变化。</li><li><strong>只对单个可分偏好对做 DPO 梯度下降，β 是&quot;KL 预算&quot;还是&quot;优化步长&quot;？</strong> 比较不同 β 的 KL 轨迹终点与到达速度。</li></ol>
+<h2>输入</h2>
+<ul><li>无外部数据，全部为解析计算 + 小型数值优化。</li><li><strong>A 部分</strong>：固定 <code>log πθ(ow)=−1.2</code>、<code>log πθ(ol)=−1.5</code>、<code>log πref(ow)=−2.0</code>、<code>log πref(ol)=−1.9</code>，得到对数比 margin <code>m=0.4</code>；在 <code>β∈[10⁻³,10]</code> 上扫描 400 个点。</li><li><strong>B 部分</strong>：两个候选，参考 logits <code>[0.5, 0.0]</code>，真实奖励 <code>[1.0, 0.0]</code>；按式 8.7 的闭式解 <code>π* ∝ πref · exp(r/β)</code> 计算 <code>β∈{0.01,0.03,0.1,0.3,1,3,10}</code> 的最优策略。</li><li><strong>C 部分</strong>：四个候选，参考 logits <code>[1.0,0.5,0.0,−0.5]</code>，单个偏好对（候选 0 胜候选 1）；用数值梯度 + Adam（学习率 0.05）分别跑 600 与 6000 步。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 dpo_beta.py</code></pre>
+<p>只依赖 numpy 2.4.6 + matplotlib 3.10.9；无随机种子（全程确定性解析/数值计算）。本次运行退出码 0。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/metrics.json</code></td><td>A/B/C 三部分的全部数值</td></tr><tr><td><code>out/beta_curve.csv</code></td><td>β 扫描的 DPO 损失、隐式奖励差、有效梯度</td></tr><tr><td><code>out/beta_curve.png</code></td><td>固定 margin 下损失与有效梯度随 β 的变化</td></tr><tr><td><code>out/beta_optimum.csv</code></td><td>闭式最优策略的 p(winner)、KL、隐式奖励差、DPO 损失</td></tr><tr><td><code>out/kl_optimum.png</code></td><td>闭式最优点的 p(winner) 与 KL 随 β 的变化</td></tr><tr><td><code>out/kl_trajectory.png</code></td><td>直接优化 DPO 时三条 β 的 KL 轨迹</td></tr></table>
+<p>关键数值（本次运行）：</p>
+<table><tr><th>量</th><th>β=0.01</th><th>β=0.1</th><th>备注</th></tr><tr><td>---</td><td>---:</td><td>---:</td><td>---</td></tr><tr><td>固定 margin 的 DPO 损失</td><td>0.6911</td><td>0.6733</td><td>m=0.4</td></tr><tr><td>隐式奖励差 β·m</td><td>0.004</td><td>0.040</td><td>随 β 线性放大</td></tr><tr><td>有效梯度 β·σ(−βm)</td><td>0.0050</td><td>0.0490</td><td>峰值在 β≈3.227，值 0.6961</td></tr></table>
+<ul><li><strong>B 部分</strong>：β 从 0.01 增到 10，闭式最优的 <code>p(winner)</code> 从 1.000 降到 0.646，KL 从 0.4741 降到 0.00115；但隐式奖励差恒为 1.0，<strong>最优点的 DPO 损失恒为 0.3133</strong>。</li><li><strong>C 部分</strong>：600 步时 β=0.01/0.1/1 的 KL 分别为 0.78734/0.78734/0.69068；6000 步时前两者仍为 0.7873387/0.7873387，β=1 为 0.77327。β=0.01 与 0.1 到达同一端点，β=1 明显更慢。</li></ul>
+<h2>结论</h2>
+<ol><li><strong>β 同时缩放隐式奖励和 sigmoid 温度。</strong> 固定 margin 时，隐式奖励差是 β·m，但有效梯度是 β·σ(−βm)：β 太小信号弱，β 太大 sigmoid 饱和、梯度也趋零，峰值在 β≈1.28/m（本实验 m=0.4，故约 3.2）。</li><li><strong>在 KL 约束目标下，β 越大，闭式最优策略离参考策略越近。</strong> 这符合&quot;β 是 KL 权重&quot;的直觉：β=0.01 时几乎完全转向高奖励答案（KL=0.474），β=10 时几乎不动（KL=0.00115）。</li><li><strong>但在单个可分偏好对上，β 不决定最终端点，只决定到达速度。</strong> β=0.01 与 0.1 充分训练后 KL 都是 0.78734（策略把胜者概率推到 1），β=1 因为 sigmoid 饱和而收敛更慢。把 β 当&quot;KL 硬预算&quot;会误判：它没有给 KL 设上限，只是改变了优化路径。</li><li><strong>最优点的 DPO 损失对 β 不敏感。</strong> B 部分里隐式奖励差恒为 1，DPO 损失恒为 0.3133，β 的影响只体现在 KL 与策略分布上；因此不能只用 DPO loss 选 β。</li></ol>
+<h2>局限</h2>
+<ul><li>全部是<strong>玩具分布</strong>：2 个或 4 个候选的 softmax，不是真实词表上的自回归策略；没有采样、没有序列级信用分配。</li><li>C 部分只有一个偏好对，数据完全可分；真实偏好数据多对、有噪声、可能不可分，端点行为未必相同。</li><li>B 部分用固定真实奖励 <code>[1,0]</code>，没有模拟奖励模型误差；它检验的是式 8.7 的几何性质，不是训练动力学。</li><li>数值梯度 + Adam 的步长与 6000 步上限会影响&quot;是否收敛&quot;的判断；β=1 的 KL 0.773 是未完全收敛，不是另一个稳定端点。</li><li>没有扫描学习率、batch 大小与 β 的交互。</li></ul>
+<h2>反思</h2>
+<p>我原来把 β 理解成&quot;KL 预算&quot;：β 越大，模型越不许动。B 部分确实支持这个直觉，但 C 部分给出了反例——在单个可分对上，β=0.01 和 0.1 最终都走到同一个 KL=0.787 的端点，只是前者慢得多。也就是说，β 在 DPO 损失里不是约束项前的系数，而是把奖励差整体缩放后再送进 sigmoid；它同时改变了&quot;目标有多陡&quot;和&quot;信号有多强&quot;。</p>
+<p>另一个反直觉点是 B 部分：β 从 0.01 变到 10，最优策略的分布差了很多，但 DPO 损失一直是 0.3133。因为闭式解的隐式奖励差被真实奖励差固定住了。这提醒我，比较不同 β 的实验不能只看 loss 曲线，必须同时看 KL 和策略分布。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

@@ -1,0 +1,17 @@
+{
+  "n_samples": 4000,
+  "dim": 64,
+  "true_features": 40,
+  "sae_features": 80,
+  "true_l0": 4,
+  "min_mse_lambda": 0.0,
+  "selection_criterion": "在 L0 <= 6 的行中取 MSE 最小",
+  "selected": {
+    "lambda": 0.5,
+    "mse": 0.000487,
+    "l0": 5.446,
+    "dead_feature_frac": 0.05,
+    "mean_best_cosine": 0.3779,
+    "frac_cosine_gt_0.8": 0.0
+  }
+}

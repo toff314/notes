@@ -1,0 +1,67 @@
+{
+  "n_docs": 25,
+  "n_relevant": 9,
+  "average_precision": 0.5972109988776655,
+  "book_average_precision": 0.6,
+  "map_single_query": 0.5972109988776655,
+  "max_abs_diff_vs_book_table": 0.010000000000000009,
+  "interpolated": [
+    {
+      "recall_level": 0.0,
+      "interpolated_precision": 1.0
+    },
+    {
+      "recall_level": 0.1,
+      "interpolated_precision": 1.0
+    },
+    {
+      "recall_level": 0.2,
+      "interpolated_precision": 0.6666666666666666
+    },
+    {
+      "recall_level": 0.3,
+      "interpolated_precision": 0.6666666666666666
+    },
+    {
+      "recall_level": 0.4,
+      "interpolated_precision": 0.6666666666666666
+    },
+    {
+      "recall_level": 0.5,
+      "interpolated_precision": 0.625
+    },
+    {
+      "recall_level": 0.6,
+      "interpolated_precision": 0.5454545454545454
+    },
+    {
+      "recall_level": 0.7,
+      "interpolated_precision": 0.4666666666666667
+    },
+    {
+      "recall_level": 0.8,
+      "interpolated_precision": 0.4444444444444444
+    },
+    {
+      "recall_level": 0.9,
+      "interpolated_precision": 0.36
+    },
+    {
+      "recall_level": 1.0,
+      "interpolated_precision": 0.36
+    }
+  ],
+  "book_table": [
+    1.0,
+    1.0,
+    0.66,
+    0.66,
+    0.66,
+    0.63,
+    0.55,
+    0.47,
+    0.44,
+    0.36,
+    0.36
+  ]
+}

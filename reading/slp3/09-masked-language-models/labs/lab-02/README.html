@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-02 · 玩具掩码语言模型：损失口径与上下文增益</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a><a href="../index.html">第 9 章 · 行动执行闭环（labs/index）</a><a href="README.html">lab-02 · 玩具掩码语言模型：损失口径与上下文增益</a></div>
+<h1>lab-02 · 玩具掩码语言模型：损失口径与上下文增益</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 第 2 条。用一个不依赖深度学习框架的玩具模型，把 §9.3.1 的两句话跑成可观察的数字：</p>
+<ol><li>MLM 的损失只对被选中的位置计算，未选中位置不产生梯度；</li><li>上下文确实比一元频率提供额外信息，但一个「词袋双塔」模型的能力有明确上限。</li></ol>
+<h2>输入</h2>
+<ul><li>脚本内生成的模板语料：训练 4,000 句、验证 1,000 句，每句 7 个词元，词表 26。</li><li>名词按语义类（animate / vehicle / nature / object）选择动词，使上下文真的有信息。</li><li>每句随机挖掉 <strong>1 个</strong>位置（约 1/7 = 14.3%，接近 BERT 的 15%），其余 6 个词作为上下文。</li><li>随机种子 <code>7</code>；仅用 Python 标准库 + numpy + matplotlib。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 lab02_toy_mlm.py</code></pre>
+<p>关键输出（本机实际运行，300 epoch，约 73 秒）：</p>
+<pre><code>训练 4000 句 × 7 词，词表 26
+epoch   0 train=2.325 dev=1.911 top1=0.314 top5=0.682
+epoch 299 train=1.741 dev=1.766 top1=0.333 top5=0.702
+
+玩具 MLM: loss=1.766 top1=0.333 top5=0.702
+一元基线: loss=2.889 top1=0.166 top5=0.513</code></pre>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/loss.csv</code></td><td>每 10 个 epoch 的训练/验证损失与 dev top-1/top-5</td></tr><tr><td><code>out/metrics.csv</code></td><td>玩具 MLM 与一元基线的 loss / top-1 / top-5</td></tr><tr><td><code>out/rank_hist.csv</code></td><td>验证集 1,000 个目标词的名次分布（rank 0–9 与 ≥10）</td></tr><tr><td><code>out/predictions.json</code></td><td>12 个样例的上下文、目标词、top-3 预测与目标概率</td></tr><tr><td><code>out/loss_and_topk.png</code></td><td>左图：损失曲线；右图：top-1 / top-5 与一元基线对照</td></tr></table>
+<h2>结论</h2>
+<ul><li><strong>上下文有效</strong>：玩具 MLM 的 dev loss 1.766，比一元基线 2.889 低约 1.12 nat；top-1 从 0.166 提到 0.333，top-5 从 0.513 提到 0.702。这说明「看其余 6 个词」确实比「只背词频」多出信息。</li><li><strong>损失确实只算被挖掉的位置</strong>：训练循环对每个样本只计算 <code>target</code> 的负对数概率，再按 batch 平均；其余 6 个词元只参与上下文向量，不进入损失。这与式 9.4「除以 |M|」在「每句 |M|=1」的特例下一致。</li><li><strong>上限明显</strong>：top-1 停在 0.333 左右。原因是模型把上下文词向量做<strong>均值</strong>，丢掉了词序与位置结构；<code>rank_hist.csv</code> 中仍有 74/1000（7.4%）的样本排名 ≥10，主要是仅凭词袋无法区分的同类别词。</li><li><strong>不能把玩具数字外推</strong>：1.766 的 loss 不是 BERT 的 perplexity，0.333 也不是 BERT 的 MLM 准确率；它只证明「目标函数可以这样落地」与「上下文有增益」两件事。</li></ul>
+<h2>局限</h2>
+<ul><li>玩具模型是位置无关的词袋双塔，没有 Transformer 的多头注意力、层归一化与残差；它无法学习词序，因此不能用来评估真实 MLM 的能力。</li><li>每句只挖 1 个位置，未测试 <code>|M|&gt;1</code> 时损失分母的变化；若要多掩码，需要把每个位置的损失求和后除以 <code>|M|</code>。</li><li>词表只有 26，且语料由模板生成；类别信号过强，top-1 的上限受模型结构限制而非数据限制。</li><li>单随机种子、单学习率（0.05）、固定 300 epoch；没有早停与超参搜索。</li><li>没有子词切分，<code>[MASK]</code> 的最小单位就是整词。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

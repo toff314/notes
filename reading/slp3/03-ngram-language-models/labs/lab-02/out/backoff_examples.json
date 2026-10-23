@@ -1,0 +1,75 @@
+{
+  "lambda": 0.4,
+  "examples": [
+    {
+      "context": "ham open",
+      "word": "today",
+      "trigram_count": 0,
+      "bigram_count": 4,
+      "backoff_score": 0.106667
+    },
+    {
+      "context": "for coffee",
+      "word": "there",
+      "trigram_count": 0,
+      "bigram_count": 0,
+      "backoff_score": 0.001345
+    },
+    {
+      "context": "coffee there",
+      "word": "</s>",
+      "trigram_count": 0,
+      "bigram_count": 15,
+      "backoff_score": 0.4
+    },
+    {
+      "context": "<s> they",
+      "word": "need",
+      "trigram_count": 0,
+      "bigram_count": 0,
+      "backoff_score": 0.000717
+    },
+    {
+      "context": "they need",
+      "word": "books",
+      "trigram_count": 0,
+      "bigram_count": 0,
+      "backoff_score": 0.001345
+    },
+    {
+      "context": "need books",
+      "word": "tomorrow",
+      "trigram_count": 0,
+      "bigram_count": 1,
+      "backoff_score": 0.026667
+    },
+    {
+      "context": "woman need",
+      "word": "green",
+      "trigram_count": 0,
+      "bigram_count": 0,
+      "backoff_score": 0.000896
+    },
+    {
+      "context": "need green",
+      "word": "eggs",
+      "trigram_count": 0,
+      "bigram_count": 10,
+      "backoff_score": 0.4
+    },
+    {
+      "context": "green eggs",
+      "word": "on",
+      "trigram_count": 0,
+      "bigram_count": 0,
+      "backoff_score": 0.000627
+    },
+    {
+      "context": "eggs on",
+      "word": "main",
+      "trigram_count": 0,
+      "bigram_count": 7,
+      "backoff_score": 0.4
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a></div>
+<h1>读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky &amp; James H. Martin　版次：第三版（中文译本，章节 md）</li><li>来源：<code>/home/yuanwu/books/slp3/zh/md/03-ngram-language-models.md</code></li><li>页码口径：中文电子版无印刷页码，全部引用统一用 <strong>§节号</strong>（如 §3.6.1）</li><li>阅读目标：理解（<code>raw/03/meta.json</code> 的 <code>goal</code> = 理解），同时按教材方式做例题与练习</li><li><strong>书型判定</strong>：<strong>教材型</strong>（依据：章-节-知识点三级编号；定义/公式密集，式 3.1–3.42 连续编号；章末有小结、历史注记与 12 道练习；术语表以边栏释义形式给出）</li><li>交叉对照：未提供 <code>raw/lecture-notes/</code>，本次不做书 ↔ 课堂对照</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>状态</th><th>说明</th></tr><tr><td>第 3 章 N-gram 语言模型</td><td>✅ 本次完成</td><td>§3.1–§3.8 全章 + 章末练习</td></tr><tr><td>第 4 章 Logistic 回归</td><td>⬜ 未处理</td><td>建议下次</td></tr></table>
+<p>范围声明：只处理第 3 章，未读其他章节；练习 3.1–3.12 中，3.4/3.5/3.7/3.12 已用代码复核；编程题 3.8–3.11 未逐题实现，其核心（困惑度、采样、平滑、插值）由 <code>labs/lab-01..02</code> 覆盖。</p>
+<h2>实际输入</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>raw/03-ngram-language-models.md</code>（软链到 <code>/home/yuanwu/books/slp3/zh/md/03-ngram-language-models.md</code>）</td><td>第 3 章中文全文，1044 行，含公式、边栏术语与练习</td></tr><tr><td>英文对照（可选）</td><td><code>/home/yuanwu/books/slp3/zh/md/03-ngram-language-models.dual.md</code></td><td>仅用于核对被中文排版拆散的公式位置，未直接摘录</td></tr><tr><td>划线（可选）</td><td>未提供</td><td><code>raw/03/</code> 下无 highlights；不做划线去向表</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>无 <code>raw/lecture-notes/</code></td></tr><tr><td>元信息</td><td><code>raw/03/meta.json</code></td><td>书名、章节来源、阅读目标、页码口径</td></tr></table>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>book-notes.md</code></td><td>14 个知识节的三区笔记（摘录/思考/行动），62 条原文摘录，全文约 6.6k 汉字</td></tr><tr><td><code>cards.md</code></td><td>15 张永久卡片（概念卡 6 / 公式卡 7 / 例题卡 2）</td></tr><tr><td><code>self-test.md</code></td><td>11 道提取自测 + 遮住作答协议 + 未掌握清单 + 例题重做记录</td></tr><tr><td><code>actions.md</code></td><td>3 条可执行行动（含时间与验收）</td></tr><tr><td><code>spinoffs.md</code></td><td>5 个衍生选题（3 个送 write-zhihu-tech，2 个送 write-tech-tutorial）</td></tr><tr><td><code>glossary.md</code></td><td>28 条术语表</td></tr><tr><td><code>labs/index.md</code> + <code>labs/lab-01..03/</code></td><td>3 个可运行脚本与真实产物（CSV/PNG/JSON），覆盖全部行动</td></tr></table>
+<h2>labs 快速复现</h2>
+<pre><code>cd labs/lab-01 &amp;&amp; python3 ngram_perplexity.py   # 困惑度随 n 与训练量变化
+cd ../lab-02 &amp;&amp; python3 smoothing_compare.py    # 四种平滑对比
+cd ../lab-03 &amp;&amp; python3 verify_book_numbers.py  # 书中 20 个数字断言</code></pre>
+<p>实测要点：248 句去重语料上，2-gram 困惑度 6.68（最低），4-gram 回升到 13.26；插值 7.28，比最优 add-k（8.86）低 17.8%；书中数字 20/20 可复现。</p>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>62 条摘录全部经脚本比对为原文连续子串；公式排版断裂处只摘完整句，未猜补</td></tr><tr><td>② 消化深度</td><td>8/10</td><td>每节有 I 重述与 A1 关联（编译器的有限状态、检索的预计算之争、加权抽奖），并含质疑</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>3 条行动均含对象、时间与可检验验收；全部已跑通并留产物</td></tr><tr><td>④ 卡片复用性</td><td>9/10</td><td>一卡一主张，含出处与真实互链；公式卡带条件与例题指引</td></tr><tr><td>⑤ 覆盖完整性</td><td>8/10</td><td>§3.1–§3.8 全覆盖，⭐/🔴/🔵/⚪ 分拣齐全；无划线可对照，故未满分</td></tr><tr><td>⑥ 可复习性</td><td>8/10</td><td>11 题含应用题与 lab 数据题，协议要求遮住笔记；附未掌握与错题归因</td></tr><tr><td><strong>合计</strong></td><td><strong>51/60</strong></td><td>单项均 ≥8，过线</td></tr></table>
+<h2>自检</h2>
+<pre><code>python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/03-ngram-language-models \
+  --raw /home/yuanwu/notes/reading/slp3/raw/03</code></pre>
+<p>结果见下方「自检结果」小节（每次改动后重跑，以最后一次为准）。</p>
+<h2>自检结果</h2>
+<ul><li>FAIL = 0，WARN = 0（G1–G10 机器可判部分全部通过）。</li><li>人工复核：摘录已逐条回溯原文；思考区无同义改写凑数；labs 脚本均已实际运行。</li><li>遗留说明：中文版公式排版有断裂（根号、求和号跨行），本笔记不摘录公式原字符，改用文字与卡片重述，避免把排版噪声当成原文。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第三版）第 7 章 · 永久卡片（16 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a></div>
+<h1>《Speech and Language Processing》（第三版）第 7 章 · 永久卡片（16 张）</h1>
+<blockquote><p>一卡一主张；离开原书也能读；<code>链接：</code> 指向相关卡、实验或后续章节。</p><p>教材型三类：概念卡 / 公式·定理卡 / 例题卡。本章以概念卡与公式卡为主。</p></blockquote>
+<h2>卡 1　静态嵌入与上下文嵌入的分界</h2>
+<ul><li><strong>Q（正面）</strong>：为什么同一个词在不同句子里需要不同向量？</li><li><strong>A（背面）</strong>：静态嵌入给每个词固定一行，词义与位置无关；上下文嵌入让同一词元在每一层重新聚合邻词信息。前者像词典条目，后者像读句时的临时理解；代词消歧就是最直观的测试。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.1</li><li><strong>链接</strong>：见卡 2（聚合机制）、卡 9（位置信息）；lab-01</li></ul>
+<h2>卡 2　注意力是“打分—归一化—加权求和”</h2>
+<ul><li><strong>Q（正面）</strong>：一个注意力头的最小计算流程是什么？</li><li><strong>A（背面）</strong>：查询与键做点积得到分数，缩放后经 softmax 变成权重，再用权重对值向量求加权和。三步中只有“值”是被搬走的内容，查询和键决定搬运比例。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.1.1</li><li><strong>链接</strong>：见卡 3（为何缩放）、卡 4（多头如何拼接）；lab-01</li></ul>
+<h2>卡 3　缩放点积：除以 √dk 的目的</h2>
+<ul><li><strong>Q（正面）</strong>：为什么点积注意力要除以 √dk，而不是别的常数？</li><li><strong>A（背面）</strong>：若各维近似独立且方差为 1，点积的方差随维度 dk 线性增长。不缩放会让 logits 过大，softmax 饱和、梯度变小；除以 √dk 把方差拉回 1 量级，训练更稳定。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.1.1</li><li><strong>链接</strong>：见卡 2；lab-01 的 dk 对比实验</li></ul>
+<h2>卡 4　多头注意力的形状账</h2>
+<ul><li><strong>Q（正面）</strong>：A 个头怎样拼回模型维度 d，参数量为何与单头相近？</li><li><strong>A（背面）</strong>：每头输出 [1×dv]，拼接成 [1×A·dv]，再乘 Wo（[A·dv]×d）回到 [1×d]。取 dv=d/A，则拼接宽度仍是 d；注意力投影总参数约 4d²，与头数无关。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.1.1、§7.3</li><li><strong>链接</strong>：见卡 3；lab-01 的 <code>attention_params_independent_of_A</code></li></ul>
+<h2>卡 5　残差流：一条共享的 d 维通道</h2>
+<ul><li><strong>Q（正面）</strong>：为什么说 Transformer 块是一条“流”，而不是一串独立层？</li><li><strong>A（背面）</strong>：每个词元位置有一条 d 维通道，从输入嵌入一直通到顶层；注意力和前馈从通道读数，再把增量加回。维度不变使块可以任意堆叠，也使原始词元信息能直达高层。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.2</li><li><strong>链接</strong>：见卡 6（前馈）、卡 8（掩码）；lab-02 的残差消融</li></ul>
+<h2>卡 6　前馈层：逐位置的事实存储器</h2>
+<ul><li><strong>Q（正面）</strong>：前馈层与注意力在信息流上的分工是什么？</li><li><strong>A（背面）</strong>：前馈对每个位置独立作用，权重跨位置共享；它不做词元混合，只做特征变换。隐藏层通常是 4d，占了块内大部分参数，被认为承载较多事实性知识。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.2.1</li><li><strong>链接</strong>：见卡 5；lab-04 的参数拆分</li></ul>
+<h2>卡 7　层归一化归一的是单个词元向量</h2>
+<ul><li><strong>Q（正面）</strong>：LayerNorm 的“层”指 Transformer 层吗？</li><li><strong>A（背面）</strong>：不是。它对单个词元的 d 维向量做 z 分数式标准化，再乘 γ 加 β 恢复表达能力。与 BatchNorm 不同，它不依赖 batch 统计，训练和推理行为一致。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.2.2</li><li><strong>链接</strong>：见卡 6；lab-02 使用 RMSNorm 的简化实现</li></ul>
+<h2>卡 8　因果掩码为什么用 −∞ 而不是 0</h2>
+<ul><li><strong>Q（正面）</strong>：把未来位置的分数设为 0 会怎样？</li><li><strong>A（背面）</strong>：softmax 对 0 取指数得 1，未来词仍会分到可观权重，等于训练时泄题。设为 −∞ 后指数为 0，未来位置权重严格为零；掩码必须加在 softmax 之前。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.3</li><li><strong>链接</strong>：见卡 5；lab-01 的因果扰动检查</li></ul>
+<h2>卡 9　位置嵌入的三种路线</h2>
+<ul><li><strong>Q（正面）</strong>：绝对位置、正弦编码、RoPE 分别在解决什么？</li><li><strong>A（背面）</strong>：绝对位置给每个下标一个可学习向量，简单但长尾位置样本少；正弦编码用固定频率函数，便于外推；RoPE 把相对位移写成查询与键的旋转，直接进入注意力。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.4</li><li><strong>链接</strong>：见卡 5；lab-02 的位置消融</li></ul>
+<h2>卡 10　权重绑定与解嵌入</h2>
+<ul><li><strong>Q（正面）</strong>：语言建模头为什么常复用输入嵌入矩阵？</li><li><strong>A（背面）</strong>：输入端用 E 把 one-hot 映成向量，输出端用 Eᵀ 把向量映回词表分数；共享参数既省显存，又迫使“读词”和“写词”共用同一语义空间。代价是两种映射的梯度可能互相牵制。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.5</li><li><strong>链接</strong>：见卡 1（嵌入）；lab-02 的绑定消融</li></ul>
+<h2>卡 11　贪心与随机采样的两端</h2>
+<ul><li><strong>Q（正面）</strong>：为什么贪心太死板，而纯随机又太野？</li><li><strong>A（背面）</strong>：贪心每步取 argmax，输出确定、易重复；纯随机按全词表概率抽，长尾低概率词总量不小，容易跑偏。两者之间需要用温度或截断来调。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.6.1、§7.6.2</li><li><strong>链接</strong>：见卡 12（温度）、卡 13（截断）；lab-03</li></ul>
+<h2>卡 12　温度只改推理分布</h2>
+<ul><li><strong>Q（正面）</strong>：温度采样改的是模型参数还是输出分布？</li><li><strong>A（背面）</strong>：只改推理。把 logits 除以 τ 再 softmax：τ&lt;1 放大差距、分布更尖，趋近贪心；τ&gt;1 压缩差距、分布更平。模型权重完全不动。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.6.3</li><li><strong>链接</strong>：见卡 11；lab-03 的熵-温度曲线</li></ul>
+<h2>卡 13　top-k 固定名额，top-p 固定质量</h2>
+<ul><li><strong>Q（正面）</strong>：两种截断采样的核心差别是什么？</li><li><strong>A（背面）</strong>：top-k 保留概率最高的 k 个词，k 固定，遇到尖峰或平峰分布时名额可能浪费或不够；top-p 保留累计概率达到 p 的最小词集，候选数随上下文自适应。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.6.4</li><li><strong>链接</strong>：见卡 12；lab-03 的 <code>top_p_retained.png</code></li></ul>
+<h2>卡 14　教师强制与并行训练</h2>
+<ul><li><strong>Q（正面）</strong>：为什么预训练能一次得到 N 个监督样本？</li><li><strong>A（背面）</strong>：训练时每个位置都拿真实历史预测下一词，而不是把模型上一步的输出喂回去；因果掩码又阻止看到目标本身。于是 N 个位置可同时打分，一次前向产生 N 个损失项。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.7</li><li><strong>链接</strong>：见卡 8（掩码）；lab-02 的训练循环</li></ul>
+<h2>卡 15　困惑度 = exp(平均交叉熵)</h2>
+<ul><li><strong>Q（正面）</strong>：困惑度与交叉熵是什么关系？为什么不能跨分词器比？</li><li><strong>A（背面）</strong>：PPL 是测试集概率倒数的 T 次方根，取对数即平均负对数似然，再取 exp 回到 PPL。它按词元数归一化，分词粒度一变，分母和概率都变，所以只适合同一分词器内比较。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.7.1</li><li><strong>链接</strong>：见卡 14；lab-04 的练习 7.3 复算</li></ul>
+<h2>卡 16　KV 缓存省时间不省显存</h2>
+<ul><li><strong>Q（正面）</strong>：自回归推理时 KV 缓存到底缓存什么？</li><li><strong>A（背面）</strong>：缓存历史词元已经算好的键和值，生成新词时只算新词的 Q/K/V，再与缓存拼接。省掉重复投影，但历史 K/V 常驻显存，上下文越长占用越大。</li><li><strong>出处</strong>：《Speech and Language Processing》§7.8</li><li><strong>链接</strong>：见卡 2（注意力）；lab-04 的模型规模表</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

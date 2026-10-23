@@ -1,0 +1,25 @@
+{
+  "sentences": 317,
+  "tokens": 9855,
+  "vocab": 555,
+  "windows": {
+    "2": {
+      "nnz_ratio": 0.0497,
+      "ppmi_nonzero_ratio": 0.0444,
+      "rank": 50,
+      "top1_variance_ratio": 0.0511
+    },
+    "5": {
+      "nnz_ratio": 0.0967,
+      "ppmi_nonzero_ratio": 0.0816,
+      "rank": 50,
+      "top1_variance_ratio": 0.0733
+    },
+    "10": {
+      "nnz_ratio": 0.1416,
+      "ppmi_nonzero_ratio": 0.115,
+      "rank": 50,
+      "top1_variance_ratio": 0.0929
+    }
+  }
+}

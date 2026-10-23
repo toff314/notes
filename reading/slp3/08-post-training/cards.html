@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 8 章 · 永久卡片（15 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a></div>
+<h1>《Speech and Language Processing》第 8 章 · 永久卡片（15 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 指向关联卡、实验产物或待补位置。</p><p>教材型三类：概念卡 / 公式·定理卡 / 例题卡。</p></blockquote>
+<h2>卡 1　后训练的三个阶段各自换掉了什么</h2>
+<ul><li><strong>Q（正面）</strong>：SFT、偏好对齐、RLVR 分别在提供哪种监督信号？</li><li><strong>A（背面）</strong>：SFT 给示范（指令配好答案），偏好对齐给比较（同一提示下哪个回答更好），RLVR 给可验证的对错（代码跑不跑通、数学答案对不对）。三者不是三种损失函数，而是三种&quot;评价来源&quot;；预训练用的是文本自身，后训练把评价换成了人、人或机器的偏好、以及程序判定。</li><li><strong>出处</strong>：《Speech and Language Processing》§8.0、§8.5</li><li><strong>链接</strong>：卡 2（SFT 的监督含义）｜卡 6（偏好判断）｜book-notes §8.5</li></ul>
+<h2>卡 2　SFT 的&quot;监督&quot;指标签来源，不是新损失</h2>
+<ul><li><strong>Q（正面）</strong>：既然 SFT 仍用下一个词预测，为什么叫&quot;监督&quot;微调？</li><li><strong>A（背面）</strong>：因为训练样本里每个指令都配了标准回答，标签是现成的；优化目标仍是交叉熵，与预训练同构。改动只有两处：任务描述放进上下文，梯度只落在回答的 token 上。若指令也计入损失，模型容易学会复述问题，而不是回答问题。</li><li><strong>出处</strong>：§8.1、图 8.1</li><li><strong>链接</strong>：卡 1（三种监督信号）｜book-notes §8.1 思考区</li></ul>
+<h2>卡 3　指令数据的三种来源与各自代价</h2>
+<ul><li><strong>Q（正面）</strong>：人写、旧数据集模板化、模型生成，三种指令数据各自的成本与风险是什么？</li><li><strong>A（背面）</strong>：人写贵但意图干净；模板化最便宜，代价是措辞单一、与真实提问分布有距离；模型生成省人力且措辞多样，但会把生成模型的偏好与错误一起带进来。实践中三者混用，关键是记录每条数据的来源，才能在做消融时归因。</li><li><strong>出处</strong>：§8.1.1</li><li><strong>链接</strong>：卡 4（安全样本配比）｜book-notes §8.1.1</li></ul>
+<h2>卡 4　500 条安全样本为什么可能比规模更重要</h2>
+<ul><li><strong>Q（正面）</strong>：为什么少量安全指令就能明显改变模型行为？</li><li><strong>A（背面）</strong>：因为行为边界由数据配比决定，而不只由总量决定。当绝大多数样本都在奖励&quot;有求必应&quot;时，少量&quot;该拒绝就拒绝&quot;的样本提供了反向梯度；它们出现的频率虽低，却定义了决策边界附近的行为。反过来，这也意味着配比失衡会被规模放大。</li><li><strong>出处</strong>：§8.1.1</li><li><strong>链接</strong>：卡 3｜spinoffs 候选 5</li></ul>
+<h2>卡 5　LoRA 的参数量、前向与部署前提</h2>
+<ul><li><strong>Q（正面）</strong>：对一个 k×d 的权重矩阵做秩为 r 的 LoRA，新增多少参数？&quot;不增加推理时间&quot;有前提吗？</li><li><strong>A（背面）</strong>：新增 k·r + r·d 个参数，前向从 h=xW 变为 h=xW+xAB，其中 A 为 k×r、B 为 r×d。以 4096×4096、r=8 为例，全量 16,777,216 个参数，LoRA 65,536 个，约为 0.39%。把 AB 预先合并进 W 后仍是单次矩阵乘法；但多适配器动态切换时，权重换入换出会带来延迟与显存开销。</li><li><strong>出处</strong>：§8.2</li><li><strong>链接</strong>：卡 2（只对回答计 loss）｜spinoffs 候选 6</li></ul>
+<h2>卡 6　偏好判断为什么比示范便宜</h2>
+<ul><li><strong>Q（正面）</strong>：标注&quot;哪个更好&quot;比&quot;写出好答案&quot;便宜在哪里，代价是什么？</li><li><strong>A（背面）</strong>：比较只需要识别，不需要生产，所以非专家也能做，单位成本低。代价是信息被压成一个二元标签：好在哪、为什么好、是否牺牲了另一个维度，全都没有记录。后续若想分析失败原因，得回到原始候选重新标注。</li><li><strong>出处</strong>：§8.3</li><li><strong>链接</strong>：卡 7（BT 的标量假设）｜卡 8（来源偏差）</li></ul>
+<h2>卡 7　Bradley–Terry：偏好是分差的 sigmoid</h2>
+<ul><li><strong>Q（正面）</strong>：写出 BT 模型，并说明它隐含的两个假设。</li><li><strong>A（背面）</strong>：P(o_i≻o_j|x)=σ(z_i−z_j)。它假设每个候选有一个标量效用，且偏好只由两者效用差决定。隐含假设是：偏好可传递（不会 A≻B≻C≻A），且与候选集合中的其他选项无关。人的选择经常两条都不满足，所以 BT 是有损压缩。</li><li><strong>出处</strong>：§8.3.2</li><li><strong>链接</strong>：卡 6｜卡 9（奖励模型）｜self-test 第 7 题</li></ul>
+<h2>卡 8　三类偏好数据各有各的偏差</h2>
+<ul><li><strong>Q（正面）</strong>：人工标注、社区投票、LLM 评委，偏差分别朝哪个方向？</li><li><strong>A（背面）</strong>：人工标注受指导语与标注规范影响，倾向产出&quot;符合研究者预期&quot;的样本；社区投票反映多数人的口味，流行不等于正确；LLM 评委继承基座模型的偏好，可能偏爱与自己风格相似的答案。混合三者只是把偏差平均，不会让偏差消失。</li><li><strong>出处</strong>：§8.3.1</li><li><strong>链接</strong>：卡 6｜卡 9｜spinoffs 候选 2</li></ul>
+<h2>卡 9　奖励模型是怎样练出来的</h2>
+<ul><li><strong>Q（正面）</strong>：奖励模型的网络结构与损失分别是什么？</li><li><strong>A（背面）</strong>：从预训练 LLM 初始化，去掉语言建模头，换成一个输出标量的线性层；用成对偏好数据最小化 −log σ(r(x,o_w)−r(x,o_l))。它学的是&quot;同一提示下两个回答的分数差&quot;，所以分数只在同提示内可比。</li><li><strong>出处</strong>：§8.3.3、图 8.10</li><li><strong>链接</strong>：卡 7｜卡 10（分布偏移）｜labs/lab-01</li></ul>
+<h2>卡 10　奖励模型的真正风险是分布，不是拟合</h2>
+<ul><li><strong>Q（正面）</strong>：奖励模型在训练集上准确率很高，为什么上线后仍会失效？</li><li><strong>A（背面）</strong>：它只见过某个策略采样出的回答；策略一更新，输入分布就变了。模型会抓住训练时与&quot;获胜&quot;共现的表面特征（长度、格式、语气），这些特征在新分布里可能不再指向质量。lab-01 把长度做成捷径后，训练准确率 0.9995，反转相关性测试掉到 0.007。</li><li><strong>出处</strong>：§8.3.3、§8.4</li><li><strong>链接</strong>：卡 9｜labs/lab-01/out/metrics.json｜spinoffs 候选 2</li></ul>
+<h2>卡 11　生成过程如何映射成 RL 四要素</h2>
+<ul><li><strong>Q（正面）</strong>：把 LLM 对齐写成 RL 问题，动作、状态、策略、奖励分别是什么？</li><li><strong>A（背面）</strong>：动作是每一步选哪个 token；状态是已生成的前缀；策略是那个自回归概率模型；奖励来自偏好数据训练出的打分器，作用于完整回答。映射成立后，信用分配成为核心难题：一个结尾分数要摊到每个 token 的选择上。</li><li><strong>出处</strong>：§8.4</li><li><strong>链接</strong>：卡 12（KL 约束）｜卡 13（DPO）</li></ul>
+<h2>卡 12　KL 项是信任域，不是普通正则</h2>
+<ul><li><strong>Q（正面）</strong>：式 8.7 中的 KL 项在约束什么？β 如何影响它？</li><li><strong>A（背面）</strong>：它约束新策略不要离参考策略太远，保证模型在追求高奖励时不丢掉预训练与 SFT 得到的能力。β 越小，KL 的相对权重越低，策略越敢偏离；β 越大，越保守。它的作用类似&quot;每步允许走多远&quot;，而不是把参数往零拉。</li><li><strong>出处</strong>：§8.4、式 8.7</li><li><strong>链接</strong>：卡 11｜卡 13｜labs/lab-02</li></ul>
+<h2>卡 13　DPO 怎样消掉配分函数</h2>
+<ul><li><strong>Q（正面）</strong>：DPO 的推导关键一步是什么？为什么配分函数会消失？</li><li><strong>A（背面）</strong>：先从 KL 约束目标的闭式解反解出 r(x,o)=β log(π*(o|x)/π_ref(o|x))+β log Z(x)，再代入 BT。因为 BT 只看两个候选的奖励差，同一个提示下的 β log Z(x) 在相减时抵消，于是偏好概率可以直接写成两个策略对数比的 sigmoid，不需要显式奖励模型。</li><li><strong>出处</strong>：§8.4.2、式 8.10–8.13</li><li><strong>链接</strong>：卡 12｜卡 14（β 的双重角色）｜labs/lab-02</li></ul>
+<h2>卡 14　β 不是 KL 预算：它同时缩放奖励与温度</h2>
+<ul><li><strong>Q（正面）</strong>：把 DPO 的 β 调大，会让模型更保守吗？</li><li><strong>A（背面）</strong>：不一定。β 既乘在隐式奖励上，又充当 sigmoid 的温度。固定对数比 margin 时，有效梯度 β·σ(−βm) 在 β≈3.2 处达到峰值，两端都趋零。lab-02 还显示：在单个可分偏好对上，无论 β 取 0.01 还是 0.1，充分训练后策略都会饱和到同一端点，KL 也一样。β 改的是到达速度，不是硬预算。</li><li><strong>出处</strong>：§8.4.2｜labs/lab-02/out/metrics.json</li><li><strong>链接</strong>：卡 13｜labs/lab-02/out/kl_trajectory.png｜spinoffs 候选 4</li></ul>
+<h2>卡 15　best-of-N 的收益被奖励噪声封顶</h2>
+<ul><li><strong>Q（正面）</strong>：增大候选数 N，为什么&quot;选中真最优的概率&quot;会下降，而&quot;期望真实质量&quot;仍在上升？</li><li><strong>A（背面）</strong>：N 越大，取最大值的样本越多，期望质量随极值上升；但奖励带噪时，最大值更可能落在&quot;噪声高&quot;的候选上，所以选中真最优的概率反而降低。lab-03 中 σ=0.5、N=128 时该概率只有 0.46，而 N=2 时是 0.85；σ=2 时奖励高估达 4.66。</li><li><strong>出处</strong>：§8.3.3（best-of-N 用途）、§8.4（带噪奖励）</li><li><strong>链接</strong>：卡 10｜labs/lab-03/out/best_of_n.png｜spinoffs 候选 2</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

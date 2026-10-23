@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 9 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/09-masked-language-models",
+    "anchor": "第9章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch09-t1",
+      "title": "为什么 BERT 不能续写：双向注意力的能力边界",
+      "angle": "观点：为什么 BERT 不能续写——双向注意力换来了理解，也锁死了生成",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S5。S1：教材只用一句话带过「不能生成」，没解释训练目标与推理条件的冲突；S4：工程上仍有大量「拿 BERT 做续写/摘要」的误用，反差强；S5：选型错误直接烧算力，读者能立刻用上。",
+      "sourceAnchor": "《Speech and Language Processing》§9.1「编码器模型不是生成式模型；它们不用来生成文本。」；§9.2.1「对于双向注意力，我们使用图 9.3b 的未掩码版本。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch09-t2",
+      "title": "15% 的代价：从 BERT 到 RoBERTa 的效率账",
+      "angle": "论文：从 BERT 到 RoBERTa——15% 掩码的效率账与四次修补",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S3 + S4 + S6。S3：涉及损失分母、动态掩码、batch 规模、数据量四层技术纵深；S4：BERT 论文把 15% 当默认，RoBERTa 用消融证明 NSP 可删，结论反转明显；S6：RoBERTa、ELECTRA、DeBERTa 均有公开论文与消融表可查。",
+      "sourceAnchor": "《Speech and Language Processing》§9.3.1「训练数据中只有 15% 的输入样本真正用于训练权重。」；§9.3.3「通常使用较大的批量大小，介于 8K 到 32K 个词元之间。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch09-t3",
+      "title": "词级 90 分，实体级 50 分：NER 评估的隐形陷阱",
+      "angle": "观点：词级 90 分，实体级 50 分——NER 评估里最容易被忽略的口径",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S5 + S6。S1：教材点出「训练按词、评估按实体」的不匹配，但没给可操作的检查清单；S5：标注项目、比赛提交、论文对比都直接踩这个坑；S6：CoNLL-2003、OntoNotes 的官方脚本与 seqeval 文档可查。",
+      "sourceAnchor": "《Speech and Language Processing》§9.5.4「对于命名实体标注而言，响应单位是实体而非词。」；同节「一个把 Jane 而非 Jane Villanueva 标注为人名的系统会造成两个错误」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch09-t4",
+      "title": "一个词被切成三瓣之后：WordPiece 与序列标注的对齐难题",
+      "angle": "论文：WordPiece 与序列标注——词级标签如何落到子词，又怎么解回来",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S5。S3：涉及分词、标签复制、首子词解码、CRF 全局约束四层；S5：任何做中文/英文 NER 的工程都会遇到 ## 前缀与词边界不一致。",
+      "sourceAnchor": "《Speech and Language Processing》§9.5.3「对于训练，我们只需把与每个词相关联的金标准标签分配给由它派生出的所有子词词元。」；同节「最简单的做法是使用与一个词的首个子词词元相关联的 argmax BIO 标签。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch09-t5",
+      "title": "多语言模型的「口音」：词表重采样为何救不了低资源语言",
+      "angle": "观点：多语言模型的「口音」——α=0.3 的词表重采样为什么只是止痛药",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 + S4 + S6。S2：Conneau 等（2020）XLM-R 与 Papadimitriou 等（2023）「口音」研究均可溯源；S4：「重采样提升多语言性能」与「低资源表示仍被英语同化」形成反差；S6：XLM-R、mBERT、BLOOM 的多语言报告可查。",
+      "sourceAnchor": "《Speech and Language Processing》§9.3.3「当语言数量变得非常庞大时，多语言模型就会表现出所谓的多语言诅咒」；同节「训练中数量庞大的英语使模型对低资源语言的表示略微更像英语」。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

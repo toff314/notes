@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 02 · 玩具 RAG + 问答评估</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 02 · 玩具 RAG + 问答评估</a></div>
+<h1>Lab 02 · 玩具 RAG + 问答评估</h1>
+<ul><li><strong>对应行动</strong>：actions.md 第 3 条（⇄ book-notes §11.4–§11.6）</li><li><strong>脚本</strong>：<code>toy_rag_eval.py</code></li><li><strong>运行</strong>：<code>cd labs/lab-02 &amp;&amp; python3 toy_rag_eval.py</code></li><li><strong>产物</strong>：<code>out/per_question.csv</code>、<code>out/metrics.csv</code>、<code>out/summary.json</code>、<code>out/rag_compare.png</code></li></ul>
+<h2>设置（这是模拟，不是真实 LLM）</h2>
+<ul><li>20 条事实型问题，每题配一段含答案的短文（魔笛首演年份、卢浮宫所在城市……）。</li><li>另加 <strong>5 条同实体、错误事实的干扰段落</strong>，例如把《魔笛》首演说成 1786 年、把卢浮宫说成在里昂。它们模拟「检索到了看似相关但内容错误的来源」。</li><li>检索：BM25（k1=1.5, b=0.75）取 top-1。</li><li>阅读器：模板抽取器，直接取被检索段落记录里的答案字段，并附上该段落 id 作为引用。<strong>它不会推理，只会抄</strong>，因此本实验能把「检索错误」与「阅读错误」分开。</li><li>三个条件：</li></ul>
+<ol><li><code>closed_book</code>：假设参数里只记住 12/20 条，其余按同类型答案池编造，且<strong>不给引用</strong>；</li><li><code>open_book_top1</code>：检索 top-1 → 阅读器抽答案 + 引用；</li><li><code>open_book_oracle</code>：直接给金标准段落 → 同一个阅读器（隔离检索错误）。</li></ol>
+<h2>结果（实跑输出）</h2>
+<table><tr><th>条件</th><th>命中率</th><th>EM</th><th>字符 F1</th><th>引用率</th><th>引用正确率</th><th>有据答对率</th></tr><tr><td>闭卷</td><td>0.60</td><td>0.60</td><td>0.777</td><td>0.00</td><td>—</td><td>0.00</td></tr><tr><td>开卷 top-1</td><td>0.85</td><td>0.85</td><td>0.877</td><td>1.00</td><td>0.85</td><td>0.85</td></tr><tr><td>开卷（给对段落）</td><td>1.00</td><td>1.00</td><td>1.000</td><td>1.00</td><td>1.00</td><td>1.00</td></tr></table>
+<p>检索 Recall@1 = 0.85；开卷失败题：f02（卢浮宫→里昂）、f11（物种起源→华莱士）、f13（珠峰→中印边界），且这 3 题<strong>全部是「引用了错误来源」</strong>。</p>
+<h2>结论</h2>
+<ol><li><strong>开卷不是无条件更好</strong>：命中率从 0.60 升到 0.85，但剩下 0.15 的失败换了一种形态——从「没根据」变成「有根据但根据是错的」。后一种对用户更危险，因为引用看起来可信。</li><li><strong>引用率 ≠ 引用正确率</strong>：开卷条件引用率 100%，引用正确率只有 85%。只报前者会把这类失败完全掩盖。</li><li><strong>F1 会抬高闭卷成绩</strong>：闭卷命中率 0.60，F1 却有 0.777，因为错误答案与正确答案共享「年」「公里」一类词元。短事实题应同时报 EM。</li><li><strong>oracle 条件把所有损失归给检索</strong>：给对段落时全部答对，说明本实验的阅读器是完美的，85% 与 100% 之间的 15 个点全是检索造成。真实系统里阅读器也会错，那时需要第三个条件（给错段落但允许说「不知道」）来分离。</li></ol>
+<h2>反思</h2>
+<p>我原来把「加 RAG」默认当成准确率提升。这个实验让我看到更准确的说法是：RAG 把错误从「无据的自信」迁移成「有据的自信」，而后者更难被用户识别。真正该盯的指标不是最终的 EM，而是「引用是否支持答案」——它才是 RAG 独有的失效面。另外，我一开始把 <code>open_book_failures</code> 写成空列表，是因为 <code>build_corpus</code> 里把问题字段当成了答案；这类「字段顺序错」的 bug 在真实流水线里同样常见，评测脚本必须先打印几条样本人工看一眼。</p>
+<h2>已知局限</h2>
+<ul><li>闭卷的「记忆」是硬编码集合，不是真实模型的参数记忆，只能说明三类损失可以分开计量。</li><li>阅读器不做改写，答案字符串与标准答案同源，因此 EM 偏乐观。</li><li>干扰段落是人工构造的，比真实检索错误更「干净」。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

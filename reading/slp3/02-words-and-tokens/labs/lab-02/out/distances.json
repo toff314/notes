@@ -1,0 +1,72 @@
+[
+  {
+    "source": "intention",
+    "target": "execution",
+    "distance_sub2": 8,
+    "distance_sub1": 5,
+    "n_ops": 5,
+    "substitutions": 3,
+    "deletions": 1,
+    "insertions": 1
+  },
+  {
+    "source": "recieve",
+    "target": "receive",
+    "distance_sub2": 2,
+    "distance_sub1": 2,
+    "n_ops": 2,
+    "substitutions": 0,
+    "deletions": 1,
+    "insertions": 1
+  },
+  {
+    "source": "seperate",
+    "target": "separate",
+    "distance_sub2": 2,
+    "distance_sub1": 1,
+    "n_ops": 1,
+    "substitutions": 1,
+    "deletions": 0,
+    "insertions": 0
+  },
+  {
+    "source": "definately",
+    "target": "definitely",
+    "distance_sub2": 2,
+    "distance_sub1": 1,
+    "n_ops": 1,
+    "substitutions": 1,
+    "deletions": 0,
+    "insertions": 0
+  },
+  {
+    "source": "accomodate",
+    "target": "accommodate",
+    "distance_sub2": 1,
+    "distance_sub1": 1,
+    "n_ops": 1,
+    "substitutions": 0,
+    "deletions": 0,
+    "insertions": 1
+  },
+  {
+    "source": "teh",
+    "target": "the",
+    "distance_sub2": 2,
+    "distance_sub1": 2,
+    "n_ops": 2,
+    "substitutions": 0,
+    "deletions": 1,
+    "insertions": 1
+  },
+  {
+    "source": "词元化",
+    "target": "词原化",
+    "distance_sub2": 2,
+    "distance_sub1": 1,
+    "n_ops": 1,
+    "substitutions": 1,
+    "deletions": 0,
+    "insertions": 0
+  }
+]

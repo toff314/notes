@@ -1,0 +1,34 @@
+{
+  "source": "/home/yuanwu/books/slp3/zh/md/01-introduction.dual.md",
+  "english_lines": 426,
+  "lines_after_holdout": 423,
+  "train_tokens": 13116,
+  "vocab_size": 2381,
+  "holdout_rule": "剔除包含 'so long and thanks' 的句子",
+  "queries": {
+    "so long and thanks for": {
+      "conditioning": "只使用最后一个词（bigram 的马尔可夫假设）",
+      "prev": "for",
+      "prev_count": 170,
+      "next_token_occurrences": 170,
+      "book_expectation": [
+        "all",
+        "the"
+      ]
+    },
+    "the language": {
+      "conditioning": "只使用最后一个词（bigram 的马尔可夫假设）",
+      "prev": "language",
+      "prev_count": 158,
+      "next_token_occurrences": 158,
+      "book_expectation": []
+    },
+    "in the": {
+      "conditioning": "只使用最后一个词（bigram 的马尔可夫假设）",
+      "prev": "the",
+      "prev_count": 680,
+      "next_token_occurrences": 680,
+      "book_expectation": []
+    }
+  }
+}

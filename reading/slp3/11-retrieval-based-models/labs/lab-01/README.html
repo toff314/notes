@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 01 · 稀疏 vs 稠密检索</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 01 · 稀疏 vs 稠密检索</a></div>
+<h1>Lab 01 · 稀疏 vs 稠密检索</h1>
+<ul><li><strong>对应行动</strong>：actions.md 第 1 条（⇄ book-notes §11.1.1–§11.3）</li><li><strong>脚本</strong>：<code>sparse_vs_dense.py</code>（仅标准库 + numpy + matplotlib）</li><li><strong>运行</strong>：<code>cd labs/lab-01 &amp;&amp; python3 sparse_vs_dense.py</code></li><li><strong>产物</strong>：<code>out/metrics.csv</code>、<code>out/per_query.csv</code>、<code>out/oracle.csv</code>、<code>out/scores.json</code>、<code>out/metrics.png</code>、<code>out/gap_analysis.png</code></li></ul>
+<h2>设置</h2>
+<ul><li>语料：24 篇中文玩具文档，覆盖第 11 章的概念（倒排索引、tf-idf、BM25、双编码器、ColBERT、RAG、引证……）。</li><li>查询：10 条<strong>改写型</strong>查询（刻意避开原文用词），每条带 qrels；其中 q05 有两个相关文档。</li><li>分词：中文按字符二元组，英文/数字按词。</li><li>三种检索器：</li><li><code>tfidf</code>：1+log10(tf) × log10(N/df)，余弦；</li><li><code>bm25</code>：k1=1.5、b=0.75；</li><li><code>dense_ppmi_svd</code>：在<strong>第 11 章原文</strong>（约 1.4 万汉字）上统计窗口 5 的共现矩阵 → PPMI → 截断 SVD 100 维；文档/查询向量为 idf 加权词向量平均。</li><li>上限对照：把查询换成金标准文档的标题（无词汇鸿沟），测同一个系统的 Recall@1。</li></ul>
+<h2>结果（实跑输出）</h2>
+<table><tr><th>系统</th><th>Recall@1</th><th>Recall@3</th><th>Recall@5</th><th>MRR</th></tr><tr><td>tfidf</td><td>0.750</td><td>0.800</td><td>1.000</td><td>0.850</td></tr><tr><td>bm25</td><td>0.750</td><td>0.800</td><td>0.900</td><td>0.842</td></tr><tr><td>dense_ppmi_svd</td><td>0.550</td><td>0.800</td><td>0.900</td><td>0.739</td></tr></table>
+<p>标题查询 Recall@1：tfidf 1.000 / bm25 1.000 / dense 0.792。</p>
+<ul><li>稠密唯一在 top-1 上翻盘的查询是 q07「让模型先查资料再回答」（金标准 d12 检索增强生成）；两个稀疏系统都被 d22（词袋模型）抢走，因为「模型」「回答」在 d22 里更密集。</li><li>稠密在 q03（长文档归一化→BM25）、q06（词汇不匹配）、q09（知识引证）上把正确答案挤出第一，典型原因是查询里几个二元组在背景语料中没共现过，向量被少数几个词主导。</li></ul>
+<h2>结论</h2>
+<ol><li>在这个规模上，<strong>字面匹配仍是最强基线</strong>：BM25 与 tf-idf 的 MRR 都高于共现向量。</li><li>上限对照说明稠密侧不是「方法错」而是「表示没学好」：换成标题查询后它也能到 0.79，但三个系统的落差（1.00 vs 0.79）显示它的向量质量不足以覆盖改写。</li><li>由此得到对 §11.3 的一个补充条件：稠密检索的收益依赖预训练规模与监督信号。玩具共现向量只覆盖语料里出现过的词，遇到词表外的同义说法照样失手。</li><li>对工程的含义：不要因为「语义检索」听起来先进就拆掉 BM25；书里推荐的混合方案（先 BM25 召回、再神经重排）在这个实验里是有依据的。</li></ol>
+<h2>反思</h2>
+<p>我原来以为「换成稠密向量就一定更能处理同义改写」。实跑后看到的是：稠密在<strong>训练分布内</strong>的同义关系上占优，在分布外的新说法上和稀疏一样瞎。真正拉开差距的是预训练见过多少改写对，而不是向量这个形式。另一个意外是 q07：稠密赢的那一题，赢的原因是背景语料里「资料/回答」和「检索」共现得多，而不是它「理解了」问题——这提醒我别把一次翻盘当成语义能力的证据。</p>
+<h2>复现说明</h2>
+<p><code>BG_PATH</code> 指向 <code>/home/yuanwu/books/slp3/zh/md/11-retrieval-based-models.md</code>；文件不存在时自动退化为用 24 篇玩具文档当背景语料，结果会不同（<code>scores.json</code> 的 <code>dense_background</code> 字段会记录实际来源）。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

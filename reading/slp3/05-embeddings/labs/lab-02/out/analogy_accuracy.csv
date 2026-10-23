@@ -1,0 +1,6 @@
+seed,accuracy,n_questions
+0,0.750,20
+1,0.750,20
+2,0.700,20
+mean,0.733,20
+range,0.050,20

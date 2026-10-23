@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 1 章 · 永久卡片（16 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a></div>
+<h1>《Speech and Language Processing》第 1 章 · 永久卡片（16 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 指向关联卡或实验。</p><p>教材型三类：概念卡 / 公式·定理卡 / 例题卡。</p></blockquote>
+<h2>卡 1　语言模型的最小定义是什么</h2>
+<ul><li><strong>Q（正面）</strong>：不用&quot;人工智能&quot;&quot;助手&quot;这些词，语言模型最核心的定义是什么？</li><li><strong>A（背面）</strong>：给它一段前缀，它输出&quot;下一个位置可能是什么&quot;的整张概率表。它不先形成完整句子再输出，而是一次只算下一步。</li><li>出处：《Speech and Language Processing》§1.1</li><li>链接：卡 2（把这个定义变成生成循环）｜卡 11（用概率表算困惑度）</li></ul>
+<h2>卡 2　自回归语言模型&quot;自&quot;在哪里</h2>
+<ul><li><strong>Q（正面）</strong>：因果语言模型 / 自回归语言模型与普通语言模型的区别是什么？</li><li><strong>A（背面）</strong>：生成时把刚采样出的 token 追加回输入，再预测下一个；&quot;自&quot;指模型以自己刚生成的内容为条件。它从左到右，不是一次规划全句。</li><li>出处：§1.1</li><li>链接：卡 1｜卡 14（推理时也是在跑这个循环）</li></ul>
+<h2>卡 3　token 与词是什么关系</h2>
+<ul><li><strong>Q（正面）</strong>：一个 token 一定等于一个词吗？</li><li><strong>A（背面）</strong>：不一定。token 是模型处理文本的最小单位，可能是一个词、词的一部分，或带空格的片段；同一个词在不同大小写/语言下会被切成不同数量。建模前先把词序列转成 token 序列。</li><li>出处：§1.1</li><li>链接：卡 10（可验证约束常以 token 计）｜第 2 章 BPE</li></ul>
+<h2>卡 4　缩放定律在说什么</h2>
+<ul><li><strong>Q（正面）</strong>：固定计算预算时，参数量与数据量应该怎么分配？</li><li><strong>A（背面）</strong>：Hoffmann 等人的经验规律：算力 C 固定时，最优参数量 N 大致按 C 的 1/2 次方增长，最优数据 token 数 D 大致与 C 同阶增长。实践含义是&quot;参数和数据要一起加&quot;，不是只堆参数。</li><li>出处：§1.1（Hoffmann et al., 2022）</li><li>链接：卡 6（预训练的数据规模）｜lab-01（小语料的稀疏性反例）</li></ul>
+<h2>卡 5　分布假说的主张是什么</h2>
+<ul><li><strong>Q（正面）</strong>：为什么&quot;看上下文&quot;就能学到词义？</li><li><strong>A（背面）</strong>：如果两个词经常出现在相似的邻近词环境里，它们很可能意义相近。意义的一部分可以从共现统计中习得，不必依赖词典或外部标注。</li><li>出处：§1.2（第 5 章展开）</li><li>链接：卡 6（预训练把这条假说工程化）｜卡 15（香农游戏是它的预测版）</li></ul>
+<h2>卡 6　预训练到底在做什么</h2>
+<ul><li><strong>Q（正面）</strong>：预训练阶段的目标函数与产物是什么？</li><li><strong>A（背面）</strong>：在海量文本上反复做&quot;给定前文预测下一个 token&quot;，用预测误差更新权重；产物是一个会续写、并附带语言/世界知识的基座模型。知识不是单独存进去的条目。</li><li>出处：§1.2、§1.6.1</li><li>链接：卡 4（规模）｜卡 7（后三个阶段补它的短板）</li></ul>
+<h2>卡 7　四个训练阶段各自补什么短板</h2>
+<ul><li><strong>Q（正面）</strong>：预训练、指令微调、偏好对齐、RLVR 的分工是什么？</li><li><strong>A（背面）</strong>：预训练给知识与续写能力；指令微调教&quot;按指令给回答&quot;的格式；偏好对齐教&quot;两个回答里选哪个&quot;的取舍；RLVR 用可自动判对错的任务练多步推理。后一阶段解决前一阶段暴露的失败。</li><li>出处：§1.6、图 1.7</li><li>链接：卡 8｜卡 9｜卡 10</li></ul>
+<h2>卡 8　指令微调为什么能泛化到没见过的任务</h2>
+<ul><li><strong>Q（正面）</strong>：SFT 训练的是具体任务，为什么模型能处理新指令？</li><li><strong>A（背面）</strong>：它学到的似乎不是任务清单，而是&quot;看到指令就产出符合指令的回答&quot;这一元技能；因此任务类型混合比某一任务的细节更重要。</li><li>出处：§1.6.2</li><li>链接：卡 7｜卡 9（偏好对齐进一步教取舍）</li></ul>
+<h2>卡 9　偏好对齐与指令微调的反馈有何不同</h2>
+<ul><li><strong>Q（正面）</strong>：既然 SFT 已经会答题，偏好对齐额外告诉模型什么？</li><li><strong>A（背面）</strong>：SFT 只示范&quot;该怎么答&quot;；偏好对齐给出&quot;选中 vs 拒绝&quot;的成对比较，因此还能传递&quot;不该说什么&quot;。它优化的是相对偏好，不要求被选中的回答绝对正确。</li><li>出处：§1.6.3</li><li>链接：卡 7｜卡 10｜§1.10 谄媚性</li></ul>
+<h2>卡 10　RLVR 的&quot;可验证&quot;指什么</h2>
+<ul><li><strong>Q（正面）</strong>：什么样的任务适合带可验证奖励的强化学习？</li><li><strong>A（背面）</strong>：答案能被程序自动判对错的任务，例如数学题；也包括用格式约束（关键词、JSON、长度、选项）把开放任务改造成可判定任务。被验证的是约束是否满足，不一定是内容真理。</li><li>出处：§1.6.4</li><li>链接：卡 7｜卡 13（约束也可被刷分）</li></ul>
+<h2>卡 11　困惑度怎么算、怎么读</h2>
+<ul><li><strong>Q（正面）</strong>：困惑度的定义与比较前提是什么？</li><li><strong>A（背面）</strong>：对长度 N 的文本，PP = exp(−(1/N) Σ ln p(w_i | 上文))。越低表示模型给正确词的概率越高。它只在同一词表、同一测试集、同一 OOV 口径下可比；零概率会让它变成无穷大。</li><li>出处：§1.9.2（第 3 章给细节）</li><li>链接：lab-02（∞ 与平滑对比）｜卡 1</li></ul>
+<h2>卡 12　数据污染为什么会让榜单失真</h2>
+<ul><li><strong>Q（正面）</strong>：模型在网页上训练，为什么这会威胁评测？</li><li><strong>A（背面）</strong>：公开测试集常常也在网上，题目可能进入训练语料；模型等于提前见过考题，准确率被高估。缓解办法包括公开训练数据、报告训练集与测试集的重叠。</li><li>出处：§1.9.1</li><li>链接：卡 13（另一种指标失真）｜卡 7</li></ul>
+<h2>卡 13　代理指标与古德哈特定律</h2>
+<ul><li><strong>Q（正面）</strong>：BLEU、chrF、词错误率这类指标的风险是什么？</li><li><strong>A（背面）</strong>：它们用可自动计算的相似度替代&quot;质量&quot;，便宜但不等价；一旦团队以它为目标，就会优化指标本身的漏洞（如词重叠）而非真实目标，指标作为代理反而变差。这就是古德哈特定律。</li><li>出处：§1.9.4</li><li>链接：lab-04（集合 F1 被词沙拉刷满）｜卡 10</li></ul>
+<h2>卡 14　上下文内学习改了什么</h2>
+<ul><li><strong>Q（正面）</strong>：few-shot 提示让模型&quot;学会&quot;了新任务，它的权重变了吗？</li><li><strong>A（背面）</strong>：没有。改变的只是输入上下文和网络激活值；对话结束，这些&quot;学到的东西&quot;就消失。它与微调是两种不同机制，不能混为一谈。</li><li>出处：§1.7.1</li><li>链接：卡 2（同一个生成循环）｜卡 8（真正的权重更新）</li></ul>
+<h2>卡 15　香农游戏在测什么</h2>
+<ul><li><strong>Q（正面）</strong>：一个人不断猜下一个字母/词、猜错被纠正，这个游戏能说明什么？</li><li><strong>A（背面）</strong>：它把&quot;预测&quot;变成可体验的实验：哪些位置容易猜、哪些位置总被纠正，反映了语言中信息与不确定性的分布。它也是预训练&quot;猜错就更新&quot;的隐喻原型。</li><li>出处：§1.2.2</li><li>链接：lab-03（字母模型复现纠正分布）｜卡 6</li></ul>
+<h2>卡 16　拟人化与意向立场</h2>
+<ul><li><strong>Q（正面）</strong>：说模型&quot;理解&quot;&quot;想要&quot;时，我们到底在做什么？</li><li><strong>A（背面）</strong>：把人类特征、情感或认知归给非人实体，并把它当作有信念与意图的主体来解释——这就是意向立场。它可以方便描述行为，但会误导对能动性与机制的理解。</li><li>出处：§1.11（Dennett, 2009）</li><li>链接：卡 1（行为层面的定义更安全）｜§1.10 谄媚性</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

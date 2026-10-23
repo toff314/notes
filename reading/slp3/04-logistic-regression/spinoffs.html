@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 4 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a></div>
+<h1>《Speech and Language Processing》第 4 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>锚点是待核线索，不是事实；下游写作前须独立搜证。筛选遵循 S1–S6（至少命中 2 条）。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>99.99% 准确率的分类器为什么可能是废的</td><td>write-zhihu-tech</td><td>S4+S5+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>从最大熵到逻辑回归：同一模型的两次独立发明</td><td>write-tech-tutorial</td><td>S2+S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>softmax 输出的概率，为什么不能直接当置信度</td><td>write-zhihu-tech</td><td>S1+S4+S6</td><td>P0</td><td>短评/标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>手推逻辑回归梯度：为什么最后只剩 (ŷ−y)x</td><td>write-tech-tutorial</td><td>S1+S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>毒性检测器为什么会误伤盲人和 AAVE 使用者</td><td>write-zhihu-tech</td><td>S2+S4+S6</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<hr>
+<h3>1. 99.99% 准确率的分类器为什么可能是废的</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：99.99% 准确率的分类器为什么可能是废的——从「无馅饼」推文检测器说起</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§4.9「设想我们查看了 100 万条推文……准确率为 999,900/1,000,000，即 99.99%！」</li><li><strong>为什么</strong>：命中 <strong>S4 + S5 + S6</strong>。S4 有强烈反差：一个把所有推文都判成“无关”的分类器拿到 99.99% 准确率却毫无用处；S5 有现实落点：垃圾邮件、疾病筛查、内容审核都存在同类陷阱；S6 可查外部权威源（scikit-learn 的 imbalance 文档、Saito &amp; Rehmsmeier 2015 的 PR 曲线论文）。</li><li><strong>增益</strong>：① 相对本书：把书中一个教学例子扩成“指标选择决策树”，补上 PR-AUC、代价敏感阈值；② 对读者：下次看到“准确率 99%”会先问正类占多少、漏报代价多大。</li><li><strong>素材种子</strong>：历史溯源（准确率何时开始被质疑）｜原理（混淆矩阵四格）｜争议（F1 是否被滥用）｜现实（医疗筛查与内容审核）。</li><li><strong>缺口（下游必须自己搜）</strong>：需要真实的类别不平衡数据集与已发表指标对比，不能只依赖本书数字。</li><li><strong>体量建议</strong>：标准长文。</li><li><strong>待核</strong>：❓ 书中 100 万/100 条的数字是虚构示例，引用时须标注为思想实验。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>2. 从最大熵到逻辑回归：同一模型的两次独立发明</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：从最大熵到逻辑回归——同一模型在统计学与 NLP 的两次独立发明</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》历史注记「在 20 世纪 90 年代初，逻辑回归在 IBM Research 以最大熵建模……之名被开发并应用于 NLP」</li><li><strong>为什么</strong>：命中 <strong>S2 + S3 + S6</strong>。S2 有可溯源的人与机构：Cox (1969)、Sankoff &amp; Labov (1979)、Berger et al. (1996)、Ratnaparkhi (1996/1997)；S3 有技术纵深：最大熵约束、指数族、与 softmax 的等价推导；S6 原始论文均可查。</li><li><strong>增益</strong>：① 相对本书：书中只有一段历史注记，文章可补上“为什么两条路线会汇合”的推导与时间线；② 对读者：理解 softmax 不是凭空发明的技巧，而是最大熵原则在分类上的解。</li><li><strong>素材种子</strong>：人物（Cox、Berger）｜历史（IBM maxent 与统计学的平行发展）｜原理（指数族等价性）｜争议（命名之争）。</li><li><strong>缺口（下游必须自己搜）</strong>：Berger 1996 与 Cox 1969 原文、maxent 在词性标注上的早期结果。</li><li><strong>体量建议</strong>：标准长文。</li><li><strong>待核</strong>：❓ 各路线“独立发现”的程度需按原始文献核实，避免写成单一发明叙事。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>3. softmax 输出的概率，为什么不能直接当置信度</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：softmax 输出的是概率，不是置信度——模型校准这件事为什么总被忽略</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§4.7.2「逻辑回归为每个类别学习一种原型表示，使得输入的向量被分配给 K 个类别中与它最相似的类别 k」</li><li><strong>为什么</strong>：命中 <strong>S1 + S4 + S6</strong>。S1 书中讲而未透：只把 softmax 当概率，没有讨论温度、过参数化与校准；S4 有反差：同一个 argmax 可以对应完全不同的概率分布；S6 有权威外部源（Guo et al. 2017 的 calibration 论文、temperature scaling）。</li><li><strong>增益</strong>：① 相对本书：把“softmax 归一化”与“概率可信”拆开，补上 ECE、温度缩放；② 对读者：知道什么时候能用阈值卡置信度、什么时候只会得到过度自信的分数。</li><li><strong>素材种子</strong>：原理（logit 尺度与温度）｜历史（Guo 2017 校准研究）｜争议（现代网络是否仍然过度自信）｜现实（内容审核的置信度阈值）。</li><li><strong>缺口（下游必须自己搜）</strong>：需要至少一个可复现的校准实验，不能只做概念解释。</li><li><strong>体量建议</strong>：短评或标准长文。</li><li><strong>待核</strong>：❓ 书中未使用“校准/ECE”术语，相关结论须由外部文献支撑。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>4. 手推逻辑回归梯度：为什么最后只剩 (ŷ−y)x</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：手推逻辑回归梯度——从交叉熵到 (ŷ−y)x 的每一步</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§4.15「sigmoid 的（非常优雅的）导数」与式 4.62</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S6</strong>。S1 书中把推导压缩成几行跳步，初学者容易卡在链式法则；S3 有技术纵深：log 导数、sigmoid 导数、链式法则、与反向传播的衔接；S6 可用矩阵求导讲义与自动微分文档交叉验证。</li><li><strong>增益</strong>：① 相对本书：把跳步补全，并用数值梯度做“验算”，让读者相信公式；② 对读者：获得一个能迁移到神经网络推导的模板，而不是背结论。</li><li><strong>素材种子</strong>：原理（逐步求导）｜工具（数值梯度校验）｜关联（反向传播）｜常见错误（漏乘 x_j、符号取反）。</li><li><strong>缺口（下游必须自己搜）</strong>：矩阵形式的梯度推导、自动微分框架的实现细节。</li><li><strong>体量建议</strong>：标准长文，配可运行代码。</li><li><strong>待核</strong>：❓ 中文版公式 OCR 有错位，引用公式时以英文原版为准。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>5. 毒性检测器为什么会误伤盲人和 AAVE 使用者</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：毒性检测器的假正例，正在让谁闭嘴</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§4.12「一些广泛使用的毒性分类器会错误地将本身无毒、只是提及诸如女性……或只是使用了非裔美国人白话英语这类语言变体所特有语言特征的句子，标记为有毒」</li><li><strong>为什么</strong>：命中 <strong>S2 + S4 + S6</strong>。S2 可溯源到具体研究（Park et al. 2018、Hutchinson et al. 2020、Sap et al. 2019、Davidson et al. 2019）；S4 有强烈反差：以“减少伤害”为目标的系统本身在制造伤害；S6 原论文与后续复现均可查。</li><li><strong>增益</strong>：① 相对本书：把一段文献综述扩成“错误类型—受影响群体—缓解手段”的分析框架；② 对读者：理解为什么内容审核不能只看总体 F1，还要看分组假正例率。</li><li><strong>素材种子</strong>：人物（各论文作者与受影响社群）｜原理（假正例与消声）｜争议（是否应放弃毒性分类）｜现实（平台审核与模型卡片）。</li><li><strong>缺口（下游必须自己搜）</strong>：各研究的具体数据、后续模型是否改善、平台政策变化。</li><li><strong>体量建议</strong>：标准长文。</li><li><strong>待核</strong>：❓ 书中引用的年份与结论需按原文核对；避免把相关性写成因果。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

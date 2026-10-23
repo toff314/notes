@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a></div>
+<h1>读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第 3 版（中文译文）　来源：<code>raw/09-masked-language-models.md</code></li><li>页码口径：中文译文无印刷页码，<strong>一律用 <code>§x.y</code> 节号定位</strong>（与 <code>raw/09/meta.json</code> 的 <code>note</code> 一致）</li><li>阅读目标：理解（<code>meta.json</code> 的 <code>goal</code>）；不用于应试刷题</li><li><strong>书型判定：教材型</strong>。依据：§9.1–§9.6 呈「章—节—子节」三级编号；含 9.1/9.2/9.4/9.5/9.9 五组编号公式与 9.1–9.10 十张图；每节先给定义框（BERT、MLM、NSP、BIO 等）再展开；章末有 8 条总结。原文<strong>没有习题</strong>，因此例题卡以正文例子（图 9.4、图 9.9、MultiNLI 例句）替代。</li><li>交叉对照：<code>raw/lecture-notes/</code> 未提供，本次不做「书 ↔ 课堂」对照</li><li>特殊说明：本章「历史注记」原文只有一句「历史部分待定。」，无可摘录内容，已在 §9.6 的分拣表中登记为 ⚪，不静默丢弃</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章 / 节</th><th>状态</th><th>说明</th></tr><tr><td>§9.1 语言模型的三种架构</td><td>✅ 本次完成</td><td>摘录 5 条</td></tr><tr><td>§9.2–§9.2.1 双向 Transformer 编码器与双向掩码架构</td><td>✅ 本次完成</td><td>两节合并为一个三区块，摘录 8 条</td></tr><tr><td>§9.3 训练双向编码器</td><td>✅ 本次完成</td><td>摘录 4 条</td></tr><tr><td>§9.3.1 掩码词：15% 与 80/10/10</td><td>✅ 本次完成</td><td>摘录 7 条</td></tr><tr><td>§9.3.2 下一句预测（NSP）</td><td>✅ 本次完成</td><td>摘录 4 条</td></tr><tr><td>§9.3.3 训练方案与多语言词表</td><td>✅ 本次完成</td><td>摘录 5 条</td></tr><tr><td>§9.4–§9.4.2 面向分类的微调（序列 / 序列对）</td><td>✅ 本次完成</td><td>三节合并，摘录 6 条</td></tr><tr><td>§9.5 引言 + §9.5.1 命名实体</td><td>✅ 本次完成</td><td>引言两句话并入 §9.5.1，摘录 5 条</td></tr><tr><td>§9.5.2 BIO 标注</td><td>✅ 本次完成</td><td>摘录 4 条</td></tr><tr><td>§9.5.3 序列标注与子词对齐</td><td>✅ 本次完成</td><td>摘录 4 条</td></tr><tr><td>§9.5.4 NER 的评估</td><td>✅ 本次完成</td><td>摘录 5 条</td></tr><tr><td>§9.6 小结</td><td>✅ 本次完成</td><td>摘录 4 条</td></tr><tr><td>历史注记</td><td>⚪ 无内容</td><td>原文「待定」，无事实可摘，保留条目</td></tr><tr><td>第 10 章</td><td>⬜ 未处理</td><td>不在本次范围</td></tr></table>
+<h2>实际输入（必填 · G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>raw/09-masked-language-models.md</code></td><td>第 9 章中文译文全文，496 行；软链到 <code>/home/yuanwu/books/slp3/zh/md/09-masked-language-models.md</code></td></tr><tr><td>书目元信息（可选）</td><td><code>raw/09/meta.json</code></td><td><code>goal=理解</code>；声明「无印刷页码，引用用 §节号」</td></tr><tr><td>划线摘录（可选）</td><td>未提供</td><td>因此无划线去向表</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>因此无 <code>cross-check.md</code></td></tr></table>
+<h2>覆盖审计（逐节核对）</h2>
+<table><tr><th>原文节</th><th>对应笔记块</th><th>摘录条数</th><th>是否在 3–8 区间</th><th>逐字回溯</th></tr><tr><td>---</td><td>---</td><td>---:</td><td>---</td><td>---</td></tr><tr><td>§9.1</td><td>第 9.1 节</td><td>5</td><td>✅</td><td>✅ 全部为原文连续子串</td></tr><tr><td>§9.2 / §9.2.1</td><td>第 9.2–9.2.1 节</td><td>8</td><td>✅（上限）</td><td>✅</td></tr><tr><td>§9.3</td><td>第 9.3 节</td><td>4</td><td>✅</td><td>✅</td></tr><tr><td>§9.3.1</td><td>第 9.3.1 节</td><td>7</td><td>✅</td><td>✅</td></tr><tr><td>§9.3.2</td><td>第 9.3.2 节</td><td>4</td><td>✅</td><td>✅</td></tr><tr><td>§9.3.3</td><td>第 9.3.3 节</td><td>5</td><td>✅</td><td>✅</td></tr><tr><td>§9.4 / §9.4.1 / §9.4.2</td><td>第 9.4–9.4.2 节</td><td>6</td><td>✅</td><td>✅</td></tr><tr><td>§9.5 引言 / §9.5.1</td><td>第 9.5–9.5.1 节</td><td>5</td><td>✅</td><td>✅</td></tr><tr><td>§9.5.2</td><td>第 9.5.2 节</td><td>4</td><td>✅</td><td>✅</td></tr><tr><td>§9.5.3</td><td>第 9.5.3 节</td><td>4</td><td>✅</td><td>✅</td></tr><tr><td>§9.5.4</td><td>第 9.5.4 节</td><td>5</td><td>✅</td><td>✅</td></tr><tr><td>§9.6</td><td>第 9.6 节</td><td>4</td><td>✅</td><td>✅</td></tr></table>
+<p>审计方法：把每条 <code>「…」</code> 去掉空白后与 <code>09-masked-language-models.md</code> 全文做子串比对；本表 61 条摘录全部命中，无改写、无凭印象转述。原文中的公式排版噪声（§9.3.1 的 <code>LMLM = −1 X ... |M|</code> 被拆行）只在「可疑处」说明，摘录区不做脑补拼接。</p>
+<h2>产物清单</h2>
+<ul><li><code>book-notes.md</code>：主笔记，12 个章节块，约 8.3k 汉字；每块含摘录 / 思考 / 行动三区，教材型优先级标记齐备</li><li><code>cards.md</code>：永久卡片 14 张（概念卡 7、公式/定理卡 5、例题/方法卡 2），全部带 <code>出处</code> 与 <code>链接</code></li><li><code>self-test.md</code>：提取自测 12 题，含「提取自测协议（遮住笔记作答）」、答案解析指向、未掌握区、例题重做记录</li><li><code>actions.md</code>：3 条可执行行动，逐条对应 <code>labs/lab-01</code>–<code>lab-03</code></li><li><code>spinoffs.md</code>：5 条衍生选题（3 条 <code>观点：</code> + 2 条 <code>论文：</code>），含锚点 / 为什么 / 两段式增益 / 发布登记</li><li><code>glossary.md</code>：24 条术语表（术语 / 原文缩引 / 节号 / 我的话）</li><li><code>labs/</code>：3 个可运行实验 + <code>labs/index.md</code> 行动闭环索引</li><li><code>cross-check.md</code>：未产出（未提供课堂笔记）</li></ul>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>判据</th></tr><tr><td>---</td><td>---:</td><td>---</td></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>61 条摘录全部逐字命中原文并带 §节号；公式噪声处标「可疑」不脑补</td></tr><tr><td>② 消化深度</td><td>9/10</td><td>思考区全部以【我】开头，含重述、经验关联与质疑；未出现同义改写凑数</td></tr><tr><td>③ 行动可执行性</td><td>8/10</td><td>3 条行动均有动词、对象、截止时间与验收；实验脚本全部实际运行</td></tr><tr><td>④ 卡片复用性</td><td>9/10</td><td>一卡一主张、离开原书可读；<code>链接</code> 指向具体卡号而非全部「待补」</td></tr><tr><td>⑤ 覆盖完整性</td><td>9/10</td><td>§9.1–§9.6 全覆盖；无划线可登记；历史注记与未读章节均登记去向</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>12 题覆盖全部 ⭐ 节，含协议、答案解析指向、未掌握区与例题重做记录</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>达标</td></tr></table>
+<h2>复现命令</h2>
+<pre><code># 机器自检
+python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/09-masked-language-models \
+  --raw /home/yuanwu/notes/reading/slp3/raw/09
+
+# 三个实验
+cd labs/lab-01 &amp;&amp; python3 lab01_mask_policy.py
+cd ../lab-02 &amp;&amp; python3 lab02_toy_mlm.py
+cd ../lab-03 &amp;&amp; python3 lab03_bio_alignment.py</code></pre>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

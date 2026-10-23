@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-02：四种平滑方法的困惑度对比</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a><a href="../index.html">labs · 行动执行闭环（第 3 章）</a><a href="README.html">lab-02：四种平滑方法的困惑度对比</a></div>
+<h1>lab-02：四种平滑方法的困惑度对比</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 第 2 条：在同一 trigram 测试集上比较 MLE、拉普拉斯、加 k、Jelinek-Mercer 插值、愚蠢回退，验证书 §3.6 的定性判断。</p>
+<h2>方法</h2>
+<ul><li>语料与切分同 lab-01（<code>../shared_corpus.py</code>，seed=7）。</li><li>模型：trigram；词表 68 个（含 <code>&lt;unk&gt;</code>）。</li><li>平滑：</li><li>MLE：<code>C(ctx,w)/C(ctx)</code>，未见 trigram 概率为 0；</li><li>拉普拉斯：k=1；</li><li>加 k：k=0.1 / 0.01 / 0.001；</li><li>插值：<code>λ1·P_uni + λ2·P_bi + λ3·P_tri</code>，在 dev 上以 0.05 为步长网格搜索，最大化对数似然；</li><li>愚蠢回退：λ=0.4，逐级回退到 unigram，不归一化。</li><li>指标：测试集逐 token 困惑度；愚蠢回退只能算&quot;伪困惑度&quot;（分数非概率）。</li></ul>
+<h2>运行</h2>
+<pre><code>python3 smoothing_compare.py</code></pre>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/metrics.csv</code></td><td>7 种设置的 dev/test 困惑度与备注（MLE 记为 inf）</td></tr><tr><td><code>out/smoothing_ppl.png</code></td><td>平滑方法对比柱状图（对数纵轴，MLE=∞ 未画）</td></tr><tr><td><code>out/dev_vs_test.png</code></td><td>各方法 dev 与 test 困惑度对照</td></tr><tr><td><code>out/lambdas.json</code></td><td>调参得到的最优插值权重</td></tr><tr><td><code>out/backoff_examples.json</code></td><td>10 个 trigram 计数为 0 的回退实例</td></tr></table>
+<h2>关键结果（实测）</h2>
+<table><tr><th>方法</th><th>dev</th><th>test</th></tr><tr><td>MLE</td><td>inf</td><td>inf</td></tr><tr><td>拉普拉斯（k=1）</td><td>17.44</td><td>18.44</td></tr><tr><td>加 k（k=0.1）</td><td>9.55</td><td>9.92</td></tr><tr><td>加 k（k=0.01）</td><td><strong>8.99</strong></td><td><strong>8.86</strong></td></tr><tr><td>加 k（k=0.001）</td><td>11.87</td><td>11.06</td></tr><tr><td>插值</td><td>6.62</td><td><strong>7.28</strong></td></tr><tr><td>愚蠢回退（λ=0.4）</td><td>5.91</td><td>6.52（伪困惑度，不可与上列直接比）</td></tr></table>
+<p>最优插值权重：<code>(λ_uni, λ_bi, λ_tri) = (0.10, 0.70, 0.20)</code>，和为 1.00。</p>
+<h2>结论</h2>
+<ul><li>MLE 在测试集上必然出现未见 trigram，困惑度直接变成 inf——这不是数值问题，而是模型不可用。</li><li>拉普拉斯把已见事件压得太狠（18.44），加 k 降到 0.01 时最好（8.86）；再降到 0.001 反而回升（11.06），说明&quot;少挪一点&quot;存在最优点。</li><li>插值（7.28）比最优 add-k 再低 <strong>17.8%</strong>，与书 §3.6.3 的判断一致：混合不同阶比单阶加 k 更稳。</li><li>愚蠢回退的数字最小，但它不归一化，不能当概率解释；这也解释书里为什么把它叫&quot;愚蠢&quot;。</li></ul>
+<h2>反思</h2>
+<p>我原本以为&quot;平滑越轻越好&quot;，实测 k=0.001 反而比 k=0.01 差：过度相信计数会让模型对少量未见组合重新变得过严。另一个意外是插值权重里 unigram 只有 0.10，bigram 占 0.70，说明这份语料上低阶信息几乎被 bigram 吸收。下次应把 dev 再切一半做&quot;权重稳定性&quot;检验，避免 λ 只对一份开发集过拟合。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

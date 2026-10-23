@@ -1,0 +1,72 @@
+[
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FP",
+    "span": "Mt. [PER]"
+  },
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FP",
+    "span": "Sanitas [LOC]"
+  },
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FP",
+    "span": "Sunshine [PER]"
+  },
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FP",
+    "span": "Canyon [PER]"
+  },
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FN",
+    "span": "Mt. Sanitas [LOC]"
+  },
+  {
+    "sentence": "Mt. Sanitas is in Sunshine Canyon .",
+    "error": "FN",
+    "span": "Sunshine Canyon [LOC]"
+  },
+  {
+    "sentence": "Jane Villanueva works at United Airlines Holding .",
+    "error": "FP",
+    "span": "works [ORG]"
+  },
+  {
+    "sentence": "Jane Villanueva works at United Airlines Holding .",
+    "error": "FP",
+    "span": "Airlines Holding [ORG]"
+  },
+  {
+    "sentence": "Jane Villanueva works at United Airlines Holding .",
+    "error": "FN",
+    "span": "United Airlines Holding [ORG]"
+  },
+  {
+    "sentence": "Tim Wagner spoke in Chicago .",
+    "error": "FP",
+    "span": "Tim [PER]"
+  },
+  {
+    "sentence": "Tim Wagner spoke in Chicago .",
+    "error": "FP",
+    "span": "Wagner [PER]"
+  },
+  {
+    "sentence": "Tim Wagner spoke in Chicago .",
+    "error": "FP",
+    "span": "in [LOC]"
+  },
+  {
+    "sentence": "Tim Wagner spoke in Chicago .",
+    "error": "FN",
+    "span": "Tim Wagner [PER]"
+  },
+  {
+    "sentence": "Apple opened a store in Palo Alto .",
+    "error": "FP",
+    "span": "a [LOC]"
+  }
+]

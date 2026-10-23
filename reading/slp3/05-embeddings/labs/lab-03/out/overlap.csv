@@ -1,0 +1,13 @@
+target,jaccard_w2_vs_w5,jaccard_w5_vs_w10,top10_w2,top10_w5
+word,0.538,0.429,a|is|of|context|target|the|c|occurs|each|represents,target|each|context|row|a|occurs|to|defined|c|the
+words,0.250,0.667,two|are|say|or|whose|its|have|similar|they|more,similar|two|are|their|tend|have|occur|contexts|neighboring|other
+meaning,0.053,0.333,should|two|changes|probably|to|how|often|fact|word|sense,of|in|idea|define|one|that|to|model|harris|by
+vector,0.111,0.538,three|into|space|unit|models|dense|long|svd|resulting|early,as|point|sparse|models|corresponding|length|space|could|list|represented
+context,0.111,0.538,window|sentences|cpos|word|noise|constituent|n|w|the|human,window|target|word|column|matrix|row|each|occurs|l|we
+embedding,0.250,0.111,spaces|value|for|if|well|separate|target|weights|include|model,spaces|must|computing|word|time|from|for|separate|last|value
+similar,0.429,0.667,cat|dog|identical|whose|are|distributions|not|related|neighboring|synonym,words|whose|cat|dog|meanings|are|neighboring|tend|contexts|not
+language,0.176,0.429,neural|network|models|when|wittgenstein|showed|could|that|difference|window,neural|bengio|network|applications|jones|models|ways|jurafsky|schone|modern
+corpus,0.250,0.176,zhao|statistics|test|associations|input|single|methods|without|also|last,training|single|were|let|look|statistics|start|zhao|test|text
+semantic,0.250,0.333,latent|space|linguistic|properties|multidimensional|representations|early|structure|indexing|models,field|scalpel|fields|surgeon|family|multidimensional|latent|indexing|resulting|properties
+king,0.429,0.429,man|woman|queen|analogy|similarly|relational|results|problems|computer|test,woman|man|queen|closest|analogy|relational|result|computer|same|but
+queen,0.429,0.538,king|analogy|man|woman|similarly|problems|results|relational|scalpel|sets,king|woman|man|closest|analogy|relational|similarly|property|same|but

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 03　香农游戏：字母三元模型在哪里被纠正得最多？</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">Lab 03　香农游戏：字母三元模型在哪里被纠正得最多？</a></div>
+<h1>Lab 03　香农游戏：字母三元模型在哪里被纠正得最多？</h1>
+<p><strong>对应行动</strong>：actions.md 第 3 条<strong>书中锚点</strong>：§1.2.2 香农游戏与预测引擎的起源；练习 1.1 <strong>脚本</strong>：<code>shannon_game.py</code>　<strong>产物</strong>：<code>out/corrections.csv</code>、<code>out/rates.csv</code>、<code>out/summary.json</code>、<code>out/rates.png</code></p>
+<h2>玩法与输入</h2>
+<ul><li>目标文本取自 §1.2.2 的英文样例（128 字符）：</li></ul>
+<p><code>the room was not very light ... the shabby red carpet</code>。</p>
+<ul><li>猜词者是一个<strong>字母三元模型</strong>：上下文 = 前两个字符（含空格），每次猜概率最高的一个字母。</li><li>猜错就&quot;被告知&quot;正确字母，并把正确字母接回上下文——与书中香农游戏的规则一致。</li><li>训练语料为本章英文原文（78,508 字符），训练前剔除目标样例，避免抄答案。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 shannon_game.py</code></pre>
+<h2>关键输出（真实运行）</h2>
+<pre><code>overall correction rate=0.6719
+pos:first  n=26 rate=0.6538 bits=3.4946
+pos:second n=25 rate=0.8400 bits=4.3814
+pos:later  n=52 rate=0.7885 bits=3.5627
+class:function n=19 rate=0.6316 bits=3.0826
+class:content  n=84 rate=0.7976 bits=3.8939
+class:boundary n=25 rate=0.2800 bits=1.5176</code></pre>
+<h2>结论（引用自己的产物）</h2>
+<ol><li>整体纠正率 67.2%——这个三元模型远不是好的猜词者，但<strong>纠正的分布不是均匀的</strong>。</li><li>按词内位置：第二个字母最难（84.0%），首字母反而容易些（65.4%），</li></ol>
+<p>词边界（空格）最可预测（28.0%）。按平均意外度（bits）看也是同一顺序。</p>
+<ol><li>按词类：实词 79.8% 被纠正，功能词 63.2%。功能词少、搭配固定，</li></ol>
+<p>实词多、续写分支多，这与&quot;可选后续越多、信息量越大&quot;的直觉一致。</p>
+<ol><li>注意这不是人类玩家的曲线。人一旦认出整个词，后面的字母几乎不用猜；</li></ol>
+<p>三元模型没有词库，只能在字符局部统计里打转。<strong>&quot;信息存在哪里&quot;取决于猜的人会什么</strong>——这正是香农游戏能反过来拷问语言模型的原因。</p>
+<h2>反思</h2>
+<p>我原以为&quot;词首最难猜&quot;，因为一个词刚开始时可能性最多。实测对字符模型来说第二个字母最难，首字母因为受&quot;上一词尾 + 空格&quot;的约束反而好猜。这个反直觉结果让我明白：书里那句&quot;语言把信息存储在哪里&quot;没有脱离观察者的答案，换一个猜词者，曲线就换一条。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

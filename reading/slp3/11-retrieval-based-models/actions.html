@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 11 章 · 行动清单（4 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a></div>
+<h1>第 11 章 · 行动清单（4 条）</h1>
+<blockquote><p>每条 = 动词 + 对象 + 时间/验收；全部已落成 <code>labs/</code> 下可运行脚本，产物见 <code>labs/index.md</code>。</p><p>来源标注到 book-notes 的节。</p></blockquote>
+<h2>学习行动（教材型）</h2>
+<ol><li><strong>实现</strong>三种检索器（tf-idf、BM25、PPMI+SVD 稠密向量），在 24 篇玩具语料上对比 Recall@1/3/5 与 MRR，并补一组「标题查询」作为上限对照——<strong>本周内</strong>完成（验收：<code>labs/lab-01/out/metrics.csv</code> 与两张图；能指出稠密侧在哪个查询上翻盘、又在哪些查询上输给字面匹配）。来自 §11.1.1–§11.3。</li><li><strong>复现</strong>图 11.7 的 25 条判定：逐排名精确率/召回率、AP、11 点插值精确率——<strong>今天 40 分钟</strong>（验收：AP 与书报的 0.6 相差 ≤0.01，插值表逐点与书表相差 ≤0.01；产物在 <code>labs/lab-03/out/</code>）。来自 §11.2。</li><li><strong>搭建</strong>一个玩具 RAG（BM25 检索 + 模板阅读器 + 5 条同实体错误干扰段落），对比闭卷、开卷 top-1、直接给对段落三种条件，报告命中率、EM、F1、引用率、引用正确率——<strong>本周内</strong>（验收：<code>labs/lab-02/out/metrics.csv</code>；能把 3 次失败逐条归因为检索错/读错/记错）。来自 §11.4–§11.6。</li><li><strong>扫描</strong> BM25 的 k1×b 网格（6×5），观察长文档干扰项在 b=0 与 b=1 下的名次变化——<strong>本周内</strong>（验收：<code>labs/lab-04/out/mrr_heatmap.png</code>；确认 k1=0 时整行不随 b 变化，并与书建议的 k1∈[1.2,2]、b=0.75 对照）。来自 §11.1.2。</li></ol>
+<h2>错题归因（来自 self-test）</h2>
+<ul><li><strong>知识性</strong>：若答不出「k1=0 时 b 失效」，说明没把长度归一化绑定到 tf 项 → 回 §11.1.2 重读式 11.12 的结构，再用 lab-04 的 flat 行自证（截止：下次自测前）。</li><li><strong>理解性</strong>：若把「引用正确率」与「答案命中率」混为一谈 → 回 lab-02 的 <code>per_question.csv</code>，找一条「引错来源但仍给引用」的记录，写出两者差别（截止：下次自测前）。</li><li><strong>技巧性</strong>：若手算 AP 时把不相关位置也计入平均 → 回 §11.2 的 AP 定义，只取相关命中的位置重算一遍，与脚本比对（截止：本周日）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

@@ -1,0 +1,29 @@
+{
+  "seed": 7,
+  "architecture": "2-8-1 (ReLU hidden, sigmoid output)",
+  "epochs": 4000,
+  "learning_rate": 0.5,
+  "initial_loss": 0.7594546937245238,
+  "final_loss": 0.0007617824612543518,
+  "final_probabilities": [
+    0.00242,
+    0.999772,
+    0.999761,
+    0.000157
+  ],
+  "predictions": [
+    0,
+    1,
+    1,
+    0
+  ],
+  "targets": [
+    0,
+    1,
+    1,
+    0
+  ],
+  "accuracy": 1.0,
+  "max_grad_rel_error_initial": 4.4461766344049587e-10,
+  "max_grad_rel_error_after_training": 2.6965920232933004e-08
+}

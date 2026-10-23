@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-01：n 阶与训练规模对困惑度的影响</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a><a href="../index.html">labs · 行动执行闭环（第 3 章）</a><a href="README.html">lab-01：n 阶与训练规模对困惑度的影响</a></div>
+<h1>lab-01：n 阶与训练规模对困惑度的影响</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 第 1 条：亲手训练 1–4 元语言模型，观察&quot;上下文变长&quot;与&quot;数据变多&quot;分别把测试困惑度推向哪边。</p>
+<h2>语料与方法</h2>
+<ul><li>语料：<code>../shared_corpus.py</code> 用固定种子（seed=7）生成 320 句模板句 + 8 句手写异常句，去重后剩 248 句（生成器会重复），再按 70/15/15 切成训练/开发/测试；<code>build_corpus</code> 用集合断言确认三个 split 两两无重叠。</li><li>词表：训练集中频次 ≥2 的词 + <code>&lt;s&gt;</code>、<code>&lt;/s&gt;</code>、<code>&lt;unk&gt;</code>，共 68 个；测试集 OOV 映射为 <code>&lt;unk&gt;</code>（实测 OOV 率 1.26%）。</li><li>概率：所有阶统一用 add-k（k=0.1），保证各阶可比；困惑度按 <code>&lt;/s&gt;</code> 计入、<code>&lt;s&gt;</code> 不计入的方式逐词归一。</li><li>采样：用 k=1e-4 的近似 MLE 分布，每阶生成 5 句（k=0.1 会让高阶模型退化成均匀噪声）。</li></ul>
+<h2>运行</h2>
+<pre><code>python3 ngram_perplexity.py</code></pre>
+<p>无第三方依赖（仅标准库 + matplotlib）。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/metrics.csv</code></td><td>12 行：4 个阶数（全量训练）+ 2 阶 × 4 个训练比例（训练比例 100% 与全量行重复）</td></tr><tr><td><code>out/ppl_by_n.png</code></td><td>测试困惑度随 n 变化（对数纵轴）</td></tr><tr><td><code>out/ppl_vs_train_size.png</code></td><td>2-gram / 3-gram 的困惑度随训练 token 数变化</td></tr><tr><td><code>out/samples.json</code></td><td>5 个测试句的 logprob、概率、句级困惑度</td></tr><tr><td><code>out/samples_generated.txt</code></td><td>每阶 5 句采样结果</td></tr></table>
+<h2>关键结果（实测）</h2>
+<table><tr><th>模型</th><th>测试困惑度</th></tr><tr><td>1-gram</td><td>46.06</td></tr><tr><td>2-gram</td><td><strong>6.68</strong></td></tr><tr><td>3-gram</td><td>9.92</td></tr><tr><td>4-gram</td><td>13.26</td></tr></table>
+<p>训练量从 25% 增到 100%：2-gram 从 11.57 降到 6.68（−42.3%），3-gram 从 18.12 降到 9.92（−45.3%）。</p>
+<p>采样示例（<code>out/samples_generated.txt</code>）：</p>
+<ul><li>1-gram：<code>ham lunch what here know me and know near the &lt;/s&gt;</code></li><li>3-gram：<code>do you know a good place for a table at noon &lt;/s&gt;</code></li><li>4-gram：<code>what time does the menu open tomorrow &lt;/s&gt;</code></li></ul>
+<h2>结论</h2>
+<ul><li>在约 1.4k 训练 token（1439）的规模上，<strong>2-gram 最优</strong>；3/4-gram 的额外上下文不足以抵消 add-k 对未见上下文的惩罚，困惑度反而上升。这正好复现书 §3.5 的&quot;高阶更像训练集、但泛化更差&quot;。</li><li>3-gram 对数据量的相对敏感度高于 2-gram（45.3% vs 42.3%），支持&quot;阶数越高越吃数据&quot;的判断。</li><li>采样结果与书 §3.4/§3.5 一致：低阶是词袋噪声，3/4-gram 开始吐出训练语料里的完整短语。</li></ul>
+<h2>反思</h2>
+<p>第一次切分时我没有去重，模板生成了大量完全相同的句子，训练集与测试集出现了重叠，断言直接失败——这正是书 §3.2 说的数据污染。去重后困惑度整体上升（2-gram 4.55→6.68），说明之前那组&quot;更好看&quot;的数字有一部分来自泄漏。另一个意外是&quot;n 越大越好&quot;并不成立：平滑把大量概率质量摊给未见上下文，高阶优势被抹平。下次应固定 k 后分别报告&quot;已见/未见上下文&quot;两类位置的困惑度，把上下文收益与平滑惩罚拆开。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

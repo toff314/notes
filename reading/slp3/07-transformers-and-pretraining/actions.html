@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第三版）第 7 章 · 行动清单（4 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a></div>
+<h1>《Speech and Language Processing》（第三版）第 7 章 · 行动清单（4 条）</h1>
+<blockquote><p>每条都落成可运行脚本与真实产物，执行记录见 <code>labs/index.md</code>。</p><p>日期以本次阅读起点 2026-10-20 为基准。</p></blockquote>
+<h2>学习行动</h2>
+<ol><li><strong>10 月 24 日前</strong>用 numpy 实现缩放点积注意力、因果掩码与双头拼接，输入取 N=6、d=8、A=2；验收：形状断言全过、每行权重和误差 &lt;1e-9、上三角权重为 0、改动未来词元不改变前三个输出，并保存一张对比热图。（对应 lab-01）</li><li><strong>10 月 26 日前</strong>在极小字符语料上训练一个含学习式位置嵌入的单层 Transformer 块（RMSNorm + 单头因果注意力 + ReLU 前馈 + 绑定解嵌入）；验收：训练损失相对初始值下降 ≥60%，held-out 损失同步下降，生成 60 个字符并保存损失曲线。（对应 lab-02）</li><li><strong>10 月 27 日前</strong>用 10 词 logits 复算 τ=0.05–5 的 softmax，比较贪心、随机、top-k=2、top-p=0.9 的生成结果；验收：每组概率和误差 &lt;1e-12、τ→0 时最大概率 &gt;0.999、top-k=1 与贪心输出一致，并保存温度-熵曲线与 top-p 候选数曲线。（对应 lab-03）</li><li><strong>10 月 28 日前</strong>按练习 7.1 推导注意力/前馈/整块参数量，复算练习 7.3 的困惑度，并把图 7.24 的六个模型抄成表；验收：L=12、d=512 时逐项求和与 12Ld² 完全相等，PPL 的两条计算路径差 &lt;1e-9，模型表中偏差最大项的成因能写成一句话。（对应 lab-04）</li></ol>
+<h2>错题归因（来自 self-test，作答后更新）</h2>
+<table><tr><th>题号</th><th>错误类型</th><th>具体表现</th><th>回补动作</th><th>截止</th></tr><tr><td>待作答</td><td>待判定</td><td>首轮自测后再填</td><td>知识性→回对应节；理解性→重画数据流；技巧性→限时重做</td><td>2026-10-31</td></tr></table>
+<h2>不做什么</h2>
+<ul><li>不把注意力热图直接当因果解释；单头权重只能当线索。</li><li>不用不同分词器下的困惑度直接比较模型优劣。</li><li>不在温度采样与 top-p 之间只凭体感选默认值；先看任务约束与候选集大小。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

@@ -1,0 +1,332 @@
+{
+  "gradient_check_max_rel_error": 3.1722325377587993e-09,
+  "best_seed": 0,
+  "accuracy": 0.75,
+  "counts": {
+    "hit": 15,
+    "returned_input": 5,
+    "miss": 0
+  },
+  "rows": [
+    {
+      "a": "king",
+      "b": "queen",
+      "a_star": "man",
+      "expected": "woman",
+      "predicted": "woman",
+      "raw_top1": "woman",
+      "status": "hit",
+      "top5": [
+        "woman",
+        "works",
+        "man",
+        "mother",
+        "in"
+      ]
+    },
+    {
+      "a": "king",
+      "b": "queen",
+      "a_star": "prince",
+      "expected": "princess",
+      "predicted": "princess",
+      "raw_top1": "prince",
+      "status": "hit",
+      "top5": [
+        "prince",
+        "princess",
+        "lives",
+        "boy",
+        "woman"
+      ]
+    },
+    {
+      "a": "king",
+      "b": "queen",
+      "a_star": "father",
+      "expected": "mother",
+      "predicted": "mother",
+      "raw_top1": "mother",
+      "status": "hit",
+      "top5": [
+        "mother",
+        "woman",
+        "works",
+        "father",
+        "at"
+      ]
+    },
+    {
+      "a": "man",
+      "b": "woman",
+      "a_star": "boy",
+      "expected": "girl",
+      "predicted": "girl",
+      "raw_top1": "boy",
+      "status": "hit",
+      "top5": [
+        "boy",
+        "girl",
+        "plays",
+        "woman",
+        "in"
+      ]
+    },
+    {
+      "a": "prince",
+      "b": "princess",
+      "a_star": "boy",
+      "expected": "girl",
+      "predicted": "girl",
+      "raw_top1": "boy",
+      "status": "hit",
+      "top5": [
+        "boy",
+        "girl",
+        "plays",
+        "in",
+        "princess"
+      ]
+    },
+    {
+      "a": "paris",
+      "b": "france",
+      "a_star": "rome",
+      "expected": "italy",
+      "predicted": "italy",
+      "raw_top1": "italy",
+      "status": "hit",
+      "top5": [
+        "italy",
+        "germany",
+        "spain",
+        "france",
+        "of"
+      ]
+    },
+    {
+      "a": "paris",
+      "b": "france",
+      "a_star": "tokyo",
+      "expected": "japan",
+      "predicted": "japan",
+      "raw_top1": "japan",
+      "status": "hit",
+      "top5": [
+        "japan",
+        "spain",
+        "england",
+        "germany",
+        "of"
+      ]
+    },
+    {
+      "a": "rome",
+      "b": "italy",
+      "a_star": "berlin",
+      "expected": "germany",
+      "predicted": "germany",
+      "raw_top1": "germany",
+      "status": "hit",
+      "top5": [
+        "germany",
+        "france",
+        "spain",
+        "italy",
+        "england"
+      ]
+    },
+    {
+      "a": "tokyo",
+      "b": "japan",
+      "a_star": "madrid",
+      "expected": "spain",
+      "predicted": "spain",
+      "raw_top1": "spain",
+      "status": "hit",
+      "top5": [
+        "spain",
+        "england",
+        "france",
+        "italy",
+        "germany"
+      ]
+    },
+    {
+      "a": "berlin",
+      "b": "germany",
+      "a_star": "london",
+      "expected": "england",
+      "predicted": "england",
+      "raw_top1": "england",
+      "status": "hit",
+      "top5": [
+        "england",
+        "spain",
+        "japan",
+        "france",
+        "of"
+      ]
+    },
+    {
+      "a": "big",
+      "b": "bigger",
+      "a_star": "small",
+      "expected": "smaller",
+      "predicted": "warm",
+      "raw_top1": "small",
+      "status": "returned_input",
+      "top5": [
+        "small",
+        "bigger",
+        "warm",
+        "smaller",
+        "taller"
+      ]
+    },
+    {
+      "a": "big",
+      "b": "bigger",
+      "a_star": "cold",
+      "expected": "colder",
+      "predicted": "warm",
+      "raw_top1": "cold",
+      "status": "returned_input",
+      "top5": [
+        "cold",
+        "bigger",
+        "warm",
+        "smaller",
+        "taller"
+      ]
+    },
+    {
+      "a": "cold",
+      "b": "colder",
+      "a_star": "warm",
+      "expected": "warmer",
+      "predicted": "bigger",
+      "raw_top1": "colder",
+      "status": "returned_input",
+      "top5": [
+        "colder",
+        "warm",
+        "bigger",
+        "big",
+        "smallest"
+      ]
+    },
+    {
+      "a": "small",
+      "b": "smaller",
+      "a_star": "tall",
+      "expected": "taller",
+      "predicted": "taller",
+      "raw_top1": "tall",
+      "status": "hit",
+      "top5": [
+        "tall",
+        "smaller",
+        "taller",
+        "cold",
+        "coldest"
+      ]
+    },
+    {
+      "a": "tall",
+      "b": "taller",
+      "a_star": "big",
+      "expected": "bigger",
+      "predicted": "colder",
+      "raw_top1": "big",
+      "status": "returned_input",
+      "top5": [
+        "big",
+        "taller",
+        "colder",
+        "smallest",
+        "bigger"
+      ]
+    },
+    {
+      "a": "france",
+      "b": "paris",
+      "a_star": "italy",
+      "expected": "rome",
+      "predicted": "rome",
+      "raw_top1": "rome",
+      "status": "hit",
+      "top5": [
+        "rome",
+        "paris",
+        "berlin",
+        "madrid",
+        "london"
+      ]
+    },
+    {
+      "a": "japan",
+      "b": "tokyo",
+      "a_star": "germany",
+      "expected": "berlin",
+      "predicted": "berlin",
+      "raw_top1": "berlin",
+      "status": "hit",
+      "top5": [
+        "berlin",
+        "tokyo",
+        "rome",
+        "paris",
+        "madrid"
+      ]
+    },
+    {
+      "a": "woman",
+      "b": "man",
+      "a_star": "queen",
+      "expected": "king",
+      "predicted": "king",
+      "raw_top1": "king",
+      "status": "hit",
+      "top5": [
+        "king",
+        "rules",
+        "from",
+        "queen",
+        "wears"
+      ]
+    },
+    {
+      "a": "girl",
+      "b": "boy",
+      "a_star": "princess",
+      "expected": "prince",
+      "predicted": "prince",
+      "raw_top1": "princess",
+      "status": "hit",
+      "top5": [
+        "princess",
+        "prince",
+        "lives",
+        "boy",
+        "in"
+      ]
+    },
+    {
+      "a": "bigger",
+      "b": "biggest",
+      "a_star": "smaller",
+      "expected": "smallest",
+      "predicted": "tallest",
+      "raw_top1": "biggest",
+      "status": "returned_input",
+      "top5": [
+        "biggest",
+        "smaller",
+        "tallest",
+        "warmer",
+        "tall"
+      ]
+    }
+  ]
+}

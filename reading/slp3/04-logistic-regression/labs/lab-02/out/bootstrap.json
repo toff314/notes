@@ -1,0 +1,13 @@
+{
+  "observed_delta": 0.06666666666666665,
+  "b": 2000,
+  "p_value": 0.085,
+  "threshold": 0.01,
+  "significant_at_0.01": false,
+  "deltas_mean": 0.06830000000000001,
+  "deltas_q95": 0.13333333333333341,
+  "model_a": "L2 alpha=0.1",
+  "model_b": "no regularization",
+  "model_accuracy": 0.8333333333333334,
+  "baseline_accuracy": 0.7666666666666667
+}

@@ -1,0 +1,42 @@
+{
+  "clean": {
+    "train_accuracy": 0.757,
+    "test_accuracy": 0.765,
+    "theta": [
+      0.9356,
+      0.6818,
+      0.4341,
+      -0.2864,
+      -0.0331,
+      -0.0295
+    ],
+    "true_w": [
+      1.0,
+      0.75,
+      0.45,
+      -0.25,
+      0.0,
+      0.0
+    ],
+    "cosine_similarity_all_dims": 0.9983612773001455,
+    "final_loss": 0.49438474375354985,
+    "initial_loss": 0.6931471805599454,
+    "bayes_accuracy_estimate": 0.7748687366608864
+  },
+  "shortcut": {
+    "train_accuracy": 0.9995,
+    "test_accuracy_same_distribution": 0.9985,
+    "test_accuracy_reversed_shortcut": 0.007,
+    "test_accuracy_shortcut_removed": 0.6105,
+    "theta": [
+      0.6732,
+      0.721,
+      0.472,
+      -0.1691,
+      4.7753,
+      0.0206
+    ],
+    "learned_shortcut_weight": 4.7753,
+    "final_loss": 0.004204416118694564
+  }
+}

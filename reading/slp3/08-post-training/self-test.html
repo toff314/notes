@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 8 章 后训练 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a></div>
+<h1>《Speech and Language Processing》第 8 章 后训练 · 提取自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用）</strong>：</p><p>1. <strong>遮住</strong> <code>book-notes.md</code>，也合上原书，只看下面的问题；</p><p>2. 口头或笔头作答，先写结论再补理由，不许翻摘录；</p><p>3. 答不出的题记进「未掌握」，回看对应小节，隔一天再测一次；</p><p>4. <strong>费曼检验</strong>：能用一个不懂机器学习的同事听懂的比喻讲清第 1、9、10 题，才算真懂；</p><p>5. 教材型附加检验：第 7、9 题的推导能不看笔记写完整，第 6 题的数字能复算。</p></blockquote>
+<h2>自测题（12 题）</h2>
+<ol><li><strong>预训练与后训练优化的目标有什么不同？为什么&quot;会接话&quot;不等于&quot;会办事&quot;？</strong></li></ol>
+<ul><li>答：预训练最大化文本似然，评价来自文本自身；后训练引入外部评价——示范、比较、可验证结果。只学似然的模型会顺着语料续写，而不是完成当前请求。→ 见 book-notes §8.0｜卡 1</li></ul>
+<ol><li><strong>SFT 并没有换损失函数，那它到底改了什么？</strong></li></ol>
+<ul><li>答：改的是数据与计损失的位置：指令放进上下文，回答作为监督目标，梯度只落在回答 token 上。损失仍是交叉熵。→ 见 book-notes §8.1｜卡 2</li></ul>
+<ol><li><strong>如果把指令部分也计入损失，会出现什么可观察的毛病？</strong></li></ol>
+<ul><li>答：模型会连带学会生成指令，常见是回答前复述问题、把任务描述当正文续写。→ 见 book-notes §8.1 思考区｜卡 2</li></ul>
+<ol><li><strong>为什么 500 条安全指令可能比几百万条普通指令更关键？</strong></li></ol>
+<ul><li>答：行为边界由数据配比决定。大量样本奖励&quot;有求必应&quot;，少量拒绝样本提供反向梯度，定义了边界附近的行为；配比失衡会被规模放大。→ 见 book-notes §8.1.1｜卡 4</li></ul>
+<ol><li><strong>按任务簇留一评估，防的是什么泄漏？它没测到哪条泛化轴？</strong></li></ol>
+<ul><li>答：防同源数据集之间的样本泄漏（例如 25 个文本蕴含数据集）；它测&quot;新任务类型&quot;，没测&quot;同一任务换一种说法&quot;。→ 见 book-notes §8.1.2</li></ul>
+<ol><li><strong>对 4096×4096 的矩阵做 r=8 的 LoRA，新增多少参数？&quot;不增加推理时间&quot;有前提吗？</strong></li></ol>
+<ul><li>答：新增 k·r+r·d=4096×8+8×4096=65,536 个，约为全量 16,777,216 的 0.39%。前提是把 AB 合并进 W；多适配器动态切换会带来额外开销。→ 见 book-notes §8.2｜卡 5</li></ul>
+<ol><li><strong>写出 Bradley–Terry 模型，指出它隐含的两个假设，并构造一个它表示不了的偏好结构。</strong></li></ol>
+<ul><li>答：P(o_i≻o_j|x)=σ(z_i−z_j)。假设偏好可传递、且只取决于两个候选本身。反例：A≻B、B≻C、C≻A 的循环偏好，任何标量效用都只能给出传递排序，无法同时满足三对。→ 见 book-notes §8.3.2｜卡 7</li></ul>
+<ol><li><strong>奖励模型为什么只是&quot;带噪替代&quot;？策略更新后它如何失效？</strong></li></ol>
+<ul><li>答：它只在旧策略采样的回答上拟合偏好；策略移动后输入分布变了，模型会把训练时与获胜共现的表面特征（长度、格式）当作质量，给出虚高分。→ 见 book-notes §8.3.3、§8.4｜卡 9、卡 10</li></ul>
+<ol><li><strong>DPO 推导中配分函数为什么能消掉？β 在其中扮演什么角色？</strong></li></ol>
+<ul><li>答：闭式解把奖励写成 β log(π*/π_ref)+β log Z(x)；BT 只看两个候选的奖励差，同一提示下 log Z(x) 相减抵消。β 既缩放隐式奖励，又充当 sigmoid 温度。→ 见 book-notes §8.4.2｜卡 13、卡 14</li></ul>
+<ol><li><strong>把 DPO 的 β 调大，模型一定更保守吗？lab-02 的哪条证据支持你的判断？</strong></li></ol>
+<ul><li>答：不一定。固定 margin 时有效梯度 β·σ(−βm) 在 β≈3.2 处最大，两端趋零；单对可分偏好下，β=0.01 与 0.1 充分训练后都饱和到同一端点，KL 同为 0.787，说明 β 改的是速度而非硬预算。→ 见 book-notes §8.4.2｜卡 14｜<code>labs/lab-02/out/metrics.json</code></li></ul>
+<ol><li><strong>best-of-N 增大 N 时，为什么&quot;选中真最优的概率&quot;下降，而&quot;期望真实质量&quot;仍上升？</strong></li></ol>
+<ul><li>答：极值效应让被选样本的质量均值随 N 上升；但奖励带噪时，最大值更可能来自噪声大的候选，所以命中真最优的比例下降。σ=0.5 时，N=2 的概率 0.85，N=128 只剩 0.46。→ 见 <code>labs/lab-03/out/best_of_n.csv</code>｜卡 15</li></ul>
+<ol><li><strong>本章小结漏掉了什么？为什么不能据此判断作者认为它不重要？</strong></li></ol>
+<ul><li>答：漏掉 RLVR 的具体机制、偏好对齐的评估与局限；源文 §8.4.1 只有 TBD，§8.4.3/§8.4.4 为空，属于稿子未完成，不能反推作者态度。→ 见 book-notes §8.5｜README「源文缺口」</li></ul>
+<h2>未掌握（自测后更新）</h2>
+<ul><li>初始状态：尚未自测。做错的题在此登记「题号 / 我答成了什么 / 正确要点 / 回看位置」，禁止只抄正确答案。</li><li>复测节奏：首次自测后第 2 天、第 7 天各复测一次；连续两次答对才移出本表。</li></ul>
+<h2>推导与计算重做记录</h2>
+<table><tr><th>项目</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>BT 的 logit → sigmoid 推导（§8.3.2）</td><td>⬜</td><td>⬜</td><td>待自测后填写：知识性 / 理解性 / 技巧性</td></tr><tr><td>DPO 配分函数抵消（§8.4.2）</td><td>⬜</td><td>⬜</td><td>待自测后填写</td></tr><tr><td>LoRA 参数量复算（§8.2）</td><td>⬜</td><td>⬜</td><td>待自测后填写</td></tr><tr><td>best-of-N 期望质量估算（lab-03）</td><td>⬜</td><td>⬜</td><td>待自测后填写</td></tr></table>
+<blockquote><p>归因三分法：定义或条件记错 → 知识性，回教材重学；读懂题但抓错关键词 → 理解性，圈题干再找同型题；会做但超时或算错 → 技巧性，限时重做两道。</p></blockquote>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

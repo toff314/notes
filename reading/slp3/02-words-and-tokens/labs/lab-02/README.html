@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 02 · 最小编辑距离与回溯对齐</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 02 · 最小编辑距离与回溯对齐</a></div>
+<h1>Lab 02 · 最小编辑距离与回溯对齐</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 行动 2，复现 §2.9 的 Levenshtein 动态规划：填表、回溯、对齐，并核对书中 <code>intention → execution</code> 的例子。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 edit_distance_lab.py</code></pre>
+<h2>实现要点</h2>
+<ul><li>两种代价：插 1／删 1／替换 2（书中 §2.9.1 的版本）与替换 1 的对照版本。</li><li>回溯优先级：相同字符走对角（<code>=</code>）→ 替换（<code>s</code>）→ 删除（<code>d</code>）→ 插入（<code>i</code>）。</li><li>对齐路径从 <code>(n,m)</code> 反向收集操作，再翻转。</li></ul>
+<h2>产物（<code>out/</code>）</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>distances.json</code></td><td>7 组词对的两种距离、操作计数</td></tr><tr><td><code>alignments.csv</code></td><td>每组词对的操作序列与逐字对齐</td></tr><tr><td><code>dp_matrix_intention_execution.csv</code></td><td>完整 10×10 DP 表</td></tr><tr><td><code>edit_distance_matrix.png</code></td><td>DP 热力图 + 最小代价路径</td></tr><tr><td><code>distance_comparison.png</code></td><td>两种代价下的距离对比</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<ul><li><code>intention → execution</code>：替换代价 2 时距离 <strong>8</strong>，与书中图 2.20 的右下角 8 一致；替换代价 1 时距离 <strong>5</strong>。</li><li>对齐：<code>d s s = i s = = = =</code>，即删 i、n→e、t→x、e 对齐、插入 c、n→u，共 5 次编辑。</li><li><code>recieve → receive</code>：两种代价下距离都是 <strong>2</strong>（删一个再插一个），说明「只错一个字母」在代价 2 下也可能要付两次操作。</li><li><code>seperate → separate</code> 与 <code>definately → definitely</code>：替换代价 1 时距离 1，代价 2 时距离 2。</li><li><code>teh → the</code>：距离 2（删 h 再插 h），不是 1；这正是需要「相邻交换」操作才能降到 1 的原因。</li></ul>
+<h2>结论</h2>
+<p>DP 表与书中的图 2.20 逐格一致（含初始化行 <code>0..9</code> 与末行 <code>9,8,9,10,11,12,11,10,9,8</code>）。距离本身只回答「最少几步」，对齐才回答「哪几步」；两者共用同一张表，区别只在是否保存回溯指针。</p>
+<h2>反思</h2>
+<p>我原以为替换代价 2 只是「让替换更贵」，跑完才发现它改变了错误词的排序：<code>recieve</code> 和 <code>teh</code> 都被判成两步，而直觉上它们只错一个位置。做拼写纠错时，代价表其实是在编码「哪种错误更可能发生」，不能照搬教科书默认值。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

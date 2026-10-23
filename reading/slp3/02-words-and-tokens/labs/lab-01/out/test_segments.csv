@@ -1,0 +1,4 @@
+sentence,chars,tokens,segmentation
+lowest newer tokenization,23,3,lowest | newer | tokenization
+词元化是自然语言处理的第一步,14,14,词 | 元 | 化 | 是 | 自 | 然 | 语 | 言 | 处 | 理 | 的 | 第 | 一 | 步
+unseen word: tokenizer,20,12,u | n | s | e | e | n | w | o | r | d | : | tokenizer

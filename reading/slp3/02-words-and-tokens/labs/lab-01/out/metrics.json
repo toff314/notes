@@ -1,0 +1,43 @@
+{
+  "corpus_lines": 12,
+  "pretokenized_types": 124,
+  "alphabet_size": 126,
+  "num_merges": 40,
+  "first_10_merges": [
+    "t+o",
+    "to+k",
+    "tok+e",
+    "toke+n",
+    "w+e",
+    "token+i",
+    "tokeni+z",
+    "d+e",
+    "w+i",
+    "wi+de"
+  ],
+  "tokens_initial_chars": 291,
+  "tokens_after": 210,
+  "token_reduction_pct": 27.84,
+  "chars_per_token_after": 1.386,
+  "train_chars": 291,
+  "test": [
+    {
+      "sentence": "lowest newer tokenization",
+      "chars": 23,
+      "tokens": 3,
+      "segmentation": "lowest | newer | tokenization"
+    },
+    {
+      "sentence": "词元化是自然语言处理的第一步",
+      "chars": 14,
+      "tokens": 14,
+      "segmentation": "词 | 元 | 化 | 是 | 自 | 然 | 语 | 言 | 处 | 理 | 的 | 第 | 一 | 步"
+    },
+    {
+      "sentence": "unseen word: tokenizer",
+      "chars": 20,
+      "tokens": 12,
+      "segmentation": "u | n | s | e | e | n | w | o | r | d | : | tokenizer"
+    }
+  ]
+}

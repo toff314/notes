@@ -1,0 +1,29 @@
+{
+  "config": {
+    "vocab": 14,
+    "n_ctx": 16,
+    "d": 24,
+    "dff": 48,
+    "block": "RMSNorm -> 1-head causal attention -> residual -> RMSNorm -> ReLU FFN -> residual -> tied unembedding",
+    "params": 5448,
+    "steps": 700,
+    "batch": 32
+  },
+  "loss": {
+    "init_train": 2.7451442654699467,
+    "final_train": 0.15926507681418087,
+    "final_val": 0.15921703555206965,
+    "relative_drop": 0.9419829847132221
+  },
+  "gradient_check_max_rel_error": 9.944851574479025e-08,
+  "position_ablation_val_loss": {
+    "learned": 0.15921703555206965,
+    "zeroed": 1.9649698093882988,
+    "shuffled": 3.074665572117483
+  },
+  "position_embedding_row_norm_std": 0.12573954793762848,
+  "samples": {
+    "temperature_0.8_top5": "the mat. the dog sat on the log. a cat sat on a mat. a dog sat o",
+    "greedy": "the mat. the dog sat on the log. a cat sat o"
+  }
+}

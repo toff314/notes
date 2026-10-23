@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第三版 · 第 2 章 · 永久卡片（14 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a></div>
+<h1>《Speech and Language Processing》第三版 · 第 2 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 指向可复用的关联卡。教材型三类：概念卡／公式卡／例题卡。</p></blockquote>
+<h2>卡 1　词类型与词例有什么区别？</h2>
+<ul><li><strong>Q（正面）</strong>：数一句话有多少「词」时，为什么会有两个答案？</li><li><strong>A（背面）</strong>：词例按出现次数累加，同一个词出现三次就算三个；词类型只记彼此不同的词，同一个词只算一次。前者衡量文本长度，后者衡量词表规模。英语句子里 16 个词例可能只对应 14 个类型。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.1</li><li><strong>链接</strong>：卡 2（词表随语料增长）、卡 10（正则里的词边界）</li></ul>
+<h2>卡 2　Heaps 定律说了什么？</h2>
+<ul><li><strong>Q（正面）</strong>：语料越大，词表会怎样增长？</li><li><strong>A（背面）</strong>：类型数 |V| 与实例数 N 近似满足 |V| = kN^β，其中 0 &lt; β &lt; 1，报告值常见于 0.44–0.56。含义是词表没有上限：看得越多，新词越多，所以「这门语言共有多少词」没有固定答案。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.1</li><li><strong>链接</strong>：卡 1（类型／词例）、卡 6（BPE 用子词应对无界词表）</li></ul>
+<h2>卡 3　语素、词根、词缀各是什么？</h2>
+<ul><li><strong>Q（正面）</strong>：cats 和 worked 怎么拆成语素？</li><li><strong>A（背面）</strong>：语素是最小的有意义单位；词根承载主要意义，词缀附加语法或派生意义。cats = cat + -s；worked = work + -ed。词根可以独立成词，词缀不能。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.2</li><li><strong>链接</strong>：卡 4（屈折 vs 派生）</li></ul>
+<h2>卡 4　屈折语素与派生语素怎么区分？</h2>
+<ul><li><strong>Q（正面）</strong>：-ed 和 -ful 都是后缀，差别在哪？</li><li><strong>A（背面）</strong>：屈折语素主要承担句法功能（时态、复数、一致），能产、常强制、意义可预测，不改变词性；派生语素适用范围窄，常改变词性，意义不易精确预测。work→worked 是屈折，care→careful 是派生。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.2</li><li><strong>链接</strong>：卡 3（语素）、卡 5（附着词是另一类）</li></ul>
+<h2>卡 5　附着词为什么不能算普通词缀？</h2>
+<ul><li><strong>Q（正面）</strong>：英语 I’ve 里的 ’ve 属于哪一类单位？</li><li><strong>A（背面）</strong>：附着词在句法上像词，但形式缩减，语音上（有时正字法上）必须依附另一个词，不能单独出现。它承载的是词一级的语法意义（have），不是典型构词词缀。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.2</li><li><strong>链接</strong>：卡 9（预词元化会专门剥离附着词）</li></ul>
+<h2>卡 6　码点、字形、编码三者是什么关系？</h2>
+<ul><li><strong>Q（正面）</strong>：一个「字符」在计算机里经过哪几层？</li><li><strong>A（背面）</strong>：码点是 Unicode 分配的抽象编号（如 a = U+0061）；字形是字体画出的视觉形状，同一码点可有多种字形；编码是把码点写成字节的规则（如 UTF-8）。编号不等于形状，也不等于字节。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.3.1</li><li><strong>链接</strong>：卡 7（UTF-8 的字节规则）</li></ul>
+<h2>卡 7　UTF-8 为什么能兼容 ASCII？</h2>
+<ul><li><strong>Q（正面）</strong>：UTF-8 是变长编码，为什么旧 ASCII 文件不用转换？</li><li><strong>A（背面）</strong>：前 128 个码点（ASCII 范围）在 UTF-8 中仍编码为单字节，取值 0x00–0x7F；其余码点用 2–4 字节，且后续字节高位为 10，不会与 ASCII 混淆。因此 ASCII 文件天然是合法 UTF-8。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.3.2</li><li><strong>链接</strong>：卡 6（码点）、卡 8（自同步）</li></ul>
+<h2>卡 8　UTF-8 的「自同步」保证了什么？</h2>
+<ul><li><strong>Q（正面）</strong>：文件中间损坏后，为什么还能找回字符边界？</li><li><strong>A（背面）</strong>：每个多字节序列的首字节带有长度前缀，后续字节都以 10 开头；因此从任意位置向左或向右最多移动 3 个字节，就能重新对齐到某个字符的起始字节。它保证边界可恢复，不保证内容未损坏。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.3.2</li><li><strong>链接</strong>：卡 7（变长编码）</li></ul>
+<h2>卡 9　BPE 训练在合并什么？</h2>
+<ul><li><strong>Q（正面）</strong>：BPE 的每一轮合并依据是什么？</li><li><strong>A（背面）</strong>：先把语料预切成词并统计频次，只统计词内部相邻符号对；每轮选出加权频次最高的对，合并成新符号并更新所有词，重复 k 次。词表 = 初始字符集 + k 个新符号。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.4.1</li><li><strong>链接</strong>：卡 10（编码阶段）、卡 12（预词元化）</li></ul>
+<h2>卡 10　BPE 编码为什么不用测试集频率？</h2>
+<ul><li><strong>Q（正面）</strong>：编码新句子时，能不能重新统计相邻对再合并？</li><li><strong>A（背面）</strong>：不能。编码器只按训练阶段学到的合并顺序依次重放；测试数据只提供待切分的字符序列，不参与决定合并优先级。否则同一模型在不同测试集上会产生不同词表，实验不可复现。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.4.2</li><li><strong>链接</strong>：卡 9（训练）、卡 11（字节级 BPE）</li></ul>
+<h2>卡 11　字节级 BPE 为什么「没有未知词元」？</h2>
+<ul><li><strong>Q（正面）</strong>：BPE 对 UTF-8 字节操作，未知词问题去哪了？</li><li><strong>A（背面）</strong>：一个字节只有 256 种取值，初始字符表已覆盖全部可能字节，所以任何输入都能表示。代价是可能学到跨字符边界的非法 UTF-8 序列，需要额外过滤器清除。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.4.3</li><li><strong>链接</strong>：卡 10（编码）、卡 7（UTF-8）</li></ul>
+<h2>卡 12　正则表达式的优先级顺序是什么？</h2>
+<ul><li><strong>Q（正面）</strong>：r&quot;the*&quot; 为什么匹配 theeeee 而不是 thethe？</li><li><strong>A（背面）</strong>：优先级从高到低为：括号 () &gt; 量词 <em> + ? {} &gt; 序列与锚点 &gt; 析取 |。量词只作用于紧邻的前一个元素，所以 the</em> 是 th + e*；要重复整个序列必须加括号。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.6.4</li><li><strong>链接</strong>：卡 13（贪婪匹配）、卡 14（捕获组）</li></ul>
+<h2>卡 13　贪婪与非贪婪匹配何时不同？</h2>
+<ul><li><strong>Q（正面）</strong>：r&quot;[a-z]*&quot; 面对 once upon a time 会匹配多少？</li><li><strong>A（背面）</strong>：默认贪婪，尽量取最长可行串，所以先尝试 once；在 * 后加 ? 变成非贪婪，尽量取最短，一旦后续模式能成立就停止。选择哪一个取决于你希望保留多少上下文。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.6.4</li><li><strong>链接</strong>：卡 12（优先级）</li></ul>
+<h2>卡 14　怎样用捕获组交换日期月日？</h2>
+<ul><li><strong>Q（正面）</strong>：把 mm/dd/yyyy 改成 dd-mm-yyyy 的正则怎么写？</li><li><strong>A（背面）</strong>：模式 r&quot;(\d{2})/(\d{2})/(\d{4})&quot;，替换串 r&quot;\2-\1-\3&quot;。三个括号按出现顺序编号为 1、2、3；替换时用 \1–\3 回引。只分组不捕获时用 (?:…)。</li><li><strong>出处</strong>：《Speech and Language Processing》§2.6.7</li><li><strong>链接</strong>：卡 12（优先级）、卡 13（量词）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

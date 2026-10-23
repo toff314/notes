@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第三版 · 第 2 章 · 衍生选题",
+    "path": "reading/slp3/02-words-and-tokens",
+    "anchor": "第2章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch02-t1",
+      "title": "中文为什么被大模型 tokenizer 切碎",
+      "angle": "观点：中文为什么被大模型 tokenizer 切碎——词表分配、UTF-8 与多语言成本",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S4 + S6。S1：书只给了一个西班牙语例子，没有展开中文的量化；S3：可从 UTF-8 字节、BPE 合并顺序、词表配额三层讲清机制；S4：词表偏斜是工程取舍还是数据霸权，有真实争议；S6：Rust et al. (2021)、Ahia et al. (2023) 等可查。",
+      "sourceAnchor": "本书 §2.4.3「西班牙语原文的 16 个词被编码成了 33 个词元」；§2.1「汉语、日语和泰语这类语言的书写系统根本没有正字法意义上的词」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch02-t2",
+      "title": "BPE 不是语素发现器",
+      "angle": "观点：BPE 不是语素发现器——频率压缩与语言学边界是两套证据",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S4 + S5。S1：书明确说子词「通常与语素或词的大小相当」，但没有系统反驳「BPE 学到语素」的流行说法；S4：与「tokenizer 有语言学意义」的常见叙事相反；S5：直接关系到可解释性与安全审计的落点。",
+      "sourceAnchor": "本书 §2.4.1「BPE 训练算法迭代地合并频繁相邻的词元」；§2.2「这一事实使得把语素用作跨语言词元化的标准变得非常困难」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch02-t3",
+      "title": "从 ELIZA 到 GPT-4o：词元化五十年",
+      "angle": "论文：从 ELIZA 到 GPT-4o——词元化五十年的三次转身",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S2 + S3 + S4。S2：Weizenbaum、Gage、Sennrich、Karpathy 都有可查史料；S3：从模式匹配到正则替换、再到 BPE 与 SuperBPE，技术有纵深；S4：ELIZA 的「假理解」与今天 tokenizer 的「假语素」形成有趣反差。",
+      "sourceAnchor": "本书章首 ELIZA 对话与 §2.6.7 的 ELIZA 替换规则；历史注记「BPE 最初是 Gage (1994) 提出的一种文本压缩方法」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch02-t4",
+      "title": "编辑距离为什么还是拼写纠错的地基",
+      "angle": "观点：编辑距离为什么还是拼写纠错的地基——从 DP 到神经纠错的成本账",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S1 + S3 + S5 + S6。S1：书只讲算法与对齐，没有讲它在现代纠错产品中的位置；S3：可从 DP、加权代价、Damerau 扩展讲到神经纠错；S5：拼写纠错是搜索、输入法、IDE 的真实落点；S6：Gusfield (1997)、NIST sclite 等可查。",
+      "sourceAnchor": "本书 §2.9「intention 与 execution 之间的距离为 5」；§2.9.1「每次插入或删除的代价为 1，且不允许替换」的版本。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch02-t5",
+      "title": "码点、字形与 UTF-8 的自同步",
+      "angle": "论文：码点、字形与 UTF-8——为什么「一个字符」在计算机里有三种答案",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S1 + S2 + S6。S1：书把 UTF-8 讲清了规则，但没展开「字形／码点／字素簇」的常见混淆；S2：Ken Thompson 与 Rob Pike 在餐垫上画出 UTF-8 的故事可查；S6：Unicode 核心规范、Python 文档可逐条核对。",
+      "sourceAnchor": "本书 §2.3.1「码点并不指定字形」；§2.3.2「它是自同步的」与图 2.5 的位映射表。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

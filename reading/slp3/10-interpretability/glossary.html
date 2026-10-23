@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 10 章 · 术语表</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）· 第 10 章 可解释性</a></div>
+<h1>《Speech and Language Processing》（第 3 版）· 第 10 章 · 术语表</h1>
+<blockquote><p>页码口径：中文译本无印刷页码，统一用节号定位；「我的话」一栏是自己的解释，不是书上原文。</p><p>共 22 条，按首次出现顺序排列。</p></blockquote>
+<table><tr><th>术语</th><th>书上定义（缩引）</th><th>节号</th><th>我的话</th></tr><tr><td>可解释性（interpretability）</td><td>「研究模型内部表示、推理路径与具体计算回路，以弄清语言模型如何完成其任务的领域」</td><td>§10 章首</td><td>不只问「输出对不对」，而是问「内部哪一步导致了它」；常与「机制可解释性」混用。</td></tr><tr><td>上下文嵌入（contextual embedding）</td><td>「每个词 w 每次出现在不同上下文中时都由不同的向量来表示」</td><td>§10.1</td><td>同一个词在不同句子里拿到的不同向量；描述这一次使用，不描述词典条目。</td></tr><tr><td>残差流（residual stream）</td><td>「模型每个组件（注意力头、前馈网络）的输出都是一种表示，会被加进残差流中」</td><td>§10.1</td><td>一条贯穿各层的累加通道；每层往里加东西，而不是把旧内容擦掉。</td></tr><tr><td>词型（word type）</td><td>「静态嵌入表示的是词型（词表条目）的含义」</td><td>§10.1</td><td>词典里那一条，比如「bank」这个拼写本身；一个词型只有一个静态向量。</td></tr><tr><td>词例（token / word instance）</td><td>「上下文嵌入表示的是词例的含义：某个特定词型在特定上下文中的实例」</td><td>§10.1</td><td>句子里实际出现的这一次；同一个词型可以有无穷多个词例向量。</td></tr><tr><td>多义（polysemy）</td><td>「同一个词可以用来表示不同的事物」</td><td>§10.1.1</td><td>一个形式挂多个义项；与「同形异义」不同，多义的义项之间通常有引申关系。</td></tr><tr><td>义项 / 词义（word sense）</td><td>「一个义项（或称词义）是对词义某一方面的离散表示」</td><td>§10.1.1</td><td>词典里用上标区分的那一层，如 bank¹（银行）与 bank²（河岸）。</td></tr><tr><td>WordNet</td><td>「按义项组织、覆盖多种语言的在线词汇数据库」</td><td>§10.1.1</td><td>义项清单的代表实现；提供同义词集与上下位关系，常被当作 WSD 的答案键。</td></tr><tr><td>词义消歧（WSD）</td><td>「依据语境从固定的义项清单中为词选定正确义项的任务」</td><td>§10.1.1</td><td>给定句子和一份义项表，选一个编号；难点在清单粒度与标注成本。</td></tr><tr><td>义项嵌入（sense embedding）</td><td>「对该义项的 n 个词元，我们对它们的 n 个上下文表示 vi 取平均」</td><td>§10.1.1</td><td>把一个义项的所有出现压成一个原型向量，测试时比余弦即可。</td></tr><tr><td>一篇话语一个义项</td><td>「一个词在一篇话语的范围内通常始终使用大致相同的意义」</td><td>§10.1.1</td><td>可当无标注的一致性检查：同一文档内义项频繁跳变，先怀疑系统不稳。</td></tr><tr><td>各向异性（anisotropy）</td><td>「系统中所有向量倾向于指向同一方向，使任意两词的余弦相似度异常偏高」</td><td>§10.1.2</td><td>全体向量挤在一个窄锥里；余弦的绝对值因此不可解释，必须先看基线。</td></tr><tr><td>各向同性（isotropy）</td><td>「在所有方向上均匀……任意一对随机嵌入的期望余弦将为零」</td><td>§10.1.2</td><td>理想状态：方向铺满整个空间，随机词对的平均余弦约为 0。</td></tr><tr><td>异常维度（rogue dimension）</td><td>「少数几个取值与其他维度差异很大的维度……具有非常大的量级和极高的方差」</td><td>§10.1.2</td><td>点积里嗓门特别大的几个坐标，会把其余维度的信息压过去。</td></tr><tr><td>z 分数标准化</td><td>「减去均值并除以方差」</td><td>§10.1.2</td><td>逐维把分布拉成均值 0、方差 1；校准尺度，但不改变频率造成的语义偏差。</td></tr><tr><td>探针（probe）</td><td>「构建一个分类器……它以嵌入向量为输入，返回我们关注的类别」</td><td>§10.2</td><td>冻结主模型、只训小分类器，用「能不能读出」来推断「表示里有没有」。</td></tr><tr><td>对照条件（control condition）</td><td>「探针分析通常需要与对照条件进行比较」</td><td>§10.2</td><td>随机标签、打乱输入、容量匹配等基线；没有它，高准确率可能只是过拟合。</td></tr><tr><td>探针容量（probe capacity）</td><td>「探针不能过于强大……相关信息编码在探针权重本身」</td><td>§10.2</td><td>分类器越强，越可能自己记住答案；线性探针是对容量的一种硬约束。</td></tr><tr><td>logit lens</td><td>「把 Transformer 任意一层的向量直接乘以解嵌入矩阵并做 softmax」</td><td>§10.3</td><td>不训练任何东西，借最终层的解嵌入矩阵直接读中间层「像什么词」。</td></tr><tr><td>J-lens（Jacobian lens）</td><td>「考察最终层关于中间层的导数，追问层的微小变化会如何影响最终层的输出表示」</td><td>§10.3</td><td>logit lens 的修正版：用雅可比补偿中间层与最终层之间的换基。</td></tr><tr><td>归纳头（induction head）</td><td>「注意力计算中的一类电路，能识别重复出现的模式并预测其后续词元」</td><td>§10.6</td><td>两个动作：回找此前出现过的 A，再把它后面的 B 复制过来。</td></tr><tr><td>消融（ablation）</td><td>「通过使某个组件失效（例如将其输出置零）来观察其因果作用」</td><td>§10.6</td><td>可解释性里的「干预」：拿掉候选原因，看效应是否随之消失。</td></tr><tr><td>上下文学习（in-context learning）</td><td>「在推理阶段的前向传播过程中……无需对模型参数进行任何基于梯度的更新」</td><td>§10.6</td><td>权重不变、行为随提示改变；是否算「学习」取决于你如何定义学习。</td></tr><tr><td>稀疏自编码器（SAE）</td><td>书稿 §10.4 仅有标题，正文为空，未给定义</td><td>§10.4 ❓</td><td>用「少量特征线性组合 + 稀疏惩罚」重建激活，试图把叠加的方向拆开；本章未展开，定义需查外部文献。</td></tr><tr><td>因果可解释性</td><td>书稿 §10.5 仅有标题，正文为空，未给定义</td><td>§10.5 ❓</td><td>以干预（置零、替换、消融）而非相关性来建立因果主张；本章未展开。</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="glossary.md">glossary.md</a></footer>
+</div></body></html>

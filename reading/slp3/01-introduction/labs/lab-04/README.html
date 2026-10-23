@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 04　代理指标与古德哈特：把 overlap 刷满，质量会涨吗？</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">Lab 04　代理指标与古德哈特：把 overlap 刷满，质量会涨吗？</a></div>
+<h1>Lab 04　代理指标与古德哈特：把 overlap 刷满，质量会涨吗？</h1>
+<p><strong>对应行动</strong>：actions.md 第 4 条<strong>书中锚点</strong>：§1.9.4 代理指标、古德哈特定律<strong>脚本</strong>：<code>proxy_goodhart.py</code>　<strong>产物</strong>：<code>out/candidates.csv</code>、<code>out/summary.json</code>、<code>out/overlap_vs_adequacy.png</code></p>
+<h2>输入的性质（先声明）</h2>
+<ul><li>6 组中英句对、每组 4 个候选译文，是<strong>为教学构造的样例</strong>；</li></ul>
+<p><code>adequacy</code>（1–5）是人工设定的示意分，不是真实标注实验。</p>
+<ul><li><code>overlap_f1</code> 由脚本<strong>真实计算</strong>：候选与参考译文的 token 集合 F1（不看顺序、不看重复）。</li><li>选择过程也是真实的：每组取 overlap 最高的候选，再与&quot;人工分最高的候选&quot;对比。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-04
+python3 proxy_goodhart.py</code></pre>
+<h2>关键输出（真实运行）</h2>
+<pre><code>&quot;mean_overlap_selected_adequacy&quot;: 3.0,
+&quot;mean_oracle_adequacy&quot;: 5.0,
+&quot;n_gamed_selected&quot;: 3,
+&quot;pearson_overlap_vs_adequacy&quot;: -0.5886</code></pre>
+<p>被选中的刷分候选之一：<code>the the cat cat sat sat on on the the mat mat</code>（overlap 1.0，adequacy 1）。</p>
+<h2>结论（引用自己的产物）</h2>
+<ol><li>6 组里有 3 组，overlap 最高的候选是<strong>词序被打乱的重复词串</strong>；按指标选，</li></ol>
+<p>平均 adequacy 只有 3.0，而按人工分选是 5.0。</p>
+<ol><li>在这组构造数据上，overlap 与 adequacy 的相关系数是 <strong>-0.59</strong>：指标越高，质量反而越低。</li></ol>
+<p>原因很直接：集合 F1 不看顺序和重复，把参考词全部倒出来就能拿满分。</p>
+<ol><li>这不是说 BLEU/chrF 一无是处——它们用 n-gram 精度，会惩罚乱序；</li></ol>
+<p>但只要指标可被优化，就存在&quot;针对指标而不是针对目标&quot;的解法。古德哈特定律说的是这个结构性风险，不是某一个指标的 bug。</p>
+<ol><li>实践含义：代理指标适合<strong>高频回归检查</strong>，不能单独当发布门槛；</li></ol>
+<p>关键决策仍要人评或 LLM 评判，并抽查指标与人工分的一致性。</p>
+<h2>反思</h2>
+<p>我原来觉得&quot;指标涨了就是变好了&quot;，最多担心一下过拟合。这个 lab 让我看到更难堪的一面：只要我知道指标怎么算，就能构造出指标满分、人读不懂的输出。以后看到&quot;我们的 BLEU 提升了 2 分&quot;，我会先问测试集、分词和候选选择方式，再决定要不要信。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

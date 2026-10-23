@@ -1,0 +1,32 @@
+{
+  "greedy": [
+    "the cat sat on the cat sat on the cat sat on the cat",
+    "the cat sat on the cat sat on the cat sat on the cat",
+    "the cat sat on the cat sat on the cat sat on the cat"
+  ],
+  "random": [
+    "a cat on the dog sat on a cat on a cat sat on",
+    "the dog sat on the mat . <bos> a dog sat on a cat",
+    "the mat . <bos> the cat sat on a dog sat on the cat"
+  ],
+  "temperature:0.5": [
+    "a cat sat on the cat sat on the dog sat on the dog",
+    "the dog sat on the dog sat on a dog sat on the cat",
+    "the dog sat on the cat sat on a dog sat on the cat"
+  ],
+  "temperature:1.5": [
+    "a cat on the dog sat on a cat on a cat sat on",
+    "the dog sat on the mat . <bos> a dog sat on a cat",
+    "the mat . <bos> the cat sat on a dog sat on the cat"
+  ],
+  "top_k:2": [
+    "a cat on the dog sat on a cat on a cat sat on",
+    "the cat sat on the dog sat on a dog sat on a cat",
+    "the dog sat on the cat sat on a dog sat on the cat"
+  ],
+  "top_p:0.9": [
+    "a cat on the dog sat on a cat on a cat sat on",
+    "the dog sat on the mat . <bos> a dog sat on a cat",
+    "the mat . <bos> the cat sat on a dog sat on the cat"
+  ]
+}

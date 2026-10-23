@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 01　bigram 下词预测：给定前缀，模型真的在看前缀吗？</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">Lab 01　bigram 下词预测：给定前缀，模型真的在看前缀吗？</a></div>
+<h1>Lab 01　bigram 下词预测：给定前缀，模型真的在看前缀吗？</h1>
+<p><strong>对应行动</strong>：actions.md 第 1 条<strong>书中锚点</strong>：§1.1 图 1.1、§1.2.2 香农游戏、§1.6.1 预训练<strong>脚本</strong>：<code>bigram_next_word.py</code>　<strong>产物</strong>：<code>out/next_word.csv</code>、<code>out/summary.json</code>、<code>out/next_word.png</code></p>
+<h2>输入</h2>
+<ul><li>语料：<code>/home/yuanwu/books/slp3/zh/md/01-introduction.dual.md</code> 的英文 blockquote 行（本章英文原文）。</li><li>清洗：只保留 ASCII 字母占比 &gt;55% 的行，转小写，去掉标点。</li><li>防泄漏：训练前剔除所有包含 <code>so long and thanks</code> 的句子（本章自己举过这句）。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-01
+python3 bigram_next_word.py</code></pre>
+<h2>关键输出（真实运行）</h2>
+<pre><code>tokens=13116 vocab=2381 lines=426
+so long and thanks for -&gt; [(&#x27;example&#x27;, 0.1471, &#x27;bigram&#x27;), (&#x27;the&#x27;, 0.0941, &#x27;bigram&#x27;),
+                            (&#x27;a&#x27;, 0.0588, &#x27;bigram&#x27;), (&#x27;each&#x27;, 0.0353, &#x27;bigram&#x27;)]
+the language -&gt; [(&#x27;models&#x27;, 0.4494, &#x27;bigram&#x27;), (&#x27;model&#x27;, 0.2785, &#x27;bigram&#x27;), ...]</code></pre>
+<p><code>out/next_word.csv</code> 的完整前 12 名里没有 <code>all</code>。书中图 1.1 的 all（.44）/ the（.33）在这份 1.3 万词的小语料上无法复现。</p>
+<h2>结论（引用自己的产物）</h2>
+<ol><li>bigram 只看<strong>最后一个词</strong>。查询&quot;so long and thanks for&quot;时，模型实际的条件是 <code>for</code>，</li></ol>
+<p>于是把本章说明文的常用搭配 <code>for example</code>（25 次，0.147）排在第一位，<code>all</code> 根本没进前 12。</p>
+<ol><li><code>the language</code> 的分布则很尖锐：<code>models</code> 0.449、<code>model</code> 0.279，说明同一语料里</li></ol>
+<p>&quot;the language model(s)&quot; 是高频模板。<strong>语料体裁直接决定&quot;合理续写&quot;长什么样。</strong></p>
+<ol><li><code>thanks</code> 在训练集里出现 0 次（OOV），但 bigram 不受影响，因为它的上下文只有 <code>for</code>。</li></ol>
+<p>这既暴露了阶数假设的省事，也暴露了它丢信息。</p>
+<h2>反思</h2>
+<p>我原来以为&quot;bigram 预测下一个词&quot;至少会用到前面几个词，跑完才看清：它把&quot;so long and thanks for&quot; 压成了一个 <code>for</code>。书里 all/the 的高概率不是 n-gram 的功劳，而是大语料 + 长上下文。这个落差正好解释了为什么第 3 章要从 n-gram 走向神经网络语言模型。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

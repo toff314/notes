@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 9 章 · 行动执行闭环（labs/index）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a><a href="index.html">第 9 章 · 行动执行闭环（labs/index）</a></div>
+<h1>第 9 章 · 行动执行闭环（labs/index）</h1>
+<blockquote><p><code>actions.md</code> 是「要做什么」，本目录是「已经跑了、看到了什么」。</p><p>环境：Linux + Python 3；仅使用标准库 + numpy + matplotlib（<code>Agg</code> 后端，无需显示器）。</p><p>三个脚本均已实际运行，产物在各自 <code>out/</code> 下；运行时间：lab-01 数秒、lab-02 约 73 秒、lab-03 数秒。</p></blockquote>
+<h2>行动覆盖总表</h2>
+<table><tr><th>行动（actions.md）</th><th>对应 lab</th><th>脚本</th><th>关键产物</th><th>结论落点</th></tr><tr><td>第 1 条：对账 15%/80/10/10，解释 leak_rate</td><td><code>lab-01</code></td><td><code>lab-01/lab01_mask_policy.py</code></td><td><code>masking_stats.csv</code>、<code>predictability.csv</code>、<code>samples.json</code>、<code>masking_rates.png</code></td><td>§9.3.1 期望 12%/1.5%/1.5% 与实测 11.88%/1.51%/1.48% 一致；「原样保留」仍会泄漏</td></tr><tr><td>第 2 条：复算 MLM 损失，与一元基线对照</td><td><code>lab-02</code></td><td><code>lab-02/lab02_toy_mlm.py</code></td><td><code>loss.csv</code>、<code>metrics.csv</code>、<code>rank_hist.csv</code>、<code>predictions.json</code>、<code>loss_and_topk.png</code></td><td>只有被挖掉的位置进损失；上下文把 top-1 从 0.166 提到 0.333</td></tr><tr><td>第 3 条：BIO→子词→解码 + 实体级评估 + bootstrap</td><td><code>lab-03</code></td><td><code>lab-03/lab03_bio_alignment.py</code></td><td><code>alignment.csv</code>、<code>metrics.csv</code>、<code>bootstrap.csv</code>、<code>errors.json</code>、<code>word_vs_entity.png</code></td><td>词级 0.760 时实体 F1 仅 0.500；6 句下 95% 区间宽达 0.60</td></tr></table>
+<h2>复现命令</h2>
+<pre><code>cd labs/lab-01 &amp;&amp; python3 lab01_mask_policy.py
+cd ../lab-02 &amp;&amp; python3 lab02_toy_mlm.py
+cd ../lab-03 &amp;&amp; python3 lab03_bio_alignment.py</code></pre>
+<h2>lab-01：掩码策略的账</h2>
+<ul><li><strong>脚本与输入</strong>：<code>lab01_mask_policy.py</code>；模板生成 6,000 句 × 7 词元，词表 26，种子 20261020。</li><li><strong>产物</strong>：<code>lab-01/out/masking_stats.csv</code>（三种策略的比例与泄漏）、<code>predictability.csv</code>（top-1/top-5）、<code>samples.json</code>（12 个样例）、<code>masking_rates.png</code>。</li><li><strong>结论</strong>：</li><li>BERT 80/10/10 的 <code>[MASK]</code> 占全文 11.88%、随机词 1.51%、原样 1.48%，与 12%/1.5%/1.5% 的期望差均 &lt;0.3 个百分点。</li><li><code>leak_rate</code> 为 10.7%，高于 10%：除「原样保留」分支外，随机替换也会以约 7.2% 的概率撞回目标词。</li><li><code>0/50/50</code> 的 <code>leak_rate</code> 为 54.2%，说明「不放 <code>[MASK]</code>」不等于「目标不在输入里」；这正是 BERT 要保留 10% 原样、又必须接受 1.5% 错误信号的由来。</li><li><strong>反思</strong>：我原来把「15% 掩码」当成一个数，跑完才把它拆成「选中率 × 分支比例 × 碰撞率」三层；以后看到任何「X% 掩码」的说法，我会先问它指选中率、<code>[MASK]</code> 率，还是进损失的比例。</li></ul>
+<h2>lab-02：玩具 MLM 的损失口径</h2>
+<ul><li><strong>脚本与输入</strong>：<code>lab02_toy_mlm.py</code>；4,000 训练句 / 1,000 验证句，每句 7 词，词表 26，每句挖 1 个位置（约 14.3%），种子 7。</li><li><strong>产物</strong>：<code>lab-02/out/loss.csv</code>（300 epoch 曲线）、<code>metrics.csv</code>（玩具 vs 一元）、<code>rank_hist.csv</code>（名次分布）、<code>predictions.json</code>、<code>loss_and_topk.png</code>。</li><li><strong>结论</strong>：</li><li>dev loss 1.766 vs 一元基线 2.889；top-1 0.333 vs 0.166，top-5 0.702 vs 0.513。</li><li>训练循环只对 <code>target</code> 计算负对数概率，其余 6 个词只提供上下文，实测印证「只有 M 中的词元起作用」；在每句 <code>|M|=1</code> 时，这就是式 9.4 的特例。</li><li>top-1 停在 0.333：词袋均值丢掉词序，<code>rank_hist.csv</code> 里 74/1000 的样本排名 ≥10，说明同类别词无法仅凭词袋区分。</li><li><strong>反思</strong>：我原以为「上下文模型一定远胜一元基线」，但玩具模型只把 top-1 翻了一倍就封顶；这让我更直观地理解为什么真实 MLM 需要多层自注意力，而不是一个上下文词袋。</li></ul>
+<h2>lab-03：BIO、子词与实体级评估</h2>
+<ul><li><strong>脚本与输入</strong>：<code>lab03_bio_alignment.py</code>；6 句手写数据、42 个词标签；简化 WordPiece 切分；四个预测变体（gold / boundary / type / noise15%）；种子 11；bootstrap 2,000 次。</li><li><strong>产物</strong>：<code>lab-03/out/alignment.csv</code>（词级→子词级标签）、<code>metrics.csv</code>（四变体指标）、<code>bootstrap.csv</code>（区间）、<code>errors.json</code>（FP/FN 明细）、<code>word_vs_entity.png</code>。</li><li><strong>结论</strong>：</li><li>词级→子词→首子词解码往返一致率 42/42 = 1.000，流程对金标准无损。</li><li>boundary 变体词级仍 0.979，但实体 F1 0.917（11 TP / 1 FP / 1 FN）；type 变体词级 0.938、实体 F1 0.917。一个边界错误同时制造 FP 与 FN，与 §9.5.4 的 Jane 例子完全对应。</li><li>noise15% 词级 0.760、实体 F1 0.500（8 TP / 12 FP / 4 FN）；词级指标明显高估系统能力。</li><li>6 句下 bootstrap 95% 区间 [0.242, 0.846]，宽约 0.60，不能据此判断两个系统的 0.1 分差是否真实。</li><li><strong>反思</strong>：我以前报告 NER 结果时习惯只写 F1，不写匹配口径与响应单位；lab-03 让我看到同一个预测在「词级」和「实体级」下能差 26 个百分点。以后无论看论文还是做项目，我都会先确认「TP 是按词算还是按实体算、边界是否严格匹配」。</li></ul>
+<h2>未做成脚本的行动（说明）</h2>
+<ul><li><code>actions.md</code> 的「错题归因」与「复习节奏」是学习行为，不是可计算实验，因此没有单独 lab；其中「α 方向」「15% 口径」「实体级差距」三项已分别由 lab-01、lab-02、lab-03 的产物覆盖。</li><li><code>book-notes.md</code> 各节行动区里还有「手算 BERT-base 参数量」「查 RoBERTa 消融表」等核查型行动；它们依赖外部论文表格或纯手算，按 SKILL §10.1 降级为核查记录，未强行包装成脚本。本页的 3 个 lab 对应 <code>actions.md</code> 的 3 条编号行动，编号一一对齐。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

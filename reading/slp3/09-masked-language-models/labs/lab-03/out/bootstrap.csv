@@ -1,0 +1,2 @@
+metric,point,ci_low,ci_high,n_sentences,n_resamples
+entity_f1_noise15,0.5,0.24242424242424246,0.8461538461538461,6,2000

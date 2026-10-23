@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第三版）第 7 章 · 术语表</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a></div>
+<h1>《Speech and Language Processing》（第三版）第 7 章 · 术语表</h1>
+<blockquote><p>中文译名以手头译本为准；「书上定义」为缩引，不是逐字摘录；定位统一用节号（原书无印刷页码）。</p></blockquote>
+<table><tr><th>术语</th><th>书上定义（缩引）</th><th>节号</th><th>我的话</th></tr><tr><td>上下文嵌入（contextual embeddings）</td><td>Transformer 依据句子中周围词元动态生成的词表示，同一个词在不同上下文中会得到不同的向量</td><td>§7.1</td><td>词的“临时身份证”，读完上下文才签发</td></tr><tr><td>注意力（attention）</td><td>加权并组合第 k 层上下文中其他词元的表示，以构建第 k+1 层的表示</td><td>§7.1</td><td>按相关度把邻词信息软性搬过来</td></tr><tr><td>注意力头（attention head）</td><td>通过查询、键、值三组投影把输入映射为按相似度加权组合的输出</td><td>§7.1.1</td><td>一次独立的“查找—搬运”操作</td></tr><tr><td>查询（query）</td><td>当前词元与先前输入比较时所充当的角色，由输入表示经线性投影得到</td><td>§7.1.1</td><td>“我在找什么”</td></tr><tr><td>键（key）</td><td>先前输入的表示经线性投影后所充当的角色，用来与当前元素比较并产生相似度权重</td><td>§7.1.1</td><td>“我有什么标签”</td></tr><tr><td>值（value）</td><td>先前元素的表示经线性投影后所充当的角色，按相似度权重被加权求和</td><td>§7.1.1</td><td>真正被搬走的内容</td></tr><tr><td>缩放点积注意力</td><td>用查询与键的点积打分，除以 √dk 后用 softmax 归一化，再对值加权求和</td><td>§7.1.1</td><td>先量相似度，再按比例取货</td></tr><tr><td>多头注意力（multi-head attention）</td><td>并行的多个头各用独立投影计算注意力，再把各头结果拼接后投影回模型维度</td><td>§7.1.1</td><td>多个人同时从不同角度查同一份上下文</td></tr><tr><td>模型维度（d）</td><td>残差流、块输入与输出共用的向量宽度</td><td>§7.1.1</td><td>整条传送带的带宽</td></tr><tr><td>残差流（residual stream）</td><td>块内贯穿各子层的一条向量通道，各组件由它读取输入并把输出加回</td><td>§7.2</td><td>一块所有层共同读写的黑板</td></tr><tr><td>前馈层（feedforward layer）</td><td>逐位置独立作用的两层全连接网络，参数量占比最大，被认为编码大部分事实性知识</td><td>§7.2.1</td><td>只加工当前词、不跨位置的“计算器”</td></tr><tr><td>SwiGLU</td><td>用 Swish 作门、对两条线性变换做逐分量乘积的门控激活</td><td>§7.2.1</td><td>一条变换当值，另一条当阀门</td></tr><tr><td>层归一化（layer norm）</td><td>对单个词元的 d 维嵌入做类似 z 分数的标准化</td><td>§7.2.2</td><td>把每个词自己的向量拉回稳定尺度</td></tr><tr><td>RMSNorm</td><td>按向量均方根重新缩放，跳过均值中心化</td><td>§7.2.2</td><td>只调大小、不挪中心</td></tr><tr><td>词元混合（token-mixing）</td><td>注意力把邻近词元的信息搬入当前词元的残差流</td><td>§7.2.3</td><td>唯一能让词与词交换信息的通道</td></tr><tr><td>因果掩码（causal mask）</td><td>把 QKᵀ 上三角设为 −∞，softmax 后未来位置权重为零</td><td>§7.3</td><td>考试时遮住答案，防止偷看</td></tr><tr><td>位置嵌入（positional embedding）</td><td>与每个输入位置对应的 d 维向量，向模型注入次序信息</td><td>§7.4</td><td>告诉模型“这个字排第几”</td></tr><tr><td>RoPE</td><td>旋转位置嵌入，通过对查询和键施加与位置相关的旋转来编码相对位置</td><td>§7.4</td><td>用旋转角度表示“相距多远”</td></tr><tr><td>语言建模头（language modeling head）</td><td>位于 Transformer 顶部、把最后一层输出映成词表概率分布的电路</td><td>§7.5</td><td>把内部向量翻译成“下一个词是谁”</td></tr><tr><td>解嵌入（unembedding）</td><td>把最后一层隐藏向量映回词表得分向量，是输入端嵌入映射的逆过程</td><td>§7.5</td><td>从意义空间回到词表</td></tr><tr><td>权重绑定（weight tying）</td><td>输入嵌入矩阵与输出端转置共享同一组权重</td><td>§7.5</td><td>读词和写词用同一本词典</td></tr><tr><td>贪心解码（greedy）</td><td>每一步只选当下概率最高的词元</td><td>§7.6.1</td><td>永远走眼前最亮的那格</td></tr><tr><td>自回归生成（autoregressive generation）</td><td>把上一步生成的词元再作为输入，逐步生成整段文本</td><td>§7.6</td><td>自己写的前文变成下一步的条件</td></tr><tr><td>温度采样（temperature sampling）</td><td>softmax 前把 logit 除以 τ，调整分布陡峭程度</td><td>§7.6.3</td><td>推理期的“锐化/柔化”旋钮</td></tr><tr><td>top-k 采样</td><td>先限制为概率最高的 k 个词，重新归一化后在其中随机抽</td><td>§7.6.4</td><td>固定名额的候选池</td></tr><tr><td>top-p 采样（核采样）</td><td>保留累计概率达到 p 的最小词集，再归一化后抽样</td><td>§7.6.4</td><td>固定质量、名额随上下文变</td></tr><tr><td>教师强制（teacher forcing）</td><td>训练时总把正确的历史序列交给模型预测下一词，而不是喂回模型自己的猜测</td><td>§7.7</td><td>每步都看标准答案，不让自己越错越远</td></tr><tr><td>困惑度（perplexity）</td><td>模型赋予测试集概率的倒数，并按词元数归一化</td><td>§7.7.1</td><td>平均在多少个等概率候选里犹豫</td></tr><tr><td>KV 缓存（KV cache）</td><td>推理时缓存已算出的键、值向量，避免为历史词元重复计算</td><td>§7.8</td><td>把旧账本留着，只算新账</td></tr><tr><td>仅解码器模型（decoder-only model）</td><td>只由解码器堆叠而成、以因果方式逐词预测下一词的语言模型</td><td>§7.5</td><td>只会“接着写”的 Transformer</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="glossary.md">glossary.md</a></footer>
+</div></body></html>

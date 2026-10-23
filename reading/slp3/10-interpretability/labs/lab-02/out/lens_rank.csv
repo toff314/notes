@@ -1,0 +1,17 @@
+prompt,layer,lens,top1,rank_correct,top5
+A_planet,0,logit,is,7,is|planet|the|fourth|and
+A_planet,0,j_lens,mars,1,mars|is|planet|the|fourth
+A_planet,1,logit,mars,1,mars|is|planet|the|fourth
+A_planet,1,j_lens,mars,1,mars|is|planet|the|fourth
+A_planet,2,logit,<pad>,10,<pad>|is|large|color|planet
+A_planet,2,j_lens,mars,1,mars|is|planet|the|fourth
+A_planet,3,logit,mars,1,mars|is|planet|the|fourth
+A_planet,3,j_lens,mars,1,mars|is|planet|the|fourth
+B_color,0,logit,is,10,is|and|planet|fourth|the
+B_color,0,j_lens,red,1,red|mars|is|and|planet
+B_color,1,logit,mars,10,mars|is|and|planet|fourth
+B_color,1,j_lens,red,1,red|mars|is|and|planet
+B_color,2,logit,planet,13,planet|color|its|small|is
+B_color,2,j_lens,red,1,red|mars|is|and|planet
+B_color,3,logit,red,1,red|mars|is|and|planet
+B_color,3,j_lens,red,1,red|mars|is|and|planet

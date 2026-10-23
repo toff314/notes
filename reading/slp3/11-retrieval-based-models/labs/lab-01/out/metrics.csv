@@ -1,0 +1,4 @@
+system,recall@1,recall@3,recall@5,mrr
+tfidf,0.75,0.8,1.0,0.85
+bm25,0.75,0.8,0.9,0.8417
+dense_ppmi_svd,0.55,0.8,0.9,0.7393

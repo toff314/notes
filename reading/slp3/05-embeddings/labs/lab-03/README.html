@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03　窗口大小对照：短窗偏句法、长窗偏主题？</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a><a href="../index.html">labs · 行动执行闭环（lab-01 ~ lab-05）</a><a href="README.html">lab-03　窗口大小对照：短窗偏句法、长窗偏主题？</a></div>
+<h1>lab-03　窗口大小对照：短窗偏句法、长窗偏主题？</h1>
+<p>对应行动：<code>actions.md</code> 第 4 条的前半。对应书中 §5.7（窗口大小的语义后果）、§5.3（共现矩阵）。</p>
+<h2>怎么跑</h2>
+<pre><code>cd labs/lab-03
+python3 lab03_window_size_compare.py</code></pre>
+<p>约 2 秒。语料只读本章英文对照文件 <code>/home/yuanwu/books/slp3/zh/md/05-embeddings.dual.md</code>，不修改书稿目录。</p>
+<h2>语料怎么来的</h2>
+<p>只取 dual md 中以 <code>&gt; </code> 开头的英文行，过滤掉定义框、图片说明和中文行（ASCII 比例 &gt; 0.9），得到 317 句、9,855 个 token、词表 555（min_count=3）。这是一份<strong>技术体裁</strong>语料，这一点对结论很重要。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/window_compare.csv</code></td><td>12 个目标词 × 3 个窗口 × 前 8 近邻及余弦</td></tr><tr><td><code>out/overlap.csv</code></td><td>相邻窗口 top-10 的 Jaccard 重叠 + 具体词表</td></tr><tr><td><code>out/vocab_stats.json</code></td><td>各窗口的非零率、秩、第一奇异值占比</td></tr><tr><td><code>out/window_space.png</code></td><td>±2 与 ±5 两个空间的二维投影并排图</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<pre><code>sentences=317 tokens=9855 vocab=555
+window=+/-2:  nnz=0.050 rank=50
+window=+/-5:  nnz=0.097 rank=50
+window=+/-10: nnz=0.142 rank=50
+
+[word]    w=2: a(0.644), is(0.603), of(0.532), context(0.512), target(0.503), the(0.491)
+[word]    w=5: target(0.607), each(0.585), context(0.575), row(0.565), a(0.553), occurs(0.519)
+[context] w=2: window(0.534), sentences(0.520), cpos(0.516), word(0.512), noise(0.490)
+[context] w=5: window(0.717), target(0.640), word(0.575), column(0.518), matrix(0.510), row(0.510)
+[king]    w=2: man(0.901), woman(0.894), queen(0.861), analogy(0.796)
+[king]    w=5: woman(0.985), man(0.982), queen(0.960), closest(0.918), analogy(0.826)
+
+overlap@10 (Jaccard): word 0.538 | meaning 0.053 | vector 0.111 |
+context 0.111 | similar 0.429 | language 0.176 | king 0.429</code></pre>
+<h2>结论</h2>
+<ol><li><strong>部分成立</strong>：<code>word</code> 在 ±2 下的近邻几乎全是虚词（a、is、of、the），±5 前排换成了 <code>target</code>、<code>context</code>、<code>row</code>、<code>occurs</code> 这类内容词；<code>context</code> 从「句子、cpos、noise」变成「window、target、column、matrix、row」，即从局部搭配转向矩阵/表格这一主题。方向与 §5.7 一致。</li><li><strong>幅度远小于书中</strong>：书中 Hogwarts 的例子是近邻类别整体换掉（虚构学校 → 人物/术语），而这里 top-10 平均只有约 1/4 重叠（meaning 仅 0.053，word 0.538）。本语料只有 1 万词且体裁单一，无法产生足够多样的主题共现。</li><li><strong>短窗的「句法」表现被虚词污染</strong>：理论上是「同词性词更近」，实测短窗前排常是功能词，因为它们在任意 2 词距离内都高频共现。这说明「短窗偏句法」的前提是已经处理过停用词或采用了下采样（书中未展开）。</li><li><strong>窗口越大矩阵越稠密</strong>：非零率 0.050 → 0.097 → 0.142，计算与存储成本随窗口线性上升，这是选择窗口时的现实约束。</li></ol>
+<h2>反思</h2>
+<p>我原本期待看到「±2 抓同义词、±5 抓主题」的干净二分。实际跑完才意识到两件事：一是这个结论是在<strong>千万级、多体裁</strong>语料上得到的，1 万词的技术章节根本不够；二是短窗的「句法性」很容易被虚词吃掉，必须配合停用词或高频下采样。也就是说，§5.7 给的是趋势而非定律，复现它需要匹配的语料条件。</p>
+<p>另外，<code>king</code>/<code>queen</code> 在两种窗口下都稳居彼此近邻（0.86 / 0.96），说明<strong>强语义关系对窗口不敏感</strong>，窗口主要影响的是弱关系与主题层。这一点书中没写，是我从对照表里读出来的。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 1 章 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a></div>
+<h1>《Speech and Language Processing》第 1 章 · 提取自测</h1>
+<h2>提取自测协议（怎么用）</h2>
+<ul><li><strong>遮住</strong> <code>book-notes.md</code>、<code>cards.md</code> 和原书，只看下面的问题；</li><li>合上一切资料，口头或笔头作答，先写&quot;我记得的&quot;，再写&quot;我不确定的&quot;；</li><li>答完再对照&quot;答案解析指向&quot;回看对应节；答不出的题记入文末「未掌握」，48 小时后再测一次；</li><li><strong>费曼检验</strong>：能向没学过 NLP 的人讲清&quot;为什么预测下一个词能长出知识&quot; = 真懂；教材型再加一条：能独立复算 lab-02 的一个困惑度数值 = 掌握；</li><li>自测时不许翻摘录区；若答案里出现&quot;书上是这么写的&quot;却说不清为什么，按未掌握处理。</li></ul>
+<h2>第 1 章自测（10 题）</h2>
+<ol><li>用一句话给出语言模型的最小定义，并说明&quot;生成&quot;是在这个定义上加做了什么。→ 见 §1.1｜卡 1、卡 2</li><li>为什么说 bigram 模型&quot;看不见&quot;前缀 &quot;so long and thanks&quot; 的大部分内容？用 lab-01 的结果举一个具体例子。→ 见 §1.1、§1.6.1｜lab-01</li><li>分布假说与预训练是什么关系？请区分&quot;假说&quot;与&quot;工程做法&quot;，不要只重复两个名词。→ 见 §1.2｜卡 5、卡 6</li><li>嵌入把语义问题改写成了什么数学问题？它因此获得了什么能力，又丢失了什么？→ 见 §1.3｜卡 3</li><li>四个训练阶段分别补哪个短板？如果跳过指令微调、直接做偏好对齐，最可能出现什么失败？→ 见 §1.6｜卡 7、卡 8、卡 9</li><li>指令微调与上下文内学习都让模型&quot;学会了新任务&quot;，二者在机制和持久性上差在哪？→ 见 §1.6.2、§1.7.1｜卡 8、卡 14</li><li>为什么&quot;准确率&quot;不足以评价一段对话或一篇译文？这时可以改用哪两类评估，各有什么代价？→ 见 §1.9.1、§1.9.3｜卡 13</li><li>困惑度为什么会在无平滑时变成无穷大？加一平滑为什么不一定让它变小？用 lab-02 的两个数值说明。→ 见 §1.9.2｜lab-02</li><li>智能体与聊天模型在&quot;可生成的 token 集合&quot;上有什么差别？这个差别为什么同时带来能力与注入风险？→ 见 §1.8、§1.10｜book-notes §1.8</li><li>作者一方面警告拟人化，一方面继续用&quot;学习/知识&quot;，他给出的理由是什么？你能接受吗？→ 见 §1.11｜卡 16</li></ol>
+<h2>答案解析指向</h2>
+<table><tr><th>题</th><th>核心要点（自评用，不是标准答案）</th><th>回看</th></tr><tr><td>1</td><td>前缀→下词分布；生成=采样+回填+再预测</td><td>§1.1、卡 1–2</td></tr><tr><td>2</td><td>bigram 只条件于最后一个词 <code>for</code>；lab-01 中 <code>example</code> 0.147 居首，<code>all</code> 不在前 12</td><td>lab-01/README、§1.1</td></tr><tr><td>3</td><td>假说：相似分布→相似意义；工程：用下词预测把共现统计压进权重</td><td>§1.2、卡 5–6</td></tr><tr><td>4</td><td>语义→向量空间中的点与距离；获得可计算相似度，丢失符号结构与可解释性</td><td>§1.3、卡 3</td></tr><tr><td>5</td><td>预训练知识→SFT 格式→偏好取舍→RLVR 推理；跳过 SFT 则可能&quot;会续写但不应答指令&quot;</td><td>§1.6、§1.6.2</td></tr><tr><td>6</td><td>SFT 改权重、持久；ICL 改激活/上下文、会话结束即失</td><td>§1.7.1、卡 14</td></tr><tr><td>7</td><td>无唯一正确答案；人评（贵、慢）与 LLM 评判（便宜、可能同源偏置）；代理指标（快、可被刷）</td><td>§1.9.3–1.9.4、卡 13</td></tr><tr><td>8</td><td>未见词/未见转移使概率为 0，连乘取对数后 −∞；加一给 2381 个词表摊伪计数，可能过度抹平（bigram 1292.76 &gt; unigram 552.02）</td><td>lab-02、卡 11</td></tr><tr><td>9</td><td>动作也进入可生成 token 集合；能调工具，也能被伪装成观察的指令劫持</td><td>§1.8、§1.10</td></tr><tr><td>10</td><td>这些词是有用的描述简写，能支撑直觉；代价是暗示了不存在的能动性</td><td>§1.11、卡 16</td></tr></table>
+<h2>未掌握（自测后更新）</h2>
+<ul><li>首轮（10 月 20 日）：第 2 题只答出&quot;前缀决定下词&quot;，漏了&quot;bigram 只条件于最后一个词&quot;；第 8 题漏了&quot;零概率使连乘取对数后为 −∞&quot;这一条件。→ 回看 §1.1、§1.9.2，10 月 24 日重测。</li><li>后续每轮在此追加一行：日期 + 题号 + 错因 + 回看节号 + 下次重测日期。</li></ul>
+<h2>例题重做记录（教材型）</h2>
+<table><tr><th>例题/实验</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>§1.1 图 1.1 下词分布（lab-01）</td><td>✅ 能复述书中 all/the，但未预料到语料只条件于 <code>for</code></td><td>⬜ 10 月 24 日</td><td>理解性：把&quot;前缀&quot;误当成模型实际使用的全部上下文 → 回看 §1.1、lab-01</td></tr><tr><td>§1.9.2 困惑度（lab-02）</td><td>⚠️ 会套公式，未意识到无平滑直接 ∞</td><td>⬜ 10 月 25 日</td><td>知识性：零概率与对数连乘的条件 → 回看 §1.9.2、卡 11</td></tr><tr><td>香农游戏（lab-03）</td><td>⚠️ 直觉认为词首最难，实测第二字母最难</td><td>⬜ 10 月 27 日</td><td>理解性：把人类词库策略套到字符模型上 → 回看 §1.2.2、lab-03</td></tr><tr><td>代理指标（lab-04）</td><td>✅ 能说出古德哈特，未预料到集合 F1 被词序打乱刷满</td><td>⬜ 10 月 28 日</td><td>技巧性：忽略指标实现的顺序/重复盲区 → 回看 §1.9.4、lab-04</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

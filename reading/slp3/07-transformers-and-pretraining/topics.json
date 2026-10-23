@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》（第三版）第 7 章 · 衍生选题（5 条）",
+    "path": "reading/slp3/07-transformers-and-pretraining",
+    "anchor": "第7章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch07-t1",
+      "title": "注意力热图不是解释",
+      "angle": "观点：注意力热图不是因果解释——从 Transformer 的可解释性误区说起",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 争议反差 + S5 现实落点。书中用热图讲直觉，但热图只是单层单头权重；最终输出还经过值向量、Wo 与后续层，且多头可能冗余。现实里大量论文与产品把热图当“模型在解释自己”，这正是可写反差的落点。",
+      "sourceAnchor": "《Speech and Language Processing》§7.1「词元 chicken 和 road 都具有很高的注意力权重……我们会最倚重 chicken 和 road 的表示」；§7.2.3「我们完全可以把注意力头看作是把信息从邻近词元的残差流搬移到当前流中」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch07-t2",
+      "title": "解码策略如何塑造模型性格",
+      "angle": "观点：同一个模型为何既能复读又能胡说——解码策略才是那个隐藏旋钮",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 争议反差 + S5 现实落点。大众常把“模型变笨/变飘”归因于模型本身，实际上 temperature、top-k、top-p 在推理期就能显著改变输出；书中把三者串成一条谱系，但没展开产品默认值的选择逻辑。",
+      "sourceAnchor": "《Speech and Language Processing》§7.6.2「贪心解码过于乏味，而随机采样又过于随机」；§7.6.3「温度采样的思想是重塑概率分布」；§7.6.4「把 top-k 采样和 top-p 采样结合起来是很常见的做法」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch07-t3",
+      "title": "12Ld² 参数估算与失效边界",
+      "angle": "论文：用 12Ld² 估算 Transformer 参数量——从练习 7.1 到 Llama 405B",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 技术纵深 + S6 权威外部源。书中只留作练习，没有把“为什么是 12”“什么被忽略”“为什么 Qwen3-0.6B 会差 40%”讲完；而这些问题可以用公开模型配置逐项核对，适合做成可复算教程。",
+      "sourceAnchor": "《Speech and Language Processing》§7.9 与练习 7.1「证明完整的 L 个块的堆叠大约有 12Ld² 个参数」；§7.8 图 7.24 的模型配置表",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch07-t4",
+      "title": "残差流：一块共享黑板",
+      "angle": "观点：Transformer 不是一层层加工，而是一块被反复读写的共享黑板",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 书中讲而未透 + S3 技术纵深。教材给了比喻，但没有把它展开成“读写协议”：谁读、谁写、为什么维度必须一致、为什么最高层还要再归一化。这个视角能统一解释很多架构细节。",
+      "sourceAnchor": "《Speech and Language Processing》§7.2「这条残差流以原始输入向量为起点，各个组件从残差流中读取自己的输入，并把输出加回该流中」；§7.2.3「注意力头看作是把信息从邻近词元的残差流搬移到当前流中」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch07-t5",
+      "title": "位置编码三条路线",
+      "angle": "论文：位置编码为什么从“加一个向量”走到“旋转查询和键”",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S3 技术纵深 + S6 权威外部源。书中三种方案各给一两句，没解释“绝对位置的长尾问题如何量化”“正弦为什么能外推”“RoPE 的旋转为何等价于相对位移”；这些都能用公式与小实验补全。",
+      "sourceAnchor": "《Speech and Language Processing》§7.4「最简单的方法称为绝对位置」「最初的 Transformer 工作就使用了频率各异的正弦与余弦函数的组合」「这类位置嵌入机制中最流行的是旋转位置嵌入（Rotary Position Embedding, RoPE）」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

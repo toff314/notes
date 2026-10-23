@@ -1,0 +1,3 @@
+model,loss,top1,top5
+toy_mlm_bow,1.765871822185119,0.333,0.702
+unigram_baseline,2.888626064211191,0.166,0.513

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 02 · 位置嵌入 + 单层 Transformer 块（numpy）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a><a href="../index.html">Labs · 行动执行闭环（第 7 章）</a><a href="README.html">Lab 02 · 位置嵌入 + 单层 Transformer 块（numpy）</a></div>
+<h1>Lab 02 · 位置嵌入 + 单层 Transformer 块（numpy）</h1>
+<p><strong>对应行动</strong>：actions.md 第 2 条。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 tiny_transformer.py</code></pre>
+<p>依赖：Python 3、numpy 2.4.6、matplotlib 3.10.9。无 PyTorch、无自动微分；前向与反向均为手写。</p>
+<h2>模型与数据</h2>
+<ul><li>语料：4 个模板句循环 90 次，字符级词表 14 个字符。</li><li>上下文长度 N=16，模型维度 d=24，前馈维度 dff=48，单头因果注意力，参数量 5448。</li><li>块结构：RMSNorm → 单头因果注意力 → 残差 → RMSNorm → ReLU 前馈 → 残差 → 与 E 绑定的解嵌入。</li><li>优化：Adam（lr=0.01），batch=32，700 步；80% 窗口训练，20% 留出。</li><li>反向传播用有限差分做了 12 个参数点的校验；位置消融在推理时把学习到的位置表置零或打乱。</li></ul>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/summary.json</code></td><td>配置、损失、梯度校验、位置消融、生成样例</td></tr><tr><td><code>out/training_log.csv</code></td><td>每 25 步的训练/留出损失</td></tr><tr><td><code>out/gradient_check.csv</code></td><td>12 个参数点的解析梯度 vs 数值梯度</td></tr><tr><td><code>out/loss_curve.png</code></td><td>训练与留出损失曲线</td></tr><tr><td><code>out/samples.json</code></td><td>温度 0.8 + top-5 与贪心生成样例</td></tr></table>
+<h2>关键输出</h2>
+<ul><li>初始训练损失 <code>2.745</code>，训练结束 <code>0.159</code>，相对下降 <code>94.2%</code>；留出损失 <code>0.159</code>。</li><li>12 个参数点的梯度校验最大相对误差 <code>9.94e-8</code>。</li><li>位置消融（留出损失）：学习式 <code>0.159</code>；位置表置零 <code>1.965</code>；位置表打乱 <code>3.075</code>。</li><li>生成样例（温度 0.8、top-5）：<code>the mat. the dog sat on the log. a cat sat on a mat. a dog sat o</code>。</li></ul>
+<h2>结论</h2>
+<p>在极小字符语料上，单层块已经能把“下一字符”损失压到 0.16 左右；但这不是“模型学会了英语”，而是语料高度重复，模型主要记住了模板。位置信息确实进入计算：把位置表置零或打乱后，留出损失从 0.159 升到 1.97/3.07，说明同一字符在不同位置被区分开了。梯度校验通过，说明手写反向传播与数值梯度一致，损失下降不是实现错误的偶然结果。</p>
+<h2>反思</h2>
+<p>我原来以为“位置嵌入只是辅助特征，去掉顶多小幅掉点”；实测掉了十几倍，才理解 §7.4 把它与词嵌入并列的原因。另一个收获是：小模型上 loss 很低并不值得兴奋，先看语料是否重复、再看生成是否只是复读模板。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

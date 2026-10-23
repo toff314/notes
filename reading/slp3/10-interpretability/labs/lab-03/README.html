@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03 · 稀疏自编码器（SAE）λ 扫描</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》（第 3 版）· 第 10 章 可解释性</a><a href="../index.html">第 10 章 · 行动执行闭环（labs）</a><a href="README.html">lab-03 · 稀疏自编码器（SAE）λ 扫描</a></div>
+<h1>lab-03 · 稀疏自编码器（SAE）λ 扫描</h1>
+<blockquote><p><strong>定位</strong>：书稿 §10.4「稀疏自编码器」只有标题、正文为空。本 lab 是<strong>书外补白</strong>，用来亲手观察「重建—稀疏—特征恢复」的权衡；它<strong>不声称复现书中方法</strong>，也不把结论冒充成书里的观点。</p></blockquote>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 学习行动 3，回答三个问题：</p>
+<ol><li>在已知真特征的「叠加」数据上，L1 系数 λ 如何改变重建误差（MSE）与平均激活特征数（L0）？</li><li>能否选出一个兼顾稀疏与重建的 λ？它的代价是什么？</li><li>重建好、L0 接近真实 k，是否意味着字典原子真的对齐了真特征？</li></ol>
+<h2>输入</h2>
+<p>不依赖外部数据，全部由脚本内固定种子生成（<code>numpy.random.default_rng(11)</code>）：</p>
+<table><tr><th>项</th><th>值</th></tr><tr><td>样本数 N</td><td>4000</td></tr><tr><td>激活维度 D</td><td>64</td></tr><tr><td>真特征数 M_TRUE</td><td>40</td></tr><tr><td>SAE 特征数 M_SAE</td><td>80（过完备字典，2×）</td></tr><tr><td>每样本非零特征数 k</td><td>4</td></tr><tr><td>非零系数</td><td><code>Uniform(0.5, 2.0)</code></td></tr><tr><td>噪声</td><td><code>NOISE=0.01</code></td></tr><tr><td>训练/测试</td><td>80% / 20%</td></tr><tr><td>λ 网格</td><td><code>[0.0, 0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0]</code></td></tr><tr><td>训练</td><td>全批量 Adam，1000 步，<code>lr=2e-3</code>，ReLU 编码器 + 线性解码器</td></tr></table>
+<p>数据生成：<code>A = S @ F + noise</code>，其中 <code>F</code> 是 40 个单位范数随机方向，<code>S</code> 每行只有 4 个非零。</p>
+<h2>运行</h2>
+<pre><code>cd /home/yuanwu/notes/reading/slp3/10-interpretability/labs/lab-03
+
+# 主实验：8 个 λ 的完整扫描
+python3 lab03_sae.py          # 实测约 2 分 49 秒（首次含缓存冷启动约 3 分 16 秒）
+
+# 补充诊断：对 λ=0.5 的模型检查「子空间是否对齐」
+python3 lab03_subspace_check.py   # 实测约 21 秒</code></pre>
+<p>依赖：标准库 + numpy + matplotlib。两次运行都使用同一随机种子，结果可重复。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/sae_lambda_sweep.csv</code></td><td>8 个 λ 的 MSE、L0、死特征比例、真特征平均最佳余弦、余弦 &gt;0.8 的比例</td></tr><tr><td><code>out/sae_lambda_sweep.png</code></td><td>三张子图：MSE–λ、L0–λ、真特征对齐度–λ</td></tr><tr><td><code>out/summary.json</code></td><td>最小 MSE 的 λ、选择准则、选中的 λ 及其指标</td></tr><tr><td><code>out/subspace_check.json</code></td><td>λ=0.5 模型的「真特征子空间 vs 激活最大 4 个字典原子子空间」重叠度</td></tr></table>
+<h2>关键输出</h2>
+<table><tr><th>λ</th><th>测试 MSE</th><th>L0</th><th>死特征比例</th><th>真特征平均最佳余弦</th><th>余弦 &gt;0.8 比例</th></tr><tr><td>---:</td><td>---:</td><td>---:</td><td>---:</td><td>---:</td><td>---:</td></tr><tr><td>0.0</td><td>3.7e-05</td><td>79.71</td><td>0.0%</td><td>0.345</td><td>0.0%</td></tr><tr><td>0.01</td><td>1.04e-04</td><td>64.04</td><td>0.0%</td><td>0.365</td><td>0.0%</td></tr><tr><td>0.05</td><td>2.25e-04</td><td>39.07</td><td>0.0%</td><td>0.404</td><td>0.0%</td></tr><tr><td>0.1</td><td>2.98e-04</td><td>26.32</td><td>0.0%</td><td>0.412</td><td>0.0%</td></tr><tr><td>0.2</td><td>3.68e-04</td><td>14.59</td><td>0.0%</td><td>0.415</td><td>0.0%</td></tr><tr><td><strong>0.5</strong></td><td><strong>4.87e-04</strong></td><td><strong>5.45</strong></td><td><strong>5.0%</strong></td><td><strong>0.378</strong></td><td><strong>0.0%</strong></td></tr><tr><td>1.0</td><td>9.81e-04</td><td>4.35</td><td>17.5%</td><td>0.320</td><td>0.0%</td></tr><tr><td>2.0</td><td>2.67e-03</td><td>4.14</td><td>22.5%</td><td>0.276</td><td>0.0%</td></tr></table>
+<p>选中准则：<strong>在 L0 ≤ 6 的行中取 MSE 最小</strong>，因此选中 <strong>λ=0.5</strong>。</p>
+<p>子空间诊断（λ=0.5，800 个测试样本）：</p>
+<pre><code>{
+  &quot;mean_subspace_overlap&quot;: 0.1566,
+  &quot;median_subspace_overlap&quot;: 0.1583,
+  &quot;p10_subspace_overlap&quot;: 0.1279,
+  &quot;mean_best_feature_cosine&quot;: 0.3779,
+  &quot;max_best_feature_cosine&quot;: 0.4915,
+  &quot;frac_feature_cosine_gt_0.8&quot;: 0.0
+}</code></pre>
+<h2>结论</h2>
+<ol><li><strong>λ 控制的是「重建 ↔ 稀疏」的单调权衡</strong>：λ 从 0 增到 2，L0 从 79.7 降到 4.14，MSE 从 3.7e-5 升到 2.7e-3。没有免费的午餐。</li><li><strong>λ=0.5 是本次数据上的折中点</strong>：L0=5.45 已接近真实 k=4，MSE 仍只有 4.87e-4，死特征仅 5%。λ=1/2 虽然 L0 更接近 4，但 MSE 翻倍、死特征升到 17.5%/22.5%，是「为稀疏而稀疏」。</li><li><strong>重建好 ≠ 特征恢复</strong>：所有 λ 下真特征的平均最佳余弦只有 0.28–0.42，没有任何真特征被某个字典原子以 &gt;0.8 的余弦对齐；λ=0.5 的子空间重叠也只有 0.157。字典用另一组基重建了数据，但没有恢复生成数据的真基。</li><li><strong>这正好说明「SAE 特征可解释」需要额外证据</strong>：只看 MSE 与 L0 曲线会得出「λ=0.5 很好」的结论；加上方向/子空间诊断后，必须承认「它只是一个好的重建器，不是一个可靠的解耦器」。这也是 §10.4 正文缺失时最该保留的警惕。</li></ol>
+<h2>局限</h2>
+<ul><li><strong>可辨识性</strong>：数据是随机稠密真特征、每样本恰好 4 个非零；同一个 4 维子空间内存在旋转自由度，SAE 可以用不同基达到同样的 L0 与 MSE。低恢复度部分是数据/目标函数的可辨识性问题，不全是优化失败。</li><li><strong>训练预算小</strong>：1000 步、单一种子、全批量 Adam；没有学习率调度、没有死特征重采样、没有 decoder 单位范数约束（只在初始化时归一化）。</li><li><strong>只评估合成数据</strong>：没有真实 LLM 激活，也没有人工「特征是否可解释」评分；不能据此推断真实 SAE 的表现。</li><li><strong>子空间诊断的近似</strong>：真特征子空间用生成时的 <code>S</code> 精确取出；字典子空间用「激活最大的 4 个原子」近似，若真实重建用了第 5 个原子，重叠度会被低估。</li><li><strong>实现修正记录</strong>：第一版把编码器/解码器矩阵方向写反（<code>A @ We</code> 中 <code>We</code> 是 <code>(M_SAE, D)</code>，与 <code>A</code> 的 <code>(N, D)</code> 不匹配），运行时报 <code>matmul</code> 维度错误。修正为编码器 <code>Wd</code> 形状 <code>(D, M_SAE)</code>、解码器 <code>We = Wd.T</code> 形状 <code>(M_SAE, D)</code> 后跑通。这类形状错误在 numpy 里没有类型检查，先打印 <code>shape</code> 比反复盯公式更快。</li></ul>
+<h2>反思</h2>
+<p>我原来以为「MSE 低 + L0 接近真实 k」就说明 SAE 学对了。子空间诊断打脸：它可能只是用另一组基把同样的子空间重建出来，单个原子与真特征的余弦仍然很低。以后读 SAE 论文，我会先问三个问题：除了重建与稀疏，怎么证明字典方向对应真特征？换一个种子/数据分布还成立吗？下游任务真的因此变好吗？如果只看 L0 曲线，很容易把「稀疏」误当成「可解释」。</p>
+<p>另外，这次先遇到维度错误、再遇到「指标好看但恢复度差」，两个问题都不是靠调参解决的：前者要回到矩阵形状，后者要回到「我在测什么」。这比多跑几个 λ 更有价值。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

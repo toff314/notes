@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03 · BIO 标注、子词对齐与实体级评估</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a><a href="../index.html">第 9 章 · 行动执行闭环（labs/index）</a><a href="README.html">lab-03 · BIO 标注、子词对齐与实体级评估</a></div>
+<h1>lab-03 · BIO 标注、子词对齐与实体级评估</h1>
+<h2>目的</h2>
+<p>对应 <code>actions.md</code> 第 3 条。把 §9.5.2–§9.5.4 的三件事串成一条可运行链路：</p>
+<ol><li>词级 BIO 标签如何复制到 WordPiece 式子词，又如何用首子词解码回词级；</li><li>词级准确率与实体级 P/R/F1 在「边界错、类型错、随机噪声」三种情况下会差多少；</li><li>句子级自助法给出的 95% 区间有多宽，为什么小测试集上的分数差不能直接当结论。</li></ol>
+<h2>输入</h2>
+<ul><li>脚本内 6 个手写句子，共 42 个词级标签，覆盖 PER / LOC / ORG / GPE / TIME / MONEY 六类实体。</li><li>一个简化的 WordPiece 切分表（<code>PIECES</code>）加「长度 &gt;8 则前 4 字符 + <code>##</code> 后缀」的兜底规则；例如 <code>Sanitas → San + ##itas</code>、<code>Villanueva → Villan + ##ueva</code>。</li><li>四个预测变体：gold、boundary（把 <code>Villanueva</code> 改成 <code>O</code>，模拟「Jane 而非 Jane Villanueva」）、type（把 ORG 改成 LOC）、noise15%（15% 词元随机换标签）。</li><li>随机种子 <code>11</code>；自助重采样 2,000 次；仅用 Python 标准库 + numpy + matplotlib。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 lab03_bio_alignment.py</code></pre>
+<p>关键输出（本机实际运行）：</p>
+<pre><code>词级→子词→词级往返一致率: 42/42 = 1.000
+
+变体          词级准确率  entity-P  entity-R  entity-F1  (TP/FP/FN)
+gold           1.000      1.000     1.000     1.000   (12/0/0)
+boundary(Jane) 0.979      0.917     0.917     0.917   (11/1/1)
+type(ORG→LOC)  0.938      0.917     0.917     0.917   (11/1/1)
+noise15%       0.760      0.400     0.667     0.500   (8/12/4)
+
+noise15% 实体级 F1 = 0.500，句子级自助 95% 区间 [0.242, 0.846]（6 句）</code></pre>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/alignment.csv</code></td><td>6 个句子的词序列、子词序列、词级 BIO、复制后的子词级 BIO</td></tr><tr><td><code>out/metrics.csv</code></td><td>四个变体的词级准确率、实体级 P/R/F1、TP/FP/FN</td></tr><tr><td><code>out/bootstrap.csv</code></td><td>noise15% 的点估计、95% 区间、句子数、重采样次数</td></tr><tr><td><code>out/errors.json</code></td><td>noise15% 变体的 FP / FN 明细（前 20 条）</td></tr><tr><td><code>out/word_vs_entity.png</code></td><td>四个变体的词级准确率与实体级 F1 并排柱状图</td></tr></table>
+<h2>结论</h2>
+<ul><li><strong>往返无损，但只对金标准成立</strong>：词级 → 子词复制 → 首子词解码的一致率是 1.000（42/42）。这证明流程本身可逆，但<strong>不能</strong>证明模型错误会被掩盖——首子词一旦预测错，整词就错；中间子词错才可能被忽略。</li><li><strong>边界错与类型错都只掉一点词级分，却各记 1 FP + 1 FN</strong>：boundary 变体的词级准确率仍有 0.979，实体 F1 降到 0.917；type 变体词级 0.938、实体 F1 0.917。原因是 <code>Jane Villanueva</code> 只标 <code>Jane</code> 时，<code>Villanueva</code> 从 <code>I-PER</code> 变 <code>O</code>，同时产生一个 <code>O</code> 的假阳性与一个 <code>I-PER</code> 的假阴性。</li><li><strong>随机噪声把差距拉大</strong>：noise15% 的词级准确率 0.760 看起来「还行」，实体级 P 只有 0.400、F1 0.500（8 TP / 12 FP / 4 FN）。词级指标掩盖了边界与类型的连锁错误，这正是 §9.5.4 说「响应单位是实体而非词」的实证。</li><li><strong>区间太宽，不能宣称优劣</strong>：6 句、2,000 次句子级重采样得到 95% 区间 [0.242, 0.846]，宽度约 0.60。任何两个系统在这个测试集上差 0.1 都可能只是抽样波动；要比较必须增加实体数或做配对检验。</li></ul>
+<h2>局限</h2>
+<ul><li>数据只有 6 句、42 个词标签、12 个实体，bootstrap 的分布是离散且极宽的；区间只能说明「不确定性大」，不能当作真实 NER 的置信区间。</li><li>分词器是手写 <code>PIECES</code> + 长度规则，不是真正的 WordPiece；<code>Mt.</code>、<code>Corp.</code> 等标点的切分与真实模型可能不同。</li><li>解码只实现「首子词 argmax」，未实现「子词概率平均/最大」与 CRF 全局约束；因此没有测到非法 BIO 转移的影响。</li><li>noise15% 用固定种子生成一次，换种子后具体 FP/FN 会变；结论是机制性的，不是某个固定分数。</li><li>未训练任何神经模型，「预测变体」是人为构造的，用来隔离评估口径的影响。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

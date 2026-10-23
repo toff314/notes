@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 5 章 · 永久卡片（14 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a></div>
+<h1>《Speech and Language Processing》（第 3 版）· 第 5 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　分布假设到底主张什么</h2>
+<ul><li><strong>Q（正面）</strong>：分布假设凭什么用「上下文」代替「词义」？</li><li><strong>A（背面）</strong>：它主张两个词若长期出现在相似的邻接词环境中，其意义也相近；因此词义可以由上下文词的多维计数来近似，而不必先有一个词典定义。它是向量语义与词嵌入的共同前提。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §5.1</li><li><strong>链接</strong>：卡 4（共现矩阵是它的直接实现）｜卡 6（窗口大小决定「环境」的粒度）</li></ul>
+<h2>卡 2　同义、相似、关联是三件事</h2>
+<ul><li><strong>Q（正面）</strong>：为什么「同义词」在实践中几乎不存在，而「相似词」却很多？</li><li><strong>A（背面）</strong>：同义要求任意句子中可替换且不改变真值条件，但对比原则指出语言形式的任何差异都对应意义差异（H2O 只适合科学语域）。相似只要求意义接近（cat/dog）；关联则是共同参与同一事件或同属一个语义场（coffee/cup）。</li><li><strong>出处</strong>：§5.1</li><li><strong>链接</strong>：卡 10（SimLex 刻意把相似与关联分开）｜卡 9（一阶/二阶共现是关联的两种机制）</li></ul>
+<h2>卡 3　词元、词形、词义三者怎么分</h2>
+<ul><li><strong>Q（正面）</strong>：mouse 与 mice、mouse（鼠标）分别属于哪个层级？</li><li><strong>A（背面）</strong>：词元是词典收录的规范形式（mouse 统摄 mice）；词形是句中实际出现的屈折形式（mice、carpets）；词义是同一词元的不同侧面（啮齿动物 / 光标设备）。嵌入通常按词形或词元建表，这个选择直接决定词表大小。</li><li><strong>出处</strong>：§5.1</li><li><strong>链接</strong>：卡 8（fasttext 用子词缓解词形稀疏）｜⬜ 待补：第 2 章分词与词表</li></ul>
+<h2>卡 4　词-上下文矩阵的一行就是一个词</h2>
+<ul><li><strong>Q（正面）</strong>：共现矩阵的行、列、单元格分别是什么？</li><li><strong>A（背面）</strong>：行是目标词，列是可能出现在其窗口内的上下文词，单元格是共现次数；因此维度为 |V|×|V|，每一行构成该词的一个稀疏向量。真实词表常截断到 1 万–5 万高频词，其余词保留收益很低。</li><li><strong>出处</strong>：§5.3</li><li><strong>链接</strong>：卡 5（余弦给这些行打分）｜lab-01 的 out/cooccurrence.csv</li></ul>
+<h2>卡 5　余弦等于归一化点积</h2>
+<ul><li><strong>Q（正面）</strong>：余弦相似度什么时候用，公式是什么？</li><li><strong>A（背面）</strong>：需要比较两个同维向量的方向相似度时使用：cos(v,w) = (v·w)/(|v||w|)。它消除了向量长度（≈词频）的影响；对单位向量，点积即余弦。非负计数向量的余弦落在 0–1，可含负值的稠密向量可到 −1。</li><li><strong>出处</strong>：§5.4</li><li><strong>链接</strong>：卡 11（原始点积为何偏爱高频词）｜lab-04 的归一化前后对比</li></ul>
+<h2>卡 6　窗口大小是在选择「哪种相似」</h2>
+<ul><li><strong>Q（正面）</strong>：±2 与 ±5 的窗口会得到什么不同的近邻？</li><li><strong>A（背面）</strong>：短窗口只看到紧邻词，近邻多为同词性、可替换的词（偏句法）；长窗口纳入更远共现，近邻变成同主题但不相似的词（如 Hogwarts 的近邻从其他虚构学校变成 Dumbledore、Malfoy）。</li><li><strong>出处</strong>：§5.7</li><li><strong>链接</strong>：卡 1（同一假设、不同粒度）｜lab-03 的窗口对比表</li></ul>
+<h2>卡 7　SGNS 的损失函数</h2>
+<ul><li><strong>Q（正面）</strong>：带负采样的 skip-gram 在最小化什么？</li><li><strong>A（背面）</strong>：对每个正例 (w, c_pos) 与 k 个噪声词，最小化 L = −[log σ(c_pos·w) + Σ_i log σ(−c_negi·w)]。即拉高目标词与真实上下文的点积，压低它与随机噪声词的点击；用 SGD 更新 W 与 C 两个矩阵。</li><li><strong>出处</strong>：§5.5.2</li><li><strong>链接</strong>：卡 8（负样本如何抽）｜lab-02 的梯度校验与 loss.csv</li></ul>
+<h2>卡 8　负采样为什么用 0.75 次方</h2>
+<ul><li><strong>Q（正面）</strong>：负样本按什么分布抽？为什么不是原始一元概率？</li><li><strong>A（背面）</strong>：按 P_α(w) ∝ count(w)^α 抽取，α 常取 0.75。这抬高稀有词的被抽概率（0.01 → 0.03），避免高频虚词垄断负样本，使训练更有效。</li><li><strong>出处</strong>：§5.5.2</li><li><strong>链接</strong>：卡 7｜卡 13（随机性导致结果不可复现）</li></ul>
+<h2>卡 9　一阶共现 vs 二阶共现</h2>
+<ul><li><strong>Q（正面）</strong>：wrote 与 book、wrote 与 said 分别属于哪种关联？</li><li><strong>A（背面）</strong>：一阶（组合）关联指两词常彼此邻近，如 wrote–book；二阶（聚合）关联指两词拥有相似的邻居，如 wrote–said，因此可互为近义词候选。二阶才是同义词能被向量捕捉的机制。</li><li><strong>出处</strong>：§5.7</li><li><strong>链接</strong>：卡 2（相似 vs 关联）｜卡 4</li></ul>
+<h2>卡 10　类比用向量加减：平行四边形模型</h2>
+<ul><li><strong>Q（正面）</strong>：a:b::a*:? 怎么用向量求解？有哪些必做的防护？</li><li><strong>A（背面）</strong>：取 b<em> = argmin_x distance(x, b − a + a</em>)。必须先从候选里排除 a、b、a* 及其形态变体，否则最近邻常常退回输入词本身；低频词与弱关系上该方法不可靠。</li><li><strong>出处</strong>：§5.7</li><li><strong>链接</strong>：卡 2｜lab-02 的 analogies.json（成功/失败分类）</li></ul>
+<h2>卡 11　原始点积偏爱长向量</h2>
+<ul><li><strong>Q（正面）</strong>：为什么不能直接按点积排相似度？</li><li><strong>A（背面）</strong>：点积同时编码方向与长度，而高频词与更多词共现且共现值更高，向量更长，点积因此系统性偏高。除以两个模长（即改用余弦）才能只比较方向。</li><li><strong>出处</strong>：§5.4</li><li><strong>链接</strong>：卡 5｜lab-04 的频率—范数散点图</li></ul>
+<h2>卡 12　PPMI：把计数变成可比权重</h2>
+<ul><li><strong>Q（正面）</strong>：PPMI 解决什么问题，怎么算？</li><li><strong>A（背面）</strong>：原始计数受词频支配，PMI = log[ (count(w,c)·N) / (count(w)·count(c)) ] 衡量「共现是否超出独立假设的预期」，PPMI 再把负值截为 0（负 PMI 在小样本上不可靠）。它是计数派嵌入的标准加权。</li><li><strong>出处</strong>：§5.5.3（书中只提「特定的（PPMI）加权方式」；PMI/PPMI 公式为通用定义，非本书原文）</li><li><strong>链接</strong>：卡 7（SGNS 隐式优化同类矩阵）｜lab-01 的 out/ppmi.csv</li></ul>
+<h2>卡 13　嵌入的偏见会被放大</h2>
+<ul><li><strong>Q（正面）</strong>：偏见只是如实反映语料吗？</li><li><strong>A（背面）</strong>：不只是反映，还会放大：嵌入中带性别色彩的词比输入统计更具性别色彩，且比真实就业统计更夸张。后果分两类——分配伤害（资源分配不公）与表征伤害（群体被贬低或无视）；去偏只能削弱，无法消除。</li><li><strong>出处</strong>：§5.8</li><li><strong>链接</strong>：卡 10（同一套向量算术既给出类比也给出刻板印象）｜lab-04 的审计记录</li></ul>
+<h2>卡 14　内部评估与外部评估</h2>
+<ul><li><strong>Q（正面）</strong>：词向量该用相似度评分还是下游任务来评？</li><li><strong>A（背面）</strong>：内部评估算模型相似度与人工评分的相关性（WordSim-353 混合相似与关联，SimLex-999 只测相似），快但可能偏离实用；外部评估把向量放进真实任务看增益，是最终依据。报告语料层结论时应多次训练取平均。</li><li><strong>出处</strong>：§5.9</li><li><strong>链接</strong>：卡 2｜卡 13（评估还需覆盖公平性）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

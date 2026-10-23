@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a></div>
+<h1>读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky &amp; James H. Martin</li><li>版次：第三版（中文译文，2026 年手头稿）</li><li>来源：<code>raw/04-logistic-regression.md</code>（英文对照：<code>raw/04-logistic-regression.dual.md</code>）</li><li>定位口径：中文版无印刷页码，全部用节号 <code>§x.y</code></li><li>阅读目标：理解（<code>raw/meta.json</code> 声明 <code>goal=理解</code>）</li><li><strong>书型判定：教材型</strong>。依据：章-节-知识点层级完整（§4.1–§4.16 及多个 <code>x.y.z</code> 子节）；含定义、公式（式 4.1–4.62）、例题（§4.3.1、§4.6.3）与章末练习（4.1–4.3）；术语密集且带章末小结。</li><li>交叉对照：<code>raw/</code> 未提供课堂笔记，未生成 <code>cross-check.md</code>。</li></ul>
+<h2>处理范围</h2>
+<table><tr><th>范围</th><th>状态</th><th>说明</th></tr><tr><td>第 4 章 §4.1–§4.16</td><td>✅ 本次完成</td><td>逐节三区 + 优先级分拣</td></tr><tr><td>历史注记</td><td>✅ 已读</td><td>用于衍生选题 2，未单列三区</td></tr><tr><td>练习 4.1–4.3</td><td>✅ 已读</td><td>4.2、4.3 进入 self-test 与 lab-01</td></tr><tr><td>第 5、6 章</td><td>⬜ 未处理</td><td>书中多次前向引用，建议下次</td></tr></table>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>/home/yuanwu/books/slp3/zh/md/04-logistic-regression.md</code></td><td>中文译文，1537 行；本次处理 §4.1–§4.16</td></tr><tr><td>英文对照（核对用）</td><td><code>/home/yuanwu/books/slp3/zh/md/04-logistic-regression.dual.md</code></td><td>2409 行双语对照；用于核对公式与术语</td></tr><tr><td>阅读目标</td><td><code>/home/yuanwu/notes/reading/slp3/raw/04/meta.json</code></td><td><code>goal=理解</code>，注明“无印刷页码，引用用 §节号”</td></tr><tr><td>划线摘录（可选）</td><td>未提供</td><td>故无划线去向表</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>故无书 ↔ 课堂对照</td></tr></table>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>book-notes.md</code></td><td>主笔记：16 个知识节，每节摘录/思考/行动三区，约 1.01 万汉字（含摘录，70 条逐字摘录）</td></tr><tr><td><code>cards.md</code></td><td>16 张永久卡片（概念卡 / 公式卡 / 例题卡）</td></tr><tr><td><code>self-test.md</code></td><td>11 道提取自测 + 协议 + 答案指向 + 例题重做记录</td></tr><tr><td><code>actions.md</code></td><td>4 条可执行行动（含时间与验收）</td></tr><tr><td><code>spinoffs.md</code></td><td>5 条衍生选题（3 条 <code>观点：</code>、2 条 <code>论文：</code>）</td></tr><tr><td><code>glossary.md</code></td><td>40 条术语表</td></tr><tr><td><code>labs/index.md</code></td><td>行动闭环索引，覆盖 4 条行动</td></tr><tr><td><code>labs/lab-01/</code></td><td>二分类逻辑回归脚本 + 5 个真实产物（PNG/JSON/CSV）</td></tr><tr><td><code>labs/lab-02/</code></td><td>softmax 多分类、评估、超参扫描、自助检验 + 8 个真实产物</td></tr></table>
+<h2>阅读路径建议</h2>
+<ol><li>先看 <code>book-notes.md</code> 的 ⭐ 节（§4.2、4.3、4.5、4.6、4.7、4.8、4.9），建立主线；</li><li>用 <code>cards.md</code> 卡 1–9 做第一轮回忆；</li><li>跑 <code>labs/lab-01</code>，把 §4.6.3 的单步更新对上；</li><li>跑 <code>labs/lab-02</code>，理解宏/微平均与 p 值；</li><li>用 <code>self-test.md</code> 遮住笔记自测，错题回填“未掌握”。</li></ol>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>摘录由脚本按行号与起止标记从原 md 直接截取，抽查 5 条与原文逐字一致；均带 §x.y；公式 OCR 错位处未摘</td></tr><tr><td>② 消化深度</td><td>8/10</td><td>每节均有 I 重述与 A1 关联（lab 结果、规则式过滤经历、数值溢出经历）；质疑点具体，但个别节（§4.15）偏短</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>4 条行动全部落到脚本与验收命令；labs 已实际运行并留产物</td></tr><tr><td>④ 卡片复用性</td><td>9/10</td><td>一卡一主张、离开原书可读；链接位多数已连到具体卡与 lab 产物</td></tr><tr><td>⑤ 覆盖完整性</td><td>9/10</td><td>16 节全覆盖，⭐/🔴/🔵/⚪ 分拣齐全；练习 4.2/4.3 进入自测；未提供的划线/课堂笔记已声明</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>11 题覆盖全部 ⭐ 节，含协议、费曼检验、答案指向与例题重做表</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>单项均 ≥7</td></tr></table>
+<h2>机器自检</h2>
+<pre><code>python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/04-logistic-regression \
+  --raw /home/yuanwu/notes/reading/slp3/raw/04</code></pre>
+<p>已知非 FAIL 提示：<code>labs</code> 只有 2 个目录，而 <code>actions.md</code> 有 4 条行动（检查器按“一行动一目录”给出 WARN）；本套笔记按“一个 lab 覆盖多条同类行动”组织，<code>labs/index.md</code> 已逐条映射，属有意设计。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

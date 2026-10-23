@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 4 章 · 永久卡片（16 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第三版）第 4 章 逻辑回归</a></div>
+<h1>《Speech and Language Processing》第 4 章 · 永久卡片（16 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　一个概率分类器由哪四块拼成？</h2>
+<ul><li><strong>Q（正面）</strong>：逻辑回归这类概率分类器，最少需要哪四个组成部分？</li><li><strong>A（背面）</strong>：① 输入的特征表示（特征向量）；② 分类函数，用 sigmoid 或 softmax 把分数变成各类概率；③ 目标函数，通常是最小化交叉熵损失；④ 优化算法，例如随机梯度下降。四块缺一不可。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.1</li><li><strong>链接</strong>：卡 2（分类函数）、卡 4（目标函数）、卡 11（优化算法）</li></ul>
+<h2>卡 2　sigmoid 与 logit 是同一枚硬币的两面</h2>
+<ul><li><strong>Q（正面）</strong>：sigmoid 做什么？logit 又是什么？</li><li><strong>A（背面）</strong>：sigmoid 把任意实数压到 (0,1)，公式 σ(z)=1/(1+exp(-z))，因而可以当概率；logit 是它的反函数 ln(p/(1-p))。线性得分 z 之所以叫 logit，是因为经 sigmoid 后它被解释成对数几率。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.2（式 4.4、4.7）</li><li><strong>链接</strong>：卡 3（阈值）、卡 8（softmax 推广）</li></ul>
+<h2>卡 3　0.5 的决策边界意味着什么？</h2>
+<ul><li><strong>Q（正面）</strong>：二分类逻辑回归凭什么把样本判成正类？阈值能不能改？</li><li><strong>A（背面）</strong>：默认规则是 P(y=1|x)&gt;0.5 判正类，否则判负类。0.5 对应正负证据打平的那条超平面（w·x+b=0）。阈值可以按业务代价调整：漏报代价高就降低阈值，误报代价高就提高阈值。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.3</li><li><strong>链接</strong>：卡 2（概率来源）、卡 15（评估指标）</li></ul>
+<h2>卡 4　二分类交叉熵怎么来的？</h2>
+<ul><li><strong>Q（正面）</strong>：为什么逻辑回归用交叉熵而不是平方误差？</li><li><strong>A（背面）</strong>：把标签看成伯努利结果，似然写成 ŷ^y(1-ŷ)^(1-y)，取负对数得 L=-[y log ŷ+(1-y)log(1-ŷ)]。它等于负对数似然，只惩罚“给正确类低概率”，且对逻辑回归是凸函数，梯度干净。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.5（式 4.19）</li><li><strong>链接</strong>：卡 5（梯度）、卡 8（多分类推广）</li></ul>
+<h2>卡 5　梯度为什么是 (ŷ−y)x？</h2>
+<ul><li><strong>Q（正面）</strong>：交叉熵对单个权重的偏导数是什么？</li><li><strong>A（背面）</strong>：∂L/∂w_j=(ŷ-y)x_j，对偏置是 ∂L/∂b=ŷ-y。直觉是“预测误差乘以该特征取值”：特征越大、错得越多，这个权重就被推得越狠；预测正确时梯度为零。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.6.1（式 4.26、4.28）</li><li><strong>链接</strong>：卡 4（损失）、卡 11（更新规则）、卡 14（单步例题）</li></ul>
+<h2>卡 6　梯度下降的一步怎么走？</h2>
+<ul><li><strong>Q（正面）</strong>：参数更新公式是什么？学习率起什么作用？</li><li><strong>A（背面）</strong>：θ←θ-η∇L。梯度指向损失上升最快的方向，所以取反；η 是步长，太大越过谷底、太小收敛慢。逻辑回归的损失是凸的，从任意起点都能走到全局最优。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.6（式 4.24）</li><li><strong>链接</strong>：卡 5（梯度）、卡 7（小批量）</li></ul>
+<h2>卡 7　SGD、批训练、小批量怎么选？</h2>
+<ul><li><strong>Q（正面）</strong>：三种梯度下降的差别是什么？</li><li><strong>A（背面）</strong>：SGD 每次用 1 个样本，更新频繁但抖动大；批训练用全量数据，方向准但每步慢；小批量取中间（如 512/1024），可向量化并行，是现代默认做法。三者是同一公式在不同 m 上的特例。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.6.2、§4.6.4</li><li><strong>链接</strong>：卡 6（更新公式）、卡 11（矩阵化）</li></ul>
+<h2>卡 8　softmax 把分数变成分布</h2>
+<ul><li><strong>Q（正面）</strong>：softmax 的公式与性质是什么？</li><li><strong>A（背面）</strong>：softmax(z_i)=exp(z_i)/Σ_j exp(z_j)。输出每项在 [0,1] 且总和为 1；最大项会挤压其他项。多分类逻辑回归为每个类别配一组权重，输出 ŷ=softmax(Wx+b)。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.7.1、§4.7.2（式 4.33、4.36）</li><li><strong>链接</strong>：卡 2（二分类版本）、卡 9（多分类损失）</li></ul>
+<h2>卡 9　多分类交叉熵只剩一项</h2>
+<ul><li><strong>Q（正面）</strong>：K 类交叉熵为什么可以写成 -log ŷ_c？</li><li><strong>A（背面）</strong>：标签是独热向量，求和 Σ_k y_k log ŷ_k 中只有正确类 c 的 y_c=1，其余为 0，所以损失就是正确类概率的负对数。梯度仍为 (ŷ_k-y_k)x_i，逐类计算。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.8（式 4.38–4.41）</li><li><strong>链接</strong>：卡 4（二分类）、卡 8（softmax）</li></ul>
+<h2>卡 10　精确率、召回率、F1 各惩罚什么？</h2>
+<ul><li><strong>Q（正面）</strong>：三个指标的定义与适用场景？</li><li><strong>A（背面）</strong>：精确率=TP/(TP+FP)，惩罚“误报”；召回率=TP/(TP+FN)，惩罚“漏报”；F1=2PR/(P+R)，是两者的调和平均，偏向较小值，因而保守。类别极不平衡时不要只看准确率。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.9</li><li><strong>链接</strong>：卡 15（例题）、卡 3（阈值）</li></ul>
+<h2>卡 11　宏平均与微平均何时分歧？</h2>
+<ul><li><strong>Q（正面）</strong>：多分类时宏平均和微平均有什么区别？</li><li><strong>A（背面）</strong>：宏平均先对每个类别算 P/R/F1，再对类别等权平均；微平均先把所有类别的 TP/FP/FN 汇总，再算一次。样本多的类别会主导微平均；类别同等重要时用宏平均。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.9.1</li><li><strong>链接</strong>：卡 10（二分类指标）</li></ul>
+<h2>卡 12　交叉验证与“盲态”语料</h2>
+<ul><li><strong>Q（正面）</strong>：k 折交叉验证怎么做？它有什么代价？</li><li><strong>A（背面）</strong>：把数据切成 k 份，轮流用 1 份测试、其余 k-1 份训练，最后对 k 次错误率取平均（常取 k=10）。代价是每份数据都当过测试集，因此特征设计阶段不能查看语料，否则等于偷看测试集。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.10</li><li><strong>链接</strong>：卡 13（显著性检验）</li></ul>
+<h2>卡 13　p 值与配对自助检验</h2>
+<ul><li><strong>Q（正面）</strong>：如何判断分类器 A 是否真的优于 B？</li><li><strong>A（背面）</strong>：先算效应量 δ=M(A)-M(B)，再问“若两者其实一样好，看到这么大 δ 的概率”。配对自助法从测试集有放回抽 b 个虚拟测试集，统计 δ_boot≥2δ 的比例作为单侧 p 值；小于阈值（如 .01）才称显著。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.11、§4.11.1（式 4.48）</li><li><strong>链接</strong>：卡 12（数据划分）、labs/lab-02/out/bootstrap.json</li></ul>
+<h2>卡 14　例题：§4.6.3 的单步更新怎么算？</h2>
+<ul><li><strong>Q（正面）</strong>：x=[3,2]、y=1、w=b=0、η=0.1，更新后参数是多少？</li><li><strong>A（背面）</strong>：σ(0)=0.5，误差 ŷ-y=-0.5；梯度=(-1.5,-1.0,-0.5)。θ←θ-0.1×梯度，得 w1=0.15、w2=0.10、b=0.05。易错点：忘记乘 x_j，或把梯度方向取反。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.6.3</li><li><strong>链接</strong>：卡 5（梯度公式）、labs/lab-01/out/gradient_step.json</li></ul>
+<h2>卡 15　例题：类别不平衡时的指标怎么算？</h2>
+<ul><li><strong>Q（正面）</strong>：1000 封邮件、40 封垃圾、系统标 30 封其中 24 封正确，四个指标是多少？</li><li><strong>A（背面）</strong>：TP=24、FP=6、FN=16、TN=954。准确率=(24+954)/1000=0.978；精确率=24/30=0.8；召回率=24/40=0.6；F1=2×0.8×0.6/1.4≈0.686。全判非垃圾的准确率是 0.96，却一个垃圾也没抓到。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.9、练习 4.2</li><li><strong>链接</strong>：卡 10（指标定义）、卡 11（宏微平均）</li></ul>
+<h2>卡 16　L1 与 L2 正则的差别在哪？</h2>
+<ul><li><strong>Q（正面）</strong>：两种正则化各偏好什么样的权重？</li><li><strong>A（背面）</strong>：L2 罚 Σθ²，偏好许多小权重，导数是 2θ，容易优化；L1 罚 Σ|θ|，偏好稀疏解，会把大量权重压到 0，但在零点不可导。两者都可解释为对权重的先验（高斯 / 拉普拉斯），偏置通常不罚。</li><li><strong>出处</strong>：《Speech and Language Processing》§4.14</li><li><strong>链接</strong>：卡 4（损失）、labs/lab-02/out/reg_comparison.csv</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

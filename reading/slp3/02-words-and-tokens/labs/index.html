@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Labs · 行动执行闭环</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a><a href="index.html">Labs · 行动执行闭环</a></div>
+<h1>Labs · 行动执行闭环</h1>
+<blockquote><p><code>actions.md</code> 是「要做什么」，这里是「已经跑了什么、看到什么、改了什么想法」。</p><p>环境：Python 3 + numpy 2.4.6 + matplotlib 3.10.9；全部脚本可直接复跑。</p></blockquote>
+<h2>行动 ↔ Lab 覆盖</h2>
+<table><tr><th>行动（actions.md）</th><th>Lab</th><th>脚本</th><th>运行产物</th><th>状态</th></tr><tr><td>1. 实现并跑通 BPE（训练 40 次合并）</td><td><a href="lab-01/README.html">lab-01</a></td><td><code>bpe_lab.py</code></td><td><code>out/metrics.json</code>、<code>out/vocab.csv</code>、<code>out/compression_curve.png</code></td><td>✅ 已跑</td></tr><tr><td>2. 实现 Levenshtein DP + 回溯对齐</td><td><a href="lab-02/README.html">lab-02</a></td><td><code>edit_distance_lab.py</code></td><td><code>out/distances.json</code>、<code>out/dp_matrix_intention_execution.csv</code>、<code>out/edit_distance_matrix.png</code></td><td>✅ 已跑</td></tr><tr><td>3. 正则审计中英混合预词元化</td><td><a href="lab-03/README.html">lab-03</a></td><td><code>pretokenize_lab.py</code></td><td><code>out/pretokenization.json</code>、<code>out/token_counts.png</code></td><td>✅ 已跑</td></tr></table>
+<h2>lab-01 · BPE</h2>
+<ul><li><strong>运行</strong>：<code>cd lab-01 &amp;&amp; python3 bpe_lab.py</code></li><li><strong>结论</strong>：40 次合并把 291 个字符压到 210 个词元（−27.84%），英文高频词根先被合并，中文逐字未动。</li><li><strong>证据</strong>：<code>out/compression_curve.png</code> 显示前 10 次合并下降最陡；<code>out/segments.csv</code> 里 <code>tokenization</code> 等词已成为单 token。</li><li><strong>反思</strong>：频率是全局竞争的，中英语料混合时中文排不进前 40 次合并；这复现了 §2.4.3 的多语言偏斜问题。</li></ul>
+<h2>lab-02 · 最小编辑距离</h2>
+<ul><li><strong>运行</strong>：<code>cd lab-02 &amp;&amp; python3 edit_distance_lab.py</code></li><li><strong>结论</strong>：<code>intention → execution</code> 在替换代价 2 下距离 8，DP 表与书中图 2.20 逐格一致；替换代价 1 下距离 5。</li><li><strong>证据</strong>：<code>out/dp_matrix_intention_execution.csv</code> 末行为 <code>9,8,9,10,11,12,11,10,9,8</code>；<code>out/alignments.csv</code> 给出 <code>d s s = i s = = = =</code>。</li><li><strong>反思</strong>：代价表会改变拼写错误的相对排序，不能把教材默认值当任务默认值。</li></ul>
+<h2>lab-03 · 预词元化</h2>
+<ul><li><strong>运行</strong>：<code>cd lab-03 &amp;&amp; python3 pretokenize_lab.py</code></li><li><strong>结论</strong>：书中例句切出 <code>We | ’re | ␣350 | …</code> 共 9 个词元；中文近似模式下整段未切；混合句因 URL 被切到 18 个词元。</li><li><strong>证据</strong>：<code>out/pretokenization.json</code> 保留每个词元（空格显示为 ␣）；<code>out/token_counts.png</code> 对比正则与空白切分。</li><li><strong>反思</strong>：<code>\p{L}</code> 与 <code>[^\W\d_]</code> 在中文上的行为不同，预词元化必须先核对切分表，再谈 BPE 参数。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

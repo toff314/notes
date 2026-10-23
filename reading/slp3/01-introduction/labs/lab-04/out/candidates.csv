@@ -1,0 +1,25 @@
+source_id,candidate_id,source,reference,candidate,overlap_f1,adequacy,gamed,selected_by_overlap
+1,1,猫坐在垫子上。,the cat sat on the mat,a cat was sitting on the mat,0.6667,5,0,0
+1,2,猫坐在垫子上。,the cat sat on the mat,a cat sat on the mat,0.9091,4,0,0
+1,3,猫坐在垫子上。,the cat sat on the mat,the cat is on the mat,0.8,4,0,0
+1,4,猫坐在垫子上。,the cat sat on the mat,the the cat cat sat sat on on the the mat mat,1.0,1,1,1
+2,1,她昨天买了一本书。,she bought a book yesterday,yesterday she bought a book,1.0,5,0,1
+2,2,她昨天买了一本书。,she bought a book yesterday,she purchased a book yesterday,0.8,5,0,0
+2,3,她昨天买了一本书。,she bought a book yesterday,she bought one book yesterday,0.8,4,0,0
+2,4,她昨天买了一本书。,she bought a book yesterday,she she bought bought a a book book yesterday yesterday,1.0,1,1,0
+3,1,会议推迟到下周一。,the meeting was postponed until next monday,the meeting was put off until next monday,0.8,5,0,0
+3,2,会议推迟到下周一。,the meeting was postponed until next monday,next monday the meeting was postponed,0.9231,5,0,0
+3,3,会议推迟到下周一。,the meeting was postponed until next monday,the meeting postponed to next monday,0.7692,4,0,0
+3,4,会议推迟到下周一。,the meeting was postponed until next monday,until until next next monday monday the the meeting meeting was was postponed postponed,1.0,1,1,1
+4,1,他没有通过考试。,he did not pass the exam,he failed the exam,0.6,5,0,0
+4,2,他没有通过考试。,he did not pass the exam,he did not succeed in the exam,0.7692,4,0,0
+4,3,他没有通过考试。,he did not pass the exam,he did not pass exam,0.9091,3,0,0
+4,4,他没有通过考试。,he did not pass the exam,he he did did not not pass pass the the exam exam,1.0,1,1,1
+5,1,请把窗户关上。,please close the window,could you please close the window,0.8,5,0,0
+5,2,请把窗户关上。,please close the window,close the window please,1.0,5,0,1
+5,3,请把窗户关上。,please close the window,please shut the window,0.75,5,0,0
+5,4,请把窗户关上。,please close the window,window window please please close close the the,1.0,1,1,0
+6,1,孩子们在花园里玩。,the children are playing in the garden,the kids are playing in the garden,0.8333,5,0,0
+6,2,孩子们在花园里玩。,the children are playing in the garden,in the garden the children are playing,1.0,5,0,1
+6,3,孩子们在花园里玩。,the children are playing in the garden,the children play in the garden,0.7273,4,0,0
+6,4,孩子们在花园里玩。,the children are playing in the garden,garden garden the the children children are are playing playing in in,1.0,1,1,0

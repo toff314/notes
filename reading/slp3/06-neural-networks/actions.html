@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 6 章 · 行动清单（3 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a></div>
+<h1>《Speech and Language Processing》第 6 章 · 行动清单（3 条）</h1>
+<blockquote><p>从各节行动区提炼的可执行项；每条 = 动词 + 对象 + 时间/验收。</p><p>三条均已提前跑通（真实产物见 <code>labs/index.md</code>）；下列日期保留为重跑与复习截止。</p></blockquote>
+<h2>学习行动（教材型）</h2>
+<ol><li><strong>10 月 23 日前</strong>跑 <code>labs/lab-01/xor_mlp.py</code>，从零实现 2-8-1 网络的向前与反向，在 XOR 上训练并做有限差分校验。</li></ol>
+<p>验收：<code>out/summary.json</code> 的 accuracy=1.0、final_loss&lt;0.001；<code>out/gradient_check.json</code> 中初始化的最大相对误差 &lt;1e-6；<code>out/decision_boundary.png</code> 能把四象限按 0/1 分开。</p>
+<ol><li><strong>10 月 26 日前</strong>跑 <code>labs/lab-02/embedding_mlp.py</code>，用同一分类器比较随机嵌入与 PPMI+SVD 共现嵌入，测试集只含训练中没出现过的情感词。</li></ol>
+<p>验收：<code>out/metrics.json</code> 同时记录两种嵌入的准确率与混淆矩阵；相对差至少 30 个百分点；<code>out/embedding_pca.png</code> 中 held-out 正负词分居两侧。</p>
+<ol><li><strong>10 月 29 日前</strong>跑 <code>labs/lab-03/gradient_vanishing.py</code>，在 10 层网络上逐层测量 sigmoid/tanh/ReLU 的梯度范数。</li></ol>
+<p>验收：<code>out/gradient_norms.csv</code> 含 3×10 行；sigmoid 首层梯度 &lt;1e-6 且测试准确率 ≤0.5，tanh/ReLU 准确率 ≥0.95；<code>out/gradient_norms.png</code> 能看到 sigmoid 的单调衰减。</p>
+<h2>错题归因（自测后填写）</h2>
+<blockquote><p>每次做完 <code>self-test.md</code>，把错题按三类归档，禁止只抄正确答案。</p><p>归因结果直接决定下一条行动，而不是笼统地&quot;再看一遍&quot;。</p></blockquote>
+<ul><li><strong>知识性</strong>（定义记错、公式条件漏）：回到对应 § 重读，并在 48 小时内用自己的话重写该卡片的 A 面。当前待办：§6.6.4 的 sigmoid 导数（10 月 30 日前）。</li><li><strong>理解性</strong>（读懂了题但抓错关键词）：把题干关键词圈出来，补一条&quot;这题在问什么&quot;的旁注，再找一道同型题验证。当前待办：XOR 的隐藏表示合并（10 月 24 日前）。</li><li><strong>技巧性</strong>（会但超时/算错）：限时 15 分钟重做同型题 2 道，记录用时与错误位置。当前待办：有限差分探针选择（11 月 1 日前）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

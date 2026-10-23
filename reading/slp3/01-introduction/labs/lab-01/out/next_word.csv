@@ -1,0 +1,37 @@
+prefix,rank,word,bigram_count,p_bigram,p_unigram_backoff,source
+so long and thanks for,1,example,25,0.147059,0.002839,bigram
+so long and thanks for,2,the,16,0.094118,0.043944,bigram
+so long and thanks for,3,a,10,0.058824,0.023359,bigram
+so long and thanks for,4,each,6,0.035294,0.001871,bigram
+so long and thanks for,5,training,5,0.029412,0.003097,bigram
+so long and thanks for,6,language,4,0.023529,0.010260,bigram
+so long and thanks for,7,tasks,4,0.023529,0.001871,bigram
+so long and thanks for,8,reasoning,4,0.023529,0.000968,bigram
+so long and thanks for,9,machine,4,0.023529,0.000710,bigram
+so long and thanks for,10,this,3,0.017647,0.004840,bigram
+so long and thanks for,11,which,3,0.017647,0.003226,bigram
+so long and thanks for,12,llms,3,0.017647,0.002839,bigram
+the language,1,models,71,0.449367,0.006776,bigram
+the language,2,model,44,0.278481,0.006776,bigram
+the language,3,processing,9,0.056962,0.001032,bigram
+the language,4,modeling,6,0.037975,0.000645,bigram
+the language,5,and,2,0.012658,0.023424,bigram
+the language,6,or,2,0.012658,0.009292,bigram
+the language,7,learning,2,0.012658,0.001355,bigram
+the language,8,is,1,0.006329,0.012583,bigram
+the language,9,that,1,0.006329,0.010002,bigram
+the language,10,are,1,0.006329,0.006388,bigram
+the language,11,this,1,0.006329,0.004840,bigram
+the language,12,about,1,0.006329,0.003097,bigram
+in the,1,model,30,0.044118,0.006776,bigram
+in the,2,language,16,0.023529,0.010260,bigram
+in the,3,next,15,0.022059,0.001549,bigram
+in the,4,first,12,0.017647,0.001162,bigram
+in the,5,idea,10,0.014706,0.001032,bigram
+in the,6,world,10,0.014706,0.000903,bigram
+in the,7,system,9,0.013235,0.002000,bigram
+in the,8,same,8,0.011765,0.000645,bigram
+in the,9,origin,8,0.011765,0.000581,bigram
+in the,10,word,7,0.010294,0.003743,bigram
+in the,11,llm,7,0.010294,0.001871,bigram
+in the,12,correct,7,0.010294,0.001226,bigram

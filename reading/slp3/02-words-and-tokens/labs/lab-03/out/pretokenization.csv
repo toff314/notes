@@ -1,0 +1,5 @@
+sentence,chars_no_space,space_words,tokens,tokens_per_word,naive_whitespace_tokens
+"We’re 350 dogs! Um, lunch?",22,5,9,1.8,5
+词元化是 NLP 的第一步。,12,3,4,1.333,3
+El niño comió nuez y jengibre.,25,6,7,1.167,6
+doesn't charge $10.40 — https://www.stanford.edu #nlproc,51,6,18,3.0,6

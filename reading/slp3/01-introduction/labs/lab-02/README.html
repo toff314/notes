@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 02　困惑度与平滑：加一平滑真的能救 bigram 吗？</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1 章 引言）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">Lab 02　困惑度与平滑：加一平滑真的能救 bigram 吗？</a></div>
+<h1>Lab 02　困惑度与平滑：加一平滑真的能救 bigram 吗？</h1>
+<p><strong>对应行动</strong>：actions.md 第 2 条<strong>书中锚点</strong>：§1.9.2 词预测准确率、§1.6.1 预训练目标<strong>脚本</strong>：<code>perplexity.py</code>　<strong>产物</strong>：<code>out/perplexity.json</code>、<code>out/perplexity.csv</code>、<code>out/perplexity.png</code></p>
+<h2>输入与设置</h2>
+<ul><li>训练语料同 Lab 01（13,116 token，词表 2,381）。</li><li>测试句：<code>so long and thanks for all the fish</code>（书中 §1.9.2 的例子）。</li><li>该句在训练前整句剔除；<code>thanks</code>、<code>fish</code> 都是训练集 OOV。</li><li>困惑度：<code>PP = exp(-(1/N) Σ ln p(w_i | context))</code>，N=8。</li></ul>
+<h2>运行</h2>
+<pre><code>cd labs/lab-02
+python3 perplexity.py</code></pre>
+<h2>关键输出（真实运行）</h2>
+<table><tr><th>模型</th><th>困惑度</th></tr><tr><td>unigram 无平滑</td><td>∞（OOV 概率 0）</td></tr><tr><td>unigram 加一</td><td>552.02</td></tr><tr><td>bigram 无平滑</td><td>∞（存在零转移）</td></tr><tr><td>bigram 加一（k=1）</td><td>1292.76</td></tr><tr><td>bigram 加 k（k=0.0001）</td><td>3572.58</td></tr><tr><td>bigram 加 k（k=0.001）</td><td>1572.26</td></tr><tr><td>bigram 加 k（k=0.01）</td><td>877.79</td></tr><tr><td>bigram 加 k（k=0.1）</td><td>846.86</td></tr></table>
+<h2>结论（引用自己的产物）</h2>
+<ol><li>不平滑的两种模型都直接爆成 ∞：只要测试句里有一个未见词或一个未见转移，</li></ol>
+<p>连乘就归零。<strong>困惑度对零概率极其敏感。</strong></p>
+<ol><li>加一平滑把 bigram 救到 1292.76，但同条件下 unigram 加一只有 552.02——</li></ol>
+<p>bigram 反而更差。原因是词表 2,381，加一给每个上下文都摊了 2,381 个伪计数，而语料只有 1.3 万 token，稀疏性把平滑变成了&quot;过度抹平&quot;。</p>
+<ol><li>k 从 0.0001 调到 0.1，困惑度从 3572 降到 847；再调到 1（等于加一）又回升到 1293。</li></ol>
+<p>存在一个中间最优点，<strong>平滑强度本身是要调的参数</strong>，不是&quot;加上就完事&quot;。</p>
+<ol><li>这组数字不能拿去和书里的 LLM 比：词表、测试集、分词口径都不同。</li></ol>
+<p>困惑度只在<strong>同一词表、同一测试集</strong>下可比。</p>
+<h2>反思</h2>
+<p>我原来把&quot;加一平滑&quot;当成万能补丁，觉得只要不出现零概率就赢了。实测 bigram 加一比 unigram 加一还差，才理解平滑是在用&quot;给未见事件留预算&quot;换&quot;已见事件的概率质量&quot;，预算大小取决于词表和语料规模。书里说困惑度&quot;对长度归一化&quot;，但没说的是：它同时对词表大小和 OOV 口径高度敏感。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

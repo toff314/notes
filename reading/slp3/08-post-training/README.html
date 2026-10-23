@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：Speech and Language Processing（第 8 章 后训练）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 8 章 后训练）</a></div>
+<h1>读书笔记：Speech and Language Processing（第 8 章 后训练）</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第三版草稿（3rd ed. draft）　来源：<code>raw/08-post-training.md</code>（软链到 <code>/home/yuanwu/books/slp3/zh/md/08-post-training.md</code>）</li><li>页码口径：中文译本无印刷页码与 PDF 页，统一用 <strong>§节号</strong> 定位；摘录逐字来自上述 md。</li><li>阅读目标：<strong>理解</strong>（<code>raw/08/meta.json</code> 的 <code>goal</code>）；侧重机制与工程含义，不按应试背诵组织。</li><li><strong>书型判定：教材型</strong>。依据：章—节—小节三级编号（§8.1 → §8.1.1）、定义框（instruction tuning / SFT / PEFT / LoRA / Bradley–Terry / reward / DPO）、编号公式（8.2、8.7、8.8、8.10–8.13）、12 幅图与章末小结；无习题，但知识密度与结构符合教材路径，故走 SQ3R + 概念/公式/例题卡。</li><li>交叉对照：未提供 <code>raw/lecture-notes/</code>，本次不做书 ↔ 课堂对照。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章 / 节</th><th>状态</th><th>说明</th></tr><tr><td>§8.0 章首：预训练的两个缺口</td><td>✅ 本次完成</td><td>三阶段总览与 base model 定义</td></tr><tr><td>§8.1 指令微调（含 §8.1.1、§8.1.2）</td><td>✅ 本次完成</td><td>SFT 的损失位置、指令数据来源、留一任务簇评估</td></tr><tr><td>§8.2 参数高效微调（LoRA）</td><td>✅ 本次完成</td><td>低秩增量、参数量、合并推理</td></tr><tr><td>§8.3 从偏好中学习（含 §8.3.1–§8.3.3）</td><td>✅ 本次完成</td><td>偏好数据、Bradley–Terry、奖励模型</td></tr><tr><td>§8.4 偏好对齐（含 §8.4.2 DPO）</td><td>✅ 本次完成</td><td>RL 映射、KL 约束、DPO 推导</td></tr><tr><td>§8.4.1 PPO</td><td>⚠️ 源文仅 <code>TBD</code></td><td>已登记缺口；PPO 细节需查原始论文</td></tr><tr><td>§8.4.3 / §8.4.4 评估与局限</td><td>⚠️ 源文仅有标题</td><td>已登记缺口，不代作者补写</td></tr><tr><td>§8.5 小结 + 历史注记</td><td>✅ 小结已记；历史注记仅标题</td><td>缺口与推断见 book-notes 缺口节</td></tr></table>
+<p><strong>范围声明</strong>：本次只处理第 8 章，不扩展到其他章节。源文缺失小节按「缺口登记」处理，不臆造正文。</p>
+<h2>实际输入（必填 · G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>raw/08-post-training.md</code> → <code>/home/yuanwu/books/slp3/zh/md/08-post-training.md</code></td><td>中文 md，第 8 章全文，共 484 行；本次处理 §8.0–§8.5</td></tr><tr><td>元信息</td><td><code>raw/08/meta.json</code></td><td>书名、章节来源 <code>08</code>、阅读目标「理解」、页码口径「用 §节号」</td></tr><tr><td>划线（可选）</td><td>未提供</td><td>因此无「划线去向表」；摘录取自原文关键句</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>不生成 <code>cross-check.md</code></td></tr></table>
+<h2>产物清单</h2>
+<ul><li><code>book-notes.md</code>：主笔记，13 个章节块（§8.0–§8.5 及子节 + 缺口登记），约 6,700 汉字，每块含摘录/思考/行动三区。</li><li><code>cards.md</code>：15 张永久卡片（概念卡 / 公式·定理卡 / 例题卡混编）。</li><li><code>self-test.md</code>：12 道提取自测题，含遮住笔记作答协议、费曼检验、推导重做记录。</li><li><code>actions.md</code>：3 条行动（奖励模型、DPO 的 β、best-of-N），均落到可运行 lab。</li><li><code>spinoffs.md</code>：5 条衍生选题（4 条送 <code>write-zhihu-tech</code>、1 条送 <code>write-tech-tutorial</code>）。</li><li><code>glossary.md</code>：24 条术语（可选产物，教材型推荐）。</li><li><code>labs/</code>：3 个真实运行的实验，脚本 + <code>out/</code> 产物 + 结论/反思，索引见 <code>labs/index.md</code>。</li></ul>
+<h2>章节审计表（对照原文 §8.1–§8.5）</h2>
+<table><tr><th>原文小节</th><th>book-notes 对应块</th><th>摘录条数</th><th>覆盖要点</th></tr><tr><td>---</td><td>---</td><td>---:</td><td>---</td></tr><tr><td>§8.1 指令微调</td><td>第 8.1 节 ⭐</td><td>6</td><td>元学习、只对回答计 loss、成本量级</td></tr><tr><td>§8.1.1 作为训练数据的指令</td><td>第 8.1.1 节 🔴</td><td>7</td><td>Aya/Super-NI/Flan 规模、模板化、复述、安全样本</td></tr><tr><td>§8.1.2 指令微调模型的评估</td><td>第 8.1.2 节 🔵</td><td>4</td><td>留一法、按任务簇划分</td></tr><tr><td>§8.2 参数高效微调</td><td>第 8.2 节 ⭐</td><td>8</td><td>冻结/更新、低秩分解、合并推理、模块换入换出</td></tr><tr><td>§8.3 从偏好中学习</td><td>第 8.3 节 🔴</td><td>5</td><td>比较监督的成本与三维目标</td></tr><tr><td>§8.3.1 LLM 偏好数据</td><td>第 8.3.1 节 🔵</td><td>6</td><td>人工/社区/LLM 三类来源、李克特评分</td></tr><tr><td>§8.3.2 偏好的建模</td><td>第 8.3.2 节 ⭐</td><td>6</td><td>Bradley–Terry、logit 到 sigmoid</td></tr><tr><td>§8.3.3 学习为偏好打分</td><td>第 8.3.3 节 ⭐</td><td>7</td><td>成对 CE、LLM 初始化、best-of-N</td></tr><tr><td>§8.4 偏好对齐框架</td><td>第 8.4 节 🔴</td><td>7</td><td>RL 四要素、带噪奖励、KL 约束</td></tr><tr><td>§8.4.1 PPO</td><td>缺口登记 ⚪</td><td>1（<code>TBD</code>）</td><td>仅能从 §8.4.2 反推四模型/在线采样</td></tr><tr><td>§8.4.2 直接偏好优化</td><td>第 8.4.2 节 ⭐</td><td>7</td><td>闭式解、配分函数抵消、β 范围、2 vs 4 模型</td></tr><tr><td>§8.4.3 / §8.4.4</td><td>缺口登记 ⚪</td><td>2（标题）</td><td>评估与局限未写，已标为待补</td></tr><tr><td>历史注记</td><td>缺口登记 ⚪</td><td>1（标题）</td><td>仅标题，无正文</td></tr><tr><td>§8.5 小结</td><td>第 8.5 节 ⚪</td><td>5</td><td>作者自选四条要点及其遗漏</td></tr></table>
+<h2>源文缺口（登记，不补写）</h2>
+<ol><li>§8.4.1「基于偏好反馈的强化学习（PPO）」正文只有 <code>TBD</code>。</li><li>§8.4.3「偏好对齐模型的评估」、§8.4.4「基于偏好的学习的局限」只有标题。</li><li>「历史注记」只有标题。</li></ol>
+<p>处理原则：摘录区照实登记 <code>TBD</code>/标题，思考区只写「能从本章其他段落推出什么」，行动区给出补读原始论文的具体任务；<strong>不把模型记忆当书稿内容</strong>。</p>
+<h2>运行与自检</h2>
+<pre><code># 三个 lab（标准库 + numpy 2.4.6 + matplotlib 3.10.9）
+python3 labs/lab-01/bradley_terry_rm.py
+python3 labs/lab-02/dpo_beta.py
+python3 labs/lab-03/best_of_n.py
+
+# 产物自检
+python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  /home/yuanwu/notes/reading/slp3/08-post-training \
+  --raw /home/yuanwu/notes/reading/slp3/raw/08</code></pre>
+<p>本次实际运行：2026-10-21，三个脚本退出码均为 0，产物见各 lab 的 <code>out/</code>。</p>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>---</td><td>---:</td><td>---</td></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>全部摘录带 §x.y，逐字取自 md；公式错位处只取完整散文句，未摘碎片</td></tr><tr><td>② 消化深度</td><td>9/10</td><td>思考区均为【我】开头，含 I 重述 + A1 具体经验 + 质疑；并有 lab 数字回填</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>3 条行动均有动词、对象、截止日与可验收指标，且全部跑通</td></tr><tr><td>④ 卡片复用性</td><td>8/10</td><td>15 张卡一卡一主张、带出处与链接位；部分链接仍待补</td></tr><tr><td>⑤ 覆盖完整性</td><td>8/10</td><td>§8.1–§8.5 全部覆盖，缺口单独登记；无划线输入，故无去向表</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>12 题覆盖各节与全部 ⭐，含提取协议、费曼检验、推导重做表</td></tr><tr><td><strong>合计</strong></td><td><strong>52/60</strong></td><td>单项均 ≥7，达标</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

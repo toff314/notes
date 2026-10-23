@@ -1,0 +1,8 @@
+model,dev_perplexity,test_perplexity,note
+MLE,inf,inf,unseen trigram -> zero -> infinite perplexity
+Laplace (k=1),17.4417,18.4384,add-one
+Add-k (k=0.1),9.5454,9.9223,add-k
+Add-k (k=0.01),8.9912,8.8559,add-k
+Add-k (k=0.001),11.8732,11.0589,add-k
+Interpolation,6.623,7.2803,"JM weights=(0.1, 0.7, 0.2)"
+Stupid backoff,5.9148,6.5192,"lambda=0.4, unnormalised score; pseudo-perplexity only"

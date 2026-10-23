@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 6 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/06-neural-networks",
+    "anchor": "第6章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch06-t1",
+      "title": "XOR 不是古董：深度到底买到了什么",
+      "angle": "观点：XOR 不是古董——从一条画不出的直线，理解\"深度\"到底买到了什么",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1（书中讲而未透）+ S2（可溯源的史与人）+ S4（有反差）。书用两页讲完 XOR 就转向工程，没有回答\"隐藏层换坐标系\"与\"深度带来组合泛化\"是不是一回事；而 Minsky & Papert (1969) 常被简化为\"扼杀神经网络的错误断言\"，与史实（他们否定的是单层，不是多层）存在明显反差。",
+      "sourceAnchor": "《Speech and Language Processing》§6.2「这一重要结果背后的直觉，依赖于理解感知机是一个线性分类器。」；§6.2.1 隐藏表示合并",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch06-t2",
+      "title": "用 100 行 numpy 拆开反向传播",
+      "angle": "论文：用 100 行 numpy 拆开反向传播——计算图、链式法则与有限差分校验",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1（讲而未透）+ S3（有技术纵深）+ S5（有现实落点）。书把 ∂L/∂z = a[2]−y 的关键化简留作练习，也没给可运行代码；而\"梯度算错\"是手写网络最常见的失败，有限差分校验是能立刻用上的技能。本笔记 lab-01 已跑出 4.4e-10 的校验误差，可直接扩成教程。",
+      "sourceAnchor": "§6.6.3「计算图是对计算某个数学表达式这一过程的表示」；§6.6.4 反向微分与式 6.43；§6.6.4 末尾\"留给读者作为练习\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch06-t3",
+      "title": "随机嵌入输给共现嵌入：表示学习最被低估的一课",
+      "angle": "观点：随机嵌入输给共现嵌入——同一个分类器，为什么换输入就从 0.315 跳到 0.995",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1（书中点到为止）+ S4（强反差）+ S5（现实落点）。书用 cat/dog 的例子说明泛化，却没有对照实验；本笔记 lab-02 在同一分类器、同一随机种子下只换嵌入，held-out 准确率从 0.315 到 0.995。这个数字对比能把\"嵌入很重要\"从口号变成证据。",
+      "sourceAnchor": "§6.5「所谓静态嵌入，是指每个词元都由一个固定的向量表示」；§6.5「神经语言模型知道 “cat” 和 “dog” 有相似的嵌入」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch06-t4",
+      "title": "梯度消失不是历史遗迹",
+      "angle": "观点：梯度消失不是历史遗迹——10 层 sigmoid 网络教不动，而 ReLU 一行就解决了",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1（书中解释偏定性）+ S3（有技术纵深）+ S5（现实落点）。书用一段话说明饱和导致梯度消失，但没有数量级；lab-03 测到 10 层 sigmoid 首层梯度 4.2e-7、准确率 0.4875，而 ReLU 首层 1.3e-1、准确率 1.0。数字让\"换个激活函数\"从经验变成可解释的选择。",
+      "sourceAnchor": "§6.1「导数为 0 会给学习带来问题」；§6.1「修正线性函数不存在这个问题，因为当 z 取很大值时，ReLU 的导数是 1」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch06-t5",
+      "title": "三次\"冬天\"里，只有一次是数学问题",
+      "angle": "观点：三次\"AI 冬天\"里，只有一次是数学问题——被误读的 XOR 与被低估的工程条件",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（可溯源的史与人）+ S4（有争议反差）+ S6（权威外部源）。书用一段话把 40 年压成\"衰落—复兴\"，容易被读成\"数学证明了不行，后来算力救了它\"；实际上 1980 年代的复兴靠的是反向传播与连接主义，算力只是 21 世纪的条件之一。这个叙事反差适合做史论。",
+      "sourceAnchor": "§历史注记「单元无法建模像 XOR 这样简单的函数之后，神经网络领域便衰落了（Minsky 和 Papert，1969）」；§历史注记「到 21 世纪初，计算机硬件的改进以及优化与训练技术的进步使得训练更大、更深的网络成为可能」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

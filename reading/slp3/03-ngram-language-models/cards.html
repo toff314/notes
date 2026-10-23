@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>N-gram 语言模型 · 永久卡片（15 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a></div>
+<h1>N-gram 语言模型 · 永久卡片（15 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式·定理卡 / 例题卡。</p></blockquote>
+<h2>卡 1　n-gram 语言模型到底在算什么？</h2>
+<ul><li><strong>Q（正面）</strong>：n-gram 语言模型的定义是什么？</li><li><strong>A（背面）</strong>：它给每个可能的下一个符号一个概率，从而给整段序列一个概率。n 指窗口大小：用前面 n−1 个符号作条件，预测第 n 个。它同时是一种数据切片（连续 n 个词）和一种概率假设。</li><li><strong>出处</strong>：SLP3 中文版 §3.1</li><li><strong>链接</strong>：卡 2（马尔可夫假设）、卡 8（困惑度）</li></ul>
+<h2>卡 2　马尔可夫假设砍掉了什么？</h2>
+<ul><li><strong>Q（正面）</strong>：为什么 n-gram 可以用少数几个词代表全部历史？</li><li><strong>A（背面）</strong>：它假设下一个词只依赖最近 n−1 个词，更早的历史全部丢弃。这不是语言事实，而是可计算性取舍：窗口越长，能区分的上下文越多，但每个上下文能分到的样本越少。</li><li><strong>出处</strong>：SLP3 中文版 §3.1.1</li><li><strong>链接</strong>：卡 1、卡 12（愚蠢回退）</li></ul>
+<h2>卡 3　整句概率怎么拆？</h2>
+<ul><li><strong>Q（正面）</strong>：链式法则在语言模型里长什么样？</li><li><strong>A（背面）</strong>：P(w1…wn) = P(w1)·P(w2|w1)·…·P(wn|w1…n−1)。它把无法直接统计的整句概率，拆成一串条件概率；n-gram 再把这些条件截断成只看前 n−1 个词。</li><li><strong>出处</strong>：SLP3 中文版 §3.1（式 3.4）</li><li><strong>链接</strong>：卡 2、卡 4（MLE）</li></ul>
+<h2>卡 4　bigram 概率怎么由计数得到？</h2>
+<ul><li><strong>Q（正面）</strong>：P(wn|wn−1) 的最大似然估计是什么？</li><li><strong>A（背面）</strong>：等于 C(wn−1wn) / C(wn−1)。分母是所有以 wn−1 开头的二元组计数之和，它恰好等于 wn−1 的 unigram 计数。这就是&quot;相对频率&quot;。</li><li><strong>出处</strong>：SLP3 中文版 §3.1.2（式 3.11）</li><li><strong>链接</strong>：卡 3、卡 5（加一平滑）</li></ul>
+<h2>卡 5　加一平滑的分母为什么要加 V？</h2>
+<ul><li><strong>Q（正面）</strong>：拉普拉斯平滑的 bigram 公式是什么？为什么不是只给分子加 1？</li><li><strong>A（背面）</strong>：P = (C(wn−1wn)+1) / (C(wn−1)+V)，V 是词表大小。因为对这一行的每个候选都加了 1，共 V 个，分母必须同步加 V，否则概率之和不再是 1。</li><li><strong>出处</strong>：SLP3 中文版 §3.6.1（式 3.26）</li><li><strong>链接</strong>：卡 4、卡 6（加 k）</li></ul>
+<h2>卡 6　加 k 平滑与加一是什么关系？</h2>
+<ul><li><strong>Q（正面）</strong>：add-k 怎么推广拉普拉斯？k 怎么选？</li><li><strong>A（背面）</strong>：把每项加的 1 换成 k：P = (C+k)/(C(prev)+kV)。k&lt;1 时挪走的概率质量更少。k 通常在开发集上选；书里指出它做语言建模仍不够好，只适合文本分类等任务。</li><li><strong>出处</strong>：SLP3 中文版 §3.6.2（式 3.28）</li><li><strong>链接</strong>：卡 5、卡 7（插值）</li></ul>
+<h2>卡 7　插值怎样混合不同阶？</h2>
+<ul><li><strong>Q（正面）</strong>：线性插值的公式与约束是什么？</li><li><strong>A（背面）</strong>：P̂(wn|wn−2wn−1) = λ1P(wn) + λ2P(wn|wn−1) + λ3P(wn|wn−2wn−1)，三个 λ 非负且和为 1。权重从留出语料上最大化似然得到，也可以按上下文条件化。</li><li><strong>出处</strong>：SLP3 中文版 §3.6.3（式 3.29–3.30）</li><li><strong>链接</strong>：卡 6、卡 12（愚蠢回退）</li></ul>
+<h2>卡 8　困惑度的定义是什么？</h2>
+<ul><li><strong>Q（正面）</strong>：给定测试集 W（N 个词元），困惑度怎么算？</li><li><strong>A（背面）</strong>：perplexity(W) = P(w1…wN)^(−1/N)，即测试集概率倒数的逐词几何平均。概率越高，困惑度越低；最小化困惑度等价于最大化测试集概率。</li><li><strong>出处</strong>：SLP3 中文版 §3.3（式 3.15）</li><li><strong>链接</strong>：卡 9（分支因子）、卡 15（熵）</li></ul>
+<h2>卡 9　分支因子与困惑度差在哪？</h2>
+<ul><li><strong>Q（正面）</strong>：为什么分支因子为 3 的语言，困惑度可以低于 3？</li><li><strong>A（背面）</strong>：分支因子数的是结构上允许的走法数量；困惑度是按概率加权后的有效不确定性。分布越不均匀，有效选择越少。均匀分布时两者相等。</li><li><strong>出处</strong>：SLP3 中文版 §3.3.1</li><li><strong>链接</strong>：卡 8、卡 14（颜色例题）</li></ul>
+<h2>卡 10　内在评估与外在评估怎么分工？</h2>
+<ul><li><strong>Q（正面）</strong>：两种评估各回答什么问题？</li><li><strong>A（背面）</strong>：外在评估把模型放进真实应用，看任务指标是否改善；内在评估独立于应用，直接测模型给测试集多大概率。前者是验收，后者是快速筛选，内在提升不保证外在收益。</li><li><strong>出处</strong>：SLP3 中文版 §3.2</li><li><strong>链接</strong>：卡 8、卡 11（数据划分）</li></ul>
+<h2>卡 11　为什么必须有开发集？</h2>
+<ul><li><strong>Q（正面）</strong>：既然有测试集，为什么还要 dev set？</li><li><strong>A（背面）</strong>：反复在测试集上试改动，会让研究者根据测试集调参，形成隐式泄漏。开发集承担所有迭代选择，测试集只在最后用一次，且必须与开发集同分布。</li><li><strong>出处</strong>：SLP3 中文版 §3.2</li><li><strong>链接</strong>：卡 10、卡 8</li></ul>
+<h2>卡 12　愚蠢回退&quot;愚蠢&quot;在哪？</h2>
+<ul><li><strong>Q（正面）</strong>：stupid backoff 与插值的核心差别？</li><li><strong>A（背面）</strong>：高阶计数为零时退回低阶，并乘一个固定权重（常用 λ=0.4）；它不做折扣、也不归一化，所以输出不是概率分布，只能当分数用。优点是实现极简、在机器翻译里够用。</li><li><strong>出处</strong>：SLP3 中文版 §3.6.4（式 3.31）</li><li><strong>链接</strong>：卡 7、卡 2</li></ul>
+<h2>卡 13　I am Sam 语料的 bigram 怎么算？</h2>
+<ul><li><strong>Q（正面）</strong>：三句语料 <code>&lt;s&gt; I am Sam &lt;/s&gt;</code>、<code>&lt;s&gt; Sam I am &lt;/s&gt;</code>、<code>&lt;s&gt; I do not like green eggs and ham &lt;/s&gt;</code>，P(Sam|am) 是多少？</li><li><strong>A（背面）</strong>：am 作为前件出现 2 次（I am Sam、Sam I am），其中后接 Sam 1 次，所以是 1/2。加 <code>&lt;s&gt;</code>、<code>&lt;/s&gt;</code> 后每个句子独立成段，句末也让 bigram 语法成为真正的分布。</li><li><strong>出处</strong>：SLP3 中文版 §3.1.2</li><li><strong>链接</strong>：卡 4、卡 5</li></ul>
+<h2>卡 14　颜色模型的困惑度怎么手算？</h2>
+<ul><li><strong>Q（正面）</strong>：A 模型三种颜色各 1/3，B 模型 P(red)=0.8、其余各 0.1，测试集 red red red red blue，各自困惑度？</li><li><strong>A（背面）</strong>：A：(1/3)^5 的 −1/5 次方 = 3。B：(0.8^4×0.1)^(−1/5) ≈ 1.89。B 更低，因为它把概率集中到了 red；换一个以 blue 为主的测试集，B 会迅速变差。</li><li><strong>出处</strong>：SLP3 中文版 §3.3.1（式 3.19）</li><li><strong>链接</strong>：卡 9、卡 8</li></ul>
+<h2>卡 15　困惑度与交叉熵是什么关系？</h2>
+<ul><li><strong>Q（正面）</strong>：为什么困惑度等于 2 的交叉熵次方？</li><li><strong>A（背面）</strong>：交叉熵是以模型分布编码真实数据时的平均比特数；困惑度把它换算回&quot;等效候选数&quot;，即 2^H(W)。所以交叉熵越低，困惑度越低，模型越好。底数换成 e 不改变困惑度数值。</li><li><strong>出处</strong>：SLP3 中文版 §3.7（式 3.42）</li><li><strong>链接</strong>：卡 8、卡 9</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

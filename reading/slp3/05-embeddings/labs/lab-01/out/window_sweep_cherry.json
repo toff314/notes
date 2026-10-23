@@ -1,0 +1,32 @@
+{
+  "window_1": {
+    "a": 1,
+    "and": 4,
+    "are": 1,
+    "dessert": 1,
+    "jam": 1,
+    "pie": 2,
+    "the": 1,
+    "traditional": 1,
+    "with": 1
+  },
+  "window_4": {
+    "a": 3,
+    "and": 5,
+    "apple": 1,
+    "are": 1,
+    "cream": 1,
+    "dessert": 2,
+    "fruit": 2,
+    "garden": 1,
+    "is": 2,
+    "jam": 2,
+    "pie": 3,
+    "strawberry": 3,
+    "sugar": 1,
+    "sweet": 1,
+    "the": 2,
+    "traditional": 1,
+    "with": 3
+  }
+}

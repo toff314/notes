@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 4 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/04-logistic-regression",
+    "anchor": "第4章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch04-t1",
+      "title": "99.99% 准确率的分类器为什么可能是废的",
+      "angle": "观点：99.99% 准确率的分类器为什么可能是废的——从「无馅饼」推文检测器说起",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 + S5 + S6。S4 有强烈反差：一个把所有推文都判成“无关”的分类器拿到 99.99% 准确率却毫无用处；S5 有现实落点：垃圾邮件、疾病筛查、内容审核都存在同类陷阱；S6 可查外部权威源（scikit-learn 的 imbalance 文档、Saito & Rehmsmeier 2015 的 PR 曲线论文）。",
+      "sourceAnchor": "《Speech and Language Processing》§4.9「设想我们查看了 100 万条推文……准确率为 999,900/1,000,000，即 99.99%！」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch04-t2",
+      "title": "从最大熵到逻辑回归：同一模型的两次独立发明",
+      "angle": "论文：从最大熵到逻辑回归——同一模型在统计学与 NLP 的两次独立发明",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S2 + S3 + S6。S2 有可溯源的人与机构：Cox (1969)、Sankoff & Labov (1979)、Berger et al. (1996)、Ratnaparkhi (1996/1997)；S3 有技术纵深：最大熵约束、指数族、与 softmax 的等价推导；S6 原始论文均可查。",
+      "sourceAnchor": "《Speech and Language Processing》历史注记「在 20 世纪 90 年代初，逻辑回归在 IBM Research 以最大熵建模……之名被开发并应用于 NLP」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch04-t3",
+      "title": "softmax 输出的概率，为什么不能直接当置信度",
+      "angle": "观点：softmax 输出的是概率，不是置信度——模型校准这件事为什么总被忽略",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S6。S1 书中讲而未透：只把 softmax 当概率，没有讨论温度、过参数化与校准；S4 有反差：同一个 argmax 可以对应完全不同的概率分布；S6 有权威外部源（Guo et al. 2017 的 calibration 论文、temperature scaling）。",
+      "sourceAnchor": "《Speech and Language Processing》§4.7.2「逻辑回归为每个类别学习一种原型表示，使得输入的向量被分配给 K 个类别中与它最相似的类别 k」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch04-t4",
+      "title": "手推逻辑回归梯度：为什么最后只剩 (ŷ−y)x",
+      "angle": "论文：手推逻辑回归梯度——从交叉熵到 (ŷ−y)x 的每一步",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6。S1 书中把推导压缩成几行跳步，初学者容易卡在链式法则；S3 有技术纵深：log 导数、sigmoid 导数、链式法则、与反向传播的衔接；S6 可用矩阵求导讲义与自动微分文档交叉验证。",
+      "sourceAnchor": "《Speech and Language Processing》§4.15「sigmoid 的（非常优雅的）导数」与式 4.62",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch04-t5",
+      "title": "毒性检测器为什么会误伤盲人和 AAVE 使用者",
+      "angle": "观点：毒性检测器的假正例，正在让谁闭嘴",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 + S4 + S6。S2 可溯源到具体研究（Park et al. 2018、Hutchinson et al. 2020、Sap et al. 2019、Davidson et al. 2019）；S4 有强烈反差：以“减少伤害”为目标的系统本身在制造伤害；S6 原论文与后续复现均可查。",
+      "sourceAnchor": "《Speech and Language Processing》§4.12「一些广泛使用的毒性分类器会错误地将本身无毒、只是提及诸如女性……或只是使用了非裔美国人白话英语这类语言变体所特有语言特征的句子，标记为有毒」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

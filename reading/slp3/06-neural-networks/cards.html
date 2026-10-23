@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 6 章 · 永久卡片（18 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a></div>
+<h1>《Speech and Language Processing》第 6 章 · 永久卡片（18 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 指向关联卡或实验产物。</p><p>教材型三类：概念卡 / 公式·定理卡 / 例题卡。</p></blockquote>
+<h2>卡 1　一个神经单元做哪三步</h2>
+<ul><li><strong>Q（正面）</strong>：不用&quot;神经元&quot;这个比喻，一个单元的计算可以拆成哪三步？</li><li><strong>A（背面）</strong>：先对输入做加权和再加偏置得到 z，然后对 z 施加非线性 g 得到激活 a，a 就是该单元的输出。线性部分决定&quot;看哪些方向&quot;，非线性决定&quot;如何弯折&quot;。单个单元的输出 y 与 a 相同；在多层网络里 y 保留给最终输出。</li><li><strong>出处</strong>：《Speech and Language Processing》§6.1</li><li><strong>链接</strong>：卡 2（偏置）｜卡 3（激活函数）｜lab-01（手写前向）</li></ul>
+<h2>卡 2　偏置项改变了什么</h2>
+<ul><li><strong>Q（正面）</strong>：如果把偏置 b 去掉，单元的表达能力会少掉什么？</li><li><strong>A（背面）</strong>：b 平移加权和，等价于移动激活门槛与决策边界。没有它，边界被迫穿过原点，无法表示&quot;两个输入都为 1 才触发&quot;这类带阈值的函数。图 6.2 把 b 画成一个输入恒为 +1 的权重，说明它和权重一样可学。</li><li><strong>出处</strong>：§6.1、图 6.2</li><li><strong>链接</strong>：卡 1｜卡 10（线性层的复合）｜lab-01（小随机偏置避开 ReLU 折点）</li></ul>
+<h2>卡 3　sigmoid、tanh、ReLU 怎么选</h2>
+<ul><li><strong>Q（正面）</strong>：隐藏层与输出层分别该用哪种激活函数？</li><li><strong>A（背面）</strong>：输出层要概率：二分类用 sigmoid，多分类用 softmax。隐藏层默认 ReLU，需要零中心且平滑时用 tanh。sigmoid 在输入很大或很小时饱和、导数趋 0，深层堆叠容易让误差传不回去；ReLU 正区间导数为 1，计算也便宜。</li><li><strong>出处</strong>：§6.1、式 6.3–6.6</li><li><strong>链接</strong>：卡 4（梯度消失）｜lab-03（三种激活的逐层梯度）</li></ul>
+<h2>卡 4　梯度消失是怎么产生的</h2>
+<ul><li><strong>Q（正面）</strong>：为什么&quot;层数一多，前面的层就学不动&quot;？</li><li><strong>A（背面）</strong>：反向传播按链式法则逐层相乘局部导数。sigmoid 的导数最大只有 0.25，多层相乘会指数衰减；误差传到浅层时已小到无法更新参数。ReLU 在正区间导数为 1，能缓解这个问题。lab-03 的 10 层网络里，sigmoid 首层梯度约 4.2e-7，ReLU 约 1.3e-1。</li><li><strong>出处</strong>：§6.1、§6.6.4</li><li><strong>链接</strong>：卡 3｜lab-03/out/gradient_norms.csv</li></ul>
+<h2>卡 5　为什么单层感知机算不了 XOR</h2>
+<ul><li><strong>Q（正面）</strong>：用&quot;决策边界&quot;解释，单层感知机为什么做不了 XOR？</li><li><strong>A（背面）</strong>：感知机按 w·x+b 的符号输出 0/1，边界是一条直线（高维时是超平面）。XOR 的正例 (0,1)、(1,0) 与负例 (0,0)、(1,1) 交错分布，任何一条直线都会把某一类切错，因此它不是线性可分的。</li><li><strong>出处</strong>：§6.2、图 6.5</li><li><strong>链接</strong>：卡 6（隐藏层如何救场）｜卡 16（手算例题）</li></ul>
+<h2>卡 6　隐藏层对 XOR 做了什么</h2>
+<ul><li><strong>Q（正面）</strong>：两层网络解决 XOR，隐藏层究竟改变了什么？</li><li><strong>A（背面）</strong>：它把四个输入点映射到新的 h 空间；两个正例 (0,1) 与 (1,0) 被合并到同一点 [1,0]，两个负例落在别处，于是新空间里一条直线就能分开。隐藏层的作用是形成输入的表示，而不是简单增加参数量。</li><li><strong>出处</strong>：§6.2.1、图 6.7</li><li><strong>链接</strong>：卡 5｜卡 16｜lab-01（决策边界图）</li></ul>
+<h2>卡 7　单隐藏层的前向公式与形状</h2>
+<ul><li><strong>Q（正面）</strong>：写出 2 层网络的前向三步，并标出每个变量的形状。</li><li><strong>A（背面）</strong>：h = σ(Wx+b)，z = Uh，ŷ = softmax(z)。x∈R^{n0}，W∈R^{n1×n0}，b∈R^{n1}，h∈R^{n1}，U∈R^{n2×n1}，ŷ∈R^{n2}。σ 按元素作用：σ([z1,z2])=[σ(z1),σ(z2)]。</li><li><strong>出处</strong>：§6.3、式 6.8–6.12</li><li><strong>链接</strong>：卡 8（层数约定）｜卡 9（logits）｜lab-01（2-8-1 实现）</li></ul>
+<h2>卡 8　为什么叫 2 层网络而不是 3 层</h2>
+<ul><li><strong>Q（正面）</strong>：一个&quot;输入—隐藏—输出&quot;的网络为什么称为 2 层？</li><li><strong>A（背面）</strong>：数的是带权重的层：隐藏层和输出层各算一层，输入层只是数据、不计入。按同一约定，逻辑回归（没有隐藏层）是 1 层网络；这样&quot;层数&quot;就等于&quot;权重矩阵的个数&quot;。</li><li><strong>出处</strong>：§6.3</li><li><strong>链接</strong>：卡 7｜卡 10</li></ul>
+<h2>卡 9　logits 是什么</h2>
+<ul><li><strong>Q（正面）</strong>：logits 与概率有什么区别？调试时先看哪个？</li><li><strong>A（背面）</strong>：logits 是最后一层 softmax 之前的未归一化得分 z[n]，可正可负、总和不为 1；softmax 之后才是概率。调试时先看 logits 能区分&quot;分数算错&quot;与&quot;归一化算错&quot;；如果 logits 本身没有把正确类抬高，问题在表示或权重，而不是 softmax。</li><li><strong>出处</strong>：§6.3.1、§6.6.1</li><li><strong>链接</strong>：卡 7｜卡 14（交叉熵）</li></ul>
+<h2>卡 10　去掉非线性，多层为什么退化成一层</h2>
+<ul><li><strong>Q（正面）</strong>：如果每层都不加激活函数，加深网络会得到什么？</li><li><strong>A（背面）</strong>：两层复合为 W2(W1x+b1)+b2 = (W2W1)x + (W2b1+b2)，仍是一个线性变换；任意层数同理，只是换了一组等价的 W′ 与 b′。因此非线性不是可选项，而是&quot;深度&quot;能增加表示能力的唯一理由。</li><li><strong>出处</strong>：§6.3.1</li><li><strong>链接</strong>：卡 1｜卡 3｜卡 7</li></ul>
+<h2>卡 11　批量推理时为什么写成 XWᵀ</h2>
+<ul><li><strong>Q（正面）</strong>：同样一层，为什么有时写 Wx+b，有时写 XWᵀ+b？</li><li><strong>A（背面）</strong>：写法由样本是列还是行决定。单个样本当列向量时是 Wx；把 m 个样本按行堆成 X∈R^{m×d}，要得到 H∈R^{m×dh}，就必须右乘 Wᵀ。两种写法计算同一个函数，混淆会直接导致维度报错。</li><li><strong>出处</strong>：§6.4.2、式 6.20</li><li><strong>链接</strong>：卡 7｜lab-02（批量编码）</li></ul>
+<h2>卡 12　嵌入矩阵如何完成&quot;查表&quot;</h2>
+<ul><li><strong>Q（正面）</strong>：为什么说&quot;从 E 里取第 i 行&quot;等价于&quot;用 one-hot 乘 E&quot;？</li><li><strong>A（背面）</strong>：E∈R^{|V|×d} 的每一行是一个词的向量。one-hot 向量只有第 i 位为 1，左乘 E 时其余行乘 0、只剩第 i 行，所以结果就是该词向量。工程实现直接按索引取行，避免真的构造稀疏向量。</li><li><strong>出处</strong>：§6.5、图 6.11–6.12</li><li><strong>链接</strong>：卡 13（池化/拼接）｜lab-02（嵌入查表）</li></ul>
+<h2>卡 13　池化与拼接怎么选</h2>
+<ul><li><strong>Q（正面）</strong>：把 N 个词嵌入送进分类器，池化和拼接各自付出什么代价？</li><li><strong>A（背面）</strong>：池化（平均/最大）把 N 个向量压成一个，规模小、效率高，但丢词序，适合情感这类位置不重要的任务；拼接保留顺序与全部信息，但输入维度是 dN，参数与计算随窗口增长，适合语言建模这类需要词序的任务。</li><li><strong>出处</strong>：§6.5、式 6.22–6.24</li><li><strong>链接</strong>：卡 12｜lab-02（平均池化）</li></ul>
+<h2>卡 14　交叉熵与负对数似然是什么关系</h2>
+<ul><li><strong>Q（正面）</strong>：多分类的交叉熵为什么可以只算正确类那一项？</li><li><strong>A（背面）</strong>：硬标签下 y 是 one-hot，−Σ y_k log ŷ_k 中只有正确类 c 的 y_c=1，其余为 0，于是等于 −log ŷ_c，即负对数似然。它从 0（ŷ_c=1）增长到 +∞（ŷ_c→0），正确类概率越低惩罚越大。</li><li><strong>出处</strong>：§6.6.1、式 6.26–6.28</li><li><strong>链接</strong>：卡 9（logits）｜卡 15（反向传播）</li></ul>
+<h2>卡 15　反向传播中每个节点只需哪两个量</h2>
+<ul><li><strong>Q（正面）</strong>：计算图上的一个节点，凭哪两个量就能把梯度继续往回传？</li><li><strong>A（背面）</strong>：一是从右侧父节点传来的上游梯度，二是本节点的局部梯度（输出对每个输入的偏导）。两者相乘得到下游梯度，沿反向拓扑序继续传。前向阶段保存的中间值（如 z、a）正是局部梯度的计算材料。</li><li><strong>出处</strong>：§6.6.3–§6.6.4、图 6.16</li><li><strong>链接</strong>：卡 10｜lab-01（手写 backward）</li></ul>
+<h2>卡 16　例题卡：手算 XOR 的一组隐藏表示</h2>
+<ul><li><strong>Q（正面）</strong>：给定图 6.6 的权重，输入 x=[0,0] 与 x=[0,1] 时 h 和 y 分别是多少？</li><li><strong>A（背面）</strong>：x=[0,0]：z1=[0,−1]，ReLU 后 h=[0,0]，输出 0。x=[0,1]：按图 6.6 的权重得到 h=[1,0]，再经输出层得 1。四个输入中，两个正例都被映到 h=[1,0]，这正是&quot;合并表示&quot;的关键一步。</li><li><strong>出处</strong>：§6.2.1、图 6.6–6.7</li><li><strong>链接</strong>：卡 6｜lab-01/out/decision_boundary.png</li></ul>
+<h2>卡 17　参数与超参数怎么分</h2>
+<ul><li><strong>Q（正面）</strong>：学习率、层数、权重，哪些是参数，哪些是超参数？判据是什么？</li><li><strong>A（背面）</strong>：参数（W、b）由梯度下降从训练数据中学；超参数（学习率、批量大小、层数、隐藏单元数、激活函数、正则化强度）由设计者在开发集上选。判据是&quot;能否被梯度更新&quot;：可微且参与反向传播的是参数，其余是超参数。</li><li><strong>出处</strong>：§6.6.5</li><li><strong>链接</strong>：卡 18（dropout 的 p 是超参数）｜lab-03（层数与激活的选择）</li></ul>
+<h2>卡 18　dropout 训练时做什么</h2>
+<ul><li><strong>Q（正面）</strong>：dropout 在训练的每一步对网络做了什么？推理时呢？</li><li><strong>A（背面）</strong>：每次迭代以概率 p 随机把单元输出置零，并对该层剩余输出重新归一化，使该层期望不变；推理时通常关闭 dropout，使用完整网络。它阻止网络依赖个别单元，起正则化作用；p 是需要调的超参数。</li><li><strong>出处</strong>：§6.6.5</li><li><strong>链接</strong>：卡 17｜lab-02（同一分类器的小数据训练设置）</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

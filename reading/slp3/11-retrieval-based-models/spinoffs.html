@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 11 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a></div>
+<h1>第 11 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>RAG 没有消灭幻觉，只是把信任搬了家</td><td>write-zhihu-tech（观点）</td><td>S3+S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>BM25 五十年不死：两个参数背后的检索直觉</td><td>write-zhihu-tech（观点）</td><td>S2+S3+S5</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>ColBERT 的后期交互：为什么保留每个词元反而更便宜</td><td>write-tech-tutorial（论文）</td><td>S1+S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>换个说法就搜不到：词汇不匹配为什么至今没解</td><td>write-zhihu-tech（观点）</td><td>S1+S4+S5</td><td>P2</td><td>短评/中篇</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>稠密检索的负例工程：好模型是被「难负例」喂出来的</td><td>write-tech-tutorial（论文）</td><td>S1+S3+S6</td><td>P2</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<blockquote><p>筛掉的方向：数据集盘点（S5 弱，公开资料已多）、倒排索引入门（S3 有但 S4/S6 不足，且教程已饱和）。</p></blockquote>
+<hr>
+<h3>1. RAG 没有消灭幻觉，只是把信任搬了家</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：RAG 没有消灭幻觉，只是把「相信模型」换成了「相信出处」——而后者需要一套独立指标</code></li><li><strong>书籍锚点</strong>：SLP3 §11.4「RAG 可以通过向模型提供一组可信文档来帮助缓解幻觉。」；§11.4「生成知识引证最简单的方式，是把它规定为提示中。」</li><li><strong>为什么</strong>：命中 <strong>S3 技术纵深 + S4 争议反差 + S5 现实落点</strong>。书上说「缓解」，产业话术常说「解决」；本章没有定义「引用是否正确」这一指标，而 lab-02 实测开卷后 3 次失败全部是「引用了错误来源」——这是可举证的裂缝。</li><li><strong>增益</strong>：① 相对本书：把「缓解」拆成检索错/读错/记错三类损失，并补上引用正确率这个第三指标，书里只到「提供引证」为止；② 对读者：给一套能立刻用的自查清单——引用率、引用正确率、有据答对率，三者分开报，避免被「有引用」骗过。</li><li><strong>素材种子</strong>：历史（引证从学术写作到生成系统的迁移）｜原理（检索-生成两阶段的责任划分）｜争议（「RAG 治幻觉」是不是营销话术）｜数据（lab-02 的 0.60/0.85/0.85 三组数字）。</li><li><strong>缺口（下游必须自己搜）</strong>：真实产品上「引用正确率」的公开测量；Dahl 等（2024）法律领域 69%–88% 幻觉率的原文与实验设置；是否有论文已提出同一指标（避免把已有工作当原创）。</li><li><strong>体量建议</strong>：标准长文（3000–5000 字）。</li><li><strong>待核</strong>：❓ 书里 Dahl 等（2024）的 69%–88% 是中文稿转述，需回英文原稿核对区间与任务定义。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>2. BM25 五十年不死：两个参数背后的检索直觉</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：BM25 没被神经网络淘汰，是因为它把「词频饱和」和「长度归一化」写成了两个可解释的旋钮</code></li><li><strong>书籍锚点</strong>：SLP3 §11.1.2「当 k 为 0 时，BM25 退化为完全不使用词频……」；「Manning 等（2008）建议合理的取值为 k = [1.2,2] 和 b = 0.75。」</li><li><strong>为什么</strong>：命中 <strong>S2 可溯源史 + S3 技术纵深 + S5 现实落点</strong>。Okapi 系统（Robertson 等，1995）到今天的混合检索仍在用；lab-04 给出可复现的参数行为——b=0 时长文档抢走 56% 第一名，k1=0 时 b 整列失效。</li><li><strong>增益</strong>：① 相对本书：书只给公式与建议区间，本文补「参数在什么区间是死区、为什么会断崖」的实测；② 对读者：拿到一套调参顺序——先看长度分布决定 b，再看是否需要词频决定 k1，最后才细调。</li><li><strong>素材种子</strong>：历史（Okapi 项目、TREC 评测）｜人物（Stephen Robertson、Karen Spärck Jones）｜原理（tf 饱和与长度归一化的耦合）｜争议（BM25 是否该被稠密检索取代）。</li><li><strong>缺口（下游必须自己搜）</strong>：Robertson &amp; Zaragoza 的 BM25 原始推导；不同语言/长度分布下的推荐参数；工业界混合检索的具体配比数据。</li><li><strong>体量建议</strong>：标准长文（3000–4500 字）。</li><li><strong>待核</strong>：❓ 书说「较大的 k 会导致使用原始词频」，需确认是相对饱和曲线而言，避免写成线性。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>3. ColBERT 的后期交互：为什么保留每个词元反而更便宜</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（论文）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：ColBERT 的 MaxSim 后期交互——用词元级向量换掉单向量瓶颈，同时把交互推迟到打分阶段</code></li><li><strong>书籍锚点</strong>：SLP3 §11.3「本质上，对于 q 中的每个词元，ColBERT 会找出 d 中在上下文上最相似的词元，再把这些相似度相加。」；图 11.12。</li><li><strong>为什么</strong>：命中 <strong>S1 书中讲而未透 + S3 技术纵深 + S6 权威外部源</strong>。书只给了 MaxSim 的一句话与打分式，没有讲清「为什么这比单塔便宜、比双塔准」的成本结构，也没讲训练时的三元组与负例采样细节。</li><li><strong>增益</strong>：① 相对本书：补上复杂度对比（单塔 O(|D|·L²)、双塔 O(|D|·d)、ColBERT O(|D|·N·m) 的存储与算力账）与训练目标；② 对读者：能自己判断什么场景该上 ColBERT（长文档、词元级匹配重要、存储可接受）。</li><li><strong>素材种子</strong>：论文（Khattab &amp; Zaharia 2020；Khattab 等 2021 ColBERTv2）｜原理（MaxSim、向量量化、剪枝）｜工程（存储放大倍数）｜对比（与双塔/交叉编码器的延迟-精度曲线）。</li><li><strong>缺口（下游必须自己搜）</strong>：ColBERTv2 的残差压缩细节；官方实现的实际存储开销；复现所需算力。</li><li><strong>体量建议</strong>：标准长文（4000–6000 字，含可运行的最小 MaxSim 代码）。</li><li><strong>待核</strong>：❓ 书中式 11.20 的求和下标在中文稿里错位，写文章前须回英文原式确认。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>4. 换个说法就搜不到：词汇不匹配为什么至今没解</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：词汇不匹配不是搜索引擎的 bug，而是「用字面代表意义」这套表示的原罪</code></li><li><strong>书籍锚点</strong>：SLP3 §11.3「只有当查询与文档之间存在完全相同的词重叠时，它们才奏效。」；§11.3 引 Furnas 等（1987）的 vocabulary mismatch problem。</li><li><strong>为什么</strong>：命中 <strong>S1 讲而未透 + S4 争议反差 + S5 现实落点</strong>。书把词汇不匹配作为稠密检索的动机一笔带过，但它其实是所有检索系统的长期失效面；lab-01 里稠密侧在改写查询上仍然输给 BM25，正好构成反直觉证据。</li><li><strong>增益</strong>：① 相对本书：把「换稠密就好了」拆成「表示学习规模 + 监督信号 + 查询改写」三条独立路径，并指出各自的天花板；② 对读者：理解为什么搜索产品仍在做同义词表、查询扩展与混合检索，而不是全押向量。</li><li><strong>素材种子</strong>：历史（Furnas 1987 的受控实验）｜原理（字面表示 vs 分布式表示）｜争议（端到端稠密能否取代一切）｜数据（lab-01 的落差：标题查询 1.00 vs 改写 0.55）。</li><li><strong>缺口（下游必须自己搜）</strong>：Furnas 等 1987 的原始实验数字；工业界查询改写/扩展的最新做法与收益；中文分词对不匹配的影响。</li><li><strong>体量建议</strong>：中篇（2500–3500 字）。</li><li><strong>待核</strong>：❓ lab-01 的样本只有 10 条查询，不能外推为普遍结论，写作时须标注规模。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>5. 稠密检索的负例工程：好模型是被「难负例」喂出来的</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（论文）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：稠密检索的负例挖掘——从 BM25 top-1000 采样到相关性引导监督</code></li><li><strong>书籍锚点</strong>：SLP3 §11.3「负例可以从某个现有信息检索系统的前 1000 条结果中随机采样。」；同节关于相关性引导监督（Khattab 等，2021）的段落。</li><li><strong>为什么</strong>：命中 <strong>S1 书中讲而未透 + S3 技术纵深 + S6 权威外部源</strong>。书只用两句话带过负例来源，但这是稠密检索成败的关键工程；「用 BM25 前 1000 条当负例」隐含了一个可讨论的循环依赖。</li><li><strong>增益</strong>：① 相对本书：把负例分成随机/批内/难负例/伪相关四类，说明各自解决的问题与失败模式；② 对读者：能自己设计一套负例流水线，并知道什么时候该用相关性引导监督替代人工标注。</li><li><strong>素材种子</strong>：论文（Karpukhin 等 2020 DPR；Khattab 等 2021；Sachan 等 2023）｜原理（对比学习、批内负例、难负例偏差）｜工程（采样成本与训练稳定性）｜争议（用检索器自己挖负例是否自我强化偏差）。</li><li><strong>缺口（下游必须自己搜）</strong>：DPR 原文的负例配置与消融；难负例导致训练崩溃的已知案例；中文/多语场景的负例实践。</li><li><strong>体量建议</strong>：标准长文（4000–5500 字）。</li><li><strong>待核</strong>：❓ 书里未给「前 1000 条」的出处页码，需回英文原稿与 DPR 论文核对。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

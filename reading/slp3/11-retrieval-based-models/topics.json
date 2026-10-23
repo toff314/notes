@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "第 11 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/11-retrieval-based-models",
+    "anchor": "第11章"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch11-t1",
+      "title": "RAG 没有消灭幻觉，只是把信任搬了家",
+      "angle": "观点：RAG 没有消灭幻觉，只是把「相信模型」换成了「相信出处」——而后者需要一套独立指标",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S3 技术纵深 + S4 争议反差 + S5 现实落点。书上说「缓解」，产业话术常说「解决」；本章没有定义「引用是否正确」这一指标，而 lab-02 实测开卷后 3 次失败全部是「引用了错误来源」——这是可举证的裂缝。",
+      "sourceAnchor": "SLP3 §11.4「RAG 可以通过向模型提供一组可信文档来帮助缓解幻觉。」；§11.4「生成知识引证最简单的方式，是把它规定为提示中。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch11-t2",
+      "title": "BM25 五十年不死：两个参数背后的检索直觉",
+      "angle": "观点：BM25 没被神经网络淘汰，是因为它把「词频饱和」和「长度归一化」写成了两个可解释的旋钮",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 可溯源史 + S3 技术纵深 + S5 现实落点。Okapi 系统（Robertson 等，1995）到今天的混合检索仍在用；lab-04 给出可复现的参数行为——b=0 时长文档抢走 56% 第一名，k1=0 时 b 整列失效。",
+      "sourceAnchor": "SLP3 §11.1.2「当 k 为 0 时，BM25 退化为完全不使用词频……」；「Manning 等（2008）建议合理的取值为 k = [1.2,2] 和 b = 0.75。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch11-t3",
+      "title": "ColBERT 的后期交互：为什么保留每个词元反而更便宜",
+      "angle": "论文：ColBERT 的 MaxSim 后期交互——用词元级向量换掉单向量瓶颈，同时把交互推迟到打分阶段",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 书中讲而未透 + S3 技术纵深 + S6 权威外部源。书只给了 MaxSim 的一句话与打分式，没有讲清「为什么这比单塔便宜、比双塔准」的成本结构，也没讲训练时的三元组与负例采样细节。",
+      "sourceAnchor": "SLP3 §11.3「本质上，对于 q 中的每个词元，ColBERT 会找出 d 中在上下文上最相似的词元，再把这些相似度相加。」；图 11.12。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch11-t4",
+      "title": "换个说法就搜不到：词汇不匹配为什么至今没解",
+      "angle": "观点：词汇不匹配不是搜索引擎的 bug，而是「用字面代表意义」这套表示的原罪",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S1 讲而未透 + S4 争议反差 + S5 现实落点。书把词汇不匹配作为稠密检索的动机一笔带过，但它其实是所有检索系统的长期失效面；lab-01 里稠密侧在改写查询上仍然输给 BM25，正好构成反直觉证据。",
+      "sourceAnchor": "SLP3 §11.3「只有当查询与文档之间存在完全相同的词重叠时，它们才奏效。」；§11.3 引 Furnas 等（1987）的 vocabulary mismatch problem。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch11-t5",
+      "title": "稠密检索的负例工程：好模型是被「难负例」喂出来的",
+      "angle": "论文：稠密检索的负例挖掘——从 BM25 top-1000 采样到相关性引导监督",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S1 书中讲而未透 + S3 技术纵深 + S6 权威外部源。书只用两句话带过负例来源，但这是稠密检索成败的关键工程；「用 BM25 前 1000 条当负例」隐含了一个可讨论的循环依赖。",
+      "sourceAnchor": "SLP3 §11.3「负例可以从某个现有信息检索系统的前 1000 条结果中随机采样。」；同节关于相关性引导监督（Khattab 等，2021）的段落。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

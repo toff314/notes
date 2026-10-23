@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第三版）第 7 章 · 衍生选题（5 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a></div>
+<h1>《Speech and Language Processing》（第三版）第 7 章 · 衍生选题（5 条）</h1>
+<blockquote><p>送给 <code>write-zhihu-tech</code> 的选题用 <code>观点：</code> 前缀，送给 <code>write-tech-tutorial</code> 的用 <code>论文：</code> 前缀。</p><p>书籍锚点是待核线索，不是最终事实；下游必须独立搜索核实。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>注意力热图不是解释</td><td>write-zhihu-tech</td><td>S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>解码策略如何塑造模型性格</td><td>write-zhihu-tech</td><td>S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>12Ld² 参数估算与失效边界</td><td>write-tech-tutorial</td><td>S3+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>残差流：一块共享黑板</td><td>write-zhihu-tech</td><td>S1+S3</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>位置编码三条路线</td><td>write-tech-tutorial</td><td>S3+S6</td><td>P2</td><td>短评/长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<hr>
+<h3>1. 注意力热图不是解释：一张漂亮图能骗过多少人</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：注意力热图不是因果解释——从 Transformer 的可解释性误区说起</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§7.1「词元 chicken 和 road 都具有很高的注意力权重……我们会最倚重 chicken 和 road 的表示」；§7.2.3「我们完全可以把注意力头看作是把信息从邻近词元的残差流搬移到当前流中」</li><li><strong>为什么</strong>：命中 <strong>S4 争议反差 + S5 现实落点</strong>。书中用热图讲直觉，但热图只是单层单头权重；最终输出还经过值向量、Wo 与后续层，且多头可能冗余。现实里大量论文与产品把热图当“模型在解释自己”，这正是可写反差的落点。</li><li><strong>增益</strong>：① 相对本书：把“注意力权重 ≠ 解释”的边界讲透，补上教材为教学简化掉的部分；② 对读者：下次看到“模型关注了这几个词”的营销图，能问出“哪一层、哪个头、后续怎么用”三个问题。</li><li><strong>素材种子</strong>：历史溯源 —— 注意力可视化从机器翻译对齐图演变而来｜人物 —— Uszkoreit 的 Transformer 直觉图｜原理 —— 单头权重、值向量、残差流｜争议 —— attention is not explanation 一类论文｜现实 —— 产品可解释性报告</li><li><strong>缺口（下游必须自己搜）</strong>：注意力可解释性的正反两派实证论文、不同层/头的一致性实验；书中未给页码，需核对原书图 7.3 与 §7.2.3 上下文。</li><li><strong>体量建议</strong>：标准长文（3000–5000 字），用一张“热图→输出”的数据流图撑起原理段。</li><li><strong>待核</strong>：❓“热图不是解释”不宜写成绝对结论；需区分“单头权重不能单独解释”与“注意力整体毫无解释力”两个主张。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>2. 从贪心到 top-p：解码策略如何塑造模型的“性格”</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：同一个模型为何既能复读又能胡说——解码策略才是那个隐藏旋钮</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§7.6.2「贪心解码过于乏味，而随机采样又过于随机」；§7.6.3「温度采样的思想是重塑概率分布」；§7.6.4「把 top-k 采样和 top-p 采样结合起来是很常见的做法」</li><li><strong>为什么</strong>：命中 <strong>S4 争议反差 + S5 现实落点</strong>。大众常把“模型变笨/变飘”归因于模型本身，实际上 temperature、top-k、top-p 在推理期就能显著改变输出；书中把三者串成一条谱系，但没展开产品默认值的选择逻辑。</li><li><strong>增益</strong>：① 相对本书：把“质量—多样性”的取舍落到可调的三个参数，并给出组合使用的工程理由；② 对读者：能自己解释为什么同一 API 在不同温度下像两个模型，并学会按任务选默认值。</li><li><strong>素材种子</strong>：历史 —— Shannon 与 Miller/Selfridge 的早期采样实验｜原理 —— softmax 温度、核采样｜数据 —— 不同 τ 下最大概率与熵（可复用 lab-03 图）｜现实 —— 各 API 的 temperature/top_p 默认值</li><li><strong>缺口（下游必须自己搜）</strong>：主流 API 的默认参数与变更记录、top-p 在长上下文下的实测；书中图 7.17 的原始 logits 未在本笔记中复现，需核对。</li><li><strong>体量建议</strong>：标准长文（3000–5000 字），以“同一提示词、四组参数、四段输出”做开头钩子。</li><li><strong>待核</strong>：❓“性格”是比喻，正文需明确它指输出分布的形状，不是模型有人格。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>3. 12Ld²：一个能心算的参数量公式，以及它何时失效</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：用 12Ld² 估算 Transformer 参数量——从练习 7.1 到 Llama 405B</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§7.9 与练习 7.1「证明完整的 L 个块的堆叠大约有 12Ld² 个参数」；§7.8 图 7.24 的模型配置表</li><li><strong>为什么</strong>：命中 <strong>S3 技术纵深 + S6 权威外部源</strong>。书中只留作练习，没有把“为什么是 12”“什么被忽略”“为什么 Qwen3-0.6B 会差 40%”讲完；而这些问题可以用公开模型配置逐项核对，适合做成可复算教程。</li><li><strong>增益</strong>：① 相对本书：把练习扩成完整推导，补上词表嵌入、GQA、门控前馈导致的偏差；② 对读者：看到任何“XX B 参数”的新闻，能用 L 与 d 在纸上估出量级，并判断数字是否合理。</li><li><strong>素材种子</strong>：推导 —— 注意力 4d² + 前馈 8d²｜数据 —— lab-04 的六模型表｜反差 —— Llama 405B 几乎命中、Qwen3-0.6B 只到 59%｜工程 —— 嵌入层与 GQA 的影响</li><li><strong>缺口（下游必须自己搜）</strong>：各模型官方配置与参数拆分、GQA 的 KV 头数、词表大小；图 7.24 的数字需与原始模型卡核对。</li><li><strong>体量建议</strong>：标准长文（3000–5000 字），附一张可复跑的 Python 脚本与 CSV。</li><li><strong>待核</strong>：❓12Ld² 忽略偏置、LayerNorm 与嵌入；不同论文对“参数量”是否含嵌入口径不一，需在开头定义。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>4. 残差流：把 Transformer 看成一块共享黑板</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：Transformer 不是一层层加工，而是一块被反复读写的共享黑板</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§7.2「这条残差流以原始输入向量为起点，各个组件从残差流中读取自己的输入，并把输出加回该流中」；§7.2.3「注意力头看作是把信息从邻近词元的残差流搬移到当前流中」</li><li><strong>为什么</strong>：命中 <strong>S1 书中讲而未透 + S3 技术纵深</strong>。教材给了比喻，但没有把它展开成“读写协议”：谁读、谁写、为什么维度必须一致、为什么最高层还要再归一化。这个视角能统一解释很多架构细节。</li><li><strong>增益</strong>：① 相对本书：把散落在 §7.2–§7.2.3 的残差、归一化、词元混合串成一个心智模型；② 对读者：读新架构时先找“它往黑板写了什么”，比逐个记模块更快。</li><li><strong>素材种子</strong>：历史 —— ResNet 的恒等映射与 Transformer 的 prenorm｜原理 —— 读写增量、维度不变、词元混合｜类比 —— 共享内存/总线｜争议 —— 残差流是否真的可分解为独立子空间</li><li><strong>缺口（下游必须自己搜）</strong>：Elhage et al. (2021) 的原始论述、残差流可解释性的后续工作；书中未给页码，需核对 §7.2 与图 7.7。</li><li><strong>体量建议</strong>：标准长文（3000–4500 字），以“如果 Transformer 是一块黑板，谁在写”作为主线。</li><li><strong>待核</strong>：❓“共享黑板”是比喻，不能推出各层信息可无损分离；正文需保留这个限制。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>5. 位置编码的三条路线：绝对、正弦与 RoPE</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：位置编码为什么从“加一个向量”走到“旋转查询和键”</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§7.4「最简单的方法称为绝对位置」「最初的 Transformer 工作就使用了频率各异的正弦与余弦函数的组合」「这类位置嵌入机制中最流行的是旋转位置嵌入（Rotary Position Embedding, RoPE）」</li><li><strong>为什么</strong>：命中 <strong>S3 技术纵深 + S6 权威外部源</strong>。书中三种方案各给一两句，没解释“绝对位置的长尾问题如何量化”“正弦为什么能外推”“RoPE 的旋转为何等价于相对位移”；这些都能用公式与小实验补全。</li><li><strong>增益</strong>：① 相对本书：把三种方案放进同一坐标系比较，补上公式与实现细节；② 对读者：能判断一个模型为什么选 RoPE、为什么长上下文扩展要改位置编码，而不是只记缩写。</li><li><strong>素材种子</strong>：历史 —— 原始 Transformer 的正弦表｜原理 —— 绝对查表、正弦函数、二维旋转｜实验 —— lab-02 的位置消融（学习式 vs 置零 vs 打乱）｜现实 —— 长上下文模型的外推需求</li><li><strong>缺口（下游必须自己搜）</strong>：RoPE 原论文与长度外推变体（如 NTK、YaRN）、不同实现的数值细节；书中未给页码，需核对 §7.4。</li><li><strong>体量建议</strong>：标准长文（3500–5000 字），配 3 张示意图与一段可运行的正弦/RoPE 代码。</li><li><strong>待核</strong>：❓“正弦更利于外推”在书中是倾向性说法，需用实验或论文证据支撑，不能写成定论。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

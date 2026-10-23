@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 11 章 基于检索的模型 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a></div>
+<h1>第 11 章 基于检索的模型 · 提取自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用）</strong></p><p>1. <strong>遮住</strong> book-notes.md 与 cards.md，只留本页问题；</p><p>2. 合上书与所有笔记，口头或笔头作答，不查资料；</p><p>3. 答不出的记进下方「未掌握」，回看对应小节后隔一天再测一次；</p><p>4. <strong>费曼检验</strong>：能把「为什么 tf 要取对数」「为什么 RAG 还会引错来源」讲给不做 NLP 的人听懂，才算真懂；</p><p>5. 教材型附加标准：能不看解答算出 AP 与 11 点插值表，才算掌握 §11.2。</p></blockquote>
+<h2>自测题（12 题）</h2>
+<ol><li>只给提示的大模型在事实问答上有哪三类缺口？为什么说它们不是同一层的问题？→ §11.0</li><li>即席检索与推荐系统的根本差别在哪里？为什么「文档」的边界是设计变量？→ §11.1</li><li>词袋假设丢掉了什么？丢掉的信息会让哪一类查询失效？→ §11.1.1</li><li>为什么 tf 用 1+log10(count) 而不是原始计数？count=0 时为什么必须特殊处理？→ §11.1.2</li><li>idf 如何让高频虚词自动降权？既然这样，停用词表还剩下什么价值与代价？→ §11.1.2</li><li>BM25 的 k1=0 时会发生什么？此时 b 还有作用吗？为什么？→ §11.1.2</li><li>余弦相似度为什么对文档长度不敏感？它和 BM25 的 b 在解决同一个什么问题？→ §11.1.3</li><li>倒排索引省下的到底是什么？位置信息为什么是可选项？→ §11.1.4</li><li>为什么单点精确率/召回率不够评价排序系统？召回率单调、精确率跳动，这一对性质如何决定 PR 曲线形状？→ §11.2</li><li>AP 与 11 点插值精确率各自怎么聚合？为什么插值要取右侧最大值？→ §11.2</li><li>词汇不匹配为什么是稀疏检索的概念性缺陷而不是调参问题？双塔、单塔、ColBERT 三者在「何时交互」上如何取舍？→ §11.3</li><li>RAG 的「缓解幻觉」在什么条件下会变成「更有底气的错误」？为什么需要引用正确率这个第三指标？→ §11.4</li></ol>
+<h2>参考答案（先作答，再看这里）</h2>
+<ul><li><strong>Q1</strong> 可靠性（幻觉）、覆盖面（私有文档不在预训练语料）、时效（权重冻结）。三者分别是内容错、资料缺、时间旧，验收手段不同：前者要出处，中者要接库与权限，后者要可重建索引。</li><li><strong>Q2</strong> 推荐靠用户历史积累偏好，即席检索的查询与集合不预先绑定，每次现场判断相关性。文档按段/页/篇切取决于编码器窗口与答案粒度，是工程选择而非自然事实。</li><li><strong>Q3</strong> 丢掉位置与顺序，否定和语序信息消失；对需要方向或搭配的查询失效（「狗咬人」/「人咬狗」、否定句、短语查询）。</li><li><strong>Q4</strong> 边际收益递减：出现 100 次不等于重要 100 倍。count=0 时 log 无定义，因此约定 tf=0（或改用 log(count+1) 的等价写法）。</li><li><strong>Q5</strong> 出现在所有文档中的词 idf=log(N/N)=0，权重自然归零。停用词表剩下的价值是缩小索引；代价是短语查询被破坏（to be or not to be → not）。</li><li><strong>Q6</strong> 退化为二值匹配：只用 idf 判断查询词是否出现，完全不用词频。此时 b 不起作用，因为长度归一化只作用在 tf 项上，而 tf 项被消掉了（lab-04 中 k1=0 整行 MRR 相同即为证据）。</li><li><strong>Q7</strong> 余弦是归一化后的点积，长度被约掉，只剩方向。b 处理的是「长文档因词多而占优」，余弦用归一化达到同一目的。</li><li><strong>Q8</strong> 省的是「读取并打分不需要的文档」：不含查询词的文档得分为零，被索引结构直接排除。位置信息增大索引体积，只在做短语/邻近查询时才需要。</li><li><strong>Q9</strong> 单点指标把排序压成集合，丢掉顺序。召回率只增不减、精确率随命中与否上下跳，于是曲线横轴单调、纵轴可回撤。</li><li><strong>Q10</strong> AP 在相关文档命中的位置上取精确率再平均；11 点插值在固定召回水平上取该水平及更高的最大精确率，再跨查询平均。取右侧最大是乐观假设，换取单调性与可比性。</li><li><strong>Q11</strong> 因为缺陷在「只认字面重合」这个前提，调参改不了。单塔编码时联合交互（最准最贵）；双塔各自编码后只做点积（最便宜、精度最低）；ColBERT 保留词元级向量、打分时做 MaxSim（折中）。</li><li><strong>Q12</strong> 当检索取回的是「看似相关但事实错误」的段落时，模型会给出有引用、措辞自信的错误答案。答案对错无法区分「蒙对」「有据答对」「引错来源」，所以要单独统计引用是否支持答案。</li></ul>
+<h2>未掌握（自测后更新）</h2>
+<ul><li>❓ 首轮自测待填：答错的题号、当时答案、正确要点、回看节号。</li></ul>
+<h2>例题重做记录（教材型）</h2>
+<table><tr><th>题目</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>§11.1.3 纳米文档 d3/d4 余弦</td><td>⬜</td><td>⬜</td><td>待做；错则归「技巧性：归一化分母漏算」</td></tr><tr><td>§11.2 图 11.7 的 AP</td><td>✅ 0.597</td><td>⬜</td><td>与书 0.6 一致；重做时要求不看脚本手算</td></tr><tr><td>§11.2 11 点插值表</td><td>✅ 误差 ≤0.01</td><td>⬜</td><td>首做即对；需确认「取右侧最大」不是靠背表</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

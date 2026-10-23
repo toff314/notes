@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 01 · 缩放点积注意力、因果掩码与多头拼接</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a><a href="../index.html">Labs · 行动执行闭环（第 7 章）</a><a href="README.html">Lab 01 · 缩放点积注意力、因果掩码与多头拼接</a></div>
+<h1>Lab 01 · 缩放点积注意力、因果掩码与多头拼接</h1>
+<p><strong>对应行动</strong>：actions.md 第 1 条。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-01
+python3 attention_shapes.py</code></pre>
+<p>依赖：Python 3、numpy 2.4.6、matplotlib 3.10.9。</p>
+<h2>配置</h2>
+<ul><li>N=6 个词元，d=8，A=2 个头，每头 dk=dv=4。</li><li>随机初始化查询、键、值、输出投影（固定种子 7）。</li><li>对比有掩码与无掩码两种注意力；再复制输入、只改动位置 3–5，检查前三个输出是否变化。</li></ul>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/checks.json</code></td><td>形状、行和、掩码、因果性、参数量断言</td></tr><tr><td><code>out/attention_weights.csv</code></td><td>第一个头的 6×6 注意力权重</td></tr><tr><td><code>out/attention_heatmap.png</code></td><td>无掩码 vs 因果掩码的权重热图</td></tr></table>
+<h2>关键输出</h2>
+<ul><li>拼接形状 <code>[6, 8]</code>，输出形状 <code>[6, 8]</code>，与输入一致；每头权重形状 <code>[6, 6]</code>。</li><li>每行权重和的最大误差 <code>1.11e-16</code>。</li><li>掩码后上三角最大权重 <code>0.0</code>。</li><li>改动未来词元后，前三个输出最大差 <code>0.0</code>；不掩码时同样改动造成 <code>5.51</code> 的泄漏。</li><li>A=2 与 A=1 的注意力投影参数都为 <code>256</code>；FFN 无偏置参数 <code>512</code>；整块 <code>768 = 12d²</code>。</li></ul>
+<h2>结论</h2>
+<p>因果掩码把“未来位置”的 softmax 权重压到严格零，因此当前位置的输出只依赖自己与左侧历史；这正是 §7.3 所说“让窗口中的每个位置都能充当训练样本”的前提。多头在 dv=d/A 的约束下，拼接宽度仍为 d，投影总量约 4d²，与头数无关。</p>
+<h2>反思</h2>
+<p>我原来以为“掩码就是在 softmax 之后把上三角清零”，跑完才确认那样会破坏归一化：必须在 softmax 之前把分数设为 −∞，让分母也不包含未来位置。另一个反直觉点是“多头不增加注意力部分的总参数量”——它增加的是并行视角，不是参数预算。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

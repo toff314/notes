@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第三版）第 7 章 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a></div>
+<h1>《Speech and Language Processing》（第三版）第 7 章 · 提取自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用）</strong></p><p>1. <strong>遮住</strong> book-notes.md 与 cards.md，只看下面的问题；不要先翻答案。</p><p>2. 合上书和一切笔记，口头或笔头作答；每题限时 90 秒。</p><p>3. 答不出的题记入“未掌握”，回看对应小节与卡片后，隔一天再测一次。</p><p>4. <strong>费曼检验</strong>：任选 3 题，向一个没学过 Transformer 的人讲 3 分钟；对方能复述“为什么”才算真懂。</p><p>5. <strong>教材型加测</strong>：合上笔记重做练习 7.1、7.3、7.5；能独立写出步骤才算掌握，不能只背结论。</p></blockquote>
+<h2>第 7 章自测（12 题）</h2>
+<ol><li>静态词向量为什么无法处理 “The chicken didn’t cross the road because it was too tired/wide” 里 it 的指代？ → 见 book-notes §7.1｜卡 1</li><li>用一个注意力头为例，写出从输入 xi 到输出 ai 的三步，并说明查询、键、值各自负责什么。 → 见 §7.1.1｜卡 2</li><li>点积注意力为什么要除以 √dk？多头把 dv 设为 d/A 后，为什么总参数量与单头相近？ → 见 §7.1.1、§7.3｜卡 3、卡 4</li><li>什么是残差流？为什么说“输入输出维度匹配”是块能堆叠的前提？ → 见 §7.2｜卡 5</li><li>前馈层与注意力在“是否跨位置”上的分工是什么？为什么说前馈占了大部分参数？ → 见 §7.2.1｜卡 6</li><li>LayerNorm 归一的是整层还是单个词元向量？它与 BatchNorm 在推理行为上的关键差别是什么？ → 见 §7.2.2｜卡 7</li><li>因果掩码为什么把上三角设为 −∞ 而不是 0？这个操作必须放在 softmax 之前还是之后？ → 见 §7.3｜卡 8</li><li>绝对位置嵌入、正弦位置编码、RoPE 各解决什么问题？各自的主要代价是什么？ → 见 §7.4｜卡 9</li><li>权重绑定如何让输入嵌入矩阵同时充当解嵌入？它省下了什么，又可能牺牲什么？ → 见 §7.5｜卡 10</li><li>贪心解码与纯随机采样各自的失败模式是什么？温度 τ&lt;1、τ&gt;1 分别把分布推向哪一端？ → 见 §7.6.1–§7.6.3｜卡 11、卡 12</li><li>top-k 与 top-p 的截断依据有何不同？为什么实际系统常把两者叠加使用？ → 见 §7.6.4｜卡 13</li><li>教师强制与因果掩码如何共同让 N 个位置一次前向就产生 N 个训练样本？困惑度为什么不能跨分词器比较？ → 见 §7.7、§7.7.1｜卡 14、卡 15</li></ol>
+<h2>参考答案（先作答，再对照）</h2>
+<ul><li><strong>第 1 题</strong>：静态嵌入对每个词只给一个向量，it 无法同时偏向 chicken 或 road；上下文嵌入按邻词重新聚合，才能在不同句子里得到不同表示。要点是“同一词元、不同上下文、不同向量”。</li><li><strong>第 2 题</strong>：查询与键点积并缩放 → softmax 得权重 → 对值加权求和。查询是“当前词要找什么”，键是“历史词提供什么标签”，值是被搬运的内容；三者由三组独立投影得到。</li><li><strong>第 3 题</strong>：点积方差随 dk 增长，不缩放会让 softmax 饱和、梯度变小；除以 √dk 把尺度拉回 1 附近。多头每头宽度 d/A，A 头拼接后宽度仍为 d，Wo 再映回 d，故注意力投影总量约 4d²，与 A 无关。</li><li><strong>第 4 题</strong>：残差流是每个词元位置一条 d 维通道，子层从通道读数再把增量加回；输入 xi 与输出 hi 都是 d 维，所以块可以首尾相接无限堆叠。</li><li><strong>第 5 题</strong>：注意力跨位置混合词元信息，前馈逐位置独立变换；前馈隐藏层通常 4d，两个大矩阵使其参数约占块内三分之二，被认为承载较多事实知识。</li><li><strong>第 6 题</strong>：归一的是单个词元的 d 维向量，不是整层。LayerNorm 每个样本自己算统计量，训练与推理一致；BatchNorm 依赖 batch 统计，推理要用 running estimate。</li><li><strong>第 7 题</strong>：设为 0 时 exp(0)=1，未来词仍会分到权重，等于泄题；设为 −∞ 后 exp 为 0。掩码必须在 softmax 之前加，softmax 之后再加就来不及改变归一化。</li><li><strong>第 8 题</strong>：绝对位置给每个下标一个可学习向量，长尾位置样本少；正弦编码是固定函数，便于外推但表达受限；RoPE 把相对位移写成旋转，直接进注意力，实现更复杂但更适合长上下文。</li><li><strong>第 9 题</strong>：E 在输入端做 one-hot→向量，Eᵀ 在输出端做向量→词表分数，共享参数省显存并共享语义；代价是两种映射梯度可能冲突，输出词表与输入词表不同时不能直接绑定。</li><li><strong>第 10 题</strong>：贪心总取 argmax，确定但重复；纯随机按全词表抽，长尾垃圾词总量可观。τ&lt;1 放大 logits 差距、分布更尖，趋近贪心；τ&gt;1 压缩差距、分布更平。</li><li><strong>第 11 题</strong>：top-k 按词数保留固定名额；top-p 按累计概率保留最小词集，候选数自适应。先用 k 挡长尾垃圾，再用 p 适配模型置信度，是常见组合。</li><li><strong>第 12 题</strong>：每个位置都用真实历史预测下一词（教师强制），因果掩码又阻止它看到目标本身，于是 N 个位置可同时打分。困惑度按词元数归一化，分词粒度改变会同时改变分母与概率，故只适合同一分词器内比较。</li></ul>
+<h2>未掌握（自测后更新）</h2>
+<ul><li>首轮尚未作答。按协议完成后，把题号、当时的错误说法、正确要点三列写在这里；不要只写“不会”。</li></ul>
+<h2>例题重做记录（教材型）</h2>
+<table><tr><th>练习</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>7.1 参数账</td><td>✅（lab-04）</td><td>⬜</td><td>已用脚本验证 12Ld²；重做时重点检查“注意力参数与 A 无关”的推导</td></tr><tr><td>7.3 困惑度</td><td>✅（lab-04）</td><td>⬜</td><td>乘积 1e-20、PPL=100000；重做时先写倒数再开四次方，避免把 1e5 写成 1e4</td></tr><tr><td>7.5 温度概率</td><td>◐（lab-03 用自设 logits）</td><td>⬜</td><td>已验概率和为 1；重做时改用图 7.17 的原始 logits，检查 τ→0 与 τ→∞ 的极限</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

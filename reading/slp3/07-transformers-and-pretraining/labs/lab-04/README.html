@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 04 · 12Ld² 参数账、困惑度与模型规模表</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 7 章 Transformer 与预训练</a><a href="../index.html">Labs · 行动执行闭环（第 7 章）</a><a href="README.html">Lab 04 · 12Ld² 参数账、困惑度与模型规模表</a></div>
+<h1>Lab 04 · 12Ld² 参数账、困惑度与模型规模表</h1>
+<p><strong>对应行动</strong>：actions.md 第 4 条（ref. 练习 7.1、7.3，图 7.24）。</p>
+<h2>目的</h2>
+<p>把三件「纸上算术」变成可复算的脚本：</p>
+<ol><li><strong>参数账</strong>（练习 7.1）：按 <code>dk=dv=d/A</code>、<code>dff=4d</code> 逐项统计注意力层、前馈层与整块参数，验证 <code>12Ld²</code>，并检查注意力参数是否与头数 <code>A</code> 无关。</li><li><strong>困惑度</strong>（练习 7.3）：用四个条件概率复算 PPL，并验证 <code>PPL = exp(平均交叉熵)</code>（练习 7.4）。</li><li><strong>规模感</strong>（§7.8 图 7.24）：把六个开放模型的配置抄成表，比较 <code>12Ld²</code> 与报告参数量的偏差，定位偏差来源。</li></ol>
+<h2>输入</h2>
+<table><tr><th>来源</th><th>内容</th></tr><tr><td>练习 7.1</td><td><code>L=12</code>、<code>d=512</code>、<code>A=8</code>、<code>dk=dv=d/A=64</code>、<code>dff=4d=2048</code></td></tr><tr><td>练习 7.3</td><td>字符串 <code>It was a dream</code> 的四个条件概率：<code>.0001</code>、<code>.0002</code>、<code>.000005</code>、<code>.0000001</code></td></tr><tr><td>图 7.24</td><td>GPT-2 XL / GPT-3 / Qwen3-0.6B / Qwen3-32B / Llama 3.1 8B / Llama 3.1 405B 的 <code>L, d, A, dff, 参数量</code></td></tr></table>
+<p>所有配置硬编码在 <code>param_perplexity.py</code> 顶部，改数即可复算；无需网络。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-04
+python3 param_perplexity.py</code></pre>
+<p>依赖：Python 3、numpy、matplotlib（仅标准库 + numpy + matplotlib）。运行时间 &lt; 1 秒。完整 stdout 见 <code>out/run.log</code>。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/summary.json</code></td><td>练习 7.1 分项与恒等式、练习 7.3 两条路径、六模型表</td></tr><tr><td><code>out/param_table.csv</code></td><td>模型 / 年份 / L / d / A / dff / 报告参数量 / 12Ld² / 比值</td></tr><tr><td><code>out/param_check.png</code></td><td>报告参数量 vs 12Ld² 的 log 轴柱图</td></tr><tr><td><code>out/run.log</code></td><td>本次运行的完整输出</td></tr></table>
+<h2>关键输出</h2>
+<h3>练习 7.1（d=512, dff=2048, L=12, A=8）</h3>
+<table><tr><th>项</th><th>公式</th><th>数值</th></tr><tr><td>注意力层（WQ+WK+WV+WO）</td><td><code>3d·dk·A + A·dv·d = 4d²</code></td><td>1,048,576</td></tr><tr><td>前馈层（无偏置）</td><td><code>2·d·dff = 8d²</code></td><td>2,097,152</td></tr><tr><td>单块</td><td><code>4d² + 8d²</code></td><td>3,145,728</td></tr><tr><td>12 块</td><td><code>12Ld²</code></td><td>37,748,736</td></tr></table>
+<ul><li>与 <code>12Ld²</code> <strong>完全相等</strong>（<code>matches: true</code>，差值 0）。</li><li><code>A=1/4/8/16</code> 的注意力参数都是 <code>1,048,576</code> → <code>attention_independent_of_A: true</code>。</li><li>前馈占整块 <code>66.7%</code>，与 §7.2.1「前馈占了大部分参数」一致。</li></ul>
+<h3>练习 7.3 / 7.4（困惑度）</h3>
+<ul><li>概率乘积 <code>1.0000000000000001e-20</code>。</li><li>路径一：<code>PPL = product^(-1/4) = 100000.0</code>。</li><li>路径二：平均交叉熵 <code>11.512925464970229</code> nat，<code>exp(...) = 100000.00000000001</code>。</li><li>两路径差约 <code>1.5e-11 &lt; 1e-9</code> → <code>identity_holds: true</code>。</li></ul>
+<h3>图 7.24 六模型对比</h3>
+<table><tr><th>模型</th><th>L</th><th>d</th><th>报告参数量</th><th>12Ld²</th><th>比值</th></tr><tr><td>GPT-2 XL</td><td>48</td><td>1600</td><td>1.5B</td><td>1.475B</td><td>0.983</td></tr><tr><td>GPT-3</td><td>96</td><td>12288</td><td>175B</td><td>173.9B</td><td>0.994</td></tr><tr><td>Qwen3-0.6B</td><td>28</td><td>1024</td><td>0.6B</td><td>0.352B</td><td>0.587</td></tr><tr><td>Qwen3-32B</td><td>64</td><td>5120</td><td>32B</td><td>20.1B</td><td>0.629</td></tr><tr><td>Llama 3.1 8B</td><td>32</td><td>4096</td><td>8B</td><td>6.44B</td><td>0.805</td></tr><tr><td>Llama 3.1 405B</td><td>126</td><td>16384</td><td>405B</td><td>405.9B</td><td>1.002</td></tr></table>
+<ul><li><strong>最准</strong>：Llama 3.1 405B（+0.2%）与 GPT-3（−0.6%）——大 <code>d</code>、词表占比小，<code>12Ld²</code> 主导。</li><li><strong>偏差最大</strong>：Qwen3-0.6B（−41%）——词表 152K，嵌入 <code>|V|·d ≈ 1.56×10⁸</code>，与 <code>12Ld² ≈ 3.52×10⁸</code> 同量级；再加 GQA 与 SwiGLU 门控，公式必然低估。</li><li>偏差方向统一为「低估」，说明 <code>12Ld²</code> 是<strong>主干下界</strong>，不是总参数上界。</li></ul>
+<h2>结论</h2>
+<p><code>12Ld²</code> 不是普适常数，而是三个假设的产物：<strong>dff=4d、标准多头（无 GQA）、忽略嵌入与偏置</strong>。在 GPT-3 这类老式配置上它几乎精确；在 Qwen3 这类大词表 + GQA + SwiGLU 的新配置上会低估 20–40%。因此看到「XX B 参数」时，先确认口径是否含嵌入，再用 <code>12Ld²</code> 判断量级，而不是反过来用公式否定官方数字。</p>
+<p>困惑度部分验证了两个等价写法：<code>PPL = 概率倒数开 n 次方 = exp(平均负对数似然)</code>。这也解释了为什么 PPL 对分词敏感——换分词器会同时改变 <code>n</code> 与每个词元的概率。</p>
+<h2>反思</h2>
+<p>我原来把 <code>12Ld²</code> 当成「Transformer 参数量公式」。跑完才意识到它是一道<strong>教材练习的近似</strong>：推导时明确说了「忽略偏置与层归一化」，而词表嵌入在推导里根本没出现。真正让我改观的是 Qwen3-0.6B：<code>d</code> 只有 1024，<code>12Ld²</code> 给出的 0.35B 连官方 0.6B 的六成都不到，缺口几乎全在嵌入表。以后估算参数量，我会先问三句：dff 是不是 4d？有没有 GQA？词表多大？</p>
+<h2>局限</h2>
+<ul><li>模型配置抄自图 7.24，<strong>未逐项核对官方模型卡</strong>；书中自己也声明「只能视为粗略近似」。</li><li><code>12Ld²</code> 与逐项求和都未计偏置、LayerNorm 的 <code>γ/β</code>、位置嵌入；这些在小模型上占比不可忽略。</li><li>练习 7.3 的四个概率是题目给定值，不是真实语言模型输出；本 lab 只验证恒等式，不评价任何模型。</li><li>未实现 GQA / SwiGLU 的精确参数拆分，偏差归因是定性的，没有逐项对账。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

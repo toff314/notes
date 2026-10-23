@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：Speech and Language Processing（第 6 章 神经网络）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a></div>
+<h1>读书笔记：Speech and Language Processing（第 6 章 神经网络）</h1>
+<h2>书目元信息</h2>
+<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第三版（草稿版）　来源：<code>../raw/06/06-neural-networks.md</code>（指向 <code>/home/yuanwu/books/slp3/zh/md/06-neural-networks.md</code> 的符号链接）</li><li>页码口径：中文译本无印刷页码，全部用 <strong>§节号</strong>（如 §6.3.1、§6.6.4）定位；历史注记标为 <code>§历史注记</code></li><li>阅读目标：<strong>理解</strong>（<code>../raw/06/meta.json</code> 的 <code>goal</code> 字段；不追考点）</li><li><strong>书型判定</strong>：<strong>教材型</strong>。依据：编号层级完整（§6.1–§6.7，含 §6.2.1、§6.3.1、§6.4.1–§6.4.2、§6.6.1–§6.6.5）；定义框密集（unit / bias / sigmoid / tanh / ReLU / saturated / perceptron / logits / embedding matrix 等）；章末有 8 条小结；正文两处留练习（XOR 其余三组输入、b[2]/W[2] 的反向推导）。</li><li>交叉对照：未提供课堂笔记（<code>../raw/lecture-notes/</code> 不存在），本次不做书 ↔ 课堂对照。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>状态</th><th>本次/下次</th></tr><tr><td>第 6 章 神经网络（§6.0–§6.7 + 历史注记）</td><td>✅ 本次完成</td><td>—</td></tr><tr><td>第 5 章 嵌入（§5.x）</td><td>⬜ 未处理</td><td>建议先补，本章 §6.5 依赖静态嵌入与嵌入矩阵</td></tr><tr><td>第 7 章 Transformer / 注意力</td><td>⬜ 未处理</td><td>建议下次，承接 §6.3.1 的 logits 与 §6.5 的拼接表示</td></tr></table>
+<h2>实际输入（必填 · G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>../raw/06/06-neural-networks.md</code></td><td>中文全章，896 行；已全文读完（含历史注记）</td></tr><tr><td>英文对照（核对用）</td><td><code>/home/yuanwu/books/slp3/zh/md/06-neural-networks.dual.md</code></td><td>仅用于核对术语与公式位置；摘录一律以中文 md 为准</td></tr><tr><td>划线摘录（可选）</td><td>未提供</td><td>无用户划线，因此无「划线去向表」</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>不做 cross-check</td></tr><tr><td>元信息（可选）</td><td><code>../raw/06/meta.json</code></td><td>书名、章节源、阅读目标&quot;理解&quot;、页码口径</td></tr></table>
+<h2>产物清单</h2>
+<ul><li><code>book-notes.md</code>：主笔记，11 个知识节（§6.0–§6.7，其中 §6.6 拆为 3 块），每节三区，约 7,000 汉字（单节 513–722 字）</li><li><code>cards.md</code>：18 张永久卡片（概念卡 13 / 公式卡 3 / 例题卡 2），全部带出处与真实卡间链接</li><li><code>self-test.md</code>：10 道提取自测 + 协议 + 答案解析 + 未掌握记录 + 例题重做表</li><li><code>actions.md</code>：3 条行动（每条对应一个 lab，含截止日期与验收标准）</li><li><code>spinoffs.md</code>：5 条衍生选题（3 条 P0、2 条 P1；1 条送教程、4 条送观点长文）</li><li><code>glossary.md</code>：32 条术语（教材型推荐）</li><li><code>labs/</code>：3 个可运行实验，含脚本、真实产物（CSV/JSON/PNG）、结论与反思</li><li>lab-01 XOR 前向/反向 + 梯度校验　lab-02 嵌入对照实验　lab-03 梯度消失测量</li></ul>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>依据</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>73 条摘录全部逐字复制，并用脚本回溯确认 0 处不符；节号齐全；公式碎片因中文版排版错位一律不摘</td></tr><tr><td>② 消化深度</td><td>8/10</td><td>每节 3–4 条【我】，含 I 重述、与 lab 结果的具体关联、以及&quot;为什么书里没讲&quot;的质疑；部分 A1 仍以学习经历为主，生活经验较少</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>3 条行动均有日期、对象与验收，且全部跑成 lab；小节行动含手算与对照实验，少数依赖未写的临时脚本</td></tr><tr><td>④ 卡片复用性</td><td>9/10</td><td>18 张一卡一主张、独立可读、带出处；链接指向具体卡与 out/ 产物，尚无跨章链接</td></tr><tr><td>⑤ 覆盖完整性</td><td>8/10</td><td>§6.1–§6.7 与历史注记全覆盖；§6.4.1/§6.4.2、§6.6.2–§6.6.4 合并成块，未逐小节展开</td></tr><tr><td>⑥ 可复习性</td><td>9/10</td><td>10 题覆盖全部 ⭐ 节，含遮住协议、答案解析、未掌握与错题归因；费曼检验给了可判定标准</td></tr><tr><td><strong>合计</strong></td><td><strong>52/60</strong></td><td>全部单项 ≥7，通过门槛</td></tr></table>
+<h2>阅读提示</h2>
+<ul><li>先读 §6.1–§6.2 建立&quot;单元 + 非线性 + 隐藏表示&quot;的主线，再读 §6.3 的矩阵写法；§6.4 是过渡桥，可快速过。</li><li>想动手：按 <code>labs/index.md</code> 依次跑三个脚本。lab-01 看梯度校验，lab-02 看同分类器只换嵌入的落差，lab-03 看 10 层 sigmoid 如何停在 ln 2。</li><li>想复习：遮住 <code>book-notes.md</code> 做 <code>self-test.md</code> 的 10 题；错题按 <code>actions.md</code> 末的三类归因处理，不要只抄答案。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

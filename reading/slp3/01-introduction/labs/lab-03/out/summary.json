@@ -1,0 +1,43 @@
+{
+  "target": "the room was not very light a small oblong reading lamp on the desk shed glow on polished wood but less on the shabby red carpet",
+  "train_chars": 78508,
+  "chars": 128,
+  "overall_correction_rate": 0.6719,
+  "buckets": {
+    "class:boundary": {
+      "n": 25,
+      "correction_rate": 0.28,
+      "mean_surprisal_bits": 1.5176
+    },
+    "class:content": {
+      "n": 84,
+      "correction_rate": 0.7976,
+      "mean_surprisal_bits": 3.8939
+    },
+    "class:function": {
+      "n": 19,
+      "correction_rate": 0.6316,
+      "mean_surprisal_bits": 3.0826
+    },
+    "pos:first": {
+      "n": 26,
+      "correction_rate": 0.6538,
+      "mean_surprisal_bits": 3.4946
+    },
+    "pos:later": {
+      "n": 52,
+      "correction_rate": 0.7885,
+      "mean_surprisal_bits": 3.5627
+    },
+    "pos:second": {
+      "n": 25,
+      "correction_rate": 0.84,
+      "mean_surprisal_bits": 4.3814
+    },
+    "pos:space": {
+      "n": 25,
+      "correction_rate": 0.28,
+      "mean_surprisal_bits": 1.5176
+    }
+  }
+}

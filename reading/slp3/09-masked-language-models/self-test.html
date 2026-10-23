@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 9 章 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a></div>
+<h1>《Speech and Language Processing》第 9 章 · 提取自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用）</strong>：</p><p>1. <strong>遮住</strong> <code>book-notes.md</code>、<code>cards.md</code> 与一切答案，只留下下面的题目；</p><p>2. 合上书，口头或笔头作答，先写结构再补细节，不查资料；</p><p>3. 答不出的题记入「未掌握」，回看对应小节后<strong>隔一天再测</strong>，不要当场翻答案；</p><p>4. <strong>费曼检验</strong>：能不看笔记给外行讲清「为什么 BERT 不能续写」「为什么 NER 不能用词级准确率」= 真懂；</p><p>5. 教材型加一条：能独立重做图 9.4 的损失账、图 9.9 的 BIO 表、lab-03 的实体级评估 = 掌握。</p></blockquote>
+<h2>题目（12 题）</h2>
+<ol><li>需求是「给每个词打标签」和「把长文压成三行摘要」，分别该选哪种架构？为什么不能拿 BERT 做流式摘要？→ 见 book-notes §9.1｜卡 1</li><li>把因果掩码去掉后，<code>QKᵀ</code> 矩阵的哪一部分发生变化？为什么 softmax 后第 1 行可见的列数会变？→ 见 book-notes §9.2–9.2.1｜卡 2</li><li>为什么双向之后「预测下一个词」不再是一个有难度的目标？如果把目标词继续留在输入里，模型会学到什么？→ 见 book-notes §9.3｜卡 4</li><li>BERT 的 15% / 80 / 10 / 10，换算成输入中的 <code>[MASK]</code> 率、随机词率、原样率各是多少？为什么「15%」不等于 <code>[MASK]</code> 出现率？→ 见 book-notes §9.3.1｜卡 5｜lab-01</li><li>选中后 10% 保持原样，防的是哪种捷径？另外 10% 随机替换又给训练信号引入了什么噪声？两种设置能否互相替代？→ 见 book-notes §9.3.1｜卡 6</li><li>写出单条序列的 MLM 损失，并解释分母为什么是 <code>|M|</code>。如果改成除以整句长度，梯度尺度会怎样变化？→ 见 book-notes §9.3.1｜卡 7｜lab-02</li><li><code>[CLS]</code> 没有词义，为什么能当句向量？NSP 的负例为什么「太容易」？删掉 NSP 后还能无条件把 <code>[CLS]</code> 当句向量用吗？→ 见 book-notes §9.3.2｜卡 8</li><li>RoBERTa 相对 BERT 主要有哪四处改动？每一处补的是哪个效率缺口？连续文档拼接到 512 词元会带来什么伪信号？→ 见 book-notes §9.3.3｜卡 9</li><li>三种语言的句子数为 1000 / 100 / 10。分别用 α=1.0 与 α=0.3 计算采样概率 <code>q_i</code>，并说明 α 变小时小语种概率如何变化。→ 见 book-notes §9.3.3｜卡 10</li><li>模型维度 d=768、情感三分类，<code>[CLS]</code> 分类头有多少参数？为什么实践中常只更新最后几层而不是全量微调？→ 见 book-notes §9.4–9.4.2｜卡 11</li><li>n=4 类实体时 BIO 有几个标签？构造「两个相邻的 PER 实体」，分别用 IO、BIO、BIOES 标注，指出 IO 在哪一步丢失边界。→ 见 book-notes §9.5.2｜卡 12</li><li>一个 NER 系统词级准确率 0.76、实体级 F1 0.50，这两个数为什么不矛盾？把 <code>Jane Villanueva</code> 只标成 <code>Jane</code> 会产生几个什么错误？自助区间 <code>[0.24, 0.85]</code> 说明结论能下到什么程度？→ 见 book-notes §9.5.4｜卡 14｜lab-03</li></ol>
+<h2>答案与解析（作答后再看）</h2>
+<ol><li><strong>架构选型</strong>：逐词打标签是「等长、每个位置一个输出」，选编码器；摘要要生成新词元且长度不定，选解码器或编码器-解码器。BERT 的训练目标允许每个位置看右侧，推理时没有「右侧」可看，且它不产出下一词元的分布，所以不能做自左向右的流式生成。→ §9.1</li><li><strong>结构改动</strong>：只有 <code>QKᵀ</code> 的上三角被置 <code>−∞</code> 与不置的区别；因果版第 1 行只能对第 1 列归一，双向版第 1 行对全部 N 列归一。前馈层、层归一化、残差不变。→ §9.2.1</li><li><strong>目标失效</strong>：下一个词就在输入序列里，双向注意力可直接读取，等于抄答案；若把目标词留在输入，模型学到的只是复制输入，不会建立「用上下文推断缺失项」的能力。→ §9.3</li><li><strong>比例账</strong>：<code>[MASK]</code> = 15%×80% = 12%；随机词 = 15%×10% = 1.5%；原样 = 15%×10% = 1.5%。15% 是「被选中接受操作」的比例，其中只有 80% 真的换成 <code>[MASK]</code>。lab-01 实测 0.1188 / 约 0.0151 / 约 0.0148，与期望一致。→ §9.3.1、lab-01</li><li><strong>两种扰动</strong>：10% 原样防的是「只有见到 <code>[MASK]</code> 才预测」的捷径，让模型在输入看起来正常时也要重建；10% 随机替换提供廉价的冲突负样本，逼模型在局部矛盾中仍相信更可靠的上下文，代价是约 1.5% 的目标信号本身是错的。二者作用不同，不能互相替代。→ §9.3.1</li><li><strong>损失</strong>：<code>L = −(1/|M|) Σ_{i∈M} log P(x_i | h_i^L)</code>。只有被选中集合 M 的位置进入交叉熵，其余位置不产生梯度，所以按 M 归一才是「每个学习项平均」。若除以整句长度，梯度会被未选中位置稀释，等效学习率随掩码率波动。→ §9.3.1、lab-02</li><li><strong>NSP 与 [CLS]</strong>：NSP 把 <code>[CLS]</code> 输出接到「两句是否相邻」的二分类头，梯度迫使该位置汇总全序列，于是被当作句向量。负例从语料任意位置抽取，模型只判断主题是否相近就能拿高分，不必学推理；RoBERTa 删除 NSP 后下游几乎不掉点，说明这个句向量并非必需，不能无条件依赖。→ §9.3.2</li><li><strong>RoBERTa</strong>：去 NSP（省掉粗粒度辅助目标）、连续文档（提高有效词元密度）、动态掩码（每轮重选，见更多不同掩码模式）、大 batch 8K–32K（稳定梯度、提高吞吐）。连续拼接让相邻文档的边界词互相可见，模型可能把「文档切换」当成伪信号。→ §9.3.3</li><li><strong>多语言采样</strong>：α=1.0 时 <code>q=(0.901, 0.090, 0.009)</code>；α=0.3 时先算 <code>n^0.3=(7.943, 3.981, 1.995)</code>，归一得 <code>q=(0.571, 0.286, 0.143)</code>。α 越小，低资源语言被抽中的概率越接近高资源语言，词表更能覆盖小语种。→ §9.3.3（式 9.5）</li><li><strong>分类头</strong>：<code>W_C</code> 为 768×3，加 3 个偏置，共 2,307 个参数。标注数据少时全量微调容易破坏预训练学到的通用结构，只更新最后几层相当于强正则，同时省算力。→ §9.4.1</li><li><strong>BIO 账</strong>：n=4 → 2×4+1 = 9 个标签。相邻两个 PER：IO 为 <code>I-PER I-PER I-PER I-PER</code>，两实体粘成一个；BIO 为 <code>B-PER I-PER B-PER I-PER</code>，靠第二个 B 切开；BIOES 为 <code>B-PER E-PER B-PER E-PER</code>（多词实体用 I 连接），边界与单词实体都显式。→ §9.5.2</li><li><strong>评估</strong>：多数词元是 O，全判 O 也能有高词级准确率，所以 0.76 不奇怪；实体级要求边界与类型同时正确，F1 会低很多。<code>Jane Villanueva</code> 只标 <code>Jane</code>：<code>Jane</code> 仍是 B-PER 但片段变短，Villanueva 位置的 <code>I-PER</code> 变成 <code>O</code>，计 1 个 O 的假阳性 + 1 个 I-PER 的假阴性。区间 <code>[0.24, 0.85]</code> 宽达 0.6，说明 6 句样本下点估计极不稳定，不能据此宣称系统优劣；需要更多实体或配对检验。→ §9.5.4、lab-03</li></ol>
+<h2>未掌握（自测后更新）</h2>
+<ul><li>⬜ 第 1 轮尚未开始。作答后把题号、错法、正确要点写在这里，并回看对应 §。</li><li>示例格式：<code>❓ 第 9 题：把 α 的作用方向记反了；正确要点：α&lt;1 抬高低资源语言；回看 §9.3.3 式 9.5。</code></li></ul>
+<h2>例题重做记录（教材型）</h2>
+<table><tr><th>例题 / 实验</th><th>首做</th><th>重做</th><th>归因</th></tr><tr><td>图 9.4 掩码损失账（3 个被选中、2 个 <code>[MASK]</code>、1 个随机词）</td><td>✅</td><td>⬜</td><td>待重做：确认只有这 3 个位置进损失，其余 5 个不产生梯度</td></tr><tr><td>图 9.9 IO / BIO / BIOES 对照表</td><td>✅</td><td>⬜</td><td>待重做：遮住原表，独立写出 <code>Jane Villanueva</code> 与 <code>United Airlines Holding</code> 三套标签</td></tr><tr><td>lab-03 实体级评估（boundary / type / noise 三变体）</td><td>✅</td><td>⬜</td><td>待重做：先预测哪个变体的 F1 更低，再跑脚本核对</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

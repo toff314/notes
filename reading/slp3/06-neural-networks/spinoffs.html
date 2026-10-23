@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 6 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a></div>
+<h1>《Speech and Language Processing》第 6 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<blockquote><p>锚点均为<strong>待核线索</strong>：书可能过时，引用前须独立检索。优先级 P0 = 素材最足、最有反差，建议先写。</p><p><code>观点：</code> 前缀送 <code>write-zhihu-tech</code>；<code>论文：</code> 前缀送 <code>write-tech-tutorial</code>。</p></blockquote>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>XOR 不是古董：深度到底买到了什么</td><td><code>write-zhihu-tech</code></td><td>S1+S2+S4</td><td>P0</td><td>标准长文（4000–6000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>用 100 行 numpy 拆开反向传播</td><td><code>write-tech-tutorial</code></td><td>S1+S3+S5</td><td>P0</td><td>教程（6000–9000 字 + 代码）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>随机嵌入输给共现嵌入：表示学习最被低估的一课</td><td><code>write-zhihu-tech</code></td><td>S1+S4+S5</td><td>P0</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>梯度消失不是历史遗迹</td><td><code>write-zhihu-tech</code></td><td>S1+S3+S5</td><td>P1</td><td>中篇（3000–4500 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>三次&quot;冬天&quot;里，只有一次是数学问题</td><td><code>write-zhihu-tech</code></td><td>S2+S4+S6</td><td>P1</td><td>标准长文</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<hr>
+<h3>1. XOR 不是古董：深度到底买到了什么</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点 + 小实验）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：XOR 不是古董——从一条画不出的直线，理解&quot;深度&quot;到底买到了什么</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》§6.2「这一重要结果背后的直觉，依赖于理解感知机是一个线性分类器。」；§6.2.1 隐藏表示合并</li><li><strong>为什么</strong>：命中 <strong>S1（书中讲而未透）+ S2（可溯源的史与人）+ S4（有反差）</strong>。书用两页讲完 XOR 就转向工程，没有回答&quot;隐藏层换坐标系&quot;与&quot;深度带来组合泛化&quot;是不是一回事；而 Minsky &amp; Papert (1969) 常被简化为&quot;扼杀神经网络的错误断言&quot;，与史实（他们否定的是单层，不是多层）存在明显反差。</li><li><strong>增益</strong>：① 相对本书：把 XOR 从&quot;历史插曲&quot;展开为&quot;线性不可分→表示变换→深度&quot;的概念链，并区分&quot;能表示&quot;与&quot;能学到&quot;；② 对读者：读完能判断一个任务为什么需要非线性、多层，而不是把&quot;加深&quot;当默认操作。</li><li><strong>素材种子</strong>：历史溯源 1943 McCulloch-Pitts、1958 Rosenblatt、1969 Minsky &amp; Papert｜人物 Rosenblatt、Minsky、Papert｜原理 线性可分/决策边界/隐藏表示｜争议 &quot;AI 冬天&quot;是否该由这本书背锅</li><li><strong>缺口（下游必须自己搜）</strong>：Minsky &amp; Papert 原书对多层网络的具体措辞；Rosenblatt 感知机的原始实验；&quot;XOR 导致神经网络衰落&quot;这一叙事在史学界的修正。</li><li><strong>体量建议</strong>：标准长文；历史 1200 字、原理 1500 字、实验 1200 字、反方 800 字。</li><li><strong>待核</strong>：❓书中图 6.6 的权重是否与 Goodfellow et al. (2016) 完全一致；❓&quot;感知机不能表示 XOR&quot;的首次提出者。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>2. 用 100 行 numpy 拆开反向传播</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（可运行教程）</li><li><strong>主题串（可直接复制）</strong>：<code>论文：用 100 行 numpy 拆开反向传播——计算图、链式法则与有限差分校验</code></li><li><strong>书籍锚点</strong>：§6.6.3「计算图是对计算某个数学表达式这一过程的表示」；§6.6.4 反向微分与式 6.43；§6.6.4 末尾&quot;留给读者作为练习&quot;</li><li><strong>为什么</strong>：命中 <strong>S1（讲而未透）+ S3（有技术纵深）+ S5（有现实落点）</strong>。书把 <code>∂L/∂z = a[2]−y</code> 的关键化简留作练习，也没给可运行代码；而&quot;梯度算错&quot;是手写网络最常见的失败，有限差分校验是能立刻用上的技能。本笔记 lab-01 已跑出 4.4e-10 的校验误差，可直接扩成教程。</li><li><strong>增益</strong>：① 相对本书：把 §6.6.3–6.6.4 的图示补成可执行代码，并把&quot;为什么前向值必须保存&quot;用显存与复用解释清楚；② 对读者：拿到一套可迁移的调试流程——先查形状、再查单样本梯度、最后做有限差分。</li><li><strong>素材种子</strong>：历史溯源 Rumelhart et al. (1986) 与反向传播的独立发明者｜人物 Rumelhart、Hinton、Williams｜原理 链式法则/计算图/自动微分｜争议 反向传播是否&quot; biologically plausible&quot;</li><li><strong>缺口（下游必须自己搜）</strong>：自动微分两种模式（前向/反向）的严格对比；PyTorch autograd 的实现细节；梯度校验在 float32 下的容差经验值。</li><li><strong>体量建议</strong>：教程；代码 100–150 行，配 3 张图（计算图、损失曲线、梯度校验表）。</li><li><strong>待核</strong>：❓式 6.43 在中文版中的排版是否可靠；❓&quot;反向传播 1986 年由 Rumelhart 等提出&quot;是否忽略了更早的 Werbos (1974)。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>3. 随机嵌入输给共现嵌入：表示学习最被低估的一课</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点 + 对照实验）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：随机嵌入输给共现嵌入——同一个分类器，为什么换输入就从 0.315 跳到 0.995</code></li><li><strong>书籍锚点</strong>：§6.5「所谓静态嵌入，是指每个词元都由一个固定的向量表示」；§6.5「神经语言模型知道 “cat” 和 “dog” 有相似的嵌入」</li><li><strong>为什么</strong>：命中 <strong>S1（书中点到为止）+ S4（强反差）+ S5（现实落点）</strong>。书用 cat/dog 的例子说明泛化，却没有对照实验；本笔记 lab-02 在同一分类器、同一随机种子下只换嵌入，held-out 准确率从 0.315 到 0.995。这个数字对比能把&quot;嵌入很重要&quot;从口号变成证据。</li><li><strong>增益</strong>：① 相对本书：把 §6.5 的静态嵌入段落变成受控对照，并说明&quot;随机嵌入低于 0.5&quot;不是 bug，而是 held-out 词没有可利用结构；② 对读者：得到一套判断&quot;该不该上预训练嵌入&quot;的小实验模板（留出词、冻结嵌入、同分类器）。</li><li><strong>素材种子</strong>：历史溯源 word2vec (Mikolov et al., 2013)、GloVe (Pennington et al., 2014)｜人物 Mikolov、Pennington｜原理 PPMI/SVD/分布假说｜争议 静态嵌入是否已被上下文嵌入淘汰</li><li><strong>缺口（下游必须自己搜）</strong>：中文语料上的同型对照；PPMI 的上下文分布平滑（context distribution smoothing）对结果的影响；真实数据上随机嵌入是否仍可能胜出。</li><li><strong>体量建议</strong>：标准长文；实验 1500 字、原理 1500 字、边界 1000 字。</li><li><strong>待核</strong>：❓lab-02 的模板语料是否过度有利于共现嵌入（需在真实语料复现）；❓&quot;随机嵌入低于 0.5&quot;的方差范围。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>4. 梯度消失不是历史遗迹</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（观点 + 实验）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：梯度消失不是历史遗迹——10 层 sigmoid 网络教不动，而 ReLU 一行就解决了</code></li><li><strong>书籍锚点</strong>：§6.1「导数为 0 会给学习带来问题」；§6.1「修正线性函数不存在这个问题，因为当 z 取很大值时，ReLU 的导数是 1」</li><li><strong>为什么</strong>：命中 <strong>S1（书中解释偏定性）+ S3（有技术纵深）+ S5（现实落点）</strong>。书用一段话说明饱和导致梯度消失，但没有数量级；lab-03 测到 10 层 sigmoid 首层梯度 4.2e-7、准确率 0.4875，而 ReLU 首层 1.3e-1、准确率 1.0。数字让&quot;换个激活函数&quot;从经验变成可解释的选择。</li><li><strong>增益</strong>：① 相对本书：把&quot;饱和→导数小→连乘→浅层学不动&quot;补成逐层测量与可视化；② 对读者：拿到一张&quot;深网不收敛&quot;的排查顺序表（激活→初始化→归一化→学习率），而不是盲目调参。</li><li><strong>素材种子</strong>：历史溯源 1991 Hochreiter 的 diploma thesis、ResNet (2015)｜人物 Hochreiter、Bengio、He｜原理 饱和/连乘/残差连接｜争议 ReLU 是否真的&quot;解决&quot;了消失（死亡 ReLU 是另一面）</li><li><strong>缺口（下游必须自己搜）</strong>：BatchNorm/LayerNorm 与残差连接对梯度范数的影响；不同初始化（Xavier/He）下的对照；真实 transformer 中梯度范数的测量方法。</li><li><strong>体量建议</strong>：中篇；现象 1000 字、实验 1200 字、排查表 800 字。</li><li><strong>待核</strong>：❓lab-03 的 10 层全连接结论能否外推到 transformer；❓&quot;梯度消失&quot;术语的首次使用。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>5. 三次&quot;冬天&quot;里，只有一次是数学问题</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（历史/观点）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：三次&quot;AI 冬天&quot;里，只有一次是数学问题——被误读的 XOR 与被低估的工程条件</code></li><li><strong>书籍锚点</strong>：§历史注记「单元无法建模像 XOR 这样简单的函数之后，神经网络领域便衰落了（Minsky 和 Papert，1969）」；§历史注记「到 21 世纪初，计算机硬件的改进以及优化与训练技术的进步使得训练更大、更深的网络成为可能」</li><li><strong>为什么</strong>：命中 <strong>S2（可溯源的史与人）+ S4（有争议反差）+ S6（权威外部源）</strong>。书用一段话把 40 年压成&quot;衰落—复兴&quot;，容易被读成&quot;数学证明了不行，后来算力救了它&quot;；实际上 1980 年代的复兴靠的是反向传播与连接主义，算力只是 21 世纪的条件之一。这个叙事反差适合做史论。</li><li><strong>增益</strong>：① 相对本书：把&quot;衰落—复兴&quot;拆成至少三条独立线索（理论打击、资金与话语、工程条件），并标出作者省略的部分；② 对读者：得到一个判断&quot;技术冬天&quot;叙事的框架，不再把单一原因当全部解释。</li><li><strong>素材种子</strong>：历史溯源 1943–1969–1986–2012 四个节点｜人物 Rosenblatt、Minsky、Rumelhart、Hinton、Krizhevsky｜原理 感知机/反向传播/GPU｜争议 AI 冬天的归因是否被简化</li><li><strong>缺口（下游必须自己搜）</strong>：Lighthill 报告（1973）与英国 AI 经费削减的原始材料；DARPA 资金变化；2012 AlexNet 的算力与数据细节。</li><li><strong>体量建议</strong>：标准长文；三段历史各 1200 字，结尾一张&quot;归因对照表&quot;。</li><li><strong>待核</strong>：❓&quot;三次冬天&quot;的分期是否有公认说法；❓XOR 证明在衰落中的实际权重（可能被后世放大）。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="spinoffs.md">spinoffs.md</a></footer>
+</div></body></html>

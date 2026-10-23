@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 03 · 复现排序评价（AP / 11 点插值）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第三版）· 第 11 章 基于检索的模型</a><a href="../index.html">Labs · 行动执行闭环</a><a href="README.html">Lab 03 · 复现排序评价（AP / 11 点插值）</a></div>
+<h1>Lab 03 · 复现排序评价（AP / 11 点插值）</h1>
+<ul><li><strong>对应行动</strong>：actions.md 第 2 条（⇄ book-notes §11.2）</li><li><strong>脚本</strong>：<code>pr_metrics.py</code></li><li><strong>运行</strong>：<code>cd labs/lab-03 &amp;&amp; python3 pr_metrics.py</code></li><li><strong>产物</strong>：<code>out/per_rank.csv</code>、<code>out/interpolated.csv</code>、<code>out/summary.json</code>、<code>out/pr_curve.png</code>、<code>out/interpolated_curve.png</code></li></ul>
+<h2>设置</h2>
+<p>判定序列直接取书图 11.7 的 judgment 列（25 篇文档、9 篇相关）：</p>
+<pre><code>R N R N R R N R N N R N N N R N N R N N N N N N R</code></pre>
+<p>计算三样东西：</p>
+<ol><li>每个排名处的 Precision@k 与 Recall@k；</li><li>AP（只在相关文档命中的位置取精确率，再除以相关文档总数）；</li><li>11 点插值精确率（0.0–1.0，步长 0.1；每点取「该召回水平及更高处」的最大精确率）。</li></ol>
+<h2>结果（实跑输出）</h2>
+<pre><code>AP = 0.5972（书 §11.2 报 0.6）
+11 点插值 max|diff| vs 书表 = 0.010
+插值表: [1.0, 1.0, 0.667, 0.667, 0.667, 0.625, 0.545, 0.467, 0.444, 0.36, 0.36]
+书表:   [1.0, 1.0, 0.66,  0.66,  0.66,  0.63,  0.55,  0.47,  0.44,  0.36, 0.36]</code></pre>
+<h2>结论</h2>
+<ol><li><strong>AP 可复现</strong>：0.5972 与书上的 0.6 只差舍入。单个查询的 AP 就是 MAP（MAP 是对多个 AP 再平均）。</li><li><strong>11 点表逐点吻合</strong>：所有点误差 ≤0.01，说明「取右侧最大」这条规则就是书上表格的实际算法，没有隐藏步骤。</li><li><strong>插值确实偏乐观</strong>：在召回 0.5 处，实测精确率只有 0.36–0.545，插值给出 0.625（把更靠后、更稀疏位置的高精确率搬了过来）。比较系统时要记住这是「对系统有利的推定」。</li><li><strong>AP 与 PR 曲线互补</strong>：曲线看形状（左偏还是右偏），AP 给单一数字。只看 AP 会丢掉「系统在前几位是否干净」这一信息。</li></ol>
+<h2>反思</h2>
+<p>我原来以为插值只是「把点连起来」，实跑后才明白它是取右侧上确界——等于假设系统在被截断的更深处一定还有好结果。这个假设对排序系统几乎总是成立的（后面的相关文档本来就在那里），但它会掩盖「前三位很差」的问题。以后读论文里的 11 点曲线，我会同时看原始点。另一个收获是：把书上的表格当作单元测试来用，能很快发现自己对定义的理解偏差——我第一次把 AP 的分母写成 25，结果只有 0.215，立刻定位到「分母是相关文档数不是文档总数」。</p>
+<h2>复现说明</h2>
+<p>判定序列硬编码在 <code>JUDGMENTS</code> 里，来自中文稿图 11.7 的表格；书表读数硬编码在 <code>BOOK_TABLE</code>（图 11.9）。若换用其他章节的例子，只需替换这两个常量。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

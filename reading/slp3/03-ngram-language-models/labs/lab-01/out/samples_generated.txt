@@ -1,0 +1,24 @@
+# 1-gram samples (5)
+i man we i like menu at like noon the </s>
+eat </s>
+the see </s>
+you would on near am </s>
+looking </s>
+# 2-gram samples (5)
+i am looking for chinese food near the station </s>
+please show me where to find chinese food </s>
+do you know the menu today </s>
+can you want coffee tonight </s>
+do not need breakfast </s>
+# 3-gram samples (5)
+my friend would like chinese food </s>
+we and we eat breakfast tomorrow </s>
+the man eat a table there </s>
+i like green eggs tomorrow </s>
+do you know a good place for a table at noon </s>
+# 4-gram samples (5)
+my friend would like coffee tonight </s>
+i would like books today </s>
+what time does the menu open tomorrow </s>
+you and you know the menu </s>
+i eat books today </s>

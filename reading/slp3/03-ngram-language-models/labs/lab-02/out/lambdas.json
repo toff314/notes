@@ -1,0 +1,6 @@
+{
+  "lambda_unigram": 0.1,
+  "lambda_bigram": 0.7,
+  "lambda_trigram": 0.2,
+  "tuned_on": "dev split, step=0.05, max dev log-likelihood"
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第三版 · 第 2 章 · 提取自测</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 2 章 词与词元</a></div>
+<h1>《Speech and Language Processing》第三版 · 第 2 章 · 提取自测</h1>
+<blockquote><p><strong>提取自测协议（怎么用）</strong></p><p>1. <strong>遮住</strong> <code>book-notes.md</code> 与 <code>cards.md</code>，只看下面的问题；</p><p>2. 合上书与全部笔记，口头或笔头作答，先写结论再补理由；</p><p>3. 答不出的题记入「未掌握」，回看对应小节与卡片，隔一天再测；</p><p>4. 费曼检验：能把「BPE 为什么能处理没见过的词」讲给非 NLP 同事听懂，才算真懂；</p><p>5. 教材型加一条：能独立做对 §2.9 的编辑距离小题，才算掌握。</p></blockquote>
+<h2>第 2 章自测（9 题）</h2>
+<ol><li>「这句话有 16 个词，但只有 14 个不同的词」——这里两个数字分别对应什么概念？大小写合并会改变哪一个？→ 见 book-notes §2.1｜卡 1</li><li>Heaps 定律的 |V| = kN^β 中，β 为什么必须小于 1？如果 β ≥ 1 意味着什么？→ 见卡 2｜§2.1</li><li>cats 与 worked 各由哪些语素组成？其中哪个是屈折、哪个只是词根加屈折？-ful 与它们有何不同？→ 见卡 3、卡 4｜§2.2</li><li>码点 U+00E9 与字形「é」、UTF-8 字节 C3 A9 分别属于哪一层？为什么同一码点可以有多种字形？→ 见卡 6、卡 7｜§2.3</li><li>训练 BPE 时只统计词内相邻对，会漏掉什么类型的单位？SuperBPE 试图补什么？→ 见 book-notes §2.4｜卡 9</li><li>BPE 编码器面对一个训练中没出现过的词，为什么仍然能切分？它依据的是训练频率还是测试频率？→ 见卡 10｜§2.4.2</li><li>r&quot;[catdog]&quot; 与 r&quot;cat|dog&quot; 的匹配结果差在哪？r&quot;the*&quot; 为什么不是「重复 the」？→ 见卡 12｜§2.6</li><li>捕获组 r&quot;(\d{2})/(\d{2})/(\d{4})&quot; 配替换串 r&quot;\2-\1-\3&quot;，把 10/15/2011 变成什么？(?:…) 与它有何区别？→ 见卡 14｜§2.6.7</li><li>intention→execution 在「插删 1、替换 2」下距离是多少？为什么对齐路径可能不唯一？→ 见 book-notes §2.9｜lab-02 <code>out/alignments.csv</code></li></ol>
+<h2>首测记录（写完笔记当天）</h2>
+<ul><li>9 题均可合上书口述；第 9 题只答出距离 8，<strong>没答出对齐路径为何可能不唯一</strong>。</li><li>归因：理解性——「代价最小」与「路径唯一」被我混成一个概念；补看 §2.9.1 回溯段与 lab-02 README 的「回溯优先级」。</li><li>第 6 题答得最顺：因为 lab-01 里 <code>tokenizer</code> 正是靠训练学到的合并序列被整体保留，例子帮我把「训练频率 vs 测试频率」固定住了。</li></ul>
+<h2>例题重做记录（教材型）</h2>
+<table><tr><th>例题／习题</th><th>状态</th><th>归因</th></tr><tr><td>习题 2.7：leda→deal（插删 1、替换 1）</td><td>未做</td><td>本次未安排手算；若做错，优先查边界行初始化 D[i][0]=i、D[0][j]=j</td></tr><tr><td>习题 2.9：实现最小编辑距离</td><td>✅ lab-02</td><td>结果与书中 intention→execution=8 一致，无须归因</td></tr><tr><td>习题 2.10：回溯输出对齐</td><td>✅ lab-02</td><td>平局规则必须写明，否则同一张表可回溯出多条路径</td></tr><tr><td>习题 2.3：手算 é／进的 UTF-8</td><td>未做</td><td>本次未安排；位分组规则见 §2.3.2 图 2.5</td></tr></table>
+<blockquote><p>归因三分法：知识性（定义／公式不熟）回教材；理解性（题干关键词看漏）重读题；技巧性（步骤／位运算出错）做限时专项。</p></blockquote>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="self-test.md">self-test.md</a></footer>
+</div></body></html>

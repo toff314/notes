@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-03：激活函数与梯度消失（逐层梯度范数）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 6 章 神经网络）</a><a href="../index.html">行动执行闭环（labs/index.md）</a><a href="README.html">lab-03：激活函数与梯度消失（逐层梯度范数）</a></div>
+<h1>lab-03：激活函数与梯度消失（逐层梯度范数）</h1>
+<p><strong>对应</strong>：§6.1（饱和与梯度消失）、§6.6.4（链式法则逐层回传）。<strong>行动</strong>：<code>actions.md</code> 第 3 条。</p>
+<h2>运行</h2>
+<pre><code>cd labs/lab-03
+python3 gradient_vanishing.py</code></pre>
+<p>只依赖标准库 + numpy + matplotlib；<code>SEED=3</code> 固定初始化与数据。</p>
+<h2>设置</h2>
+<ul><li>数据：两条交错的月牙（two moons），训练 320 点、测试 320 点，噪声 0.12。</li><li>网络：2 → 24×10 隐藏层 → 1，输出 sigmoid，BCE 损失，全批量梯度下降 2500 轮，学习率 0.08。</li><li>初始化：ReLU 用 He 缩放，sigmoid/tanh 用 Xavier 缩放，偏置为 0。</li><li>每层记录权重梯度的 Frobenius 范数：初始化时一次、训练结束时一次。</li></ul>
+<h2>真实运行结果</h2>
+<table><tr><th>激活</th><th>测试准确率</th><th>首层梯度（初始化）</th><th>末层梯度（初始化）</th><th>首层梯度（训练后）</th><th>初始化时 &lt;1e-6 的层数</th></tr><tr><td>sigmoid</td><td>0.4875</td><td>4.23e-7</td><td>7.27e-2</td><td>3.74e-7</td><td>1</td></tr><tr><td>tanh</td><td>1.000</td><td>2.57e-1</td><td>3.60e-1</td><td>2.20e-5</td><td>0</td></tr><tr><td>ReLU</td><td>1.000</td><td>1.32e-1</td><td>2.92e-1</td><td>3.80e-5</td><td>0</td></tr></table>
+<p>sigmoid 的逐层梯度（初始化）：4.23e-7, 1.97e-6, 5.54e-6, 2.50e-5, 8.92e-5, 3.39e-4, 1.08e-3, 4.83e-3, 1.98e-2, 7.27e-2 —— 从输入到输出单调放大约 17 万倍。</p>
+<p>产物：<code>out/gradient_norms.csv</code>、<code>out/gradient_norms.png</code>、<code>out/decision_boundary.png</code>、<code>out/summary.json</code>。</p>
+<h2>结论</h2>
+<ol><li>10 层 sigmoid 的首层梯度 4.23e-7，低于 1e-6；同一网络里 ReLU 首层是 1.32e-1，相差约 31 万倍。<code>out/gradient_norms.png</code> 左图的对数纵轴能直接看到 sigmoid 的斜线。</li><li>这个差距直接反映在结果上：sigmoid 训练损失停在 0.6931（等于 ln 2，即输出恒为 0.5），测试准确率 0.4875；tanh 与 ReLU 都到 1.000，<code>out/decision_boundary.png</code> 里能切开两个月牙。</li><li>注意：梯度小不等于一定失败。6 层版本里 sigmoid 首层梯度约 5e-5，准确率仍有 0.984；到 10 层才彻底学不动。消失是连续恶化，不是某个阈值突然崩塌。</li></ol>
+<h2>反思</h2>
+<p>我原以为&quot;6 层就足够让 sigmoid 崩掉&quot;，实测 6 层还能到 0.98，只是首层梯度比末层小三个数量级。这个反例让我修正了判断：<strong>梯度范数是预警指标，不是判决书</strong>；真正决定成败的是它相对参数尺度和学习率的比例，以及损失面本身的形状。</p>
+<p>另一个发现是初始化的影响被低估了。同一套 10 层结构，只把激活从 sigmoid 换成 ReLU，首层梯度从 4e-7 变成 1e-1；这不是 ReLU &quot;更聪明&quot;，而是它不压缩正区间的斜率，连乘时不会指数衰减。书里那句&quot;ReLU 的导数是 1，而不是非常接近 0&quot;（§6.1）在数字上就是这么直白。</p>
+<h2>文件</h2>
+<ul><li><code>gradient_vanishing.py</code>：数据、前向/反向、逐层测量、出图</li><li><code>out/</code>：CSV / JSON / 两张图</li><li><code>README.md</code>：本文件</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-01　共现矩阵 → PPMI → 截断 SVD</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../../index.html">笔记架首页</a><a href="../../../../index.html">读书 · Reading</a><a href="../../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../../README.html">读书笔记：《Speech and Language Processing》第 3 版 · 第 5 章 嵌入</a><a href="../index.html">labs · 行动执行闭环（lab-01 ~ lab-05）</a><a href="README.html">lab-01　共现矩阵 → PPMI → 截断 SVD</a></div>
+<h1>lab-01　共现矩阵 → PPMI → 截断 SVD</h1>
+<p>对应行动：<code>actions.md</code> 第 1、2 条。对应书中 §5.3（词-上下文矩阵）、§5.4（余弦）、§5.5.3（PPMI 与计数派）。</p>
+<h2>怎么跑</h2>
+<pre><code>cd labs/lab-01
+python3 lab01_cooccurrence_ppmi_svd.py            # 默认窗口 ±4，秩 20
+python3 lab01_cooccurrence_ppmi_svd.py --window 1 --rank 10</code></pre>
+<p>依赖：numpy、matplotlib（脚本已固定 Agg 后端，无显示环境也能出图）。</p>
+<h2>输入</h2>
+<p>自建 28 句英文小语料（food 与 computer 两个语义场），词表 31 个（min_count=2）。语料写死在脚本 <code>CORPUS</code> 里，可复现且不依赖外部下载。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/cooccurrence.csv</code></td><td>31×31 原始共现计数</td></tr><tr><td><code>out/ppmi.csv</code></td><td>PPMI 加权矩阵（列和 +1 平滑）</td></tr><tr><td><code>out/singular_values.csv</code></td><td>奇异值及其解释方差比</td></tr><tr><td><code>out/word_vectors.csv</code></td><td>归一化后的 20 维词向量（可直接算余弦）</td></tr><tr><td><code>out/neighbors.csv</code></td><td>5 个目标词 × 5 个余弦近邻</td></tr><tr><td><code>out/window_sweep_cherry.json</code></td><td>cherry 行在 ±1 与 ±4 下的非零维对照</td></tr><tr><td><code>out/book_cosine_check.csv</code></td><td>复算书中 §5.4 的两个余弦</td></tr><tr><td><code>out/vectors_2d.png</code></td><td>PPMI-SVD 前两维散点（红色 = food 词）</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<pre><code>vocab=31  cooccurrence_nnz=372/961
+PPMI nonzero ratio=0.338; rank=20
+neighbors:
+  cherry -&gt; pie(0.430), a(0.412), in(0.393), are(0.377), is(0.339)
+  strawberry -&gt; jam(0.552), are(0.376), sugar(0.371), and(0.360), dessert(0.291)
+  digital -&gt; information(0.638), stores(0.331), are(0.307), data(0.287), computer(0.284)
+  information -&gt; digital(0.638), device(0.554), on(0.446), data(0.363), to(0.317)
+  sugar -&gt; pie(0.398), strawberry(0.371), sweet(0.312), cherry(0.295), cream(0.293)
+book cosine check:
+  cos(cherry,information)=0.017754 book=0.018 diff=0.000246
+  cos(digital,information)=0.996321 book=0.996 diff=0.000321
+cos(cherry,strawberry)=0.2261  cos(digital,information)=0.6385</code></pre>
+<h2>结论</h2>
+<ol><li><strong>书中数值可复算</strong>：用 §5.3 图 5.3 的三维计数重算，两个余弦与书中 .018 / .996 的误差都在 0.0004 以内。这说明我对「余弦 = 归一化点积」的理解与书中计算口径一致（§5.4）。</li><li><strong>同域词确实靠近</strong>：<code>digital</code> 与 <code>information</code> 互为第一名（0.638），<code>strawberry</code> 的第一名是 <code>jam</code>（0.552），<code>sugar</code> 的前两名是 <code>pie</code> 与 <code>strawberry</code>。food 与 computer 两个簇在 <code>vectors_2d.png</code> 中分开。</li><li><strong>小语料的代价</strong>：<code>cherry</code> 的近邻里混进了 <code>a</code>、<code>in</code>、<code>are</code>、<code>is</code>。PPMI 只压低了「高频 × 高频」的组合，但本语料的虚词几乎出现在每一句里，仍会挤进前排。这正好说明 §5.9 说的语料规模问题：1 万词以下谈近邻质量意义有限。</li><li><strong>窗口改变共现指纹</strong>：cherry 在 ±1 下只与 9 个词共现（<code>and</code> 4 次、<code>pie</code> 2 次），±4 下扩到 17 个词，新增 <code>apple</code>、<code>strawberry</code>、<code>fruit</code>、<code>garden</code>。窗口越大，向量越「主题化」，与 §5.7 的描述一致。</li></ol>
+<h2>反思</h2>
+<p>我原以为只要做了 PPMI，虚词问题就会自动消失；实际跑出来 cherry 的前五仍有四个功能词。原因是 PPMI 抑制的是「超出独立假设的偶然共现」，而虚词的高频本身是真实的、稳定的共现。要得到干净近邻，还需要停用词处理或更好的加权（如 §5.3 提到的 tf-idf、§5.5.3 的 PPMI 变体），这一步书中没有展开，我是在自己的输出里才看清的。</p>
+<p>另一个意外是 SVD 之后 <code>cherry</code> 与 <code>strawberry</code> 的余弦只有 0.226（连前五都没进），远低于 <code>digital</code>–<code>information</code> 的 0.638。检查后发现语料里两者的句式差异较大（一个多在「pie/dessert」，一个多在「jam/sugar」），说明「同域」不等于「同上下文指纹」——这也解释了为什么书中要用 Wikipedia 级别的语料。</p>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="README.md">README.md</a></footer>
+</div></body></html>

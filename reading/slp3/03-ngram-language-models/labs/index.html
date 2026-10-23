@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>labs · 行动执行闭环（第 3 章）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../../index.html">笔记架首页</a><a href="../../../index.html">读书 · Reading</a><a href="../../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="../README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a><a href="index.html">labs · 行动执行闭环（第 3 章）</a></div>
+<h1>labs · 行动执行闭环（第 3 章）</h1>
+<blockquote><p><code>actions.md</code> 的每条行动在这里都有一个可运行脚本、真实产物、结论与反思。</p><p>所有脚本仅依赖标准库 + numpy/matplotlib，语料由 <code>shared_corpus.py</code> 固定种子生成，可重复。</p></blockquote>
+<h2>行动 ↔ lab 对照</h2>
+<table><tr><th>#</th><th>actions.md 行动</th><th>lab</th><th>脚本</th><th>主要产物</th><th>结论（引用自己的产物）</th><th>反思</th></tr><tr><td>1</td><td>训练 1–4 元模型，产出困惑度表与两张图</td><td><code>lab-01</code></td><td><code>ngram_perplexity.py</code></td><td><code>metrics.csv</code>（12 行）、<code>ppl_by_n.png</code>、<code>ppl_vs_train_size.png</code>、<code>samples_generated.txt</code></td><td>2-gram 最低（6.68），3/4-gram 回升到 9.92/13.26；训练量 25%→100% 时 3-gram 降 45.3%</td><td>高阶优势依赖语料规模与平滑强度，不是单调结论</td></tr><tr><td>2</td><td>四种平滑同测试集对比并画柱状图</td><td><code>lab-02</code></td><td><code>smoothing_compare.py</code></td><td><code>metrics.csv</code>、<code>smoothing_ppl.png</code>、<code>dev_vs_test.png</code>、<code>lambdas.json</code>、<code>backoff_examples.json</code></td><td>MLE=inf；add-k(0.01)=8.86 最优；插值=7.28，再低 17.8%；λ=(0.1,0.7,0.2)</td><td>平滑并非越轻越好，k=0.001 反而回升；插值最稳</td></tr><tr><td>3</td><td>重算书中例子并断言</td><td><code>lab-03</code></td><td><code>verify_book_numbers.py</code></td><td><code>checks.json</code>、<code>bigram_iamsam.csv</code>、<code>exercise37.png</code></td><td>20/20 通过；颜色 B 反转测试从 1.89 升到 6.60</td><td>错误集中在计数口径（<code>&lt;s&gt;</code>、<code>&lt;/s&gt;</code>、V 怎么数）</td></tr></table>
+<h2>复现方式</h2>
+<pre><code>cd labs/lab-01 &amp;&amp; python3 ngram_perplexity.py
+cd ../lab-02 &amp;&amp; python3 smoothing_compare.py
+cd ../lab-03 &amp;&amp; python3 verify_book_numbers.py</code></pre>
+<p><code>lab-01</code> 与 <code>lab-02</code> 共享 <code>labs/shared_corpus.py</code>（320 句模板语料 + 8 句手写句，去重后 248 句，seed=7，70/15/15 切分），因此两个 lab 的困惑度数字可以直接对照。</p>
+<h2>章节内小行动的落实</h2>
+<ul><li>§3.1.2 手算 bigram：由 <code>lab-03/out/bigram_iamsam.csv</code> 覆盖（6 个概率）。</li><li>§3.2 训练/测试交集检查：<code>shared_corpus.build_corpus</code> 先 shuffle 再切分，并用集合断言确认 train/dev/test 两两无重叠。</li><li>§3.3 困惑度比值：<code>lab-01/out/metrics.csv</code> 的 2-gram/3-gram 行可直接相除。</li><li>§3.3.1 反转测试集：<code>lab-03/out/checks.json</code> 中 <code>colour LM B perplexity (swapped test)</code>。</li><li>§3.4 采样：<code>lab-01/out/samples_generated.txt</code>（每阶 5 句）。</li><li>§3.5 训练规模对比：<code>lab-01/out/ppl_vs_train_size.png</code> 与 CSV 的 <code>train_frac</code> 列。</li><li>§3.6 k 值扫描：<code>lab-02/out/metrics.csv</code> 的四个 add-k 行。</li><li>§3.6.3 插值权重：<code>lab-02/out/lambdas.json</code>（和 = 1.00）。</li><li>§3.6.4 回退手算：<code>lab-02/out/backoff_examples.json</code>。</li><li>§3.7 熵换算：<code>lab-03/out/checks.json</code> 的 <code>horse entropy (bits)</code>、<code>uniform 8-way entropy (bits)</code> 与 <code>2 bits in nats</code>。</li></ul>
+<h2>未做成脚本的部分（核查记录）</h2>
+<ul><li>「语料是否带 datasheet」属于外部资料核查，本章不涉及具体数据集，故未建 lab；处理方式是在 README 的「实际输入」中如实登记语料来源（合成语料，无版权问题）。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="index.md">index.md</a></footer>
+</div></body></html>

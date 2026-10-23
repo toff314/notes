@@ -1,0 +1,98 @@
+[
+  {
+    "position": 2,
+    "target": "sees",
+    "top1": "carries",
+    "top2": "likes",
+    "top3": "finds",
+    "in_input": 0
+  },
+  {
+    "position": 1,
+    "target": "canyon",
+    "top1": "river",
+    "top2": "student",
+    "top3": "dog",
+    "in_input": 0
+  },
+  {
+    "position": 3,
+    "target": "a",
+    "top1": "the",
+    "top2": "a",
+    "top3": "under",
+    "in_input": 0
+  },
+  {
+    "position": 3,
+    "target": "a",
+    "top1": "a",
+    "top2": "the",
+    "top3": "beside",
+    "in_input": 0
+  },
+  {
+    "position": 1,
+    "target": "book",
+    "top1": "canyon",
+    "top2": "dog",
+    "top3": "book",
+    "in_input": 0
+  },
+  {
+    "position": 3,
+    "target": "sees",
+    "top1": "in",
+    "top2": "beside",
+    "top3": "under",
+    "in_input": 0
+  },
+  {
+    "position": 5,
+    "target": "car",
+    "top1": "book",
+    "top2": "river",
+    "top3": "dog",
+    "in_input": 0
+  },
+  {
+    "position": 2,
+    "target": "under",
+    "top1": ".",
+    "top2": "beside",
+    "top3": "near",
+    "in_input": 0
+  },
+  {
+    "position": 3,
+    "target": "a",
+    "top1": "a",
+    "top2": "the",
+    "top3": "beside",
+    "in_input": 0
+  },
+  {
+    "position": 6,
+    "target": ".",
+    "top1": ".",
+    "top2": "beside",
+    "top3": "near",
+    "in_input": 0
+  },
+  {
+    "position": 3,
+    "target": "under",
+    "top1": "under",
+    "top2": "beside",
+    "top3": "near",
+    "in_input": 0
+  },
+  {
+    "position": 5,
+    "target": "dog",
+    "top1": "river",
+    "top2": "cat",
+    "top3": "book",
+    "in_input": 0
+  }
+]

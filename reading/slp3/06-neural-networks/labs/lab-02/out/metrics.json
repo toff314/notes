@@ -1,0 +1,106 @@
+{
+  "seed": 11,
+  "dim": 16,
+  "window": 3,
+  "epochs": 400,
+  "learning_rate": 0.15,
+  "hidden": 24,
+  "vocab_size": 73,
+  "train_sentences": 240,
+  "test_sentences": 200,
+  "train_sentiment_words": {
+    "positive": [
+      "good",
+      "great",
+      "excellent",
+      "delightful",
+      "superb",
+      "brilliant"
+    ],
+    "negative": [
+      "bad",
+      "terrible",
+      "awful",
+      "boring",
+      "dull",
+      "annoying"
+    ]
+  },
+  "heldout_sentiment_words": {
+    "positive": [
+      "charming",
+      "enjoyable",
+      "lovely",
+      "impressive"
+    ],
+    "negative": [
+      "clumsy",
+      "dismal",
+      "tedious",
+      "painful"
+    ]
+  },
+  "results": {
+    "random": {
+      "accuracy": 0.315,
+      "final_train_loss": 0.47768812761085966,
+      "confusion_matrix": [
+        [
+          22,
+          67
+        ],
+        [
+          70,
+          41
+        ]
+      ],
+      "params": 458
+    },
+    "ppmi_svd": {
+      "accuracy": 0.995,
+      "final_train_loss": 0.028939097886724312,
+      "confusion_matrix": [
+        [
+          89,
+          0
+        ],
+        [
+          1,
+          110
+        ]
+      ],
+      "params": 458
+    }
+  },
+  "heldout_neighbors_ppmi": {
+    "charming": [
+      "brilliant",
+      "lovely",
+      "great",
+      "superb",
+      "excellent"
+    ],
+    "enjoyable": [
+      "good",
+      "excellent",
+      "impressive",
+      "superb",
+      "lovely"
+    ],
+    "clumsy": [
+      "dismal",
+      "boring",
+      "awful",
+      "bad",
+      "dull"
+    ],
+    "dismal": [
+      "clumsy",
+      "boring",
+      "bad",
+      "tedious",
+      "dull"
+    ]
+  },
+  "note": "embeddings frozen; identical classifier init/seed for both conditions"
+}

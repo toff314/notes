@@ -1,0 +1,53 @@
+{
+  "note": "句对与 adequacy 为构造的教学样例；overlap 由脚本计算，选择和结论可复现。",
+  "n_sources": 6,
+  "n_candidates": 24,
+  "mean_overlap_selected_adequacy": 3.0,
+  "mean_oracle_adequacy": 5.0,
+  "n_gamed_selected": 3,
+  "pearson_overlap_vs_adequacy": -0.5886,
+  "selected": [
+    {
+      "source_id": 1,
+      "candidate": "the the cat cat sat sat on on the the mat mat",
+      "overlap_f1": 1.0,
+      "adequacy": 1,
+      "gamed": true
+    },
+    {
+      "source_id": 2,
+      "candidate": "yesterday she bought a book",
+      "overlap_f1": 1.0,
+      "adequacy": 5,
+      "gamed": false
+    },
+    {
+      "source_id": 3,
+      "candidate": "until until next next monday monday the the meeting meeting was was postponed postponed",
+      "overlap_f1": 1.0,
+      "adequacy": 1,
+      "gamed": true
+    },
+    {
+      "source_id": 4,
+      "candidate": "he he did did not not pass pass the the exam exam",
+      "overlap_f1": 1.0,
+      "adequacy": 1,
+      "gamed": true
+    },
+    {
+      "source_id": 5,
+      "candidate": "close the window please",
+      "overlap_f1": 1.0,
+      "adequacy": 5,
+      "gamed": false
+    },
+    {
+      "source_id": 6,
+      "candidate": "in the garden the children are playing",
+      "overlap_f1": 1.0,
+      "adequacy": 5,
+      "gamed": false
+    }
+  ]
+}

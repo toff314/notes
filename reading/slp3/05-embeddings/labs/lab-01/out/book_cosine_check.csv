@@ -1,0 +1,3 @@
+word_a,word_b,recomputed_cosine,book_value,abs_diff
+cherry,information,0.017754,0.018,0.000246
+digital,information,0.996321,0.996,0.000321

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 9 章 · 永久卡片（14 张）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a></div>
+<h1>《Speech and Language Processing》第 9 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 指向可继续追问的卡或实验。</p><p>教材型三类：概念卡（卡 1、2、4、6、8、9、10、13）/ 公式·定理卡（卡 3、5、7、11、12）/ 例题·方法卡（卡 14）。</p></blockquote>
+<h2>卡 1　三种架构靠什么区分？</h2>
+<ul><li><strong>Q（正面）</strong>：编码器、解码器、编码器-解码器，判据是什么？</li><li><strong>A（背面）</strong>：看两件事：输入与输出是否同一套词元，以及生成时能否回看已写内容。解码器同词表、只依据左侧；编码器等长输出、可看两侧；编码器-解码器允许输入输出词表与长度不同，所以翻译、语音识别归它。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.1</li><li><strong>链接</strong>：卡 2（双向怎么做）、卡 8（编码器为何不生成）</li></ul>
+<h2>卡 2　双向注意力到底改了什么？</h2>
+<ul><li><strong>Q（正面）</strong>：把因果编码器改成双向编码器，结构上要动哪里？</li><li><strong>A（背面）</strong>：只去掉 <code>QKᵀ</code> 上三角的 <code>−∞</code> 掩码，让 softmax 对整行归一；前馈层、层归一化、残差都不变。可见范围从「当前及左侧」变成「全序列」，这就是双向的全部结构差异。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.2.1（图 9.3、式 9.2）</li><li><strong>链接</strong>：卡 3（具体形状）、卡 4（目标为何必须换）</li></ul>
+<h2>卡 3　BERT-base 的 512×768×12 各指什么？</h2>
+<ul><li><strong>Q（正面）</strong>：BERT-base 的输入形状与层数如何拆开？</li><li><strong>A（背面）</strong>：N=512 是上下文窗口，d=768 是模型维度，L=12 层，每层 A=12 个注意力头、每头 64 维；词表 30,000 个 WordPiece 词元，总参数约 100M。X 的形状是 <code>[512×768]</code>。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.2.1</li><li><strong>链接</strong>：卡 2（掩码实现）、卡 11（分类头维度）</li></ul>
+<h2>卡 4　为什么双向之后不能继续「猜下一个词」？</h2>
+<ul><li><strong>Q（正面）</strong>：去掉因果掩码，原语言建模目标为什么失效？</li><li><strong>A（背面）</strong>：下一个词本来就在输入序列里，双向注意力可以直接看到答案，任务变成抄写，没有学习信号。因此必须把目标词从输入中挖走，改成「给定残缺序列还原缺失项」。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3</li><li><strong>链接</strong>：卡 5（掩码比例）、卡 7（损失口径）</li></ul>
+<h2>卡 5　15% / 80 / 10 / 10 的期望账怎么算？</h2>
+<ul><li><strong>Q（正面）</strong>：BERT 的「15% 掩码」具体会在输入里留下多少 <code>[MASK]</code>？</li><li><strong>A（背面）</strong>：先以 15% 选中；选中后 80% 换 <code>[MASK]</code>、10% 换随机词、10% 保持原词。于是期望 <code>[MASK]</code> 率 = 15%×80% = 12%，随机词率 = 1.5%，原样保留率 = 1.5%。「15%」是选中率，不是 <code>[MASK]</code> 出现率。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.1</li><li><strong>链接</strong>：卡 6（为何保留原词）、卡 7（损失只算选中项）、<code>labs/lab-01</code></li></ul>
+<h2>卡 6　为什么选中后还要有 10% 保持原样？</h2>
+<ul><li><strong>Q（正面）</strong>：既然要重建被选中词，为什么有时不破坏它？</li><li><strong>A（背面）</strong>：如果只在看到 <code>[MASK]</code> 时才预测，模型会学到「特殊符号 = 该启动了」的捷径。保留 10% 正常输入、目标仍是它自己，逼迫模型持续判断「哪里可能被动了手脚」，从而缩小预训练与下游推理的输入分布差。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.1</li><li><strong>链接</strong>：卡 5（比例账）、卡 9（RoBERTa 的动态掩码）</li></ul>
+<h2>卡 7　MLM 损失为什么除以 |M| 而不是序列长度？</h2>
+<ul><li><strong>Q（正面）</strong>：式 9.4 的分母为什么是被选中集合 M 的大小？</li><li><strong>A（背面）</strong>：交叉熵只在 M 中的位置计算：<code>L = −(1/|M|) Σ_{i∈M} log P(x_i | h_i^L)</code>。其他词元参与注意力但不产生梯度，因此同一遍语料只有约 15% 的词元真正更新权重，这是 MLM 训练效率低的直接原因。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.1（式 9.4）</li><li><strong>链接</strong>：卡 5（15% 的来源）、卡 9（RoBERTa 如何补效率）、<code>labs/lab-02</code></li></ul>
+<h2>卡 8　NSP 如何把 [CLS] 变成句向量？</h2>
+<ul><li><strong>Q（正面）</strong>：<code>[CLS]</code> 本来没有词义，为什么能代表整句？</li><li><strong>A（背面）</strong>：NSP 把 <code>[CLS]</code> 的最终输出接二分类头，判断两个句子是否原本相邻；梯度迫使这个位置汇总全序列信息。但负例从任意位置随机抽取，模型只需判断主题是否相近就能过关，所以 RoBERTa 删掉 NSP 后下游分数几乎不掉——<code>[CLS]</code> 未必仍是可靠句向量。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.2</li><li><strong>链接</strong>：卡 9（RoBERTa 的删除）、卡 11（分类头如何用它）</li></ul>
+<h2>卡 9　RoBERTa 相对 BERT 改了哪几处？</h2>
+<ul><li><strong>Q（正面）</strong>：RoBERTa 的训练方案与 BERT 的差异，应该记成一张什么清单？</li><li><strong>A（背面）</strong>：四处主要改动：去掉 NSP；输入改为连续文档拼接而非句对；动态掩码（每轮重新选）；batch 增大到 8K–32K 词元，并配合更多数据与更长训练。它们共同指向同一目标——让 15% 的稀疏监督吃满梯度。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.3</li><li><strong>链接</strong>：卡 7（效率缺口）、卡 8（NSP 被删）</li></ul>
+<h2>卡 10　多语言词表的 α 重采样在做什么？</h2>
+<ul><li><strong>Q（正面）</strong>：为什么多语言模型不按语料量直接抽句子建词表？</li><li><strong>A（背面）</strong>：按原始句数抽样会让英语等高资源语言垄断词表。做法是给每种语言的句数 <code>n_i</code> 取 α 次方再归一：<code>q_i = p_i^α / Σ p_j^α</code>，其中 <code>p_i = n_i / Σ n_k</code>。α=0.3 抬高低资源语言的入选概率，代价是每语言容量被摊薄，出现过「多语言诅咒」。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.3.3（式 9.5）</li><li><strong>链接</strong>：卡 9（训练方案）、卡 3（词表规模）</li></ul>
+<h2>卡 11　d=768、三分类的 [CLS] 头有多少参数？</h2>
+<ul><li><strong>Q（正面）</strong>：情感三分类头的权重形状与参数量怎么推？</li><li><strong>A（背面）</strong>：取 <code>h_CLS</code>（768 维）乘 <code>W_C</code>（768×3）得 3 个 logits，再过 softmax；参数为 768×3 + 3 个偏置 = 2,307。微调时通常只更新最后几层与这个头，以保留预训练的通用表示。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.4.1</li><li><strong>链接</strong>：卡 8（[CLS] 的来源）、卡 3（d=768）</li></ul>
+<h2>卡 12　n 类实体的 BIO 标签为什么是 2n+1？</h2>
+<ul><li><strong>Q（正面）</strong>：BIO 的标签数量如何推导？IO 与 BIOES 差在哪？</li><li><strong>A（背面）</strong>：每类实体有 <code>B-X</code>（片段开始）与 <code>I-X</code>（片段内部）两个标签，再加全类共享的 <code>O</code>，共 2n+1。IO 只有 <code>I-X</code> 与 <code>O</code>，相邻同类实体会粘连；BIOES 增加 <code>E-X</code>（结尾）与 <code>S-X</code>（单词实体），边界更明确但标签更稀疏。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.5.2</li><li><strong>链接</strong>：卡 13（子词对齐）、卡 14（实体级评估）、<code>labs/lab-03</code></li></ul>
+<h2>卡 13　词级 BIO 如何落到子词，又怎么解回来？</h2>
+<ul><li><strong>Q（正面）</strong>：WordPiece 把一个词切成多个子词后，词级标签怎么办？</li><li><strong>A（背面）</strong>：训练时把该词的金标准标签复制给它派生的所有子词；解码时取每个词<strong>首个子词</strong>的 argmax 标签作为词标签，忽略后续子词。这个不对称意味着首子词错则整词错，中间子词错却可能被掩盖。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.5.3</li><li><strong>链接</strong>：卡 12（BIO 标签）、<code>labs/lab-03</code></li></ul>
+<h2>卡 14　为什么词级准确率会高估 NER？</h2>
+<ul><li><strong>Q（正面）</strong>：词级准确率 76%，实体级 F1 却只有 0.5，如何解释？</li><li><strong>A（背面）</strong>：文本中大多数词元是 <code>O</code>，模型全判 <code>O</code> 也能得到很高的词级准确率；实体级评估以「实体」为响应单位，要求边界与类型同时正确。把 <code>Jane Villanueva</code> 只标成 <code>Jane</code>，会同时产生 1 个 <code>O</code> 的假阳性和 1 个 <code>I-PER</code> 的假阴性，所以错误不是线性的。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §9.5.4</li><li><strong>链接</strong>：卡 12（BIO 边界）、卡 13（子词解码）、<code>labs/lab-03</code></li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="cards.md">cards.md</a></footer>
+</div></body></html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 9 章 · 术语表（24 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a></div>
+<h1>《Speech and Language Processing》第 9 章 · 术语表（24 条）</h1>
+<blockquote><p>页码口径：中文译文无印刷页码，统一用 <code>§x.y</code> 定位。</p><p>「缩引」只截取原文关键短语，完整定义回看 <code>book-notes.md</code> 的摘录区。</p></blockquote>
+<table><tr><th>术语</th><th>书上定义（缩引）</th><th>页码</th><th>我的话</th></tr><tr><td>编码器（encoder）</td><td>「以词元序列为输入，并为每个词元输出一个向量表示」</td><td>§9.1</td><td>等长进、等长出，每个位置一个上下文化向量；不负责往下写。</td></tr><tr><td>解码器（decoder）</td><td>「逐个迭代地生成输出词元」「信息流是从左到右的」</td><td>§9.1</td><td>只能看左边，边写边定；GPT/Claude/Llama 都是它。</td></tr><tr><td>编码器-解码器</td><td>「输入词元与输出词元之间的关系要松散得多」</td><td>§9.1</td><td>允许两边词表不同、长度不同；翻译与语音识别的主场。</td></tr><tr><td>掩码语言模型</td><td>「遮蔽掉一个词，并学习通过观察两侧周围的词来预测它」</td><td>§9.1</td><td>用挖空-还原代替下一词预测的双向模型。</td></tr><tr><td>双向注意力</td><td>「词元 i 的注意力可以关注其后的词元 i+1 等等」</td><td>§9.2.1</td><td>把 <code>QKᵀ</code> 上三角的 <code>−∞</code> 拿掉，整行都能被 softmax 看到。</td></tr><tr><td>因果掩码</td><td>「使注意力无法看到未来的词元」</td><td>§9.2.1</td><td>上三角置 <code>−∞</code>，保证第 i 行只看 1..i；双向模型删的就是它。</td></tr><tr><td>完形填空任务（cloze）</td><td>「学习执行填空任务」（Taylor，1953）</td><td>§9.3</td><td>给残缺句子补缺项；来自语言测试，不是神经网络原创。</td></tr><tr><td>去噪（denoising）</td><td>「以某种方式破坏……系统的目标就是去除噪声」</td><td>§9.3</td><td>先弄坏再还原的总称；掩码、替换、重排、删除都算。</td></tr><tr><td>掩码语言建模（MLM）</td><td>「随机遮盖……一定比例的词元……预测这些被遮盖词元」</td><td>§9.3.1</td><td>只对选中位置算损失的预训练目标。</td></tr><tr><td><code>[MASK]</code></td><td>「词表中名为 [MASK] 的特殊词元」</td><td>§9.3.1</td><td>训练时才会出现的占位符；下游推理通常见不到。</td></tr><tr><td>下一句预测（NSP）</td><td>「判断输入的两个句子在语料库中是否原本相邻」</td><td>§9.3.2</td><td>BERT 的辅助二分类目标；RoBERTa 证明可删。</td></tr><tr><td><code>[CLS]</code></td><td>「被加在输入句对的最前面」</td><td>§9.3.2</td><td>没有词义的汇总位；靠 NSP 被训练成句向量。</td></tr><tr><td><code>[SEP]</code></td><td>「被放在两个句子之间以及第二句最后一个词元之后」</td><td>§9.3.2</td><td>句对任务的分隔符，微调时沿用同一格式。</td></tr><tr><td>段嵌入（segment embedding）</td><td>「第一/第二段嵌入」与词嵌入、位置嵌入相加</td><td>§9.3.2</td><td>告诉模型这个词属于第几句；与位置嵌入同维相加。</td></tr><tr><td>多语言诅咒</td><td>「与在较少语言上训练的模型相比，它在每种语言上的性能都会下降」</td><td>§9.3.3</td><td>语言越多，每种语言分到的模型容量越薄。</td></tr><tr><td>微调（fine-tuning）</td><td>「在预训练模型之上加入……专用头」</td><td>§9.4</td><td>主干基本不动，只换最后一公里。</td></tr><tr><td>分类头（classifier head）</td><td>「接收模型输出向量并据此作出该任务的判断」</td><td>§9.4.1</td><td>一个小矩阵把 <code>h_CLS</code> 映射到标签空间。</td></tr><tr><td>迁移学习</td><td>「从一个任务或领域获取知识，然后把它应用（迁移）到求解一个新任务」</td><td>章首</td><td>预训练-微调是它在 NLP 里的具体形态。</td></tr><tr><td>词元 / 子词</td><td>输入「先经过词元化……在子词词元而非词上进行」</td><td>§9.2.1</td><td>模型的最小输入单位，不等于语言学上的词。</td></tr><tr><td>BIO 标注</td><td>「B 标记实体片段的起始，I 标记片段内部的词元，O 标记片段之外」</td><td>§9.5.2</td><td>用逐位置状态表示括号；n 类实体共 2n+1 个标签。</td></tr><tr><td>IO 标注</td><td>「通过取消 B 标签而丢失了一些信息」</td><td>§9.5.2</td><td>⚠️ 与 BIO 的区别：相邻同类实体会粘成一个，边界丢失。</td></tr><tr><td>BIOES 标注</td><td>「为片段的结尾增加了一个结束标签 E，并为仅由一个词构成的片段增加了一个片段标签 S」</td><td>§9.5.2</td><td>⚠️ 与 BIO 的区别：边界更显式，但标签更多、每类样本更稀。</td></tr><tr><td>条件随机场（CRF）</td><td>「可以考虑全局的标签级转移」</td><td>§9.5.3</td><td>给逐位置 softmax 加一层标签转移约束，惩罚非法跳转。</td></tr><tr><td>配对自助法</td><td>「判断两个 NER 系统的 F1 分值之间的差异是否为显著差异」</td><td>§9.5.4</td><td>同一测试集上反复重采样，看分数差的分布是否跨 0。</td></tr></table>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="glossary.md">glossary.md</a></footer>
+</div></body></html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 3 章 N-gram 语言模型 · 行动清单（3 条）</title>
+<style>
+:root { --ink:#1b1b1b; --muted:#6b7280; --line:#e5e7eb; --accent:#0b5fa5; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { margin:0; background:#f6f7f9; color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height:1.85; font-size:16px; }
+.wrap { max-width:860px; margin:0 auto; background:var(--bg); min-height:100vh;
+  padding:48px 56px 120px; box-shadow:0 0 24px rgba(0,0,0,.06); }
+h1,h2,h3,h4 { line-height:1.35; margin:1.4em 0 .6em; }
+h1 { font-size:28px; border-bottom:2px solid var(--line); padding-bottom:.3em; }
+h2 { font-size:22px; } h3 { font-size:18px; } h4 { font-size:16px; }
+p { margin:0 0 .9em; text-align:justify; }
+ul,ol { margin:.4em 0 1em 1.5em; } li { margin:.25em 0; }
+img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
+blockquote { margin:.8em 0; padding:.5em 1em; background:#f7f8fa;
+  border-left:3px solid #c9d2dd; color:#4a4a4a; font-size:14px; }
+blockquote p { margin:.2em 0; }
+table { border-collapse:collapse; width:100%; margin:1em 0; font-size:14px; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:#f3f5f7; font-weight:600; }
+code { background:#f0f2f5; padding:.1em .35em; border-radius:3px; font-size:.9em; }
+a { color:var(--accent); }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+pre { background:#f3f5f7; border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.6; }
+pre code { background:none; padding:0; }
+pre.mermaid { background:#fff; text-align:center; }
+.nav { margin-bottom:1.5em; font-size:14px; color:var(--muted); }
+.nav a { color:var(--accent); text-decoration:none; margin-right:1em; }
+footer { margin-top:3em; padding-top:1em; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted); }
+</style>
+
+</head><body><div class="wrap">
+<div class="nav"><a href="../../../index.html">笔记架首页</a><a href="../../index.html">读书 · Reading</a><a href="../README.html">读书笔记：Speech and Language Processing（第 1–11 章）</a><a href="README.html">读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</a></div>
+<h1>第 3 章 N-gram 语言模型 · 行动清单（3 条）</h1>
+<blockquote><p>每条 = 动词 + 对象 + 时间/验收。全部行动已在 <code>labs/</code> 中真实执行，产物可复现。</p><p>错题归因规则：做错时先判是<strong>公式条件</strong>（回对应小节）、<strong>计数口径</strong>（重画计数表）还是<strong>算术步骤</strong>（限时重做），不抄题了事。</p></blockquote>
+<ol><li>48 小时内用 <code>labs/lab-01/ngram_perplexity.py</code> 在自建语料上训练 1–4 元模型，产出 <code>out/metrics.csv</code> 与两张图（验收：CSV 共 12 行数据（4 个阶数 + 2 阶×4 个训练比例），图中 2-gram 的测试困惑度最低、4-gram 回升，并能用&quot;上下文收益 &lt; 稀疏代价&quot;解释）。</li></ol>
+<ol><li>本周内把拉普拉斯、加 k、插值、愚蠢回退四种平滑实现在同一 trigram 测试集上跑通，产出对比柱状图（验收：MLE 因零概率记为 inf；插值困惑度低于所有 add-k；<code>lambdas.json</code> 中三个权重之和为 1）。</li></ol>
+<ol><li>下次复习前用 <code>labs/lab-03/verify_book_numbers.py</code> 重算书中的 I am Sam 概率、颜色困惑度、马匹熵、练习 3.5 与 3.12（验收：20/20 断言通过；若失败，按上述三类归因并回看对应 <code>book-notes</code> 小节）。</li></ol>
+<h2>错题归因备注</h2>
+<ul><li>本轮实际发生的三类错误见 <code>self-test.md</code> 的「例题重做记录」：分母口径 1 次、公式漏项 1 次、分母未加 V 1 次。</li><li>归因顺序固定：先查定义与公式条件，再查计数是否含 <code>&lt;s&gt;</code>/<code>&lt;/s&gt;</code>，最后才怀疑算术。</li></ul>
+<footer>本页由 <code>scripts/md2html.py</code> 从同名 <code>.md</code> 渲染 ·
+源文件：<a href="actions.md">actions.md</a></footer>
+</div></body></html>

@@ -1,0 +1,3 @@
+attribute_set,n_group,n_attr,observed_abs_diff,null_mean,null_sd,perm_p_value
+science,3,3,0.0163,0.0598,0.0488,0.813
+arts,3,1,0.0421,0.0820,0.0749,0.619

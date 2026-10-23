@@ -1,0 +1,34 @@
+{
+  "shapes": {
+    "concat": [
+      6,
+      8
+    ],
+    "out": [
+      6,
+      8
+    ],
+    "per_head_weights": [
+      [
+        6,
+        6
+      ],
+      [
+        6,
+        6
+      ]
+    ]
+  },
+  "row_sum_max_error": 1.1102230246251565e-16,
+  "masked_upper_max_weight": 0.0,
+  "causal_perturbation_max_diff": 0.0,
+  "unmasked_perturbation_leak": 5.51212573228045,
+  "head_dim_equals_d_over_A": true,
+  "attention_params_A2": 256,
+  "attention_params_A1": 256,
+  "attention_params_independent_of_A": true,
+  "ffn_params_no_bias": 512,
+  "per_block_params_no_bias": 768,
+  "formula_12d2": 768,
+  "all_pass": true
+}

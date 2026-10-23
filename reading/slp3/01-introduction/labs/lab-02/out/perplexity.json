@@ -1,0 +1,46 @@
+{
+  "test_sentence": "so long and thanks for all the fish",
+  "test_tokens": 8,
+  "train_tokens": 13116,
+  "vocab_size": 2381,
+  "oov": [
+    "thanks",
+    "fish"
+  ],
+  "models": {
+    "unigram_unsmoothed": {
+      "perplexity": Infinity,
+      "logprob": -Infinity
+    },
+    "unigram_add1": {
+      "perplexity": 552.0219464160117,
+      "logprob": -50.508702427894306
+    },
+    "bigram_unsmoothed": {
+      "perplexity": Infinity,
+      "logprob": -Infinity
+    }
+  },
+  "bigram_add_k": {
+    "0.0001": {
+      "perplexity": 3572.575443443041,
+      "logprob": -65.44833621927798
+    },
+    "0.001": {
+      "perplexity": 1572.2600108837598,
+      "logprob": -58.88215488509926
+    },
+    "0.01": {
+      "perplexity": 877.7886295100409,
+      "logprob": -54.21924659020347
+    },
+    "0.1": {
+      "perplexity": 846.8584126491228,
+      "logprob": -53.932268138691725
+    },
+    "1.0": {
+      "perplexity": 1292.763974336,
+      "logprob": -57.31630256793934
+    }
+  }
+}

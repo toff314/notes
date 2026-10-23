@@ -1,0 +1,5 @@
+embedding,true_label,pred_negative,pred_positive
+random,0,22,67
+random,1,70,41
+ppmi_svd,0,89,0
+ppmi_svd,1,1,110

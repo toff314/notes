@@ -1,0 +1,401 @@
+embedding,sentence,target,prediction,p_positive
+random,"the ending is lovely",0,1,0.089527
+random,"the book seemed charming",0,1,0.08389
+random,"we thought the movie was charming",0,1,0.300992
+random,"the ending was very tedious",1,0,0.608768
+random,"i found the direction lovely",0,1,0.205382
+random,"the music was very enjoyable",0,0,0.657567
+random,"this movie was really clumsy",1,0,0.84783
+random,"the script was clumsy",1,0,0.810354
+random,"i thought the ending was clumsy",1,1,0.4413
+random,"overall the movie was charming",0,1,0.361937
+random,"the book was clumsy",1,0,0.775698
+random,"the script was dismal",1,1,0.479693
+random,"overall the acting was painful",1,0,0.922722
+random,"the cast is charming",0,1,0.019003
+random,"the direction was tedious",1,0,0.650555
+random,"overall the show was tedious",1,0,0.577747
+random,"the plot was very clumsy",1,0,0.839993
+random,"the play and the story were impressive",0,0,0.690682
+random,"the movie was very impressive",0,0,0.743834
+random,"the show was dismal and the story was tedious",1,1,0.424418
+random,"the acting was very impressive",0,0,0.687808
+random,"the show was very painful",1,0,0.920819
+random,"i found the scene impressive",0,1,0.174515
+random,"the book is tedious",1,1,0.183047
+random,"i found the script tedious",1,1,0.275614
+random,"i thought the direction was charming",0,1,0.135925
+random,"the scene felt painful to me",1,0,0.796477
+random,"the script was clumsy and the story was tedious",1,0,0.599499
+random,"the plot is impressive",0,1,0.263095
+random,"we thought the ending was charming",0,1,0.211286
+random,"i thought the plot was tedious",1,1,0.28074
+random,"i found the show lovely",0,1,0.147872
+random,"i thought the script was dismal",1,1,0.23184
+random,"i found the music clumsy",1,0,0.722894
+random,"the story was very lovely",0,1,0.369883
+random,"i found the acting impressive",0,1,0.332949
+random,"i found the acting charming",0,1,0.103692
+random,"i thought the scene was charming",0,1,0.063406
+random,"the direction was very painful",1,0,0.944233
+random,"overall the book was clumsy",1,0,0.766498
+random,"the scene was very impressive",0,1,0.482258
+random,"we thought the ending was enjoyable",0,1,0.314539
+random,"the story seemed dismal",1,1,0.2419
+random,"i thought the movie was clumsy",1,0,0.561102
+random,"i thought the direction was clumsy",1,0,0.536729
+random,"we thought the music was lovely",0,1,0.499989
+random,"this book was really impressive",0,0,0.518102
+random,"we thought the music was clumsy",1,0,0.818282
+random,"the direction and the music were painful",1,0,0.972278
+random,"overall the show was impressive",0,0,0.599267
+random,"i found the cast clumsy",1,1,0.32527
+random,"the film was tedious and the play was painful",1,0,0.677256
+random,"the scene is charming",0,1,0.024712
+random,"the acting was dismal",1,0,0.538597
+random,"the scene was tedious and the music was clumsy",1,0,0.660845
+random,"the script was enjoyable",0,1,0.315707
+random,"overall the movie was painful",1,0,0.940212
+random,"the story and the play were charming",0,1,0.439455
+random,"we thought the book was dismal",1,1,0.399439
+random,"i found the music impressive",0,0,0.500631
+random,"the film was very impressive",0,0,0.612255
+random,"i found the ending painful",1,0,0.716636
+random,"the play was very enjoyable",0,1,0.330216
+random,"the ending seemed painful",1,0,0.859439
+random,"this scene was really clumsy",1,0,0.638143
+random,"this plot was really clumsy",1,0,0.791928
+random,"this show was really clumsy",1,0,0.767655
+random,"the direction seemed tedious",1,1,0.484446
+random,"i found the music tedious",1,1,0.479254
+random,"the film was very tedious",1,0,0.590022
+random,"the story and the scene were impressive",0,0,0.662324
+random,"the show felt painful to me",1,0,0.870594
+random,"the plot was impressive",0,0,0.607562
+random,"the book was enjoyable and the movie was enjoyable",0,1,0.333471
+random,"the acting felt charming to me",0,1,0.32308
+random,"the cast is lovely",0,1,0.038282
+random,"the show felt enjoyable to me",0,1,0.408782
+random,"the acting and the play were impressive",0,0,0.759343
+random,"the direction was tedious and the story was painful",1,0,0.755235
+random,"the story and the script were charming",0,0,0.524486
+random,"the film seemed dismal",1,1,0.285997
+random,"the ending is clumsy",1,1,0.480546
+random,"the script felt clumsy to me",1,0,0.757146
+random,"overall the ending was lovely",0,1,0.376709
+random,"overall the ending was lovely",0,1,0.376709
+random,"i found the acting impressive",0,1,0.332949
+random,"we thought the cast was tedious",1,1,0.316918
+random,"this script was really dismal",1,0,0.505062
+random,"the film seemed tedious",1,1,0.334821
+random,"i thought the script was charming",0,1,0.102085
+random,"overall the plot was charming",0,1,0.282546
+random,"the acting and the film were impressive",0,0,0.801889
+random,"overall the acting was lovely",0,1,0.439086
+random,"the cast felt dismal to me",1,1,0.363596
+random,"the direction was tedious",1,0,0.650555
+random,"overall the music was tedious",1,0,0.76767
+random,"the book was painful and the play was dismal",1,0,0.645825
+random,"i thought the story was painful",1,0,0.589676
+random,"the ending seemed dismal",1,1,0.294946
+random,"we thought the cast was clumsy",1,0,0.52789
+random,"this film was really charming",0,1,0.214378
+random,"the book and the plot were dismal",1,0,0.752339
+random,"the play was impressive and the book was charming",0,1,0.244533
+random,"the acting and the story were enjoyable",0,0,0.6657
+random,"this play was really tedious",1,1,0.424653
+random,"the cast and the play were tedious",1,0,0.596052
+random,"the ending is lovely",0,1,0.089527
+random,"this direction was really enjoyable",0,1,0.453859
+random,"the show was very impressive",0,0,0.640804
+random,"this film was really painful",1,0,0.881957
+random,"we thought the show was impressive",0,1,0.491479
+random,"the scene and the scene were painful",1,0,0.852374
+random,"this acting was really clumsy",1,0,0.797312
+random,"the plot was very impressive",0,0,0.672651
+random,"overall the scene was lovely",0,1,0.25044
+random,"the script is tedious",1,1,0.21707
+random,"i thought the ending was tedious",1,1,0.249285
+random,"the movie was charming and the movie was charming",0,1,0.264337
+random,"the ending was lovely",0,1,0.295099
+random,"the show and the movie were tedious",1,0,0.835617
+random,"the direction was impressive and the movie was enjoyable",0,0,0.522868
+random,"this cast was really tedious",1,1,0.349672
+random,"i thought the scene was clumsy",1,1,0.325777
+random,"i thought the book was impressive",0,1,0.244877
+random,"i thought the book was charming",0,1,0.091354
+random,"the music felt impressive to me",0,0,0.744106
+random,"we thought the scene was clumsy",1,0,0.555747
+random,"overall the show was dismal",1,0,0.529153
+random,"the acting felt lovely to me",0,1,0.445391
+random,"i thought the direction was painful",1,0,0.712179
+random,"overall the music was tedious",1,0,0.76767
+random,"the plot was lovely and the story was lovely",0,1,0.274676
+random,"the scene and the music were impressive",0,0,0.817564
+random,"the ending seemed clumsy",1,0,0.659929
+random,"the film is enjoyable",0,1,0.088049
+random,"i found the book clumsy",1,1,0.47425
+random,"i found the play tedious",1,1,0.189978
+random,"the play seemed charming",0,1,0.056383
+random,"i thought the cast was impressive",0,1,0.161561
+random,"i found the ending tedious",1,1,0.262654
+random,"the direction and the show were lovely",0,0,0.732736
+random,"the music felt clumsy to me",1,0,0.864718
+random,"overall the cast was dismal",1,1,0.340684
+random,"i thought the film was dismal",1,1,0.21254
+random,"this script was really lovely",0,1,0.359698
+random,"overall the acting was clumsy",1,0,0.827302
+random,"the cast was clumsy and the music was painful",1,0,0.845545
+random,"the play was clumsy and the script was painful",1,0,0.801204
+random,"the plot was enjoyable",0,1,0.353221
+random,"the ending is charming",0,1,0.045877
+random,"i thought the story was impressive",0,1,0.227953
+random,"we thought the film was lovely",0,1,0.302282
+random,"the book seemed impressive",0,1,0.345023
+random,"the acting and the music were painful",1,0,0.968026
+random,"the acting was tedious",1,0,0.598976
+random,"the book was dismal",1,1,0.424496
+random,"we thought the book was tedious",1,1,0.43735
+random,"i found the script painful",1,0,0.734085
+random,"the book and the music were dismal",1,0,0.837596
+random,"this show was really dismal",1,1,0.498506
+random,"the show and the film were impressive",0,0,0.778352
+random,"the cast is enjoyable",0,1,0.03913
+random,"the scene was painful and the story was tedious",1,0,0.632283
+random,"we thought the show was charming",0,1,0.220322
+random,"i found the film tedious",1,1,0.251396
+random,"i found the plot tedious",1,1,0.301319
+random,"overall the direction was lovely",0,1,0.487564
+random,"i thought the cast was clumsy",1,1,0.301774
+random,"the story and the play were dismal",1,0,0.646951
+random,"the plot felt lovely to me",0,1,0.432581
+random,"this script was really painful",1,0,0.892221
+random,"the ending seemed lovely",0,1,0.173779
+random,"this movie was really clumsy",1,0,0.84783
+random,"the music was very painful",1,0,0.96522
+random,"we thought the film was painful",1,0,0.811329
+random,"i thought the ending was lovely",0,1,0.147992
+random,"the acting was tedious and the scene was painful",1,0,0.691792
+random,"i found the cast dismal",1,1,0.123193
+random,"the show felt dismal to me",1,0,0.522323
+random,"the script is clumsy",1,0,0.506275
+random,"overall the ending was impressive",0,0,0.586569
+random,"the direction seemed dismal",1,1,0.428162
+random,"we thought the cast was dismal",1,1,0.286476
+random,"we thought the ending was charming",0,1,0.211286
+random,"the direction is clumsy",1,0,0.622418
+random,"this play was really tedious",1,1,0.424653
+random,"the story felt lovely to me",0,1,0.351115
+random,"the script was painful and the plot was clumsy",1,0,0.849165
+random,"the script was charming and the book was lovely",0,1,0.209011
+random,"the book felt tedious to me",1,0,0.527013
+random,"the cast felt painful to me",1,0,0.778534
+random,"this script was really enjoyable",0,1,0.364175
+random,"the music is enjoyable",0,1,0.249552
+random,"the cast was tedious",1,1,0.302418
+random,"the ending was impressive and the book was impressive",0,1,0.481995
+random,"i found the book painful",1,0,0.692478
+random,"i found the acting enjoyable",0,1,0.180563
+random,"i found the scene tedious",1,1,0.163226
+random,"the direction was charming and the movie was charming",0,1,0.252911
+random,"i thought the script was clumsy",1,1,0.458458
+ppmi_svd,"the ending is lovely",0,0,0.985577
+ppmi_svd,"the book seemed charming",0,0,0.982224
+ppmi_svd,"we thought the movie was charming",0,0,0.895573
+ppmi_svd,"the ending was very tedious",1,1,0.013475
+ppmi_svd,"i found the direction lovely",0,0,0.972209
+ppmi_svd,"the music was very enjoyable",0,0,0.956612
+ppmi_svd,"this movie was really clumsy",1,1,0.011545
+ppmi_svd,"the script was clumsy",1,1,0.003158
+ppmi_svd,"i thought the ending was clumsy",1,1,0.028587
+ppmi_svd,"overall the movie was charming",0,0,0.955633
+ppmi_svd,"the book was clumsy",1,1,0.005083
+ppmi_svd,"the script was dismal",1,1,0.00327
+ppmi_svd,"overall the acting was painful",1,1,0.172075
+ppmi_svd,"the cast is charming",0,0,0.989436
+ppmi_svd,"the direction was tedious",1,1,0.002652
+ppmi_svd,"overall the show was tedious",1,1,0.019249
+ppmi_svd,"the plot was very clumsy",1,1,0.039204
+ppmi_svd,"the play and the story were impressive",0,0,0.979218
+ppmi_svd,"the movie was very impressive",0,0,0.966568
+ppmi_svd,"the show was dismal and the story was tedious",1,1,0.023262
+ppmi_svd,"the acting was very impressive",0,0,0.962858
+ppmi_svd,"the show was very painful",1,1,0.286237
+ppmi_svd,"i found the scene impressive",0,0,0.98012
+ppmi_svd,"the book is tedious",1,1,0.007409
+ppmi_svd,"i found the script tedious",1,1,0.016773
+ppmi_svd,"i thought the direction was charming",0,0,0.92129
+ppmi_svd,"the scene felt painful to me",1,1,0.32305
+ppmi_svd,"the script was clumsy and the story was tedious",1,1,0.016448
+ppmi_svd,"the plot is impressive",0,0,0.995687
+ppmi_svd,"we thought the ending was charming",0,0,0.892066
+ppmi_svd,"i thought the plot was tedious",1,1,0.054794
+ppmi_svd,"i found the show lovely",0,0,0.984189
+ppmi_svd,"i thought the script was dismal",1,1,0.026415
+ppmi_svd,"i found the music clumsy",1,1,0.073339
+ppmi_svd,"the story was very lovely",0,0,0.991328
+ppmi_svd,"i found the acting impressive",0,0,0.974694
+ppmi_svd,"i found the acting charming",0,0,0.967179
+ppmi_svd,"i thought the scene was charming",0,0,0.935901
+ppmi_svd,"the direction was very painful",1,1,0.177227
+ppmi_svd,"overall the book was clumsy",1,1,0.018283
+ppmi_svd,"the scene was very impressive",0,0,0.971059
+ppmi_svd,"we thought the ending was enjoyable",0,0,0.750697
+ppmi_svd,"the story seemed dismal",1,1,0.030571
+ppmi_svd,"i thought the movie was clumsy",1,1,0.030038
+ppmi_svd,"i thought the direction was clumsy",1,1,0.025923
+ppmi_svd,"we thought the music was lovely",0,0,0.964291
+ppmi_svd,"this book was really impressive",0,0,0.964485
+ppmi_svd,"we thought the music was clumsy",1,1,0.049666
+ppmi_svd,"the direction and the music were painful",1,1,0.409614
+ppmi_svd,"overall the show was impressive",0,0,0.977527
+ppmi_svd,"i found the cast clumsy",1,1,0.034249
+ppmi_svd,"the film was tedious and the play was painful",1,1,0.078561
+ppmi_svd,"the scene is charming",0,0,0.984909
+ppmi_svd,"the acting was dismal",1,1,0.003453
+ppmi_svd,"the scene was tedious and the music was clumsy",1,1,0.01639
+ppmi_svd,"the script was enjoyable",0,0,0.856395
+ppmi_svd,"overall the movie was painful",1,1,0.192824
+ppmi_svd,"the story and the play were charming",0,0,0.974908
+ppmi_svd,"we thought the book was dismal",1,1,0.023159
+ppmi_svd,"i found the music impressive",0,0,0.992795
+ppmi_svd,"the film was very impressive",0,0,0.983622
+ppmi_svd,"i found the ending painful",1,1,0.272271
+ppmi_svd,"the play was very enjoyable",0,0,0.932459
+ppmi_svd,"the ending seemed painful",1,1,0.129737
+ppmi_svd,"this scene was really clumsy",1,1,0.013958
+ppmi_svd,"this plot was really clumsy",1,1,0.029084
+ppmi_svd,"this show was really clumsy",1,1,0.018581
+ppmi_svd,"the direction seemed tedious",1,1,0.003411
+ppmi_svd,"i found the music tedious",1,1,0.062809
+ppmi_svd,"the film was very tedious",1,1,0.028511
+ppmi_svd,"the story and the scene were impressive",0,0,0.968014
+ppmi_svd,"the show felt painful to me",1,1,0.384391
+ppmi_svd,"the plot was impressive",0,0,0.992354
+ppmi_svd,"the book was enjoyable and the movie was enjoyable",0,0,0.894066
+ppmi_svd,"the acting felt charming to me",0,0,0.94121
+ppmi_svd,"the cast is lovely",0,0,0.991534
+ppmi_svd,"the show felt enjoyable to me",0,0,0.90235
+ppmi_svd,"the acting and the play were impressive",0,0,0.937452
+ppmi_svd,"the direction was tedious and the story was painful",1,1,0.071768
+ppmi_svd,"the story and the script were charming",0,0,0.953721
+ppmi_svd,"the film seemed dismal",1,1,0.012965
+ppmi_svd,"the ending is clumsy",1,1,0.006865
+ppmi_svd,"the script felt clumsy to me",1,1,0.036596
+ppmi_svd,"overall the ending was lovely",0,0,0.962255
+ppmi_svd,"overall the ending was lovely",0,0,0.962255
+ppmi_svd,"i found the acting impressive",0,0,0.974694
+ppmi_svd,"we thought the cast was tedious",1,1,0.022999
+ppmi_svd,"this script was really dismal",1,1,0.010701
+ppmi_svd,"the film seemed tedious",1,1,0.010399
+ppmi_svd,"i thought the script was charming",0,0,0.921002
+ppmi_svd,"overall the plot was charming",0,0,0.981705
+ppmi_svd,"the acting and the film were impressive",0,0,0.938623
+ppmi_svd,"overall the acting was lovely",0,0,0.957912
+ppmi_svd,"the cast felt dismal to me",1,1,0.059323
+ppmi_svd,"the direction was tedious",1,1,0.002652
+ppmi_svd,"overall the music was tedious",1,1,0.040036
+ppmi_svd,"the book was painful and the play was dismal",1,1,0.065621
+ppmi_svd,"i thought the story was painful",1,0,0.523396
+ppmi_svd,"the ending seemed dismal",1,1,0.00496
+ppmi_svd,"we thought the cast was clumsy",1,1,0.026171
+ppmi_svd,"this film was really charming",0,0,0.972782
+ppmi_svd,"the book and the plot were dismal",1,1,0.094708
+ppmi_svd,"the play was impressive and the book was charming",0,0,0.982322
+ppmi_svd,"the acting and the story were enjoyable",0,0,0.899411
+ppmi_svd,"this play was really tedious",1,1,0.021027
+ppmi_svd,"the cast and the play were tedious",1,1,0.080928
+ppmi_svd,"the ending is lovely",0,0,0.985577
+ppmi_svd,"this direction was really enjoyable",0,0,0.810249
+ppmi_svd,"the show was very impressive",0,0,0.978406
+ppmi_svd,"this film was really painful",1,1,0.290912
+ppmi_svd,"we thought the show was impressive",0,0,0.93834
+ppmi_svd,"the scene and the scene were painful",1,1,0.27861
+ppmi_svd,"this acting was really clumsy",1,1,0.010685
+ppmi_svd,"the plot was very impressive",0,0,0.986161
+ppmi_svd,"overall the scene was lovely",0,0,0.96672
+ppmi_svd,"the script is tedious",1,1,0.004623
+ppmi_svd,"i thought the ending was tedious",1,1,0.025023
+ppmi_svd,"the movie was charming and the movie was charming",0,0,0.965805
+ppmi_svd,"the ending was lovely",0,0,0.974883
+ppmi_svd,"the show and the movie were tedious",1,1,0.052041
+ppmi_svd,"the direction was impressive and the movie was enjoyable",0,0,0.940121
+ppmi_svd,"this cast was really tedious",1,1,0.015307
+ppmi_svd,"i thought the scene was clumsy",1,1,0.032158
+ppmi_svd,"i thought the book was impressive",0,0,0.952449
+ppmi_svd,"i thought the book was charming",0,0,0.941427
+ppmi_svd,"the music felt impressive to me",0,0,0.983426
+ppmi_svd,"we thought the scene was clumsy",1,1,0.021071
+ppmi_svd,"overall the show was dismal",1,1,0.023055
+ppmi_svd,"the acting felt lovely to me",0,0,0.949367
+ppmi_svd,"i thought the direction was painful",1,1,0.214974
+ppmi_svd,"overall the music was tedious",1,1,0.040036
+ppmi_svd,"the plot was lovely and the story was lovely",0,0,0.992114
+ppmi_svd,"the scene and the music were impressive",0,0,0.961956
+ppmi_svd,"the ending seemed clumsy",1,1,0.004797
+ppmi_svd,"the film is enjoyable",0,0,0.969256
+ppmi_svd,"i found the book clumsy",1,1,0.028837
+ppmi_svd,"i found the play tedious",1,1,0.039069
+ppmi_svd,"the play seemed charming",0,0,0.990253
+ppmi_svd,"i thought the cast was impressive",0,0,0.95941
+ppmi_svd,"i found the ending tedious",1,1,0.01917
+ppmi_svd,"the direction and the show were lovely",0,0,0.919433
+ppmi_svd,"the music felt clumsy to me",1,1,0.105973
+ppmi_svd,"overall the cast was dismal",1,1,0.022474
+ppmi_svd,"i thought the film was dismal",1,1,0.055051
+ppmi_svd,"this script was really lovely",0,0,0.945398
+ppmi_svd,"overall the acting was clumsy",1,1,0.012918
+ppmi_svd,"the cast was clumsy and the music was painful",1,1,0.091648
+ppmi_svd,"the play was clumsy and the script was painful",1,1,0.052981
+ppmi_svd,"the plot was enjoyable",0,0,0.956659
+ppmi_svd,"the ending is charming",0,0,0.981883
+ppmi_svd,"i thought the story was impressive",0,0,0.982531
+ppmi_svd,"we thought the film was lovely",0,0,0.949324
+ppmi_svd,"the book seemed impressive",0,0,0.986988
+ppmi_svd,"the acting and the music were painful",1,1,0.413725
+ppmi_svd,"the acting was tedious",1,1,0.002804
+ppmi_svd,"the book was dismal",1,1,0.005308
+ppmi_svd,"we thought the book was tedious",1,1,0.019782
+ppmi_svd,"i found the script painful",1,1,0.247291
+ppmi_svd,"the book and the music were dismal",1,1,0.112691
+ppmi_svd,"this show was really dismal",1,1,0.019136
+ppmi_svd,"the show and the film were impressive",0,0,0.958538
+ppmi_svd,"the cast is enjoyable",0,0,0.954346
+ppmi_svd,"the scene was painful and the story was tedious",1,1,0.083394
+ppmi_svd,"we thought the show was charming",0,0,0.923937
+ppmi_svd,"i found the film tedious",1,1,0.041312
+ppmi_svd,"i found the plot tedious",1,1,0.049239
+ppmi_svd,"overall the direction was lovely",0,0,0.957042
+ppmi_svd,"i thought the cast was clumsy",1,1,0.040607
+ppmi_svd,"the story and the play were dismal",1,1,0.181245
+ppmi_svd,"the plot felt lovely to me",0,0,0.978353
+ppmi_svd,"this script was really painful",1,1,0.143353
+ppmi_svd,"the ending seemed lovely",0,0,0.980817
+ppmi_svd,"this movie was really clumsy",1,1,0.011545
+ppmi_svd,"the music was very painful",1,1,0.461243
+ppmi_svd,"we thought the film was painful",1,1,0.270432
+ppmi_svd,"i thought the ending was lovely",0,0,0.938906
+ppmi_svd,"the acting was tedious and the scene was painful",1,1,0.035687
+ppmi_svd,"i found the cast dismal",1,1,0.035202
+ppmi_svd,"the show felt dismal to me",1,1,0.060238
+ppmi_svd,"the script is clumsy",1,1,0.005587
+ppmi_svd,"overall the ending was impressive",0,0,0.96483
+ppmi_svd,"the direction seemed dismal",1,1,0.004276
+ppmi_svd,"we thought the cast was dismal",1,1,0.026826
+ppmi_svd,"we thought the ending was charming",0,0,0.892066
+ppmi_svd,"the direction is clumsy",1,1,0.005662
+ppmi_svd,"this play was really tedious",1,1,0.021027
+ppmi_svd,"the story felt lovely to me",0,0,0.986005
+ppmi_svd,"the script was painful and the plot was clumsy",1,1,0.059369
+ppmi_svd,"the script was charming and the book was lovely",0,0,0.970629
+ppmi_svd,"the book felt tedious to me",1,1,0.04465
+ppmi_svd,"the cast felt painful to me",1,1,0.379173
+ppmi_svd,"this script was really enjoyable",0,0,0.813418
+ppmi_svd,"the music is enjoyable",0,0,0.982138
+ppmi_svd,"the cast was tedious",1,1,0.005454
+ppmi_svd,"the ending was impressive and the book was impressive",0,0,0.977012
+ppmi_svd,"i found the book painful",1,1,0.32103
+ppmi_svd,"i found the acting enjoyable",0,0,0.899096
+ppmi_svd,"i found the scene tedious",1,1,0.021687
+ppmi_svd,"the direction was charming and the movie was charming",0,0,0.96351
+ppmi_svd,"i thought the script was clumsy",1,1,0.025856
