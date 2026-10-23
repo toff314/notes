@@ -43,6 +43,8 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
 .assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
 .assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -82,7 +84,7 @@ L1  &lt;分区&gt;/index.html     记录平铺：一门课/一本书/一场会�
 L2  所有 .md 的内容页（统一 .prose 排版）；条目子目录按需保留索引页</code></pre>
 <ul><li><strong>压缩一级</strong>：L1 分区页内，每个记录一个区块（标题 + meta + 产物表格），</li></ul>
 <p>&quot;课堂：课堂1 就能看到所有几节课的笔记产物，一个列表&quot;——不再有点击进记录页这一层。</p>
-<ul><li>产物表格：每行 = 条目（章/讲/议题/digest 产物目录）；<strong>列按产物类型拆分</strong>（读书：笔记/卡片/自测/行动/验证/术语/选题；课堂：主笔记/大纲/自测/勘误/选题；会议：纪要/决策/行动/待定/结转/勘误/主题/选题；极客时间：一页纸/指南/精华卡/讲摘/分拣/评论文/主题文/概念图/通览），无内容的类型列自动隐藏，未识别类型进&quot;其他&quot;列；记录级文档占首行&quot;（总览）&quot;。</li><li>面包屑（<code>.crumb</code>）全站常驻：笔记架首页 / 分区 / [条目]；当前层级青墨高亮、不可点。</li></ul>
+<ul><li>素材与课件表：记录表格之下单独一张虚线表（类别 | 数量 | 清单）——<code>slides/ppt</code> 课件与 <code>raw/</code> 素材只展示文件名（纯文本、<strong>不可点击、不提供下载</strong>），不进产物表格。</li><li>产物表格：每行 = 条目（章/讲/议题/digest 产物目录）；<strong>列按产物类型拆分</strong>（读书：笔记/卡片/自测/行动/验证/术语/选题；课堂：主笔记/大纲/自测/勘误/选题；会议：纪要/决策/行动/待定/结转/勘误/主题/选题；极客时间：一页纸/指南/精华卡/讲摘/分拣/评论文/主题文/概念图/通览），无内容的类型列自动隐藏，未识别类型进&quot;其他&quot;列；记录级文档占首行&quot;（总览）&quot;。</li><li>面包屑（<code>.crumb</code>）全站常驻：笔记架首页 / 分区 / [条目]；当前层级青墨高亮、不可点。</li></ul>
 <h2>四、组件</h2>
 <ol><li><strong>面包屑</strong>：14px，accent 链接 + <code> / </code> 分隔 + 当前级 plain。</li><li><strong>卡片 <code>.card</code></strong>：白底、1px <code>--line</code>、圆角 12、无下划线继承文字色；hover：边框变 accent、上浮 2px、出现阴影。（仅 L0 分区卡与 L2 子目录索引用；记录列表用表格。）</li><li><strong>卡片网格 <code>.grid</code></strong>：<code>repeat(auto-fill, minmax(280px, 1fr))</code>，gap <code>16px</code>——天然响应式。</li><li><strong>正文 <code>.prose</code></strong>：h1–h4 分级缩进；<code>table</code> 全宽、表头 <code>--accent-soft</code> 底色、横向滚动；<code>pre</code> 深色底（<code>#0e0f11</code> / <code>#d4d4d4</code> 文字）横向滚动；<code>img</code> 最大 100% 圆角 8；<code>blockquote</code> 左侧 3px accent 边 + 灰底。</li><li><strong>产物表格</strong>：L1 记录区块内的 <code>.records</code> 表格——全宽、表头 <code>--accent-soft</code>、行 hover 高亮、文档链接青墨可点；整表横向滚动（移动端）。</li></ol>
 <h2>五、响应式</h2>

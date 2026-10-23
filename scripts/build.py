@@ -34,6 +34,7 @@ ARTIFACT_COLUMNS = {
         ("验证", ["labs"]),
         ("术语", ["glossary"]),
         ("选题", ["spinoffs", "topics"]),
+        ("素材", ["__raw__"]),
     ],
     "courses": [
         ("主笔记", ["book-notes", "notes"]),
@@ -42,6 +43,7 @@ ARTIFACT_COLUMNS = {
         ("勘误", ["corrections"]),
         ("选题", ["spinoffs", "topics"]),
         ("卡片", ["cards"]),
+        ("素材", ["__raw__"]),
     ],
     "meetings": [
         ("纪要", ["notes", "minutes"]),
@@ -52,6 +54,7 @@ ARTIFACT_COLUMNS = {
         ("勘误", ["corrections"]),
         ("主题", ["themes", "matrix", "speakers"]),
         ("选题", ["spinoffs", "topics"]),
+        ("素材", ["__raw__"]),
     ],
     "geektime": [
         ("一页纸", ["digest"]),
@@ -149,6 +152,8 @@ p.sub{color:var(--muted);margin:0 0 2em}
 .assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
 .assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
 .assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
 .prose{max-width:820px}
 .prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
 .prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
@@ -436,19 +441,38 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     def type_label(idx):
         return columns[idx][0] if idx is not None and idx < len(columns) else None
 
-    def add_doc(item_label, match_key, display, link):
-        idx = classify_artifact(section_key, match_key)
+    def add_doc_at(item_label, idx, match_key, display, link):
+        """link=None 时渲染纯文本（不可点击，如 raw 素材——Caddy 对 raw/ 一律 404）。"""
         present.add(idx if idx is not None else "other")
+        item = (f'<a href="{esc(link)}">{esc(display)}</a>' if link
+                else f'<span class="plain">{esc(display)}</span>')
         for it, cells in rows:
             if it == item_label:
                 cell = cells.setdefault(idx, [])
-                text = display
-                if any(display in a for a in cell):
-                    text = match_key  # 同类型多份：用文件名区分
-                cell.append(f'<a href="{esc(link)}">{esc(text)}</a>')
+                if any(link is not None and f'>{esc(display)}<' in a for a in cell):
+                    item = f'<a href="{esc(link)}">{esc(match_key)}</a>'
+                cell.append(item)
                 return
-        cells = {idx: [f'<a href="{esc(link)}">{esc(display)}</a>']}
+        cells = {idx: [item]}
         rows.append((item_label, cells))
+
+    def add_doc(item_label, match_key, display, link):
+        add_doc_at(item_label, classify_artifact(section_key, match_key), match_key, display, link)
+
+    material_idx = next((i for i, (lb, _k) in enumerate(columns) if lb == "素材"), None)
+
+    def add_materials(item_label, base_abs, base_rel):
+        """base 下 raw/ 目录的素材 → 素材列，纯文本清单（不可点击：Caddy 对 raw/ 一律 404）。"""
+        if material_idx is None:
+            return
+        raw_dir = os.path.join(base_abs, "raw")
+        if not os.path.isdir(raw_dir):
+            return
+        names = [os.path.splitext(os.path.basename(f))[0]
+                 for f in list_named_files(raw_dir)
+                 if not re.search(r"(meta\.json|topics\.json|\.cache)", f)]
+        if names:
+            add_doc_at(item_label, material_idx, "raw", "、".join(names), None)
 
     def add_item_docs(item_label, item_dir_rel):
         """item 目录下的产物：根级 md 用 H1 做显示名；json/mermaid 与一级子目录文件（如 labs/REPORT.md）用路径名。"""
@@ -463,6 +487,7 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
             idx = classify_artifact(section_key, no_ext)
             display = type_label(idx) or no_ext
             add_doc(item_label, no_ext, display, href(doc_href(rel_file)))
+        add_materials(item_label, item_abs, item_dir_rel)
         idx_file = os.path.join(item_dir_rel, "index.html")
         if os.path.isfile(os.path.join(ROOT, idx_file)):
             add_doc(item_label, item_dir_rel.split(os.sep)[-1], "目录", href(item_dir_rel) + "/index.html")
@@ -518,11 +543,7 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
         files = list_named_files(os.path.join(ROOT, root_rel, d), ASSET_FILE_RE)
         if files:
             assets_rows.append(("课件 PPT", f"{len(files)} 份", plain_names(files)))
-    for d in raw_subs:
-        files = [f for f in list_named_files(os.path.join(ROOT, root_rel, d))
-                 if not re.search(r"(meta\.json|topics\.json|\.cache)", f)]
-        if files:
-            assets_rows.append(("素材 raw", f"{len(files)} 份", plain_names(files)))
+
     assets_html = ""
     if assets_rows:
         rows_html = "".join(
