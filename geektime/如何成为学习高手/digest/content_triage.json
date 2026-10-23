@@ -1,38 +1,85 @@
 {
   "course": "如何成为学习高手",
-  "triage_date": "2026-08-14",
+  "triage_date": "2026-10-23",
   "total_lectures": 24,
   "gold_count": 3,
   "silver_count": 16,
   "copper_count": 5,
   "iron_count": 0,
   "overall_snr": 3.5,
-
   "data_audit": {
-    "total_claims": 23,
-    "verified": 16,
-    "partial": 4,
-    "unverifiable": 3,
+    "total_claims": 57,
+    "verified": 32,
+    "partial": 23,
+    "unverifiable": 2,
     "suspicious": 0,
-    "summary": "全课23个量化声明中16个可追溯（峰终定律、检索式练习、组块7±2、洗车实验、爆米花实验、象棋实验、德韦克实验、弗林效应等均为真实心理学成果），4个为转述/意译（5分钟起步法命名、威林厄姆引言、李笑来GRE数字、精力管理比例），3个为讲师个人经历无法独立验证（550→650分、15天10门课、提前45分钟交卷），无编造数据。整体可信度在同类自媒体课程中偏高。"
+    "summary": "全课萃取声明共57条（含金句/框架/数据点）：32条可追溯至真实心理学研究或原著（✅，占56%），23条为作者经验归纳或转述包装（⚠️，占40%），2条为讲师个人经历无法独立验证（❓，占4%），无编造数据（🚩=0）。整体可信度在同类自媒体课程中偏高，核心方法论均有认知科学底座。"
   },
-
   "entries": [
     {
       "lecture_id": "01",
       "lecture_title": "如何减少对学习的排斥和厌恶心理，使其变得相对愉悦？",
       "snr_score": 3.6,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 3.5, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：用峰终定律解释「为什么学习让人排斥」，并给出让学习变愉悦的4个方法。论证结构：先引入卡尼曼峰终定律→穿插轻松任务避免负向峰值→记录成果避免负向终值→换环境激发场所神经元→关注过程而非结果（成就目标理论）。",
       "adler_q2": "解决「学习厌恶感」从何而来及如何缓解。已解决：给出可操作的愉悦化方法；未解决：峰终定律是感受层面的解释，未触及学习动机的深层（兴趣、意义感）。",
       "adler_q3": "大体有道理。峰终定律、成就目标理论均有真实出处（✅），但「场所神经元」概念含糊、未给出处（⚠️），「大脑只喜欢眼前利益」是通俗化表述。逻辑链清晰，但方法之间缺少优先级排序。",
       "adler_q4": "读完能在今天就用「穿插轻松任务」「记录当日成果」降低学习排斥感，并把「掌握目标 vs 成绩目标」作为自我诊断框架。",
       "critical_notes": "开场质量高：把卡尼曼峰终定律翻译成「穿插轻松环节+记录成果」两个动作，是全书「原理→方法」模式的范本。但「场所神经元」「大脑奖励系统」等说法偏口语化、无出处，属论证可验证性的薄弱点。成就目标理论（掌握/成绩）是后续「关注过程」主题的源头，与04、13形成呼应。",
       "extractions": [
-        { "type": "framework", "name": "峰终定律学习化应用", "source_text": "人们对一切人、事、物的感受，由峰值和终值两个因素决定。……在学习的过程中，可以穿插安排喜欢且擅长的环节，而不是一直死磕艰难的任务。", "paraphrase": "体验好坏由最高点和结尾决定，学习时穿插擅长任务、记录成果制造正向峰值和终值，可降低排斥感。", "writing_angle": "methodology", "related_lectures": ["04", "12"], "verification": { "status": "✅", "source_url": "Kahneman 1999 Peak-End Rule", "notes": "峰终定律真实，属Daniel Kahneman正式理论" } },
-        { "type": "framework", "name": "掌握目标 vs 成绩目标", "source_text": "20世纪80年代，心理学家尼科尔斯、德韦克等人，提出了「成就目标」……「掌握目标」和「成绩目标」。", "paraphrase": "关注过程成长（掌握目标）vs 关注结果名次（成绩目标），前者更愉悦且最终带来更好成绩。", "writing_angle": "opinion", "related_lectures": ["22"], "verification": { "status": "✅", "source_url": "Nicholls 1984 / Dweck 成就目标理论", "notes": "成就目标理论真实" } },
-        { "type": "technique", "name": "穿插轻松任务 + 记录成果", "source_text": "详细记录自己当天具体的时间使用情况……把成果具像化，让自己看到清晰明确的正反馈。", "paraphrase": "两个具体动作：穿插擅长环节、记录时间成果，制造正向峰终体验。", "writing_angle": "tutorial", "related_lectures": ["18"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "方法是作者归纳，逻辑合理但无研究直接支撑" } }
+        {
+          "type": "framework",
+          "name": "峰终定律学习化应用",
+          "source_text": "人们对一切人、事、物的感受，由峰值和终值两个因素决定。……在学习的过程中，可以穿插安排喜欢且擅长的环节，而不是一直死磕艰难的任务。",
+          "paraphrase": "体验好坏由最高点和结尾决定，学习时穿插擅长任务、记录成果制造正向峰值和终值，可降低排斥感。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "04",
+            "12"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Kahneman 1999 Peak-End Rule",
+            "notes": "峰终定律真实，属Daniel Kahneman正式理论"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "掌握目标 vs 成绩目标",
+          "source_text": "20世纪80年代，心理学家尼科尔斯、德韦克等人，提出了「成就目标」……「掌握目标」和「成绩目标」。",
+          "paraphrase": "关注过程成长（掌握目标）vs 关注结果名次（成绩目标），前者更愉悦且最终带来更好成绩。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Nicholls 1984 / Dweck 成就目标理论",
+            "notes": "成就目标理论真实"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "穿插轻松任务 + 记录成果",
+          "source_text": "详细记录自己当天具体的时间使用情况……把成果具像化，让自己看到清晰明确的正反馈。",
+          "paraphrase": "两个具体动作：穿插擅长环节、记录时间成果，制造正向峰终体验。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "18"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "方法是作者归纳，逻辑合理但无研究直接支撑"
+          }
+        }
       ]
     },
     {
@@ -40,15 +87,50 @@
       "lecture_title": "学会这 4 点，你也可以告别伪勤奋",
       "snr_score": 3.2,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：伪勤奋有四种形态，各有解法。结构：做容易环节→做检测→总结规律（元认知）→道德许可效应。",
       "adler_q2": "解决「看起来很努力但没效果」的困惑。已解决：给出四种伪勤奋的识别与对策；未解决：未量化「踮一踮脚」的最近发展区边界。",
       "adler_q3": "有道理但多为常见自我提升观点。「道德许可效应」有真实心理学出处（✅），「元认知」概念正确；其余三点偏常识整理，独创性有限。",
       "adler_q4": "能用「真勤奋=踮脚够得到+立刻检测」两个标准审视自己当前的学习行为。",
       "critical_notes": "结构清晰、可操作的自我诊断清单。「真勤奋 vs 伪勤奋」的二分有实用价值，但「花时间做容易环节」「不总结规律」等是教育心理学的常识复述。道德许可效应（moral licensing）是本节唯一有分量的学术概念，被解释得通俗到位。",
       "extractions": [
-        { "type": "framework", "name": "真勤奋 vs 伪勤奋", "source_text": "只有去完成那些让你感到需要思考、需要克服困难的任务，才称得上「真勤奋」。", "paraphrase": "真勤奋在「踮脚够得到」的层面做事并立即检测，而非在舒适区重复。", "writing_angle": "opinion", "related_lectures": ["03", "22"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "概念整理，逻辑合理" } },
-        { "type": "insight", "name": "道德许可效应", "source_text": "道德许可（moral licensing）是指，当你对某事有一个明确的道德标准之后……反而更倾向于违背这个标准。", "paraphrase": "做了上进的事后会倾向用放纵奖励自己，形成原地徘徊的伪勤奋。", "writing_angle": "opinion", "related_lectures": ["16"], "verification": { "status": "✅", "source_url": "Monin & Miller 2001 moral licensing", "notes": "道德许可效应真实心理学概念" } }
+        {
+          "type": "framework",
+          "name": "真勤奋 vs 伪勤奋",
+          "source_text": "只有去完成那些让你感到需要思考、需要克服困难的任务，才称得上「真勤奋」。",
+          "paraphrase": "真勤奋在「踮脚够得到」的层面做事并立即检测，而非在舒适区重复。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03",
+            "22"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "概念整理，逻辑合理"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "道德许可效应",
+          "source_text": "道德许可（moral licensing）是指，当你对某事有一个明确的道德标准之后……反而更倾向于违背这个标准。",
+          "paraphrase": "做了上进的事后会倾向用放纵奖励自己，形成原地徘徊的伪勤奋。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Monin & Miller 2001 moral licensing",
+            "notes": "道德许可效应真实心理学概念"
+          }
+        }
       ]
     },
     {
@@ -56,17 +138,82 @@
       "lecture_title": "掌握考试思维：成为一个特别会考试的人",
       "snr_score": 4.33,
       "tier": "gold",
-      "score_breakdown": { "originality": 4.5, "verifiability": 4.0, "actionability": 4.5, "change_potential": 4.5, "expression_efficiency": 4.0 },
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
       "adler_q1": "核心主张：学习和考试走相反路径，要用「输出倒推输入」。结构：学习≠考试→研究真题（即学即用）→即用即学→检索式练习。",
       "adler_q2": "解决「平时都会、一考就废」的普遍困境。已解决：给出从题目倒推学习方式的完整方法链；未解决：对无真题可依的学习场景（如工作技能）迁移有限。",
       "adler_q3": "有道理且反直觉。「学习与考试是相反路径」是清晰的认知重构；「检索式练习」有《认知天性》与Kang研究双重支撑（✅）；「即学即用/即用即学」术语自洽。仅「柳比歇夫认为输出更多」一处引用较模糊（⚠️）。",
       "adler_q4": "读完能把「先研究真题再学习」直接用于备考，并用检索式练习替代重复阅读。",
       "critical_notes": "本课是全书含金量最高之一。把「检索式练习」（testing effect）翻译成中国学生听得懂的「考试思维」，配「即学即用/即用即学」原创术语，反直觉地指出「重复阅读的熟练感是错觉」。论证可验证性强（认知天性+Kang），可操作性强（研究真题的4个问题）。是方法论科普的上好素材。",
       "extractions": [
-        { "type": "framework", "name": "考试思维：学习与考试是相反路径", "source_text": "学习和考试，是不同的事情。它们用的，是相反的路径。……要学会用考试的思维去学习。", "paraphrase": "学习目标是记住，考试目标是调取输出，要用输出倒推输入方式。", "writing_angle": "methodology", "related_lectures": ["02", "07", "22"], "verification": { "status": "✅", "source_url": "测试效应（testing effect）研究", "notes": "核心论点与认知科学检索练习一致" } },
-        { "type": "technique", "name": "研究真题的4个问题", "source_text": "1>考哪些？2>是怎么考的？3>思考自己怎样才能答出来？4>需要有意识地培养哪些思维和能力？", "paraphrase": "从出题者角度揣摩：考什么、怎么考、如何答、培养什么能力，倒推学习方式。", "writing_angle": "tutorial", "related_lectures": ["10"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者方法归纳，实用但无研究出处" } },
-        { "type": "data_point", "name": "检索式练习优于重复阅读", "source_text": "S.H.Kang等人的研究表明，如果你肯花时间，进行艰苦地回想……更有助于理解记忆。", "paraphrase": "费力回想比重复阅读记忆更牢，越吃力记得越久。", "writing_angle": "case_study", "related_lectures": ["06", "07"], "verification": { "status": "✅", "source_url": "Kang, McDermott & Roediger 2007 / 《认知天性》", "notes": "检索式练习（retrieval practice）为认知科学经典结论" } },
-        { "type": "quote", "name": "熟练感是错觉", "source_text": "《认知天性》一书指出，我们在重复阅读时所获得的「熟练感」，只是自以为掌握而已。", "paraphrase": "重复阅读带来的流畅感不等于真正掌握。", "writing_angle": "opinion", "related_lectures": ["07"], "verification": { "status": "✅", "source_url": "Brown, Roediger & McDaniel《Make It Stick》", "notes": "《认知天性》核心观点真实" } }
+        {
+          "type": "framework",
+          "name": "考试思维：学习与考试是相反路径",
+          "source_text": "学习和考试，是不同的事情。它们用的，是相反的路径。……要学会用考试的思维去学习。",
+          "paraphrase": "学习目标是记住，考试目标是调取输出，要用输出倒推输入方式。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "02",
+            "07",
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "测试效应（testing effect）研究",
+            "notes": "核心论点与认知科学检索练习一致"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "研究真题的4个问题",
+          "source_text": "1>考哪些？2>是怎么考的？3>思考自己怎样才能答出来？4>需要有意识地培养哪些思维和能力？",
+          "paraphrase": "从出题者角度揣摩：考什么、怎么考、如何答、培养什么能力，倒推学习方式。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "10"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者方法归纳，实用但无研究出处"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "检索式练习优于重复阅读",
+          "source_text": "S.H.Kang等人的研究表明，如果你肯花时间，进行艰苦地回想……更有助于理解记忆。",
+          "paraphrase": "费力回想比重复阅读记忆更牢，越吃力记得越久。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "06",
+            "07"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Kang, McDermott & Roediger 2007 / 《认知天性》",
+            "notes": "检索式练习（retrieval practice）为认知科学经典结论"
+          }
+        },
+        {
+          "type": "quote",
+          "name": "熟练感是错觉",
+          "source_text": "《认知天性》一书指出，我们在重复阅读时所获得的「熟练感」，只是自以为掌握而已。",
+          "paraphrase": "重复阅读带来的流畅感不等于真正掌握。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "07"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Brown, Roediger & McDaniel《Make It Stick》",
+            "notes": "《认知天性》核心观点真实"
+          }
+        }
       ]
     },
     {
@@ -74,16 +221,63 @@
       "lecture_title": "用科学原理告诉你如何在考场上超常发挥",
       "snr_score": 3.45,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 3.5, "actionability": 3.5, "change_potential": 3.5, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：发挥失常源于得失心占用工作记忆，忘掉得失心才能超常发挥。结构：得失心现象→工作记忆有限→超常发挥方法→平时学习的完美主义→一小时+两分钟。",
       "adler_q2": "解决「一到考场就紧张发挥失常」。已解决：用工作记忆理论给出机制解释和心态方法；未解决：默念法仅预告，本讲未展开。",
       "adler_q3": "工作记忆容量有限是真实认知科学结论（✅），用它解释考试焦虑逻辑通顺。但核心证据是作者个人经历（550→650分），属孤证（❓），「最多只差5%」明确注明非准确数字，态度诚实。",
       "adler_q4": "能理解「做的时候不要想、做完再想」的原理，并开始用一小时专注+两分钟总结对抗学习中的完美主义。",
       "critical_notes": "把「工作记忆」引入考试心态是漂亮的跨学科解释，但论证高度依赖个人经历（复读生、自己550→650），说服力打折。「一小时学习+两分钟总结」是本节最有迁移价值的具体方法，与「减少自我监测」主线呼应。整体被01/05前后夹击，内容略有重复。",
       "extractions": [
-        { "type": "framework", "name": "工作记忆分配理论", "source_text": "工作记忆能够存储和处理的信息容量越多，意味着你解决问题的能力就越强。……相当一部分「工作记忆」的容量，被这些焦虑占用。", "paraphrase": "焦虑和自我监测占用有限的工作记忆，留给答题的容量就少，导致发挥失常。", "writing_angle": "methodology", "related_lectures": ["05", "08"], "verification": { "status": "✅", "source_url": "Baddeley 工作记忆模型", "notes": "工作记忆容量有限为认知科学共识" } },
-        { "type": "technique", "name": "一小时学习 + 两分钟总结", "source_text": "你可以先用目前的这个方法学一小时……一小时后，可以花两分钟总结经验。", "paraphrase": "先用现有方法专注学一小时，过程有想法先记下，结束花两分钟调整，避免边做边质疑。", "writing_angle": "tutorial", "related_lectures": ["18"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者归纳，实用" } },
-        { "type": "data_point", "name": "个人成绩暴涨经历", "source_text": "我高三前两次月考，总分在550分左右。……然后分数出来，650多分。", "paraphrase": "放下得失心后成绩从550涨到650，作为「忘掉得失心」的孤证。", "writing_angle": "case_study", "related_lectures": [], "verification": { "status": "❓", "source_url": "无独立来源", "notes": "个人经历无法验证，不可作为事实引用" } }
+        {
+          "type": "framework",
+          "name": "工作记忆分配理论",
+          "source_text": "工作记忆能够存储和处理的信息容量越多，意味着你解决问题的能力就越强。……相当一部分「工作记忆」的容量，被这些焦虑占用。",
+          "paraphrase": "焦虑和自我监测占用有限的工作记忆，留给答题的容量就少，导致发挥失常。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "05",
+            "08"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Baddeley 工作记忆模型",
+            "notes": "工作记忆容量有限为认知科学共识"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "一小时学习 + 两分钟总结",
+          "source_text": "你可以先用目前的这个方法学一小时……一小时后，可以花两分钟总结经验。",
+          "paraphrase": "先用现有方法专注学一小时，过程有想法先记下，结束花两分钟调整，避免边做边质疑。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "18"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者归纳，实用"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "个人成绩暴涨经历",
+          "source_text": "我高三前两次月考，总分在550分左右。……然后分数出来，650多分。",
+          "paraphrase": "放下得失心后成绩从550涨到650，作为「忘掉得失心」的孤证。",
+          "writing_angle": "case_study",
+          "related_lectures": [],
+          "verification": {
+            "status": "❓",
+            "source_url": "无独立来源",
+            "notes": "个人经历无法验证，不可作为事实引用"
+          }
+        }
       ]
     },
     {
@@ -91,16 +285,64 @@
       "lecture_title": "教你全面提升专注力，学习时不再走神",
       "snr_score": 3.93,
       "tier": "silver",
-      "score_breakdown": { "originality": 4.0, "verifiability": 3.5, "actionability": 4.5, "change_potential": 4.0, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：专注力靠「互动、问题、默念」三个方法提升，且走神后重新专注的能力更重要。结构：心流→互动（参与者）→问题让人专注→默念→重新定义走神。",
       "adler_q2": "解决「学习时走神、考试时焦虑」。已解决：给出默念等具体技巧；未解决：默念缺乏研究支撑，属经验总结。",
       "adler_q3": "「默念」是作者招牌原创方法且有大量读者反馈，但无学术出处（❓）；「心流」「Treisman注意研究」有真实出处（✅）。「专注力=重新专注的能力」是本节最反直觉的认知重构，价值高。",
       "adler_q4": "能立刻用「默念」（带口型自我对话）应对考场焦虑，并重新定义自己是否为「专注的人」。",
       "critical_notes": "默念法是全书最具个人印记、最被读者验证的方法，值得单独成文。但「互动」「问题让人专注」偏常见，「提前45分钟交卷」是个人孤证。走神→重新专注的重新定义，是对「专注力」的一次有价值的概念升级。",
       "extractions": [
-        { "type": "technique", "name": "默念法", "source_text": "一定要有口型。因为，如果仅仅是在心里这么想，还是会走神……而「默念」，会把你全部的注意力，或者说全部的「工作记忆」，集中在做题上。", "paraphrase": "不出声但带口型地把内心念头转化成具体语言，把注意力集中在当前题目，对抗考场焦虑。", "writing_angle": "tutorial", "related_lectures": ["04"], "verification": { "status": "❓", "source_url": "无独立来源", "notes": "作者原创经验方法，无研究支撑，但有读者反馈背书" } },
-        { "type": "insight", "name": "专注力=重新专注的能力", "source_text": "我们是否是一个专注的人，取决于我们能否在走神之时，重新专注。", "paraphrase": "专注不是永不走神，而是走神后能快速拉回。", "writing_angle": "opinion", "related_lectures": ["13"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "反直觉观点，逻辑自洽" } },
-        { "type": "technique", "name": "互动：从旁观者到参与者", "source_text": "不要让自己停留于「旁观者」的角色，要去主动进行「互动」，成为一个「参与者」。", "paraphrase": "听课默念关键词、背书出声、看书找「句眼」，用主动互动防走神。", "writing_angle": "tutorial", "related_lectures": ["08"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "实用技巧，与主动加工底层逻辑一致" } }
+        {
+          "type": "technique",
+          "name": "默念法",
+          "source_text": "一定要有口型。因为，如果仅仅是在心里这么想，还是会走神……而「默念」，会把你全部的注意力，或者说全部的「工作记忆」，集中在做题上。",
+          "paraphrase": "不出声但带口型地把内心念头转化成具体语言，把注意力集中在当前题目，对抗考场焦虑。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "04"
+          ],
+          "verification": {
+            "status": "❓",
+            "source_url": "无独立来源",
+            "notes": "作者原创经验方法，无研究支撑，但有读者反馈背书"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "专注力=重新专注的能力",
+          "source_text": "我们是否是一个专注的人，取决于我们能否在走神之时，重新专注。",
+          "paraphrase": "专注不是永不走神，而是走神后能快速拉回。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "反直觉观点，逻辑自洽"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "互动：从旁观者到参与者",
+          "source_text": "不要让自己停留于「旁观者」的角色，要去主动进行「互动」，成为一个「参与者」。",
+          "paraphrase": "听课默念关键词、背书出声、看书找「句眼」，用主动互动防走神。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "08"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "实用技巧，与主动加工底层逻辑一致"
+          }
+        }
       ]
     },
     {
@@ -108,7 +350,13 @@
       "lecture_title": "教你高效复习：巧用学习神器取得好成绩",
       "snr_score": 2.7,
       "tier": "copper",
-      "score_breakdown": { "originality": 2.5, "verifiability": 2.5, "actionability": 3.5, "change_potential": 2.5, "expression_efficiency": 2.5 },
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 2.5,
+        "expression_efficiency": 2.5
+      },
       "adler_q1": "核心主张：高效复习靠「闭环」思维，用Anki实现间隔重复。结构：闭环→及时复习→Anki介绍→Anki用法。",
       "adler_q2": "解决「学了不复习等于白学」。已解决：给出Anki工具方案；未解决：闭环概念本身简单，Anki非作者原创。",
       "adler_q3": "「闭环」概念有价值但简单，「及时复习时机」与检索式练习原理一致（✅），但Anki后半段为工具教程并带公众号导流，信噪比下降。",
@@ -121,17 +369,80 @@
       "lecture_title": "我考北大中文系时，15 天背下 10 门专业课的连点成线法",
       "snr_score": 4.33,
       "tier": "gold",
-      "score_breakdown": { "originality": 4.5, "verifiability": 4.0, "actionability": 4.5, "change_potential": 4.5, "expression_efficiency": 4.0 },
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.5,
+        "expression_efficiency": 4.0
+      },
       "adler_q1": "核心主张：大段文字要靠「精细复述」而非机械背诵记忆，方法是「连点成线」。结构：机械复述低效→精细复述原理→连点成线操作→记少不记多。",
       "adler_q2": "解决「背了就忘、背了不会用」。已解决：给出从记关键词到用自己的语言串逻辑的完整方法；未解决：方法主要针对人文社科大段文字，理工公式迁移有限。",
       "adler_q3": "有道理且原创。「精细复述」有彭聃龄《普通心理学》出处（✅），「连点成线」「记少不记多」是作者的原创操作化，且与检索式练习原理一致。标题「15天背10门课」是个人声明无法验证（❓），但不影响方法本身可信度。",
       "adler_q4": "能立刻用「记关键词→串逻辑→合书复述」替代逐字背书，并先记核心句再扩展。",
       "critical_notes": "作者招牌方法，是「精细加工」这一认知科学原理的最优中文落地。连点成线（记点→串线→合书复述）步骤完整、可操作，且点明「每次复述语言可不同，恰恰说明真懂了」这一反直觉判断。标题有标题党嫌疑（15天10门课无佐证），但正文质量过硬。",
       "extractions": [
-        { "type": "framework", "name": "连点成线法", "source_text": "你先去记忆书本原有的关键词、知识点等「点」信息，而后连「点」成「线」，把这一块的「点」信息串成有逻辑的内容。", "paraphrase": "先记关键词和逻辑关系，再合上书用自己的语言把点串成线，主动回想填充细节。", "writing_angle": "methodology", "related_lectures": ["03", "08"], "verification": { "status": "✅", "source_url": "精细复述（elaborative rehearsal）+ 彭聃龄《普通心理学》", "notes": "精细复述是经典记忆理论" } },
-        { "type": "technique", "name": "记少不记多，由少记多", "source_text": "先选取最核心的那句话进行记忆，把它变为自己「已有的知识经验」，而后再去记「多」。", "paraphrase": "先记最核心的一两句，成为已有经验后，其余细节因与核心关联而变容易，甚至不必再记。", "writing_angle": "tutorial", "related_lectures": ["21"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者原创方法，逻辑自洽" } },
-        { "type": "insight", "name": "每次复述可不同，恰恰说明真懂", "source_text": "事实上，每一次你都能用新的语句表达出来，恰恰说明你是真的理解了这段文字。", "paraphrase": "能用不同语言反复复述同一段，才说明真理解而非死记。", "writing_angle": "opinion", "related_lectures": ["03"], "verification": { "status": "✅", "source_url": "检索式练习原理", "notes": "与「费力回想增强记忆」一致" } },
-        { "type": "data_point", "name": "精细复述定义", "source_text": "精细进行复述是存储信息最有效的方法，它是指把要记住的内容和已有的知识经验联系起来。（彭聃龄《普通心理学》）", "paraphrase": "把新内容与已有知识经验联系是最有效的存储方式。", "writing_angle": "case_study", "related_lectures": ["08"], "verification": { "status": "✅", "source_url": "彭聃龄《普通心理学》", "notes": "心理学教材原文，可信" } }
+        {
+          "type": "framework",
+          "name": "连点成线法",
+          "source_text": "你先去记忆书本原有的关键词、知识点等「点」信息，而后连「点」成「线」，把这一块的「点」信息串成有逻辑的内容。",
+          "paraphrase": "先记关键词和逻辑关系，再合上书用自己的语言把点串成线，主动回想填充细节。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "03",
+            "08"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "精细复述（elaborative rehearsal）+ 彭聃龄《普通心理学》",
+            "notes": "精细复述是经典记忆理论"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "记少不记多，由少记多",
+          "source_text": "先选取最核心的那句话进行记忆，把它变为自己「已有的知识经验」，而后再去记「多」。",
+          "paraphrase": "先记最核心的一两句，成为已有经验后，其余细节因与核心关联而变容易，甚至不必再记。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者原创方法，逻辑自洽"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "每次复述可不同，恰恰说明真懂",
+          "source_text": "事实上，每一次你都能用新的语句表达出来，恰恰说明你是真的理解了这段文字。",
+          "paraphrase": "能用不同语言反复复述同一段，才说明真理解而非死记。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "检索式练习原理",
+            "notes": "与「费力回想增强记忆」一致"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "精细复述定义",
+          "source_text": "精细进行复述是存储信息最有效的方法，它是指把要记住的内容和已有的知识经验联系起来。（彭聃龄《普通心理学》）",
+          "paraphrase": "把新内容与已有知识经验联系是最有效的存储方式。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "08"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "彭聃龄《普通心理学》",
+            "notes": "心理学教材原文，可信"
+          }
+        }
       ]
     },
     {
@@ -139,17 +450,80 @@
       "lecture_title": "高效记忆的根本方法：主动思考和加工 & 组块化记忆",
       "snr_score": 4.05,
       "tier": "gold",
-      "score_breakdown": { "originality": 4.0, "verifiability": 4.0, "actionability": 4.5, "change_potential": 4.0, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：「主动思考与加工」是记忆的底层逻辑，具体手段是精细化提问；「组块化」是把小组块编成大组块。结构：记忆底层逻辑→精细化提问→组块化记忆。",
       "adler_q2": "解决「死记硬背记不住」的根本原因。已解决：给出「主动 vs 被动」的区分和精细化提问操作；未解决：未说明哪些内容必须硬记（如外语拼写）难以「加工」。",
       "adler_q3": "有道理。「精细化提问」有《聪明教学7原理》出处（✅），「7±2组块」是Miller经典结论（✅），「威林厄姆引言」为意译（⚠️）。「主动 vs 被动」是全文最有解释力的底层框架。",
       "adler_q4": "能用「问自己一句为什么」替代死记硬背，并用组块化把零散知识点串联。",
       "critical_notes": "本节提出全书记忆部分的底层逻辑——「大脑只能记住仔细思考过的东西」，并用「主动 vs 被动」区分解释了为什么词根法有时反而增负。精细化提问（elaborative interrogation）是经过验证的学习策略。组块化的「7瓶水」比喻直观。是理解07、21的关键前置。",
       "extractions": [
-        { "type": "framework", "name": "主动思考与加工：记忆的底层逻辑", "source_text": "「主动思考」和「加工」……是记忆的底层逻辑。……大脑不擅长记忆无意义的东西。", "paraphrase": "记忆的本质是主动加工意义，被动接受的东西记不住。", "writing_angle": "methodology", "related_lectures": ["07", "23"], "verification": { "status": "✅", "source_url": "精细加工理论（elaborative encoding）", "notes": "认知科学共识" } },
-        { "type": "technique", "name": "精细化提问", "source_text": "根本要义是「主动」。……具体的实现手段，是精细化提问（elaborative interrogation）。也就是，问自己一句「为什么」。", "paraphrase": "对记忆内容的任一点问「为什么」，哪怕编荒诞理由也算主动加工，就能记住。", "writing_angle": "tutorial", "related_lectures": ["07"], "verification": { "status": "✅", "source_url": "Dunlosky 2013 / 安布罗斯《聪明教学7原理》", "notes": "elaborative interrogation 是经元分析验证的有效策略" } },
-        { "type": "data_point", "name": "7±2组块", "source_text": "短时记忆的容量很有限，大约相当于7±2个组块，这个容量，是不可扩充的。", "paraphrase": "短时记忆容量约7±2组块，但可扩充每个组块的信息量。", "writing_angle": "case_study", "related_lectures": ["21"], "verification": { "status": "✅", "source_url": "Miller 1956 《神奇的数字7±2》", "notes": "心理学经典结论" } },
-        { "type": "framework", "name": "组块化记忆", "source_text": "将一些零散的、各自独立的知识点，用你能想到的任何方式，串联起来，将小的组块，转化为大的组块。", "paraphrase": "用任何方式把零散知识点串成更大的组块，提高记忆效率。", "writing_angle": "methodology", "related_lectures": ["21"], "verification": { "status": "✅", "source_url": "chunking（组块化）", "notes": "认知心理学经典概念" } }
+        {
+          "type": "framework",
+          "name": "主动思考与加工：记忆的底层逻辑",
+          "source_text": "「主动思考」和「加工」……是记忆的底层逻辑。……大脑不擅长记忆无意义的东西。",
+          "paraphrase": "记忆的本质是主动加工意义，被动接受的东西记不住。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "07",
+            "23"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "精细加工理论（elaborative encoding）",
+            "notes": "认知科学共识"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "精细化提问",
+          "source_text": "根本要义是「主动」。……具体的实现手段，是精细化提问（elaborative interrogation）。也就是，问自己一句「为什么」。",
+          "paraphrase": "对记忆内容的任一点问「为什么」，哪怕编荒诞理由也算主动加工，就能记住。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "07"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Dunlosky 2013 / 安布罗斯《聪明教学7原理》",
+            "notes": "elaborative interrogation 是经元分析验证的有效策略"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "7±2组块",
+          "source_text": "短时记忆的容量很有限，大约相当于7±2个组块，这个容量，是不可扩充的。",
+          "paraphrase": "短时记忆容量约7±2组块，但可扩充每个组块的信息量。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Miller 1956 《神奇的数字7±2》",
+            "notes": "心理学经典结论"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "组块化记忆",
+          "source_text": "将一些零散的、各自独立的知识点，用你能想到的任何方式，串联起来，将小的组块，转化为大的组块。",
+          "paraphrase": "用任何方式把零散知识点串成更大的组块，提高记忆效率。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "chunking（组块化）",
+            "notes": "认知心理学经典概念"
+          }
+        }
       ]
     },
     {
@@ -157,7 +531,13 @@
       "lecture_title": "如何高效读书？如何记住读过的每一本书？",
       "snr_score": 2.9,
       "tier": "copper",
-      "score_breakdown": { "originality": 3.0, "verifiability": 2.5, "actionability": 3.0, "change_potential": 3.0, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：高效读书靠跳读+两种读书模式（结果导向/漫游），记住书靠「留下线索、使用时回溯」。结构：快速阅读→结果导向vs漫游→留下线索。",
       "adler_q2": "解决「读了很多书记不住」。已解决：给出「不用背、留线索、用的时候回溯」的省力策略；未解决：纯经验，无研究支撑。",
       "adler_q3": "「结果导向 vs 漫游式读书」二分有洞见但偏个人经验（❓），「读过的书用到的才算读过」观点正确但无出处。",
@@ -170,15 +550,50 @@
       "lecture_title": "如何快速入门新领域？论述题如何答出高分？",
       "snr_score": 3.23,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 3.0, "actionability": 3.0, "change_potential": 3.5, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 3.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：入门新领域先读综述书建立宏观感，论述题要「答得不同而非正确」。结构：综述书入门→读两三遍→论述题创新→真题示例。",
       "adler_q2": "解决「如何快速入门」「论述题如何拿高分」。已解决：给出综述书入门法和「答得不同」策略；未解决：仅适用于人文社科，明确排除了理工科。",
       "adler_q3": "「答得不同」有北大教授观点背书（✅），「与其正确不如不同」是反直觉但有边界的判断（事实性知识仍须正确）。「书读百遍其义自现」是经验总结。",
       "adler_q4": "能用综述书快速建立领域框架，答题时主动建立知识点间的联系网而非照搬教材。",
       "critical_notes": "「与其答得正确，不如答得不同」是本节核心洞察，与07/08的「建立联系、主动加工」底层逻辑贯通。引用的温儒敏、吴晓东观点增强了可信度。局限：仅适用人文社科，理工科迁移有限，作者也明确承认。",
       "extractions": [
-        { "type": "insight", "name": "与其答得正确，不如答得不同", "source_text": "除了事实性的知识，教材上的表述并不等于标准答案。……与其答得「正确」，不如答得「不同」。", "paraphrase": "论述题看重的不是复述标准答案，而是有角度、有联系的独立观点。", "writing_angle": "opinion", "related_lectures": ["03", "08"], "verification": { "status": "✅", "source_url": "温儒敏、吴晓东（北大教授）公开访谈", "notes": "有北大教授观点背书，可交叉验证" } },
-        { "type": "technique", "name": "综述书快速入门", "source_text": "可以找几本综述性的书籍进行阅读……重要的是获得对这个领域的宏观感受和认知，先不必追究细节。", "paraphrase": "入门先读综述书获宏观框架，再读两三遍互相印证，不必第一次就细读。", "writing_angle": "tutorial", "related_lectures": ["09"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者经验归纳" } }
+        {
+          "type": "insight",
+          "name": "与其答得正确，不如答得不同",
+          "source_text": "除了事实性的知识，教材上的表述并不等于标准答案。……与其答得「正确」，不如答得「不同」。",
+          "paraphrase": "论述题看重的不是复述标准答案，而是有角度、有联系的独立观点。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "03",
+            "08"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "温儒敏、吴晓东（北大教授）公开访谈",
+            "notes": "有北大教授观点背书，可交叉验证"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "综述书快速入门",
+          "source_text": "可以找几本综述性的书籍进行阅读……重要的是获得对这个领域的宏观感受和认知，先不必追究细节。",
+          "paraphrase": "入门先读综述书获宏观框架，再读两三遍互相印证，不必第一次就细读。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "09"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者经验归纳"
+          }
+        }
       ]
     },
     {
@@ -186,16 +601,65 @@
       "lecture_title": "如何快速完成学习和工作任务，以及快速学会新技能？",
       "snr_score": 3.35,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.0, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：用「先完成再完美」「立刻开始输出」对抗工作膨胀和方法焦虑。结构：帕金森法则→先完成再完美→立刻输出→剪辑案例。",
       "adler_q2": "解决「任务拖延」「总学不会新技能」。已解决：给出「限定时间抓核心」「允许写垃圾」等可操作方法；未解决：对需深度质量的任务（如科研）「先完成再完美」适用边界未讨论。",
       "adler_q3": "「帕金森法则」有真实出处（✅），「允许自己写垃圾否则连垃圾都写不出」是本节金句且反直觉。「立刻输出」与03/07输出导向一致。",
       "adler_q4": "能用「2小时抓核心完成80%」「今天先写100字」立刻启动拖延的任务。",
       "critical_notes": "「允许写出垃圾」是全书的标志性反直觉金句，把「完美主义」重构为「先完成再完美」。方法可操作性强，剪辑视频案例生动。与12、19的主题有重叠，但「帕金森法则」的引入让它有独立价值。",
       "extractions": [
-        { "type": "insight", "name": "允许自己写出垃圾", "source_text": "要允许自己写出来垃圾，否则连垃圾都写不出来。", "paraphrase": "先完成再完美，改比写更重要，否则连初稿都出不来。", "writing_angle": "opinion", "related_lectures": ["12", "19"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者金句，反直觉但无出处" } },
-        { "type": "data_point", "name": "帕金森法则", "source_text": "时间管理领域有个「帕金森法则」：工作会不断膨胀，直到填满截止日期前的全部时间。", "paraphrase": "给多少时间工作就花多少时间，所以要主动限定更少的时间。", "writing_angle": "case_study", "related_lectures": ["18"], "verification": { "status": "✅", "source_url": "Parkinson's Law (1955)", "notes": "真实且广为验证的时间管理规律" } },
-        { "type": "technique", "name": "限定2小时完成80%", "source_text": "如果用2小时的时间完成它，你要怎么拆解任务？采用什么方法？如何先完成80%的工作？", "paraphrase": "用更短时限倒逼自己抓核心、先完成80%，不纠缠细节。", "writing_angle": "tutorial", "related_lectures": ["19"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者方法" } }
+        {
+          "type": "insight",
+          "name": "允许自己写出垃圾",
+          "source_text": "要允许自己写出来垃圾，否则连垃圾都写不出来。",
+          "paraphrase": "先完成再完美，改比写更重要，否则连初稿都出不来。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "12",
+            "19"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者金句，反直觉但无出处"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "帕金森法则",
+          "source_text": "时间管理领域有个「帕金森法则」：工作会不断膨胀，直到填满截止日期前的全部时间。",
+          "paraphrase": "给多少时间工作就花多少时间，所以要主动限定更少的时间。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "18"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Parkinson's Law (1955)",
+            "notes": "真实且广为验证的时间管理规律"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "限定2小时完成80%",
+          "source_text": "如果用2小时的时间完成它，你要怎么拆解任务？采用什么方法？如何先完成80%的工作？",
+          "paraphrase": "用更短时限倒逼自己抓核心、先完成80%，不纠缠细节。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "19"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者方法"
+          }
+        }
       ]
     },
     {
@@ -203,16 +667,65 @@
       "lecture_title": "每个人都能学会：5 分钟克服拖延症的方法",
       "snr_score": 3.93,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 4.0, "actionability": 4.5, "change_potential": 4.0, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 4.0,
+        "actionability": 4.5,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：拖延症有3个可操作方法：5分钟起步、走在计划前面、替代拖延。结构：5分钟起步→走在计划前面（洗车实验）→替代拖延。",
       "adler_q2": "解决「想开始却总拖延」。已解决：给出三个具体方法并有实验数据支撑；未解决：未触及拖延的深层心理原因（完美主义、恐惧失败）。",
       "adler_q3": "有数据支撑。洗车实验19%vs34%可追溯（✅），5分钟起步法可追溯到卡尔顿大学拖延研究小组（⚠️，名称系转述），替代拖延法是作者原创但有说服力。",
       "adler_q4": "能立刻用「就5分钟」启动拖延任务，用「替代拖延」把简单任务当作复杂任务的逃避出口。",
-      "critical_notes": "三个方法层次分明：行为启动（5分钟）、心理留白（走在前面）、任务排序（替代拖延）。洗车积分卡实验（19%/34%）是全书少有的精确可验证数据，替代拖延法是巧妙的行为经济学应用。是「拖延」主题最好的一讲。",
+      "critical_notes": "三个方法层次分明：行为启动（5分钟）、心理留白（走在前面）、任务排序（替代拖延）。洗车积分卡实验（19%/34%）是全书少有的精确可验证数据，替代拖延法是巧妙的行为经济学应用。是「拖延」主题最好的一讲。 六步质询补遗：「替代拖延法」与 John Perry《结构化拖延法》（structured procrastination，2011 年经典文）高度同源，作者以「我发现的新思路」呈现但未提及 Perry，属来源标注缺失，写作时须自行补注。",
       "extractions": [
-        { "type": "technique", "name": "5分钟起步法", "source_text": "开始做一件事的时候，先给自己5分钟的起步时间……接受自己刚开始那5分钟的烦躁和抗拒。", "paraphrase": "先做5分钟，行动本身会带来状态，别计较效率。", "writing_angle": "tutorial", "related_lectures": ["11"], "verification": { "status": "⚠️", "source_url": "卡尔顿大学拖延研究小组（Pychyl）", "notes": "来源真实但「5分钟起步法」名称系作者转述包装" } },
-        { "type": "data_point", "name": "洗车积分卡实验", "source_text": "从零开始的顾客，只有19%换得免费洗车服务，预先盖了两个章的顾客，则有34%达成目标。（《瞬变》）", "paraphrase": "预先完成一部分（抢跑）能显著提高完成率（19%→34%）。", "writing_angle": "case_study", "related_lectures": ["17"], "verification": { "status": "✅", "source_url": "《Switch/瞬变》引用目标梯度效应实验", "notes": "数据可追溯，真实实验" } },
-        { "type": "insight", "name": "替代拖延法", "source_text": "如果有一个更难的任务需要完成，我们就非常极其愿意去做相对简单的任务了。", "paraphrase": "用更硬的任务倒逼自己去做相对简单的事，把拖延变成完成。", "writing_angle": "opinion", "related_lectures": ["13", "19"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者原创洞察，逻辑自洽" } }
+        {
+          "type": "technique",
+          "name": "5分钟起步法",
+          "source_text": "开始做一件事的时候，先给自己5分钟的起步时间……接受自己刚开始那5分钟的烦躁和抗拒。",
+          "paraphrase": "先做5分钟，行动本身会带来状态，别计较效率。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "11"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "卡尔顿大学拖延研究小组（Pychyl）",
+            "notes": "来源真实但「5分钟起步法」名称系作者转述包装"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "洗车积分卡实验",
+          "source_text": "从零开始的顾客，只有19%换得免费洗车服务，预先盖了两个章的顾客，则有34%达成目标。（《瞬变》）",
+          "paraphrase": "预先完成一部分（抢跑）能显著提高完成率（19%→34%）。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "17"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "《Switch/瞬变》引用目标梯度效应实验",
+            "notes": "数据可追溯，真实实验"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "替代拖延法",
+          "source_text": "如果有一个更难的任务需要完成，我们就非常极其愿意去做相对简单的任务了。",
+          "paraphrase": "用更硬的任务倒逼自己去做相对简单的事，把拖延变成完成。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13",
+            "19"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "John Perry, \"Structured Procrastination\" (1995/2011)",
+            "notes": "与 Perry 结构化拖延法同源，作者未标注来源，思想可信但归属需补注"
+          }
+        }
       ]
     },
     {
@@ -220,16 +733,64 @@
       "lecture_title": "3 个思路，让你成为一个真正自律的人",
       "snr_score": 3.88,
       "tier": "silver",
-      "score_breakdown": { "originality": 4.5, "verifiability": 3.0, "actionability": 4.0, "change_potential": 4.0, "expression_efficiency": 4.0 },
+      "score_breakdown": {
+        "originality": 4.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 4.0
+      },
       "adler_q1": "核心主张：真正的自律是在「不自律」念头中约束自己，方法包括两种痛苦选择、反向思维、他律。结构：重新定义自律→两种痛苦→反向思维→他律→关注合理需求。",
       "adler_q2": "解决「为什么总是坚持不下去」。已解决：给出「两种痛苦」「他律」等认知重构；未解决：无研究支撑，纯逻辑推理与个人经验。",
       "adler_q3": "反直觉且有原创性。「两种痛苦之间选择」是漂亮的认知重构，「他律」概念有解释力，但全程无研究引用（❓），「反向思维（固定时间放弃自律）」凭个人体感论证。",
       "adler_q4": "能用「两种痛苦」重构自律/放纵的选择，用「他律」（报名半马、打卡罚钱）强制自己进入正轨。",
       "critical_notes": "本节是全书「认知重构」能力最强的一讲：「两种痛苦之间选择」「他律」两个概念都反直觉且可迁移。「他律」与14的「对别人负责」、17的「自由感」形成完整闭环。缺陷是无数据支撑，全凭逻辑，适合作为观点文素材而非事实文。",
       "extractions": [
-        { "type": "insight", "name": "两种痛苦之间做选择", "source_text": "我们不是在快乐与痛苦之间做选择……而是在一种痛苦与另一种痛苦之间做选择。", "paraphrase": "自律与否都不是逃避痛苦，只是选一个「有意义的痛苦」。", "writing_angle": "opinion", "related_lectures": ["16"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "反直觉认知重构，逻辑自洽但无出处" } },
-        { "type": "framework", "name": "他律：隐形的外部约束", "source_text": "一切自律的前提，是有一个隐形的外部约束。……在「自律」之外，可以为自己找到明确的「他律」。", "paraphrase": "自律依赖外部强制力（他律），必须做的事就能做到，纠结更少。", "writing_angle": "methodology", "related_lectures": ["14"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者概念，与「外部动机」「承诺装置」心理学相关" } },
-        { "type": "insight", "name": "固定时间放弃自律反而更自律", "source_text": "在某些固定的时间里放弃自律，反而会让你变得更自律。", "paraphrase": "只规定「只能」在特定时间自律，其他时间必须放松，反而减少叛逆式放纵。", "writing_angle": "opinion", "related_lectures": ["15"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "反直觉策略，个人经验支撑" } }
+        {
+          "type": "insight",
+          "name": "两种痛苦之间做选择",
+          "source_text": "我们不是在快乐与痛苦之间做选择……而是在一种痛苦与另一种痛苦之间做选择。",
+          "paraphrase": "自律与否都不是逃避痛苦，只是选一个「有意义的痛苦」。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "16"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "反直觉认知重构，逻辑自洽但无出处"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "他律：隐形的外部约束",
+          "source_text": "一切自律的前提，是有一个隐形的外部约束。……在「自律」之外，可以为自己找到明确的「他律」。",
+          "paraphrase": "自律依赖外部强制力（他律），必须做的事就能做到，纠结更少。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "14"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者概念，与「外部动机」「承诺装置」心理学相关"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "固定时间放弃自律反而更自律",
+          "source_text": "在某些固定的时间里放弃自律，反而会让你变得更自律。",
+          "paraphrase": "只规定「只能」在特定时间自律，其他时间必须放松，反而减少叛逆式放纵。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "15"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "反直觉策略，个人经验支撑"
+          }
+        }
       ]
     },
     {
@@ -237,15 +798,49 @@
       "lecture_title": "通过选择环境，来提高学习和工作效率",
       "snr_score": 3.35,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 3.5, "actionability": 3.0, "change_potential": 3.5, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.5,
+        "actionability": 3.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：环境通过社会助长、感觉剥夺、对别人负责三种机制影响效率。结构：表演型学习→社会助长/印象管理→感觉剥夺→对别人负责。",
       "adler_q2": "解决「在家学不进去」。已解决：用心理学机制解释并给出「去公共场所」「对别人负责」方案；未解决：对社恐/独处偏好者适用性有限。",
       "adler_q3": "有理论支撑。社会助长（扎琼克）、印象管理、感觉剥夺均有真实出处（✅），「对别人负责」是「他律」的场景化延伸。",
       "adler_q4": "能用「表演型学习」「对别人负责」重构环境选择，主动去图书馆或把任务关联他人。",
       "critical_notes": "把「去图书馆」这个朴素建议拆解为社会助长、印象管理、社会认同、感觉剥夺四个心理学机制，是本节的价值。「对别人负责」与13的「他律」无缝衔接。信息密度中等，但引用真实文献（亲密关系、龙樱）提升了可信度。",
       "extractions": [
-        { "type": "framework", "name": "表演型学习与社会助长", "source_text": "在同他人共同活动，或者当他人在场旁观时，我们的效率会提高，也就是存在「社会助长」效应。", "paraphrase": "他人在场激活印象管理和社会认同，让人自然进入努力状态。", "writing_angle": "methodology", "related_lectures": ["13"], "verification": { "status": "✅", "source_url": "Zajonc 1965 社会助长理论", "notes": "社会助长真实经典理论" } },
-        { "type": "insight", "name": "对别人负责 > 对自己负责", "source_text": "而一旦这件事儿需要对他人负责……你也会尽力把它做好。", "paraphrase": "把只对自己负责的任务关联他人，能显著提升执行力。", "writing_angle": "opinion", "related_lectures": ["13"], "verification": { "status": "⚠️", "source_url": "无独立来源（《龙樱》剧情佐证）", "notes": "观察归纳，逻辑自洽" } }
+        {
+          "type": "framework",
+          "name": "表演型学习与社会助长",
+          "source_text": "在同他人共同活动，或者当他人在场旁观时，我们的效率会提高，也就是存在「社会助长」效应。",
+          "paraphrase": "他人在场激活印象管理和社会认同，让人自然进入努力状态。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Zajonc 1965 社会助长理论",
+            "notes": "社会助长真实经典理论"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "对别人负责 > 对自己负责",
+          "source_text": "而一旦这件事儿需要对他人负责……你也会尽力把它做好。",
+          "paraphrase": "把只对自己负责的任务关联他人，能显著提升执行力。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源（《龙樱》剧情佐证）",
+            "notes": "观察归纳，逻辑自洽"
+          }
+        }
       ]
     },
     {
@@ -253,7 +848,13 @@
       "lecture_title": "一个人在家如何做到高度自律？",
       "snr_score": 2.95,
       "tier": "copper",
-      "score_breakdown": { "originality": 3.0, "verifiability": 2.0, "actionability": 4.0, "change_potential": 3.0, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.0,
+        "actionability": 4.0,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：在家自律靠「惯性」和「6小时工作制」。结构：早起第一件事→惯性→整块时间→6小时工作制。",
       "adler_q2": "解决「独自在家荒废时间」。已解决：给出6小时工作制等具体方案；未解决：全为个人经验，无研究支撑，与13/14重复度高。",
       "adler_q3": "「惯性」比喻形象，「6小时工作制」的「自我欺骗」有原创性，但全程个人经验（❓），「6小时」这一数字无任何依据。",
@@ -266,17 +867,79 @@
       "lecture_title": "一玩手机就停不下来？教你如何戒手机",
       "snr_score": 3.73,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 4.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 4.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：玩手机停不下来是情境问题而非意志问题，方法是「写下来」和「自我谅解」。结构：多巴胺→爆米花实验→无意识转有意识→自我谅解。",
       "adler_q2": "解决「手机成瘾」。已解决：用奖励系统机制+两个可操作方法；未解决：对重度成瘾、算法成瘾的深层机制（无限下滑）仅略过。",
       "adler_q3": "有可验证数据。小白鼠实验（奥尔兹米尔纳）、爆米花实验53%（康纳尔大学）均可追溯（✅），「多巴胺承诺快乐但不负责快乐」是准确的神经科学表述，「控制环境而非控制自己」与14一致。",
       "adler_q4": "能用「写下来」把无意识刷手机转为有意识，用「自我谅解」打破破罐破摔循环。",
       "critical_notes": "「无意识→有意识」的「写下来」法是本节最实用的技巧，简单可执行。爆米花实验（53%）是全书又一个精确可验证数据。对手机成瘾的机制解释到位，但「控制环境」与14重复，「自我谅解」未展开（在24有呼应）。",
       "extractions": [
-        { "type": "insight", "name": "看似人的问题，实则情境问题", "source_text": "看似人的问题，实则情境问题。与其控制自己，不如控制环境。", "paraphrase": "手机沉迷靠物理隔绝解决，而非意志力。", "writing_angle": "opinion", "related_lectures": ["14"], "verification": { "status": "✅", "source_url": "爆米花实验 / 情境主义（situationism）", "notes": "与「情境决定行为」心理学一致" } },
-        { "type": "technique", "name": "写下来：无意识转有意识", "source_text": "写下来的时候，我就从「无意识」的状态，转变为了「有意识」……你会更容易停下来。", "paraphrase": "想刷手机时先写下想干什么，从无意识冲动转为有意识选择。", "writing_angle": "tutorial", "related_lectures": ["13"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者方法，实用" } },
-        { "type": "data_point", "name": "爆米花实验：大桶多吃53%", "source_text": "电影结束后，研究人员发现，大桶观众比中桶观众多吃了53%。", "paraphrase": "容器越大食量越大，便利性决定沉迷，与意志力无关。", "writing_angle": "case_study", "related_lectures": ["14"], "verification": { "status": "✅", "source_url": "Wansink 康纳尔大学爆米花实验（《瞬变》引用）", "notes": "数据可追溯，真实实验" } },
-        { "type": "insight", "name": "自我谅解打破恶性循环", "source_text": "越是自我批评，越是会恶性循环。……对自己表示理解，才能真正有精力去达成改变。", "paraphrase": "堕落之后不苛责，才能停止破罐破摔。", "writing_angle": "opinion", "related_lectures": ["24"], "verification": { "status": "✅", "source_url": "自我同情研究（self-compassion）", "notes": "与Kelly McGonigal《自控力》及自我同情研究一致" } }
+        {
+          "type": "insight",
+          "name": "看似人的问题，实则情境问题",
+          "source_text": "看似人的问题，实则情境问题。与其控制自己，不如控制环境。",
+          "paraphrase": "手机沉迷靠物理隔绝解决，而非意志力。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "14"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "爆米花实验 / 情境主义（situationism）",
+            "notes": "与「情境决定行为」心理学一致"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "写下来：无意识转有意识",
+          "source_text": "写下来的时候，我就从「无意识」的状态，转变为了「有意识」……你会更容易停下来。",
+          "paraphrase": "想刷手机时先写下想干什么，从无意识冲动转为有意识选择。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者方法，实用"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "爆米花实验：大桶多吃53%",
+          "source_text": "电影结束后，研究人员发现，大桶观众比中桶观众多吃了53%。",
+          "paraphrase": "容器越大食量越大，便利性决定沉迷，与意志力无关。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "14"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "https://en.wikipedia.org/wiki/Brian_Wansink#Retractions_and_other_corrections",
+            "notes": "实验本身见于《瞬变》引用且数据匹配，但 Wansink 实验室 2018 年起多起撤稿与更正，作为单一来源流行科学数据，引用须注明出处与争议"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "自我谅解打破恶性循环",
+          "source_text": "越是自我批评，越是会恶性循环。……对自己表示理解，才能真正有精力去达成改变。",
+          "paraphrase": "堕落之后不苛责，才能停止破罐破摔。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "24"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "自我同情研究（self-compassion）",
+            "notes": "与Kelly McGonigal《自控力》及自我同情研究一致"
+          }
+        }
       ]
     },
     {
@@ -284,15 +947,49 @@
       "lecture_title": "如何合理地制订计划？",
       "snr_score": 3.48,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 3.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 3.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：计划要SMART，但更要摆脱「倒数日」思维、只规划今天。结构：SMART→倒数日弊端→只规划今天。",
       "adler_q2": "解决「计划总执行不下去」。已解决：给出SMART原则+「只规划今天」的降负策略；未解决：SMART是教科书常识，无新意。",
       "adler_q3": "SMART原则有标准出处（✅），「只规划今天」是反直觉的原创洞察，用「对抗理论」（布雷姆）解释了倒数日为何失效。「倒数日vs只规划今天」的对比是本节价值核心。",
       "adler_q4": "能放弃「从今天起坚持100天」的长期计划，改为每天只规划今天，降低启动心理负担。",
       "critical_notes": "「只规划今天」是全书的原创亮点，用「自由感受威胁」解释了为什么长期计划让人抗拒。但前半段SMART是教科书复述，价值集中在后半段。与18衔接紧密，构成「计划」主题的完整单元。",
       "extractions": [
-        { "type": "insight", "name": "只规划今天", "source_text": "我只规划今天。明天要干啥，明天再说。我从来没去制订过一个长远的计划。", "paraphrase": "以天为单位做计划，避免长期计划对自由感的剥夺和破罐破摔。", "writing_angle": "opinion", "related_lectures": ["18"], "verification": { "status": "⚠️", "source_url": "无独立来源（布雷姆对抗理论佐证）", "notes": "作者原创洞察，用心理抗拒理论解释" } },
-        { "type": "framework", "name": "倒数日思维 vs 今日计划", "source_text": "「倒数日」的思维，制订的是系统的长期的计划……它剥夺了我们的自由感。", "paraphrase": "长期倒计时计划让人抗拒，改为只看今天反而持续执行。", "writing_angle": "opinion", "related_lectures": ["13"], "verification": { "status": "✅", "source_url": "布雷姆心理抗拒理论（Reactance）", "notes": "理论真实" } }
+        {
+          "type": "insight",
+          "name": "只规划今天",
+          "source_text": "我只规划今天。明天要干啥，明天再说。我从来没去制订过一个长远的计划。",
+          "paraphrase": "以天为单位做计划，避免长期计划对自由感的剥夺和破罐破摔。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "18"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源（布雷姆对抗理论佐证）",
+            "notes": "作者原创洞察，用心理抗拒理论解释"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "倒数日思维 vs 今日计划",
+          "source_text": "「倒数日」的思维，制订的是系统的长期的计划……它剥夺了我们的自由感。",
+          "paraphrase": "长期倒计时计划让人抗拒，改为只看今天反而持续执行。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "13"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "布雷姆心理抗拒理论（Reactance）",
+            "notes": "理论真实"
+          }
+        }
       ]
     },
     {
@@ -300,15 +997,50 @@
       "lecture_title": "如何保证100%完成你制订的计划？",
       "snr_score": 3.45,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 2.5, "actionability": 4.5, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 2.5,
+        "actionability": 4.5,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：计划是工具不是目的，执行要「清单+记录时间」。结构：事情该花多少时间就花多少→计划是工具→清单+记录时间法。",
       "adler_q2": "解决「执行计划的进度焦虑」。已解决：给出反焦虑认知+清单记录法；未解决：无研究支撑，纯个人经验。",
       "adler_q3": "「计划是工具不是目的」「事情该花多少时间就花多少」是有效的反焦虑重构，「清单清空大脑」与GTD一致，但均无出处（❓）。清单+记录时间法非常可操作。",
       "adler_q4": "能用「清单+记录开始结束时间」替代精密课程表式计划，减少进度焦虑。",
       "critical_notes": "对「计划焦虑」的化解很有价值，清单+记录时间法可操作性强。但全讲无研究引用，靠个人经验和常识。与17构成完整单元，「记录时间」与01的「记录成果」呼应。",
       "extractions": [
-        { "type": "insight", "name": "计划是工具，不是目的本身", "source_text": "计划，是工具，是手段，是为我们服务的……而我们，常常把计划以及执行计划，错当成了目的本身。", "paraphrase": "计划服务于做事，别把完成计划当目标，否则反而焦虑。", "writing_angle": "opinion", "related_lectures": ["17"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "反焦虑洞察，逻辑自洽" } },
-        { "type": "technique", "name": "清单 + 记录时间法", "source_text": "第一步，把你今天要做的事情，都写出具体的条目……记录开始的时间……记录结束时间。", "paraphrase": "写清单清空大脑，只选最紧急任务专注做，记录实际起止时间。", "writing_angle": "tutorial", "related_lectures": ["01", "17"], "verification": { "status": "⚠️", "source_url": "无独立来源（与GTD相通）", "notes": "实用方法，与GTD原理一致" } }
+        {
+          "type": "insight",
+          "name": "计划是工具，不是目的本身",
+          "source_text": "计划，是工具，是手段，是为我们服务的……而我们，常常把计划以及执行计划，错当成了目的本身。",
+          "paraphrase": "计划服务于做事，别把完成计划当目标，否则反而焦虑。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "17"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "反焦虑洞察，逻辑自洽"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "清单 + 记录时间法",
+          "source_text": "第一步，把你今天要做的事情，都写出具体的条目……记录开始的时间……记录结束时间。",
+          "paraphrase": "写清单清空大脑，只选最紧急任务专注做，记录实际起止时间。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "01",
+            "17"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源（与GTD相通）",
+            "notes": "实用方法，与GTD原理一致"
+          }
+        }
       ]
     },
     {
@@ -316,7 +1048,13 @@
       "lecture_title": "如何高效完成复杂艰难的、不喜欢的任务？",
       "snr_score": 2.98,
       "tier": "copper",
-      "score_breakdown": { "originality": 3.0, "verifiability": 2.5, "actionability": 3.5, "change_potential": 3.0, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 2.5,
+        "actionability": 3.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：复杂任务拆解成小目标，靠「完成感」驱动。结构：拆解小目标→每200字xx元→完成感是奖励。",
       "adler_q2": "解决「难任务不想做」。已解决：给出拆解小目标+完成感激励；未解决：与11/12/17拆解思路重复，深度有限。",
       "adler_q3": "「走2km vs 走200个10m」「完成感是奖励」比喻生动，李笑来GRE案例是转述（❓），整体与相邻讲重复度高。",
@@ -329,16 +1067,64 @@
       "lecture_title": "如何做到每天高效学习 12 小时？",
       "snr_score": 3.73,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.5, "verifiability": 4.0, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.5,
+        "verifiability": 4.0,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：长时间高效靠「短跑观」和「酝酿效应」，休息是投资。结构：短跑观→冥想/换事情→酝酿效应→专注/发散模式。",
       "adler_q2": "解决「如何长时间高效学习」。已解决：给出90-120分钟+15分钟节奏、冥想、发散模式等方法；未解决：对「学习12小时」的必要性本身未质疑（其实是低效的）。",
       "adler_q3": "多来源支撑。精力管理（✅）、卢梭换事情、酝酿效应（凯库勒/阿基米德）、奥克利《学习之道》专注/发散模式均有出处（✅）。「休息是投资」的论证充分。",
       "adler_q4": "能用「90分钟学习+15分钟休息」的钟摆节奏，用冥想在休息时恢复，用发散模式孕育灵感。",
       "critical_notes": "标题「学习12小时」是标题党，正文其实在论证「休息与专注同等重要」。综合《精力管理》、卢梭、奥克利等多来源，「酝酿效应」「专注/发散模式」是有学术支撑的洞见。是「精力管理」主题的完整一讲。",
       "extractions": [
-        { "type": "framework", "name": "短跑观：钟摆式精力管理", "source_text": "人生应该是一场接一场的短跑，而不是永不停歇的马拉松。……学习或工作90~120分钟后，你应该休息15分钟。", "paraphrase": "按周期消耗与补充精力，做事时全情投入，休息时彻底恢复。", "writing_angle": "methodology", "related_lectures": ["05"], "verification": { "status": "✅", "source_url": "《精力管理》(Loehr & Schwartz)", "notes": "书真实，具体比例系转述" } },
-        { "type": "insight", "name": "酝酿效应：暂停带来顿悟", "source_text": "这种暂停就是「酝酿效应」。……暂时停止对问题的积极探索，可能就会对问题的解决，起到关键作用。", "paraphrase": "难题卡住时暂停，潜意识继续工作，休息后往往灵光乍现。", "writing_angle": "opinion", "related_lectures": ["23"], "verification": { "status": "✅", "source_url": "酝酿效应（incubation effect）+ 奥克利《学习之道》", "notes": "真实心理学现象" } },
-        { "type": "technique", "name": "冥想恢复精力", "source_text": "冥想可以让你迅速恢复精力，也可以让你的情绪保持平静……有效提升你的专注力。", "paraphrase": "闭眼专注呼吸5-15分钟，恢复精力、缓解焦虑。", "writing_angle": "tutorial", "related_lectures": ["16"], "verification": { "status": "✅", "source_url": "冥想研究（正念减压）", "notes": "冥想效果有大量研究支撑" } }
+        {
+          "type": "framework",
+          "name": "短跑观：钟摆式精力管理",
+          "source_text": "人生应该是一场接一场的短跑，而不是永不停歇的马拉松。……学习或工作90~120分钟后，你应该休息15分钟。",
+          "paraphrase": "按周期消耗与补充精力，做事时全情投入，休息时彻底恢复。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "05"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "《精力管理》(Loehr & Schwartz)",
+            "notes": "书真实，具体比例系转述"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "酝酿效应：暂停带来顿悟",
+          "source_text": "这种暂停就是「酝酿效应」。……暂时停止对问题的积极探索，可能就会对问题的解决，起到关键作用。",
+          "paraphrase": "难题卡住时暂停，潜意识继续工作，休息后往往灵光乍现。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "23"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "酝酿效应（incubation effect）+ 奥克利《学习之道》",
+            "notes": "真实心理学现象"
+          }
+        },
+        {
+          "type": "technique",
+          "name": "冥想恢复精力",
+          "source_text": "冥想可以让你迅速恢复精力，也可以让你的情绪保持平静……有效提升你的专注力。",
+          "paraphrase": "闭眼专注呼吸5-15分钟，恢复精力、缓解焦虑。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "16"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "冥想研究（正念减压）",
+            "notes": "冥想效果有大量研究支撑"
+          }
+        }
       ]
     },
     {
@@ -346,16 +1132,64 @@
       "lecture_title": "学霸为什么学什么都快？有哪些可以借鉴的方法论？",
       "snr_score": 3.75,
       "tier": "silver",
-      "score_breakdown": { "originality": 4.0, "verifiability": 4.0, "actionability": 3.0, "change_potential": 4.0, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 4.0,
+        "actionability": 3.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：学霸快的原因是知识储备与能力储备，学习是复利过程。结构：知识储备→象棋实验→盖房子vs捡砖头→能力储备→复利效应。",
       "adler_q2": "解决「为什么别人学得比我快」。已解决：用知识储备、组块、复利解释并给出「早积累」方向；未解决：知识储备的解释力强但可操作性弱（无法速成）。",
       "adler_q3": "有可验证数据。象棋实验64%/34%/18%（蔡斯西蒙，✅），「盖房子vs捡砖头」比喻精妙，「复利/马太效应」引用吴军《见识》（✅）。核心是经典教育心理学（先前知识效应）。",
       "adler_q4": "能理解「越早积累越好」的复利逻辑，把「盖房子」作为检验自己是否真理解的标尺。",
       "critical_notes": "用象棋实验解释「组块」让「学霸为什么快」有科学依据，「盖房子vs捡砖头」「apple vs 5个字母」的比喻是全书最佳类比之一。但核心是「先前知识效应」（prior knowledge）的教科书结论，可操作性强但「早积累」本身无速成法。「种一棵树最好时间是十年前」的收尾真诚。",
       "extractions": [
-        { "type": "data_point", "name": "象棋大师实验", "source_text": "真实的棋局，象棋大师的正确率为64%，一级棋手为34%，业余新手为18%。", "paraphrase": "大师靠经验把棋子组成大组块记忆，随机棋局则无优势，证明知识储备的作用。", "writing_angle": "case_study", "related_lectures": ["08"], "verification": { "status": "✅", "source_url": "Chase & Simon 1973 象棋研究（彭聃龄《普通心理学》引用）", "notes": "真实经典实验，数据可追溯" } },
-        { "type": "analogy", "name": "盖房子 vs 捡砖头", "source_text": "一个知识储备少的人，TA学习东西，是在捡砖头……而知识储备多的人，TA学习东西，是在盖房子。", "paraphrase": "有储备的人把新知识放进已有结构形成大组块，无储备者零散捡取。", "writing_angle": "case_study", "related_lectures": ["08"], "verification": { "status": "⚠️", "source_url": "无独立来源", "notes": "作者比喻，形象但非研究" } },
-        { "type": "insight", "name": "学习的复利效应", "source_text": "就像是理财领域的「复利」效应，你的每一次练习，都会积累成你的本金。", "paraphrase": "知识积累是复利，越早开始收益越大，晚起步难追赶。", "writing_angle": "opinion", "related_lectures": ["22"], "verification": { "status": "✅", "source_url": "吴军《见识》层数比喻", "notes": "类比逻辑成立" } }
+        {
+          "type": "data_point",
+          "name": "象棋大师实验",
+          "source_text": "真实的棋局，象棋大师的正确率为64%，一级棋手为34%，业余新手为18%。",
+          "paraphrase": "大师靠经验把棋子组成大组块记忆，随机棋局则无优势，证明知识储备的作用。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "08"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Chase & Simon 1973 象棋研究（彭聃龄《普通心理学》引用）",
+            "notes": "真实经典实验，数据可追溯"
+          }
+        },
+        {
+          "type": "analogy",
+          "name": "盖房子 vs 捡砖头",
+          "source_text": "一个知识储备少的人，TA学习东西，是在捡砖头……而知识储备多的人，TA学习东西，是在盖房子。",
+          "paraphrase": "有储备的人把新知识放进已有结构形成大组块，无储备者零散捡取。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "08"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源",
+            "notes": "作者比喻，形象但非研究"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "学习的复利效应",
+          "source_text": "就像是理财领域的「复利」效应，你的每一次练习，都会积累成你的本金。",
+          "paraphrase": "知识积累是复利，越早开始收益越大，晚起步难追赶。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "吴军《见识》层数比喻",
+            "notes": "类比逻辑成立"
+          }
+        }
       ]
     },
     {
@@ -363,17 +1197,80 @@
       "lecture_title": "如何通过练习，让自己变得更聪明？",
       "snr_score": 3.83,
       "tier": "silver",
-      "score_breakdown": { "originality": 3.0, "verifiability": 4.5, "actionability": 4.0, "change_potential": 4.0, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 3.0,
+        "verifiability": 4.5,
+        "actionability": 4.0,
+        "change_potential": 4.0,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：聪明可被练出来，靠成长型思维和刻意练习。结构：成长型思维实验→弗林效应→刻意练习4原则。",
       "adler_q2": "解决「聪明和努力哪个重要」「智商能否提升」。已解决：用德韦克实验、弗林效应论证智商可塑，给出刻意练习4原则；未解决：刻意练习是Ericsson的经典结论复述，无原创。",
       "adler_q3": "数据最扎实的一讲。德韦克实验五成/九成、弗林效应100→115均可追溯（✅），刻意练习4原则有《刻意练习》出处（✅）。但均为经典理论的忠实复述，独创性低。",
       "adler_q4": "能用「成长型思维」替代「我不聪明」的自我设限，用刻意练习4原则（明确目标/专注/反馈/走出舒适区）指导练习。",
       "critical_notes": "全书数据最可信的一讲（德韦克实验、弗林效应均为真实可验证），但内容本质是Dweck《终身成长》+Ericsson《刻意练习》的忠实转述，无个人原创。「刻意练习4原则」是全书最有操作性的总结之一。开头「个人成长30讲也提过」暴露了内容复用。",
       "extractions": [
-        { "type": "data_point", "name": "德韦克成长型思维实验", "source_text": "被夸聪明的第一组孩子，有五成选了简单的题目；被夸努力的第二组孩子，有九成选了非常之困难的题目。", "paraphrase": "夸努力比夸聪明更能培养坚持与挑战倾向。", "writing_angle": "case_study", "related_lectures": ["21"], "verification": { "status": "✅", "source_url": "Mueller & Dweck 1998", "notes": "真实经典实验" } },
-        { "type": "data_point", "name": "弗林效应", "source_text": "从1932年到1978年间，整个美国，人们的IQ分数……从100，到接近115，逐步增长。", "paraphrase": "IQ随环境大幅增长，说明智能受环境影响、可改变。", "writing_angle": "case_study", "related_lectures": ["21"], "verification": { "status": "✅", "source_url": "Flynn Effect (James Flynn)", "notes": "真实且被广泛验证" } },
-        { "type": "framework", "name": "刻意练习4原则", "source_text": "1>目标要明确。2>做事时需要极其专注。3>需要及时看到反馈，并进行调整。4>走出舒适区。", "paraphrase": "刻意练习=明确目标+专注+及时反馈+走出舒适区，区别于天真的简单重复。", "writing_angle": "tutorial", "related_lectures": ["02", "03"], "verification": { "status": "✅", "source_url": "Ericsson《刻意练习》", "notes": "刻意练习是公认学习理论" } },
-        { "type": "insight", "name": "成长型思维 vs 固定型思维", "source_text": "重视努力让孩子拥有一个TA自己能掌控的变量，这会让他们认为自己能掌控自己的成功。", "paraphrase": "把努力视为可控变量（成长型思维）比把聪明视为天生（固定型思维）更能坚持。", "writing_angle": "opinion", "related_lectures": ["21"], "verification": { "status": "✅", "source_url": "Dweck《Mindset》", "notes": "成长型思维理论真实" } }
+        {
+          "type": "data_point",
+          "name": "德韦克成长型思维实验",
+          "source_text": "被夸聪明的第一组孩子，有五成选了简单的题目；被夸努力的第二组孩子，有九成选了非常之困难的题目。",
+          "paraphrase": "夸努力比夸聪明更能培养坚持与挑战倾向。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Mueller & Dweck 1998",
+            "notes": "真实经典实验"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "弗林效应",
+          "source_text": "从1932年到1978年间，整个美国，人们的IQ分数……从100，到接近115，逐步增长。",
+          "paraphrase": "IQ随环境大幅增长，说明智能受环境影响、可改变。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Flynn Effect (James Flynn)",
+            "notes": "真实且被广泛验证"
+          }
+        },
+        {
+          "type": "framework",
+          "name": "刻意练习4原则",
+          "source_text": "1>目标要明确。2>做事时需要极其专注。3>需要及时看到反馈，并进行调整。4>走出舒适区。",
+          "paraphrase": "刻意练习=明确目标+专注+及时反馈+走出舒适区，区别于天真的简单重复。",
+          "writing_angle": "tutorial",
+          "related_lectures": [
+            "02",
+            "03"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Ericsson《刻意练习》",
+            "notes": "刻意练习是公认学习理论"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "成长型思维 vs 固定型思维",
+          "source_text": "重视努力让孩子拥有一个TA自己能掌控的变量，这会让他们认为自己能掌控自己的成功。",
+          "paraphrase": "把努力视为可控变量（成长型思维）比把聪明视为天生（固定型思维）更能坚持。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "21"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Dweck《Mindset》",
+            "notes": "成长型思维理论真实"
+          }
+        }
       ]
     },
     {
@@ -381,16 +1278,65 @@
       "lecture_title": "教你利用“双加工理论”，有效提高学习能力",
       "snr_score": 3.73,
       "tier": "silver",
-      "score_breakdown": { "originality": 4.0, "verifiability": 3.5, "actionability": 4.0, "change_potential": 3.5, "expression_efficiency": 3.5 },
+      "score_breakdown": {
+        "originality": 4.0,
+        "verifiability": 3.5,
+        "actionability": 4.0,
+        "change_potential": 3.5,
+        "expression_efficiency": 3.5
+      },
       "adler_q1": "核心主张：用「路径依赖」和「双加工理论」解释「学了不会用」，方法是练习路径本身直到自动化。结构：路径依赖→练习路径→双加工理论→受控转自动化。",
       "adler_q2": "解决「知识储备充足却用不出来」。已解决：用「路径需要练习」解释并给出「在目标路径中练习」方案；未解决：双加工理论是经典心理学，原创在「路径依赖」的框架化。",
       "adler_q3": "「路径依赖」框架有原创性，双加工理论（谢夫林）有真实出处（✅），「自动驾驶模式」比喻清晰。用「口头表达低于文字表达」的自我剖析很诚实。",
       "adler_q4": "能识别自己的「路径依赖」，在「目标路径」（如脱稿说英语）中练习而非在舒适路径（跟读）中练习。",
       "critical_notes": "本节提出一个全书少有的原创框架——「路径依赖」：知识储备是必要条件但非充分，调取路径本身也要练习。用双加工理论把「练习让受控加工变自动化」解释得透彻。是「学了为什么不会用」这一终极困惑的较好回答，适合做方法论文章。",
       "extractions": [
-        { "type": "framework", "name": "路径依赖", "source_text": "一旦进入某一路径，就可能对这种路径产生依赖。……我们习惯了用某一路径进行学习、做事，但是每一个路径，都需要练习。", "paraphrase": "知识储备足够但不会用，是因为没练习「调取路径」本身。", "writing_angle": "methodology", "related_lectures": ["08", "22"], "verification": { "status": "⚠️", "source_url": "无独立来源（经济学概念迁移）", "notes": "路径依赖是经济学概念，作者迁移到学习场景，原创框架" } },
-        { "type": "data_point", "name": "双加工理论", "source_text": "人类的认知加工包括「自动化加工」和「受意识控制的加工」……由谢夫林等人提出。", "paraphrase": "熟练行为转自动化后不占认知资源，可并行其他需意识的任务。", "writing_angle": "case_study", "related_lectures": ["22"], "verification": { "status": "✅", "source_url": "Shiffrin & Schneider 1977 双加工理论", "notes": "真实经典认知理论" } },
-        { "type": "insight", "name": "练习让受控加工转自动化", "source_text": "只要我们积累了大量的练习，「受意识控制的加工」可以转变为「自动化加工」。", "paraphrase": "在目标路径中大量练习，让「费力调用」变成本能，才能腾出工作记忆做更高阶的事。", "writing_angle": "opinion", "related_lectures": ["22"], "verification": { "status": "✅", "source_url": "自动化（automaticity）研究", "notes": "练习形成自动化的认知科学共识" } }
+        {
+          "type": "framework",
+          "name": "路径依赖",
+          "source_text": "一旦进入某一路径，就可能对这种路径产生依赖。……我们习惯了用某一路径进行学习、做事，但是每一个路径，都需要练习。",
+          "paraphrase": "知识储备足够但不会用，是因为没练习「调取路径」本身。",
+          "writing_angle": "methodology",
+          "related_lectures": [
+            "08",
+            "22"
+          ],
+          "verification": {
+            "status": "⚠️",
+            "source_url": "无独立来源（经济学概念迁移）",
+            "notes": "路径依赖是经济学概念，作者迁移到学习场景，原创框架"
+          }
+        },
+        {
+          "type": "data_point",
+          "name": "双加工理论",
+          "source_text": "人类的认知加工包括「自动化加工」和「受意识控制的加工」……由谢夫林等人提出。",
+          "paraphrase": "熟练行为转自动化后不占认知资源，可并行其他需意识的任务。",
+          "writing_angle": "case_study",
+          "related_lectures": [
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "Shiffrin & Schneider 1977 双加工理论",
+            "notes": "真实经典认知理论"
+          }
+        },
+        {
+          "type": "insight",
+          "name": "练习让受控加工转自动化",
+          "source_text": "只要我们积累了大量的练习，「受意识控制的加工」可以转变为「自动化加工」。",
+          "paraphrase": "在目标路径中大量练习，让「费力调用」变成本能，才能腾出工作记忆做更高阶的事。",
+          "writing_angle": "opinion",
+          "related_lectures": [
+            "22"
+          ],
+          "verification": {
+            "status": "✅",
+            "source_url": "自动化（automaticity）研究",
+            "notes": "练习形成自动化的认知科学共识"
+          }
+        }
       ]
     },
     {
@@ -398,7 +1344,13 @@
       "lecture_title": "重要：别再去找更好的学习方法了",
       "snr_score": 2.53,
       "tier": "copper",
-      "score_breakdown": { "originality": 2.5, "verifiability": 2.0, "actionability": 2.5, "change_potential": 3.0, "expression_efficiency": 3.0 },
+      "score_breakdown": {
+        "originality": 2.5,
+        "verifiability": 2.0,
+        "actionability": 2.5,
+        "change_potential": 3.0,
+        "expression_efficiency": 3.0
+      },
       "adler_q1": "核心主张：方法论只值1%时间，99%应花在实践上。结构：方法论焦虑→新华网实习→1%灵感99%汗水。",
       "adler_q2": "解决「方法论收集焦虑」。已解决：给出「别再找方法、去实践」的收尾劝告；未解决：偏鸡汤，无新方法，论据为个人实习经历。",
       "adler_q3": "观点正确（实践>方法论）且与11/22呼应，但「1%灵感99%汗水」是爱迪生名言（出处存疑），实习经历为孤证（❓），信息密度低。",

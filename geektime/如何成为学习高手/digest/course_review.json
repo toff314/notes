@@ -3,10 +3,10 @@
   "course": "如何成为学习高手",
   "title_idea": "一门把认知心理学翻译成中文的学霸课：为什么它值得你花2小时，而不是24节全听",
   "data_credibility_summary": {
-    "total_claims": 23,
-    "verified_pct": "70%",
-    "partial_pct": "17%",
-    "unverifiable_pct": "13%",
+    "total_claims": 57,
+    "verified_pct": "56%",
+    "partial_pct": "40%",
+    "unverifiable_pct": "4%",
     "suspicious_pct": "0%"
   },
   "narrative_structure": {
@@ -47,7 +47,7 @@
         ],
         "data_credibility_flags": [
           "L12 洗车积分卡实验 19%/34%（《瞬变》）✅ 可追溯",
-          "L16 爆米花实验 53%（康纳尔大学Wansink）✅ 可追溯",
+          "L16 爆米花实验 53%（康纳尔大学Wansink）⚠️ 数据匹配但研究者有撤稿争议，引用须注明出处",
           "L16 小白鼠电极实验（奥尔兹&米尔纳1953）✅ 可追溯",
           "L12 「5分钟起步法=卡尔顿大学研究」⚠️ 名称系作者转述包装",
           "L13 他律/两种痛苦 ❓ 纯逻辑推理，无研究出处"
