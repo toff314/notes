@@ -67,6 +67,18 @@ ARTIFACT_COLUMNS = {
 }
 
 
+def short_label(dirname, h1):
+    """条目短名：H1 截断在副标题前（——/——/——）；超 24 字或无从截断则回退目录名。"""
+    text = (h1 or "").strip()
+    for sep in ("——", "——", "——"):
+        if sep in text:
+            text = text.split(sep)[0].strip()
+            break
+    if text and len(text) <= 24:
+        return text
+    return dirname
+
+
 def classify_artifact(section_key, name):
     """文件名 → 类型列下标；匹配不到返回 None（进"其他"列）。"""
     low = name.lower()
@@ -419,9 +431,14 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
     # 条目级产物
     for d in subs:
         d_rel = os.path.join(root_rel, d)
-        d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
-                        h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-        add_item_docs(d_title, d_rel)
+        d_h1 = h1_of(os.path.join(ROOT, d_rel, "README.md"),
+                     h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
+        # 条目短名：数字/章节前缀目录直接用目录名（自带序且最短）；其余分区用截断标题
+        if section_key != "meetings" and re.match(r"^(\d+|ch\d+)", d):
+            item_label = d
+        else:
+            item_label = short_label(d, d_h1)
+        add_item_docs(item_label, d_rel)
 
     visible_cols = [(i, col_label) for i, (col_label, _keys) in enumerate(columns) if i in present]
     has_other = "other" in present
