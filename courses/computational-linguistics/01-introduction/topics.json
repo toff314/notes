@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "计算语言学基础 · 第 1 课 绪论（2026 非全博士班）· 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "courses/computational-linguistics/01-introduction",
+    "anchor": "第1讲"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec01-t1",
+      "title": "乔姆斯基 vs Jelinek：NLP 八十年\"规则与统计\"之争",
+      "angle": "观点：NLP 规则与统计之争",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4（同一时代两种针锋相对的方法论；PPT P30-32 ALPAC/P36 IBM SMT 可锚定）+ S2（Weaver/乔姆斯基/Jelinek 人物史可溯源）；书内/讲内未展开人物背景与争论全貌",
+      "sourceAnchor": "§8 研究简史——乔姆斯基\"句子的概率是完全没有用的概念\" vs \"Every time I fire a linguist, the performance of the recognizer improves\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t2",
+      "title": "大模型为什么从语言起步：一份语料的先天优势",
+      "angle": "观点：大模型为何始于语言",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1（讲而未透：自监督机制史与多模态延展链；PPT P40 时间线可作锚点）+ S3（可纵深到 MLM/自监督/多模态的技术脉络）",
+      "sourceAnchor": "§5——互联网使文字语料最早富集；深度学习需要海量数据时\"别标注了，用语言本身，抠掉一块让模型填\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t3",
+      "title": "\"技术超前科学\"：大模型的幻觉与可解释性欠账",
+      "angle": "观点：大模型可解释性",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4（工程能力 vs 科学解释的反差）+ S6（可解释性研究文献丰富可查）",
+      "sourceAnchor": "§4/§7——\"技术工程的发展超前了科学认知\"\"它真的理解语言奥秘吗？目前觉得还不够\"\"输出都是算的，所以给的是概率\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t4",
+      "title": "施氏食狮史 ≠ 段子：同音文里的拼音转汉字难题",
+      "angle": "观点：普通主题：施氏食狮史与拼音输入法",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S5（落到输入法/语音转写的日常体验）+ S2（赵元任写同音文的初衷——反拼音化运动，史料可查）",
+      "sourceAnchor": "§6——现场朗读同音文 + 拼音转汉字 2023 vs 2024.9 大模型对比实验",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t5",
+      "title": "一句拆迁条款教会你的句法歧义（真实纠纷案例）",
+      "angle": "观点：句法歧义的现实代价",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S5（现实落点：合同/法条里的歧义人人都可能踩）+ S4（\"歧义只是语言学趣味\"的反差认知）",
+      "sourceAnchor": "§6——腾退补偿办法\"户口在册的产权人及其直系血亲\"修饰范围歧义 → 法律纠纷；北邮沙河校区钉子户实例",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t6",
+      "title": "80 年 NLP 名言考古：从 Weaver 的密码破译到 \"All the knowledge is in the connections\"",
+      "angle": "论文：NLP 发展史",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S2（名言皆可溯源一手文献）+ S3（每句名言背后是一条技术路线，可深挖）",
+      "sourceAnchor": "§8——Weaver（1949）、乔姆斯基、Jelinek、\"Give me parallel data…\"、连接主义口号，一串名言串起方法论变迁",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

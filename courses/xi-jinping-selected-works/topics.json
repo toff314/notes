@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "course",
+    "title": "xi-jinping-selected-works",
+    "path": "courses/xi-jinping-selected-works"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "xi-jinping-selected-works-lec01-t1",
+      "title": "蔡元培的北大治理真的成功吗",
+      "angle": "观点：蔡元培的北大治理真的成功吗",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（蔡元培、胡适、陈独秀、蒋梦麟等人物与五四、讲义风潮皆可溯源）+ S4（与\"北大因蔡元培而伟大\"的通行叙事形成反差）",
+      "sourceAnchor": "转写 第 82–201 行「他讲的是'北大治理并不那么成功'」；第 146–151 行「做了 10 年校长，但是有 5 年辞职在外，所以他并不成功」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "xi-jinping-selected-works-lec01-t2",
+      "title": "太平天国的史料与网络谣言",
+      "angle": "观点：太平天国的史料与网络谣言",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（洪秀全、洪天贵福自述等史料可查）+ S4（\"农民运动最高峰\"与\"邪教论\"两种极端评价的反差）",
+      "sourceAnchor": "转写 第 55–70 行「洪秀全……88 个王娘」「说拜上帝教是邪教……这都是谣传」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "xi-jinping-selected-works-lec01-t3",
+      "title": "经典作家名单为什么变了",
+      "angle": "观点：经典文献名单的变迁",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1（讲而未透：只给结论与简因，未展开版本史）+ S4（名单变动背后的评价反转，天然有讨论度）",
+      "sourceAnchor": "转写 第 275–341 行「斯大林不再作为经典」「把总书记的重要著作也作为经典文献」「毛 4→3、习 4→3」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "xi-jinping-selected-works-lec01-t4",
+      "title": "中共一大与南湖红船的细节",
+      "angle": "观点：中共一大与南湖红船",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2（一大、王会悟、董必武诗等可溯源）+ S6（党史一手材料丰富、可查证）",
+      "sourceAnchor": "转写 第 374–416 行「密探闯入……改到嘉兴南湖」「王会悟提议」「船上放麻将」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "xi-jinping-selected-works-lec01-t5",
+      "title": "马克思恩格斯的一生与友谊",
+      "angle": "观点：马克思恩格斯的一生与友谊",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2（马克思、恩格斯、燕妮等可溯源）+ S5（可落到\"信仰与代价\"的现实思考）",
+      "sourceAnchor": "转写 第 561–618 行「特里尔……柏林大学……耶拿大学……莱茵报……德法年鉴……天鹅咖啡厅……恩格斯管厂 30 年」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

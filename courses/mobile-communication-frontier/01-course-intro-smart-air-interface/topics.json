@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "移动通信技术前沿 · 第1讲 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "courses/mobile-communication-frontier/01-course-intro-smart-air-interface",
+    "anchor": "第1讲"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "mobile-communication-frontier-lec01-t1",
+      "title": "大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构",
+      "angle": "论文：大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师明说\"不深入算法细节，不同文献可有自己的设计\"）+ S3 有技术纵深（压缩感知/SVD/码本→CSINet 系列→AutoEncoder 显式反馈→预测联合优化，技术链条完整）+ S6 权威外部源可查（Guo/Wen/Jin/Li arXiv:2206.15132、IEEE 9931713 综述、X. Lin arXiv:2308.05315、MathWorks 官方示例、3GPP TR 38.843）",
+      "sourceAnchor": "PPT 第 20–28 页；转写第 2 段「三类增强模型」「信道老化」「单侧训练/双侧联合训练」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t2",
+      "title": "毫米波波束管理的深度学习地图：低频预言、省着扫、让摄像头看见",
+      "angle": "论文：毫米波波束管理AI方案全景：低频辅助、超分辨预测与视觉辅助三条路线",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师明确\"论文特别多，只讲思路启发大家\"）+ S3 技术纵深（FC-DNN/FC-CNN/级联LSTM、固定角间距/宽窄混合/高SNR宽波束三方案、3D点云CNN、DRL 联合优化，每支都有可展开的原理与代码）+ S6 权威外部源（Alkhateeb 团队 ViWi 数据集系列论文、M. Alrabeiah、Qi/Wang/Li、Echigo、Ma/Hanzo、3GPP TR 38.843）",
+      "sourceAnchor": "PPT 第 35–41 页；转写第 6–7 段「三大类」「摄像头大货车遮挡」「激光追水杯演示」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t3",
+      "title": "AI业务流量建模：文生文流式、文生图突发，3GPP还没答案的问题",
+      "angle": "观点：AI业务流量建模——大模型时代通信网络面对的无标准难题",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议/反差（\"传统业务有泊松模型、XR 业务有 3GPP 模型，AI 业务没有模型——没有业务就无从评估网络性能\"）+ S5 现实落点（运营商流量预测、载波关断节能、准入控制都依赖业务模型；AI 流量已占大头）+ S6 权威外部源（3GPP 业务模型系列、MAWI/Telecom Italia 公开数据集、LSTM-CVAE/ARIMA 预测文献）",
+      "sourceAnchor": "PPT 第 56–58 页；转写第 7 段「文生文流式逐字蹦、文生图沉寂后突发」「AI类业务的模型还在讨论之中」「DeepSeek 高峰时段计费」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t4",
+      "title": "\"换了个AI算法算不算创新？\"——通信博士的选题困境",
+      "angle": "观点：把A算法换成B算法算不算创新？——无线AI时代的科研创新界定之问",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议反差（这是老师公开抛给 36 位在职博士的真问题，答辩评审现场就会发生）+ S5 现实落点（直接命中每个读者的论文送审、职称评审、专利审查——老师还提到与专利局朋友聊过同类问题）+ S6 权威外部源（可检索\"缝合怪\"\"A+B 式创新\"讨论、国家自然科学基金/专利审查指南对创新性的界定、AI for wireless 综述对\"重复性研究\"的批评）",
+      "sourceAnchor": "转写第 2 段末「我把一个新的AI的算法应用在这个场景下，这个算不算创新……我也没有什么明确的结论……跟大家把这个事儿抛出来」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t5",
+      "title": "位置数据隐私 vs AI高精度定位：运营商都拿不到的数据，模型怎么训",
+      "angle": "观点：AI定位的两难——分米级精度需求与位置数据隐私的正面碰撞",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 争议反差（需求端：车道级导航/儿童手表/智慧仓储要求分米级且下沉到垂直维度；供给端：训练所需地面实况位置数据恰好是最敏感的数据）+ S5 现实落点（每个人手机里\"是否允许获取位置\"弹窗、商场导购/防走散产品、工业 AGV）+ S6 权威外部源（WAIR-D arXiv:2212.02159、3GPP 定位增强标准、隐私计算/联邦学习在定位中的应用的文献）",
+      "sourceAnchor": "PPT 第 43–48 页；转写第 7 段「运营商聊过，用户位置数据他们自己都拿不着」「我是一概关闭位置权限」「金属货架园区定位难」",
+      "status": "published",
+      "link": "标准长文"
+    }
+  ]
+}

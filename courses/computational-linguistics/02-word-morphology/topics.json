@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "计算语言学基础 · 第 2 讲 词形态分析 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "courses/computational-linguistics/02-word-morphology",
+    "anchor": "第2讲"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec02-t1",
+      "title": "汉语到底有没有\"词\"？一场持续半个世纪的争论",
+      "angle": "观点：汉语有没有\"词\"——赵元任、吕叔湘、王力、徐通锵的\"字\"之争",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 + S4 —— 四位可查证的语言学大家、四种针锋相对的观点；讲座只把引语当 PPT 条目念过，讲而未透（S1），但它是\"汉语切分\"之所以成立的根。PPT P40 直接给了四段引语，是现成锚点。",
+      "sourceAnchor": "PPT P40（关于汉语的词的争论）／转写 §汉语切分（\"关于这个词，早期语言学家们都有比较多的争论，到今天也没有人说完全把这争论解决\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t2",
+      "title": "汉语分词的两大拦路虎：交集歧义与组合歧义",
+      "angle": "观点：汉语分词为什么难——交集歧义与组合歧义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 + S5 —— \"能穿多少穿多少\"\"武汉市/长江大桥\"\"本科/非本科\"都是反直觉的日常例子（S4 反差），又直接落到输入法/分词器/检索的工程痛点（S5 现实落点）；PPT 还给了 OA/CA 的统计结论与出处（P45 [ZhouQ2002]/[YanYT2000]、P48 [HouM2005]/[QinY2007]）。",
+      "sourceAnchor": "PPT P41–P50（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §汉语·边界歧义（\"能穿多少穿多少\"两解相反 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t3",
+      "title": "从 FSA 到 FST：词形态分析的有限状态方法",
+      "angle": "论文：从 FSA 到 FST：用有限状态转录机做英语词形态分析（生成与剖析）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S6 —— 有完整技术纵深（是什么→怎么用→原理→可复现示例），且外部源丰富（Omlin&Giles 1996、Weiss et al. ICML2018、Michalenko ICLR2019，PPT P34 直接给了引用）。讲座只用两张状态图示意，没跑通代码（S1）。",
+      "sourceAnchor": "PPT P18–P35（三类知识、双层结构、FSA→FST、配列/正字法 FST、生成/剖析、RNN 抽取 FST）／转写 §英语·FST（老师现场一步步画 fox→foxes 的状态转移）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t4",
+      "title": "BPE 子词分割：从 OOV 到 Subword 的一篇论文",
+      "angle": "论文：Sennrich et al. 2016 《Neural Machine Translation of Rare Words with Subword Units》——BPE 子词分割",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S3 + S6 —— 有技术纵深（论文精读：算法→代码→原理→演进），外部源极权威（Sennrich 2016 ACL、Kudo 2018、Schuster 2012，PPT P149/P162 给了论文与 GitHub）。PPT 只给了\"合并最频繁邻接符号\"的概述，讲而未透（S1）。",
+      "sourceAnchor": "PPT P146–P165（OOV 动机、Subwords、BPE token learner/parser、unigram LM、WordPiece、BPE 论文与实现）／转写未覆盖（转写讲到 OOV 即下课，见 corrections.md 四）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t5",
+      "title": "编辑距离（Levenshtein）与拼写纠错：一次讲透",
+      "angle": "论文：编辑距离（Levenshtein）与最小编辑距离：从定义到动态规划，再到拼写纠错",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S5 —— 有技术纵深（定义→递推→矩阵→反向回溯），且现实落点强（拼写纠错、输入法、DNA 比对，S5）；PPT 给了 execution→intention 的完整矩阵示例与递推公式，是现成锚点。",
+      "sourceAnchor": "02-2 PPT P1–P29（非词错误检测/纠正、Levenshtein、三种操作与代价、execution→intention 矩阵、动态规划、汉语非字/非词错误、汉字形态距离 open question、Glyce）／转写未覆盖",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t6",
+      "title": "大模型时代还需要分词吗？",
+      "angle": "观点：大模型时代还需要中文分词吗——\"切分是否必要\"的争论",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 + S6 —— 有争议反差（\"分词无用论\" vs 业界的\"分词仍然必要/有用\"），且 [MengYX2019ACL] 与 SOTA 结果（P134/P136）可查（S6）。讲座只在 PPT 末尾列了一页结论，讲而未透（S1）。",
+      "sourceAnchor": "PPT P145（[MengYX2019ACL] 认为直接基于字的模型在机器翻译等任务上优于切分后模型）／PPT P137–P138（深度学习把切分从特征工程转为自动表示）／转写 §第 2 章开场（\"现在你用大模型很容易，不用那么多剖析啊生成啊\" 待核）",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

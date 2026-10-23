@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "meeting",
+    "title": "2026-10-21-high-school-feature-forum",
+    "path": "meetings/2026-10-21-high-school-feature-forum"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-meeting-notes",
+  "topics": [
+    {
+      "id": "2026-10-21-high-school-feature-forum-t1",
+      "title": "特色的来源是校情，不是标签",
+      "angle": "观点：特色的来源是校情，不是标签——特色诊断应先做校情/师情诊断再定方向；区域层面适合用协作体做分层分类布局。",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 M1（跨讲者共识）+ M2（可迁移方法）。特色必须立足办学历史、区域资源与生源特点：赵晶以\"职教积淀 + 东城美育资源 + 美术特长生源\"三个坐标定办学定位 [00:02:16]；尚宝山从校史文脉、中轴线区位、校友榜样中找特色之根 [00:47:27]；张云直言\"一校一品不是刻意追求与众不同\" [00:30:52]；郝进宏要求先\"结合地域、办学定位、教育对象\"细化育人目标 [01:02:27]。",
+      "sourceAnchor": "[00:02:16]、[00:47:27]、[01:02:27]",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "2026-10-21-high-school-feature-forum-t2",
+      "title": "课程是特色的核心载体——把资源和活动课程化",
+      "angle": "观点：课程是特色的核心载体——把资源和活动课程化",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "论坛型 M1+M2",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "2026-10-21-high-school-feature-forum-t3",
+      "title": "分层分类——普惠与特长兼顾",
+      "angle": "观点：分层分类——普惠与特长兼顾",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "论坛型 M1+M2",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "2026-10-21-high-school-feature-forum-t4",
+      "title": "集团 / 协作体是特色发展的放大器，机制化是关键",
+      "angle": "观点：集团 / 协作体是特色发展的放大器，机制化是关键",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "论坛型 M1+M2",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "2026-10-21-high-school-feature-forum-t5",
+      "title": "教师与评价是特色发展的两块\"硬骨头\"",
+      "angle": "观点：教师与评价是特色发展的两块\"硬骨头\"",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "论坛型 M1+M2",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

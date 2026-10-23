@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "计算语言学基础 · 第 3 讲 汉语切分方法与评测 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "courses/computational-linguistics/03-word-segmentation",
+    "anchor": "第3讲"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec03-t1",
+      "title": "汉语分词的两大拦路虎：交集歧义与组合歧义",
+      "angle": "观点：汉语分词为什么难——交集歧义与组合歧义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 + S5 —— \"能穿多少穿多少\"\"北京人和足球俱乐部\"都是反直觉的日常例子（S4 反差），又直接落到分词器/检索的工程痛点（S5）；PPT 给了 OA/CA 的规范定义与更多例子。",
+      "sourceAnchor": "PPT P47–P52（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §难点叠加（\"敦煌市长孙熙龙说\"\"赶超女举\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t2",
+      "title": "从 FMM 到 Viterbi：汉语分词方法的演进",
+      "angle": "观点：从基于规则到基于序标——汉语分词的六十年方法演进",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 + S4 —— 有清晰的\"问题驱动方法\"叙事主线（无上下文→局部最优→全局最优），且观点反差强（\"规则早已过时\"其实不成立，FMM+BMM 至今可用于发现歧义，P66）。",
+      "sourceAnchor": "PPT P53–P132（三路线全流程）／转写 §方法史总览、§基于规则、§基于分类、§基于序标",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t3",
+      "title": "用\"天气考古\"讲透 HMM 与 Viterbi",
+      "angle": "论文：用\"天气考古\"讲透隐马尔可夫模型与 Viterbi 算法（以中文分词为例）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S6 —— 有完整技术纵深（是什么→怎么算→为什么用 DP），且\"天气考古\"是个好直觉入口；PPT 直接给了 Viterbi 的完整算例（P98–P106），是现成锚点。",
+      "sourceAnchor": "PPT P80–P106（HMM 五元组、天气/冰淇淋例、状态转移与发射概率、3ⁿ→动态规划、Viterbi 算例）／转写 §基于序标·HMM",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t4",
+      "title": "中文分词工具怎么选：从 FMM 到 CRF 到 BERT",
+      "angle": "论文：中文分词工具怎么选：从 FMM、jieba 到 CRF、BERT 的实测对比",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S5 —— 有技术纵深（原理 → 工具 → 选型）又极具现实落点（\"我该用哪个分词库\"，S5）；评测章节（P133–P145）提供了比较框架的入口。",
+      "sourceAnchor": "PPT P133–P145（SIGHAN/NLPCC 评测、SOTA、切分是否必要）／PPT P54–P132（方法原理）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t5",
+      "title": "大模型时代还需要中文分词吗？",
+      "angle": "观点：大模型时代还需要中文分词吗——\"切分是否必要\"的争论",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 + S6 —— 有争议反差（\"分词无用论\" vs \"分词仍然必要\"），且 [MengYX2019ACL] 与 SOTA 结果可查（S6）。讲座只在一页给结论，讲而未透（S1）。",
+      "sourceAnchor": "PPT P145（[MengYX2019ACL] 认为直接基于字的模型在某些任务上优于切分后模型）／PPT P138–P143（深度把切分从特征工程转为自动表示）／转写 §第 2 章开场（\"你用大模型很容易\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t6",
+      "title": "问答六十年：从 BASEBALL 到 RAG",
+      "angle": "观点：同一个问题问了六十年——从 BASEBALL 到 RAG 的问答史",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 + S5 —— 有强叙事主线（1961→今天，同一问题换了五代方案）与鲜明反差（几十年前的棒球问答系统与今天的 RAG 撞题，S4 倾向），且 RAG 是当下热点（S5）。",
+      "sourceAnchor": "PPT 第 11 章（学生分享，PPT 未提供）／转写 §学生分享（BASEBALL、向量空间模型、IDF、BM25、双塔/交叉编码器、FAISS、RAG 待核）",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

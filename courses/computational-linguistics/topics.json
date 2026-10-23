@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "course",
+    "title": "computational-linguistics",
+    "path": "courses/computational-linguistics"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec01-t1",
+      "title": "乔姆斯基 vs Jelinek：NLP 八十年\"规则与统计\"之争",
+      "angle": "观点：NLP 规则与统计之争",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4（同一时代两种针锋相对的方法论；PPT P30-32 ALPAC/P36 IBM SMT 可锚定）+ S2（Weaver/乔姆斯基/Jelinek 人物史可溯源）；书内/讲内未展开人物背景与争论全貌",
+      "sourceAnchor": "§8 研究简史——乔姆斯基\"句子的概率是完全没有用的概念\" vs \"Every time I fire a linguist, the performance of the recognizer improves\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t2",
+      "title": "大模型为什么从语言起步：一份语料的先天优势",
+      "angle": "观点：大模型为何始于语言",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1（讲而未透：自监督机制史与多模态延展链；PPT P40 时间线可作锚点）+ S3（可纵深到 MLM/自监督/多模态的技术脉络）",
+      "sourceAnchor": "§5——互联网使文字语料最早富集；深度学习需要海量数据时\"别标注了，用语言本身，抠掉一块让模型填\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t3",
+      "title": "\"技术超前科学\"：大模型的幻觉与可解释性欠账",
+      "angle": "观点：大模型可解释性",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4（工程能力 vs 科学解释的反差）+ S6（可解释性研究文献丰富可查）",
+      "sourceAnchor": "§4/§7——\"技术工程的发展超前了科学认知\"\"它真的理解语言奥秘吗？目前觉得还不够\"\"输出都是算的，所以给的是概率\"",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t4",
+      "title": "施氏食狮史 ≠ 段子：同音文里的拼音转汉字难题",
+      "angle": "观点：普通主题：施氏食狮史与拼音输入法",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S5（落到输入法/语音转写的日常体验）+ S2（赵元任写同音文的初衷——反拼音化运动，史料可查）",
+      "sourceAnchor": "§6——现场朗读同音文 + 拼音转汉字 2023 vs 2024.9 大模型对比实验",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t5",
+      "title": "一句拆迁条款教会你的句法歧义（真实纠纷案例）",
+      "angle": "观点：句法歧义的现实代价",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S5（现实落点：合同/法条里的歧义人人都可能踩）+ S4（\"歧义只是语言学趣味\"的反差认知）",
+      "sourceAnchor": "§6——腾退补偿办法\"户口在册的产权人及其直系血亲\"修饰范围歧义 → 法律纠纷；北邮沙河校区钉子户实例",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec01-t6",
+      "title": "80 年 NLP 名言考古：从 Weaver 的密码破译到 \"All the knowledge is in the connections\"",
+      "angle": "论文：NLP 发展史",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "reason": "命中 S2（名言皆可溯源一手文献）+ S3（每句名言背后是一条技术路线，可深挖）",
+      "sourceAnchor": "§8——Weaver（1949）、乔姆斯基、Jelinek、\"Give me parallel data…\"、连接主义口号，一串名言串起方法论变迁",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t1",
+      "title": "汉语到底有没有\"词\"？一场持续半个世纪的争论",
+      "angle": "观点：汉语有没有\"词\"——赵元任、吕叔湘、王力、徐通锵的\"字\"之争",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 + S4 —— 四位可查证的语言学大家、四种针锋相对的观点；讲座只把引语当 PPT 条目念过，讲而未透（S1），但它是\"汉语切分\"之所以成立的根。PPT P40 直接给了四段引语，是现成锚点。",
+      "sourceAnchor": "PPT P40（关于汉语的词的争论）／转写 §汉语切分（\"关于这个词，早期语言学家们都有比较多的争论，到今天也没有人说完全把这争论解决\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t2",
+      "title": "汉语分词的两大拦路虎：交集歧义与组合歧义",
+      "angle": "观点：汉语分词为什么难——交集歧义与组合歧义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 + S5 —— \"能穿多少穿多少\"\"武汉市/长江大桥\"\"本科/非本科\"都是反直觉的日常例子（S4 反差），又直接落到输入法/分词器/检索的工程痛点（S5 现实落点）；PPT 还给了 OA/CA 的统计结论与出处（P45 [ZhouQ2002]/[YanYT2000]、P48 [HouM2005]/[QinY2007]）。",
+      "sourceAnchor": "PPT P41–P50（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §汉语·边界歧义（\"能穿多少穿多少\"两解相反 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t3",
+      "title": "从 FSA 到 FST：词形态分析的有限状态方法",
+      "angle": "论文：从 FSA 到 FST：用有限状态转录机做英语词形态分析（生成与剖析）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S6 —— 有完整技术纵深（是什么→怎么用→原理→可复现示例），且外部源丰富（Omlin&Giles 1996、Weiss et al. ICML2018、Michalenko ICLR2019，PPT P34 直接给了引用）。讲座只用两张状态图示意，没跑通代码（S1）。",
+      "sourceAnchor": "PPT P18–P35（三类知识、双层结构、FSA→FST、配列/正字法 FST、生成/剖析、RNN 抽取 FST）／转写 §英语·FST（老师现场一步步画 fox→foxes 的状态转移）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t4",
+      "title": "BPE 子词分割：从 OOV 到 Subword 的一篇论文",
+      "angle": "论文：Sennrich et al. 2016 《Neural Machine Translation of Rare Words with Subword Units》——BPE 子词分割",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S3 + S6 —— 有技术纵深（论文精读：算法→代码→原理→演进），外部源极权威（Sennrich 2016 ACL、Kudo 2018、Schuster 2012，PPT P149/P162 给了论文与 GitHub）。PPT 只给了\"合并最频繁邻接符号\"的概述，讲而未透（S1）。",
+      "sourceAnchor": "PPT P146–P165（OOV 动机、Subwords、BPE token learner/parser、unigram LM、WordPiece、BPE 论文与实现）／转写未覆盖（转写讲到 OOV 即下课，见 corrections.md 四）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t5",
+      "title": "编辑距离（Levenshtein）与拼写纠错：一次讲透",
+      "angle": "论文：编辑距离（Levenshtein）与最小编辑距离：从定义到动态规划，再到拼写纠错",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S5 —— 有技术纵深（定义→递推→矩阵→反向回溯），且现实落点强（拼写纠错、输入法、DNA 比对，S5）；PPT 给了 execution→intention 的完整矩阵示例与递推公式，是现成锚点。",
+      "sourceAnchor": "02-2 PPT P1–P29（非词错误检测/纠正、Levenshtein、三种操作与代价、execution→intention 矩阵、动态规划、汉语非字/非词错误、汉字形态距离 open question、Glyce）／转写未覆盖",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec02-t6",
+      "title": "大模型时代还需要分词吗？",
+      "angle": "观点：大模型时代还需要中文分词吗——\"切分是否必要\"的争论",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 + S6 —— 有争议反差（\"分词无用论\" vs 业界的\"分词仍然必要/有用\"），且 [MengYX2019ACL] 与 SOTA 结果（P134/P136）可查（S6）。讲座只在 PPT 末尾列了一页结论，讲而未透（S1）。",
+      "sourceAnchor": "PPT P145（[MengYX2019ACL] 认为直接基于字的模型在机器翻译等任务上优于切分后模型）／PPT P137–P138（深度学习把切分从特征工程转为自动表示）／转写 §第 2 章开场（\"现在你用大模型很容易，不用那么多剖析啊生成啊\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t1",
+      "title": "汉语分词的两大拦路虎：交集歧义与组合歧义",
+      "angle": "观点：汉语分词为什么难——交集歧义与组合歧义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 + S5 —— \"能穿多少穿多少\"\"北京人和足球俱乐部\"都是反直觉的日常例子（S4 反差），又直接落到分词器/检索的工程痛点（S5）；PPT 给了 OA/CA 的规范定义与更多例子。",
+      "sourceAnchor": "PPT P47–P52（OA/CA 定义与例子、混合歧义、真实/伪歧义）／转写 §难点叠加（\"敦煌市长孙熙龙说\"\"赶超女举\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t2",
+      "title": "从 FMM 到 Viterbi：汉语分词方法的演进",
+      "angle": "观点：从基于规则到基于序标——汉语分词的六十年方法演进",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 + S4 —— 有清晰的\"问题驱动方法\"叙事主线（无上下文→局部最优→全局最优），且观点反差强（\"规则早已过时\"其实不成立，FMM+BMM 至今可用于发现歧义，P66）。",
+      "sourceAnchor": "PPT P53–P132（三路线全流程）／转写 §方法史总览、§基于规则、§基于分类、§基于序标",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t3",
+      "title": "用\"天气考古\"讲透 HMM 与 Viterbi",
+      "angle": "论文：用\"天气考古\"讲透隐马尔可夫模型与 Viterbi 算法（以中文分词为例）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S6 —— 有完整技术纵深（是什么→怎么算→为什么用 DP），且\"天气考古\"是个好直觉入口；PPT 直接给了 Viterbi 的完整算例（P98–P106），是现成锚点。",
+      "sourceAnchor": "PPT P80–P106（HMM 五元组、天气/冰淇淋例、状态转移与发射概率、3ⁿ→动态规划、Viterbi 算例）／转写 §基于序标·HMM",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t4",
+      "title": "中文分词工具怎么选：从 FMM 到 CRF 到 BERT",
+      "angle": "论文：中文分词工具怎么选：从 FMM、jieba 到 CRF、BERT 的实测对比",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 + S5 —— 有技术纵深（原理 → 工具 → 选型）又极具现实落点（\"我该用哪个分词库\"，S5）；评测章节（P133–P145）提供了比较框架的入口。",
+      "sourceAnchor": "PPT P133–P145（SIGHAN/NLPCC 评测、SOTA、切分是否必要）／PPT P54–P132（方法原理）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t5",
+      "title": "大模型时代还需要中文分词吗？",
+      "angle": "观点：大模型时代还需要中文分词吗——\"切分是否必要\"的争论",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 + S6 —— 有争议反差（\"分词无用论\" vs \"分词仍然必要\"），且 [MengYX2019ACL] 与 SOTA 结果可查（S6）。讲座只在一页给结论，讲而未透（S1）。",
+      "sourceAnchor": "PPT P145（[MengYX2019ACL] 认为直接基于字的模型在某些任务上优于切分后模型）／PPT P138–P143（深度把切分从特征工程转为自动表示）／转写 §第 2 章开场（\"你用大模型很容易\" 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec03-t6",
+      "title": "问答六十年：从 BASEBALL 到 RAG",
+      "angle": "观点：同一个问题问了六十年——从 BASEBALL 到 RAG 的问答史",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 + S5 —— 有强叙事主线（1961→今天，同一问题换了五代方案）与鲜明反差（几十年前的棒球问答系统与今天的 RAG 撞题，S4 倾向），且 RAG 是当下热点（S5）。",
+      "sourceAnchor": "PPT 第 11 章（学生分享，PPT 未提供）／转写 §学生分享（BASEBALL、向量空间模型、IDF、BM25、双塔/交叉编码器、FAISS、RAG 待核）",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

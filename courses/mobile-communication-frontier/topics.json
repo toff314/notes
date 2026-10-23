@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "course",
+    "title": "mobile-communication-frontier",
+    "path": "courses/mobile-communication-frontier"
+  },
+  "generatedAt": "2026-10-22",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "mobile-communication-frontier-lec01-t1",
+      "title": "大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构",
+      "angle": "论文：大规模MIMO CSI压缩反馈：从Type II码本到端到端AI重构",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师明说\"不深入算法细节，不同文献可有自己的设计\"）+ S3 有技术纵深（压缩感知/SVD/码本→CSINet 系列→AutoEncoder 显式反馈→预测联合优化，技术链条完整）+ S6 权威外部源可查（Guo/Wen/Jin/Li arXiv:2206.15132、IEEE 9931713 综述、X. Lin arXiv:2308.05315、MathWorks 官方示例、3GPP TR 38.843）",
+      "sourceAnchor": "PPT 第 20–28 页；转写第 2 段「三类增强模型」「信道老化」「单侧训练/双侧联合训练」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t2",
+      "title": "毫米波波束管理的深度学习地图：低频预言、省着扫、让摄像头看见",
+      "angle": "论文：毫米波波束管理AI方案全景：低频辅助、超分辨预测与视觉辅助三条路线",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师明确\"论文特别多，只讲思路启发大家\"）+ S3 技术纵深（FC-DNN/FC-CNN/级联LSTM、固定角间距/宽窄混合/高SNR宽波束三方案、3D点云CNN、DRL 联合优化，每支都有可展开的原理与代码）+ S6 权威外部源（Alkhateeb 团队 ViWi 数据集系列论文、M. Alrabeiah、Qi/Wang/Li、Echigo、Ma/Hanzo、3GPP TR 38.843）",
+      "sourceAnchor": "PPT 第 35–41 页；转写第 6–7 段「三大类」「摄像头大货车遮挡」「激光追水杯演示」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t3",
+      "title": "AI业务流量建模：文生文流式、文生图突发，3GPP还没答案的问题",
+      "angle": "观点：AI业务流量建模——大模型时代通信网络面对的无标准难题",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议/反差（\"传统业务有泊松模型、XR 业务有 3GPP 模型，AI 业务没有模型——没有业务就无从评估网络性能\"）+ S5 现实落点（运营商流量预测、载波关断节能、准入控制都依赖业务模型；AI 流量已占大头）+ S6 权威外部源（3GPP 业务模型系列、MAWI/Telecom Italia 公开数据集、LSTM-CVAE/ARIMA 预测文献）",
+      "sourceAnchor": "PPT 第 56–58 页；转写第 7 段「文生文流式逐字蹦、文生图沉寂后突发」「AI类业务的模型还在讨论之中」「DeepSeek 高峰时段计费」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t4",
+      "title": "\"换了个AI算法算不算创新？\"——通信博士的选题困境",
+      "angle": "观点：把A算法换成B算法算不算创新？——无线AI时代的科研创新界定之问",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议反差（这是老师公开抛给 36 位在职博士的真问题，答辩评审现场就会发生）+ S5 现实落点（直接命中每个读者的论文送审、职称评审、专利审查——老师还提到与专利局朋友聊过同类问题）+ S6 权威外部源（可检索\"缝合怪\"\"A+B 式创新\"讨论、国家自然科学基金/专利审查指南对创新性的界定、AI for wireless 综述对\"重复性研究\"的批评）",
+      "sourceAnchor": "转写第 2 段末「我把一个新的AI的算法应用在这个场景下，这个算不算创新……我也没有什么明确的结论……跟大家把这个事儿抛出来」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec01-t5",
+      "title": "位置数据隐私 vs AI高精度定位：运营商都拿不到的数据，模型怎么训",
+      "angle": "观点：AI定位的两难——分米级精度需求与位置数据隐私的正面碰撞",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 争议反差（需求端：车道级导航/儿童手表/智慧仓储要求分米级且下沉到垂直维度；供给端：训练所需地面实况位置数据恰好是最敏感的数据）+ S5 现实落点（每个人手机里\"是否允许获取位置\"弹窗、商场导购/防走散产品、工业 AGV）+ S6 权威外部源（WAIR-D arXiv:2212.02159、3GPP 定位增强标准、隐私计算/联邦学习在定位中的应用的文献）",
+      "sourceAnchor": "PPT 第 43–48 页；转写第 7 段「运营商聊过，用户位置数据他们自己都拿不着」「我是一概关闭位置权限」「金属货架园区定位难」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t1",
+      "title": "数字孪生与射线追踪：Sionna 如何\"凭空造\"信道数据",
+      "angle": "论文：数字孪生与射线追踪：用 Sionna 生成信道数据并验证 6G 系统",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师明说\"电磁方法更准但其他场景太复杂\"，只讲了用途不讲实现）+ S3 技术纵深（镜像法/SBR/FDTD → 开源 GPU 加速射线追踪 → 物理层/链级仿真，技术链条完整、可跑代码）+ S6 权威外部源可查（Sionna/Sionna RT 官方文档与论文、被综述引用做 DT 的出处）",
+      "sourceAnchor": "PPT 第 203–226 页（确定性射线法/FDTD）、第 332–362 页（近场/6G/AI 空口引用）；转写\"仿真与数字孪生\"节「英伟达的……开源……RT+physical……做数字孪生」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t2",
+      "title": "低空经济下的无人机信道：为什么\"低空城市最恶劣\"",
+      "angle": "论文：低空经济的信道难题：A2G 传播建模与\"低空城市最恶劣\"",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师点到为止，\"B=\"数据不多）+ S3 技术纵深（直射/反射/绕射/散射、两径模型、路损指数 2 与 3dB 起伏、多径时延扩展随高度变化、L/C 波段莱斯因子差异，都有量化结论）+ S5 现实落点（低空经济、无人机物流/巡检正当风口）",
+      "sourceAnchor": "PPT 第 322–330 页（AG 传播模型、测量、非射频感知辅助）；转写 §9「低空城市最恶劣」「参考信号按高度分配」「视觉定位」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t3",
+      "title": "NTN 传播建模：卫星通信的路径损耗到底怎么算",
+      "angle": "论文：NTN 传播建模入门：从视距概率到大气损耗与闪烁",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 讲而未透（老师给了框架与结论，公式/表格未展开）+ S3 技术纵深（PL=自由空间+杂波+阴影、O2I 双对数正态、大气损耗=频率×仰角×水汽、电离层/对流层闪烁的适用频段与纬度，链条清晰）+ S6 权威外部源（3GPP TR 38.811、ITU-R 闪烁模型）",
+      "sourceAnchor": "PPT 第 303–321 页（NTN 传播模型）；转写 §8「空天地海+通感算智」「无线电窗口」「辩证看频点」",
+      "status": "published",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t4",
+      "title": "观点：为什么\"每台手机各生成一套阴影衰落\"是错的",
+      "angle": "观点：信道仿真里最容易被忽视的错——阴影衰落的空间相关性",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议反差（\"把每台手机的阴影衰落当独立随机数\"是教科书里常见做法，老师却说这不对——反直觉）+ S5 现实落点（系统级仿真的干扰/容量结论会被这个假设系统性带偏）+ S6 权威外部源（对数正态阴影、Gudmundson 时空相关模型、区域相关文献）",
+      "sourceAnchor": "PPT 第 102–107 页（慢衰时间/空间相关性、阴影衰落-区域相关）；转写 §6「每台手机各生成一套是不对的」「最终极是拿真实地图来生成」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t5",
+      "title": "观点：AI 信道建模能不能把\"黑盒\"变成\"知识库\"",
+      "angle": "观点：AI 信道建模的两种路线——从\"黑盒拟合\"到 WEI 可解释知识库",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议反差（同样是\"AI 做信道\"，一派黑盒端到端、一派强调\"环境信息+知识\"可解释——技术路线之争）+ S5 现实落点（数字孪生、实时推理、场景自适应直接关系 6G 空口落地）+ S6 权威外部源（Jianhua Zhang 团队 WEI/AI2 论文、老师自己的\"图像信道\"工作）",
+      "sourceAnchor": "PPT 第 344–362 页（WEI + AI 空口四步、验证）；转写 §11「把地图输入模型快速给路径损耗」「黑盒特性导致泛化性和可解释性不强」",
+      "status": "published",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec02-t6",
+      "title": "观点：XL-MIMO 与近场通信——\"一条射线\"为什么要重新看成球面波",
+      "angle": "观点：6G 为什么要把\"一条射线\"重新看成球面波——XL-MIMO 与近场通信",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 争议反差（传统模型把电磁波当\"一条射线\"，阵列变大后近场必须当\"有形状的波\"——认知反转）+ S5 现实落点（THz、超大规模阵列、距离域预编码、LDMA，直通 6G 关键技术）",
+      "sourceAnchor": "PPT 第 332–343 页（近场 MIMO、XL-MIMO 非平稳/球面波前）；转写 §10「近场/远场以瑞利距离划分」「球面波要考虑聚焦与波束分裂」",
+      "status": "published",
+      "link": "标准长文"
+    }
+  ]
+}
