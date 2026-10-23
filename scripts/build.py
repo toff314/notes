@@ -165,7 +165,38 @@ def list_dirs(path):
     )
 
 
+DOC_EXTS = (".md", ".json", ".mermaid")
+
+
 def list_md(path):
+    if not os.path.isdir(path):
+        return []
+    return sorted(
+        f for f in os.listdir(path)
+        if os.path.isfile(os.path.join(path, f)) and f.endswith(".md") and not f.startswith(".")
+    )
+
+
+def list_docs(path, depth=0):
+    """产物文件（相对 path）：md/json/mermaid；depth=1 时含一级子目录内文件（如 labs/REPORT.md）。"""
+    if not os.path.isdir(path):
+        return []
+    files = []
+    for f in sorted(os.listdir(path)):
+        full = os.path.join(path, f)
+        if os.path.isfile(full) and f.endswith(DOC_EXTS) and not f.startswith("."):
+            files.append(f)
+    if depth >= 1:
+        for d in list_dirs(path):
+            for f in sorted(os.listdir(os.path.join(path, d))):
+                if f.endswith(DOC_EXTS) and not f.startswith("."):
+                    files.append(f"{d}/{f}")
+    return files
+
+
+def doc_href(rel_file):
+    """产物文件（相对路径，带扩展名）→ 链接目标：md 转 .html，json/mermaid 直链。"""
+    return rel_file[:-3] + ".html" if rel_file.endswith(".md") else rel_file
     if not os.path.isdir(path):
         return []
     return sorted(
@@ -340,36 +371,53 @@ def build_record(section_key, section_label, sub, root_marker, section_page_dir)
 
     # ---- L1 平铺区块：产物表格（按类型分列）----
     columns = ARTIFACT_COLUMNS.get(section_key, [])
-    # rows: item_label -> {col_idx|None("other"): [link html]}
-    rows = []
+    rows = []          # [(item_label, {col_idx|None: [link html]})]
     present = set()
 
-    def add_doc(item_label, name_no_ext, link):
-        idx = classify_artifact(section_key, name_no_ext)
+    def add_doc(item_label, match_key, display, link):
+        idx = classify_artifact(section_key, match_key)
         present.add(idx if idx is not None else "other")
         for it, cells in rows:
             if it == item_label:
-                cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(name_no_ext)}</a>')
+                cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(display)}</a>')
                 return
-        cells = {}
-        cells.setdefault(idx, []).append(f'<a href="{esc(link)}">{esc(name_no_ext)}</a>')
+        cells = {idx: [f'<a href="{esc(link)}">{esc(display)}</a>']}
         rows.append((item_label, cells))
 
-    for f in mds:
-        label = h1_of(os.path.join(ROOT, root_rel, f), f[:-3])
-        add_doc("（总览）", label, href(os.path.join(root_rel, f[:-3])) + ".html")
+    def add_item_docs(item_label, item_dir_rel):
+        """item 目录下的产物：根级 md 用 H1 做显示名；json/mermaid 与一级子目录文件（如 labs/REPORT.md）用路径名。"""
+        item_abs = os.path.join(ROOT, item_dir_rel)
+        for f in list_docs(item_abs, depth=1):
+            if f in ("README.md", "index.md"):
+                continue
+            rel_file = os.path.join(item_dir_rel, f)
+            no_ext = f[:-3] if f.endswith(".md") else f
+            if "/" in f or not f.endswith(".md"):
+                display = no_ext
+            else:
+                display = h1_of(os.path.join(item_abs, f), f[:-3])
+            add_doc(item_label, no_ext, display, href(rel_file if not f.endswith(".md") else rel_file))
+        idx_file = os.path.join(item_dir_rel, "index.html")
+        if os.path.isfile(os.path.join(ROOT, idx_file)):
+            add_doc(item_label, item_dir_rel.split(os.sep)[-1], "目录", href(item_dir_rel) + "/index.html")
+
+    # 记录级产物（总览行）
+    for f in list_docs(root_abs):
+        if f == "README.md":
+            continue
+        rel_file = os.path.join(root_rel, f)
+        no_ext = f[:-3] if f.endswith(".md") else f
+        display = h1_of(os.path.join(root_abs, f), f[:-3]) if f.endswith(".md") else no_ext
+        add_doc("（总览）", no_ext, display, href(rel_file))
+
+    # 条目级产物
     for d in subs:
         d_rel = os.path.join(root_rel, d)
         d_title = h1_of(os.path.join(ROOT, d_rel, "README.md"),
                         h1_of(os.path.join(ROOT, d_rel, "index.md"), d))
-        idx = os.path.join(d_rel, "index.html")
-        if os.path.isfile(os.path.join(ROOT, idx)):
-            add_doc(d_title, "目录", href(d_rel) + "/index.html")
-        for f in [x for x in list_md(d_rel) if x not in ("README.md", "index.md")]:
-            label = h1_of(os.path.join(ROOT, d_rel, f), f[:-3])
-            add_doc(d_title, label, href(os.path.join(d_rel, f[:-3])) + ".html")
+        add_item_docs(d_title, d_rel)
 
-    visible_cols = [(i, label) for i, label in enumerate(columns) if i in present]
+    visible_cols = [(i, col_label) for i, (col_label, _keys) in enumerate(columns) if i in present]
     has_other = "other" in present
     head = "<tr><th>条目</th>" + "".join(f"<th>{esc(lb)}</th>" for _, lb in visible_cols)
     if has_other:
