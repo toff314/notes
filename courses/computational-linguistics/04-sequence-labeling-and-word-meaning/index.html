@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 听课笔记 · 第 4 讲 序列标注解码与词义之难 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记</span> <span>/</span> <span class="cur">第 4 讲 序列标注解码与词义之难</span></nav>
+<h1 class="title">计算语言学基础 · 听课笔记 · 第 4 讲 序列标注解码与词义之难</h1><div class="prose"><h1>第 4 讲 序列标注解码与词义之难</h1>
+<ul><li>课程：计算语言学基础（2026 秋 · 非全日制博士班）</li><li>讲师：李蕾（课件封面署名：李蕾、王小捷）</li><li>日期：2026-10-24</li><li>输入：飞书 wiki <code>K73gwzaX8iazhwk2AY9c0eJ2neg</code>（文档标题「自然语言处理4」）</li></ul>
+<blockquote><p>进度说明：课程计划表把第 4 讲列为「语言模型」，但实际课堂因前几节展开较细，本节仍在收尾「词形态分析」（序列标注解码、BPE、编辑距离）并开启「词语义表示」，与计划表不同步。本笔记按实际讲授内容记录。</p></blockquote>
+<h2>实际输入</h2>
+<ul><li>转写：<code>raw/transcript.md</code>，994 行 / 43,011 汉字 / 143,793 字节，含 3 个录音分段标记（<code>1</code>、<code>2-1ppt</code>、<code>3</code>）</li><li>PPT 1：<code>raw/slides-1-word-morphology.pptx</code>（02-1 词形态分析，165 页；本讲用 P77–P165）</li><li>PPT 2：<code>raw/slides-2-min-edit-distance.pptx</code>（02-2 最小编辑距离，29 页；本讲用 P10–P29）</li><li>PPT 3：<code>raw/slides-3-word-meaning-symbolic.pptx</code>（03-1 词语义表示-符号方法，47 页；本讲用 P1–P14）</li><li>来源路径：<code>courses/computational-linguistics/slides/02 词形态分析/</code>、<code>slides/03 词语义表示/</code>（第 2、3 课已在用同一批课件）</li></ul>
+<blockquote><p>说明：第 2、3 讲在 <code>raw/</code> 里已分别存有 02-1、02-2 的副本；本次按同一命名规则补入 02-1、02-2、03-1，并新增 <code>slides-3-*</code>，未改动旧目录。</p></blockquote>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>用途</th><th>规模</th></tr><tr><td><code>notes.md</code></td><td>听课笔记正文（9 节 + 五条 takeaway）</td><td>3,498 汉字</td></tr><tr><td><code>outline.md</code></td><td>思路大纲（Mermaid 主线 + 分段地图 + 支线）</td><td>1 表 + 1 图</td></tr><tr><td><code>questions.md</code></td><td>自测 11 题 + PPT-only 清单 + 待追问</td><td>4 组</td></tr><tr><td><code>corrections.md</code></td><td>16 条差异 + 5 条存疑 + 未采用内容</td><td>双源可追溯</td></tr><tr><td><code>spinoffs.md</code></td><td>5 条衍生选题（含锚点/增益/发布位）</td><td>5 条</td></tr><tr><td><code>topics.json</code></td><td>选题结构化数据</td><td>5 条</td></tr><tr><td><code>my-notes.md</code></td><td>自写页（占位 4 问）</td><td>767 B</td></tr><tr><td><code>raw/</code></td><td>转写 + meta + 3 份 PPT</td><td>143 KB + 12 MB</td></tr></table>
+<h2>验收门（<code>check_notes.py . --raw raw</code>）</h2>
+<table><tr><th>门</th><th>结果</th><th>说明</th></tr><tr><td>G1 双源</td><td>✅</td><td>转写 994 行 + 3 份 PPT 均在 <code>raw/</code></td></tr><tr><td>G2 骨架锚点</td><td>✅</td><td>9 节首行均为「线索：」问题句</td></tr><tr><td>G3 归因</td><td>✅</td><td>【师】4 · 【师/PPT】6 · 【同学】2 · 【PPT】1</td></tr><tr><td>G4 差异</td><td>✅</td><td>16 条，依据列同时含转写行号与课件页码；4 条 ❓</td></tr><tr><td>G6 篇幅</td><td>✅</td><td>3,498 汉字 ≤ 4,000；9 节 ∈ 4–10</td></tr><tr><td>G7 产物</td><td>✅</td><td>8 份齐备（含 topics.json）+ 9/9 节一句话总结</td></tr><tr><td>G9 选题</td><td>✅</td><td>5 条，含主题串/锚点/为什么/增益</td></tr></table>
+<h2>六维自评（满分 60）</h2>
+<table><tr><th>维度</th><th>分</th><th>理由</th></tr><tr><td>忠实度</td><td>9/10</td><td>所有结论有转写行号或课件页码；闲聊段只留一句概括</td></tr><tr><td>结构清晰</td><td>9/10</td><td>一条主线五个台阶，Mermaid 图与分段表互为索引</td></tr><tr><td>可复习性</td><td>8/10</td><td>11 题自测 + 五条 takeaway；公式只留 Viterbi 与 Dis 两处</td></tr><tr><td>密度</td><td>8/10</td><td>3,498 汉字装 9 节，未注水；代价是学生分享两段压缩较狠</td></tr><tr><td>洞察</td><td>8/10</td><td>点出&quot;Viterbi 与编辑距离同构&quot;&quot;90% 的缝&quot;，但未展开证明</td></tr><tr><td>诚信</td><td>9/10</td><td>5 条存疑显式标注 ❓；学生分享边界行号为推断值并注明</td></tr><tr><td>合计</td><td>51/60</td><td>—</td></tr></table>
+<h2>发布记录</h2>
+<ul><li><code>check_notes.py . --raw raw</code> → <strong>FAIL=0 WARN=0</strong>，仅 4 条 INFO（归因/存疑/Mermaid/Mode B 待人工确认）</li><li><code>publish_notes.py</code> → 已登记 SUMMARY.md 第 04 讲、课程页与首页卡片；已渲染 8 个 HTML</li><li><code>scripts/build-html.sh</code> → 构建完成；本地 <code>127.0.0.1:17001</code> 各页均 200</li><li>站点：<code>https://notes.askfount.com/courses/computational-linguistics/04-sequence-labeling-and-word-meaning/</code></li><li>git：未提交（沿用课程仓库习惯，由用户决定提交时机）</li></ul></div><ul class="docs"><li><a class="doc-link" href="corrections.html">差异与存疑 · 第 4 讲<span class="arrow">→</span></a></li><li><a class="doc-link" href="my-notes.html">我的笔记 · 第 4 讲<span class="arrow">→</span></a></li><li><a class="doc-link" href="notes.html">第 4 讲 序列标注解码与词义之难：HMM/Viterbi、子词与编辑距离<span class="arrow">→</span></a></li><li><a class="doc-link" href="outline.html">思路大纲 · 第 4 讲<span class="arrow">→</span></a></li><li><a class="doc-link" href="questions.html">疑问与自测 · 第 4 讲<span class="arrow">→</span></a></li><li><a class="doc-link" href="spinoffs.html">衍生选题 · 第 4 讲<span class="arrow">→</span></a></li></ul>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

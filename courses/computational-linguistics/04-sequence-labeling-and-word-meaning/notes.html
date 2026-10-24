@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 4 讲 序列标注解码与词义之难：HMM/Viterbi、子词与编辑距离 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 4 讲 序列标注解码与词义之难</span> <span>/</span> <span class="cur">第 4 讲 序列标注解码与词义之难：HMM/Viterbi、子词与编辑距离</span></nav>
+<article class="prose"><h1>第 4 讲 序列标注解码与词义之难：HMM/Viterbi、子词与编辑距离</h1>
+<blockquote><p>输入：课堂转写 <code>raw/transcript.md</code>（994 行 / 43,011 汉字，3 段）+ 课件 02-1 P77–P165、02-2 P10–P29、03-1 P1–P14。</p><p>本讲两条线：前 2/3 把上一讲没讲透的 HMM/Viterbi 补齐，顺手把 CRF、特征工程、子词（BPE）、最小编辑距离串起来；最后 1/3 开启新单元「词语义表示」，只讲到&quot;什么是意义&quot;这一层。</p></blockquote>
+<h3>1. 开场：为什么回头补序列标注</h3>
+<p>线索：上一讲末尾&quot;讲快了&quot;的 HMM，为什么值得再花一节课？</p>
+<ul><li>【师】课程事务：第 4 节为讨论课，不公开录音；前几周含非课堂内容的部分也不公开。请假在群里报日期即可，不点名、不算缺勤（转写 L4–L21）。</li><li>老师说明：上一讲最后一段讲得快，而这部分&quot;与现在的生成式背景相关&quot;，所以回头补（L25）。</li><li>接上前两节的两种切分：基于规则（查词典、看上下文决定切不切）与基于分类（在字与字之间做二分类）。二分类逐个位置决策，&quot;前面错了就一错再错&quot;，像早期 RNN 层数一多就连乘出梯度爆炸/消失（L27–L32）。</li><li>所以要的是全局最优（L33）。序列标注正是为此而来：输入任意字串，输出等长的标签串（L38–L46）。</li><li>最简标注集 BIO：B=begin（词首字）、I=inside（词内后续字）、O=单独成词。&quot;有意见分歧&quot;切成 有/意见/分歧，&quot;见&quot;是 B、&quot;意&quot;是 O（L41–L43）。</li><li>序列到序列（seq2seq）是个黑盒：进一个 sequence、出一个 sequence。等长时（切分）是一一映射，不等长时（翻译、摘要、问答）就放开长度；Transformer 只是在改中间网络结构——并行化、修 RNN/LSTM 的旧问题（L47–L58）。</li></ul>
+<p>一句话总结：把切分从&quot;逐位置二分类&quot;改写成&quot;字串→等长标签串&quot;，才谈得上全局最优；顺带把 seq2seq 这条后来的主线接了上来。</p>
+<h3>2. HMM：隐在哪，三要素是什么</h3>
+<p>线索：HMM 的&quot;隐&quot;到底隐在哪？三个假设各自砍掉了什么？</p>
+<ul><li>【师/PPT】看到的是字（汉字加标点，几千到上万），决定它的是内部标签 BIO——&quot;隐藏的核心往外发射一个可见的字&quot;（L68–L78）。</li><li>三要素：状态集 {B,I,O}、状态转移矩阵 A（3×3）、发射矩阵 B（3 行、列数=字符集大小）。另加虚拟起始 Q0 与终止 QM（L79–L90、L104–L112）。</li><li>状态序列有马氏性：每个状态只看前面有限个（一阶即只看前一个），不往前看、也不往后看（L91–L93）。</li><li>三个假设（L138–L144）：①当前标签只依赖前 N 个标签（取 N=1）；②当前字只依赖当前标签；③字与字条件独立。老师点明这是&quot;为了当时算得出来&quot;的简化——&quot;看到北，你会想到北京&quot;，字间关联被硬砍掉了。</li><li>组合数：10 个字的句子、每位置 3 种标签 → 3^10 条标签序列，全枚举不可能（L153–L159，02-1 P93）。</li><li>老师顺手把 HMM 与今天的大模型并置：都是&quot;给定输入序列、找概率最大的输出序列&quot;，只是内部机制不同（L131–L132）。</li></ul>
+<p>一句话总结：HMM 把切分写成&quot;隐状态链 + 发射观测&quot;，用一阶马尔可夫与条件独立把联合概率拆成可算的乘积，代价是砍掉了真实的字间依赖。</p>
+<h3>3. Viterbi：粉笔盒与&quot;今天真热&quot;</h3>
+<p>线索：3^10 条路，怎么在多项式时间里挑出最好的那条？</p>
+<ul><li>先看贪心为什么不行：两个粉笔盒，盒 1 白 3 红 7、盒 2 白 7 红 3。抽到红猜盒 1、抽到白猜盒 2，每步都按当前最大概率选——拼出来的状态序列可能根本不合规则，&quot;很多幻觉也由此而来&quot;（L173–L186）。</li><li>Viterbi 的做法：定义中间量 V（第 t 时刻处于状态 j 的最优路径概率）与回溯指针（这个最优值来自哪个前驱），递推 V_t(j)=max_i[V_{t-1}(i)·a_ij]·b_j(o_t)（L190–L197）。</li><li>4 字例&quot;今天真热&quot;（L200–L294）：A 矩阵里 B→B、B→O 为 0（B 后必须接 I），I 可转 B/I/O，O 可转 B/O、不能转 I；Q0 只能到 B 或 O，各 0.5（L213–L226，02-1 P100）。</li><li>【师/PPT】初始化：V₁(B)=P(Q0→B)·P(B→今)=0.5×0.25=0.125；V₁(I)=0（Q0 不到 I）；V₁(O)=0.5×0.001=0.0005（L250–L259，02-1 P103）。</li><li>第二列：V₂(I) 在 B→I、I→I、O→I 三条来路中取最大，得 0.04，回溯指针记 1（来自 B）；此后每列同法（L268–L289，02-1 P104）。</li><li>到末列取最大，沿指针回溯得 B I O O → 今天/真/热。老师强调：中间只记&quot;当前最优与其来源&quot;，到 END 才回退，&quot;重复计算只算一次&quot;（L289–L293）。</li></ul>
+<p>一句话总结：Viterbi 每列只保留&quot;最优前驱&quot;，把 3^10 的枚举压成 T×N² 的递推，末列取最大再回溯，才拿到全局最优的标签串。</p>
+<h3>4. 参数从哪来：数数、互推与 HMM 的天花板</h3>
+<p>线索：A、B 怎么估？没有标注语料怎么办？HMM 死在哪？</p>
+<ul><li>有监督：在标注语料上数数——数状态转移、数&quot;某状态发射某字&quot;，归一化即得 A、B（L320–L326）。矩阵 B 巨大（3×上万），只能靠语料估（L115–L119）。</li><li>【师】无监督：随机初始化 A、B，用 A 算切分、用切分重估 B，再用 B 重估 A，来回迭代到不再变化（EM/Baum-Welch 的思路）。老师比喻&quot;自己踩自己左右脚往上走&quot;，并类比神经网络随机初始化后靠梯度调参（L327–L345）。</li><li>收敛≠正确：可能停在局部极值；三个假设本身也不成立（L303–L307）。</li><li>天花板（关键）：只看当前字与前一标签，遇到&quot;当前字相同、前一标签相同、正确标签却不同&quot;就必错——如&quot;一个人网站&quot;与&quot;人影&quot;，前面的&quot;人&quot;没法只靠前文区分，得看后文的&quot;网/影&quot;（L360–L370）。</li><li>出路是&quot;往后看&quot;：换成判别式模型，前后文都当特征。MaxEnt 能融合丰富上下文，但它是分类模型、标签之间没有约束【PPT】（02-1 P114）；MaxEnt + 马尔可夫 = MEMM，局部归一化带来模型偏置（02-1 P119：最优 1-1-1-1，MEMM 给出 1-2-2-2）。</li></ul>
+<p>一句话总结：A/B 有标注就数数、没标注就互推（EM），但 HMM 只看局部，&quot;同字同前标签、标签该不同&quot;是它的死穴，也是它逼出 CRF 的原因。</p>
+<h3>5. 从 CRF 到深度学习：抠特征的二十年</h3>
+<p>线索：为什么 2003–2015 年大家在&quot;抠特征&quot;，后来又不抠了？</p>
+<ul><li>【师/PPT】CRF 把相邻节点之间的连接关系也做成特征，所有特征统一进一个条件概率，&quot;线没有方向了&quot;——无向图、全局归一化，解决了 MEMM 的偏置（L372–L389）。</li><li>特征工程年代的清单：字特征、N-gram 特征、数字特征、结构特征、位置特征；标注集从 BIO 扩到 BIEO（E=end），再到 B1/B2/B3（词内第 1/2/3 个字，&quot;现代化&quot;的&quot;化&quot;总在末尾）——&quot;谁弄得细谁效果好&quot;，但标注规模、难度、计算量一起涨（L393–L400）。</li><li>深度网络接手：自动提特征，&quot;把人的工作解放出来&quot;；算力和数据到位后性能才爆发（L403–L407）。CRF 的序列约束仍常留在输出层（L426）。</li><li>评测史：2003、2005、2006 年起持续组织评测（转写为&quot;LRPCC/C/RPC&quot;，疑为 SIGHAN/Bakeoff 系列，存疑❓），2007 年多所高校推出带训练/测试规模与 OOV 比例的语料；F 值做到 90% 多，用时仍&quot;一堆抱怨&quot;（L409–L417）。</li><li>为什么 90% 还不够：评测是大范围平均，用户看的是自己的样例；领域词、人名、新词仍在漏（L415–L420）。</li></ul>
+<p>一句话总结：CRF 把能用的特征统一进一个全局模型，深度学习又把&quot;设计特征&quot;自动化；90% 的 F 值不够用，是因为评测分布与真实场景之间永远有缝。</p>
+<h3>6. 子词与 BPE：还要不要分词</h3>
+<p>线索：神经网络都能端到端了，为什么还要&quot;词&quot;这个单位？不要了又用什么？</p>
+<ul><li>三重压力（L429–L455）：切分错了会连累后续任务；多语种（日韩、阿拉伯、彝文等）没有统一的&quot;词&quot;；OOV 永远清不干净（lower 没进词表，来了就傻眼）。</li><li>于是把单元往下拆：不按&quot;人觉得是词&quot;的单位，而按内部编码/统计特性拆，就是今天说的 token；常见方法是 BPE（L444–L457）。</li><li>【师】BPE 训练（老师现场推演，L460–L492）：语料只有 low/lowest/newer/wider/new，故意没有 lower。每个词拆成单字符并加词尾标记&quot;_&quot;，得初始子词表；统计相邻符号对频次，合并最高频的一对；er 在 newer(6)+wider(3) 里共现 9 次，先合 er；再合 er_（er 后常接词尾）；随后 ne、new、low、newer 依次出现。</li><li>停止条件：合并次数是经验超参——&quot;觉得 token 规模够了就停&quot;，不是合到一个符号为止（L489–L492）。越频繁的片段越早进入子词表。</li><li>编码新词：加词尾标记后，按学到的合并顺序贪心走一遍；没见过就一路拆到单字符，相当于中文&quot;单字成词&quot;（L493–L505）。</li><li>代价：BPE 完全不看语义，只看邻接统计；好处是天然处理多语种与 OOV，汉语也能做，只是效果不如英文明显（L501–L507）。</li></ul>
+<p>一句话总结：当&quot;词&quot;在多语种、OOV、词表规模三重压力下失效，BPE 用&quot;高频相邻片段合并&quot;把切分交给统计，词表大小从语言学问题变成可调超参。</p>
+<h3>7. 最小编辑距离：一张表里的最短路</h3>
+<p>线索：输入法打错一个词，怎么算出&quot;最少改几次&quot;并给出候选？</p>
+<ul><li>问题：源串 S 变目标串 T，允许插入、删除、替换；插入/删除代价 1，替换代价 2（替换=删一个再加一个）。&quot;不是不能改，是要在多种改法里找代价最小的&quot;（L541–L555，02-2 P10–P12）。</li><li>全部硬替换的代价是 10，存在更优的 8——所以叫&quot;最小&quot;编辑距离（L551–L555）。</li><li>【师/PPT】递推：Dis(i,j)=min{Dis(i-1,j)+1, Dis(i,j-1)+1, Dis(i-1,j-1)+cost}，边界 Dis(i,0)=i、Dis(0,j)=j；从左上往右下逐格填，每格记&quot;最小值 + 来自哪条路&quot;（L556–L598，02-2 P14–P24）。</li><li>例 execution→intention：以 #（转写&quot;井号&quot;）表示空串起表，逐格推到右下角得 8；相同字母（T/T）斜着过来不加代价；同一格可能三条路同代价，所以最优路径不唯一（L574–L605）。</li><li>与 Viterbi 同构：前向填表、反向回溯，&quot;一个前向操作，一个反向获取&quot;（L603–L607）。</li><li>汉语适配（L608–L619）：拼音/五笔/语音输入的错误形态不同；可考虑笔画与笔顺（手写输入）、形近字图像比对（为汉字设计的&quot;田字格 CNN&quot;），以及铭文、隶书等历史文本。</li></ul>
+<p>一句话总结：编辑距离把&quot;改几次&quot;变成 m×n 网格上的最短路，前向递推、反向回溯，与 Viterbi 同属动态规划家族；汉语的难点在&quot;一个字的代价怎么定义&quot;。</p>
+<h3>8. 新单元开场：什么是&quot;意义&quot;</h3>
+<p>线索：为什么语义比语法更难？&quot;意义&quot;连定义都不唯一，NLP 怎么办？</p>
+<ul><li>语言层级：形态（偏语法）→ 语法 → 语义 → 语用；词形态分析到此收尾，进入词语义——&quot;比语法更难&quot;，且基本不涉及公式，更多是语言学的东西（L621–L626）。</li><li>【师/PPT】1923 年（一百多年前）就有学者讨论&quot;意义的意义&quot;，给出 22 种解读（L630–L631，03-1 P3–P4）。</li><li>沟通为什么失败：说的人觉得表达精准，听的人觉得听得准确，结果没对上——&quot;你画我猜&quot;里比划半天对方完全猜不到，因为&quot;你的思路跟每个人都不一样&quot;（L634–L643）。</li><li>课堂互动：老师请同学谈理解，一位同学按&quot;客观/主观&quot;两分，举例北京话&quot;卧槽&quot;——主观上几乎能覆盖所有情绪，客观上是个不好的词（L648–L655）。</li><li>词的&quot;意义&quot;还依赖视角：老师从国奖评审（博士 3 万、硕士 2 万、本科 1 万；中心 70 多人只推 3 个博士、18 人选 11 个）、论文被拒、开题报告读不懂，一路讲到&quot;同一件事换别人的视角看会完全不同&quot;，落到&quot;我表达清楚了吗&quot;这句自省（L660–L742）。这是闲聊式延伸，只保留与&quot;意义依赖视角&quot;有关的一层。</li><li>【师/PPT】词义的可分解性：义素（sememe，最小语义成分）与义位（义项），词义可拆成义素组合；老师口头说的是&quot;异素、异位&quot;（转写误识），并说&quot;不强迫理解，看例子就行&quot;（L743–L744，03-1 P6–P7）。</li><li>预告：下次讲词义表示的三类思路（基于基本义、基于关系、基于组合）。老师先给了词向量的直觉：China−Beijing ≈ USA−Washington、woman−man ≈ girl−boy——&quot;用歧义更小的词去描述复杂意义&quot;，这个早期想法后来被 word embedding 验证（L745–L756）。</li></ul>
+<p>一句话总结：语义难在&quot;意义&quot;本身没有统一定义（1923 年就有 22 种说法），而 NLP 必须把它变成可计算的表示——这正是下一课词向量要回答的问题。</p>
+<h3>9. 学生分享：信息抽取三阶段与&quot;token 经济学&quot;</h3>
+<p>线索：两位同学带来的两条外来视角，各自补上了什么？</p>
+<ul><li>【同学】同学一（第 21 章 信息抽取，L820–L905）：任务含实体、关系、事件、时间与槽填充；三阶段——1982–1997 专家规则（航空新闻&quot;票价上调 56 美元&quot;这类模板填充、人工写规则）、1997–2010 统计机器学习（MUC 评测推动、CRF/序列标注、半监督与弱监督 bootstrapping 带来的语义漂移、开放信息抽取与 Web 规模、依存路径特征、SemEval）、2011– 深度学习（CNN+池化、词向量、BIO 输出与全局约束）。结论：方法、数据、评测三条线并行演进。</li><li>【同学】同学二（第 2 章，网络安全从业，L900–L993）：词类与词例（type/token）；Zipf 定律指数 0.44–0.56（中文按字约 0.34、按词约 0.80）；Unicode 码点与 UTF-8 的四个设计好处——前导位可判长度、0/1 互斥可自同步、变长去掉零字节、0–7F 覆盖 ASCII（Ken Thompson 餐巾纸的典故）；符号规则的穷举困境与 Unix 管道&quot;可解释、可逐步调试&quot;的价值；token 量级表（千→十万亿）；token 成本管理——系统提示词、对话记录、输出 token 更贵、缓存命中、大小模型换挡。</li><li>【师】老师点评：把课上内容接到自己工作上最好（L960 附近）。</li></ul>
+<p>一句话总结：信息抽取展示了&quot;规则→统计→神经&quot;的三段式演进，第二位同学把 token 从抽象单位落到编码与成本——两条视角都在回答同一个问题：语言的单位怎么定、代价怎么算。</p>
+<h2>拿走这五条</h2>
+<ol><li><strong>一条主线</strong>：局部决策（逐位置二分类）→ 全局最优（序列标注/Viterbi）→ 更强表达（CRF/深度网络），问题是方法之母。</li><li><strong>一个算法家族</strong>：Viterbi 与最小编辑距离都是&quot;网格上的最短路&quot;，前向递推 + 反向回溯；掌握这个范式比记公式有用。</li><li><strong>一个反复出现的天花板</strong>：HMM 只看局部（同字同前标签、标签却不同），突破方向始终是&quot;加特征&quot;或&quot;学表示&quot;。</li><li><strong>一次单位降级</strong>：词 → 子词/字节（BPE），词表大小从语言学问题变成超参，多语种与 OOV 一并缓解。</li><li><strong>一个未解的核心</strong>：意义（1923 年 22 种定义）→ 词义表示与分布假设，是后半程的主线。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

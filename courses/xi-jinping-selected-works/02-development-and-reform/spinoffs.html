@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 2 讲 · 可衍生选题（送 `write-tech-tutorial` / `write-zhihu-tech`） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">习近平著作选读 · 听课笔记 · 第 2 讲 · 专题三（新发展理念引领高质量发展）+ 专题四（全面深化改革与制度建设）</span> <span>/</span> <span class="cur">第 2 讲 · 可衍生选题（送 `write-tech-tutorial` / `write-zhihu-tech`）</span></nav>
+<article class="prose"><h1>第 2 讲 · 可衍生选题（送 <code>write-tech-tutorial</code> / <code>write-zhihu-tech</code>）</h1>
+<blockquote><p>选题判据：只有满足下面任一条才留下——① 讲而未透（课上点到、没展开）；② 可验证（有数据、文件、案例可查）；③ 与我有关（能落到读者的处境）；④ 反直觉。<strong>不产生</strong>纯思政观点稿。</p></blockquote>
+<h2>索引（状态 / 链接）</h2>
+<table><tr><th>#</th><th>选题</th><th>目标技能</th><th>优先级</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>3万美元的门槛：为什么只有十几个国家跨过去</td><td>write-zhihu-tech</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>2</td><td>分红80亿与涨薪150元：共享为什么最难</td><td>write-zhihu-tech</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>3</td><td>市场作用的三个定语：补充、基础性、决定性</td><td>write-zhihu-tech</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>4</td><td>政府为什么会失灵：从独山县到低空经济</td><td>write-zhihu-tech</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>5</td><td>一张美国急诊账单与一次种牙：两种医疗制度的算法</td><td>write-zhihu-tech</td><td>P2</td><td>未发布</td><td>—</td></tr></table>
+<h3>1. 3万美元的门槛：为什么只有十几个国家跨过去</h3>
+<ul><li><strong>主题串</strong>：<code>观点：3万美元门槛与后发国家的结构困境</code></li><li><strong>锚点</strong>：转写 415—500 行——人均 GDP 3 万美元门槛；2025 年我国 1.4 万美元（约 8 万人民币）；韩日 3.6—3.9 万；全球四层结构（原材料国 / 外围工业国 / 准中央 / 中央）；美元霸权三段史（布雷顿森林 → 1970 年代脱钩 → 与石油绑定）；1960 年代以来 100 多个中等经济体只有十几个跨过。</li><li><strong>为什么</strong>：课上给了&quot;四层结构&quot;这个框架，但<strong>没给判断标准</strong>——一个后发国家要满足什么条件才能往&quot;准中央&quot;挤？这正是可展开处。</li><li><strong>增益</strong>：把老师的&quot;结构直觉&quot;变成可检验清单（政治稳定、人口规模、产业升级路径、货币与金融地位），并补上 3—4 个反例（资源国为何停滞、四小龙为何是特例）。</li><li><strong>更新建议</strong>：<code>write-zhihu-tech</code> — 先跑数据（世界银行人均 GNI 分档、IMF 货币储备份额），再下结论；结论必须由数据推出。</li><li><strong>素材种子</strong>：World Bank 人均 GNI 档位数据；IMF COFER 美元/欧元/人民币份额；韩国 1980—2000 年出口结构变化；我国集成电路进出口额。</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>2. 分红80亿与涨薪150元：共享为什么最难</h3>
+<ul><li><strong>主题串</strong>：<code>观点：从一家龙头企业的分红与涨薪看「共享」的执行难点</code></li><li><strong>锚点</strong>：转写 526—540 行——某新能源电池龙头分红 80 亿，一线生产工人每月涨薪 150 元；胖东来&quot;高工资 + 高分钱&quot;模式；老师点到&quot;按劳分配 + 按资分配&quot;两种分配方式并存。</li><li><strong>为什么</strong>：课上用这个对比讲&quot;共享&quot;，但<strong>没解释为什么企业必然这么分配</strong>（谁占有生产资料谁决定分配），也没讨论&quot;如果强制提高工资会怎样&quot;。</li><li><strong>增益</strong>：把&quot;道德指责&quot;换成&quot;机制分析&quot;——资本回报率与劳动报酬份额、上市公司的分红与薪酬结构、行业周期对涨薪的约束。</li><li><strong>更新建议</strong>：<code>write-zhihu-tech</code> — 抓该企业年报（分红总额、员工人数、人均薪酬）与行业平均，做一张对照表。</li><li><strong>素材种子</strong>：该龙头近三年年报&quot;利润分配&quot;章节；A 股制造业人均薪酬中位数；统计局&quot;劳动报酬占 GDP 比重&quot;。</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>3. 市场作用的三个定语：补充、基础性、决定性</h3>
+<ul><li><strong>主题串</strong>：<code>观点：市场作用的三次定性变化及其政治经济学含义</code></li><li><strong>锚点</strong>：转写 590—650 行——计划经济（指令性、计委、苏联模式）→ 市场的三特征（价格引导供求、竞争带来创新、企业可破产）→ 市场作用&quot;补充 → 基础性（十四大）→ 决定性（十八届三中全会）&quot;。</li><li><strong>为什么</strong>：三个定语在课上是一句话带过，而<strong>每一次换词都对应一次真实的制度调整</strong>，这是理解中国改革节奏的钥匙。</li><li><strong>增益</strong>：给出时间轴 + 原文出处 + 对应的政策后果（国企改革、价格双轨制、加入 WTO、负面清单）。</li><li><strong>更新建议</strong>：<code>write-zhihu-tech</code> — 引用原文必须给文件与届次，不能凭记忆。</li><li><strong>素材种子</strong>：十四大报告、十八届三中全会《决定》原文；价格双轨制史料；《市场准入负面清单》。</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>4. 政府为什么会失灵：从独山县到低空经济</h3>
+<ul><li><strong>主题串</strong>：<code>观点：政府失灵的四种机制与中国式表现</code></li><li><strong>锚点</strong>：转写 676—720 行——&quot;一抓就死、一放就乱&quot;；政策时滞；政治与安全考量遏制创新（低空经济）；裁判兼运动员；政府自身利益（GDP、一票否决、晋升）；中央与地方不一致 → 上有政策下有对策；独山县举债盖楼（757 行）；4 万亿、P2P、国补导致的过度生产。</li><li><strong>为什么</strong>：课上把&quot;政府失灵&quot;讲成了枚举，<strong>没给出可复用的分析框架</strong>，读者遇到新案例时无法自行判断。</li><li><strong>增益</strong>：写成&quot;四种机制 + 三个判据&quot;的判断工具，并给出反面（国家不计代价铺光纤、卫星覆盖）说明失灵不是必然。</li><li><strong>更新建议</strong>：<code>write-zhihu-tech</code> — 独山县需引财政部/审计署或公开报道的债务数据，不引转写。</li><li><strong>素材种子</strong>：独山县债务公开报道；低空经济试点城市名单与空域管理规定；4 万亿投资的后续评估文献。</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>5. 一张美国急诊账单与一次种牙：两种医疗制度的算法</h3>
+<ul><li><strong>主题串</strong>：<code>观点：从三个价格看两种医疗制度的算法差异</code></li><li><strong>锚点</strong>：转写 860—920 行——在美急诊 15 分钟、未做检查、收费 5670 美元；留学生被猫抓伤急诊 5 小时、仅开止痛片、2000 多美元；种牙 13000 元 → 集采后约 5000 元；心脏支架国产 3—4 万（进口 7—8 万）→ 集采后几千元；医保覆盖近 10 亿人。</li><li><strong>为什么</strong>：这是全课最有传播力的对比，但<strong>两边都被讲成了极端</strong>：美国有保险的人并不这么贵，中国的低价也有代价（药企利润、进口药进院难）。</li><li><strong>增益</strong>：补上&quot;有保险 / 无保险&quot;&quot;原研 / 仿制&quot;&quot;集采前后&quot;三个切面，做成&quot;同一手术在两种制度下的账单&quot;，避免变成情绪对比。</li><li><strong>更新建议</strong>：<code>write-zhihu-tech</code> — 账单必须标年份、州、保险类型；国内价格标城市与集采批次。</li><li><strong>素材种子</strong>：美国 CMS 医院收费公开数据；我国集采中选价格公告（冠脉支架、种植牙）；医保统计公报参保人数。</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

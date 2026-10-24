@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "习近平著作选读 · 第 2 讲（专题三 · 专题四）· 衍生选题",
+    "path": "courses/xi-jinping-selected-works/02-development-and-reform",
+    "anchor": "第2讲"
+  },
+  "generatedAt": "2026-10-24",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "lec02-t1",
+      "title": "3万美元的门槛：为什么只有十几个国家跨过去",
+      "angle": "观点：3万美元门槛与后发国家的结构困境",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1（讲而未透：只给四层结构与美元霸权，未展开准中央国家的具体条件）+ S4（与「努力就能追上」的乐观叙事形成反差）",
+      "sourceAnchor": "转写 415–500 行：人均 GDP 3 万美元、2025 年我国 1.4 万美元、四层结构、布雷顿森林→脱钩→石油",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "lec02-t2",
+      "title": "分红80亿与涨薪150元：共享为什么最难",
+      "angle": "观点：从一家龙头企业的分红与涨薪看「共享」的执行难点",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（年报与薪酬数据可溯源）+ S4（共同富裕口号与企业分配现实的落差）",
+      "sourceAnchor": "转写 526–540 行：分红 80 亿、一线工人每月涨 150 元、按劳分配 + 按资分配",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "lec02-t3",
+      "title": "市场作用的三个定语：补充、基础性、决定性",
+      "angle": "观点：市场作用的三次定性变化及其政治经济学含义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S6（十四大、十八届三中全会文件可查证）+ S2（语义演变本身就是一部改革史）",
+      "sourceAnchor": "转写 640–650 行：十八届三中全会，市场作用「不再是基础性的，变成了决定性」；计划与市场对比见 590–640 行",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "lec02-t4",
+      "title": "政府为什么会失灵：从独山县到低空经济",
+      "angle": "观点：政府失灵的四种机制与中国式表现",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（独山县债务、频谱政策、集成电路补贴均可查）+ S5（可落到考公热与政策依赖的现实思考）",
+      "sourceAnchor": "转写 676–720 行：一抓就死一放就乱、频谱政策、4 万亿/P2P/国补；757 行：独山县",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "lec02-t5",
+      "title": "一张美国急诊账单与一次种牙：两种医疗制度的算法",
+      "angle": "观点：从急诊账单、种牙、心脏支架三个价格看两种医疗制度",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4（免费医疗与看病贵两种刻板印象同时被打脸）+ S2（集采价格、医保覆盖率有公开数据）",
+      "sourceAnchor": "转写 860–920 行：急诊 15 分钟 5670 美元、种牙 13000→5000、支架 3—4 万→几千、医保近 10 亿人",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

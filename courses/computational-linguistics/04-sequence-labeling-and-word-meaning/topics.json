@@ -1,0 +1,65 @@
+{
+  "schema": "lecture-spinoffs/1",
+  "course": "计算语言学基础",
+  "lecture": 4,
+  "title": "序列标注解码与词义之难：HMM/Viterbi、子词与编辑距离",
+  "generated_at": "2026-10-24",
+  "target_platform": "知乎专栏",
+  "topics": [
+    {
+      "id": "dp-viterbi-edit-distance",
+      "title": "Viterbi 与编辑距离：同一张表的两种用法",
+      "type": "论文",
+      "angle": "动态规划的统一模板：状态定义、递推式、边界、回溯、复杂度",
+      "anchor": "§3 L190–L293；§7 L556–L605（02-1 P94–P112、02-2 P14–P24）",
+      "why": "两个算法在课上相隔四十分钟，容易被当成两件事，其实只差格子含义",
+      "gain": "给出可复用的 DP 五步模板，可套到 HMM/CRF/DTW/ASR 解码",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "metric-90-not-enough",
+      "title": "90% 的 F 值为什么不够用",
+      "type": "观点",
+      "angle": "评测分布与真实使用分布之间的缝",
+      "anchor": "§5 L409–L420（02-1 P133–P138）",
+      "why": "指标好看、体验很差的经典案例，可迁移到 NER/抽取/对话",
+      "gain": "教读者读评测表的三件事，并给出自建小测试集的实操建议",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "bpe-word-as-hyperparameter",
+      "title": "BPE：把「词」变成超参的那一步",
+      "type": "论文",
+      "angle": "从五个词的合并推演讲到停止条件与贪心编码",
+      "anchor": "§6 L429–L507（02-1 P146–P165）",
+      "why": "多数科普只讲「合并高频对」，讲不清停在哪、怎么编码",
+      "gain": "附 20 行可跑的 BPE 脚本与合并日志，解释中文 token 效率问题",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "chinese-tokenization-units",
+      "title": "中文还要不要分词：字、词、byte 三级单位",
+      "type": "观点",
+      "angle": "任务 × 单位 的选型表与仍需要分词的场景",
+      "anchor": "§5–§6 L392–L527（02-1 P128–P165）",
+      "why": "十年未决的工程问题，直接决定 token 成本与效果",
+      "gain": "给检索/分类/抽取/生成四类任务的选型建议与反例",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "meaning-22-definitions",
+      "title": "意义的 22 种定义：词向量前史",
+      "type": "论文",
+      "angle": "意义无法定义 → 只能表示 → 分布假设 → 向量",
+      "anchor": "§8 L620–L756（03-1 P1–P14）",
+      "why": "多数词向量文章从 one-hot 讲起，缺「为什么非要表示」这一层",
+      "gain": "把 1923 年的思想史接到 word2vec，讲成一条因果线",
+      "status": "待写",
+      "link": null
+    }
+  ]
+}

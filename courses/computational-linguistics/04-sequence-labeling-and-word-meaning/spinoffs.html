@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>衍生选题 · 第 4 讲 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 4 讲 序列标注解码与词义之难</span> <span>/</span> <span class="cur">衍生选题 · 第 4 讲</span></nav>
+<article class="prose"><h1>衍生选题 · 第 4 讲</h1>
+<blockquote><p>从本讲可直接长出的写作选题，5 条。默认目标平台为知乎专栏（技术科普），若要改投公众号或课程作业，只需调结构、不改锚点。</p><p>状态：<code>待写</code> / <code>写作中</code> / <code>已发布</code>。链接留在条目内，发布后回填。</p></blockquote>
+<table><tr><th>#</th><th>选题</th><th>类型</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>Viterbi 与编辑距离：同一张表的两种用法</td><td>论文：算法同构</td><td>待写</td><td>—</td></tr><tr><td>2</td><td>90% 的 F 值为什么不够用</td><td>观点：评测与真实场景的缝</td><td>待写</td><td>—</td></tr><tr><td>3</td><td>BPE：把&quot;词&quot;变成超参的那一步</td><td>论文：子词算法</td><td>待写</td><td>—</td></tr><tr><td>4</td><td>中文还要不要分词：字、词、byte 三级单位</td><td>观点：单位的降级</td><td>待写</td><td>—</td></tr><tr><td>5</td><td>意义的 22 种定义：词向量前史</td><td>论文：语义表示的思想史</td><td>待写</td><td>—</td></tr></table>
+<hr>
+<h3>1. Viterbi 与编辑距离：同一张表的两种用法</h3>
+<ul><li><strong>主题串</strong>：动态规划 → 网格最短路 → Viterbi（状态×时刻）→ 编辑距离（字符×字符）→ 前向递推 + 反向回溯 → 为什么&quot;记住来源&quot;比&quot;记住值&quot;更重要</li><li><strong>锚点</strong>：本讲 §3（Viterbi 递推与回溯，转写 L190–L293）与 §7（Dis(i,j) 与 8 步回溯，转写 L556–L605）；课件 02-1 P94–P112、02-2 P14–P24</li><li><strong>为什么</strong>：两个算法在课上相隔四十分钟，学生容易当成两件事；其实只差&quot;格子代表什么&quot;。合并讲能一次打通 DP 的通用范式。</li><li><strong>增益</strong>：给出统一模板（状态定义 → 递推式 → 边界 → 回溯 → 复杂度），读者下次遇到 HMM、CRF、DTW、ASR 解码都能套。</li><li><strong>发布</strong>：状态 <code>待写</code>；链接 —</li></ul>
+<h3>2. 90% 的 F 值为什么不够用</h3>
+<ul><li><strong>主题串</strong>：SIGHAN 评测史 → F 值 90%+ → 用户仍抱怨 → 评测分布 ≠ 使用分布 → 领域词/OOV/标点混排 → 评测推动迭代</li><li><strong>锚点</strong>：§5（转写 L409–L420）；课件 02-1 P133–P138（评测年份、SOTA 表）</li><li><strong>为什么</strong>：这是&quot;指标好看、体验很差&quot;的经典案例，可迁移到所有 NLP 任务（NER、抽取、对话）。</li><li><strong>增益</strong>：教读者读评测表的三件事——语料来源、OOV 比例、评测单位；并给出&quot;自建小测试集&quot;的实操建议。</li><li><strong>发布</strong>：状态 <code>待写</code>；链接 —</li></ul>
+<h3>3. BPE：把&quot;词&quot;变成超参的那一步</h3>
+<ul><li><strong>主题串</strong>：词表爆炸/OOV/多语种 → 子词 → BPE 合并推演（low/lowest/newer/wider/new）→ er 9 次 → 词尾标记 → 停止条件 → 贪心编码</li><li><strong>锚点</strong>：§6（转写 L429–L507）；课件 02-1 P146–P165</li><li><strong>为什么</strong>：课上的推演只有五个词，是最好的最小可复现例子；多数科普直接讲&quot;合并高频对&quot;，却讲不清&quot;停在哪、怎么编码&quot;。</li><li><strong>增益</strong>：附一份 20 行可跑的 BPE 脚本与合并日志，读者能自己改语料验证；并解释 GPT 系中文 token 效率问题的来源。</li><li><strong>发布</strong>：状态 <code>待写</code>；链接 —</li></ul>
+<h3>4. 中文还要不要分词：字、词、byte 三级单位</h3>
+<ul><li><strong>主题串</strong>：规则/统计分词 → 90% 天花板 → 预训练模型端到端 → 字 vs 词 vs 子词 vs byte → 下游任务差异 → 工程选型</li><li><strong>锚点</strong>：§5–§6（转写 L392–L527）；课件 02-1 P128–P165</li><li><strong>为什么</strong>：这是中文 NLP 十年未决的工程问题，且直接决定 token 成本与效果。</li><li><strong>增益</strong>：给一张&quot;任务 × 单位&quot;选型表（检索/分类/抽取/生成），并指出哪些场景分词仍是刚需（词典约束、可解释性、低资源）。</li><li><strong>发布</strong>：状态 <code>待写</code>；链接 —</li></ul>
+<h3>5. 意义的 22 种定义：词向量前史</h3>
+<ul><li><strong>主题串</strong>：1923《意义的意义》→ 22 种定义 → 沟通失败 → 义素/义位 → 语义关系 → 分布假设 → word2vec 类比（China−Beijing ≈ USA−Washington）</li><li><strong>锚点</strong>：§8（转写 L620–L756）；课件 03-1 P1–P14</li><li><strong>为什么</strong>：多数词向量文章从 one-hot 讲起，缺&quot;为什么非要表示&quot;这一层；1923 年的 22 种定义是最好的开场钩子。</li><li><strong>增益</strong>：把&quot;意义无法定义 → 只能表示 → 分布假设 → 向量&quot;这条链讲成一条因果线，而不是罗列模型。</li><li><strong>发布</strong>：状态 <code>待写</code>；链接 —</li></ul>
+<h2>未选入的候选（记录备查）</h2>
+<ul><li>&quot;token 经济学：提示词、缓存与换挡&quot;（学生分享二，转写 L900–L993）：素材偏工程经验，缺公开可核的定价数据，暂不单独立题。</li><li>&quot;信息抽取三阶段&quot;（学生分享一，转写 L820–L900）：与第 21 章教材高度重合，独立成文的增量不足，可并入第 2 条的案例段。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
