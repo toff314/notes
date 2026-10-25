@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 5 讲 词义表示与词向量：从义原、词间关系到共现、SVD 与层次 Softmax · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 5 讲 · 词义表示与词向量</span> <span>/</span> <span class="cur">第 5 讲 词义表示与词向量：从义原、词间关系到共现、SVD 与层次 Softmax</span></nav>
+<article class="prose"><h1>第 5 讲 词义表示与词向量：从义原、词间关系到共现、SVD 与层次 Softmax</h1>
+<blockquote><p>输入：课堂转写 <code>raw/transcript.md</code>（660 行 / 29,124 汉字，3 段）+ 课件 03-1 P1–P48、03-2 P1–P34。</p><p>本讲前半（约 2/3）讲完「基于基本词」「基于词间关系」两条符号方法，收在词义消歧与词间相似度；后半转入词向量——分布式假设、高维共现、SVD 降维、神经概率语言模型，最后落在 CBOW + 层次 Softmax。Skip-gram 与负采样留到下节。</p></blockquote>
+<h3>1. 开场：三条岔路与&quot;什么是意义&quot;</h3>
+<p>线索：词义表示有哪几条路，为什么先讲&quot;最像语文课&quot;的那条？</p>
+<ul><li>【师】接上节&quot;词的意义本身非常复杂&quot;，本节看研究者做过的尝试（L4–L5）。</li><li>【师/PPT】第一条是&quot;基于词/词典&quot;：查词典时，一个词项由别的词、别的语句来解释（L6–L8，03-1 P8、P11）。</li><li>【师】它默认&quot;有些词大家都懂&quot;——有限的基本词 + 组合去表达复杂词义；但这里有个循环：用来解释的词本身也要人懂（L10–L13）。</li><li>【PPT】获取渠道两分：人工（专家）总结 vs 自动从语料获取；表示方法两分：符号表示 vs 数值（向量）表示。人工多是符号，自动更多是数值（03-1 P9）。</li><li>【师】路线预告：基于基本词（义素/义原）、基于词间关系、结合的方法（L15–L20，03-1 P2）。</li></ul>
+<p>一句话总结：第一条路是&quot;用已知的词解释未知的词&quot;，核心问题立刻变成——哪些词算&quot;基本&quot;，由谁说了算。</p>
+<h3>2. 义原工程：HowNet 的 2000 个&quot;砖头&quot;</h3>
+<p>线索：把整个语义体系当地基，砖头是什么？</p>
+<ul><li>【师/PPT】董振东先生与儿子（课上记不清名字，实为董强）做了多年，公开了知网 HowNet；它与 CNKI 的&quot;知网&quot;同名，老师特意区分（L28–L33，03-1 P13）。</li><li>【师/PPT】比喻：整体语义体系是房子，基本语义单元是砖头，定义成&quot;义原&quot;。义原发现流程：先考察汉字（单纯词）取得义原，再拿义原当标注集去标多音节词；不够用就调整扩充，最终形成 2000 多个义原 + 10 万中英文词/短语（L36–L41，03-1 P13）。</li><li>【PPT】&quot;打&quot;的例子：打1 的 DEF=buy|买（打酱油、打张票、打饭、打瓶酒），打2 的 DEF=weave|编（打毛衣、打毛裤、打草鞋）。老师问&quot;我女儿给我打的那副手套&quot;算 d(手套,酱油) 还是 d(手套,毛衣)——答案是后者，词的关系被归结为义原间的关系（L45–L56，03-1 P14）。</li><li>【师】刘群、李素建（北大）据此做词汇语义相似度计算，发表在当年的汉语词汇语义学研讨会（L57–L59，03-1 P14）。</li><li>【师/PPT】第二条专家路径：直接吃词典。Oxford 学生词典用 2000 基础词定义其余词；课上顺着&quot;词：语言里最小的、可以自由运用的单位 → 语言：人类最重要的交际工具 → 交际：往来应酬 → …… → 来往=交往&quot;一路追到基本词（L60–L69，03-1 P15）。</li></ul>
+<p>一句话总结：HowNet 用 2000 多个义原把词义拆成可组合的积木，代价是这件事只能靠人一件件手工砌。</p>
+<h3>3. 谁来定&quot;基本&quot;：专家、自动发现与心理学的支撑</h3>
+<p>线索：专家定义错在哪？义素凭什么不是凭空构想？</p>
+<ul><li>【师】缺点很快暴露：不同词典定义不一致、每个人想法不同、工作量巨大；更致命的是词典出版即固化，扛不住新词与新义——&quot;粉丝&quot;从食品变成追星群体，&quot;饭圈&quot;跟着来（L71–L83，03-1 P16）。</li><li>【师/PPT】于是有语料驱动的自动获取（Sememe Prediction），用词向量相似性预测一个词是否含某义原（L84–L85，03-1 P16）。</li><li>【师/PPT】义素有心理学支撑：概念的特征表说——概念 = 一组特征（每个特征是义素）+ 结合规则；&quot;红圆&quot; = 特征{红, 圆} + and 操作（L86–L131，03-1 P17）。</li><li>【师/PPT】义素还能约束搭配：若某词含义素&quot;液体&quot;，它更可能与&quot;泼、喝&quot;共现，与&quot;吃、锯&quot;别扭；反过来，从搭配也能抽义素（L132–L137，03-1 P18）。老师强调这是概率上的、不是绝对的——&quot;吃茶&quot;也能说。</li><li>【师】中间插入一段长讨论（教师岗前培训、北理工教师言论、ISO 七层协议 vs TCP/IP、论文必写 limitation、&quot;福兮祸之所伏&quot;），落到一句：没有完美模型，能用就先被用起来，缺点是下一轮改进的动力（L141–L168）。这段是方法论插话，不属知识主线。</li><li>【PPT】义素分析的遗留问题：总共多少义素？多少才够且最少？专家定还是机器抽？人工概念易、自然概念难统一，机器抽取仍在研究中（03-1 P19）。</li></ul>
+<p>一句话总结：义素的合法性来自心理学而非工程，但&quot;多少义素才够用&quot;始终没有答案——这条路的瓶颈是人的产能。</p>
+<h3>4. 词间关系：把词义交给&quot;邻居&quot;</h3>
+<p>线索：不定义词本身，只定义词与词的关系，够不够用？</p>
+<ul><li>【PPT】词间关系严格说是&quot;两个词某两个义位之间的关系&quot;：上下义、全体—成员、整体—部分、同义（03-1 P21）。</li><li>【师/PPT】上下位就是 IS-A 的层次：哺乳动物→动物→生物→物；反向是 Include。名词、动词都有上下位结构，且都有人整理成公开资源（L206–L208，03-1 P22–P23）。</li><li>【PPT】全体—成员（学会→会员 / 会员→学会）、整体—部分（桌子→腿 / 腿→桌子）（03-1 P24–P25）。</li><li>【师】为什么这条路更容易落地：关系是&quot;上过小学就能接受&quot;的，不需要专家把关，主观性大幅下降（L196–L202）。</li></ul>
+<p>一句话总结：把词义写成&quot;它在层级里的位置&quot;，可接受性大幅提高，代价是只覆盖了少数几种关系。</p>
+<h3>5. 关系的毛边：同音、近义、反义与多义</h3>
+<p>线索：看似清楚的关系，边界在哪里？</p>
+<ul><li>【PPT】基于音与义的更多关系：同音词（tale/tail、红/洪）、同形同音异义（dove 鸽子 vs dive 过去式；省 行政单位 vs 节约）、同形异音异义（看 kān/kàn）、近义、反义、换喻（03-1 P26–P27、P30）。</li><li>【师/PPT】近义用圣地亚哥野生动物园的告示示范：一句里 22 个动词——annoy, torment, pester, plague, molest, worry, badger, harry, harass, heckle, persecute, irk, bullyrag, vex, disquiet, grate, beset, bother, tease, nettle, tantalize, ruffle（L222–L244，03-1 P28）。老师点出：把每种程度的骚扰都列出，是为了法律意义上的全面约束；中文译文读起来气势就弱了。</li><li>【师/PPT】反义不是一种：互补（生/死、出席/缺席）、分级（庞大—巨大—大—中—小—微小）、关系（给/收、买/卖）、自反（cleave = 分开｜黏住；中文&quot;无价&quot;可指极贵也可指极贱）（L244–L271，03-1 P29）。</li><li>【同学】三位同学分别从&quot;不同维度上的对立&quot;&quot;互补/分级/关系分属不同维度&quot;&quot;状态、动词、程度各异&quot;作答，老师认可&quot;放到那个语境下才成立&quot;（L250–L261）。</li><li>【师/PPT】多义词 vs 同形异义词的判据是系统性：省（节约｜行政单位）无关，看（视｜阅读｜认为）三个义位系统性相关——听、闻、触、嗅也这么长（L275–L294，03-1 P31–P32）。有同学提出&quot;省是国家规模的缩小&quot;，老师惊讶并建议去查。</li></ul>
+<p>一句话总结：关系一旦落到真实语料就毛边丛生——近义有远近、反义分四种、多义与同形要靠&quot;系统性&quot;划界。</p>
+<h3>6. 两个可评测的任务：WSD 与相似度</h3>
+<p>线索：前面讲的都是资源，怎么变成任务和分数？</p>
+<ul><li>【师/PPT】WSD：给定上下文，为词选义项。两类任务——Lexical Sample（指定词，如 horse 在 WordNet 里 6 个义项，配标注样本，选一个）与 All-words（为文中所有多义词选义项）（L295–L307，03-1 P33–P35）。</li><li>【师/PPT】评测线：1998 年起的 SENSEVAL（最初只有英语 Lexical Sample）→ 2007 年后改为 SemEval，任务不断扩展（L308–L309，03-1 P36）。转写里的&quot;3C8&quot;应是 SENSEVAL/SemEval。</li><li>【师/PPT】词间相似性比近义更宽：sim(猫,狗) &gt; sim(猫,桌子)、sim(站,坐) &gt; sim(站,看待)；可分语义相似、用法相似、形态相似。价值在于迁移搭配——猫常与&quot;叫&quot;搭配，狗比桌子更可能&quot;叫&quot;（L310–L331，03-1 P37）。</li><li>【同学】同学用&quot;我那儿有只猫/有只狗&quot;对比&quot;有个桌子&quot;解释共现频率，又用&quot;站在哪一边/如何看待&quot;解释&quot;站&quot;与&quot;看待&quot;的立场义相似，老师称&quot;就是在点子上&quot;（L324–L331）。</li><li>【PPT/师】相似 ≠ 相关：医生、病人、医院、急症构成语义场（相关但不相似）；苹果的&quot;屏幕&quot;靠语义场定位义项（L332–L341，03-1 P38）。</li><li>【师/PPT】资源两条：中文《同义词词林》（梅家驹等，1983；哈工大扩展版）以&quot;类内同义 + 层次上下位&quot;组织，可算路径长度；英文 WordNet 以同义词集合 Synset 表示义项（L343–L357，03-1 P39–P43）。转写把编者记成&quot;吴占驹&quot;，实为梅家驹。</li><li>【PPT】结合方法：FrameNet（Fillmore 框架语义学）以框架 + 核心/非核心框架元素 + 词元组织，如&quot;辨别&quot;框架（03-1 P45–P46）。</li></ul>
+<p>一句话总结：WSD 与相似度把符号资源变成可打分任务，但符号计算仍要另设量化算法——这正是转向向量的动机。</p>
+<h3>7. 换一条路：观其伴，知其义</h3>
+<p>线索：不定义意义本身，用&quot;跟谁一起出现&quot;来定义，行不行？</p>
+<ul><li>【PPT】思想来源：Wittgenstein&quot;词的意义在于其使用&quot;，Firth&quot;观其伴，知其义&quot;（03-2 P4）。</li><li>【师】老师用北邮学生与运营商举例：移动、电信、联通里都有北邮毕业生，新来一个人说&quot;我在某移动&quot;，你大概就猜他是北邮的——不是事实因果，只是语料里高频共现（L384–L391）。</li><li>【PPT】形式化：词表大小 V，目标词 w_t 的向量 x=(x₁…x_V)，x_i 由 w_t 与 w_i 在同一窗口内是否/多少次同现决定；即布尔型与频次型（03-2 P5）。</li><li>【师】维度为什么能定：一个词周边可能出现什么无法预知，但&quot;词典里的词都可能出现&quot;，于是维度 = 词表大小（L397–L412）。</li><li>【PPT】优点：每词一个向量，可直接算相似度；每一维有意义（某词）。问题：维数过高（=词表大小）、词间独立（同义词落在不同维）（03-2 P7）。</li><li>【师/PPT】独热（one-hot）是最小的分布式表示——只有自己那维为 1，信息检索里文章向量与查询词匹配就用它；共现型则把自己那维留空（L445–L457，03-2 P5–P6）。</li><li>【同学】同学总结优点&quot;能算&quot;、缺点&quot;维度太高、相似词之间没有分类关系&quot;；另一位补充：符号方法有 5 层大类，向量法每词一维、维度散且无层级（L464–L470）。</li></ul>
+<p>一句话总结：分布假设把&quot;意义&quot;换成&quot;共现统计&quot;，一举换来可计算性，代价是高维、稀疏、无层级。</p>
+<h3>8. SVD 降维：可算，但维度失去名字</h3>
+<p>线索：几千上万维怎么压到几百维，压掉了什么？</p>
+<ul><li>【PPT】降维两条路：特征选择（如 tf-idf）与特征抽取（LSI，核心是对共现矩阵做 SVD）（03-2 P8）。</li><li>【师/PPT】课上 4 词小例：词表{我,你,是,学生}，词-词矩阵对角为 0，SVD 后特征值 6.1、3、2.1、1；只留前三个 → 降到 3 维，U 取前三列，前后矩阵各删一行/列（L474–L481，03-2 P10）。</li><li>【师】代价一：特征值分解本身运算复杂，大规模难支撑；代价二：原来&quot;一维一个词&quot;可解释，压缩后新维度由哪些词构成说不清，只能猜相似词被压到同一维（L482–L491，03-2 P10–P11）。</li><li>【师】这一阶段可总结成流水线：语料统计 → 高维稀疏整数向量 → 降维 → 低维连续实值向量，全程有完备数学工具支撑（L492–L494）。</li></ul>
+<p>一句话总结：SVD 按特征值大小决定砍哪些维，降维有效且数学完备，代价是丢掉维度的语义标签。</p>
+<h3>9. 神经概率语言模型与 CBOW + 层次 Softmax</h3>
+<p>线索：既然矩阵分解太贵，能不能直接学出低维实值向量？</p>
+<ul><li>【师/PPT】2003 年 Bengio 的神经概率语言模型：词层（前 t−1 个词）→ 表示层（每词一组权值，神经元数=维度）→ 隐层（抽象）→ 输出层（|V| 个神经元，softmax）；任务是用前文预测下一个词，标准答案从语料里抠出来自带（L512–L541，03-2 P15）。</li><li>【师/PPT】关键一句：主导任务是语言模型，词向量是&quot;副产品&quot;——训练完发现表示层那组权值本身有用；计算量卡在隐层到输出层与 softmax 的 |V| 维求和（L523–L547，03-2 P16）。老师还提到 2003 模型里的直连（skip connection），后来 ResNet、Transformer 都用（L538–L539）。</li><li>【师】更早的伏笔：1986 年（约 40 年前）就有人设想用神经网络学表示，但真正推动要等 20 年后有了大规模真实数据（L504–L509）。与 03 年模型只看前文不同，word2vec 整句可见，前后文都算上下文（L575–L579）。</li><li>【师/PPT】2013 年 word2vec 转向&quot;直接学词向量&quot;：两个模型 CBOW / Skip-gram，两种训练 层次 softmax / 负采样（L548–L560，03-2 P17–P18）。CBOW = Continuous Bag-Of-Words，词袋即不管词序；与布尔/频次型相比是连续、低维（L561–L571，03-2 P20）。</li><li>【师/PPT】CBOW 的任务：窗口 k=2，给 c−2、c−1、c+1、c+2 预测目标词&quot;同时&quot;；投射层综合上下文表示，输出层 V 维 softmax（L575–L599，03-2 P20–P21）。</li><li>【师/PPT】层次 softmax：把 V 分类拆成一串二分类，用哈夫曼树按词频构造。课上 6 词例：词频 6、10、40、5、30、4，总和 95；40 最大一步到位，其余 55 再拆 30+25，25 拆 10+15……约定左小右大；词频越高路径越短，解码从&quot;比一万次&quot;降到&quot;走一条 log 级路径&quot;（L601–L651，03-2 P22–P29）。</li><li>【师/PPT】层次 softmax 也有代价：树的结构影响大、训练复杂度高，于是转向更简洁的负采样（03-2 P34）。</li><li>【师】课程事务：本节收在层次 softmax，Skip-gram 与负采样下节讲；只剩 3 次课，同学汇报要排期（L655–L658）。</li></ul>
+<p>一句话总结：词向量从&quot;矩阵分解的副产品&quot;变成&quot;预测任务的直接产物&quot;，CBOW 用上下文猜目标词，层次 softmax 用哈夫曼路径把上万分类压成十几次二分类。</p>
+<h2>拿走这五条</h2>
+<ol><li><strong>两条路线</strong>：符号（义原、词间关系，可解释但难扩展、不可直接计算）→ 数值（共现、降维、预测，可计算但不可解释）。</li><li><strong>一个判据</strong>：任何表示法都要回答&quot;基本单元是什么、由谁定、够不够用&quot;——义素卡在人的产能，词向量卡在可解释性。</li><li><strong>一个思想</strong>：观其伴，知其义。把&quot;意义&quot;换成&quot;共现统计&quot;，是整条词向量路线的合法性来源。</li><li><strong>一次降维</strong>：V 维稀疏 → 数百维稠密。SVD 靠特征值排序，神经网络靠任务反向传播；后者更快，前者更&quot;可算&quot;。</li><li><strong>一个工程技巧</strong>：层次 softmax 用哈夫曼树把 O(V) 归一化变成 O(log V)，词频高的词走最短路径——信息论思想直接落到工程。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

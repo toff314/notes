@@ -5,13 +5,14 @@
 > **课次结构**：每次课 **4 × 45 分钟** —— 前 3 节讲授、**第 4 节讨论**。
 > **第 1 课（绪论）** 的录音转写由 **3 段课堂录音合并**而成（本课即绪论全部内容）。
 
-图例：✅ 已完成 · ⬜ 待整理　　**进度：第 1–3 课已完成**
+图例：✅ 已完成 · ⬜ 待整理　　**进度：第 1–5 课已完成**
 
 ## 课次
 
 | # | 课 | 学时 | 笔记 | 大纲 | 自测 | 勘误 | 衍生选题 |
 |---|---|---|---|---|---|---|---|
 | 04 | 序列标注解码与词义之难（HMM/Viterbi · CRF · BPE 子词 · 最小编辑距离 · 词义导论） | 4 × 45′ | ✅ [notes](04-sequence-labeling-and-word-meaning/notes.html) | ✅ [outline](04-sequence-labeling-and-word-meaning/outline.html) | ✅ [questions](04-sequence-labeling-and-word-meaning/questions.html) | ✅ [corrections](04-sequence-labeling-and-word-meaning/corrections.html) | ✅ [spinoffs](04-sequence-labeling-and-word-meaning/spinoffs.html) |
+| 05 | 词义表示与词向量（义素/HowNet · 词间关系 · WSD · 分布假设 · SVD · CBOW+层次 softmax） | 4 × 45′ | ✅ [notes](05-word-meaning-and-word-vectors/notes.html) | ✅ [outline](05-word-meaning-and-word-vectors/outline.html) | ✅ [questions](05-word-meaning-and-word-vectors/questions.html) | ✅ [corrections](05-word-meaning-and-word-vectors/corrections.html) | ✅ [spinoffs](05-word-meaning-and-word-vectors/spinoffs.html) |
 | 1 | 绪论 | 4 × 45′ | ✅ [notes](01-introduction/notes.html) | ✅ [outline](01-introduction/outline.html) | ✅ [questions](01-introduction/questions.html) | ✅ [corrections](01-introduction/corrections.html) | ✅ [spinoffs](01-introduction/spinoffs.html) |
 | 2 | 词形态分析（英语断词/词形还原 · FST · 汉语切分 · 歧义/OOV · 最小编辑距离） | 4 × 45′ | ✅ [notes](02-word-morphology/notes.html) | ✅ [outline](02-word-morphology/outline.html) | ✅ [questions](02-word-morphology/questions.html) | ✅ [corrections](02-word-morphology/corrections.html) | ✅ [spinoffs](02-word-morphology/spinoffs.html) |
 | 3 | 汉语切分方法与评测（歧义/OOV · FMM/BMM · 基于分类 · 基于序列标注 HMM/CRF） | 4 × 45′ | ✅ [notes](03-word-segmentation/notes.html) | ✅ [outline](03-word-segmentation/outline.html) | ✅ [questions](03-word-segmentation/questions.html) | ✅ [corrections](03-word-segmentation/corrections.html) | ✅ [spinoffs](03-word-segmentation/spinoffs.html) |
