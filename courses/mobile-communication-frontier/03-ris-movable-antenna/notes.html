@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第 3 讲：可重配置智能表面（RIS）与可移动天线 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 3 讲 可重配置智能表面（RIS）与可移动天线</span> <span>/</span> <span class="cur">移动通信技术前沿 · 第 3 讲：可重配置智能表面（RIS）与可移动天线</span></nav>
+<article class="prose"><h1>移动通信技术前沿 · 第 3 讲：可重配置智能表面（RIS）与可移动天线</h1>
+<blockquote><p>课程：移动通信技术前沿（2026 秋，北京邮电大学 信息与通信工程学院）</p><p>本讲一句话：前两讲在&quot;猜信道&quot;，这一讲开始&quot;改信道&quot;——RIS 改中间那段，可移动天线改两端。</p></blockquote>
+<p><strong>导读（四问）</strong></p>
+<ul><li><strong>讲了什么</strong>：先复盘上一讲那篇&quot;用 AI 感知环境&quot;的论文，再讲 RIS 的背景、原理、电磁模型、结构与通感一体化，最后讲可移动天线（MA/6DMA）。</li><li><strong>怎么讲的</strong>：每个技术先问&quot;省了什么&quot;，再问&quot;代价是什么&quot;。RIS 的账是&quot;板子便宜、选址贵、信道难测&quot;。</li><li><strong>最硬的一句</strong>：CSI 缺失是所有缺陷的来源——它把 RIS 从&quot;万能板&quot;打回&quot;需要估计的器件&quot;。</li><li><strong>与我何干</strong>：RIS 与 MA 是同一本账，自由度越多，要重新知道的信道就越多。</li></ul>
+<h3>§1 复盘：AI 先看懂环境，但四步范式有三个未解</h3>
+<p><strong>线索</strong>：上一篇论文凭什么能省掉波束扫描？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>环境数据采集</strong>【师】：点云、RGB、深度图、GPS 对齐，提取多径、遮挡、散射体位置与材质；这类特征库做一次就不用常改，是基础设施性质的工作。</li><li><strong>地图→路损</strong>【师】：输入卫星图或地形图，直接给区域的路径损耗指数与覆盖百分比，做链路预算；数据量够就够用，几乎不用更新。</li><li><strong>控制导引信号</strong>【师】：楼密处把解调参考信号在时频上排密，开阔地只做常规波束扫描。</li><li><strong>跳过 SSB 扫描</strong>【师】：用视觉、雷达或位置信息直接给波束方向，省掉&quot;扫 SSB→上报最强波束&quot;；天线与用户越多省得越多，精度略差也划算。结果：开销省 <strong>25% plus</strong>（此数字属上一篇论文，不在本课件内）。</li><li><strong>四步范式</strong>【PPT】P7–P9】：①环境感知 ②特征提取（尺寸/位置/朝向/材质）③面向任务的环境语义（波束/功控/切换各取所需）④电磁计算或数字孪生。相比图像直接映射波束的黑盒，白盒泛化与可解释更好，代价是延迟与算力——只适合高价值业务，或离线生成仿真数据。</li><li><strong>三个未解</strong>【师】：①<strong>兜底基准</strong>：传统系统是标尺，没有它无法判断 AI 好坏；②<strong>校准</strong>：最简是偏移量，复杂到天线增益与波束角修正；③<strong>虚实结合与生命周期</strong>：trace 是&quot;死交互&quot;，上线要&quot;活交互&quot;，效果掉了得判断是重训、换架构还是换模型。</li><li><strong>泛化例子</strong>【师】：3/30/120 km/h 三档要三套模型；想&quot;速度不敏感&quot;就得采海量数据。务实做法是按场景选模型。</li></ul>
+<p><strong>一句话总结</strong>：四步范式把黑盒换成物理可校验的流水线，代价是延迟，回报是泛化与可信。</p>
+<h3>§2 RIS 要解决的问题：从适应到改变</h3>
+<p><strong>线索</strong>：环境既测不准也改不了，为什么不去改环境？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>前提翻转</strong>【师】：前面所有方法的前提都是&quot;环境不能改，只能被动适应&quot;；RIS 把这个前提翻过来。</li><li><strong>名词谱系</strong>【师】：智能反射面、可重配置智能表面、全息表面、透射面、STAR-RIS……叫法极不统一；共同核心是&quot;超材料底子 + 智能算法&quot;，缺一都不算。</li><li><strong>为什么 6G 要它</strong>【师】：覆盖、容量、可靠性、能耗这些指标无一不落在信道上；信道若可控，比信道可测值钱。</li><li><strong>产业为什么冷</strong>【师】：性价比。板子便宜（照公开电路图打样，百十块钱），贵在<strong>选址与部署</strong>——已建成的楼不能随便加东西，站址成本不可控。</li><li><strong>主战场</strong>【师】：室内与地库覆盖、物理层安全（波束绕开窃听者或加扰动）、无线供能、智慧农业与工厂（弱终端借反射面把信号送远）。</li><li><strong>位置约定</strong>【师】：默认放在两节点中间靠中间的位置；也常放发端或收端，那时&quot;反射面&quot;这个名字就不贴切了——这正是名词混乱的由来。</li></ul>
+<p><strong>一句话总结</strong>：RIS 把信道建模问题改写成信道设计问题，这是它唯一的、也足够充分的立身理由。</p>
+<h3>§3 构成与分类：一块会算的板子</h3>
+<p><strong>线索</strong>：一块 100×100 的板子，凭什么能改信道？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>最小模型</strong>【师】：可调反射系数的天线阵列；物理上调单元电容电感，等效于调相位与幅度。</li><li><strong>有源/无源</strong>【师】：有源带功率补偿能放大，绝大多数无源有损；但控制电路都要供电、都要算力。</li><li><strong>电子皮肤</strong>【师】：半静态配置——调一次管几天到几周，参数固定后不再计算，一块电池能撑很久；工程上比&quot;实时智能&quot;更合理。</li><li><strong>功率激励方式</strong>【师】：反射式像独立工具；折射式、波导式更像天线，馈电不同，能耗形式也不同（机械、热、电、光都有）。</li><li><strong>进化链</strong>【PPT】P16】：超材料 → 2D 梯度表面（透镜、涡旋）→ 可重配置（磁/热/光/电/机械/折纸）→ 加<strong>传感与控制闭环</strong>才配叫 RIS。</li><li><strong>按频谱与材料</strong>【师】：微波、太赫兹、光；二极管、铁磁、石墨烯、液晶，原理相通。</li><li><strong>尺度</strong>【师】：100×100 = 1 万单元；理论常假设单元独立同相，实际互耦明显、间距越近相关性越强。</li></ul>
+<p><strong>一句话总结</strong>：RIS 的智能不在材料，而在感知—决策—执行的闭环；没有闭环的只能叫超表面。</p>
+<h3>§4 电磁模型与它的失真</h3>
+<p><strong>线索</strong>：论文里&quot;信道已知&quot;，到 RIS 这里代价有多大？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>两套电磁模型</strong>【师】：射线追踪简单快、高频够用；波动/全波更准，要算电流与磁场分布，复杂度高。</li><li><strong>损耗两类</strong>【师】：当点散射体 → 与 1/(d1·d2) 成正比；当大面（近场，尺寸不可忽略）→ 与 1/(d1+d2) 成正比；中距离两种都不严格成立。</li><li><strong>优化对象</strong>【师】：相位与幅度；目标随任务变（做安全就是对准合法用户、偏离窃听者）。</li><li><strong>失真四来源</strong>【师】：①理论近似（远场近场都不覆盖的中距离）②硬件量化（低精度离散相位、单元一致性差）③系统假设（单元独立、忽略互耦）④环境与发端建模简化。</li><li><strong>约束形态</strong>【师】：连续幅度+连续相位（理论好看）、固定幅度+离散相位（最常用，速度最快，损失可接受）。</li><li><strong>资源维度</strong>【师】：信道分配、用户配对、基站配对、RIS 位置布放；&quot;用户↔基站&quot;与&quot;用户↔RIS&quot;是两套关联，配对一变问题结构就变。</li></ul>
+<p><strong>一句话总结</strong>：RIS 的收益上限由相位精度与位置两个物理量决定，算法只能在天花板下做分配。</p>
+<h3>§5 为什么把 AI 拉进来</h3>
+<p><strong>线索</strong>：一个相位优化问题，为什么非得用深度学习？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>复杂度</strong>【师】：发端参数 × RIS 参数 × RIS 位置 × 多用户配对，强耦合、非凸；用户一移动传统优化就要重解。</li><li><strong>RIS 算力弱</strong>【师】：不可能挂大算力，只能&quot;训练一次、推理映射&quot;；强化学习、联邦学习也在这条线上。</li><li><strong>数据维度</strong>【师】：注意与 §1 的区别——这里采的是<strong>业务侧</strong>数据：用户移动与分布（白天商场单量）、业务类型（视频/聊天/办公），最后才是 CSI。理由是 CSI 无线侧本来能采，而&quot;用户何时何地聚集&quot;才决定要不要用 RIS。</li><li><strong>地库例子</strong>【师】：车少时覆盖好坏无所谓，开门高峰才是瓶颈；所以预测用户聚集比预测瞬时信道更有用。</li><li><strong>载具形态</strong>【师】：无人机载 RIS 为遮挡用户提供反射，位置、朝向、相位一起优化。</li><li><strong>其他结合</strong>【师】：RIS 直接做调制（早期原始用途）、物理层安全、无线供能、V2X（扩大雷达扫描范围，或给车辆打反射特征编码）。</li></ul>
+<p><strong>一句话总结</strong>：AI 在这里不是更聪明的优化器，而是把高维耦合压成一次推理。</p>
+<h3>§6 常见结构：从反射面到可编程电磁器件</h3>
+<p><strong>线索</strong>：为什么 RIS 不只是一块镜子？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>室内例子</strong>【师】：相位控制层 + 模式控制层，三种模式——纯反射、纯透射、两者兼顾。</li><li><strong>STAR-RIS</strong>【师】：反射与透射同时工作，把极化也当控制量；按区域分给反射/透射，或按时间切换。</li><li><strong>C-RIS（电缆辅助）</strong>【师】：厚墙或体育馆两侧各放一面，用电缆连成整体统一控制，解决&quot;透不过去&quot;。</li><li><strong>单次 vs 双重反射</strong>【师】：绕一次把非直射径变成可用径；墙太厚就绕两次，损耗显著变大。</li><li><strong>BD-RIS</strong>【PPT】P24–P25】【师】：单元不互联、局部互联、全互联；互联度越高功能越全（反射透射联合优化），控制也最难；本质是把相控阵矩阵一般化。</li><li><strong>可拉伸结构</strong>【师】：贴气球、贴手套，靠形变改电磁特性；东南大学团队做得较多（转写&quot;崔磊军&quot;，❓疑为崔铁军，待核）。</li></ul>
+<p><strong>一句话总结</strong>：结构演进沿着控制维度走——从相位，到极化，到单元互联拓扑。</p>
+<h3>§7 RIS 与通感一体化</h3>
+<p><strong>线索</strong>：通信和感知本来抢资源，RIS 怎么让它们不打架？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>动因</strong>【师】：6G 要更高频率，而高频段本来就归雷达；硬件与频谱都浪费，干脆一体，还能提高功率利用率、灵活平衡两者。</li><li><strong>目标冲突</strong>【师】：通信要速率，感知要精度（波形、旁瓣）；两个目标不一致，设计就是折中。</li><li><strong>现实做法</strong>【师】：频段共享但资源分开、时分复用，各用各的模型；真正合并复杂度高很多。分立时主要是通信回波干扰探测回波。</li><li><strong>RIS 当发射阵</strong>【师】：结构本身可做发射阵，功耗与成本都低；野外供电不稳时做窄波束很划算（转写&quot;hoics&quot;，❓语境指大规模平面阵列系统，待核）。</li><li><strong>用例</strong>【师】：干扰管理、predict（RIS 增强目标反射，雷达探到后把波束对准它）、物理层安全（人工噪声导向别处，合法端再消掉）、近场聚焦（大孔径除方向性外还有聚焦项）。</li><li><strong>分类与整合</strong>【PPT】P34–P35】：单基地（A 发 A 收）/双基地（A 发 B 收）；分立 → 共硬件，共硬件后干扰路径变成三条，干扰管理显著变难。</li><li><strong>波形</strong>【师】：OTFS 把信号放在时延-多普勒域，测速测距更顺，是 ISAC 最常提的波形。</li></ul>
+<p><strong>一句话总结</strong>：ISAC 的瓶颈不在波形，而在通信与感知要共用同一个可控信道。</p>
+<h3>§8 三次信道估计：RIS 落地的真实成本</h3>
+<p><strong>线索</strong>：论文里&quot;CSI 已知&quot;，实测要付几次账？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>最大难点</strong>【师】：CSI 缺失——&quot;所有缺陷都来自这个&quot;。</li><li><strong>三步</strong>【师】：①关掉 RIS，只估直射 ②估 RIS 反射的通信链路 ③估 RIS 反射的感知链路（通信链路会干扰它）。每次都要发导频、接收、回传、计算。</li><li><strong>环境依赖</strong>【师】：部署开阔、多径简单时还行；散射体一多就非常麻烦，主直射方向一变，问题结构就变。</li><li><strong>频段限定</strong>【师】：RIS 最大好处在毫米波（30 GHz 量级），那里以视距为主，反射/散射分量功率小、不稳定；低频要估的信道太多，基本不现实，想用就得借多模态感知。</li><li><strong>整合模式的资源划分</strong>【师】：一块板分区域，一部分辅助感知、一部分做通信波束；搜索大范围目标时感知集中，精确跟踪时把更多资源给感知。</li><li><strong>波形叠加</strong>【师】：频率上拼或时间上拼最简单；多功能波形（OTFS、RIS 接入）更彻底也更复杂。</li></ul>
+<p><strong>一句话总结</strong>：RIS 的成本不在板子，在每换一次配置就要重新测一遍信道。</p>
+<h3>§9 老师的研究：把视觉和地图接进信道</h3>
+<p><strong>线索</strong>：既然信道难测，能不能先用眼睛和地图猜？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>视觉辅助波束</strong>【师】：视频做 3D 建模，知道反射面与障碍物位置后，直接跳过被挡住的波束方向；侧面刹车灯反光在光学上成立，所以思路不取巧。</li><li><strong>实测平台</strong>【师】：室内平台，频率&quot;F6&quot;（❓待核）；结论是室内多径虽复杂，图像与多径信道的关系依然明确，大量训练后能明显降低波束选择难度。</li><li><strong>地图→路损</strong>【师】：三维高度图入网，毫秒级给出哪些区域被遮挡、遮挡多严重。对比射线追踪（转写&quot;cing 和英伟达那个万 tracing&quot;，❓疑为 NVIDIA Sionna RT）后者更准但慢，且慢的程度随障碍物数量变化；本法缺点是<strong>需要大量训练数据</strong>；PPT 给的数是耗时最多降 4 个数量级、误差多在 1–2 dB（【PPT】P44）。</li><li><strong>定位修正</strong>【师】：多径干扰 TDOA 的到达时间估计，用地图+误差标签预测高误差区并修正；PPT 的仿真结果是 NLOS 定位误差中值 20 m→5 m（【PPT】P45）；老师强调&quot;表达对了就有效&quot;，修正后仍有几米残差。前提是终端位置先大致可知。</li><li><strong>视觉定位的局限</strong>【师】：最准的是视觉/高频测距测角，但只覆盖近处，周围一变就失效；位置指纹时间稳定性差，适合低频。</li><li><strong>RIS 边缘结构（RISE）</strong>【师】：墙后覆盖不必绕远放反射板（常常也没地方放），直接在墙边缘包一层小波导结构，让信号沿表面&quot;爬&quot;过去形成干涉；边缘区比反射强，拐大弯时不如反射。典型场景是屋顶基站的&quot;灯下黑&quot;。</li></ul>
+<p><strong>一句话总结</strong>：主线是用便宜的感知换昂贵的测量，天花板由感知精度决定。</p>
+<h3>§10 可移动天线：把位置变成优化变量</h3>
+<p><strong>线索</strong>：RIS 改了中间，两端还能改什么？代价是什么？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>缺口</strong>【师】：前面讲的信道与 RIS 都在中间那段；发端与收端的天线位置一直被视为固定，这是链路里缺的最后一个自由度。</li><li><strong>问题</strong>【师】：固定阵列在半个波长尺度上就有深衰落——位置差几厘米，信号天壤之别。</li><li><strong>6DMA</strong>【PPT】P47–P53】【师】：3 个位置维度（沿 XYZ 平移）+ 3 个旋转维度（绕 XYZ 转）；与流体天线、电调下倾角的区别是&quot;物理上真的挪&quot;，不是只调等效位置或角度。</li><li><strong>建模与收益</strong>【师】：几何坐标 + 信道随位置变化，优化变量是天线位置（连续或离散网格）；收益是阵列增益、干扰抑制、空间复用，无人机场景还能免掉&quot;为了对准而改飞行轨迹&quot;。</li><li><strong>形态</strong>【师】：连续移动 vs 离散网格、部分可移动、预先配置好位置再工作；PASS 是把 MA 与 RIS 结合的无源可移动表面。</li><li><strong>应用</strong>【师】：多用户接入、Cell-Free 无蜂窝（转写&quot;Self free&quot;，【PPT】P65 证实为 Cell-Free）、无人机、波束扫描受限场景、终端协同（华为手机之间）。</li><li><strong>挑战</strong>【师】：位置约束非凸、连续离散混合、与相位只能交替优化；CSI 更缺（每挪一次信道就变）；运动本身要调度要耗能。</li><li><strong>AI 的用法</strong>【师】：算法展开（unfolding）把迭代优化展成网络层，保留可解释性，比纯黑盒更适合有明确优化结构的问题。</li></ul>
+<p><strong>一句话总结</strong>：MA 的收益来自自由度，代价来自每动一次就得重新知道信道——与 RIS 是同一本账。</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

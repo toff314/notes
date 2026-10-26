@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "lecture",
+    "title": "移动通信技术前沿 · 第3讲（可重配置智能表面与可移动天线）· 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "courses/mobile-communication-frontier/03-ris-movable-antenna",
+    "anchor": "第3讲"
+  },
+  "generatedAt": "2026-10-26",
+  "generator": "write-lecture-notes",
+  "topics": [
+    {
+      "id": "mobile-communication-frontier-lec03-t1",
+      "title": "RIS 为什么在低频\"基本不现实\"——三次信道估计的开销账",
+      "angle": "论文：RIS 的隐藏成本：三步信道估计与频段约束",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师只说\"要估的信道太多\"，未给公式与数量级）+ S3 技术纵深（导频数 ∝ 单元数 × 配置数，可写出闭式并代两组参数对比）+ S5 现实落点（毫米波才是 RIS 的主战场，直接决定哪些项目值得做）+ S6 权威外部源（3GPP RIS 研究项与信道估计综述）",
+      "sourceAnchor": "PPT P38–P39（信道估计流程）、P47 页前后频段讨论；转写 §9「最大的问题是这个 CSI」「毫米波 30GHz」「低频很难」",
+      "status": "idea",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec03-t2",
+      "title": "\"电子皮肤\"与半静态 RIS：为什么工程上不要\"实时智能\"",
+      "angle": "观点：学术在追实时优化，工程只要半静态——RIS 的智能错位",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 讲而未透（老师一句\"没必要搞那么智能\"带过）+ S4 争议反差（论文默认实时可调，实际部署是调一次管几周）+ S5 现实落点（地库、室内覆盖的真实形态）+ S6 权威外部源（超表面半静态配置与电池供电方案）",
+      "sourceAnchor": "PPT P19–P20（材料与调节方式）；转写 §4「电子皮肤」「调一次管好几天」「电池能撑」",
+      "status": "idea",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec03-t3",
+      "title": "通感一体里\"资源分开\"为什么赢了\"深度融合\"",
+      "angle": "观点：ISAC 的工程选择——分立部署为什么比整合更常见",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 争议反差（\"一体化\"听起来该合并，工程实际选分立）+ S3 技术纵深（分立 1 条干扰路径 vs 共硬件 3 条，可画图量化）+ S5 现实落点（3GPP ISAC 架构讨论）+ S6 权威外部源（ISAC 综述与标准化进展）",
+      "sourceAnchor": "PPT P31–P35（ISAC 用例与整合级别）；转写 §8「分开部署最省事」「整合以后干扰路径三条」",
+      "status": "idea",
+      "link": "标准长文"
+    },
+    {
+      "id": "mobile-communication-frontier-lec03-t4",
+      "title": "可移动天线：把\"位置\"变成优化变量，代价是 CSI 更贵",
+      "angle": "论文：从 6DMA 看 MIMO 之后的新自由度与其代价",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S2 完全空白（可移动天线是新方向，中文系统材料少）+ S3 技术纵深（半波长深衰落、六维建模、离散/连续、交替优化、unfolding）+ S5 现实落点（终端协同、无人机、Cell-Free）+ S6 权威外部源（6DMA 与流体天线综述）",
+      "sourceAnchor": "PPT P47–P80（MA 全部）；转写 §11–§12「缺的这个维度」「6 维」「每挪一次信道就变」",
+      "status": "idea",
+      "link": "专栏级"
+    },
+    {
+      "id": "mobile-communication-frontier-lec03-t5",
+      "title": "用视觉和地图\"换掉\"信道测量：天花板在哪",
+      "angle": "论文：感知辅助通信的四种手法与它们的边界",
+      "suggestedSkill": "zhihu-tech-deep-tutorial",
+      "priority": "P2",
+      "reason": "命中 S1 讲而未透（老师只给结论与效果图）+ S3 技术纵深（视觉辅助波束、地图→路损、TDOA 误差修正、RISE 边缘结构四条线）+ S5 现实落点（灯下黑、室内覆盖）+ S6 权威外部源（老师专利与实测平台，需补专利号）",
+      "sourceAnchor": "PPT P42–P46（RISE 与感知辅助）；转写 §10「视觉跳过两个波束」「灯下黑」「几米误差」",
+      "status": "idea",
+      "link": "专栏级"
+    }
+  ]
+}
