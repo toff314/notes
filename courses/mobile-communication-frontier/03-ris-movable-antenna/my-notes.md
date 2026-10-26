@@ -22,4 +22,4 @@
 
 - 课后 10 分钟：只看 `outline.md` 默画三块结构。
 - 当天晚上：做 `questions.md` 里的 ★ 题（5 道）。
-- 下次课前：看 `corrections.md` 的❓清单，把待核术语抄成提问。
+- 下次课前：看 `corrections.md` 的待核清单，把待核术语抄成提问。
