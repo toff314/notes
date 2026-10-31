@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我的笔记 · 第 6 讲 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 6 讲 · 从 Skip-Gram 到 N-Gram</span> <span>/</span> <span class="cur">我的笔记 · 第 6 讲</span></nav>
+<article class="prose"><h1>我的笔记 · 第 6 讲</h1>
+<blockquote><p><strong>占位文件</strong>：本讲我尚未亲手做课堂笔记。以下是我为自己定的记录流程与待填槽位，不代替听课记录，也不伪造心得。</p></blockquote>
+<h2>三源交叉流程（每节都走一遍）</h2>
+<ol><li><strong>听</strong>：<code>raw/transcript.md</code> 里该节的行号区间（见 <code>outline.md</code> 分段地图）。</li><li><strong>对</strong>：翻到对应 PPT 页（<code>raw/slides-*.pptx</code>），确认老师口头说的公式/数字与幻灯片是否一致；不一致记进 <code>corrections.md</code>。</li><li><strong>写</strong>：只用自己的话写三行——① 这节解决的问题一句话；② 关键式子或数字；③ 我还不敢说清的地方。</li></ol>
+<h2>待填槽位</h2>
+<h3>一、Skip-Gram 与负采样</h3>
+<ul><li>一句话：______</li><li>关键式子：$\sigma(u_o^\top v_c)$；负例目标 $\log\sigma(u_o^\top v_c)+\sum_{k}\log\sigma(-u_k^\top v_c)$</li><li>我还不敢说清：______</li><li>想动手验证的一件事：把 K 从 2 调到 20，看同一批近邻变不变</li></ul>
+<h3>二、采样与训练细节</h3>
+<ul><li>一句话：______</li><li>关键数字：3/4 次幂；100:1 → 10:1；K=5~20（小数据）/ 2~5（大数据）</li><li>我还不敢说清：3/4 这个指数的敏感性</li><li>想动手验证的一件事：用真实词频画 f^0.75 与 f 的覆盖曲线</li></ul>
+<h3>三、GloVe</h3>
+<ul><li>一句话：______</li><li>关键数字：8.9 / 8.5×10⁻² / 1.36 / 0.96</li><li>我还不敢说清：比值怎么就等价于 log 差的最小二乘</li><li>想动手验证的一件事：自建小语料重算这张比值表</li></ul>
+<h3>四、缺口与评估</h3>
+<ul><li>一句话：______</li><li>关键区分：静态 vs 动态；外部 vs 内在</li><li>我还不敢说清：多原型的切分粒度由谁定</li><li>想动手验证的一件事：在 300 维上跑 PCA 看 1000 词的分布形状</li></ul>
+<h3>五、N-gram 与稀疏</h3>
+<ul><li>一句话：______</li><li>关键式子：$P(w_n\mid w_1^{n-1})\approx P(w_n\mid w_{n-N+1}^{n-1})$</li><li>我还不敢说清：参数 10⁸ 时实际存储与平滑的取舍</li><li>想动手验证的一件事：在小型中文语料上做加法平滑，看 OOV 句子的概率从 0 变多少</li></ul>
+<h2>我的困惑清单（待下次课问）</h2>
+<ol><li>负采样的采样池，工业实作用词表还是打散语料？（课上未定论）</li><li>输入侧/输出侧向量相加 vs 拼接，有没有公认结论？</li><li>层次 softmax 与负采样在同规模数据上谁更快，课上只说了&quot;两种都行&quot;。</li><li>N-gram 的 N 在实际系统里到底取到几？（课上没有给工程值）</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

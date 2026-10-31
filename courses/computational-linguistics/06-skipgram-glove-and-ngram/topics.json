@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "schema": "lecture-spinoffs/1",
+  "course": "计算语言学基础",
+  "lecture": 6,
+  "title": "从 Skip-Gram 到 N-Gram：负采样、GloVe、词向量评估与语言模型的开端",
+  "generated_at": "2026-10-31",
+  "target_platform": "知乎专栏",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec06-t1",
+      "title": "负采样为什么是 3/4 次幂：一条曲线改变训练",
+      "type": "教程",
+      "angle": "把 f(w)^0.75 与 f(w) 的采样分布画在同一张图上，量化高频词被压掉多少",
+      "anchor": "§二 L296–L331（03-2 P55）",
+      "why": "所有 word2vec 教程都说\"3/4 次幂效果好\"，但没人画过这条曲线；课上也只给了\"开根号\"的类比",
+      "gain": "附 40 行脚本，用真实词频表输出两条分布曲线与高低频覆盖率对照表",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t2",
+      "title": "窗口大小 = 句法还是主题：复现 Levy 2014 的 Hogwarts 实验",
+      "type": "教程",
+      "angle": "同一语料训两个 skip-gram，只改窗口 2 vs 5，看最近邻从学校名变成小说人物",
+      "anchor": "§三 L386–L391（03-2 P60）",
+      "why": "课上只念了结论，Levy & Goldberg 2014 (ACL) 的实验设计与数据未展开；而窗口是所有人调 word2vec 时唯一会碰的超参",
+      "gain": "给可复现的最小语料、训练命令与近邻表，读者能亲手看到同一个词的两种语义",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t3",
+      "title": "GloVe 的概率比：为什么\"比值\"是放大镜",
+      "type": "教程",
+      "angle": "用 ice/steam × solid/gas/water/fashion 的表手算 8.9 / 8.5e-2 / 1.36 / 0.96，解释干扰词比值≈1 的过滤机制",
+      "anchor": "§四 L475–L510（03-3 P5）",
+      "why": "GloVe 科普都从损失函数讲起，绕过了真正聪明的设计——不是模型新，是统计量换了",
+      "gain": "附 5 分钟小语料复现比值表的脚本，并给\"为什么不能直接用单一概率做特征\"的三条理由",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t4",
+      "title": "一个词两个向量：输入侧与输出侧该取哪个",
+      "type": "教程",
+      "angle": "三种取法（只取输入侧／相加／拼接）在下游文本分类上做对比实验",
+      "anchor": "§三 L377–L382（03-2 P59）",
+      "why": "老师自己说\"别人这点我固定好了\"，说明这是没有共识的工程选择，正好可以用实验回答",
+      "gain": "给可复现对比表与结论区间：拼接近乎总小幅优于单侧，代价是维度翻倍",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t5",
+      "title": "参数按 N 指数爆炸：用 28 个词和 10^8 语料各算一遍",
+      "type": "教程",
+      "angle": "先手算 28 token 的 unigram 概率，再放大到 V=10^4、语料 10^8，算每个参数平均分到几条 n-gram",
+      "anchor": "§八 L763–L796、§九 L797–L816（04-1 P6–P17）",
+      "why": "数据稀疏人人都在说，很少有人真把\"语料/参数\"这个除商算给读者看",
+      "gain": "一张随 N 变化的\"每参数可用样本数\"表，N=4 时已不足 1",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t6",
+      "title": "26% 与 9%：为什么\"人写还是机写\"这么难判",
+      "type": "观点",
+      "angle": "从 OpenAI 分类器两个错误率出发，讨论检测器与被检测模型同步进化的结构性劣势",
+      "anchor": "§七 L681–L693（03-3 P35）",
+      "why": "AI 检测是高频需求，但多数讨论停在\"准不准\"，没讲清这个任务在原理上就吃亏",
+      "gain": "给\"检测器必然滞后\"的三条机制，以及替代方案（水印、来源签名、过程审计）",
+      "status": "待写",
+      "link": null
+    }
+  ]
+}

@@ -5,7 +5,7 @@
     "title": "computational-linguistics",
     "path": "courses/computational-linguistics"
   },
-  "generatedAt": "2026-10-22",
+  "generatedAt": "2026-10-31",
   "generator": "write-lecture-notes",
   "topics": [
     {
@@ -203,6 +203,182 @@
       "priority": "P1",
       "reason": "命中 S2 + S5 —— 有强叙事主线（1961→今天，同一问题换了五代方案）与鲜明反差（几十年前的棒球问答系统与今天的 RAG 撞题，S4 倾向），且 RAG 是当下热点（S5）。",
       "sourceAnchor": "PPT 第 11 章（学生分享，PPT 未提供）／转写 §学生分享（BASEBALL、向量空间模型、IDF、BM25、双塔/交叉编码器、FAISS、RAG 待核）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec04-t1",
+      "title": "Viterbi 与编辑距离：同一张表的两种用法",
+      "angle": "论文：动态规划的统一模板：状态定义、递推式、边界、回溯、复杂度",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "两个算法在课上相隔四十分钟，容易被当成两件事，其实只差格子含义；增益：给出可复用的 DP 五步模板，可套到 HMM/CRF/DTW/ASR 解码",
+      "sourceAnchor": "§3 L190–L293；§7 L556–L605（02-1 P94–P112、02-2 P14–P24）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec04-t2",
+      "title": "90% 的 F 值为什么不够用",
+      "angle": "观点：评测分布与真实使用分布之间的缝",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "指标好看、体验很差的经典案例，可迁移到 NER/抽取/对话；增益：教读者读评测表的三件事，并给出自建小测试集的实操建议",
+      "sourceAnchor": "§5 L409–L420（02-1 P133–P138）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec04-t3",
+      "title": "BPE：把「词」变成超参的那一步",
+      "angle": "论文：从五个词的合并推演讲到停止条件与贪心编码",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "多数科普只讲「合并高频对」，讲不清停在哪、怎么编码；增益：附 20 行可跑的 BPE 脚本与合并日志，解释中文 token 效率问题",
+      "sourceAnchor": "§6 L429–L507（02-1 P146–P165）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec04-t4",
+      "title": "中文还要不要分词：字、词、byte 三级单位",
+      "angle": "观点：任务 × 单位 的选型表与仍需要分词的场景",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "十年未决的工程问题，直接决定 token 成本与效果；增益：给检索/分类/抽取/生成四类任务的选型建议与反例",
+      "sourceAnchor": "§5–§6 L392–L527（02-1 P128–P165）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec04-t5",
+      "title": "意义的 22 种定义：词向量前史",
+      "angle": "论文：意义无法定义 → 只能表示 → 分布假设 → 向量",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "多数词向量文章从 one-hot 讲起，缺「为什么非要表示」这一层；增益：把 1923 年的思想史接到 word2vec，讲成一条因果线",
+      "sourceAnchor": "§8 L620–L756（03-1 P1–P14）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec05-t1",
+      "title": "2000 个义原能不能盖完一门语言",
+      "angle": "论文：从词典释义的循环讲到 HowNet 的义原集、义原预测与新词新义",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "教材都提 HowNet，却很少讲清它为什么没成为标准：不是不好，是产能不够、出版即固化；增益：把知识工程 vs 统计学习的争论落到具体资源上，并能判断大模型是绕过而非解决了这个问题",
+      "sourceAnchor": "§2–§3 L21–L137（03-1 P12–P19）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec05-t2",
+      "title": "相似 ≠ 相关：语义场是怎么骗过词向量的",
+      "angle": "观点：语义相似、语义相关、语义场三者的区别与误用场景",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "「向量近 = 意思近」在语义场上直接失效，而语义场是上下文里最常见的共现结构；增益：给一个可自测的 20 组词对实验，读者能亲手看到错在哪",
+      "sourceAnchor": "§6 L310–L341（03-1 P37–P38）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec05-t3",
+      "title": "「无价」到底贵还是贱：反义关系的四个抽屉",
+      "angle": "科普：互补、分级、关系、自反四类反义的判定与反例",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "「无价」是反义分类的天然反例，能一次说清反义不是二元对立；增益：附四类反义的判定流程图，可直接用于标注培训",
+      "sourceAnchor": "§5 L244–L271（03-1 P29）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec05-t4",
+      "title": "哈夫曼树上做分类：14 次替代一万次",
+      "angle": "论文：层次 softmax 的建树、编码与路径概率连乘",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "多数科普只说「更快」，讲不清为什么按词频建树、解码到底算了几次；增益：附 30 行 Python 实现，用课上 6 词词频跑出与课件一致的路径",
+      "sourceAnchor": "§9 L601–L651（03-2 P22–P34）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec05-t5",
+      "title": "从 SVD 到负采样：词向量换过几次姿势",
+      "angle": "观点：每次方法更替都在解决上一个方法的什么病",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "技术史能把「为什么每一步都要换」讲成因果链，而不是年表；增益：给一张「贵 / 不可解释 / 无上下文 / 一词多义」对照表，读者能预测下一步方向",
+      "sourceAnchor": "§7–§9 L384–L658（03-2 P1–P34，延伸 03-3）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t1",
+      "title": "负采样为什么是 3/4 次幂：一条曲线改变训练",
+      "angle": "教程：把 f(w)^0.75 与 f(w) 的采样分布画在同一张图上，量化高频词被压掉多少",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "所有 word2vec 教程都说\"3/4 次幂效果好\"，但没人画过这条曲线；课上也只给了\"开根号\"的类比；增益：附 40 行脚本，用真实词频表输出两条分布曲线与高低频覆盖率对照表",
+      "sourceAnchor": "§二 L296–L331（03-2 P55）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t2",
+      "title": "窗口大小 = 句法还是主题：复现 Levy 2014 的 Hogwarts 实验",
+      "angle": "教程：同一语料训两个 skip-gram，只改窗口 2 vs 5，看最近邻从学校名变成小说人物",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "课上只念了结论，Levy & Goldberg 2014 (ACL) 的实验设计与数据未展开；而窗口是所有人调 word2vec 时唯一会碰的超参；增益：给可复现的最小语料、训练命令与近邻表，读者能亲手看到同一个词的两种语义",
+      "sourceAnchor": "§三 L386–L391（03-2 P60）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t3",
+      "title": "GloVe 的概率比：为什么\"比值\"是放大镜",
+      "angle": "教程：用 ice/steam × solid/gas/water/fashion 的表手算 8.9 / 8.5e-2 / 1.36 / 0.96，解释干扰词比值≈1 的过滤机制",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "GloVe 科普都从损失函数讲起，绕过了真正聪明的设计——不是模型新，是统计量换了；增益：附 5 分钟小语料复现比值表的脚本，并给\"为什么不能直接用单一概率做特征\"的三条理由",
+      "sourceAnchor": "§四 L475–L510（03-3 P5）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t4",
+      "title": "一个词两个向量：输入侧与输出侧该取哪个",
+      "angle": "教程：三种取法（只取输入侧／相加／拼接）在下游文本分类上做对比实验",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "老师自己说\"别人这点我固定好了\"，说明这是没有共识的工程选择，正好可以用实验回答；增益：给可复现对比表与结论区间：拼接近乎总小幅优于单侧，代价是维度翻倍",
+      "sourceAnchor": "§三 L377–L382（03-2 P59）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t5",
+      "title": "参数按 N 指数爆炸：用 28 个词和 10^8 语料各算一遍",
+      "angle": "教程：先手算 28 token 的 unigram 概率，再放大到 V=10^4、语料 10^8，算每个参数平均分到几条 n-gram",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "数据稀疏人人都在说，很少有人真把\"语料/参数\"这个除商算给读者看；增益：一张随 N 变化的\"每参数可用样本数\"表，N=4 时已不足 1",
+      "sourceAnchor": "§八 L763–L796、§九 L797–L816（04-1 P6–P17）",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec06-t6",
+      "title": "26% 与 9%：为什么\"人写还是机写\"这么难判",
+      "angle": "观点：从 OpenAI 分类器两个错误率出发，讨论检测器与被检测模型同步进化的结构性劣势",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "AI 检测是高频需求，但多数讨论停在\"准不准\"，没讲清这个任务在原理上就吃亏；增益：给\"检测器必然滞后\"的三条机制，以及替代方案（水印、来源签名、过程审计）",
+      "sourceAnchor": "§七 L681–L693（03-3 P35）",
       "status": "open",
       "link": null
     }

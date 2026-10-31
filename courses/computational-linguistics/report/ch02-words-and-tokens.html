@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SLP3 阅读报告 · 第 2 章《词与词元》（Words and Tokens） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · report</span> <span>/</span> <span class="cur">SLP3 阅读报告 · 第 2 章《词与词元》（Words and Tokens）</span></nav>
+<article class="prose"><h1>SLP3 阅读报告 · 第 2 章《词与词元》（Words and Tokens）</h1>
+<h2>一、本章内容综述</h2>
+<p>我在前面课的一次口头报告中分享过本章，并结合自己的工提出了一些问题：任何系统都存在不直接可见、但对运行结果起决定作用的部件，就是暗结构——我将章节综述、课堂笔记和重点内容重读后的新问题整理到了一起。之前并未深入考察NLP背后&quot;词&quot;是如何被切分的。读完本章后我认识到，这个看似简单的问题才是全书的基础问题。本章的主线就是先把&quot;词&quot;这一概念本身的定义的困难讨论清楚，再逐步地给出工程上的解决方案。</p>
+<p>第一块内容是&quot;词&quot;的定义困境。 教材开篇的例句说明，连&quot;数词&quot;都需要先约定好口径：是否要计入标点、是否要计入填充词、大小写是否要合并，每一步都会改变答案，因此，书中的&quot;答案是这取决于具体任务&quot;的表述是事实陈述而并非回避。此外有两个更困难的问题。第一，汉语、日语、泰语的书写系统没有正字法意义上的词，书中指出&quot;姚明进入总决赛&quot;一句存在 Treebank（3 词）、北大（5 词）、字序列（7 字）三种合理切分。其二，词表是无界的，Heaps 定律 |V| = kN^β（β 常见于 0.44~0.56）表明词类型随语料的规模按照幂律无限增长，任何固定的词表都无法覆盖语言的全部词，测试集中的未登录词（OOV）也会导致模型无法处理这些词。顺着这个，§2.2 引入了语素（最小意义单位），区分了屈折与派生，但书中也明确指出，跨语言形态的差异过大，&quot;把语素用作跨语言词元化的标准是非常困难&quot;。</p>
+<p>第二块内容是字符层与数据驱动的切分（§2.3–2.5）。 第三节将 Unicode 码点、字形和UTF-8 字节三层拆开：码点是编号、字形是显示、编码是字节的规则，自同步设计使损坏文件最多错 3 个字节后即可重新对齐，且 ASCII 文件即天然合法。接下来是全章的核心：BPE 训练时迭代合并当前最频繁的相邻对，编码时只重放训练时学到的合并顺序，测试数据的频率不起作用；字节级 BPE（GPT-2 起）把初始词表降为 256 个字节，从机制上解决了 OOV 问题，但是代价是低资源语言被切分得更碎，书中西班牙语例子中 16 词被切成 33 个词元。书中讨论语料库时，说语料是特定人群在特定场景留下的痕迹，不是语言的均匀抽样，因此数据说明书是需要的。</p>
+<p>第三块的内容是工程工具与最小编辑距离（§2.6–2.9）。 工程工具部分包括正则表达式（Kleene 星号、锚点、贪婪匹配、捕获组与预词元化）、Unix 三件套（tr/sort/uniq）以及基于规则的词元化与句子切分。Penn Treebank 标准是这一部分内容的综合体现：附着词切出：doesn&#x27;t → does + n&#x27;t、连字符词则保持整体、标点独立成词；句子切分的难点在于缩写词末尾的点&quot;既在词内、又是句界&quot;。最小编辑距离是全章算法含量最高的部分，它把&quot;两个字符串有多像&quot;转化为每步三选一（插/删/替）的累加，用动态规划填表、回溯指针还原对齐。书中 intention → execution 的例子，替换代价为 2 时距离是 8，经典 Levenshtein 版本距离是 5。这个例子说明了：代价表如何设定比算法本身更影响结论，这是本节最重要的观点。</p>
+<h2>二、与课堂内容的对照</h2>
+<p>本章的内容与课程第 2、3 讲几乎是逐节对应的，但是两者的视角互补。第 2 讲把&quot;断词&quot;定义为&quot;在符号序列中确定词的外部边界&quot;，并且用&quot;差点没上上上上海的车&quot;这一句展示了中文断词的困难；英语断词看起来平凡（靠空格和标点），例外却很多（I&#x27;m、i.e.、Ph.D.、AT&amp;T），这正好对应书中关于词内标点要保留的内容。此外，老师课上还特别提醒过：这里的 token（词）和今天大模型语境下的 token（子词）含义已经不同，这个提醒正好点出了书中从 §2.1 到 §2.4 之间的一条重要线索。到了第 3 讲，汉语切分被当成了一个可评测的工程任务：从基于规则的 FMM/BMM（最大匹配，性能被 MaxLen 和词典两个经验参数决定），到位置二分类，再到 BIO 序列标注，同时还配了一整套评测方法（标准答案怎么造、P/R/F1、baseline 与 ceiling）。教材中说&quot;切分取决于任务&quot;，课堂则回答了&quot;那怎么让结果可信&quot;的问题。我在工作中做中文分词评测的时候，曾经遇到同一句被标成 3 词和 5 词的两套答案，当时以为有人标错了，现在才明白那是 Treebank 口径和北大口径的差别，而不是对错的问题。这也正是课堂上强调的&quot;统一标注标准要先于一切算法&quot;。</p>
+<h2>三、重读与验证：两个印象最深的实验</h2>
+<p>口头报告中我沿上述视角做了几组动手验证，这里只记录两个重读后仍认为分量最重的实验。第一个实验是关于 Heaps 定律的跨语言实测。我没有直接接受书上给出的 β 区间，先拿合成英文语料拟合得 β=0.5048，落在书中 0.44~0.56 区间内，英文这条线教材和实验对上了。但是把同样的方法搬到中文，结果就出现了明显的差异：按&quot;字&quot;统计 β 只有 0.34，按二字组近似&quot;词&quot;β 达到 0.81，同一个语料只是换了计量单位，指数就差出两倍多。换真实的语料再独立验证一遍：三国演义（jieba 词级，4.2 万词）β=0.77，《Pride and Prejudice》英文 β=0.53。后来查文献发现，这个现象有一个正式的名字：Lü、Zhang、Zhou 在《Scaling Laws in Human Language》中指出，Heaps 定律的统计&quot;压倒性地集中在印欧语系&quot;，中日韩表意文字的类型数增长是三阶段的（表观 β 约为 1 → 0.7 → 0.3），而我的实测结果正好各自落在对应的位置：中文词级 0.77~0.81 落在中间段，中文字级 0.34 落在饱和段。倒不是谁测错了，只是各自测对了三阶段其中的一段。</p>
+<p>第二个是关于 token 的计量问题。按 OpenAI 官方经验值来说，cl100k 分词器是对中日韩文本大约 1.5~2 个汉字才合 1 个 token，中文比英文费 token 是由分词器的结构决定的。这个问题不只是一个技术细节：同一句话，不同语言按照不同的&quot;单价&quot;计费，语言之间的差异在于词元化那一刻就已经进入了系统。更隐蔽的是推理侧的开销：技能文件、系统提示每一轮对话都要原样随行，让我印象深刻的是，我用 Kimi 写一份报告时它开了 10 个 agent，每个 agent 都重复承担一遍初始化开销，一份报告消耗掉我一个月额度的三分之一。从那以后我养成了一个习惯：做数据相关工作先问计量口径，报数字之前先把分母说清楚。</p>
+<h2>四、我的问题</h2>
+<p>以英文语料为基础写成的&quot;普适规律&quot;，在中文里还有多少是成立的？而我的实测显示，Heaps 定律的 β 在中文里随切分单位从 0.34（字级）跳到 0.81（词级），而教材给出的 0.44~0.56 只是印欧语系词级语料的拟合值。课堂上一再强调&quot;先统一标注标准，再谈评测指标&quot;，而 Heaps 这件事就说明，只要换一个计量的维度，指标的含义就整个变了。这和换一个采集口径之后、报表里每个数字的含义全变，是同一类问题。那么，NLP 文献里究竟还有多少结论，其实是被&quot;计量口径&quot;悄悄决定了的？面对一本以英文为主写成的教材，我们这些以中文为母语的学生，该建立怎样的&quot;先问口径、再引用数字&quot;的纪律？</p>
+<p>次问题，供讨论：课堂上提到 token 一词的含义已从&quot;词&quot;变为&quot;子词&quot;。如果连自己一个月消耗了多少 token 都说不清，那么谈论优化就缺乏计量的基础。</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

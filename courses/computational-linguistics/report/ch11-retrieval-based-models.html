@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SLP3 阅读报告 · 第 11 章《基于检索的模型》（Retrieval-Based Models） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · report</span> <span>/</span> <span class="cur">SLP3 阅读报告 · 第 11 章《基于检索的模型》（Retrieval-Based Models）</span></nav>
+<article class="prose"><h1>SLP3 阅读报告 · 第 11 章《基于检索的模型》（Retrieval-Based Models）</h1>
+<h2>一、本章内容综述</h2>
+<p>本章一上来就点了三个失效，而且这三样还彼此独立：一是会幻觉，而且错起来特别自信，二是碰不到自家的专有数据，三是知识停在预训练那一刻，不更新了。RAG 说这三样它能一起解决，办法其实只有一个动作：把外部文本塞进上下文。全章是从稀疏检索开始讲的。书里先拿向量空间模型（Salton, 1971）把文档表示成词频向量，词袋假设丢掉语序，只留频次，于是莎士比亚的喜剧和历史剧，靠 fool、battle 这几个题材词就能分开。接着再给词频加权重：tf 取对数，因为出现一百次不等于重要一百倍；idf 让每篇都有的词权重归零，停用词表于是也就可以退休了；BM25 在它上面又加了两个分工明确的参数，一个专门管词频饱和，一个专门管长度归一化。算相似度的时候只比方向，不比长度长短；倒排索引把&quot;跟所有文档比&quot;变成了&quot;只翻含查询词的倒排链&quot;；教材把这些收成了两步走：离线建索引，在线取候选再打分。</p>
+<p>接下来是评价，这一节也是我阅读时唯一动手复算过的。单点精确率、召回率对排序系统来说不够用，于是就有了偏爱靠前命中的插值精确率、AP 和 MAP。我照着书里的判定表，动手复现了一遍，我算出来的 AP 是 0.597，跟书里的 0.6 正好对上，说明这套定义里确实没藏什么步骤。再往后是稠密检索。BM25 只认字面重叠，一同义改写就失灵，这就叫词汇不匹配。稠密检索是把查询和文档都编码成嵌入，依据是预训练早把同义关系压成了几何上的邻近。从架构上看，交互放在什么时候，就成了一个分歧点：交叉编码器是全程都在交互，最准，也最贵；双编码器各自压成一个向量再点积，便宜是便宜，但词元级的细节丢了；ColBERT 走的是中间路线，把每个词元的向量都留下来，打分时给每个查询词元在文档侧取最相似的那个，再求和。</p>
+<p>最后一部分，讲检索怎么接进生成。RAG 分成检索器和生成器（也叫阅读器）这两块，检索出 top-k 段落拼进提示里，让大模型条件化生成；变体有智能体式 RAG（模型自己决定什么时候查、查哪个库），还有端到端联合训练。教材还专门拿了一节讲&quot;引证&quot;：让模型把出处都标出来，等于把信任从模型挪到来源上，可引文是真的、内容错了的时候，用户反倒更容易被说服。11.5 节提醒了一句：数据集分自然问题和探查式考题两种，开卷还是闭卷，是用法问题，不是数据集的属性；11.6 节指出，EM 和词元 F1 都不查答案有没有来源支持，所以 RAG 还得有个第三个指标：引用正确率。11.8 节的历史注记把这条线追到 1961 年的 BASEBALL，还有 1964 年按词项重叠排序的 Protosynthex，说明稀疏检索这套思路，比 Transformer 早出现了六十年。</p>
+<h2>二、与课堂内容的对照</h2>
+<p>本章跟第 3 讲末尾一位同学分享的《从 BASEBALL 到 RAG》讲的是同一段历史，只是两边角度不同：一个讲任务，一个讲机制。同学是从任务侧开始讲起的：大模型有幻觉、看不见私有数据、知识不动这三个毛病，所以回答之前得先做检索增强；三代方案依次是结构化库加人工规则（BASEBALL、LUNAR）、语义解析（GeoQuery、NL2SQL、2011 年 Watson 夺冠）、检索（1971 年向量空间模型、1995 年 BM25、稠密双塔与交叉编码器、2017 年前后 FAISS 十亿级向量检索），落点是一句话：理解交给大模型，事实交给检索，关键场景用确定程序兜底。课本则从机制侧一路铺开：向量空间模型那一节，讲的正是同学说的 1971 年，BM25 那一节，就是几十年的稀疏检索，双塔、交叉编码器、ColBERT，就是稠密段的三档交互，RAG 那一节，正是分享的终点。另外，11.8 节里 BASEBALL&quot;查结构化比赛数据库&quot;这个说法，跟同学说的 1961 年也对得上，课本的注记和课堂分享的开头，能互相印证。而且两边还各自补上了对方没说完的地方。同学说的&quot;三硬伤&quot;是动机，教材章首给的是同一组失效的学理化说法；同学说的&quot;表达能力与可信可控的权衡&quot;，在教材里落到了具体处，比如 11.5 节说，考题型数据集测不出检索好坏，11.6 节说，F1 会被&quot;1791 年&quot;和&quot;1786 年&quot;共用一个&quot;年&quot;字抬上去。反过来看，课堂分享把教材各节串成了一条有人物、有年份的时间线，让 11.1 到 11.4 不再只是四段机制，而是六十年里&quot;怎么拿答案&quot;的一次次换代。我读 11.4 节的时候，一开始只觉得 RAG 是个新管道，听完分享再回头看，才意识到它只是这条线上最新的一站。</p>
+<h2>三、延伸思考</h2>
+<p>重读本章时，我注意到那篇《从 BM25 到 ColBERT》里的一个说法：ColBERT 的设计哲学是&quot;延迟，但保留&quot;，也就是查询和文档各自先编码，交互推到编码之后，用 MaxSim 来做，文档向量可以离线先算好，在线只编码查询。这算不上什么模型技巧，更像一条工程原则：先粗排、后精排，把贵的计算挪到离线，把便宜的计算留在在线。这跟我做架构时的习惯顺序是一致的，先把接口和边界定下来，再填实现；先弄清每层管什么，再谈这层怎么实现。这个视角其实从头到尾贯穿了全章。稀疏检索本来就是这么干的：倒排索引离线建好，在线只扫命中的倒排链；两阶段流程先召回、再精排；稠密检索的三种架构，说到底是在回答&quot;交互放什么时候&quot;；重排、还有智能体式 RAG 决定什么时候查、查哪个库，说到底都是分层决策。课堂上&quot;理解交给大模型、事实交给检索&quot;这句话，是同一原则的放大版：理解贵、要创造性，交给参数；事实便宜、可核查，交给索引；关键场景再交给确定程序兜底，三层各管一段。</p>
+<p>让我印象比较深的，是我在工作中搭过 ElasticSearch 集群，建索引、做备份、调检索这些事都干过，于是养成了一个习惯：凡是要检索资料，先把文档集合的定义写清楚，范围、文档单位、预估规模，写清楚再动手，这正是 11.1 节说的：文档的边界是个设计变量。前阵子我在产品里给文档问答接了条检索链路，一开始只想着换个更大的模型，答案质量还是不稳；后来从检索那边一查，发现召回结果里压根没有那段关键文档，生成器就是在没有来源的情况下硬答。这跟那篇文章开头写的&quot;文档明明在、就是检索不到&quot;是同一类问题：检索没召回，换什么生成器都没用。另外，我自己的个人笔记库也照这套思路来，纯属业余。</p>
+<h2>四、我的问题</h2>
+<p>我觉得，分层各司其职之后，错误到底该算哪一层的，这事还得讨论。课本 11.4 节说，检索错、读错、记错要分开量，文章也提了，先测检索，再测生成。可系统一旦跑在端到端联合训练、甚至智能体式 RAG 底下，检索器和生成器的参数一起更新，损失一起往下掉，这时候把错误归到某一层，技术上还成不成立，我有点怀疑。要是归因本身就失效了，那得讨论靠什么机制让每层还各司其职，是靠训练目标显式拆开，还是靠评测协议在系统外面硬拆。再往下说，课堂上&quot;关键场景用确定程序兜底&quot;那个兜底机制，在这种边界模糊的端到端系统里该挂哪一层，也得说清楚。另外，EM 和 F1 都查不了答案有没有来源支持，教材把引用正确率当第三个指标，可引用是模型自己生成的，我读的时候想到一种更难查的情形：段落引对了，答案却是从参数记忆里冒出来的，这时候引用正确率反而可能变成信任的来源，而不是保障。</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

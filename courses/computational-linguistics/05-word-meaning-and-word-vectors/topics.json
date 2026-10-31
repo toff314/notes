@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "schema": "lecture-spinoffs/1",
   "course": "计算语言学基础",
   "lecture": 5,
@@ -7,7 +8,7 @@
   "target_platform": "知乎专栏",
   "topics": [
     {
-      "id": "hownet-2000-sememes",
+      "id": "computational-linguistics-lec05-t1",
       "title": "2000 个义原能不能盖完一门语言",
       "type": "论文",
       "angle": "从词典释义的循环讲到 HowNet 的义原集、义原预测与新词新义",
@@ -18,7 +19,7 @@
       "link": null
     },
     {
-      "id": "similarity-vs-relatedness",
+      "id": "computational-linguistics-lec05-t2",
       "title": "相似 ≠ 相关：语义场是怎么骗过词向量的",
       "type": "观点",
       "angle": "语义相似、语义相关、语义场三者的区别与误用场景",
@@ -29,7 +30,7 @@
       "link": null
     },
     {
-      "id": "antonymy-four-types",
+      "id": "computational-linguistics-lec05-t3",
       "title": "「无价」到底贵还是贱：反义关系的四个抽屉",
       "type": "科普",
       "angle": "互补、分级、关系、自反四类反义的判定与反例",
@@ -40,7 +41,7 @@
       "link": null
     },
     {
-      "id": "hierarchical-softmax-huffman",
+      "id": "computational-linguistics-lec05-t4",
       "title": "哈夫曼树上做分类：14 次替代一万次",
       "type": "论文",
       "angle": "层次 softmax 的建树、编码与路径概率连乘",
@@ -51,7 +52,7 @@
       "link": null
     },
     {
-      "id": "word-vector-history",
+      "id": "computational-linguistics-lec05-t5",
       "title": "从 SVD 到负采样：词向量换过几次姿势",
       "type": "观点",
       "angle": "每次方法更替都在解决上一个方法的什么病",

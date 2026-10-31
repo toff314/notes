@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "schema": "lecture-spinoffs/1",
   "course": "计算语言学基础",
   "lecture": 4,
@@ -7,7 +8,7 @@
   "target_platform": "知乎专栏",
   "topics": [
     {
-      "id": "dp-viterbi-edit-distance",
+      "id": "computational-linguistics-lec04-t1",
       "title": "Viterbi 与编辑距离：同一张表的两种用法",
       "type": "论文",
       "angle": "动态规划的统一模板：状态定义、递推式、边界、回溯、复杂度",
@@ -18,7 +19,7 @@
       "link": null
     },
     {
-      "id": "metric-90-not-enough",
+      "id": "computational-linguistics-lec04-t2",
       "title": "90% 的 F 值为什么不够用",
       "type": "观点",
       "angle": "评测分布与真实使用分布之间的缝",
@@ -29,7 +30,7 @@
       "link": null
     },
     {
-      "id": "bpe-word-as-hyperparameter",
+      "id": "computational-linguistics-lec04-t3",
       "title": "BPE：把「词」变成超参的那一步",
       "type": "论文",
       "angle": "从五个词的合并推演讲到停止条件与贪心编码",
@@ -40,7 +41,7 @@
       "link": null
     },
     {
-      "id": "chinese-tokenization-units",
+      "id": "computational-linguistics-lec04-t4",
       "title": "中文还要不要分词：字、词、byte 三级单位",
       "type": "观点",
       "angle": "任务 × 单位 的选型表与仍需要分词的场景",
@@ -51,7 +52,7 @@
       "link": null
     },
     {
-      "id": "meaning-22-definitions",
+      "id": "computational-linguistics-lec04-t5",
       "title": "意义的 22 种定义：词向量前史",
       "type": "论文",
       "angle": "意义无法定义 → 只能表示 → 分布假设 → 向量",

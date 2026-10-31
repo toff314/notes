@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>没有不带上下文的通用：一节课、两组代码，和我查不到出处的那句话 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 听课笔记：计算语言学基础 · 第 3 讲 汉语切分方法与评测</span> <span>/</span> <span class="cur">没有不带上下文的通用：一节课、两组代码，和我查不到出处的那句话</span></nav>
+<article class="prose"><h1>没有不带上下文的通用：一节课、两组代码，和我查不到出处的那句话</h1>
+<blockquote><p>计算语言学基础 · 第 3 讲《汉语切分方法与评测》课后随想</p><p>素材：课堂笔记、周志明《智慧的疆界》本地电子版（缺章）、Kocoń et al. 2023（arXiv:2302.10724）、两组自己动手跑的实验（labs/lab-01、lab-02）</p></blockquote>
+<h2>开场：一次查不到出处的检索</h2>
+<p>第 3 讲听完，我脑子里翻来覆去是一句记不准出处的话：<strong>通用模型如果各方面都强，就说明各方面都不强——没有真正的 AGI，时间和成本有限，不可能面面俱到。</strong> 我记得好像在哪本书里读过，疑似周志明的《智慧的疆界》，就躺在我的微信读书本地书库里。我当即去查——结果扑了个空：本地电子版缺了好几章，已下载的部分逐章检索&quot;通用人工智能&quot;&quot;AGI&quot;&quot;全能&quot;，一条都没有。倒是顺着这个念头在网上搜，搜到了一篇实打实的论文：Kocoń 等人 2023 年的《ChatGPT: Jack of all trades, master of none》（arXiv:2302.10724），把 ChatGPT 拉上 25 个 NLP benchmark，和各路专用微调模型同台，结论就写在标题里。</p>
+<p>后来想想，这个&quot;查不到→换一条路找到&quot;的过程，本身就是这节课最好的注脚——课上学生分享的那段&quot;从 BASEBALL 到 RAG&quot;的问答六十年，讲的正是同一件事：人向机器要一个答案，机器从规则库查到向量检索，查的越来越准，但&quot;答案在哪、信多少&quot;这个问题，从来都在人这一侧。我这次也不例外：书的记忆是模糊的，论文的证据是扎实的，我能交代的只有后者。</p>
+<p>这句查无实据的话，就用它当这篇随想的骨架。下面分三块：第 3 讲的分词方法史告诉我&quot;通用性从哪来&quot;；我的两组实验回答&quot;专用值多少钱&quot;；最后说为什么我笃定这是&quot;第五次革命&quot;——虽然这个数是我私下的叫法，不是哪本教科书的说法。</p>
+<h2>一、分词三路线：每一步都在买回来一点上下文</h2>
+<p>先把课上的知识主线讲清楚（讲义 §4–§9）。汉语切分为什么难，第 2 讲已经立过案：词无定界。第 3 讲回答&quot;那怎么办&quot;，方法是按历史排成三代的：</p>
+<p><strong>第一代，基于规则</strong>：前向最大匹配 FMM（和后向镜像 BMM），靠的是两个东西——一部词典，一个参数 MaxLen（词典最长词长，课堂上的经验值是词表平均词长再加一两）。老师现场演示了&quot;语言学很重要&quot;怎么被切成&quot;语言学/很/重要&quot;。规则法的先天缺陷也当场暴露：交集歧义 OA（&quot;的确&quot;：FMM 切&quot;的确/定&quot;，BMM 切&quot;的/确定&quot;）、组合歧义 CA（&quot;一起&quot;既可一词也可两词）、未登录词 OOV（一律切成单字）。加规则救局部，规则总有例外；根子上的诊断是：固定词表不含上下文，而&quot;一起&quot;还是&quot;一/起&quot;，恰恰取决于上下文（讲义 §7）。</p>
+<p><strong>第二代，基于分类</strong>：换视角，不看词，看每个字和字之间的位置——&quot;分还是不分&quot;，变成位置二分类。成熟分类器全部能用：朴素贝叶斯（用先验估后验，&quot;朴素&quot;在特征条件独立）、KNN、最大熵、深度网络（讲义 §8）。代价是 pipeline 的原罪：每个位置单独决策，前面切错了往后传，每步只是局部最优。</p>
+<p><strong>第三代，基于序标</strong>：把切分建模成&quot;给每个字打标签&quot;，标签集 {B, I, O}，BIO 序列标注从此成了主流。HMM 用状态转移概率加发射概率建模，Viterbi 动态规划在 3ⁿ 种候选里保留中间结果、求出全局最优路径；后面还有 MEMM、CRF、深度网络加 CRF 一路接棒（讲义 §9）。</p>
+<p>贯穿三代的还有一把尺子：评测。标准答案要经过统一标注口径、专家标注、交叉检验、委员会仲裁；P 以自己输出的词数为分母，R 以标准答案为分母，F1 调和；基线回答&quot;脚下最低&quot;，天花板回答&quot;往上最高&quot;（讲义 §6）。</p>
+<p><strong>我的重述就一句话：这三代方法，每一步进化买回来的是&quot;更多上下文&quot;。</strong> 规则没有上下文，所以撞死在歧义和 OOV 上；分类把左右邻字当特征引进来，买回来局部上下文；序标把整个句子当一个序列整体求解，买回来全局上下文。上下文就是专用性——模型&quot;懂&quot;的场景边界，就是它见过的上下文边界。由此看市面上一切&quot;通用&quot;的标榜，都可以翻译成：它只带通用上下文。所谓通用模型，是只见过通用世界的专用模型。这句话没有出处，是我的重述，但我下面用实验给它称了称斤两。</p>
+<h2>二、通用值多少钱：我的两组实验</h2>
+<h3>实验一：给分词器灌领域知识，F1 从 0.449 到 0.923</h3>
+<p>我拿自己行业的文本测的——云安全是个行话密布的领域，&quot;等保测评&quot;&quot;零信任&quot;&quot;容器逃逸&quot;&quot;态势感知&quot;全是通用词典里不收的词。造了三句话当考题，金标准按领域口径标注，三个选手同台。下面是完整可运行的代码（与 labs/lab-01-domain-segmentation/run.py 同源，2026-10-27 本机实跑）：</p>
+<pre><code>import jieba
+
+DOMAIN_TERMS = [&quot;等保测评&quot;,&quot;零信任&quot;,&quot;容器逃逸&quot;,&quot;态势感知&quot;,&quot;数据脱敏&quot;,&quot;护网行动&quot;,&quot;基线核查&quot;]
+
+CASES = [
+    (&quot;等保测评要求做基线核查和漏洞扫描&quot;,
+     [&quot;等保测评&quot;,&quot;要求&quot;,&quot;做&quot;,&quot;基线核查&quot;,&quot;和&quot;,&quot;漏洞扫描&quot;]),
+    (&quot;零信任架构下容器逃逸风险需要态势感知&quot;,
+     [&quot;零信任&quot;,&quot;架构&quot;,&quot;下&quot;,&quot;容器逃逸&quot;,&quot;风险&quot;,&quot;需要&quot;,&quot;态势感知&quot;]),
+    (&quot;护网行动期间数据脱敏必须到位&quot;,
+     [&quot;护网行动&quot;,&quot;期间&quot;,&quot;数据脱敏&quot;,&quot;必须&quot;,&quot;到位&quot;]),
+]
+
+def prf(pred, gold):                      # P/R/F1，讲义 §6 口径
+    def spans(seg):
+        out, i = set(), 0
+        for w in seg:
+            out.add((i, w)); i += len(w)
+        return out
+    p, g = spans(pred), spans(gold)
+    tp = len(p &amp; g)
+    P = tp/len(p); R = tp/len(g)
+    return round(P,3), round(R,3), round(2*P*R/(P+R),3)
+
+def fmm(text, lexicon, maxlen=6):         # 课堂 FMM
+    res, i = [], 0
+    while i &lt; len(text):
+        hit = next((text[i:i+L] for L in range(min(maxlen,len(text)-i),0,-1)
+                    if text[i:i+L] in lexicon), None)
+        if hit: res.append(hit); i += len(hit)
+        else:   res.append(text[i]); i += 1
+    return res
+
+jieba.initialize()
+resA = [list(jieba.cut(s)) for s,_ in CASES]        # A：通用
+for t in DOMAIN_TERMS: jieba.add_word(t)
+resB = [list(jieba.cut(s)) for s,_ in CASES]        # B：+领域词典
+lex  = set(jieba.dt.FREQ.keys()) | set(DOMAIN_TERMS)
+resC = [fmm(s, lex) for s,_ in CASES]              # C：FMM+大词表
+
+for name, res in [(&quot;A_jieba通用&quot;,resA),(&quot;B_加领域词典&quot;,resB),(&quot;C_FMM加领域词典&quot;,resC)]:
+    F1s = [prf(p, g)[2] for p,(_,g) in zip(res, CASES)]
+    print(name, &quot;avgF1 =&quot;, round(sum(F1s)/len(F1s),3))</code></pre>
+<p>真实输出：</p>
+<pre><code>A_jieba通用        avgF1 = 0.449
+B_加领域词典        avgF1 = 0.923
+C_FMM加领域词典     avgF1 = 0.923</code></pre>
+<p>拆开看细节更有意思（完整明细在 labs/lab-01-domain-segmentation/out/raw.log）：</p>
+<pre><code>等保测评要求做基线核查和漏洞扫描
+  A: 等/保/测评/要求/做/基线/核查/和/漏洞/扫描      F1=0.375
+  B: 等保测评/要求/做/基线核查/和/漏洞/扫描          F1=0.769
+零信任架构下容器逃逸风险需要态势感知
+  A: 零/信任/架构/下/容器/逃逸/风险/需要/态势/感知   F1=0.471
+  B: 零信任/架构/下/容器逃逸/风险/需要/态势感知      F1=1.0
+护网行动期间数据脱敏必须到位
+  A: 护网/行动/期间/数据/脱敏/必须/到位            F1=0.5
+  B: 护网行动/期间/数据脱敏/必须/到位               F1=1.0</code></pre>
+<p>明细里还藏着一个诚实的细节：B 组第一句得了 0.769 而不是满分——因为我只往词典里灌了七个领域词，&quot;漏洞扫描&quot;这种领域内的普通复合词不在清单里，就被切成了&quot;漏洞/扫描&quot;。专用化是清单驱动的，清单漏一条，现场就错一处。这个教训和 MaxLen 的经验值一样，都是同一个道理：专用性是人逐条喂出来的，喂不到的地方，通用性顶不上去。</p>
+<p>三个数字三件事。<strong>其一，通用确实会输</strong>：0.449 的 F1，术语全军覆没，等保测评被切成&quot;等/保&quot;——跟通用模型在专业 benchmark 上输给专用模型，是同一件事的两幅画面，Kocoń 那篇论文给过大模型的版本，我的笔记本给了分词的版本。<strong>其二，专用化的成本低得离谱</strong>：jieba.add_word 七行代码，F1 翻倍。<strong>其三，最扎眼——赢的不是新算法</strong>：四十多年前的 FMM 配上今天的通用大词表，和统计学习出身的 jieba 打成了平手。增益的来源是领域知识本身，不是方法的新旧。这和<a href="https://www.askfount.com/articles/articles-20261027-1793074467919">第 5 课那篇 HowNet 随笔</a>的结论遥相呼应：义原追不上的新词，靠向量补；通用追不上的领域，靠词典补。<strong>&quot;专用&quot;从来都不是算法的对立面，它是上下文的对齐度。</strong></p>
+<h3>实验二：FMM/BMM 复现，看歧义怎么躲猫猫</h3>
+<p>第二组实验把课堂算法原样复现了一遍。完整代码如下（与 labs/lab-02-fmm-bmm/run.py 同源，21 个词的词典，MaxLen=3）：</p>
+<pre><code>LEX = {&quot;结婚&quot;,&quot;的&quot;,&quot;和&quot;,&quot;尚未&quot;,&quot;和尚&quot;,&quot;未&quot;,&quot;研究&quot;,&quot;生命&quot;,&quot;起源&quot;,&quot;研究生&quot;,
+       &quot;学生&quot;,&quot;会&quot;,&quot;学生会&quot;,&quot;说&quot;,&quot;英语&quot;,&quot;北京&quot;,&quot;人和&quot;,&quot;足球&quot;,&quot;俱乐部&quot;,&quot;疫情&quot;,&quot;如此&quot;}
+
+def fmm(text, lexicon, maxlen=3):
+    res, i = [], 0
+    while i &lt; len(text):
+        hit = next((text[i:i+L] for L in range(min(maxlen,len(text)-i),0,-1)
+                    if text[i:i+L] in lexicon), None)
+        if hit: res.append(hit); i += len(hit)
+        else:   res.append(text[i]); i += 1
+    return res
+
+def bmm(text, lexicon, maxlen=3):          # 从右往左的镜像
+    res, i = [], len(text)
+    while i &gt; 0:
+        hit = next((text[i-L:i] for L in range(min(maxlen,i),0,-1)
+                    if text[i-L:i] in lexicon), None)
+        if hit: res.append(hit); i -= len(hit)
+        else:   res.append(text[i-1]); i -= 1
+    return res[::-1]
+
+for s, kind in [(&quot;结婚的和尚未结婚的&quot;,&quot;OA&quot;),(&quot;研究生命起源&quot;,&quot;CA+贪婪陷阱&quot;),
+                (&quot;学生会说英语&quot;,&quot;CA&quot;),(&quot;北京人和足球俱乐部&quot;,&quot;实体&quot;),(&quot;新冠疫情反复&quot;,&quot;OOV&quot;)]:
+    f, b = fmm(s, LEX), bmm(s, LEX)
+    mark = &quot;  &lt;== 分歧&quot; if f != b else &quot;&quot;
+    print(f&quot;[{kind}] {s}\n  FMM: {&#x27;/&#x27;.join(f)}\n  BMM: {&#x27;/&#x27;.join(b)}{mark}\n&quot;)</code></pre>
+<p>真实输出（2026-10-27 本机实跑）：</p>
+<pre><code>[OA 交集歧义（FMM/BMM 分歧可发现）] 结婚的和尚未结婚的
+  FMM: 结婚/的/和尚/未/结婚/的
+  BMM: 结婚/的/和/尚未/结婚/的  &lt;== 分歧
+
+[CA 组合歧义 + FMM 贪婪陷阱] 研究生命起源
+  FMM: 研究生/命/起源
+  BMM: 研究/生命/起源  &lt;== 分歧
+
+[CA 组合歧义（双向均不可见）] 学生会说英语
+  FMM: 学生会/说/英语
+  BMM: 学生会/说/英语
+
+[实体歧义（词典未收实体则不可见）] 北京人和足球俱乐部
+  FMM: 北京/人和/足球/俱乐部
+  BMM: 北京/人和/足球/俱乐部
+
+[OOV（新/冠 退化为单字）] 新冠疫情反复
+  FMM: 新/冠/疫情/反/复
+  BMM: 新/冠/疫情/反/复</code></pre>
+<p>这五道把讲义上的分类学（P64–P67）搬到了屏幕上。&quot;结婚的和尚未结婚的&quot;是汉语分词的老笑话：顺着切，出来一个&quot;和尚&quot;；倒着切，&quot;和尚未婚&quot;变成了&quot;和/尚未&quot;——FMM 和 BMM 各信一种读法，分歧一暴露，OA 就现形了。这比课堂上任何定义都直观地说明了一件事：<strong>检验两个独立方法的一致性，是最便宜的验证手段</strong>——规则时代就有的一致性检测，六十年后的今天依然是校验 AI 输出的第一性工具。&quot;研究生命起源&quot;暴露了最大匹配的贪婪：FMM 贪到&quot;研究生&quot;，把&quot;命&quot;掉在半空，BMM 则给出通顺的&quot;研究/生命/起源&quot;——贪婪地看一切局部最优，和通用模型&quot;什么都要答&quot;的贪婪，气质上是同一种东西。&quot;学生会&quot;双向一致地赌错，演示 CA 的不可见；&quot;北京人和&quot;提醒人实体歧义是 OOV 的堂兄弟——词典不收&quot;北京人和足球俱乐部&quot;这个队名，歧义连登场的机会都没有；&quot;新冠疫情&quot;里&quot;疫情&quot;幸存、&quot;新冠&quot;碎成单字，把语言生命力问题直接拍在脸上。</p>
+<h2>三、&quot;第五次革命&quot;：当话题消失，革命才算完成</h2>
+<p>现在可以把那句话说圆了。<strong>我的悖论版本是：模型的能力是一个定长的预算，面铺得越广，单点能买到的深度就越薄——除非预算无限，而预算是数据、算力、注意力和时间，哪一样都不是无限的。</strong> Kocoń 那篇论文给了这个直觉一个 25 项 benchmark 的实证形态；我的 FMM 实验给了它一个 21 词词典的形态：通用词表里每多一个词，都是一次预算的分配。课上也有一模一样的智慧：MaxLen 设多大是个权衡，词表收哪些词也是个权衡——工程的一切通用性，都是权衡出来的。</p>
+<p>但&quot;通用不够专用来凑&quot;只是硬币的一面。另一面是：绝大多数场景根本用不着一百分。写周报、改文案、查资料，八十分的通用模型<a href="https://www.askfount.com/questions/questions-535">按量计费</a>，比养一个九十五分的专用系统便宜三个数量级。专用只该出现在关键路径上——做工程的人管这个纪律叫默认拒绝、按需放行：通用是底色，专用是闸门。课上那句&quot;低于基线就不必凑热闹，先跑通基线再改&quot;，说的是同一个纪律。</p>
+<p>更值得一提的是观察侧的体感。我私下把这轮变化叫&quot;第五次革命&quot;，前四次我经历过的是 PC、互联网、移动、云——每次的标志都一样：<strong>话题消失</strong>。2015 年人人言必称云，今天没人谈了，不是云失败了，是云成了水和电，谈它就像谈插座。AI 正在同一条路上：电梯里的广告是 AI 生成的；给高校合作项目帮忙时，学生的任务清单里 AI 工具是默认项；翻论文目录，几乎每篇都和 AI 沾边。当一件事连反对它的人都懒得再提的时候，它就是基础设施了。</p>
+<p>这也回答了我为什么来学这门课。业余给自己挖了一整套知识管理的渠，但真正让我坐进教室的，是一个更老的问题：<strong>语言是什么？</strong> 我的答案是：语言是信息的传递，是上一代把知识交给下一代的通道——通道的效率就是文明的速率。这门课研究的东西剥到底，是&quot;信息如何被更高效地传递&quot;：分词研究怎么把连续的语流切成可计数的单位（第 2、3 讲），语言模型研究怎么预测下一个词最省惊喜（困惑度那一章），词向量研究怎么把意义压进更低维的信道（第 5 讲）。<a href="https://www.askfount.com/questions/questions-537">省 token 就是省带宽</a>，层次 softmax 用哈夫曼树给高频词修快速路，和通信里给高概率符号配短码是同一个思想。我硕士在通信所待过，这门课听得我满脑子都是信道。</p>
+<p>课上的学生分享把这条线的终点讲得很完整。问答系统六十年：1961 年 BASEBALL 查结构化棒球数据，1971 年向量空间模型，1995 年 BM25，2011 年 Watson 在&quot;危险边缘&quot;夺冠，再到今天的 RAG——检索 top-k 片段拼进提示词，&quot;理解交给大模型、事实交给检索、关键场景用确定程序兜底&quot;（讲义 §10）。六十年五代方案，每一代都在重新回答同一个问题：<strong>知识怎么被更高效地复用？</strong> 我在自己的工作里看到的接力是 RAG → MCP → skills → agent：检索增强之后是工具协议，工具协议之后是可装载的技能单元，技能单元之后是自主编排的代理——每一个新名词，都是&quot;把已有的知识更快搬进新任务&quot;的又一次工程化。老师站在讲台上讲 FMM 的那个上午，也是同一条链路上的一环：他在把他脑子里的知识，压缩成两个小时的高效传递。</p>
+<p><strong>所以我的判断是：AI 和语言的合体，本质是一场沟通效率的革命，而沟通效率是社会进步的元变量。</strong> 知识生产得越快、传得越准、复用得越省，文明就转得越快。这一轮革命的特别之处在于：它优化的正是&quot;知识传递&quot;这件事本身——用机器把信道拓宽，把人从搬运工变成校验员。</p>
+<h2>收尾：一个我不安的追问</h2>
+<p>课上老师提醒过一句话：AI 重度参与的学习成果，正式场合要自己先过一遍、把好关（讲义 §10）。我当时记下来了，这篇随想交稿前也照做了。但把这句话放大到整个社会的尺度，它让我不安：</p>
+<p>信息传递的瓶颈，正在从生产端移到验证端。以前写一篇文章要一天，核对它要一刻钟；现在生成只要十秒，核对的时间反而比写的还长。这不是我一个人的体感——2026 年 10 月，Reddit 最大的开源社区 r/opensource 公告禁止一切 AI 相关项目帖子，理由之一是版主们已经分辨不出一段文字是 AI 写的还是人写后翻译的，连&quot;非英语母语者的帖子&quot;一并拒之门外（The Verge 有报道，抗议者另立了 r/TrueOpenSource）。一个运营十几年的技术社区，宁可错杀也无法校验——这就是验证端瓶颈掐住组织咽喉的实况。</p>
+<p>当 AI 让&quot;生产知识&quot;趋近于免费，<strong>校验知识就成了最贵的环节</strong>——而校验本身也是一种信息传递，它也会、也正在被 AI 接管。用 AI 校验 AI，谁来校验校验者？这个问题课上没有答案。我目前只摸到两块砖：一是校验要独立——FMM 加 BMM 双向跑一遍，分歧即报警，和这篇随想过 A4 评审时独立审核员揪出我五处问题，是同一条纪律；二是重要的东西得有不能伪造的锚——P/R/F1 要有一把造得出处的金标准尺子。但这两块砖能撑多大，我说不好，留给后面的课。</p>
+<p>（全文事实与数字来源：课堂讲义 §4–§10；FMM/BMM 与歧义分类为课堂 PPT 口径并经 labs/lab-02 本机复现，全部输出逐字来自 2026-10-27 实跑日志 labs/lab-02-fmm-bmm/out/raw.log；分词对比实验为 labs/lab-01 本机实跑，明细见 labs/lab-01-domain-segmentation/out/raw.log；Kocoń et al.《ChatGPT: Jack of all trades, master of none》arXiv:2302.10724；&quot;通用悖论&quot;在《智慧的疆界》（周志明）本地电子版中未检索到，出处存疑已在正文如实交代；&quot;第五次革命&quot;为作者私人计数，非公认术语；r/opensource 事件转引自 The Verge 报道。）</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

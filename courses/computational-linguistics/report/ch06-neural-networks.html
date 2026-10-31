@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SLP3 阅读报告 · 第 6 章《神经网络》（Neural Networks） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · report</span> <span>/</span> <span class="cur">SLP3 阅读报告 · 第 6 章《神经网络》（Neural Networks）</span></nav>
+<article class="prose"><h1>SLP3 阅读报告 · 第 6 章《神经网络》（Neural Networks）</h1>
+<h2>一、本章内容综述</h2>
+<p>前面几章，说白了都还在拿统计的路子来给语言建模。这一章转过去，是让模型自己学。主线其实一句话就能说清：单元管的是非线性，堆叠起来才有深度，反向传播再把这套东西训起来。书一开头就把立场摆了出来：神经网络属于&quot;非常古老的工具&quot;，这一章拿它当分类任务做，同时尽量不去碰人工设计的特征，网络拿到的输入就是原始词元，特征靠它学的时候自己总结。书先从单元讲起，加权和、偏置、激活函数，三段各管一摊。输入一大，sigmoid 的导数就往零走，这就是饱和；ReLU 不做压缩，负的那半边直接归零，输入一大导数就恒等于 1。这些取舍那会儿看着都只是细节，讲到反向传播才明白，原来都是在替&quot;误差能不能传回去&quot;铺路。所以激活函数选哪个不是小问题，它决定训练跑不跑得起来。</p>
+<p>再往下那一节，算是整章的一个坎。Minsky 和 Papert（1969）证明单个感知机说到底就是个线性分类器，XOR 那条边界它画不出来；可多加一层就解决了，两个正例 [0,1] 和 [1,0] 会被折到同一个隐藏表示 h=[1,0] 上去（6.2.1 节）。换个说法，隐藏层多半就是在换表示，让原来分不开的东西变得能分开，&quot;表示学习&quot;这个说法就是从这儿来的。书接着把单层网络写成一个矩阵模板 a = g(Wx+b)，说逻辑回归不过就是一层网络，还捎带一句：要是没有非线性，多层网络就塌回单层的一个变体。所以非线性多半不是可有可无的选项，它才是&quot;深度&quot;能站住的理由。</p>
+<p>沿这条线往下，书就把网络接进了 NLP。头一步，手工计数的特征留着、只把分类那一层换作带隐藏层的网络，这样就能看出非线性交互本身是有收益的；做批量推理时，公式还得跟着样本矩阵转置，书里那句&quot;始终留意权重矩阵的形状&quot;（6.4.2 节）是从实践里攒出来的高频坑。再一步，用嵌入矩阵把词表索引查成可学的向量，这大致等于独热向量去乘矩阵。拼接是为了保住词序，池化拿词序换效率，选哪个得看任务；神经语言模型里&quot;cat&quot;和&quot;dog&quot;的嵌入离得近，所以能从&quot;cat&quot;的上下文挪到&quot;dog&quot;上（§6.5）。另外，书里说交叉熵损失就是正确类概率的负对数；计算图把表达式拆成一个个节点，反向传播顺着边从右往左用链式法则，中间值前向时算过，这里直接拿来用，训练比推理更吃显存，原因也在这儿。训练细节书里还补了几条：优化本身是非凸的、初始化取小随机数来打破对称、输入归一化、dropout，超参在开发集上挑，不在训练集上碰。收尾的是 §6.7 和历史注记：XOR 那个证明把整个领域按下去好多年，Hinton（2006）、Bengio（2007）之后，大数据、硬件都跟上了，深度学习这才回来。</p>
+<h2>二、与课堂内容的对照</h2>
+<p>第 5 讲后半段，差不多就是这一章在课上的延伸，几乎一条一条都能对上。课上那个 Bengio 2003 年的神经概率语言模型，词层、表示层、隐层、输出层 softmax，一串下来，大概就是前馈网络加嵌入结构的原型。老师说过&quot;主导任务是语言模型，词向量是副产品&quot;，这跟书里&quot;表示层那组权值训练完本身有用&quot;（§6.5）对得上。课上还说，2003 年那个模型里有一根直连（skip connection），后来的 ResNet、Transformer 都留着它；回头看书里前面那个标准网络，loss 得一层一层往回穿，那根捷径这一章还没有，它后来为什么值得被发明，原因大概就在这儿。老师那句&quot;1986 年就有人设想用神经网络学表示，真正推动要等 20 年后有了大规模真实数据&quot;，基本就是 §6.7 历史注记的口述版。第 5 讲拿层次 softmax 把词表归一化从 O(V) 压到 O(log V)，走哈夫曼路径，痛点跟 §6.6.1 说的一样：语言建模类别数可能好几万、计算全卡在 softmax 那个分母上。</p>
+<p>第 5 讲从共现、SVD 讲到 CBOW，基本都在词向量这条脉络外面绕；这一章把线收进网络里，词向量不只是矩阵分解的附带产物了，它成了前馈网络里的一张普通权重表。&quot;表示&quot;这俩字，课上靠任务带出来，书里拿查表搞定。两边这么一对，&quot;分布式表示&quot;这词才算落到了实处。说到底就是一张随梯度更新的矩阵。</p>
+<h2>三、延伸思考</h2>
+<p>第 2 章笔记里，我把分词器叫作模型的「暗结构」：它排在头一道工序，也最不被人审视。拿这个眼光再读这一章，同样的结构又露出来一回，这回还更极端。XOR 也就四行真值表，却装着整个领域的起落：1969 年一份证明，把神经网络按下去二十年（§6.7），后来能回来，不是靠推翻它，是在它上面垫了一层表示，两个正例都折到同一个点 h=[1,0]（§6.2.1），一条直线办不到的事情，换个表示就分开了。这跟文章里 UTF-8&quot;自同步&quot;那个设计很像：一处很省事的结构性改动，后面一堆难题跟着就消了。&quot;简单里藏复杂&quot;这个印象，这一章里算最短的例子。</p>
+<p>反向传播是另一个暗结构。聊模型能力的时候，没几个人会盯着梯度是怎么流的：前向存下来的中间值，反向时确实得用（§6.6.3），sigmoid 一饱和导数就趋零、误差传不回前面几层（§6.1），我自己在实验里跑过一个十来层深的 sigmoid 网络，损失一直卡在 ln 2。训练细节里那些不起眼的决定也一样要命：全零初始化，同一层的单元永远同进同退，等于只训了一个单元；小随机初始化、输入归一化、dropout，单拎出来都不起眼，缺一个就到处出问题。这类约定，多半就是工程规范该管的地方。我在云安全这个方向上做事，经验也指向同一个判断：看得见的门口总有人守着，事故常常出在没人看的那一层，训练失败也多半落在 §6.6.5 那几个少人讨论的地方：初始化、归一化、dropout。三边一对照，书里给的是机制，课里给的是来历，文章给的则是一种读法：没人盯的那一层，往往就是成败所在。</p>
+<p>这条线我碰过两回。先说做情感分类那次，词典特征调了好些天，收益还不如直接换一份嵌入，我本来是做服务端工程的，对这类结构比较敏感：领域知识从特征工程挪到表示层，大概就是特征工程到嵌入这道坎，分类头基本不动，成败全看 x 是什么，相当于接口没动，只换了实现。另一次手写反向传播，dz 除了两遍样本数，梯度一下小了一半，拿有限差分对着比才找出来。链条看不见的地方，对错只能拿数值校验，这跟给不报错的隐蔽逻辑补单元测试，是一个道理。</p>
+<h2>四、我的问题</h2>
+<p>有个问题我一直没想透：书里说网络会&quot;自己学会有用的表示&quot;，可为什么&quot;深&quot;了表示就更好？§6.7 只讲能力来自靠前几层学到的表示，层数多了为什么更好，它没答，听人说这个&quot;为什么&quot;得等到第 7 章 transformer 才有一半答案。我的疑问更具体些：哪怕第 5 讲里只有一层投射的 word2vec，也已经拿到最有用的词向量了，那深度带来的收益花在哪一步？是花在更抽象的组合特征上，还是让训练难度给抵掉了？这问题对我挺实际：在决定要不要上更深的模型之前，我总得知道&quot;深&quot;的收益从哪儿来、到哪儿停。</p>
+<p>次要的问题留给大家讨论：交叉熵会把正确类的概率一路往 1 推，标签一有噪声，错标的影响反而被放大，书和课都没提标签平滑。我倒觉得，小样本、标注质量参差不齐的真实数据里，这个补丁多半一开始就该默认开着。</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
