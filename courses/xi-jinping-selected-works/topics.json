@@ -126,7 +126,7 @@
   {
    "id": "xi-jinping-selected-works-lec03-t1",
    "title": "豆选法：当多数人不识字，票该怎么投",
-   "angle": "技术史：低识字率条件下的投票技术演进",
+   "angle": "观点：低识字率条件下的投票技术演进（技术史角度）",
    "suggestedSkill": "write-zhihu-tech",
    "priority": "P1",
    "reason": "命中 S1（讲而未透：只讲豆选场景，未讲它作为投票技术如何防代投/防胁迫/计票）+ S2（边区选举条例与记者团报道可查证）",
@@ -138,7 +138,7 @@
   {
    "id": "xi-jinping-selected-works-lec03-t2",
    "title": "杰利蝾螈：一张选区地图如何决定谁执政",
-   "angle": "制度工程：选区划分（gerrymandering）如何把选票转成席位",
+   "angle": "观点：选区划分（gerrymandering）如何把选票转成席位",
    "suggestedSkill": "write-zhihu-tech",
    "priority": "P1",
    "reason": "命中 S1（\"制度设计决定结果\"只给结论未给数据）+ S2（美国各州重划地图与效率缺口数据公开可复算）",
@@ -150,7 +150,7 @@
   {
    "id": "xi-jinping-selected-works-lec03-t3",
    "title": "赢者通吃 vs 比例代表：同一批选票，两种议会",
-   "angle": "制度工程：选举公式如何决定政党体系",
+   "angle": "观点：选举公式如何决定政党体系",
    "suggestedSkill": "write-zhihu-tech",
    "priority": "P1",
    "reason": "命中 S1（只给一句对比，未解释为何美国必然两党、德国必然多党）+ S2（可用脚本对同一组选票复算两种公式）",
@@ -162,7 +162,7 @@
   {
    "id": "xi-jinping-selected-works-lec03-t4",
    "title": "为什么表决门槛是 3/4：一个考核方案的程序设计",
-   "angle": "工具：超级多数表决与协商程序的落地设计",
+   "angle": "观点：超级多数表决与协商程序的落地设计",
    "suggestedSkill": "write-tech-tutorial",
    "priority": "P2",
    "reason": "命中 S3（与读者处境直接相关：公司/学校/业委会都要处理多数决伤害少数）+ S1（课上只给结论未给程序清单）",
@@ -174,7 +174,7 @@
   {
    "id": "xi-jinping-selected-works-lec03-t5",
    "title": "1991 年的公投赢了，国家却没了：改革顺序为什么致命",
-   "angle": "政治经济：改革顺序、国家能力与制度崩溃",
+   "angle": "观点：改革顺序、国家能力与制度崩溃",
    "suggestedSkill": "write-zhihu-tech",
    "priority": "P1",
    "reason": "命中 S2（公投结果、联盟条约、别洛韦日协议均有原始档案）+ S4（\"多数人赞成却解体\"本身反直觉）",
