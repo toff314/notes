@@ -1,67 +1,187 @@
 {
-  "version": 1,
-  "source": {
-    "kind": "course",
-    "title": "xi-jinping-selected-works",
-    "path": "courses/xi-jinping-selected-works"
+ "version": 1,
+ "source": {
+  "kind": "course",
+  "title": "xi-jinping-selected-works",
+  "path": "courses/xi-jinping-selected-works"
+ },
+ "generatedAt": "2026-10-31",
+ "generator": "write-lecture-notes",
+ "topics": [
+  {
+   "id": "xi-jinping-selected-works-lec01-t1",
+   "title": "蔡元培的北大治理真的成功吗",
+   "angle": "观点：蔡元培的北大治理真的成功吗",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S2（蔡元培、胡适、陈独秀、蒋梦麟等人物与五四、讲义风潮皆可溯源）+ S4（与\"北大因蔡元培而伟大\"的通行叙事形成反差）",
+   "sourceAnchor": "转写 第 82–201 行「他讲的是'北大治理并不那么成功'」；第 146–151 行「做了 10 年校长，但是有 5 年辞职在外，所以他并不成功」",
+   "status": "open",
+   "link": null
   },
-  "generatedAt": "2026-10-22",
-  "generator": "write-lecture-notes",
-  "topics": [
-    {
-      "id": "xi-jinping-selected-works-lec01-t1",
-      "title": "蔡元培的北大治理真的成功吗",
-      "angle": "观点：蔡元培的北大治理真的成功吗",
-      "suggestedSkill": "write-zhihu-tech",
-      "priority": "P1",
-      "reason": "命中 S2（蔡元培、胡适、陈独秀、蒋梦麟等人物与五四、讲义风潮皆可溯源）+ S4（与\"北大因蔡元培而伟大\"的通行叙事形成反差）",
-      "sourceAnchor": "转写 第 82–201 行「他讲的是'北大治理并不那么成功'」；第 146–151 行「做了 10 年校长，但是有 5 年辞职在外，所以他并不成功」",
-      "status": "open",
-      "link": null
-    },
-    {
-      "id": "xi-jinping-selected-works-lec01-t2",
-      "title": "太平天国的史料与网络谣言",
-      "angle": "观点：太平天国的史料与网络谣言",
-      "suggestedSkill": "write-zhihu-tech",
-      "priority": "P1",
-      "reason": "命中 S2（洪秀全、洪天贵福自述等史料可查）+ S4（\"农民运动最高峰\"与\"邪教论\"两种极端评价的反差）",
-      "sourceAnchor": "转写 第 55–70 行「洪秀全……88 个王娘」「说拜上帝教是邪教……这都是谣传」",
-      "status": "open",
-      "link": null
-    },
-    {
-      "id": "xi-jinping-selected-works-lec01-t3",
-      "title": "经典作家名单为什么变了",
-      "angle": "观点：经典文献名单的变迁",
-      "suggestedSkill": "write-zhihu-tech",
-      "priority": "P1",
-      "reason": "命中 S1（讲而未透：只给结论与简因，未展开版本史）+ S4（名单变动背后的评价反转，天然有讨论度）",
-      "sourceAnchor": "转写 第 275–341 行「斯大林不再作为经典」「把总书记的重要著作也作为经典文献」「毛 4→3、习 4→3」",
-      "status": "open",
-      "link": null
-    },
-    {
-      "id": "xi-jinping-selected-works-lec01-t4",
-      "title": "中共一大与南湖红船的细节",
-      "angle": "观点：中共一大与南湖红船",
-      "suggestedSkill": "write-zhihu-tech",
-      "priority": "P2",
-      "reason": "命中 S2（一大、王会悟、董必武诗等可溯源）+ S6（党史一手材料丰富、可查证）",
-      "sourceAnchor": "转写 第 374–416 行「密探闯入……改到嘉兴南湖」「王会悟提议」「船上放麻将」",
-      "status": "open",
-      "link": null
-    },
-    {
-      "id": "xi-jinping-selected-works-lec01-t5",
-      "title": "马克思恩格斯的一生与友谊",
-      "angle": "观点：马克思恩格斯的一生与友谊",
-      "suggestedSkill": "write-zhihu-tech",
-      "priority": "P2",
-      "reason": "命中 S2（马克思、恩格斯、燕妮等可溯源）+ S5（可落到\"信仰与代价\"的现实思考）",
-      "sourceAnchor": "转写 第 561–618 行「特里尔……柏林大学……耶拿大学……莱茵报……德法年鉴……天鹅咖啡厅……恩格斯管厂 30 年」",
-      "status": "open",
-      "link": null
-    }
-  ]
+  {
+   "id": "xi-jinping-selected-works-lec01-t2",
+   "title": "太平天国的史料与网络谣言",
+   "angle": "观点：太平天国的史料与网络谣言",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S2（洪秀全、洪天贵福自述等史料可查）+ S4（\"农民运动最高峰\"与\"邪教论\"两种极端评价的反差）",
+   "sourceAnchor": "转写 第 55–70 行「洪秀全……88 个王娘」「说拜上帝教是邪教……这都是谣传」",
+   "status": "open",
+   "link": null
+  },
+  {
+   "id": "xi-jinping-selected-works-lec01-t3",
+   "title": "经典作家名单为什么变了",
+   "angle": "观点：经典文献名单的变迁",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S1（讲而未透：只给结论与简因，未展开版本史）+ S4（名单变动背后的评价反转，天然有讨论度）",
+   "sourceAnchor": "转写 第 275–341 行「斯大林不再作为经典」「把总书记的重要著作也作为经典文献」「毛 4→3、习 4→3」",
+   "status": "open",
+   "link": null
+  },
+  {
+   "id": "xi-jinping-selected-works-lec01-t4",
+   "title": "中共一大与南湖红船的细节",
+   "angle": "观点：中共一大与南湖红船",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P2",
+   "reason": "命中 S2（一大、王会悟、董必武诗等可溯源）+ S6（党史一手材料丰富、可查证）",
+   "sourceAnchor": "转写 第 374–416 行「密探闯入……改到嘉兴南湖」「王会悟提议」「船上放麻将」",
+   "status": "open",
+   "link": null
+  },
+  {
+   "id": "xi-jinping-selected-works-lec01-t5",
+   "title": "马克思恩格斯的一生与友谊",
+   "angle": "观点：马克思恩格斯的一生与友谊",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P2",
+   "reason": "命中 S2（马克思、恩格斯、燕妮等可溯源）+ S5（可落到\"信仰与代价\"的现实思考）",
+   "sourceAnchor": "转写 第 561–618 行「特里尔……柏林大学……耶拿大学……莱茵报……德法年鉴……天鹅咖啡厅……恩格斯管厂 30 年」",
+   "status": "open",
+   "link": null
+  },
+  {
+   "id": "xi-jinping-selected-works-lec02-t1",
+   "title": "3万美元的门槛：为什么只有十几个国家跨过去",
+   "angle": "观点：3万美元门槛与后发国家的结构困境",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S1（讲而未透：只给四层结构与美元霸权，未展开准中央国家的具体条件）+ S4（与「努力就能追上」的乐观叙事形成反差）",
+   "sourceAnchor": "转写 415–500 行：人均 GDP 3 万美元、2025 年我国 1.4 万美元、四层结构、布雷顿森林→脱钩→石油",
+   "status": "open",
+   "link": null,
+   "lecture": "02-development-and-reform"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec02-t2",
+   "title": "分红80亿与涨薪150元：共享为什么最难",
+   "angle": "观点：从一家龙头企业的分红与涨薪看「共享」的执行难点",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S2（年报与薪酬数据可溯源）+ S4（共同富裕口号与企业分配现实的落差）",
+   "sourceAnchor": "转写 526–540 行：分红 80 亿、一线工人每月涨 150 元、按劳分配 + 按资分配",
+   "status": "open",
+   "link": null,
+   "lecture": "02-development-and-reform"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec02-t3",
+   "title": "市场作用的三个定语：补充、基础性、决定性",
+   "angle": "观点：市场作用的三次定性变化及其政治经济学含义",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S6（十四大、十八届三中全会文件可查证）+ S2（语义演变本身就是一部改革史）",
+   "sourceAnchor": "转写 640–650 行：十八届三中全会，市场作用「不再是基础性的，变成了决定性」；计划与市场对比见 590–640 行",
+   "status": "open",
+   "link": null,
+   "lecture": "02-development-and-reform"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec02-t4",
+   "title": "政府为什么会失灵：从独山县到低空经济",
+   "angle": "观点：政府失灵的四种机制与中国式表现",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S2（独山县债务、频谱政策、集成电路补贴均可查）+ S5（可落到考公热与政策依赖的现实思考）",
+   "sourceAnchor": "转写 676–720 行：一抓就死一放就乱、频谱政策、4 万亿/P2P/国补；757 行：独山县",
+   "status": "open",
+   "link": null,
+   "lecture": "02-development-and-reform"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec02-t5",
+   "title": "一张美国急诊账单与一次种牙：两种医疗制度的算法",
+   "angle": "观点：从急诊账单、种牙、心脏支架三个价格看两种医疗制度",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P2",
+   "reason": "命中 S4（免费医疗与看病贵两种刻板印象同时被打脸）+ S2（集采价格、医保覆盖率有公开数据）",
+   "sourceAnchor": "转写 860–920 行：急诊 15 分钟 5670 美元、种牙 13000→5000、支架 3—4 万→几千、医保近 10 亿人",
+   "status": "open",
+   "link": null,
+   "lecture": "02-development-and-reform"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec03-t1",
+   "title": "豆选法：当多数人不识字，票该怎么投",
+   "angle": "技术史：低识字率条件下的投票技术演进",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S1（讲而未透：只讲豆选场景，未讲它作为投票技术如何防代投/防胁迫/计票）+ S2（边区选举条例与记者团报道可查证）",
+   "sourceAnchor": "转写 216—236 行：候选人背对群众、身后放碗、发豆投豆、拉布戳洞、\"金豆豆银豆豆\"民谣",
+   "status": "open",
+   "link": null,
+   "lecture": "03-whole-process-people-democracy"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec03-t2",
+   "title": "杰利蝾螈：一张选区地图如何决定谁执政",
+   "angle": "制度工程：选区划分（gerrymandering）如何把选票转成席位",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S1（\"制度设计决定结果\"只给结论未给数据）+ S2（美国各州重划地图与效率缺口数据公开可复算）",
+   "sourceAnchor": "转写 334—360 行：不纳税限制、复数票制、选区划分、大小选区、赢者通吃",
+   "status": "open",
+   "link": null,
+   "lecture": "03-whole-process-people-democracy"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec03-t3",
+   "title": "赢者通吃 vs 比例代表：同一批选票，两种议会",
+   "angle": "制度工程：选举公式如何决定政党体系",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S1（只给一句对比，未解释为何美国必然两党、德国必然多党）+ S2（可用脚本对同一组选票复算两种公式）",
+   "sourceAnchor": "转写 359—372 行：加州 51% 对 49% 全拿、比例代表制、少数派与第三党后果",
+   "status": "open",
+   "link": null,
+   "lecture": "03-whole-process-people-democracy"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec03-t4",
+   "title": "为什么表决门槛是 3/4：一个考核方案的程序设计",
+   "angle": "工具：超级多数表决与协商程序的落地设计",
+   "suggestedSkill": "write-tech-tutorial",
+   "priority": "P2",
+   "reason": "命中 S3（与读者处境直接相关：公司/学校/业委会都要处理多数决伤害少数）+ S1（课上只给结论未给程序清单）",
+   "sourceAnchor": "转写 843—856 行：三次征求意见、逐条反馈、3/4 以上同意、差异化赛道",
+   "status": "open",
+   "link": null,
+   "lecture": "03-whole-process-people-democracy"
+  },
+  {
+   "id": "xi-jinping-selected-works-lec03-t5",
+   "title": "1991 年的公投赢了，国家却没了：改革顺序为什么致命",
+   "angle": "政治经济：改革顺序、国家能力与制度崩溃",
+   "suggestedSkill": "write-zhihu-tech",
+   "priority": "P1",
+   "reason": "命中 S2（公投结果、联盟条约、别洛韦日协议均有原始档案）+ S4（\"多数人赞成却解体\"本身反直觉）",
+   "sourceAnchor": "转写 1099—1112 行：中苏同步改革、先政改、放弃集中统一领导、1991 年公投仍解体",
+   "status": "open",
+   "link": null,
+   "lecture": "03-whole-process-people-democracy"
+  }
+ ]
 }
