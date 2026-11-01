@@ -1,0 +1,5 @@
+# i shot an elephant in my pajamas
+# 共 3 种分析；首列是 PP 的宿主产出式
+VP->Verb-NP-PP         (S (NP i) (VP (Verb shot) (NP (Det an) (Nominal elephant)) (PP (Preposition in) (NP (Det my) (Nominal pajamas)))))
+Nominal->Nominal-PP    (S (NP i) (VP (Verb shot) (NP (Det an) (Nominal (Nominal elephant) (PP (Preposition in) (NP (Det my) (Nominal pajamas)))))))
+VP->VP-PP              (S (NP i) (VP (VP (Verb shot) (NP (Det an) (Nominal elephant))) (PP (Preposition in) (NP (Det my) (Nominal pajamas)))))

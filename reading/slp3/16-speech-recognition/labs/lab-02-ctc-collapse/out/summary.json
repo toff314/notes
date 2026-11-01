@@ -1,0 +1,67 @@
+{
+  "T": 3,
+  "alphabet": [
+    "a",
+    "b",
+    "ε"
+  ],
+  "n_alignments": 27,
+  "n_distinct_outputs": 9,
+  "brute_vs_dp_max_abs_diff": 0.024000000000000004,
+  "greedy_path": "abε",
+  "greedy_output": "ab",
+  "argmax_output": "b",
+  "random_trials": 20000,
+  "mismatch_count": 5607,
+  "mismatch_rate": 0.2803,
+  "max_gap_example": {
+    "gap": 0.48863056158357154,
+    "greedy": "bb",
+    "best": "b",
+    "p_best": 0.645008099696574,
+    "p_greedy": 0.15637753811300248,
+    "probs": [
+      [
+        0.026,
+        0.696,
+        0.278
+      ],
+      [
+        0.017,
+        0.488,
+        0.495
+      ],
+      [
+        0.099,
+        0.454,
+        0.447
+      ]
+    ]
+  },
+  "dinner_demo": {
+    "有空白符": {
+      "frames": [
+        "d",
+        "i",
+        "n",
+        "ε",
+        "n",
+        "ε",
+        "e",
+        "r"
+      ],
+      "collapse": "dinner"
+    },
+    "无空白符": {
+      "frames": [
+        "d",
+        "i",
+        "n",
+        "n",
+        "e",
+        "r"
+      ],
+      "collapse": "diner"
+    }
+  }
+}

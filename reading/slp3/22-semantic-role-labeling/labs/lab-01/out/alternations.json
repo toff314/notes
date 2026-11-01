@@ -1,0 +1,38 @@
+{
+  "thematic_grids": {
+    "break": [
+      "主题",
+      "工具",
+      "施事"
+    ],
+    "give": [
+      "主题",
+      "施事",
+      "目标"
+    ],
+    "open": [
+      "主题",
+      "施事"
+    ]
+  },
+  "subject_alternations": {
+    "break": [
+      "主题",
+      "施事",
+      "工具"
+    ],
+    "give": [
+      "施事"
+    ],
+    "open": [
+      "主题",
+      "施事"
+    ]
+  },
+  "examples_count": 10,
+  "verbs": [
+    "break",
+    "give",
+    "open"
+  ]
+}

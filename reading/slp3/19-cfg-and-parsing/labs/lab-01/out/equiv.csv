@@ -1,0 +1,21 @@
+sentence,before_cnf,after_cnf
+book the flight through houston,True,True
+i prefer a morning flight,False,False
+does houston include the meal,True,True
+the flight from houston to united,False,False
+she book the money,True,True
+i shot an elephant in my pajamas,True,True
+the meal on united,False,False
+near houston the flight,False,False
+book book book,False,False
+the the the,False,False
+flight,False,False
+i,False,False
+does,False,False
+from houston,False,False
+the flight through houston on united near a meal,False,False
+i prefer the flight through houston on united,True,True
+book that flight,True,True
+the money from the meal,False,False
+united near houston,False,False
+she prefer a meal in the morning,False,False

@@ -1,0 +1,65 @@
+lhs,rhs,kind
+Aux,does,lexical
+Det,a,lexical
+Det,an,lexical
+Det,my,lexical
+Det,that,lexical
+Det,the,lexical
+Det,this,lexical
+NP,Det Nominal,binary
+NP,houston,lexical
+NP,i,lexical
+NP,me,lexical
+NP,she,lexical
+NP,united,lexical
+Nominal,Nominal Noun,binary
+Nominal,Nominal PP,binary
+Nominal,book,lexical
+Nominal,elephant,lexical
+Nominal,flight,lexical
+Nominal,meal,lexical
+Nominal,money,lexical
+Nominal,pajamas,lexical
+Noun,book,lexical
+Noun,elephant,lexical
+Noun,flight,lexical
+Noun,meal,lexical
+Noun,money,lexical
+Noun,pajamas,lexical
+PP,Preposition NP,binary
+Preposition,from,lexical
+Preposition,in,lexical
+Preposition,near,lexical
+Preposition,on,lexical
+Preposition,through,lexical
+Preposition,to,lexical
+Pronoun,i,lexical
+Pronoun,me,lexical
+Pronoun,she,lexical
+Proper-Noun,houston,lexical
+Proper-Noun,united,lexical
+S,Aux X1,binary
+S,NP VP,binary
+S,VP PP,binary
+S,Verb NP,binary
+S,Verb PP,binary
+S,Verb X3,binary
+S,book,lexical
+S,include,lexical
+S,prefer,lexical
+S,shot,lexical
+VP,VP PP,binary
+VP,Verb NP,binary
+VP,Verb PP,binary
+VP,Verb X2,binary
+VP,book,lexical
+VP,include,lexical
+VP,prefer,lexical
+VP,shot,lexical
+Verb,book,lexical
+Verb,include,lexical
+Verb,prefer,lexical
+Verb,shot,lexical
+X1,NP VP,binary
+X2,NP PP,binary
+X3,NP PP,binary

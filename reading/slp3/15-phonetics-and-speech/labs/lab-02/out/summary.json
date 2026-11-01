@@ -1,0 +1,40 @@
+{
+  "fs": 16000,
+  "frame_ms": 25.0,
+  "stride_ms": 10.0,
+  "n_frames": 48,
+  "nfft": 512,
+  "bin_hz": 31.25,
+  "tones": [
+    {
+      "tone_Hz": 240.0,
+      "cycles_in_frame": 6.0,
+      "rect_扇贝损失_dB": -1.09,
+      "rect_3dB主瓣宽_Hz": 31.25,
+      "rect_主瓣外能量占比": 0.042,
+      "rect_最坏旁瓣_dB": -17.96,
+      "hamming_扇贝损失_dB": -0.45,
+      "hamming_3dB主瓣宽_Hz": 62.5,
+      "hamming_主瓣外能量占比": 0.0003,
+      "hamming_最坏旁瓣_dB": -37.45
+    },
+    {
+      "tone_Hz": 250.0,
+      "cycles_in_frame": 6.25,
+      "rect_扇贝损失_dB": -0.02,
+      "rect_3dB主瓣宽_Hz": 31.25,
+      "rect_主瓣外能量占比": 0.0513,
+      "rect_最坏旁瓣_dB": -18.45,
+      "hamming_扇贝损失_dB": -0.0,
+      "hamming_3dB主瓣宽_Hz": 31.25,
+      "hamming_主瓣外能量占比": 0.0004,
+      "hamming_最坏旁瓣_dB": -43.11
+    }
+  ],
+  "harmonic_contrast_dB": {
+    "iy-rect": 3.73,
+    "iy-hamming": 2.09,
+    "ae-rect": 12.25,
+    "ae-hamming": 6.27
+  }
+}

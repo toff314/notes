@@ -1,0 +1,72 @@
+{
+  "A_short": {
+    "token_acc": 0.95,
+    "entity_P": 0.8571,
+    "entity_R": 0.8571,
+    "entity_F1": 0.8571,
+    "tp": 6,
+    "fp": 1,
+    "fn": 1,
+    "boundary": 1,
+    "type": 0,
+    "spurious": 0,
+    "missing": 0
+  },
+  "B_long": {
+    "token_acc": 0.95,
+    "entity_P": 0.8571,
+    "entity_R": 0.8571,
+    "entity_F1": 0.8571,
+    "tp": 6,
+    "fp": 1,
+    "fn": 1,
+    "boundary": 1,
+    "type": 0,
+    "spurious": 0,
+    "missing": 0
+  },
+  "C_type": {
+    "token_acc": 0.9,
+    "entity_P": 0.8571,
+    "entity_R": 0.8571,
+    "entity_F1": 0.8571,
+    "tp": 6,
+    "fp": 1,
+    "fn": 1,
+    "boundary": 0,
+    "type": 1,
+    "spurious": 0,
+    "missing": 0
+  },
+  "io_vs_bio": {
+    "bio": [
+      "B-PER",
+      "I-PER",
+      "B-PER"
+    ],
+    "io": [
+      "I-PER",
+      "I-PER",
+      "I-PER"
+    ],
+    "bio_spans": [
+      [
+        0,
+        2,
+        "PER"
+      ],
+      [
+        2,
+        3,
+        "PER"
+      ]
+    ],
+    "io_spans": [
+      [
+        0,
+        3,
+        "PER"
+      ]
+    ]
+  }
+}

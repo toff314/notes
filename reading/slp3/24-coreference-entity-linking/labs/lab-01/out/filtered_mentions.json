@@ -1,0 +1,47 @@
+{
+  "candidates_13": [
+    "Victoria Chen",
+    "$2.3 million",
+    "she",
+    "CFO of Megabucks Banking",
+    "the 38-year-old",
+    "Megabucks",
+    "Megabucks Banking",
+    "the company",
+    "Lotsabucks",
+    "her",
+    "the company's president",
+    "her pay",
+    "It"
+  ],
+  "filtered_out": [
+    {
+      "mention": "$2.3 million",
+      "reason": "谓语性 NP / 数值量词（描述 her pay）"
+    },
+    {
+      "mention": "CFO of Megabucks Banking",
+      "reason": "同位语（补充描述中心 NP Victoria Chen）"
+    },
+    {
+      "mention": "the company's president",
+      "reason": "谓语性 NP（描述 the 38-year-old 的属性）"
+    }
+  ],
+  "kept_9": [
+    "Victoria Chen",
+    "she",
+    "the 38-year-old",
+    "Megabucks",
+    "Megabucks Banking",
+    "the company",
+    "Lotsabucks",
+    "her",
+    "her pay"
+  ],
+  "counts": {
+    "candidates": 13,
+    "filtered": 3,
+    "kept": 9
+  }
+}

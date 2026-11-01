@@ -1,0 +1,150 @@
+{
+  "results": [
+    {
+      "sentence": "John broke the window with a stone",
+      "predicate": "broke",
+      "gold": [
+        "B-ARG0",
+        "O",
+        "B-ARG1",
+        "I-ARG1",
+        "B-ARGM-MNR",
+        "I-ARGM-MNR",
+        "I-ARGM-MNR"
+      ],
+      "predicted": [
+        "B-ARG0",
+        "O",
+        "B-ARG1",
+        "B-ARG1",
+        "B-ARGM",
+        "B-ARG1",
+        "B-ARG1"
+      ],
+      "metrics": {
+        "tp": 2,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.333,
+        "recall": 1.0,
+        "f1": 0.5
+      }
+    },
+    {
+      "sentence": "The window broke",
+      "predicate": "broke",
+      "gold": [
+        "B-ARG1",
+        "I-ARG1",
+        "O"
+      ],
+      "predicted": [
+        "B-ARG0",
+        "I-ARG0",
+        "O"
+      ],
+      "metrics": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0,
+        "f1": 0
+      }
+    },
+    {
+      "sentence": "Doris gave the book to Cary",
+      "predicate": "gave",
+      "gold": [
+        "B-ARG0",
+        "O",
+        "B-ARG1",
+        "I-ARG1",
+        "B-ARG2",
+        "I-ARG2"
+      ],
+      "predicted": [
+        "B-ARG0",
+        "O",
+        "B-ARG1",
+        "B-ARG1",
+        "B-ARGM",
+        "B-ARG1"
+      ],
+      "metrics": {
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.571
+      }
+    },
+    {
+      "sentence": "Sales fell to 25 million",
+      "predicate": "fell",
+      "gold": [
+        "B-ARG1",
+        "O",
+        "B-ARG4",
+        "I-ARG4",
+        "I-ARG4"
+      ],
+      "predicted": [
+        "B-ARG0",
+        "O",
+        "B-ARGM",
+        "B-ARG2",
+        "B-ARG1"
+      ],
+      "metrics": {
+        "tp": 0,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0,
+        "f1": 0
+      }
+    },
+    {
+      "sentence": "Big Fruit Co. increased the price of bananas",
+      "predicate": "increased",
+      "gold": [
+        "B-ARG0",
+        "I-ARG0",
+        "I-ARG0",
+        "O",
+        "B-ARG1",
+        "I-ARG1",
+        "I-ARG1",
+        "I-ARG1"
+      ],
+      "predicted": [
+        "B-ARG0",
+        "I-ARG0",
+        "B-ARG1",
+        "O",
+        "B-ARG1",
+        "B-ARG1",
+        "B-ARG1",
+        "B-ARG1"
+      ],
+      "metrics": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.429,
+        "recall": 1.0,
+        "f1": 0.6
+      }
+    }
+  ],
+  "overall": {
+    "total_tp": 7,
+    "total_fp": 17,
+    "total_fn": 0,
+    "precision": 0.292,
+    "recall": 1.0,
+    "f1": 0.452
+  }
+}

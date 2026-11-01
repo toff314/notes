@@ -1,0 +1,61 @@
+{
+  "kb_size": 30,
+  "corpus_size": 50,
+  "strategy_any": {
+    "n_total": 34,
+    "n_pos_pred": 34,
+    "n_neg_pred": 0,
+    "tp": 30,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.8824,
+    "recall": 1.0,
+    "noise_rate": 0.1176
+  },
+  "strategy_pattern": {
+    "n_total": 34,
+    "n_pos_pred": 30,
+    "n_neg_pred": 4,
+    "tp": 30,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "noise_rate": 0.0
+  },
+  "delta_noise": 0.1176,
+  "fp_examples": [
+    {
+      "sent": "MySQL 和 Oracle 都是数据库。",
+      "e1": "MySQL",
+      "e2": "数据库",
+      "rel": "is-a",
+      "is_pos": true,
+      "strategy": "any"
+    },
+    {
+      "sent": "MySQL 和 Oracle 都是数据库。",
+      "e1": "Oracle",
+      "e2": "数据库",
+      "rel": "is-a",
+      "is_pos": true,
+      "strategy": "any"
+    },
+    {
+      "sent": "苹果和香蕉都是常见水果。",
+      "e1": "苹果",
+      "e2": "水果",
+      "rel": "is-a",
+      "is_pos": true,
+      "strategy": "any"
+    },
+    {
+      "sent": "苹果和香蕉都是常见水果。",
+      "e1": "香蕉",
+      "e2": "水果",
+      "rel": "is-a",
+      "is_pos": true,
+      "strategy": "any"
+    }
+  ]
+}

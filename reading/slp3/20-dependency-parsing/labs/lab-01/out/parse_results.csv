@@ -1,0 +1,5 @@
+sentence,n_words,n_gold_arcs,n_actions,n_recovered_arcs,exact_match
+Book me the morning flight,5,5,10,5,True
+Book the flight through Houston,5,5,10,5,True
+I prefer the morning flight through Denver,7,7,14,7,True
+United canceled the morning flights to Houston,7,7,14,7,True

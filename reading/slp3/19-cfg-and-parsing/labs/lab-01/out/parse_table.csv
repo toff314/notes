@@ -1,0 +1,16 @@
+i,j,span_words,nonterminals
+0,1,book,Nominal|Noun|S|VP|Verb
+0,2,book the,
+0,3,book the flight,S|VP
+0,4,book the flight through,
+0,5,book the flight through houston,S|VP
+1,2,the,Det
+1,3,the flight,NP
+1,4,the flight through,
+1,5,the flight through houston,NP|X2|X3
+2,3,flight,Nominal|Noun
+2,4,flight through,
+2,5,flight through houston,Nominal
+3,4,through,Preposition
+3,5,through houston,PP
+4,5,houston,NP|Proper-Noun

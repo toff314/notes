@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 17 章 文本转语音 · 衍生选题（送 write-zhihu-tech / write-science-tutorial）",
+    "path": "reading/slp3/17-text-to-speech",
+    "anchor": "第17章"
+  },
+  "generatedAt": "2026-10-31",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch17-t1",
+      "title": "亲手搭一台 8 级残差矢量量化器：残差到底怎么衰减",
+      "angle": "教程：从 k-means 起步，逐级量化残差，实测每级 MSE 衰减比，回答「砍到第几级开始听得出糊」",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 —— ①S1：书里只写「8 个码字相加」，逐级误差曲线要自己跑，且 lab-02 已跑通，材料成本最低；②S3：读者对「码本」「残差」缺少直觉，用可运行脚本 + 曲线图能一次性建立。",
+      "sourceAnchor": "§17.2.3「1024 个码字矢量根本不足以表示我们从编码所有可能的语音波形中得到的各种嵌入。」；§17.2.3「在 ENCODEC RVQ 中同样简单：我们取出这 8 个码字并把它们相加！」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch17-t2",
+      "title": "「3 秒克隆音色」克隆的究竟是什么",
+      "angle": "辨析：3 秒参考语音能覆盖音高、共振峰分布、语速习惯，但覆盖不了口音与用词习惯",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 —— ①S1：零样本 TTS 被产品文案简化成魔法，需要拆开讲条件输入与说话人无关训练；②S4：可对照本章 CMOS 与说话人相似度两种口径，反差强。",
+      "sourceAnchor": "§17.1「因此，现代 TTS 系统的输入是一段文本提示，或许再加上约 3 秒来自我们希望用以生成语音的那种音色的语音。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch17-t3",
+      "title": "平均意见分的天花板：合成语音评估正在失效",
+      "angle": "方法论：五点量表的上端饱和 + 听者间方差，为什么成对偏好更灵敏，多少句才够",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2 + S3 —— ①S2：评估口径是跨章通用方法论，可迁移到任何生成任务；②S3：需要补配对检验与样本量估算，有额外纵深但工作量可控。",
+      "sourceAnchor": "§17.4「我们对比如 50 个句子（以随机顺序呈现）进行这一操作，并比较每个系统被偏好的句子数量。」；§17.4「CMOS 得分的范围从 -3（该系统比参考系统差得多）到 3（该系统优于参考系统）。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch17-t4",
+      "title": "唤醒词为什么必须待在端侧：一笔隐私账",
+      "angle": "产品向：端侧 vs 云侧在算力、延迟、隐私三条账上的比较，附两说话人切段实验",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S4 —— ①S1：书中只有一行历史性表述，需要用工程账本补足；②S4：隐私与合规是大众关心点，且 lab-03 已产出可引用的数字。",
+      "sourceAnchor": "§17.5「唤醒词的目标是把检测功能内建到计算边缘的小型设备中，通过将传往云端服务器的用户语音降到最少来保护隐私。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch17-t5",
+      "title": "补一章「口语语言模型」：书稿留白处的五项待填",
+      "angle": "综述：音频词元化 + 统一词表 + 自回归的最小结构，以及训练配比、延迟预算、打断处理三项缺口",
+      "suggestedSkill": "write-science-tutorial",
+      "priority": "P2",
+      "reason": "命中 S3 + S5 —— ①S3：§17.6 正文只有「待定」，没有现成叙述可抄，原创空间最大；②S5：需要等前四篇的实测素材积累，优先级排后。",
+      "sourceAnchor": "§17.2「口语语言模型接收文本或语音输入，并能生成文本或语音输出，以解决语音到语音翻译、说话人日志或口语问答之类的任务。」；§17.6 正文为「待定」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

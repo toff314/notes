@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 14 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/14-rnns-and-lstms",
+    "anchor": "第14章"
+  },
+  "generatedAt": "2026-10-31",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch14-t1",
+      "title": "「理论上能记住全部历史」这句话，实际能撑多远？——RNN 上下文容量的实测边界",
+      "angle": "本章说隐藏状态原则上可以表示直到序列开头的信息，但 lab-01 的 6 步衰减与 lab-03 的延迟断层指向一条很陡的实用边界；不讲 LSTM 救场，只回答可用记忆有多长、用什么量能测出来。",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "① 从原文「原则上」三字切入，说明理论承诺与工程现实的落差；② 给出可测定义：把记忆长度定成扰动影响降到 5% 以下的步数；③ 用 lab-01 的注入扰动法扫 T；④ 用延迟回忆任务给行为侧证据（lag=12 崩到 71.9%，lag=20 到 32.8%）；⑤ 讨论边界为何随任务变化；⑥ 结论：把上下文长度当超参而非承诺。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §14.1「原则上可以表示一直到序列开头为止的所有前文词的信息」；实测依据 labs/lab-01/out/influence_decay.csv, labs/lab-03/out/accuracy_by_lag.csv",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch14-t2",
+      "title": "教师强制的三个数量级：暴露偏差在小模型上到底有多贵",
+      "angle": "同一模型教师强制 ppl 1.08、自由运行 ppl 9787，差距夸张到反成一个好题材：拆开多少来自结构性错配、多少来自 164 字符语料的过拟合，把术语变成可复算的量。",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "① 复述教师强制定义；② 给测量协议：固定权重只换输入来源；③ 报 lab-02 真实数字与训练曲线；④ 归因：语料规模、模型容量、序列长度各占多少（缩短序列与加大语料两组对照）；⑤ 讨论 scheduled sampling 为何没成主流；⑥ 结论：绝对值不可迁移，同模型两种跑法的比值可迁移。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §14.1「原则上可以表示一直到序列开头为止的所有前文词的信息」；实测依据 labs/lab-02/out/teacher_forcing.json, labs/lab-02/out/loss_curve.csv",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch14-t3",
+      "title": "门控到底修好了哪一半？——把「表示问题」和「优化问题」分开测",
+      "angle": "§14.5 给了两个失败原因（一个状态身兼两职、梯度连乘），科普常把它们混成一句「LSTM 解决了梯度消失」。做分离实验：只加细胞状态不加门、只加门不加加法通路，看各自救回多少。",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "① 拆开两个原因并给可测代理（探针解码远处信息 / 首步梯度保留率）；② 用 lab-03 框架实现三个变体：纯 RNN、加 c 但门恒为 1、完整 LSTM；③ 报 lag=12 与 20 的准确率及梯度保留率；④ 分析两者收益是否可加；⑤ 结论：门控收益主要落在优化侧还是表示侧。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §14.1「原则上可以表示一直到序列开头为止的所有前文词的信息」；实测依据 labs/lab-03/lab03_lstm_vs_rnn.py, labs/lab-03/out/grad_norm_by_step.csv",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch14-t4",
+      "title": "瓶颈的形状：从「一个向量」到「一组权重」，注意力到底改变了什么",
+      "angle": "lab-05 想复现注意力优于固定上下文，却因评估口径出错导致准确率全 0，而热图给出漂亮的一对一角峰。写这个半成品：热图证明了什么、没证明什么，失败的对照实验能教人什么。",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "① 复述瓶颈与两种架构差别；② 展示训练曲线（fixed 从 1.48 降到 0.48（step 500）、step 600 回升到 0.79，attn 最低 0.014 后反弹到 0.42）；③ 展示热图与单样例预测正确的事实；④ 指出评估失败疑似原因：greedy 输出含 EOS/PAD 尾位、与目标长度不对齐；⑤ 给修复方案与预期；⑥ 结论：注意力解除定长约束，对齐是学出来的副产品。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §14.1「原则上可以表示一直到序列开头为止的所有前文词的信息」；实测依据 labs/lab-05/out/fig_attention_heatmap.png, labs/lab-05/out/summary.json",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

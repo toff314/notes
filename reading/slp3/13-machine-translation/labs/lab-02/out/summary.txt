@@ -1,0 +1,4 @@
+HYP1: chrP=0.6906 chrR=0.6469 chrF2=0.6552
+HYP2: chrP=0.6774 chrR=0.3799 chrF2=0.4162
+corpus5 BLEU-4=0.5528
+corpus5 mean chrF2=0.7254

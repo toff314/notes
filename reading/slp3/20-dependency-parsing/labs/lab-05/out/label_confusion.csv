@@ -1,0 +1,7 @@
+gold_label,sys_label,count
+det,nmod,1
+iobj,iobj,1
+nmod,nmod,1
+obj,det,1
+pobj,pobj,1
+root,root,1

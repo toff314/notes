@@ -1,0 +1,72 @@
+{
+  "num_topics": 2,
+  "num_docs": 6,
+  "vocab_size": 18,
+  "iterations": 50,
+  "topic_top_words": {
+    "topic_0": [
+      "music",
+      "computer",
+      "melody",
+      "instrument",
+      "algorithm"
+    ],
+    "topic_1": [
+      "song",
+      "software",
+      "program",
+      "data",
+      "keyboard"
+    ]
+  },
+  "doc_topic_distribution": [
+    {
+      "doc_id": 0,
+      "doc": "piano music song melody instrument keyboard",
+      "topic_distribution": {
+        "topic_0": 0.6666666666666666,
+        "topic_1": 0.3333333333333333
+      }
+    },
+    {
+      "doc_id": 1,
+      "doc": "guitar music chord song rhythm instrument",
+      "topic_distribution": {
+        "topic_0": 0.5,
+        "topic_1": 0.5
+      }
+    },
+    {
+      "doc_id": 2,
+      "doc": "computer software algorithm data program",
+      "topic_distribution": {
+        "topic_0": 0.4,
+        "topic_1": 0.6
+      }
+    },
+    {
+      "doc_id": 3,
+      "doc": "python code software computer program algorithm",
+      "topic_distribution": {
+        "topic_0": 0.5,
+        "topic_1": 0.5
+      }
+    },
+    {
+      "doc_id": 4,
+      "doc": "music computer digital audio software",
+      "topic_distribution": {
+        "topic_0": 0.4,
+        "topic_1": 0.6
+      }
+    },
+    {
+      "doc_id": 5,
+      "doc": "song melody code program data",
+      "topic_distribution": {
+        "topic_0": 0.4,
+        "topic_1": 0.6
+      }
+    }
+  ]
+}

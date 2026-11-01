@@ -1,0 +1,3 @@
+split,n_sentences,min_len,max_len,mean_len
+train,1500,4,12,7.45
+test,250,4,12,7.63

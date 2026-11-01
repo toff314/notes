@@ -1,0 +1,130 @@
+{
+  "contours": [
+    {
+      "kind": "fall",
+      "f0_mean": 129.8,
+      "f0_max": 136.8,
+      "f0_min": 111.9,
+      "final_slope_Hz_per_s": -98.8,
+      "final_span_Hz": 24.9,
+      "intensity_range_dB": 36.6
+    },
+    {
+      "kind": "rise",
+      "f0_mean": 135.9,
+      "f0_max": 153.8,
+      "f0_min": 126.0,
+      "final_slope_Hz_per_s": 33.6,
+      "final_span_Hz": 27.9,
+      "intensity_range_dB": 36.7
+    }
+  ],
+  "classifier_acc": 0.5,
+  "scale_half": {
+    "intensity_drop_dB": 6.02,
+    "max_f0_diff_Hz": 0.0,
+    "theory_dB": 6.02
+  },
+  "detections": [
+    {
+      "true": "fall",
+      "slope": -101.7,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -102.7,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -96.7,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -97.5,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -98.4,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -97.1,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -98.5,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -98.2,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -98.6,
+      "pred": "fall"
+    },
+    {
+      "true": "fall",
+      "slope": -100.7,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 35.5,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 34.2,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 35.4,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 37.7,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 32.5,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 29.9,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 35.1,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 36.2,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 34.5,
+      "pred": "fall"
+    },
+    {
+      "true": "rise",
+      "slope": 33.6,
+      "pred": "fall"
+    }
+  ]
+}

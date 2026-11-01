@@ -1,0 +1,19 @@
+{
+  "graphs": 90,
+  "lossy": 47,
+  "mean_gap": 1.94,
+  "max_gap": 12,
+  "crossing_pairs": [
+    [
+      [
+        2,
+        6
+      ],
+      [
+        4,
+        10
+      ]
+    ]
+  ],
+  "projective": false
+}

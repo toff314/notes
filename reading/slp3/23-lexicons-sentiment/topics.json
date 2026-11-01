@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 23 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/23-lexicons-sentiment",
+    "anchor": "第23章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch23-t1",
+      "title": "Potts 图：为什么「好」和「极好」不是同一种正面",
+      "angle": "观点：词的情感不只有正负——Potts 图如何用分布形状区分「好」与「极好」",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给结论和形状分类，但没给构建 Potts 图的完整代码与调参细节；②S3：涉及似然估计、归一化、分布形状分析，有足够纵深；③S6：Potts 2011 原始论文、IMDb 数据集均可查。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §23.5「强正面程度词的曲线呈字母 J 形，而强负面程度词看起来像倒 J 形」；「弱正面和弱负面程度词呈驼峰形」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch23-t2",
+      "title": "种子词选错，整个词表就废了：半监督情感词表的命门",
+      "angle": "观点：5 个种子词决定 5000 个词的极性——半监督情感词表如何被种子词劫持",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S5 —— ①S1：书中给结论和一个例子，但没系统分析种子词数量和选择对结果的影响；②S4：大众直觉是「有种子词就能扩展」，而书中明确说种子词选择决定成败；③S5：直接落在领域适配（金融 vs Twitter）上，有现实工程意义。",
+      "sourceAnchor": "§23.4.1「Hellrich 等（2019）指出，在为不同历史时期建模态度时，从一部大型现代态度词典出发，要优于使用为跨时间稳定而调校过的小种子集」；Hamilton 等（2016a）为通用/Twitter/金融分别定义种子词。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch23-t3",
+      "title": "对数几率比信息狄利克雷先验：找两个语料的差异词，为什么简单方法会骗你",
+      "angle": "论文：用 Monroe 2008 方法找语料差异词——为什么你需要狄利克雷先验和 z 分数",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给公式和直觉，但没给完整实现和调参细节；②S3：涉及狄利克雷先验、对数几率比、z 分数、方差估计，统计纵深足；③S6：Monroe 2008 原始论文、Yelp 数据集均可查。",
+      "sourceAnchor": "§23.5.1「简单的对数似然或对数几率方法的问题在于，它们会过分强调极罕见词的差异，而且往往还会过分强调极高频词的差异」；式 23.9–23.11 的完整公式；图 23.12 的 Yelp 一星 vs 五星应用。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch23-t4",
+      "title": "内涵框架：动词本身携带了对主语和宾语的态度",
+      "angle": "观点：「侵犯」和「幸存」本身就是态度——内涵框架如何结构化谓词的情感",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中给直觉和例子，但没给构建内涵框架的完整流程；②S3：涉及谓词-论元结构、情感方向标注、权力/能动性维度，有语言学纵深；③S5：直接落在新闻立场分析、舆论监控上，有现实落点。",
+      "sourceAnchor": "§23.9「通过使用（23.15）中的动词 violate，作者表达了对 B 国的同情，把 B 国描绘成受害者，并表达了对施事方 A 国的敌意」；「对于 survive，作者和读者对 Role1（主语）持正面情感，对 Role2（直接宾语）持负面情感」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch23-t5",
+      "title": "情感词表不是词典：固定词表为什么注定反语境",
+      "angle": "观点：「厉害」到底是夸还是骂——固定情感词表为什么处理不了语境",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S4 + S5 + S6 —— ①S4：大众直觉是「查词典就知道情感」，而书中明确说固定词表忽略语境；②S5：直接落在中文产品评论、社交媒体分析上，「厉害」「棒」「绝」的极性翻转是常见痛点；③S6：Barrett 2007 的建构主义、第 5 章上下文嵌入均可查。",
+      "sourceAnchor": "§23.1「在这类基于词表的态度模型中，一个词的情感含义通常是固定的，与使用该词的语言语境、说话者的方言或文化无关」；§23.8 以实体为中心的方法作为「补洞」方案。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

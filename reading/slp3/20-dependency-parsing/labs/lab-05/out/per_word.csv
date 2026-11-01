@@ -1,0 +1,7 @@
+word,gold_head,dep_index,gold_label,sys_head,sys_label,uas_hit,las_hit,ls_hit
+Book,0,1,root,0,root,1,1,1
+me,1,2,iobj,1,iobj,1,1,1
+flight,1,4,obj,1,nmod,1,0,0
+the,4,3,det,1,det,0,0,1
+through,4,5,nmod,4,nmod,1,1,1
+Houston,5,6,pobj,5,pobj,1,1,1

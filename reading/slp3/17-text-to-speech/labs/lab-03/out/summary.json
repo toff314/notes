@@ -1,0 +1,55 @@
+{
+  "speakers": {
+    "A": {
+      "f0": 110.0,
+      "scale": 1.0
+    },
+    "B": {
+      "f0": 205.0,
+      "scale": 1.15
+    }
+  },
+  "turn_order": [
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B"
+  ],
+  "turn_s": 1.0,
+  "gap_s": 0.2,
+  "conditions": [
+    {
+      "noise_snr_db": null,
+      "n_frames": 1178,
+      "voiced_frames": 1012,
+      "threshold_db": -133.63,
+      "frame_accuracy": 0.1409,
+      "cluster_accuracy": 0.164,
+      "vad_recall": 0.8591,
+      "vad_false_alarm": 0.0,
+      "true_boundaries": 9,
+      "pred_boundaries": 23,
+      "boundary_mae_ms": 15.6
+    },
+    {
+      "noise_snr_db": 8.0,
+      "n_frames": 1178,
+      "voiced_frames": 344,
+      "threshold_db": -19.29,
+      "frame_accuracy": 0.0289,
+      "cluster_accuracy": 0.0988,
+      "vad_recall": 0.292,
+      "vad_false_alarm": 0.0,
+      "true_boundaries": 9,
+      "pred_boundaries": 19,
+      "boundary_mae_ms": 10.0
+    }
+  ],
+  "note": "frame_accuracy 以真值语音帧为分母，VAD 漏检计为错误"
+}

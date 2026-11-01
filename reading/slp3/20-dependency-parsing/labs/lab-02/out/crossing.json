@@ -1,0 +1,14 @@
+{
+  "sentence": "JetBlue canceled our flight this morning which was already late",
+  "n_words": 10,
+  "n_arcs": 10,
+  "crossing_pairs": [
+    {
+      "arc1": "2->6",
+      "arc2": "4->10"
+    }
+  ],
+  "n_crossing_pairs": 1,
+  "projective": false,
+  "implication": "转移式系统只能生成投射树：该句的交叉弧结构在 arc-standard / arc-eager 的合法转移序列中不可达。"
+}

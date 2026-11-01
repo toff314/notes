@@ -1,0 +1,12 @@
+t,word,NNP,MD,VB,JJ,NN,RB,DT
+0,Janet,-1.163460e+01,-inf,-inf,-inf,-inf,-inf,-inf
+1,will,-inf,-1.732071e+01,-2.913102e+01,-inf,-2.299223e+01,-inf,-inf
+2,back,-inf,-inf,-2.485312e+01,-3.290818e+01,-3.285995e+01,-2.365538e+01,-inf
+3,the,-3.823322e+01,-inf,-inf,-inf,-inf,-inf,-2.703428e+01
+4,bill,-inf,-inf,-4.603477e+01,-inf,-3.383887e+01,-inf,-inf
+
+backpointer(t>=1),NNP,MD,VB,JJ,NN,RB,DT
+1,NNP,NNP,NNP,NNP,NNP,NNP,NNP
+2,MD,MD,MD,MD,MD,MD,MD
+3,VB,RB,RB,RB,VB,RB,VB
+4,DT,DT,DT,DT,DT,DT,DT

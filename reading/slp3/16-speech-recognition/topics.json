@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 16 章 · 自动语音识别 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/16-speech-recognition",
+    "anchor": "第16章"
+  },
+  "generatedAt": "2026-10-31",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch16-t1",
+      "title": "语音识别为什么比机器翻译难：一条「长度失配」的主线",
+      "angle": "观点：语音识别的所有设计，都在收拾「输入比输出长二十倍」这个烂摊子",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中把前端压缩（§16.3.1）、CTC 折叠（§16.5）、流式约束（§16.5.4）分散在四节，从未点明它们回答的是同一个问题；②S3：涉及注意力二次代价、感受野、多对一折叠、因果性约束，纵深足够；③S5：语音产品的延迟与准确率取舍是可直接落地的工程决策。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §16.3.1「以 10ms 帧表示的语音信号，比以词或标记表示的文本信号长约 5（25/5）到 19（25/1.3）倍」；§16.3.1 Whisper 两个卷积层把 3000 帧降到 1500 帧、每 20ms 一个标记；§16.5 折叠函数；§16.5.4 注意力需先看完整输入而 CTC 可立即从左到右输出。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch16-t2",
+      "title": "从 CTC 到 RNN-T：流式识别到底牺牲了什么",
+      "angle": "教程：用 100 行 numpy 从 CTC 折叠写到 RNN-T 的联合网络，量出延迟的代价",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S3 + S5 + S6 —— ①S3：路径枚举、DP 状态设计、预测器的条件依赖，都有可实现的细节；②S5：流式是语音产品硬需求，延迟可量化；③S6：Graves 2006（CTC）、Graves 2012 / Sak 2017（RNN-T）均可查。",
+      "sourceAnchor": "§16.5.1「问题在于，我们选择了最可能对齐 A，但最可能的对齐未必对应于最可能的最终合并输出串 Y」；§16.5.2 用前向-后向合并对齐；§16.5.4 RNN-T 由 CTC 声学模型与以输出标记历史为条件的预测器组成。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch16-t3",
+      "title": "HuBERT 的标签是自己造的：自监督语音里的 k-means 工程",
+      "angle": "教程：没有转写也能训语音模型——HuBERT 两阶段聚类目标的完整拆解",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书里只说「先粗后细」的直觉，没解释换标签为何有效、k 如何选；②S3：倒谱去相关、欧氏距离前提、聚类规模与显存、码本坍缩都是可展开的工程点；③S6：Hsu 2021（HuBERT）、Baevski 2020（wav2vec 2.0）、Chung 2021 均可查。",
+      "sourceAnchor": "§16.4.2 第一阶段用 39 维 MFCC 在 960 小时 LibriSpeech 的 1.72 亿向量上聚 100 类，第二阶段取第 6 层 Transformer 输出聚 500 类；§16.4.3 分配与重估两步。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch16-t4",
+      "title": "两个 5% 不能直接比：WER 的四个隐藏陷阱",
+      "angle": "观点：WER 差 1 个百分点可能是噪声——规范化、对齐歧义、分母与显著性",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 + S5 + S6 —— ①S4：WER 被当成绝对刻度，实际依赖规范化脚本与对齐回溯规则，反差点强；②S5：直接决定产品验收与论文结论是否成立；③S6：sclite/NIST 评分文档、MAPSSWE 原始文献均可查。",
+      "sourceAnchor": "§16.6「由于公式中包含插入，错误率可能超过 100%」；同节 sclite 同时做对齐与统计、MAPSSWE 要求片段内错误与另一片段错误统计独立；§16.1 的 1.4% 与 25.5% 展示场景对数字的支配。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch16-t5",
+      "title": "从 HMM-GMM 到 Whisper：一条被算力改写的历史",
+      "angle": "观点：语音识别不是被算法革命掉的，是被 GPU 和数据改写掉的",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2 + S4 + S6 —— ①S2：Davis 的倒谱与 Baker 的 DRAGON 两条独立起源线有一手文献；②S4：主流叙事是端到端推翻了 HMM，而书中强调混合系统在数据与算力到位前一直更强；③S6：Juvela 2021 的历史综述、Bourlard & Morgan 的混合系统专著可查。",
+      "sourceAnchor": "§16 历史注记：1950s 贝尔实验室数字识别与音素转移概率、1970s DTW 与 DRAGON 用 Viterbi 解码、1990s HMM-GMM 主导与 ARPA 年度评测竞赛、2010s 深层网络在 GPU 与大数据下超过 GMM、此后 CTC 与 RNN-T 与 LAS 与 Transformer 相继成熟。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

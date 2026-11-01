@@ -1,0 +1,9 @@
+{
+  "train_sentences": 1500,
+  "test_sentences": 250,
+  "train_span_accuracy": 0.7965,
+  "exact_match_cky": 0.0,
+  "exact_match_greedy": 0.0,
+  "greedy_valid_tree_rate": 0.372,
+  "avg_spans_per_sentence": 17.79
+}

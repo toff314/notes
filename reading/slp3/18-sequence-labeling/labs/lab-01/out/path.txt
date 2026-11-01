@@ -1,0 +1,4 @@
+gold   : Janet/NNP will/MD back/VB the/DT bill/NN
+viterbi: Janet/NNP will/MD back/VB the/DT bill/NN
+MFT基线: Janet/NNP will/MD back/RB the/DT bill/NN
+最终概率 2.0136e-15；书中 will/MD 格 2.772e-8，本表复算 3.0041e-08

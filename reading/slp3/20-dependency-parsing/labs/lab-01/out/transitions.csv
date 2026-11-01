@@ -1,0 +1,49 @@
+sentence,step,stack,buffer,action,added_arc
+Book me the morning flight,0,flight book,me the morning flight,SHIFT,
+Book me the morning flight,1,flight book me,the morning flight,SHIFT,
+Book me the morning flight,2,flight book,the morning flight,RIGHTARC(iobj),book->me(iobj)
+Book me the morning flight,3,flight book the,morning flight,SHIFT,
+Book me the morning flight,4,flight book the morning,flight,SHIFT,
+Book me the morning flight,5,flight book the morning flight,,SHIFT,
+Book me the morning flight,6,flight book the flight,,LEFTARC(compound),flight->morning(compound)
+Book me the morning flight,7,flight book flight,,LEFTARC(det),flight->the(det)
+Book me the morning flight,8,flight book,,RIGHTARC(obj),book->flight(obj)
+Book me the morning flight,9,flight,,RIGHTARC(root),ROOT->book(root)
+Book the flight through Houston,0,houston book,the flight through houston,SHIFT,
+Book the flight through Houston,1,houston book the,flight through houston,SHIFT,
+Book the flight through Houston,2,houston book the flight,through houston,SHIFT,
+Book the flight through Houston,3,houston book flight,through houston,LEFTARC(det),flight->the(det)
+Book the flight through Houston,4,houston book flight through,houston,SHIFT,
+Book the flight through Houston,5,houston book flight through houston,,SHIFT,
+Book the flight through Houston,6,houston book flight through,,RIGHTARC(pobj),through->houston(pobj)
+Book the flight through Houston,7,houston book flight,,RIGHTARC(nmod),flight->through(nmod)
+Book the flight through Houston,8,houston book,,RIGHTARC(obj),book->flight(obj)
+Book the flight through Houston,9,houston,,RIGHTARC(root),ROOT->book(root)
+I prefer the morning flight through Denver,0,denver I,prefer the morning flight through denver,SHIFT,
+I prefer the morning flight through Denver,1,denver I prefer,the morning flight through denver,SHIFT,
+I prefer the morning flight through Denver,2,denver prefer,the morning flight through denver,LEFTARC(nsubj),prefer->I(nsubj)
+I prefer the morning flight through Denver,3,denver prefer the,morning flight through denver,SHIFT,
+I prefer the morning flight through Denver,4,denver prefer the morning,flight through denver,SHIFT,
+I prefer the morning flight through Denver,5,denver prefer the morning flight,through denver,SHIFT,
+I prefer the morning flight through Denver,6,denver prefer the flight,through denver,LEFTARC(compound),flight->morning(compound)
+I prefer the morning flight through Denver,7,denver prefer flight,through denver,LEFTARC(det),flight->the(det)
+I prefer the morning flight through Denver,8,denver prefer flight through,denver,SHIFT,
+I prefer the morning flight through Denver,9,denver prefer flight through denver,,SHIFT,
+I prefer the morning flight through Denver,10,denver prefer flight through,,RIGHTARC(pobj),through->denver(pobj)
+I prefer the morning flight through Denver,11,denver prefer flight,,RIGHTARC(nmod),flight->through(nmod)
+I prefer the morning flight through Denver,12,denver prefer,,RIGHTARC(obj),prefer->flight(obj)
+I prefer the morning flight through Denver,13,denver,,RIGHTARC(root),ROOT->prefer(root)
+United canceled the morning flights to Houston,0,houston united,canceled the morning flights to houston,SHIFT,
+United canceled the morning flights to Houston,1,houston united canceled,the morning flights to houston,SHIFT,
+United canceled the morning flights to Houston,2,houston canceled,the morning flights to houston,LEFTARC(nsubj),canceled->united(nsubj)
+United canceled the morning flights to Houston,3,houston canceled the,morning flights to houston,SHIFT,
+United canceled the morning flights to Houston,4,houston canceled the morning,flights to houston,SHIFT,
+United canceled the morning flights to Houston,5,houston canceled the morning flights,to houston,SHIFT,
+United canceled the morning flights to Houston,6,houston canceled the flights,to houston,LEFTARC(compound),flights->morning(compound)
+United canceled the morning flights to Houston,7,houston canceled flights,to houston,LEFTARC(det),flights->the(det)
+United canceled the morning flights to Houston,8,houston canceled flights to,houston,SHIFT,
+United canceled the morning flights to Houston,9,houston canceled flights to houston,,SHIFT,
+United canceled the morning flights to Houston,10,houston canceled flights to,,RIGHTARC(pobj),to->houston(pobj)
+United canceled the morning flights to Houston,11,houston canceled flights,,RIGHTARC(nmod),flights->to(nmod)
+United canceled the morning flights to Houston,12,houston canceled,,RIGHTARC(obj),canceled->flights(obj)
+United canceled the morning flights to Houston,13,houston,,RIGHTARC(root),ROOT->canceled(root)

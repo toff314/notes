@@ -1,0 +1,43 @@
+config,child,parent,is_gold,sentence
+A_naive,紫菜,红藻富含碘元素,0,紫菜等红藻富含碘元素。
+A_naive,石花菜,红藻可用于提取琼胶,0,石花菜等红藻可用于提取琼胶。
+A_naive,国航,航空公司本周上调了票,0,国航等航空公司本周上调了票价。
+A_naive,东航,航空公司随即跟进,0,东航等航空公司随即跟进。
+A_naive,Python,编程语言在本课程中使,0,Python 等编程语言在本课程中使用。
+A_naive,Rust,编程语言适合写系统软,0,Rust 等编程语言适合写系统软件。
+A_naive,MySQL,数据库支撑了大量中小,0,MySQL 等数据库支撑了大量中小网站。
+A_naive,PostgreSQL,数据库支持复杂查询,0,PostgreSQL 等数据库支持复杂查询。
+A_naive,紫菜,红藻,1,红藻包括紫菜和石花菜。
+A_naive,石花菜,红藻,1,红藻包括紫菜和石花菜。
+A_naive,国航,航空公司,1,航空公司包括国航和东航。
+A_naive,东航,航空公司,1,航空公司包括国航和东航。
+A_naive,紫菜,红藻,1,紫菜是红藻的一种。
+A_naive,国航,航空公司,1,国航是航空公司的一种。
+A_naive,国航,了三小时才起飞,0,国航等了三小时才起飞。
+A_naive,东航等通知,了一整天,0,东航等通知等了一整天。
+A_naive,MySQL,不到了,0,MySQL 等不到了，先开会。
+A_naive,Python,脚本跑完再说,0,Python 等脚本跑完再说。
+A_naive,了燃油,票价,0,票价包括了燃油和税费。
+A_naive,税费,票价,0,票价包括了燃油和税费。
+A_naive,燃油附加费,机票价格,0,机票价格包括燃油附加费和税费。
+A_naive,税费,机票价格,0,机票价格包括燃油附加费和税费。
+B_naive_plus_type,紫菜,红藻,1,红藻包括紫菜和石花菜。
+B_naive_plus_type,石花菜,红藻,1,红藻包括紫菜和石花菜。
+B_naive_plus_type,国航,航空公司,1,航空公司包括国航和东航。
+B_naive_plus_type,东航,航空公司,1,航空公司包括国航和东航。
+B_naive_plus_type,紫菜,红藻,1,紫菜是红藻的一种。
+B_naive_plus_type,国航,航空公司,1,国航是航空公司的一种。
+C_refined_plus_type,紫菜,红藻,1,紫菜等红藻富含碘元素。
+C_refined_plus_type,石花菜,红藻,1,石花菜等红藻可用于提取琼胶。
+C_refined_plus_type,国航,航空公司,1,国航等航空公司本周上调了票价。
+C_refined_plus_type,东航,航空公司,1,东航等航空公司随即跟进。
+C_refined_plus_type,Python,编程语言,1,Python 等编程语言在本课程中使用。
+C_refined_plus_type,Rust,编程语言,1,Rust 等编程语言适合写系统软件。
+C_refined_plus_type,MySQL,数据库,1,MySQL 等数据库支撑了大量中小网站。
+C_refined_plus_type,PostgreSQL,数据库,1,PostgreSQL 等数据库支持复杂查询。
+C_refined_plus_type,紫菜,红藻,1,红藻包括紫菜和石花菜。
+C_refined_plus_type,石花菜,红藻,1,红藻包括紫菜和石花菜。
+C_refined_plus_type,国航,航空公司,1,航空公司包括国航和东航。
+C_refined_plus_type,东航,航空公司,1,航空公司包括国航和东航。
+C_refined_plus_type,紫菜,红藻,1,紫菜是红藻的一种。
+C_refined_plus_type,国航,航空公司,1,国航是航空公司的一种。

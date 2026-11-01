@@ -1,0 +1,301 @@
+{
+  "reconstruction": [
+    {
+      "pattern": "P1_等",
+      "hits": 5,
+      "finds": 6,
+      "wrong_formula": 5.0,
+      "correct_rlogf": 0.4651,
+      "log_finds": 1.7918
+    },
+    {
+      "pattern": "P2_包括",
+      "hits": 3,
+      "finds": 4,
+      "wrong_formula": 3.0,
+      "correct_rlogf": 0.541,
+      "log_finds": 1.3863
+    },
+    {
+      "pattern": "P3_是一种",
+      "hits": 2,
+      "finds": 3,
+      "wrong_formula": 2.0,
+      "correct_rlogf": 0.6068,
+      "log_finds": 1.0986
+    },
+    {
+      "pattern": "P4_例如",
+      "hits": 1,
+      "finds": 10,
+      "wrong_formula": 1.0,
+      "correct_rlogf": 0.0434,
+      "log_finds": 2.3026
+    },
+    {
+      "pattern": "P5_称为",
+      "hits": 1,
+      "finds": 2,
+      "wrong_formula": 1.0,
+      "correct_rlogf": 0.7213,
+      "log_finds": 0.6931
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "pattern_scores": [
+        {
+          "pattern": "X是Y的一种",
+          "rlogf": 1.4427,
+          "hits": 2,
+          "finds": 2
+        },
+        {
+          "pattern": "X等Y",
+          "rlogf": 0.1803,
+          "hits": 3,
+          "finds": 8
+        },
+        {
+          "pattern": "X包括Y",
+          "rlogf": 0.0,
+          "hits": 0,
+          "finds": 2
+        }
+      ],
+      "top_k": [
+        "X是Y的一种",
+        "X等Y"
+      ],
+      "new_pairs": [
+        [
+          "MySQL",
+          "数据库"
+        ],
+        [
+          "PostgreSQL",
+          "数据库"
+        ],
+        [
+          "Rust",
+          "编程语言"
+        ],
+        [
+          "东航",
+          "航空公司"
+        ],
+        [
+          "石花菜",
+          "红藻"
+        ]
+      ],
+      "n_new": 5,
+      "n_tp": 5,
+      "precision": 1.0
+    },
+    {
+      "round": 2,
+      "pattern_scores": [
+        {
+          "pattern": "X是Y的一种",
+          "rlogf": 1.4427,
+          "hits": 2,
+          "finds": 2
+        },
+        {
+          "pattern": "X等Y",
+          "rlogf": 0.1176,
+          "hits": 8,
+          "finds": 22
+        },
+        {
+          "pattern": "X包括Y",
+          "rlogf": 0.0,
+          "hits": 0,
+          "finds": 2
+        }
+      ],
+      "top_k": [
+        "X是Y的一种",
+        "X等Y"
+      ],
+      "new_pairs": [
+        [
+          "MySQL",
+          "命令"
+        ],
+        [
+          "MySQL",
+          "开源软件"
+        ],
+        [
+          "PostgreSQL",
+          "关系型数据库"
+        ],
+        [
+          "Python",
+          "脚本"
+        ],
+        [
+          "Rust",
+          "系统语言"
+        ],
+        [
+          "国航",
+          "企业"
+        ],
+        [
+          "数据库",
+          "问题"
+        ],
+        [
+          "石花菜",
+          "藻类"
+        ],
+        [
+          "紫菜",
+          "食材"
+        ],
+        [
+          "红藻",
+          "水生植物"
+        ],
+        [
+          "红藻",
+          "海洋生物"
+        ],
+        [
+          "编程语言",
+          "工具"
+        ],
+        [
+          "航空公司",
+          "行业"
+        ]
+      ],
+      "n_new": 13,
+      "n_tp": 0,
+      "precision": 0.0
+    },
+    {
+      "round": 3,
+      "pattern_scores": [
+        {
+          "pattern": "X是Y的一种",
+          "rlogf": 1.4427,
+          "hits": 2,
+          "finds": 2
+        },
+        {
+          "pattern": "X等Y",
+          "rlogf": 0.3235,
+          "hits": 22,
+          "finds": 22
+        },
+        {
+          "pattern": "X包括Y",
+          "rlogf": 0.0,
+          "hits": 0,
+          "finds": 2
+        }
+      ],
+      "top_k": [
+        "X是Y的一种",
+        "X等Y"
+      ],
+      "new_pairs": [],
+      "n_new": 0,
+      "n_tp": 0,
+      "precision": 0.0
+    }
+  ],
+  "cumulative_pairs": [
+    [
+      "MySQL",
+      "命令"
+    ],
+    [
+      "MySQL",
+      "开源软件"
+    ],
+    [
+      "MySQL",
+      "数据库"
+    ],
+    [
+      "PostgreSQL",
+      "关系型数据库"
+    ],
+    [
+      "PostgreSQL",
+      "数据库"
+    ],
+    [
+      "Python",
+      "编程语言"
+    ],
+    [
+      "Python",
+      "脚本"
+    ],
+    [
+      "Rust",
+      "系统语言"
+    ],
+    [
+      "Rust",
+      "编程语言"
+    ],
+    [
+      "东航",
+      "航空公司"
+    ],
+    [
+      "国航",
+      "企业"
+    ],
+    [
+      "国航",
+      "航空公司"
+    ],
+    [
+      "数据库",
+      "问题"
+    ],
+    [
+      "石花菜",
+      "红藻"
+    ],
+    [
+      "石花菜",
+      "藻类"
+    ],
+    [
+      "紫菜",
+      "红藻"
+    ],
+    [
+      "紫菜",
+      "食材"
+    ],
+    [
+      "红藻",
+      "水生植物"
+    ],
+    [
+      "红藻",
+      "海洋生物"
+    ],
+    [
+      "编程语言",
+      "工具"
+    ],
+    [
+      "航空公司",
+      "行业"
+    ]
+  ],
+  "final_precision": 0.381,
+  "drift_detected": true
+}

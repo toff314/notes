@@ -1,0 +1,16 @@
+{
+  "sentence": "book the flight through houston",
+  "n_words": 5,
+  "n_cnf_rules": 64,
+  "n_cells_filled": 11,
+  "n_cells_total": 15,
+  "n_parses": 3,
+  "n_parses_enumerated": 3,
+  "cnf_ok": true,
+  "equiv_agree": "20/20",
+  "dummy_terminals": {},
+  "root_cell": [
+    "S",
+    "VP"
+  ]
+}

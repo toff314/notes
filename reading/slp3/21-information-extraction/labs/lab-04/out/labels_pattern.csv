@@ -1,0 +1,35 @@
+sent,e1,e2,rel,is_pos
+紫菜等红藻富含碘。,紫菜,红藻,is-a,True
+石花菜等红藻可用于提取琼胶。,石花菜,红藻,is-a,True
+江蓠等红藻在浅海生长。,江蓠,红藻,is-a,True
+国航等航空公司上调了票价。,国航,航空公司,is-a,True
+东航等航空公司随即跟进。,东航,航空公司,is-a,True
+南航等航空公司也宣布涨价。,南航,航空公司,is-a,True
+Python 等编程语言在本课程中使用。,Python,编程语言,is-a,True
+Rust 等编程语言适合写系统软件。,Rust,编程语言,is-a,True
+Java 等编程语言在企业中广泛应用。,Java,编程语言,is-a,True
+MySQL 等数据库支撑了大量网站。,MySQL,数据库,is-a,True
+PostgreSQL 等数据库支持复杂查询。,PostgreSQL,数据库,is-a,True
+Oracle 等数据库在商业领域很常见。,Oracle,数据库,is-a,True
+苹果等水果富含维生素。,苹果,水果,is-a,True
+香蕉等水果在热带地区生长。,香蕉,水果,is-a,True
+橙子等水果可以榨汁。,橙子,水果,is-a,True
+北京位于中国华北。,北京,中国,located-in,True
+上海地处中国华东。,上海,中国,located-in,True
+广州位于中国华南。,广州,中国,located-in,True
+深圳地处中国南方。,深圳,中国,located-in,True
+杭州位于中国东南沿海。,杭州,中国,located-in,True
+南京位于中国长江下游。,南京,中国,located-in,True
+巴黎位于法国北部。,巴黎,法国,located-in,True
+伦敦地处英国东南部。,伦敦,英国,located-in,True
+东京位于日本本州。,东京,日本,located-in,True
+柏林位于德国东北部。,柏林,德国,located-in,True
+莫斯科位于俄罗斯西部。,莫斯科,俄罗斯,located-in,True
+首尔位于韩国西北部。,首尔,韩国,located-in,True
+纽约位于美国东海岸。,纽约,美国,located-in,True
+洛杉矶位于美国西海岸。,洛杉矶,美国,located-in,True
+芝加哥位于美国中西部。,芝加哥,美国,located-in,True
+MySQL 和 Oracle 都是数据库。,MySQL,数据库,is-a,False
+MySQL 和 Oracle 都是数据库。,Oracle,数据库,is-a,False
+苹果和香蕉都是常见水果。,苹果,水果,is-a,False
+苹果和香蕉都是常见水果。,香蕉,水果,is-a,False

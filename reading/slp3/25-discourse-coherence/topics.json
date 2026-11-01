@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 25 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/25-discourse-coherence",
+    "anchor": "第25章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch25-t1",
+      "title": "为什么「连贯」不能只看连接词：汉语篇章分析的特殊性",
+      "angle": "观点：汉语篇章分析为什么不能照搬英语——从 22% 的显式连接词比例说起",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S3 + S4 + S6 —— ①S3：涉及显式/隐式关系分类、连接词消歧、端到端隐式关系模型等技术纵深；②S4：大众直觉是「抓 because/although 就行」，但汉语里 78% 的关系没有显式标记，反差强；③S6：Zhou & Xue 2015 汉语篇章树库、Xue et al. 2016 多语种共享任务均可查。",
+      "sourceAnchor": "§25.1.2「由于汉语中显式篇章连接词的比例低于英语（所有篇章关系中只有 22% 由显式连接词标示，」；同节给出汉语篇章树库直接映射到 11 个语义标签的标注策略。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch25-t2",
+      "title": "RST 的核心-卫星不对称：摘要系统为什么该删除 satellite",
+      "angle": "观点：摘要不是抽句子，是删卫星——RST 的核心-卫星不对称给文本压缩的启示",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S3 + S5 + S6 —— ①S3：涉及 RST 树构建、核性判定、摘要压缩率等技术细节；②S5：直接落在自动文摘、信息抽取等现实系统上；③S6：Marcu 2000、Carlson et al. 2001、Yang & Cardie 2014 均可查。",
+      "sourceAnchor": "§25.1.1「核心（nucleus）是这样一个单元：它」；§25.1.1「一段文本中的核心（nucleus）所表达的信息大概比卫星（satellite）更重要，而后者在摘要中可能被删除」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch25-t3",
+      "title": "中心理论实战：Cb/Cf/Cp 怎么追踪篇章显著实体",
+      "angle": "论文：用 200 行 Python 实现中心理论——Cb/Cf/Cp 追踪与连贯性评估",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中只给定义和走查示例，没给完整实现；②S3：涉及代词消解、语法角色排序、转移状态机等技术细节；③S6：Grosz et al. 1995、Brennan et al. 1987、Karamanis et al. 2004 均可查。",
+      "sourceAnchor": "§25.3.1「Un 的后向中心记作 Cb(Un)，表示当前的显著实体，也就是在 Un 被解读之后篇章所聚焦的那个实体」；「我们把排序最高的前向中心称为 Cp（即“preferred center”，首选中心）。Cp 是对接下来将谈论哪个实体的一种预测」；§25.3.1 Brennan et al. 1987 的四种转移状态规则。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch25-t4",
+      "title": "自监督连贯判别：不需要人工标注的文本质量评估",
+      "angle": "观点：文本连贯性可以「自己学」——从原始顺序 vs 随机顺序的判别说起",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中只给任务定义，没有给基线实现和效果数据；②S3：涉及句子嵌入、对比学习、困难负采样等技术；③S5：直接落在作文评分、文本质量检测等现实应用上。",
+      "sourceAnchor": "§25.3.3「Barzilay 与 Lapata (2005) 提出了一个简化性的创新：连贯模型可以通过自监督来训练，即训练它区分篇章中句子自然的原始顺序与经过改动的顺序（如随机顺序）」；§25.3.3 三种自监督任务（判别、插入、重构）的难度递进。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch25-t5",
+      "title": "从 RST 到 PDTB：两种篇章标注框架的工程取舍",
+      "angle": "观点：建篇章树还是标片段对——RST 与 PDTB 的工程取舍",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中分别介绍两种框架，但没有系统对比它们的工程优劣；②S3：涉及标注成本、模型复杂度、任务适用性等多维对比；③S6：Carlson et al. 2001、Prasad et al. 2008、Lin et al. 2014 均可查。",
+      "sourceAnchor": "§25.1.2「与 RST 篇章树库不同，后者把这些成对的连贯」；§25.2.3「PDTB 篇章分析」。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+metric,correct,total,score
+UAS,5,6,0.8333
+LAS,4,6,0.6667
+LS,4,6,0.6667
+EM,0,1,0.0000

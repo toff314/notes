@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 22 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/22-semantic-role-labeling",
+    "anchor": "第22章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch22-t1",
+      "title": "为什么「主语」不等于「施事」：语义角色到底解决了什么问题",
+      "angle": "观点：为什么「主语」不等于「施事」——语义角色标注要解决的真正问题",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中把「主语≠施事」作为结论给出，但没有展开「如果不做这层抽象，问答/翻译/信息抽取会出什么具体错误」；②S3：涉及题元网格、语态交替、Levin 动词分类、VerbNet 等一整套语言学机制；③S5：直接落在问答系统、事件抽取、机器翻译等现实应用上。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §22.2「语义角色有助于对谓词论元的不同表层实现方式加以概括」；§22.2 中 break 的 5 种语态交替（施事主语/工具主语/主题主语/被动）与 give 的与格交替。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch22-t2",
+      "title": "PropBank vs FrameNet：两种语义角色体系的取舍",
+      "angle": "观点：PropBank 和 FrameNet 到底哪个好——语义角色标注的两种世界观",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S4 —— ①S1：书中分别介绍两派，但没有系统对比「什么任务该选哪个」；②S3：涉及框架继承、核心/非核心角色、跨词形泛化等技术细节；③S4：两派各有拥趸，且 CoNLL 评测中两派成绩互有胜负，反差强。",
+      "sourceAnchor": "§22.4「PropBank 中的语义角色是相对于单个动词义项来定义的」；§22.5「PropBank 项目中的角色特定于单个动词，而 FrameNet 项目中的角色特定于框架」；§22.5 中 change position on a scale 框架的完整框架元素列表。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch22-t3",
+      "title": "从硬约束到软偏好：选择限制的现代转身",
+      "angle": "观点：eat 的宾语必须是食物吗——选择限制从硬约束到软偏好的五十年",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中把「硬约束→软偏好」的转变作为历史注记给出，但没有展开「为什么这个转变是必然的」；②S3：涉及 FOL 表示、WordNet 义项集、Resnik 选择关联、条件概率模型等一串技术方案；③S6：Katz & Fodor 1963、Wilks 1975、Resnik 1993/1996、Brockmann & Lapata 2003 均可查。",
+      "sourceAnchor": "§22.7「选择限制是一种语义类型约束」；§22.7.2「在最早的实现中，选择限制被视为对谓词所能携带的论元种类的严格约束（Katz and Fodor 1963, Hirst 1987）」；「然而，人们很快就清楚地认识到，这些选择限制用偏好来表述比用严格约束更合适（Wilks 1975b, Wilks 1975a）」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch22-t4",
+      "title": "语义角色标注的特征工程：Gildea & Jurafsky 2000 到底提了什么",
+      "angle": "论文：SRL 的特征工程——从 Gildea & Jurafsky 2000 到 CoNLL-2005 的完整实现",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中列出特征但没有给完整实现；②S3：涉及句法分析、特征抽取、1-of-N 分类、全局优化（Viterbi/ILP）等一整套 pipeline；③S6：Gildea & Jurafsky 2000、CoNLL-2005 共享任务、Surdeanu et al. 2008 均可查。",
+      "sourceAnchor": "§22.6.1「大多数系统使用 Gildea and Jurafsky (2000) 提出的那组核心特征的一些推广」；§22.6.1 所列 10 项核心特征（支配谓词、短语类型、中心词、词性、句法路径、语态、线性位置、次范畴化、命名实体类型、成分首尾词）；图 22.5 的句法分析树与路径特征示例。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch22-t5",
+      "title": "从 kill = CAUSE + BECOME + NOT + ALIVE 到概念依存：谓词语义的还原论尝试",
+      "angle": "观点：能不能用十个基元动词表示一切——概念依存理论的野心与局限",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2 + S3 + S4 —— ①S2：可溯源到 Schank 1970 年代的 Yale AI 实验室、Lakoff 1965、Dowty 1979；②S3：涉及语义基元的定义、组合规则、题元角色关联等；③S4：「用十个基元表示一切」是 AI 史上最大胆的想法之一，但最终被统计方法取代，反差强。",
+      "sourceAnchor": "§22.8「KILL(x,y) ⇔ CAUSE(x, BECOME(NOT(ALIVE(y))))」；「更激进的做法则选择把这些谓词也进一步拆解。其中一种在早期自然语言系统中发挥过作用的动词谓词分解方法，叫作概念依存（CD），它由十个基元谓词组成，如图 22.8 所示」；图 22.8 的十个基元列表（ATRANS、PTRANS、MTRANS 等）。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

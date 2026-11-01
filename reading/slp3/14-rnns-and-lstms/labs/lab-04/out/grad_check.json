@@ -1,0 +1,5 @@
+{
+  "classifier_mean_pool_max_rel_err": 3.835998291959536e-08,
+  "charlm_untied_max_rel_err": 5.952779909739663e-08,
+  "charlm_tied_max_rel_err": 2.2997771248486825e-08
+}

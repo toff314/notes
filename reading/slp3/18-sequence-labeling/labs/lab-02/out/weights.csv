@@ -1,0 +1,21 @@
+template,arg,tag,weight
+T,"('DT', 'NN')",None,2.3468
+E,"('big',)",JJ,2.2723
+E,"('the',)",DT,2.0790
+E,"('a',)",DT,2.0291
+T,"('NN', 'VB')",None,1.9584
+T,"('NNP', 'VB')",None,1.8913
+S,"('Xx',)",NNP,1.7184
+T,"('JJ', 'NN')",None,1.7028
+T,"('DT', 'JJ')",None,1.5946
+E,"('dog',)",NN,1.5103
+S,"('x',)",NNP,-1.5073
+E,"('cat',)",NN,1.3611
+E,"('sleeps',)",VB,1.2335
+T,"('NN', 'NN')",None,-1.2188
+E,"('barks',)",VB,1.2158
+T,"('DT', 'DT')",None,-1.1746
+T,"('NN', 'DT')",None,-1.1042
+T,"('VB', 'DT')",None,1.0783
+E,"('big',)",NN,-0.8999
+T,"('DT', 'VB')",None,-0.8962

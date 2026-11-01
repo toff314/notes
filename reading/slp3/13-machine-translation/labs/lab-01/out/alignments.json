@@ -1,0 +1,331 @@
+{
+  "mean_P": 0.7917,
+  "mean_R": 0.5375,
+  "mean_F1": 0.631,
+  "pairs": [
+    {
+      "id": 1,
+      "en": "the house is big",
+      "de": "das haus ist groß",
+      "pred": [
+        {
+          "en": "a",
+          "de": "das"
+        },
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "the",
+          "de": "das"
+        },
+        {
+          "en": "house",
+          "de": "haus"
+        },
+        {
+          "en": "is",
+          "de": "ist"
+        },
+        {
+          "en": "big",
+          "de": "groß"
+        }
+      ],
+      "P": 1.0,
+      "R": 0.75,
+      "F1": 0.8571
+    },
+    {
+      "id": 2,
+      "en": "the house is small",
+      "de": "das haus ist klein",
+      "pred": [
+        {
+          "en": "a",
+          "de": "das"
+        },
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "the",
+          "de": "das"
+        },
+        {
+          "en": "house",
+          "de": "haus"
+        },
+        {
+          "en": "is",
+          "de": "ist"
+        },
+        {
+          "en": "small",
+          "de": "klein"
+        }
+      ],
+      "P": 1.0,
+      "R": 0.75,
+      "F1": 0.8571
+    },
+    {
+      "id": 3,
+      "en": "i see the house",
+      "de": "ich sehe das haus",
+      "pred": [
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "i",
+          "de": "ich"
+        },
+        {
+          "en": "see",
+          "de": "sehe"
+        },
+        {
+          "en": "the",
+          "de": "das"
+        },
+        {
+          "en": "house",
+          "de": "haus"
+        }
+      ],
+      "P": 1.0,
+      "R": 0.5,
+      "F1": 0.6667
+    },
+    {
+      "id": 4,
+      "en": "i see the big house",
+      "de": "ich sehe das große haus",
+      "pred": [
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        },
+        {
+          "en": "house",
+          "de": "ein"
+        }
+      ],
+      "gold": [
+        {
+          "en": "i",
+          "de": "ich"
+        },
+        {
+          "en": "see",
+          "de": "sehe"
+        },
+        {
+          "en": "the",
+          "de": "das"
+        },
+        {
+          "en": "big",
+          "de": "haus"
+        },
+        {
+          "en": "house",
+          "de": "große"
+        }
+      ],
+      "P": 0.3333,
+      "R": 0.2,
+      "F1": 0.25
+    },
+    {
+      "id": 5,
+      "en": "the dog is small",
+      "de": "der hund ist klein",
+      "pred": [
+        {
+          "en": "a",
+          "de": "<NULL>"
+        },
+        {
+          "en": "a",
+          "de": "das"
+        },
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "the",
+          "de": "der"
+        },
+        {
+          "en": "dog",
+          "de": "hund"
+        },
+        {
+          "en": "is",
+          "de": "ist"
+        },
+        {
+          "en": "small",
+          "de": "klein"
+        }
+      ],
+      "P": 0.75,
+      "R": 0.75,
+      "F1": 0.75
+    },
+    {
+      "id": 6,
+      "en": "i see the dog",
+      "de": "ich sehe den hund",
+      "pred": [
+        {
+          "en": "dog",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "i",
+          "de": "ich"
+        },
+        {
+          "en": "see",
+          "de": "sehe"
+        },
+        {
+          "en": "the",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "hund"
+        }
+      ],
+      "P": 0.5,
+      "R": 0.25,
+      "F1": 0.3333
+    },
+    {
+      "id": 7,
+      "en": "the dog sees the house",
+      "de": "der hund sieht das haus",
+      "pred": [
+        {
+          "en": "big",
+          "de": "<NULL>"
+        },
+        {
+          "en": "a",
+          "de": "das"
+        },
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "house",
+          "de": "ein"
+        }
+      ],
+      "gold": [
+        {
+          "en": "the",
+          "de": "der"
+        },
+        {
+          "en": "dog",
+          "de": "hund"
+        },
+        {
+          "en": "sees",
+          "de": "sieht"
+        },
+        {
+          "en": "the",
+          "de": "das"
+        },
+        {
+          "en": "house",
+          "de": "haus"
+        }
+      ],
+      "P": 0.75,
+      "R": 0.6,
+      "F1": 0.6667
+    },
+    {
+      "id": 8,
+      "en": "i see a house",
+      "de": "ich sehe ein haus",
+      "pred": [
+        {
+          "en": "big",
+          "de": "den"
+        },
+        {
+          "en": "dog",
+          "de": "der"
+        }
+      ],
+      "gold": [
+        {
+          "en": "i",
+          "de": "ich"
+        },
+        {
+          "en": "see",
+          "de": "sehe"
+        },
+        {
+          "en": "a",
+          "de": "ein"
+        },
+        {
+          "en": "house",
+          "de": "haus"
+        }
+      ],
+      "P": 1.0,
+      "R": 0.5,
+      "F1": 0.6667
+    }
+  ]
+}

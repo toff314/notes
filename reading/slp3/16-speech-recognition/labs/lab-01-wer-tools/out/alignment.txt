@@ -1,0 +1,29 @@
+# 对齐明细（S=替换 D=删除 I=插入 C=正确）
+
+## A-单替换  ref=6词  edit=1
+原始: C:the→the C:cat→cat C:sat→sat C:on→on S:the→a C:mat→mat
+规范: C:the→the C:cat→cat C:sat→sat C:on→on S:the→a C:mat→mat
+S/I/D = 1/0/0  WER_raw=16.67%  WER_norm=16.67%
+
+## B-缩合+多错  ref=8词  edit=4
+原始: C:i→i D:want→* S:to→wanna C:go→go D:to→* D:the→* C:store→store C:tomorrow→tomorrow
+规范: C:i→i D:want→* S:to→wanna C:go→go D:to→* D:the→* C:store→store C:tomorrow→tomorrow
+S/I/D = 1/0/3  WER_raw=50.00%  WER_norm=50.00%
+
+## C-带填充词  ref=10词  edit=4
+原始: D:um→* C:so→so D:the→* C:the→the C:phone→phone C:is→is C:on→on D:the→* C:desk→desk D:uh→*
+规范: C:so→so D:the→* C:the→the C:phone→phone C:is→is C:on→on D:the→* C:desk→desk
+S/I/D = 0/0/4  WER_raw=40.00%  WER_norm=25.00%
+
+## D-书中量级  ref=13词  edit=12
+原始: C:i→i I:*→got I:*→it I:*→to C:the→the S:phone→full S:is→it C:i→i D:left→* S:the→love C:phone→phone S:upstairs→form S:last→of S:night→stores S:uh→last S:ok→night
+规范: C:i→i I:*→got I:*→it I:*→to C:the→the S:phone→full S:is→it C:i→i I:*→love S:left→phone S:the→form S:phone→of S:upstairs→stores C:last→last C:night→night D:ok→*
+S/I/D = 8/3/1  WER_raw=92.31%  WER_norm=91.67%
+
+## E-对齐歧义  ref=4词  edit=4
+原始: S:a→c S:b→d S:c→a S:d→b
+规范: S:a→c S:b→d S:c→a S:d→b
+S/I/D = 4/0/0  WER_raw=100.00%  WER_norm=100.00%
+
+## 书中例子复算
+13 词参考，S=6 I=3 D=1 → 76.92%（书中 76.9%）；若分母误用假设词数 15 → 66.67%，可见分母口径会改变结论。

@@ -4,7 +4,7 @@
 
 ## 已收录
 
-**Speech and Language Processing（第三版）** ｜ 书目页：[`slp3/`](slp3/README.html) ｜ 进度：11 / 26 章（第 12 章原文占位，跳过）
+**Speech and Language Processing（第三版）** ｜ 书目页：[`slp3/`](slp3/README.html) ｜ 进度：24 / 26 章（第 12 章原文占位，跳过）
 
 | # | 章 | 笔记 | 卡片 | 自测 | 行动 | 实验 | 选题 |
 |---|---|---|---|---|---|---|---|
@@ -19,9 +19,21 @@
 | 9 | 掩码语言模型 | ✅ [笔记](slp3/09-masked-language-models/book-notes.html) | ✅ [卡片](slp3/09-masked-language-models/cards.html) | ✅ [自测](slp3/09-masked-language-models/self-test.html) | ✅ [行动](slp3/09-masked-language-models/actions.html) | ✅ [实验](slp3/09-masked-language-models/labs/index.html) | ✅ [选题](slp3/09-masked-language-models/spinoffs.html) |
 | 10 | 可解释性 | ✅ [笔记](slp3/10-interpretability/book-notes.html) | ✅ [卡片](slp3/10-interpretability/cards.html) | ✅ [自测](slp3/10-interpretability/self-test.html) | ✅ [行动](slp3/10-interpretability/actions.html) | ✅ [实验](slp3/10-interpretability/labs/index.html) | ✅ [选题](slp3/10-interpretability/spinoffs.html) |
 | 11 | 基于检索的模型 | ✅ [笔记](slp3/11-retrieval-based-models/book-notes.html) | ✅ [卡片](slp3/11-retrieval-based-models/cards.html) | ✅ [自测](slp3/11-retrieval-based-models/self-test.html) | ✅ [行动](slp3/11-retrieval-based-models/actions.html) | ✅ [实验](slp3/11-retrieval-based-models/labs/index.html) | ✅ [选题](slp3/11-retrieval-based-models/spinoffs.html) |
+| 13 | 机器翻译 | ✅ [笔记](slp3/13-machine-translation/book-notes.html) | ✅ [卡片](slp3/13-machine-translation/cards.html) | ✅ [自测](slp3/13-machine-translation/self-test.html) | ✅ [行动](slp3/13-machine-translation/actions.html) | ✅ [实验](slp3/13-machine-translation/labs/index.html) | ✅ [选题](slp3/13-machine-translation/spinoffs.html) |
+| 14 | RNN 与 LSTM | ✅ [笔记](slp3/14-rnns-and-lstms/book-notes.html) | ✅ [卡片](slp3/14-rnns-and-lstms/cards.html) | ✅ [自测](slp3/14-rnns-and-lstms/self-test.html) | ✅ [行动](slp3/14-rnns-and-lstms/actions.html) | ✅ [实验](slp3/14-rnns-and-lstms/labs/index.html) | ✅ [选题](slp3/14-rnns-and-lstms/spinoffs.html) |
+| 15 | 语音学与语音 | ✅ [笔记](slp3/15-phonetics-and-speech/book-notes.html) | ✅ [卡片](slp3/15-phonetics-and-speech/cards.html) | ✅ [自测](slp3/15-phonetics-and-speech/self-test.html) | ✅ [行动](slp3/15-phonetics-and-speech/actions.html) | ✅ [实验](slp3/15-phonetics-and-speech/labs/index.html) | ✅ [选题](slp3/15-phonetics-and-speech/spinoffs.html) |
+| 16 | 语音识别 | ✅ [笔记](slp3/16-speech-recognition/book-notes.html) | ✅ [卡片](slp3/16-speech-recognition/cards.html) | ✅ [自测](slp3/16-speech-recognition/self-test.html) | ✅ [行动](slp3/16-speech-recognition/actions.html) | ✅ [实验](slp3/16-speech-recognition/labs/index.html) | ✅ [选题](slp3/16-speech-recognition/spinoffs.html) |
+| 17 | 文本转语音 | ✅ [笔记](slp3/17-text-to-speech/book-notes.html) | ✅ [卡片](slp3/17-text-to-speech/cards.html) | ✅ [自测](slp3/17-text-to-speech/self-test.html) | ✅ [行动](slp3/17-text-to-speech/actions.html) | ✅ [实验](slp3/17-text-to-speech/labs/index.html) | ✅ [选题](slp3/17-text-to-speech/spinoffs.html) |
+| 19 | 上下文无关文法与成分句法分析 | ✅ [笔记](slp3/19-cfg-and-parsing/book-notes.html) | ✅ [卡片](slp3/19-cfg-and-parsing/cards.html) | ✅ [自测](slp3/19-cfg-and-parsing/self-test.html) | ✅ [行动](slp3/19-cfg-and-parsing/actions.html) | ✅ [实验](slp3/19-cfg-and-parsing/labs/index.html) | ✅ [选题](slp3/19-cfg-and-parsing/spinoffs.html) |
+| 20 | 依存句法分析 | ✅ [笔记](slp3/20-dependency-parsing/book-notes.html) | ✅ [卡片](slp3/20-dependency-parsing/cards.html) | ✅ [自测](slp3/20-dependency-parsing/self-test.html) | ✅ [行动](slp3/20-dependency-parsing/actions.html) | ✅ [实验](slp3/20-dependency-parsing/labs/index.html) | ✅ [选题](slp3/20-dependency-parsing/spinoffs.html) |
+| 21 | 信息抽取 | ✅ [笔记](slp3/21-information-extraction/book-notes.html) | ✅ [卡片](slp3/21-information-extraction/cards.html) | ✅ [自测](slp3/21-information-extraction/self-test.html) | ✅ [行动](slp3/21-information-extraction/actions.html) | ✅ [实验](slp3/21-information-extraction/labs/index.html) | ✅ [选题](slp3/21-information-extraction/spinoffs.html) |
+| 22 | 语义角色标注 | ✅ [笔记](slp3/22-semantic-role-labeling/book-notes.html) | ✅ [卡片](slp3/22-semantic-role-labeling/cards.html) | ✅ [自测](slp3/22-semantic-role-labeling/self-test.html) | ✅ [行动](slp3/22-semantic-role-labeling/actions.html) | ✅ [实验](slp3/22-semantic-role-labeling/labs/index.html) | ✅ [选题](slp3/22-semantic-role-labeling/spinoffs.html) |
+| 23 | 词汇表与情感分析 | ✅ [笔记](slp3/23-lexicons-sentiment/book-notes.html) | ✅ [卡片](slp3/23-lexicons-sentiment/cards.html) | ✅ [自测](slp3/23-lexicons-sentiment/self-test.html) | ✅ [行动](slp3/23-lexicons-sentiment/actions.html) | ✅ [实验](slp3/23-lexicons-sentiment/labs/index.html) | ✅ [选题](slp3/23-lexicons-sentiment/spinoffs.html) |
+| 24 | 共指消解与实体链接 | ✅ [笔记](slp3/24-coreference-entity-linking/book-notes.html) | ✅ [卡片](slp3/24-coreference-entity-linking/cards.html) | ✅ [自测](slp3/24-coreference-entity-linking/self-test.html) | ✅ [行动](slp3/24-coreference-entity-linking/actions.html) | ✅ [实验](slp3/24-coreference-entity-linking/labs/index.html) | ✅ [选题](slp3/24-coreference-entity-linking/spinoffs.html) |
+| 25 | 篇章与连贯 | ✅ [笔记](slp3/25-discourse-coherence/book-notes.html) | ✅ [卡片](slp3/25-discourse-coherence/cards.html) | ✅ [自测](slp3/25-discourse-coherence/self-test.html) | ✅ [行动](slp3/25-discourse-coherence/actions.html) | ✅ [实验](slp3/25-discourse-coherence/labs/index.html) | ✅ [选题](slp3/25-discourse-coherence/spinoffs.html) |
+| 26 | 对话结构 | ✅ [笔记](slp3/26-conversation-structure/book-notes.html) | ✅ [卡片](slp3/26-conversation-structure/cards.html) | ✅ [自测](slp3/26-conversation-structure/self-test.html) | ✅ [行动](slp3/26-conversation-structure/actions.html) | ✅ [实验](slp3/26-conversation-structure/labs/index.html) | ✅ [选题](slp3/26-conversation-structure/spinoffs.html) |
 | 12 | 智能体 | ⛔ 原文占位 | — | — | — | — | — |
 
-## 新增一本书
 
 1. 指定书稿路径（`.pdf` / `.epub` / `.md` / `.txt` 均可），用 `write-read-notes` 按章产出；
 2. 在 `reading/<book-slug>/` 下为每章建 `<NN-chapter>/`，放入六件套 + `labs/`；书目级 `README.md` 做索引；

@@ -1,0 +1,12 @@
+{
+  "teacher_forced_loss": 0.07487462766278183,
+  "teacher_forced_ppl": 1.0777490225002424,
+  "free_running_loss": 9.188859892321286,
+  "free_running_ppl": 9787.485827927812,
+  "vocab_size": 22,
+  "d_h": 24,
+  "d_e": 16,
+  "n_params": 1886,
+  "first_epoch_loss": 2.4401829995130626,
+  "final_epoch_loss": 0.1223648324152344
+}

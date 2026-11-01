@@ -1,0 +1,68 @@
+{
+  "sentences": [
+    "John went to his favorite music store.",
+    "He bought a piano.",
+    "He was excited, finally he could own a piano."
+  ],
+  "trace": [
+    {
+      "utterance": "U1",
+      "sentence": "John went to his favorite music store.",
+      "entities": [
+        {
+          "text": "John",
+          "role": "subject"
+        }
+      ],
+      "Cf": [
+        "John"
+      ],
+      "Cb": null,
+      "Cp": "John",
+      "transition": "Start"
+    },
+    {
+      "utterance": "U2",
+      "sentence": "He bought a piano.",
+      "entities": [
+        {
+          "text": "John",
+          "role": "subject"
+        },
+        {
+          "text": "piano",
+          "role": "object"
+        }
+      ],
+      "Cf": [
+        "John",
+        "piano"
+      ],
+      "Cb": "John",
+      "Cp": "John",
+      "transition": "Smooth-Shift"
+    },
+    {
+      "utterance": "U3",
+      "sentence": "He was excited, finally he could own a piano.",
+      "entities": [
+        {
+          "text": "John",
+          "role": "subject"
+        },
+        {
+          "text": "piano",
+          "role": "object"
+        }
+      ],
+      "Cf": [
+        "John",
+        "piano"
+      ],
+      "Cb": "John",
+      "Cp": "John",
+      "transition": "Continue"
+    }
+  ],
+  "note": "简化实现：语法角色用规则模拟，实际应用应使用 spaCy"
+}

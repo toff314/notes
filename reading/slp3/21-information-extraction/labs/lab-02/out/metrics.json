@@ -1,0 +1,42 @@
+{
+  "n_train": 48,
+  "n_test": 14,
+  "n_classes": 4,
+  "full_macro_f1": 1.0,
+  "no_type_macro_f1": 0.75,
+  "delta": 0.25,
+  "full_feature_dim": 119,
+  "no_type_feature_dim": 115,
+  "full_confusion": [
+    [
+      4,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      4,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      4
+    ]
+  ],
+  "full_labels": [
+    "employed-by",
+    "founder-of",
+    "located-in",
+    "no-relation"
+  ]
+}

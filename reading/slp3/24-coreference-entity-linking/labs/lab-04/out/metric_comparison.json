@@ -1,0 +1,43 @@
+{
+  "gold_vs_pred_perfect": {
+    "MUC": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0
+    },
+    "B3": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0
+    },
+    "CEAFe": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0
+    },
+    "CoNLL_F1": 1.0
+  },
+  "gold_vs_pred_bad": {
+    "MUC": {
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909
+    },
+    "B3": {
+      "P": 0.812,
+      "R": 1.0,
+      "F1": 0.897
+    },
+    "CEAFe": {
+      "P": 0.875,
+      "R": 0.875,
+      "F1": 0.875
+    },
+    "CoNLL_F1": 0.894
+  },
+  "metric_differences": {
+    "MUC_bias": "MUC 偏好产生大链：对 PRED_BAD 的 F1 比 B³ 高，因为 MUC 奖励把更多提及并入同一链",
+    "B3_mention_based": "B³ 基于提及而非链接，对单例和错误合并更敏感",
+    "CEAFe_entity_alignment": "CEAFe 通过实体对齐，介于 MUC 和 B³ 之间，是 CoNLL 标准"
+  }
+}

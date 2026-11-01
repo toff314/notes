@@ -1,0 +1,3 @@
+text,gold,pred,pos,neg
+"Not bad at all, actually good",pos,neg,1,1
+"Good enough, not amazing",neg,pos,2,0

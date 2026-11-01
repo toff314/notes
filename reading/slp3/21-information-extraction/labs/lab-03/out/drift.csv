@@ -1,0 +1,4 @@
+round,top_pattern,n_new,n_tp,precision,cumulative_n
+1,X是Y的一种|X等Y,5,5,1.0,8
+2,X是Y的一种|X等Y,13,0,0.0,21
+3,X是Y的一种|X等Y,0,0,0.0,21

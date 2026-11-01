@@ -1,0 +1,3 @@
+(S (Verb book) (NP (Det the) (Nominal (Nominal flight) (PP (Preposition through) (NP houston)))))
+(S (Verb book) (X3 (NP (Det the) (Nominal flight)) (PP (Preposition through) (NP houston))))
+(S (VP (Verb book) (NP (Det the) (Nominal flight))) (PP (Preposition through) (NP houston)))

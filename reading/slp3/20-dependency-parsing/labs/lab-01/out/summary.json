@@ -1,0 +1,12 @@
+{
+  "gold_exact_match": "4/4",
+  "total_actions": 48,
+  "actions_per_sentence": [
+    10,
+    10,
+    14,
+    14
+  ],
+  "check_actions_eq_2n": true,
+  "note": "每句动作数 = 词数(全 SHIFT) + 弧数(含 root 弧，每弧一次归约) = 2n"
+}

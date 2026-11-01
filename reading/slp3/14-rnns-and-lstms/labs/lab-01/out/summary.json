@@ -1,0 +1,45 @@
+{
+  "dims": {
+    "d_in": 6,
+    "d_h": 4,
+    "d_out": 5,
+    "T": 6
+  },
+  "shapes": {
+    "W": [
+      4,
+      6
+    ],
+    "U": [
+      4,
+      4
+    ],
+    "V": [
+      5,
+      4
+    ],
+    "hs": [
+      6,
+      4
+    ],
+    "ys": [
+      6,
+      5
+    ]
+  },
+  "params_total": 60,
+  "params_total_T60": 60,
+  "loop_vs_vectorized_max_abs_diff": 0.0,
+  "row_sums_max_dev": 2.220446049250313e-16,
+  "influence_delta_y": [
+    0.005393,
+    0.014993,
+    0.013575,
+    0.006934,
+    0.001877,
+    0.000379
+  ],
+  "influence_ratio_last_over_first": 0.07019014215252559,
+  "h_abs_mean": 0.6230514650883677,
+  "h_tanh_saturation_ratio": 0.2916666666666667
+}

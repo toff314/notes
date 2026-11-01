@@ -1,0 +1,25 @@
+{
+  "toy": {
+    "greedy": {
+      "1": 3,
+      "2": 0,
+      "3": 0
+    },
+    "greedy_cycle": null,
+    "mst": {
+      "3": 0,
+      "2": 3,
+      "1": 3
+    },
+    "brute": {
+      "1": 3,
+      "2": 3,
+      "3": 0
+    },
+    "score": 25,
+    "agree": true
+  },
+  "random_agree": 150,
+  "random_same_heads": 147,
+  "random_total": 150
+}

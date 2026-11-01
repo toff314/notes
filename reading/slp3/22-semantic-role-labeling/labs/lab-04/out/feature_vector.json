@@ -1,0 +1,75 @@
+{
+  "sentence": "The San Francisco Examiner issued a special edition yesterday",
+  "predicate": "issued",
+  "features": {
+    "governing_predicate": "issued",
+    "phrase_type": "NP-SBJ",
+    "head_word": "Examiner",
+    "head_pos": "NNP",
+    "path": "NP↑S↓VP↓VBD",
+    "voice": "active",
+    "linear_position": "before",
+    "subcategorization": "VP → VBD NP PP",
+    "named_entity_type": "ORG",
+    "first_word": "The",
+    "last_word": "Examiner"
+  },
+  "validation": [
+    {
+      "feature": "governing_predicate",
+      "value": "issued",
+      "matches_book": true
+    },
+    {
+      "feature": "phrase_type",
+      "value": "NP-SBJ",
+      "matches_book": true
+    },
+    {
+      "feature": "head_word",
+      "value": "Examiner",
+      "matches_book": true
+    },
+    {
+      "feature": "head_pos",
+      "value": "NNP",
+      "matches_book": true
+    },
+    {
+      "feature": "path",
+      "value": "NP↑S↓VP↓VBD",
+      "matches_book": true
+    },
+    {
+      "feature": "voice",
+      "value": "active",
+      "matches_book": true
+    },
+    {
+      "feature": "linear_position",
+      "value": "before",
+      "matches_book": true
+    },
+    {
+      "feature": "subcategorization",
+      "value": "VP → VBD NP PP",
+      "matches_book": true
+    },
+    {
+      "feature": "named_entity_type",
+      "value": "ORG",
+      "matches_book": true
+    },
+    {
+      "feature": "first_word",
+      "value": "The",
+      "matches_book": true
+    },
+    {
+      "feature": "last_word",
+      "value": "Examiner",
+      "matches_book": true
+    }
+  ],
+  "all_match": true
+}

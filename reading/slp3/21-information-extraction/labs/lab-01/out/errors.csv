@@ -1,0 +1,17 @@
+config,child,parent,sentence
+A_naive,紫菜,红藻富含碘元素,紫菜等红藻富含碘元素。
+A_naive,石花菜,红藻可用于提取琼胶,石花菜等红藻可用于提取琼胶。
+A_naive,国航,航空公司本周上调了票,国航等航空公司本周上调了票价。
+A_naive,东航,航空公司随即跟进,东航等航空公司随即跟进。
+A_naive,Python,编程语言在本课程中使,Python 等编程语言在本课程中使用。
+A_naive,Rust,编程语言适合写系统软,Rust 等编程语言适合写系统软件。
+A_naive,MySQL,数据库支撑了大量中小,MySQL 等数据库支撑了大量中小网站。
+A_naive,PostgreSQL,数据库支持复杂查询,PostgreSQL 等数据库支持复杂查询。
+A_naive,国航,了三小时才起飞,国航等了三小时才起飞。
+A_naive,东航等通知,了一整天,东航等通知等了一整天。
+A_naive,MySQL,不到了,MySQL 等不到了，先开会。
+A_naive,Python,脚本跑完再说,Python 等脚本跑完再说。
+A_naive,了燃油,票价,票价包括了燃油和税费。
+A_naive,税费,票价,票价包括了燃油和税费。
+A_naive,燃油附加费,机票价格,机票价格包括燃油附加费和税费。
+A_naive,税费,机票价格,机票价格包括燃油附加费和税费。

@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "verb": "read",
+      "observed_association": {
+        "WRITING": 6.8,
+        "ACTIVITY": -0.2
+      },
+      "implied_p_c_given_v": {
+        "WRITING": 0.9991,
+        "ACTIVITY": 0.0009
+      },
+      "total_association": 6.6
+    },
+    {
+      "verb": "write",
+      "observed_association": {
+        "WRITING": 7.26,
+        "COMMERCE": 0
+      },
+      "implied_p_c_given_v": {
+        "WRITING": 0.9993,
+        "COMMERCE": 0.0007
+      },
+      "total_association": 7.26
+    },
+    {
+      "verb": "see",
+      "observed_association": {
+        "ENTITY": 5.79,
+        "METHOD": -0.01
+      },
+      "implied_p_c_given_v": {
+        "ENTITY": 0.997,
+        "METHOD": 0.003
+      },
+      "total_association": 5.78
+    }
+  ],
+  "note": "用 exp(A_R) 反推 P(c|v)，验证相对偏好"
+}

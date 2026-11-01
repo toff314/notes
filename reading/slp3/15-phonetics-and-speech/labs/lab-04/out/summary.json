@@ -1,0 +1,45 @@
+{
+  "n_mfcc": 13,
+  "dim_39": 39,
+  "f0_estimation": [
+    {
+      "true_F0": 100,
+      "quefrency_sample": 160,
+      "quefrency_ms": 10.0,
+      "est_F0": 100.0,
+      "err_Hz": 0.0
+    },
+    {
+      "true_F0": 120,
+      "quefrency_sample": 133,
+      "quefrency_ms": 8.31,
+      "est_F0": 120.3,
+      "err_Hz": 0.3
+    },
+    {
+      "true_F0": 150,
+      "quefrency_sample": 107,
+      "quefrency_ms": 6.69,
+      "est_F0": 149.5,
+      "err_Hz": -0.5
+    },
+    {
+      "true_F0": 200,
+      "quefrency_sample": 80,
+      "quefrency_ms": 5.0,
+      "est_F0": 200.0,
+      "err_Hz": 0.0
+    }
+  ],
+  "dist_same_filter_diff_f0": {
+    "cepstrum_c1_12": 3.076,
+    "logmel": 5.25
+  },
+  "dist_diff_vowel_same_f0": {
+    "cepstrum_c1_12": 16.205,
+    "logmel": 16.691
+  },
+  "ratio_cepstrum": 5.3,
+  "ratio_logmel": 3.2,
+  "transition_frame": 17
+}

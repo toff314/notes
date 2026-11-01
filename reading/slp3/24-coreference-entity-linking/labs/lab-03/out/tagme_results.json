@@ -1,0 +1,101 @@
+{
+  "demo_yuan_disambiguation": {
+    "Yuan": {
+      "candidates": [
+        {
+          "entity": "Yuan_dynasty",
+          "prior": 0.55,
+          "vote": 0.0,
+          "score": 0.55
+        },
+        {
+          "entity": "Yuan_currency",
+          "prior": 0.45,
+          "vote": 0.0,
+          "score": 0.45
+        }
+      ],
+      "chosen": "Yuan_dynasty"
+    }
+  },
+  "news_text_entity_linking": {
+    "Victoria Chen": {
+      "candidates": [
+        {
+          "entity": "Victoria_Chen",
+          "prior": 0.7,
+          "vote": 0.0,
+          "score": 0.7
+        },
+        {
+          "entity": "Victoria_British_Columbia",
+          "prior": 0.3,
+          "vote": 0.0,
+          "score": 0.3
+        }
+      ],
+      "chosen": "Victoria_Chen"
+    },
+    "Megabucks": {
+      "candidates": [
+        {
+          "entity": "Megabucks_Banking",
+          "prior": 0.6,
+          "vote": 0.0,
+          "score": 0.6
+        },
+        {
+          "entity": "Victoria_Chen",
+          "prior": 0.4,
+          "vote": 0.0,
+          "score": 0.4
+        }
+      ],
+      "chosen": "Megabucks_Banking"
+    }
+  },
+  "inlinks": {
+    "Kublai_Khan": [
+      "Yuan_dynasty"
+    ],
+    "Dadu": [
+      "Yuan_dynasty"
+    ],
+    "Chinese_dynasty": [
+      "Yuan_dynasty"
+    ],
+    "Mongol_Empire": [
+      "Yuan_dynasty"
+    ],
+    "China": [
+      "Yuan_currency"
+    ],
+    "Renminbi": [
+      "Yuan_currency"
+    ],
+    "Currency": [
+      "Yuan_currency"
+    ],
+    "CFO": [
+      "Victoria_Chen"
+    ],
+    "Megabucks_Banking": [
+      "Victoria_Chen"
+    ],
+    "Banking": [
+      "Victoria_Chen"
+    ],
+    "British_Columbia": [
+      "Victoria_British_Columbia"
+    ],
+    "Canada": [
+      "Victoria_British_Columbia"
+    ],
+    "Capital_city": [
+      "Victoria_British_Columbia"
+    ]
+  },
+  "explanation": {
+    "yuan_dynasty_wins": "先验 0.55 已较高；且 KB 中 Yuan_dynasty 出链到 Chinese_dynasty 等，与上下文『朝代』概念关联度更高；Yuan_currency 先验较低且无关联。"
+  }
+}

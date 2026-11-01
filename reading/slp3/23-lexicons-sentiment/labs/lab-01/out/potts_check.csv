@@ -1,0 +1,4 @@
+item,computed,book_value,diff
+P(disappointing|1),0.000337,0.0003,0.000037
+"PottsScore(disappointing,1)",0.1000,0.10,0.0000
+sum(PottsScore),0.9900,1.0,0.0100

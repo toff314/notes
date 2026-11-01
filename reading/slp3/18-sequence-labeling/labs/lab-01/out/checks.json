@@ -1,0 +1,44 @@
+{
+  "row_sums": {
+    "NNP": 0.4679,
+    "MD": 0.973,
+    "VB": 0.4574,
+    "JJ": 0.5685,
+    "NN": 0.1833,
+    "RB": 0.352,
+    "DT": 0.819
+  },
+  "row_sum_max_dev": 0.8167,
+  "rows_not_normalized": [
+    "NNP",
+    "MD",
+    "VB",
+    "JJ",
+    "NN",
+    "RB",
+    "DT"
+  ],
+  "gold_path_recovered": true,
+  "decoded_path": [
+    "NNP",
+    "MD",
+    "VB",
+    "DT",
+    "NN"
+  ],
+  "final_log_score": -33.83886677615418,
+  "final_prob": 2.0135707102213835e-15,
+  "book_value_2.772e-8": 2.772e-08,
+  "rel_diff_will_MD_vs_book": 0.08371882793650884,
+  "will_MD_cell_prob": 3.0040685910400024e-08,
+  "baseline_all_NNP_acc": 0.2,
+  "baseline_most_frequent_tag_acc": 0.8,
+  "baseline_mft_path": [
+    "NNP",
+    "MD",
+    "RB",
+    "DT",
+    "NN"
+  ],
+  "hmm_acc": 1.0
+}

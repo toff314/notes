@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 19 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/19-cfg-and-parsing",
+    "anchor": "第19章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch19-t1",
+      "chapterLabel": "第19章",
+      "title": "一个 5 词的句子为什么会有 3 棵合法树",
+      "hook": "book the flight through houston 的三种分析——PP 附着歧义如何吃掉你的 parser",
+      "angle": "观点：PP 附着歧义不是分析器的 bug，而是文法本身的组合爆炸",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中只给结论与图 19.14，没有给出三种分析的完整括号串；②S3：涉及 CNF 转换、单元产生式消除、回溯指针设计；③S6：Hindle and Rooth (1993)、Ratnaparkhi (1998) 均可查。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §19.6.2「注意，单元格 [0,5] 中的动作表明该输入存在三种不同的分析」；§19.5「介词短语既可以附着在 NP 内、也可以附着在 VP 内等不同归属所造成的歧义」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch19-t2",
+      "chapterLabel": "第19章",
+      "title": "CKY 的秘密不是动态规划，是「左部只有一个符号」",
+      "hook": "为什么 CKY 能多项式时间枚举所有句法树——上下文无关这个约束到底解放了什么",
+      "angle": "观点：动态规划不是万能优化，上下文无关才是 CKY 可行的形式前提",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中把 CKY 的正确性藏在两句「上下文无关」里，没有点破因果链；②S3：涉及 αAγ ⇒ αβγ 的上下文无关性、子问题独立性、记忆化三个层次；③S6：Hopcroft & Ullman (1979)、Aho & Ullman (1972) 均可查。",
+      "sourceAnchor": "§19.6「动态规划的优势来自于我们文法规则的上下文无关性质——一旦在输入的某个片段中发现了一个成分，我们就可以记录它的存在，并让它可供任何后续可能需要它的推导使用」；§19.2.1「若 A →β 是 R 的一条产生式，且 α 与 γ 是集合 (Σ∪N)∗ 中的任意串，则我们说 αAγ 直接推导出 αβγ」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch19-t3",
+      "chapterLabel": "第19章",
+      "title": "从树库读文法：4,500 条 VP 规则的教训",
+      "hook": "树库不是文法的答案——4,500 条 VP 规则暴露了「从数据读规则」的极限",
+      "angle": "观点：纯枚举不等于理解，扁平文法的规则爆炸是数据驱动方法的内在代价",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S4 + S5 —— ①S1：书中只给数字与一句「非常扁平」，没有展开「为什么扁平会导致规则爆炸」；②S4：直觉是「数据驱动的文法更可靠」，但 4,500 条规则说明纯枚举不等于理解；③S5：现代 NLP 系统仍隐式使用树库做评估。",
+      "sourceAnchor": "§19.3「用于分析宾州树库的文法非常扁平，导致规则数量极多」；「在约 4,500 条用于展开 VP 的不同规则中，有分别针对任意长度的 PP 序列以及动词论元各种可能排列方式的规则」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch19-t4",
+      "chapterLabel": "第19章",
+      "title": "从零实现 CKY：CNF 转换、填表、回溯、枚举",
+      "hook": "不调用 spaCy 也能做句法分析——CKY 算法的完整 Python 实现",
+      "angle": "论文：把图 19.12 的伪代码落成 300 行可运行 Python，并验证 5 词句确实给出 3 种分析",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中只给伪代码与填表示例，没有给可运行实现；②S3：涉及 CNF 转换、单元产生式闭包、回溯指针、树枚举四个模块；③S6：Aho & Ullman (1972)、Grune & Jacobs (2008) 均可查。",
+      "sourceAnchor": "§19.6.1「CKY 算法要求文法首先处于乔姆斯基范式（CNF）」；§19.6.2「图 19.12 给出的算法一次填充一列地填写这个上三角矩阵，从左到右推进，每一列都自底向上填充」；§19.6.3「第一处改动是扩充表中的条目，使每个非终结符都配以指向其来源表条目的指针」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch19-t5",
+      "chapterLabel": "第19章",
+      "title": "贪心解码 95% 能成树，剩下 5% 是硬伤",
+      "hook": "神经句法分析的贪心陷阱——为什么 95% 的合法树率仍然不够",
+      "angle": "观点：贪心解码的 95% 合法树率高度依赖任务与数据，不能当作常数引用",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S1 + S3 + S4 —— ①S1：书中只给 95% 一个数字，没有展开「剩下 5% 长什么样」；②S3：涉及结构化预测、解码约束、全局 vs 局部最优；③S4：大众叙事是「神经网络端到端」，但 5% 的失败率是工程硬伤。",
+      "sourceAnchor": "§19.7.2「这种贪心方法不保证能产生一棵树，因为某个跨度的最佳标签可能无法嵌入一棵完整的树。然而在实践中，贪心方法往往能找到树；Gaddy et al. (2018) 在实验中发现，95% 的预测括号结构能形成有效的树。」",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+case,bleu4_smooth,bleu4_raw
+HYP1,0.8091,0.7598
+HYP2,0.0000,0.0000
+corpus5,0.5528,
+segment,chrf2
+"the house is big",1.0000
+"the dog is small",1.0000
+"i see a house",0.4062
+"the dog sees house",0.6533
+"i see big dog",0.5672

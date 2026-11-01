@@ -1,0 +1,110 @@
+{
+  "greedy": {
+    "seq": "yes yes EOS",
+    "prob": 0.2,
+    "trace": [
+      {
+        "step": 1,
+        "prefix": "<s>",
+        "chosen": "yes",
+        "p_chosen": 0.5,
+        "alternatives": {
+          "yes": 0.5,
+          "ok": 0.4,
+          "the": 0.05,
+          "EOS": 0.05
+        }
+      },
+      {
+        "step": 2,
+        "prefix": "yes",
+        "chosen": "yes",
+        "p_chosen": 0.4,
+        "alternatives": {
+          "yes": 0.4,
+          "ok": 0.3,
+          "EOS": 0.2,
+          "the": 0.1
+        }
+      },
+      {
+        "step": 3,
+        "prefix": "yes yes",
+        "chosen": "EOS",
+        "p_chosen": 1.0,
+        "alternatives": {
+          "EOS": 1.0
+        }
+      }
+    ]
+  },
+  "beam": {
+    "k": 2,
+    "pool": [
+      {
+        "hyp": "ok ok EOS",
+        "logp": -1.273
+      },
+      {
+        "hyp": "yes yes EOS",
+        "logp": -1.6094
+      },
+      {
+        "hyp": "yes EOS",
+        "logp": -2.3026
+      },
+      {
+        "hyp": " EOS",
+        "logp": -2.9957
+      },
+      {
+        "hyp": "ok EOS",
+        "logp": -3.2189
+      }
+    ]
+  },
+  "length_norm": {
+    "trials": 2000,
+    "n_hyp": 6,
+    "alpha": 1.0,
+    "flip_rate_gnmt": 0.1135,
+    "flip_rate_avg": 0.228
+  },
+  "top2_scores": [
+    {
+      "hyp": "ok ok EOS",
+      "len": 2,
+      "logp": -1.273,
+      "avg_lp": -0.6365,
+      "gnmt": -1.0911
+    },
+    {
+      "hyp": "yes yes EOS",
+      "len": 2,
+      "logp": -1.6094,
+      "avg_lp": -0.8047,
+      "gnmt": -1.3795
+    },
+    {
+      "hyp": "yes EOS",
+      "len": 1,
+      "logp": -2.3026,
+      "avg_lp": -2.3026,
+      "gnmt": -2.3026
+    },
+    {
+      "hyp": " EOS",
+      "len": 0,
+      "logp": -2.9957,
+      "avg_lp": -2.9957,
+      "gnmt": -2.9957
+    },
+    {
+      "hyp": "ok EOS",
+      "len": 1,
+      "logp": -3.2189,
+      "avg_lp": -3.2189,
+      "gnmt": -3.2189
+    }
+  ]
+}

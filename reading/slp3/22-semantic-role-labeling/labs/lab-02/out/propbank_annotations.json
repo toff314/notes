@@ -1,0 +1,147 @@
+{
+  "parsed_frames": {
+    "agree.01": {
+      "verb": "agree.01",
+      "roles": {
+        "Arg0": "同意者",
+        "Arg1": "命题",
+        "Arg2": "其他表示同意的实体"
+      },
+      "num_roles": 3
+    },
+    "fall.01": {
+      "verb": "fall.01",
+      "roles": {
+        "Arg1": "逻辑主语、受事、下落之物",
+        "Arg2": "幅度、落下的量",
+        "Arg3": "起始点",
+        "Arg4": "终点、arg1 的结束状态"
+      },
+      "num_roles": 4
+    },
+    "increase.01": {
+      "verb": "increase.01",
+      "roles": {
+        "Arg0": "增加的致使者",
+        "Arg1": "增加之物",
+        "Arg2": "增加量、EXT 或 MNR",
+        "Arg3": "起始点",
+        "Arg4": "终点"
+      },
+      "num_roles": 5
+    }
+  },
+  "annotations": [
+    {
+      "verb": "agree.01",
+      "sentence": "[Arg0 The group] agreed [Arg1 it wouldn't make an offer].",
+      "annotations": [
+        {
+          "tag": "Arg0",
+          "text": "The group"
+        },
+        {
+          "tag": "Arg1",
+          "text": "it wouldn't make an offer"
+        }
+      ]
+    },
+    {
+      "verb": "agree.01",
+      "sentence": "[ArgM-TMP Usually] [Arg0 John] agrees [Arg2 with Mary] [Arg1 on everything].",
+      "annotations": [
+        {
+          "tag": "ArgM-TMP",
+          "text": "Usually"
+        },
+        {
+          "tag": "Arg0",
+          "text": "John"
+        },
+        {
+          "tag": "Arg2",
+          "text": "with Mary"
+        },
+        {
+          "tag": "Arg1",
+          "text": "on everything"
+        }
+      ]
+    },
+    {
+      "verb": "fall.01",
+      "sentence": "[Arg1 Sales] fell [Arg4 to $25 million] [Arg3 from $27 million].",
+      "annotations": [
+        {
+          "tag": "Arg1",
+          "text": "Sales"
+        },
+        {
+          "tag": "Arg4",
+          "text": "to $25 million"
+        },
+        {
+          "tag": "Arg3",
+          "text": "from $27 million"
+        }
+      ]
+    },
+    {
+      "verb": "fall.01",
+      "sentence": "[Arg1 The average junk bond] fell [Arg2 by 4.2%].",
+      "annotations": [
+        {
+          "tag": "Arg1",
+          "text": "The average junk bond"
+        },
+        {
+          "tag": "Arg2",
+          "text": "by 4.2%"
+        }
+      ]
+    },
+    {
+      "verb": "increase.01",
+      "sentence": "[Arg0 Big Fruit Co.] increased [Arg1 the price of bananas].",
+      "annotations": [
+        {
+          "tag": "Arg0",
+          "text": "Big Fruit Co."
+        },
+        {
+          "tag": "Arg1",
+          "text": "the price of bananas"
+        }
+      ]
+    },
+    {
+      "verb": "increase.01",
+      "sentence": "[Arg1 The price of bananas] was increased again [Arg0 by Big Fruit Co.].",
+      "annotations": [
+        {
+          "tag": "Arg1",
+          "text": "The price of bananas"
+        },
+        {
+          "tag": "Arg0",
+          "text": "by Big Fruit Co."
+        }
+      ]
+    },
+    {
+      "verb": "increase.01",
+      "sentence": "[Arg1 The price of bananas] increased [Arg2 5%].",
+      "annotations": [
+        {
+          "tag": "Arg1",
+          "text": "The price of bananas"
+        },
+        {
+          "tag": "Arg2",
+          "text": "5%"
+        }
+      ]
+    }
+  ],
+  "total_sentences": 7
+}

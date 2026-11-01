@@ -1,0 +1,142 @@
+{
+  "doc_date": "2024-06-15",
+  "n_cases": 19,
+  "n_ok": 19,
+  "n_bad": 0,
+  "accuracy": 1.0,
+  "rows": [
+    {
+      "expr": "2023年10月25日",
+      "expected": "date",
+      "value": "2023-10-25",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "2024-01-01",
+      "expected": "date",
+      "value": "2024-01-01",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "2024/6/1",
+      "expected": "date",
+      "value": "2024-06-01",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "今天",
+      "expected": "date",
+      "value": "2024-06-15",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "昨天",
+      "expected": "date",
+      "value": "2024-06-14",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "明天",
+      "expected": "date",
+      "value": "2024-06-16",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "本周",
+      "expected": "week",
+      "value": "2024-W24",
+      "kind": "week",
+      "ok": true
+    },
+    {
+      "expr": "上周",
+      "expected": "week",
+      "value": "2024-W23",
+      "kind": "week",
+      "ok": true
+    },
+    {
+      "expr": "下周",
+      "expected": "week",
+      "value": "2024-W25",
+      "kind": "week",
+      "ok": true
+    },
+    {
+      "expr": "三天前",
+      "expected": "date",
+      "value": "2024-06-12",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "两周后",
+      "expected": "week",
+      "value": "2024-W26",
+      "kind": "week",
+      "ok": true
+    },
+    {
+      "expr": "周三",
+      "expected": "date",
+      "value": "2024-06-12",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "上周五",
+      "expected": "date",
+      "value": "2024-06-07",
+      "kind": "date",
+      "ok": true
+    },
+    {
+      "expr": "三周",
+      "expected": "duration",
+      "value": "P3W",
+      "kind": "duration",
+      "ok": true
+    },
+    {
+      "expr": "两天",
+      "expected": "duration",
+      "value": "P2D",
+      "kind": "duration",
+      "ok": true
+    },
+    {
+      "expr": "五年",
+      "expected": "duration",
+      "value": "P5Y",
+      "kind": "duration",
+      "ok": true
+    },
+    {
+      "expr": "6小时",
+      "expected": "duration",
+      "value": "PT6H",
+      "kind": "duration",
+      "ok": true
+    },
+    {
+      "expr": "30分钟",
+      "expected": "duration",
+      "value": "PT30M",
+      "kind": "duration",
+      "ok": true
+    },
+    {
+      "expr": "苹果",
+      "expected": "unmatched",
+      "value": null,
+      "kind": "unmatched",
+      "ok": true
+    }
+  ]
+}

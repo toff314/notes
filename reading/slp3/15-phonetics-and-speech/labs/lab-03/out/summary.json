@@ -1,0 +1,46 @@
+{
+  "n_channels": 80,
+  "bin_hz": 31.25,
+  "mel_100Hz_step": {
+    "0-100": 150.5,
+    "700-800": 77.8,
+    "7000-7100": 14.5
+  },
+  "bins_per_filter_first_last": [
+    1,
+    16
+  ],
+  "center_range_Hz": [
+    22.1,
+    7733.5
+  ],
+  "snr_sweep": [
+    {
+      "snr_dB": 20,
+      "logmel80": 1.0,
+      "lin80": 1.0,
+      "lin40": 1.0
+    },
+    {
+      "snr_dB": 10,
+      "logmel80": 1.0,
+      "lin80": 1.0,
+      "lin40": 1.0
+    },
+    {
+      "snr_dB": 0,
+      "logmel80": 1.0,
+      "lin80": 1.0,
+      "lin40": 0.978
+    },
+    {
+      "snr_dB": -5,
+      "logmel80": 0.889,
+      "lin80": 0.889,
+      "lin40": 0.844
+    }
+  ],
+  "margin_logmel": 4.78,
+  "margin_lin80": 6.25,
+  "margin_lin40": 5.21
+}

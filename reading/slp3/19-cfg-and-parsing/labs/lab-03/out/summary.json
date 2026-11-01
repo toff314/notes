@@ -1,0 +1,9 @@
+{
+  "fit_points": "n >= 10",
+  "slope_time_vs_n": 2.412,
+  "slope_cells_vs_n": 1.923,
+  "slope_splits_vs_n": 3.021,
+  "max_n": 39,
+  "max_parses": 588374417,
+  "note": "斜率在 2.5-3.5 之间即支持 n^3；低于 3 的部分来自小 n 的常数开销与表稀疏"
+}

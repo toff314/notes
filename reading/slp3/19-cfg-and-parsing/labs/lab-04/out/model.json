@@ -1,0 +1,22 @@
+{
+  "D": 225,
+  "labels": [
+    "S",
+    "NP",
+    "VP",
+    "PP",
+    "Nominal",
+    "Aux",
+    "Det",
+    "Noun",
+    "Preposition",
+    "Pronoun",
+    "Proper-Noun",
+    "Verb",
+    "X"
+  ],
+  "lr": 0.35,
+  "l2": 0.0001,
+  "epochs": 40,
+  "note": "权重未导出；重新运行本脚本即可复现（固定随机种子）"
+}

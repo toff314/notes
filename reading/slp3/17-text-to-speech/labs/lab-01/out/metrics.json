@@ -1,0 +1,19 @@
+{
+  "sample_rate": 24000,
+  "duration_s": 1.64,
+  "f0_target": 120.0,
+  "f0_measured": 120.0,
+  "f0_err_pct": 0.0,
+  "downsample_factor": 320,
+  "frames_theory_75hz": 123,
+  "samples_per_frame": 320.0,
+  "frame_ms": 13.33,
+  "mean_abs_err_F1_pct": 7.43,
+  "mean_abs_err_F2_pct": 2.24,
+  "max_abs_err_pct": 23.75,
+  "proxy_spectral_dist_db": {
+    "narrow": 1.01,
+    "base": 0.0,
+    "wide": 3.39
+  }
+}

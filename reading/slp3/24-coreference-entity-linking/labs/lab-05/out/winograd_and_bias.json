@@ -1,0 +1,101 @@
+{
+  "winograd": {
+    "results": [
+      {
+        "id": "trophy_1",
+        "sentence": "The trophy doesn't fit into the suitcase because it is too big.",
+        "answer": "trophy",
+        "lexical_baseline_pred": "trophy",
+        "correct": true,
+        "scores": {
+          "trophy": 0.9,
+          "suitcase": 0.1
+        },
+        "commonsense": "A big object cannot fit into a smaller container."
+      },
+      {
+        "id": "trophy_2",
+        "sentence": "The trophy doesn't fit into the suitcase because it is too small.",
+        "answer": "suitcase",
+        "lexical_baseline_pred": "suitcase",
+        "correct": true,
+        "scores": {
+          "trophy": 0.1,
+          "suitcase": 0.9
+        },
+        "commonsense": "A small container cannot hold a larger object."
+      },
+      {
+        "id": "city_1",
+        "sentence": "The city councilmen refused the demonstrators a permit because they feared violence.",
+        "answer": "city councilmen",
+        "lexical_baseline_pred": "city councilmen",
+        "correct": true,
+        "scores": {
+          "city councilmen": 0.8,
+          "demonstrators": 0.2
+        },
+        "commonsense": "Councilmen fear violence; demonstrators advocate it."
+      },
+      {
+        "id": "city_2",
+        "sentence": "The city councilmen refused the demonstrators a permit because they advocated violence.",
+        "answer": "demonstrators",
+        "lexical_baseline_pred": "demonstrators",
+        "correct": true,
+        "scores": {
+          "city councilmen": 0.2,
+          "demonstrators": 0.8
+        },
+        "commonsense": "Demonstrators advocate violence; councilmen fear it."
+      }
+    ],
+    "lexical_baseline_accuracy": 1.0,
+    "note": "词汇基线利用『big↔trophy』等共现统计，但 §24.9 指出这类模型可能只是在记忆训练分布而非真懂常识。"
+  },
+  "gender_bias": {
+    "results": [
+      {
+        "id": "pro_1",
+        "stereotypical": true,
+        "biased_model_correct": true,
+        "fair_model_correct": true
+      },
+      {
+        "id": "anti_1",
+        "stereotypical": false,
+        "biased_model_correct": false,
+        "fair_model_correct": true
+      },
+      {
+        "id": "pro_2",
+        "stereotypical": true,
+        "biased_model_correct": true,
+        "fair_model_correct": true
+      },
+      {
+        "id": "anti_2",
+        "stereotypical": false,
+        "biased_model_correct": false,
+        "fair_model_correct": true
+      },
+      {
+        "id": "pro_3",
+        "stereotypical": true,
+        "biased_model_correct": true,
+        "fair_model_correct": true
+      },
+      {
+        "id": "anti_3",
+        "stereotypical": false,
+        "biased_model_correct": false,
+        "fair_model_correct": true
+      }
+    ],
+    "pro_stereotypical_acc_biased": 1.0,
+    "anti_stereotypical_acc_biased": 0.0,
+    "performance_gap": 1.0,
+    "note": "有偏见模型在反刻板印象对上性能差 100%，与 §24.10『平均差 21 个 F1 点』方向一致。",
+    "mitigation": "§24.10 方案：性别互换数据增强 + 去偏嵌入 + 公平审计"
+  }
+}

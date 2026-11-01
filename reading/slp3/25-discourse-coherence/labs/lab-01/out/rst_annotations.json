@@ -1,0 +1,55 @@
+{
+  "task": "RST 关系手工标注",
+  "total": 5,
+  "correct": 5,
+  "accuracy": 1.0,
+  "annotations": [
+    {
+      "id": "t1",
+      "text": "[NUC Jane 乘火车从 Paris 到 Istanbul。] [SAT 她必须去参加一个会议。]",
+      "source": "书中例句 (25.7)",
+      "predicted": "Reason",
+      "correct": "Reason",
+      "is_correct": true
+    },
+    {
+      "id": "t2",
+      "text": "[NUC Dorothy 来自 Kansas。] [SAT 她住在大片 Kansas 草原的中央。]",
+      "source": "书中例句 (25.8)",
+      "predicted": "Elaboration",
+      "correct": "Elaboration",
+      "is_correct": true
+    },
+    {
+      "id": "t3",
+      "text": "[NUC Kevin 一定在这里。] [SAT 他的车停在外面。]",
+      "source": "书中例句 (25.9)",
+      "predicted": "Evidence",
+      "correct": "Evidence",
+      "is_correct": true
+    },
+    {
+      "id": "t4",
+      "text": "[SAT 分析师估计] [NUC 美国门店的销售额在本季度也下降了]",
+      "source": "书中例句 (25.10)",
+      "predicted": "Attribution",
+      "correct": "Attribution",
+      "is_correct": true
+    },
+    {
+      "id": "t5",
+      "text": "[NUC Billy Bones 是大副；] [NUC Long John，他是舵手长]",
+      "source": "书中例句 (25.11)",
+      "predicted": "List",
+      "correct": "List",
+      "is_correct": true
+    }
+  ],
+  "definitions": {
+    "Reason": "核心（nucleus）是一个由有生命的施事者执行的动作，卫星（satellite）是核心（nucleus）的原因。",
+    "Elaboration": "卫星（satellite）对核心（nucleus）所呈现的情景给出附加的信息或细节。",
+    "Evidence": "卫星（satellite）对核心（nucleus）所呈现的情景给出附加的信息或细节。给出这些信息的目的在于说服读者接受核心（nucleus）所呈现的信息。",
+    "Attribution": "卫星（satellite）给出核心（nucleus）中一处转述话语的归属来源。",
+    "List": "在这个多核心关系中，给出一系列核心（nucleus），其间没有对比或显式的比较。"
+  }
+}

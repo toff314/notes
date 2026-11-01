@@ -1,0 +1,16 @@
+{
+  "gold_turns": 20,
+  "predicted_boundaries": 20,
+  "false_positive_boundaries": 1,
+  "precision": 0.9524,
+  "recall": 1.0,
+  "f1": 0.9756,
+  "errors": [
+    {
+      "turn_id": "C19",
+      "text": "呃，嗯。我会考虑在那里多待一天，待到星期天。",
+      "reason": "以填充词开头且包含多句，规则在首个句末误切"
+    }
+  ],
+  "note": "规则：每段 GOLD 末尾预测一个边界；以填充词开头且含多句的段落在首个句末误插一个边界。"
+}

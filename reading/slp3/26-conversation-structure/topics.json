@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 26 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/26-conversation-structure",
+    "anchor": "第26章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch26-t1",
+      "title": "为什么 LLM 总是抢方向盘：对话主动权的设计困境",
+      "angle": "观点：对话主动权——为什么 LLM 对话系统常常不能自然地接过和交出方向盘",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S4 + S5 —— ①S1：书中只给三分类和一句「难做到」，没有展开「难在哪里」；②S4：用户普遍抱怨 LLM「接不住话」「自说自话」，与「混合主动权是人际常态」形成反差；③S5：直接影响语音助手、客服机器人、车载系统等所有交互产品的体验。",
+      "sourceAnchor": "§26.1.5「即便是基于大语言模型的现代对话系统——它们已相当接近使用完全混合主动权——也常常不能完全自然地切换主动权」；「把这一点做对是现代系统的一个重要目标」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch26-t2",
+      "title": "「你能关门吗？」——指令的伪装与言语行为的识别",
+      "angle": "观点：言语行为的识别——为什么理解一句话必须识别它在「做」什么，而不仅是它在「说」什么",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给四分类但只各举一例，没有讨论识别难点；②S3：涉及句法模式、语境推理、文化差异（礼貌程度）、反语识别等一串技术问题；③S6：Austin 1962、Bach & Harnish 1979、Searle 的言语行为理论均可查。",
+      "sourceAnchor": "§26.1.2「提出一个需要回答的问题，也是发出指令类的一种方式：从某种意义上说，当系统说出（A2）\"您想在五月的哪一天出行？\"时，就好像系统在（非常礼貌地）命令用户作答」；四分类体系（断言、指令、承诺、回应）。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch26-t3",
+      "title": "共同基础：对话系统里的 ACK 机制",
+      "angle": "观点：共同基础建立——为什么好的对话系统必须像 TCP 一样发送 ACK",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中给概念和五级方法，但没有讨论工程实现；②S3：涉及对话状态跟踪、确认策略生成、多模态反馈（点头、表情）；③S5：直接影响语音助手、客服系统、车载交互的用户体验。",
+      "sourceAnchor": "§26.1.3「建立共同基础意味着确认听者已经理解了说话者」；呈现-接受两阶段模型；五级方法（持续注意、下一贡献、确认、演示、展示）；「这里的 uh-huh 一词是一个继续信号，也常被称为确认标记（acknowledgment token）或背信道」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch26-t4",
+      "title": "从纠正子对话看对话系统的栈结构",
+      "angle": "论文：对话系统的栈结构——如何用栈处理纠正子对话、澄清提问与前置序列",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给概念和例子，但没有给实现；②S3：涉及栈结构、对话状态跟踪、上下文管理、返回点恢复等一串工程问题；③S6：Litterman 1985、Litman & Allen 1987、Chu-Carroll & Carberry 1998 均可查。",
+      "sourceAnchor": "§26.1.4「话语 C17 到 A20 构成一个纠正子对话」；「C17 中的提问打断了先前的对话，而在那段对话中，代理正在查找 5 月 15 日的返程航班」；子对话、前置序列的定义。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch26-t5",
+      "title": "会话含义：Grice 准则如何让人类对话如此高效",
+      "angle": "观点：会话含义——为什么人类对话可以如此省略，而机器却常常听不懂言外之意",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2 + S3 + S6 —— ①S2：Grice 1975/1978 是哲学经典，有可溯源的历史；②S3：涉及世界知识、意图推理、多步推断、上下文建模等深层技术问题；③S6：Grice 1975/1978、Sperber & Wilson 的关联理论均可查。",
+      "sourceAnchor": "§26.1.6「说话人似乎期待听话人作出某些推断；换句话说，说话人传达的信息比说出的话语表面上呈现的更多」；「Grice 提出，听话人之所以能作出这些推断，是因为会话受一整套准则引导」；关联准则；图 26.1 中客户提到会议、代理推断出行日期的完整推理链。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "feature_space_size": 110,
+  "with_shape": {
+    "epoch_nll_first_last": [
+      6.2078,
+      0.0978
+    ],
+    "cases": [
+      {
+        "sent": "Zorbly bought a car",
+        "gold": [
+          "NNP",
+          "VB",
+          "DT",
+          "NN"
+        ],
+        "decoded": [
+          "NNP",
+          "VB",
+          "DT",
+          "NN"
+        ],
+        "correct": true,
+        "score": 12.7505
+      },
+      {
+        "sent": "Zorbly",
+        "gold": [
+          "NNP"
+        ],
+        "decoded": [
+          "NNP"
+        ],
+        "correct": true,
+        "score": 1.7184
+      }
+    ],
+    "correct_all": true,
+    "top_weights": [
+      [
+        "('T', 'DT', 'NN')=>None",
+        2.347
+      ],
+      [
+        "('E', 'big')=>JJ",
+        2.272
+      ],
+      [
+        "('E', 'the')=>DT",
+        2.079
+      ],
+      [
+        "('E', 'a')=>DT",
+        2.029
+      ],
+      [
+        "('T', 'NN', 'VB')=>None",
+        1.958
+      ],
+      [
+        "('T', 'NNP', 'VB')=>None",
+        1.891
+      ],
+      [
+        "('S', 'Xx')=>NNP",
+        1.718
+      ],
+      [
+        "('T', 'JJ', 'NN')=>None",
+        1.703
+      ]
+    ],
+    "shape_weights": [
+      [
+        "Xx/NNP",
+        1.718
+      ],
+      [
+        "x/NNP",
+        -1.507
+      ],
+      [
+        "x/VB",
+        0.799
+      ],
+      [
+        "x/NN",
+        0.782
+      ],
+      [
+        "Xx/NN",
+        -0.705
+      ],
+      [
+        "x/JJ",
+        -0.639
+      ]
+    ]
+  },
+  "no_shape": {
+    "epoch_nll_first_last": [
+      6.2078,
+      0.1346
+    ],
+    "cases": [
+      {
+        "sent": "Zorbly bought a car",
+        "gold": [
+          "NNP",
+          "VB",
+          "DT",
+          "NN"
+        ],
+        "decoded": [
+          "NNP",
+          "VB",
+          "DT",
+          "NN"
+        ],
+        "correct": true,
+        "score": 10.8967
+      },
+      {
+        "sent": "Zorbly",
+        "gold": [
+          "NNP"
+        ],
+        "decoded": [
+          "DT"
+        ],
+        "correct": false,
+        "score": 0.0
+      }
+    ],
+    "correct_all": false,
+    "top_weights": [
+      [
+        "('T', 'DT', 'NN')=>None",
+        2.922
+      ],
+      [
+        "('T', 'NNP', 'VB')=>None",
+        2.517
+      ],
+      [
+        "('E', 'the')=>DT",
+        2.29
+      ],
+      [
+        "('E', 'a')=>DT",
+        2.221
+      ],
+      [
+        "('T', 'NN', 'VB')=>None",
+        2.191
+      ],
+      [
+        "('E', 'big')=>JJ",
+        2.176
+      ],
+      [
+        "('E', 'dog')=>NN",
+        1.741
+      ],
+      [
+        "('T', 'JJ', 'NN')=>None",
+        1.699
+      ]
+    ],
+    "shape_weights": []
+  },
+  "hmm_equals_crf": {
+    "hmm_path": [
+      "NNP",
+      "MD",
+      "VB",
+      "DT",
+      "NN"
+    ],
+    "crf_path": [
+      "NNP",
+      "MD",
+      "VB",
+      "DT",
+      "NN"
+    ],
+    "paths_equal": true,
+    "score_diff": 0.0
+  }
+}

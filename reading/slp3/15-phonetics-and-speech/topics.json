@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 15 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/15-phonetics-and-speech",
+    "anchor": "第15章"
+  },
+  "generatedAt": "2026-10-31",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch15-t1",
+      "title": "MFCC 统治三十年，为什么现在又被「滤波器组 + 神经网络」取代",
+      "angle": "观点：MFCC 不是「更好的特征」，只是「为 GMM 时代量身定做」的特征",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S4 + S6 —— ①S1：书中把 MFCC 当既定答案，没说清它的两个前提（对角协方差、DCT 去相关）在神经网络时代已不成立；②S3：牵涉 DCT 的去相关作用、Δ/ΔΔ 的补充、fbank 与 MFCC 在下游模型上的精度差，纵深足够；③S4：大众叙事是「MFCC 是语音金标准」，而 Kaldi/ESPnet 实践默认 fbank，反差强；④S6：Davis & Mermelstein 1980、Kaldi 文档、Mohamed 2014 均可查。",
+      "sourceAnchor": "§15.6「MFCC 是一个 39 维特征向量」；同节「不同系数的方差往往互不相关」与取前 12 个倒谱系数的做法；§15.5.4 对数梅尔滤波器组。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch15-t2",
+      "title": "从波形到 39 维：手写一条语音特征流水线",
+      "angle": "教程：不调 librosa，用 numpy 从零写出 MFCC——分帧、加窗、DFT、梅尔滤波、DCT、差分",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给公式与直觉，但没有可运行代码，也没给帧数、nfft、滤波器上下限这些工程取值；②S3：每一步都有坑（预加重要不要、nfft 与帧长关系、梅尔上下限截断、DCT 正交归一、Δ 的窗口宽度）；③S6：HTK Book、Kaldi 文档、librosa 源码均可查。",
+      "sourceAnchor": "§15.5「语音处理的第一步通常是把输入波形转换成一个声学特征向量序列」；§15.5.2 加窗与「矩形窗会在其边界处突然截断信号」；§15.5.3 DFT 与 FFT；§15.5.4 梅尔滤波器组与取对数；§15.6 倒谱与 39 维。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch15-t3",
+      "title": "字母不是声音：英语拼写为什么是一笔糊涂账",
+      "angle": "科普：为什么英语拼写不能当发音用——从 c 的两种读法说到音位转写",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S3 + S4 + S5 —— ①S3：涉及音子/音位区分、宽窄转写、ARPAbet 与 IPA 的取舍；②S4：大众直觉是「英语拼写虽不规则但大致能读」，而 lab-01 的 40 词统计（平均音子/字母比 0.825、仅 12/40 相等）直接反驳；③S5：落在背单词、发音纠正、TTS 前端等现实场景。",
+      "sourceAnchor": "§15.1「英语正字法的字母与音子之间的对应关系相当不透明」；「每个音子都用一个取自罗马字母表的符号来表示」；同节列出的发音词典规模（CELEX 160,595 词、CMU 134,000 词）。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch15-t4",
+      "title": "音高不是频率：梅尔刻度背后的听觉生理",
+      "angle": "科普：为什么 MFCC 要在梅尔刻度上滤波——耳朵不是频谱仪",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中给了结论与公式，没解释耳蜗的临界带机制，也没说 mel 与 Bark 的关系；②S3：牵涉基底膜行波、临界带带宽、mel 公式的两种常用形式；③S6：Stevens & Volkmann 1940、Zwicker 1961、O'Shaughnessy 教材均可查。",
+      "sourceAnchor": "§15.4.3「人类的音高感知在 100 Hz 到 1000 Hz 之间最为准确，在这个范围内音高与频率呈线性相关」；§15.5.4「人的听觉并非对所有频带都同样敏感；它对较高频率的敏感度更低」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch15-t5",
+      "title": "一个乘法解释两件事：源-滤波器模型与倒谱",
+      "angle": "原理：语音频谱 = 源 × 滤波器——这个乘法如何同时解释音高、音色与 MFCC",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S1 + S3 + S4 —— ①S1：书中把源-滤波器当直觉讲，没写出「乘积 → 对数 → 相加 → 再傅里叶」的完整链条；②S3：涉及卷积定理、同态信号处理、倒谱的 quefrency 单位；③S4：多数教程把 MFCC 当黑盒，而它其实是这条链的必然产物，反差强。",
+      "sourceAnchor": "§15.4.6「声门产生的脉冲（源）如何被声道（滤波器）塑形」；「结果是，不同的元音会使不同的谐波被放大」；§15.6「倒谱可以看作是谱的对数之谱」。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

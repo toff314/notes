@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 24 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/24-coreference-entity-linking",
+    "anchor": "第24章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch24-t1",
+      "title": "共指消解为什么难：从「她」到「这位 38 岁的 CFO」",
+      "angle": "观点：共指消解为什么比想象中难——从代词到定指 NP 的三层陷阱",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S5 —— ①S1：书中把非指称表达式压缩成一节，但工程上这是错误的主要来源，值得展开；②S3：涉及句法分析、语义判断、语用推理的多层交互；③S5：对话系统、信息抽取、机器翻译都直接受影响，是能落地的工程问题。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §24.1「新闻专线文本中超过半数的定指 NP 都是非回指的」；§24.1.3 四种非指称表达式；§24.3「系统错误地把像 it 这样的赘余代词以及其他非指称性 NP 标记为共指，是现代共指消解系统的一大错误来源」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch24-t2",
+      "title": "实体链接：从 TAGME 到 ELQ，先验概率与双编码器的进化",
+      "angle": "论文：实体链接的两次进化——从 TAGME 的锚词典到 ELQ 的双编码器",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中两节分别讲 TAGME 和 ELQ，但没有系统对比两者的工程 trade-off；②S3：涉及 IR 索引、图算法、神经编码、缓存策略；③S6：Ferragina & Scaiella 2011、Li et al. 2020、Wu et al. 2020 均可查。",
+      "sourceAnchor": "§24.7.1 TAGME 算法（锚词典、先验概率、关联度投票）；§24.7.2 ELQ 算法（BERT 双编码器、跨度提及检测、实体嵌入）；「Yuan 之前是中国的哪个朝代？」的消歧示例。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch24-t3",
+      "title": "共指模型里的性别偏见：21 个 F1 点的代价与数据增强的救赎",
+      "angle": "观点：共指模型里的性别偏见——21 个 F1 点的代价与数据增强的救赎",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S4 + S5 + S6 —— ①S4：大众以为 NLP 模型「只是反映数据」，但书中明确说会系统性偏离公平；②S5：招聘、信贷、法律文书等场景直接受影响；③S6：Zhao et al. 2018a、Webster et al. 2018、Kurita et al. 2019 均可查。",
+      "sourceAnchor": "§24.10「所有架构的共指系统……都表现出显著偏见，在反刻板印象的情形中平均要差 21 个 F1 点」；「女性实体在用于训练大多数共指系统的 OntoNotes 数据集中严重不足」；「生成第二个性别互换的数据集……重新训练」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch24-t4",
+      "title": "Winograd 模式：预训练模型真懂常识了吗",
+      "angle": "观点：Winograd 模式——预训练模型是真懂常识，还是高级模式匹配",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S3 + S4 + S6 —— ①S3：涉及常识推理、词汇关联、世界知识的边界；②S4：大众以为预训练模型「理解了」，但 Trichelair 等人指出可能只是过拟合词汇；③S6：Levesque 2011、Kocijan 2019、Trichelair 2018 均可查。",
+      "sourceAnchor": "§24.9「奖杯装不进手提箱，因为它太大了/太小了」；「原始问题集中有很大一部分可以由在 Winograd 模式句子上微调的预训练语言模型解决」；「基于知识的模型似乎对 Winograd 模式训练集中的词汇特异性过拟合更少」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch24-t5",
+      "title": "共指评价指标：MUC、B³、CEAFe 各会骗你什么",
+      "angle": "论文：共指评价指标的正确打开方式——MUC、B³、CEAFe 的盲区与组合",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S1 + S3 + S6 —— ①S1：书中只描述指标，没有给可运行的实现和边界 case 处理；②S3：涉及集合运算、对齐算法、加权方案；③S6：Pradhan et al. 2014 官方实现、Luo & Pradhan 2016 综述均可查。",
+      "sourceAnchor": "§24.8「MUC 偏向于产生大链……并且它忽略单例」；「B³ 基于提及而非基于链接」；「CoNLL 共指竞赛基于 MUC、CEAF-e 和 B³ 的平均值进行评分」；「应当使用这些指标的参考实现，而不是尝试从零重新实现」。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

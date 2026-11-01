@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "book-chapter",
+    "title": "《Speech and Language Processing》第 3 版 · 第 21 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）",
+    "path": "reading/slp3/21-information-extraction",
+    "anchor": "第21章"
+  },
+  "generatedAt": "2026-11-01",
+  "generator": "write-read-notes",
+  "topics": [
+    {
+      "id": "slp3-ch21-t1",
+      "title": "没有标注数据时，关系抽取该走哪条路",
+      "angle": "技术综述：把模式、有监督、自举、远程监督、Open IE 排成一条「标注成本 ↔ 覆盖关系数」曲线，给出一张可直接用于技术选型的对照表",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "命中 S1 —— ①市面上讲关系抽取多按模型罗列（CNN/BERT/LLM），缺「零标注起步该选哪条路」的决策线，而这正是工程的第一个问题；②五条路线各自的最小可行标注量可以从 §21.2.1–21.2.6 与 §21.9 小结直接读出；③Hearst 1992a、Mintz 2009、Fader 2011、Snow 2005 均可查，引用链完整。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §21.2「关系抽取算法」全节 + §21.9 小结：小结逐条列出模式法「准确率高、召回率低」、有监督「脆弱、不跨体裁」、自举「语义漂移」、远程监督「精度低」、Open IE「关系为动词串」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch21-t2",
+      "title": "半监督抽取的两种病：越跑越偏 vs 一开始就脏",
+      "angle": "方法论剖析：自举的语义漂移是过程性恶化，远程监督的噪声是静态分布偏移；用两条 precision-轮次曲线说明为什么后者更适合无人值守地喂分类器",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2 —— ①教材常把两者并列称「半监督」，不区分失败模式，反差点强；②工程后果明确：「会不会越跑越糟」决定能否无人值守；③书中 §21.2.3 有 Sydney 渡轮码头的漂移实例，§21.2.4 有精度低与「只能覆盖已有大型数据库的关系」的论断，lab-03/04 可给出实测曲线。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §21.2.3「如果被当作正例接受，这个表达就可能导致错误地引入元组 ⟨Sydney,CircularQuay⟩」；§21.2.4「与基于种子的系统中模式的迭代扩展不同，这里不存在语义漂移」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch21-t3",
+      "title": "中文的「上周」到底指哪一周",
+      "angle": "工程实践：从 Allen 区间代数到 ISO 8601，讲清相对时间归一化的锚点问题，以及中文缺形态时态带来的三处陷阱",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "命中 S3 —— ①英文教程能靠 tense 特征，中文不能，这是真实的语言差异；②现有中文资料多停在「正则抽日期」，不讲相对表达式的锚定与跨年周号；③§21.7.2 明确给出文档日期锚、ISO 周编号规则（第一周含该年第一个星期四）与 the weekend 受动词时态支配的例子。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §21.7.2「在真实文本中，新闻文章里的大多数时间表达式都是不完整的，只被隐式地锚定，通常是相对于文章的日期行锚定」；§21.7.2「在 ISO 标准中，周从 01 编号到 53，一年的第一周是包含该年第一个星期四的那一周」。",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch21-t4",
+      "title": "「我飞了」和「我飞到纽约」差在哪一个词上",
+      "angle": "语言学 × NLP：用一组最小对立证明体（aktionsart）是短语级属性，动词级体词典必然失效",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S4 —— ①「建一张动词体分类表」是极常见的错误直觉，且抽样验证看不出来（多数动词在多数语境下恰好同类）；②书中给出成对例证：活动「John 正在飞行」vs 完结「Sally 预订了她的航班」、达成「她找到了她的登机口」；③Vendler 1967 的原始四类划分可查，学术纵深足够。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §21.5「事件的分类并不只由动词决定，而是由整个表达式在上下文中的语义决定」；同节给出四类对照句「状态：我知道我的登机口。活动：John 正在飞行。完结：Sally 预订了她的航班。达成：她找到了她的登机口。」",
+      "status": "open",
+      "link": null
+    },
+    {
+      "id": "slp3-ch21-t5",
+      "title": "三十年前的级联状态机，今天的大模型仍然没解决",
+      "angle": "技术史：从 MUC-5 的 FASTUS 五级级联讲到无模板归纳，说明「槽里套模板」的层级结构为何一直是端到端模型的软肋",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S5 —— ①这是一条被遗忘的技术脉络，能解释「大模型能抽三元组却归纳不出事件脚本」的现象；②书中 §21.8.1 末段把无预定义模板的模板归纳明确列为「关键的未决问题」；③Chambers & Jurafsky 2011、Hobbs 1993 的 FASTUS 均可查证。",
+      "sourceAnchor": "《Speech and Language Processing》第 3 版 §21.8.1「一个关键的未决问题是在没有训练数据、甚至没有预定义模板的情况下抽取模板，即通过把模板归纳为相互链接的事件集合来实现」；§21.8.2 描述 FASTUS 的级联有限状态转换器与合并算法。",
+      "status": "open",
+      "link": null
+    }
+  ]
+}

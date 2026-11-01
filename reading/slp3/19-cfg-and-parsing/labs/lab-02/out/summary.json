@@ -1,0 +1,66 @@
+{
+  "sentence": "i shot an elephant in my pajamas",
+  "n_parses": 3,
+  "pp_host_productions": {
+    "VP->Verb-NP-PP": 1,
+    "Nominal->Nominal-PP": 1,
+    "VP->VP-PP": 1
+  },
+  "growth": [
+    {
+      "n_pp": 0,
+      "n_words": 4,
+      "parses_L1": 1,
+      "parses_L1X": 1,
+      "catalan_k": 1,
+      "factorial_k": 1,
+      "n_enumerated_L1X": 1,
+      "t_count_s": 0.0001,
+      "t_enum_s": 0.0
+    },
+    {
+      "n_pp": 1,
+      "n_words": 7,
+      "parses_L1": 3,
+      "parses_L1X": 4,
+      "catalan_k": 1,
+      "factorial_k": 1,
+      "n_enumerated_L1X": 4,
+      "t_count_s": 0.0001,
+      "t_enum_s": 0.0
+    },
+    {
+      "n_pp": 2,
+      "n_words": 9,
+      "parses_L1": 8,
+      "parses_L1X": 17,
+      "catalan_k": 2,
+      "factorial_k": 2,
+      "n_enumerated_L1X": 17,
+      "t_count_s": 0.0002,
+      "t_enum_s": 0.0001
+    },
+    {
+      "n_pp": 3,
+      "n_words": 11,
+      "parses_L1": 15,
+      "parses_L1X": 63,
+      "catalan_k": 5,
+      "factorial_k": 6,
+      "n_enumerated_L1X": 63,
+      "t_count_s": 0.0003,
+      "t_enum_s": 0.0008
+    },
+    {
+      "n_pp": 4,
+      "n_words": 14,
+      "parses_L1": 24,
+      "parses_L1X": 226,
+      "catalan_k": 14,
+      "factorial_k": 24,
+      "n_enumerated_L1X": 226,
+      "t_count_s": 0.0003,
+      "t_enum_s": 0.0036
+    }
+  ]
+}
