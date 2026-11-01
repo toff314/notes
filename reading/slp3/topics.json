@@ -878,6 +878,66 @@
       "link": null
     },
     {
+      "id": "slp3-ch18-t1",
+      "title": "为什么你的 NER 模型词元准确率 95%，实体 F1 却只有 85%",
+      "angle": "S1+S3+S5｜标准长文（6000–8000 字）",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "S1+S3+S5",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null,
+      "chapterLabel": "第 18 章"
+    },
+    {
+      "id": "slp3-ch18-t2",
+      "title": "HMM 是 CRF 的特例：一次可复现的等价性实验",
+      "angle": "S1+S3+S6｜教程（5000–7000 字 + 代码）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P0",
+      "reason": "S1+S3+S6",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null,
+      "chapterLabel": "第 18 章"
+    },
+    {
+      "id": "slp3-ch18-t3",
+      "title": "维特比算法的实现陷阱：并列最大值、log 空间与回溯指针",
+      "angle": "S1+S3+S6｜教程（5000–7000 字 + 代码）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "reason": "S1+S3+S6",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null,
+      "chapterLabel": "第 18 章"
+    },
+    {
+      "id": "slp3-ch18-t4",
+      "title": "规则先跑、模型后接：工业界 NER 为什么还没抛弃正则",
+      "angle": "S4+S5+S6｜中篇（4000–5000 字）",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "S4+S5+S6",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null,
+      "chapterLabel": "第 18 章"
+    },
+    {
+      "id": "slp3-ch18-t5",
+      "title": "词形特征：从 `Xx→NNP` 的权重里读出人类规则",
+      "angle": "S1+S3+S5｜短评/中篇（3000–4500 字）",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "S1+S3+S5",
+      "sourceAnchor": "",
+      "status": "open",
+      "link": null,
+      "chapterLabel": "第 18 章"
+    },
+    {
       "id": "slp3-ch19-t1",
       "chapterLabel": "第19章",
       "title": "一个 5 词的句子为什么会有 3 棵合法树",

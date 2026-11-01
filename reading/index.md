@@ -4,7 +4,7 @@
 
 ## 已收录
 
-**Speech and Language Processing（第三版）** ｜ 书目页：[`slp3/`](slp3/README.html) ｜ 进度：24 / 26 章（第 12 章原文占位，跳过）
+**Speech and Language Processing（第三版）** ｜ 书目页：[`slp3/`](slp3/README.html) ｜ 进度：25 / 26 章（第 12 章原文占位，跳过）
 
 | # | 章 | 笔记 | 卡片 | 自测 | 行动 | 实验 | 选题 |
 |---|---|---|---|---|---|---|---|
@@ -23,6 +23,7 @@
 | 14 | RNN 与 LSTM | ✅ [笔记](slp3/14-rnns-and-lstms/book-notes.html) | ✅ [卡片](slp3/14-rnns-and-lstms/cards.html) | ✅ [自测](slp3/14-rnns-and-lstms/self-test.html) | ✅ [行动](slp3/14-rnns-and-lstms/actions.html) | ✅ [实验](slp3/14-rnns-and-lstms/labs/index.html) | ✅ [选题](slp3/14-rnns-and-lstms/spinoffs.html) |
 | 15 | 语音学与语音 | ✅ [笔记](slp3/15-phonetics-and-speech/book-notes.html) | ✅ [卡片](slp3/15-phonetics-and-speech/cards.html) | ✅ [自测](slp3/15-phonetics-and-speech/self-test.html) | ✅ [行动](slp3/15-phonetics-and-speech/actions.html) | ✅ [实验](slp3/15-phonetics-and-speech/labs/index.html) | ✅ [选题](slp3/15-phonetics-and-speech/spinoffs.html) |
 | 16 | 语音识别 | ✅ [笔记](slp3/16-speech-recognition/book-notes.html) | ✅ [卡片](slp3/16-speech-recognition/cards.html) | ✅ [自测](slp3/16-speech-recognition/self-test.html) | ✅ [行动](slp3/16-speech-recognition/actions.html) | ✅ [实验](slp3/16-speech-recognition/labs/index.html) | ✅ [选题](slp3/16-speech-recognition/spinoffs.html) |
+| 18 | 序列标注 | ✅ [笔记](slp3/18-sequence-labeling/book-notes.html) | ✅ [卡片](slp3/18-sequence-labeling/cards.html) | ✅ [自测](slp3/18-sequence-labeling/self-test.html) | ✅ [行动](slp3/18-sequence-labeling/actions.html) | ✅ [实验](slp3/18-sequence-labeling/labs/index.html) | ✅ [选题](slp3/18-sequence-labeling/spinoffs.html) |
 | 17 | 文本转语音 | ✅ [笔记](slp3/17-text-to-speech/book-notes.html) | ✅ [卡片](slp3/17-text-to-speech/cards.html) | ✅ [自测](slp3/17-text-to-speech/self-test.html) | ✅ [行动](slp3/17-text-to-speech/actions.html) | ✅ [实验](slp3/17-text-to-speech/labs/index.html) | ✅ [选题](slp3/17-text-to-speech/spinoffs.html) |
 | 19 | 上下文无关文法与成分句法分析 | ✅ [笔记](slp3/19-cfg-and-parsing/book-notes.html) | ✅ [卡片](slp3/19-cfg-and-parsing/cards.html) | ✅ [自测](slp3/19-cfg-and-parsing/self-test.html) | ✅ [行动](slp3/19-cfg-and-parsing/actions.html) | ✅ [实验](slp3/19-cfg-and-parsing/labs/index.html) | ✅ [选题](slp3/19-cfg-and-parsing/spinoffs.html) |
 | 20 | 依存句法分析 | ✅ [笔记](slp3/20-dependency-parsing/book-notes.html) | ✅ [卡片](slp3/20-dependency-parsing/cards.html) | ✅ [自测](slp3/20-dependency-parsing/self-test.html) | ✅ [行动](slp3/20-dependency-parsing/actions.html) | ✅ [实验](slp3/20-dependency-parsing/labs/index.html) | ✅ [选题](slp3/20-dependency-parsing/spinoffs.html) |
