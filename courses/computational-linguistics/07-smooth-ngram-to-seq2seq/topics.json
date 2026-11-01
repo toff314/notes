@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "schema": "lecture-spinoffs/1",
+  "course": "计算语言学基础",
+  "lecture": 7,
+  "title": "从 N-gram 平滑到 Seq2Seq：折扣/回退/差值、PPL 评估与神经语言模型",
+  "generated_at": "2026-11-01",
+  "target_platform": "知乎专栏",
+  "topics": [
+    {
+      "id": "computational-linguistics-lec07-t1",
+      "title": "加 1 平滑到底把概率打掉了多少：一张图看 Laplace 的\"暴力折扣\"",
+      "type": "教程",
+      "angle": "用真实词频分布模拟 Laplace 平滑，画出\"原始概率 vs 平滑后概率\"的散点图，标出 N/V 临界点，看高频词被压掉多少、零频词分到多少",
+      "anchor": "§一 L21–L55（04-1 P24–P32）",
+      "why": "所有 NLP 教材都写\"加 1 平滑简单但效果差\"，但没人量化展示它到底有多差；老师课上只给了 V=1000、N=10000 的手算例子",
+      "gain": "附 50 行脚本，输入任意词频表，输出 Laplace/Lidstone/Good-Turing 三种平滑的对比图 + \"want to\" 类高频搭配的折扣率表",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec07-t2",
+      "title": "KN 平滑的\"上下文活性\"：San Francisco 为什么特殊",
+      "type": "科普",
+      "angle": "用真实语料统计\"San Francisco\"和\"table\"的上下文分布，计算 continuation probability，直观展示为什么 KN 要把它们区别对待",
+      "anchor": "§一 L82–L90（04-1 P37–P38）",
+      "why": "KN 平滑是 N-gram 平滑的巅峰，但\"词的活性\"这个概念很抽象；用具体例子可以让读者一眼看懂",
+      "gain": "附 30 行脚本，输入语料，输出指定词的上下文分布柱状图 + KN 平滑前后的概率对比",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec07-t3",
+      "title": "PPL 到底在衡量什么：从分支因子到熵的直觉链条",
+      "type": "教程",
+      "angle": "把 PPL、分支因子、信息熵三个概念串成一条直觉链：PPL = 分支因子 = 2^熵，用\"猜下一个词\"的游戏来解释",
+      "anchor": "§二 L112–L147（04-1 P43–P47）",
+      "why": "PPL 是 NLP 最常用的评估指标，但很多人只记\"越小越好\"，不理解它和熵的关系；老师课上用\"心里门儿清\"的比喻很形象，但没有展开公式",
+      "gain": "附交互式小工具，输入自定义概率分布，实时显示 PPL 和熵",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec07-t4",
+      "title": "Bengio 2003 的\"直连\"为什么是 ResNet 的雏形",
+      "type": "技术史",
+      "angle": "从 Bengio 2003 的 NNLM 直连结构，到 Highway Network，到 ResNet，梳理\"输入直接连输出\"这条思想线",
+      "anchor": "§三 L47–L70, L138–L144（04-2 P8–P18）",
+      "why": "ResNet 是 CV 和 NLP 的标配，但很少人知道 Bengio 2003 就讨论过直连；老师课上提到\"后来我就给大家提过一个 last\"，这是重要的思想史线索",
+      "gain": "附 NNLM 最小实现（PyTorch 50 行），对比有/无直连的收敛速度",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec07-t5",
+      "title": "梯度消失/爆炸的数值模拟：0.9 和 1.1 的连乘实验",
+      "type": "教程",
+      "angle": "用 Python 模拟反向传播时梯度的连乘过程，画出 0.9^t 和 1.1^t 的曲线，直观展示为什么 RNN 难以训练",
+      "anchor": "§四 L234–L246（04-2 P40–P42）",
+      "why": "梯度消失/爆炸是 RNN 的经典问题，但很多教程只给公式不给直觉；老师课上用\"蝴蝶效应\"比喻很形象，可以数值化",
+      "gain": "附 20 行脚本，模拟不同梯度值下的连乘结果，可视化\"消失\"和\"爆炸\"",
+      "status": "待写",
+      "link": null
+    },
+    {
+      "id": "computational-linguistics-lec07-t6",
+      "title": "LSTM 三门机制：用\"遗忘、输入、输出\"类比讲清楚门控",
+      "type": "科普",
+      "angle": "把 LSTM 的三个门比作\"人事决策\"：遗忘门 = 裁员，输入门 = 招聘，输出门 = 汇报，用具体例子讲清楚每个门的数学作用",
+      "anchor": "§五 L248–L294（04-2 P43–P58）",
+      "why": "LSTM 是 NLP 的标配，但三个门的具体作用很多人记混；老师课上用\"学会遗忘是境界\"的比喻很有感染力，可以系统化",
+      "gain": "附 LSTM 单元结构图（SVG），标注每个门的输入输出和计算公式",
+      "status": "待写",
+      "link": null
+    }
+  ]
+}

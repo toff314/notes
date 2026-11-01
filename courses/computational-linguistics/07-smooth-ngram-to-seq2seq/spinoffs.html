@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>衍生选题 · 第 7 讲 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 7 讲 · 从 N-gram 平滑到 Seq2Seq</span> <span>/</span> <span class="cur">衍生选题 · 第 7 讲</span></nav>
+<article class="prose"><h1>衍生选题 · 第 7 讲</h1>
+<p>筛选判据（四条全过才留）：① 讲而未透；② 可验证（能跑代码或算数）；③ 与我的技术栈有关（Python / 服务端 / 知乎专栏读者能用）；④ 反直觉或可证伪。<strong>不产生纯观点稿。</strong></p>
+<h3>t1 加 1 平滑到底把概率打掉了多少：一张图看 Laplace 的&quot;暴力折扣&quot;</h3>
+<ul><li><strong>主题串</strong>：Laplace 平滑 / 折扣 / 高频压制 / 概率重分配</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：教程（可复现）</li><li><strong>角度</strong>：用真实词频分布模拟 Laplace 平滑，画出&quot;原始概率 vs 平滑后概率&quot;的散点图，标出 N/V 临界点，看高频词被压掉多少、零频词分到多少</li><li><strong>锚点</strong>：§一 L21–L55（04-1 P24–P32）</li><li><strong>为什么值得写</strong>：所有 NLP 教材都写&quot;加 1 平滑简单但效果差&quot;，但没人量化展示它到底有多差；老师课上只给了 V=1000、N=10000 的手算例子</li><li><strong>增益</strong>：附 50 行脚本，输入任意词频表，输出 Laplace/Lidstone/Good-Turing 三种平滑的对比图 + &quot;want to&quot; 类高频搭配的折扣率表</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h3>t2 KN 平滑的&quot;上下文活性&quot;：San Francisco 为什么特殊</h3>
+<ul><li><strong>主题串</strong>：Kneser-Ney / 上下文多样性 / 词的活性 / 固定搭配</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：科普（可验证）</li><li><strong>角度</strong>：用真实语料统计&quot;San Francisco&quot;和&quot;table&quot;的上下文分布，计算 continuation probability，直观展示为什么 KN 要把它们区别对待</li><li><strong>锚点</strong>：§一 L82–L90（04-1 P37–P38）</li><li><strong>为什么值得写</strong>：KN 平滑是 N-gram 平滑的巅峰，但&quot;词的活性&quot;这个概念很抽象；用具体例子可以让读者一眼看懂</li><li><strong>增益</strong>：附 30 行脚本，输入语料，输出指定词的上下文分布柱状图 + KN 平滑前后的概率对比</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h3>t3 PPL 到底在衡量什么：从分支因子到熵的直觉链条</h3>
+<ul><li><strong>主题串</strong>：Perplexity / 分支因子 / 信息熵 / 语言模型评估</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：教程（概念梳理）</li><li><strong>角度</strong>：把 PPL、分支因子、信息熵三个概念串成一条直觉链：PPL = 分支因子 = 2^熵，用&quot;猜下一个词&quot;的游戏来解释</li><li><strong>锚点</strong>：§二 L112–L147（04-1 P43–P47）</li><li><strong>为什么值得写</strong>：PPL 是 NLP 最常用的评估指标，但很多人只记&quot;越小越好&quot;，不理解它和熵的关系；老师课上用&quot;心里门儿清&quot;的比喻很形象，但没有展开公式</li><li><strong>增益</strong>：附交互式小工具，输入自定义概率分布，实时显示 PPL 和熵</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h3>t4 Bengio 2003 的&quot;直连&quot;为什么是 ResNet 的雏形</h3>
+<ul><li><strong>主题串</strong>：NNLM / 残差连接 / skip connection / Bengio 2003</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：技术史（考据）</li><li><strong>角度</strong>：从 Bengio 2003 的 NNLM 直连结构，到 Highway Network，到 ResNet，梳理&quot;输入直接连输出&quot;这条思想线</li><li><strong>锚点</strong>：§三 L47–L70, L138–L144（04-2 P8–P18）</li><li><strong>为什么值得写</strong>：ResNet 是 CV 和 NLP 的标配，但很少人知道 Bengio 2003 就讨论过直连；老师课上提到&quot;后来我就给大家提过一个 last&quot;，这是重要的思想史线索</li><li><strong>增益</strong>：附 NNLM 最小实现（PyTorch 50 行），对比有/无直连的收敛速度</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h3>t5 梯度消失/爆炸的数值模拟：0.9 和 1.1 的连乘实验</h3>
+<ul><li><strong>主题串</strong>：梯度消失 / 梯度爆炸 / BPTT / RNN 训练</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：教程（可复现）</li><li><strong>角度</strong>：用 Python 模拟反向传播时梯度的连乘过程，画出 0.9^t 和 1.1^t 的曲线，直观展示为什么 RNN 难以训练</li><li><strong>锚点</strong>：§四 L234–L246（04-2 P40–P42）</li><li><strong>为什么值得写</strong>：梯度消失/爆炸是 RNN 的经典问题，但很多教程只给公式不给直觉；老师课上用&quot;蝴蝶效应&quot;比喻很形象，可以数值化</li><li><strong>增益</strong>：附 20 行脚本，模拟不同梯度值下的连乘结果，可视化&quot;消失&quot;和&quot;爆炸&quot;</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h3>t6 LSTM 三门机制：用&quot;遗忘、输入、输出&quot;类比讲清楚门控</h3>
+<ul><li><strong>主题串</strong>：LSTM / 门控机制 / 遗忘门 / 输入门 / 输出门</li><li><strong>发布</strong>：未发布（状态见文末索引表）</li></ul>
+<ul><li><strong>类型</strong>：科普（概念可视化）</li><li><strong>角度</strong>：把 LSTM 的三个门比作&quot;人事决策&quot;：遗忘门 = 裁员，输入门 = 招聘，输出门 = 汇报，用具体例子讲清楚每个门的数学作用</li><li><strong>锚点</strong>：§五 L248–L294（04-2 P43–P58）</li><li><strong>为什么值得写</strong>：LSTM 是 NLP 的标配，但三个门的具体作用很多人记混；老师课上用&quot;学会遗忘是境界&quot;的比喻很有感染力，可以系统化</li><li><strong>增益</strong>：附 LSTM 单元结构图（SVG），标注每个门的输入输出和计算公式</li><li><strong>目标技能</strong>：<code>write-tech-tutorial</code></li></ul>
+<h2>索引表</h2>
+<table><tr><th>编号</th><th>标题</th><th>状态</th><th>链接</th></tr><tr><td>t1</td><td>加 1 平滑到底把概率打掉了多少</td><td>待写</td><td>—</td></tr><tr><td>t2</td><td>KN 平滑的&quot;上下文活性&quot;：San Francisco 为什么特殊</td><td>待写</td><td>—</td></tr><tr><td>t3</td><td>PPL 到底在衡量什么</td><td>待写</td><td>—</td></tr><tr><td>t4</td><td>Bengio 2003 的&quot;直连&quot;为什么是 ResNet 的雏形</td><td>待写</td><td>—</td></tr><tr><td>t5</td><td>梯度消失/爆炸的数值模拟</td><td>待写</td><td>—</td></tr><tr><td>t6</td><td>LSTM 三门机制</td><td>待写</td><td>—</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

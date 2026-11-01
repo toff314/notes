@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算语言学基础 · 第七讲：从 N-gram 平滑到 Seq2Seq · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 7 讲 · 从 N-gram 平滑到 Seq2Seq</span> <span>/</span> <span class="cur">计算语言学基础 · 第七讲：从 N-gram 平滑到 Seq2Seq</span></nav>
+<article class="prose"><h1>计算语言学基础 · 第七讲：从 N-gram 平滑到 Seq2Seq</h1>
+<blockquote><p>转写 <code>raw/transcript-seg1.md</code> ~ <code>raw/transcript-seg3.md</code>（3 段 / 40,710 汉字）｜PPT 两份：<code>04-1语言模型-N-gram语言模型</code> P22–P51（30 页）、<code>04-2语言模型-神经语言模型</code> P1–P110（110 页）</p></blockquote>
+<h2>本讲坐标</h2>
+<p>上一讲（第 6 讲）把 N-gram 讲到数据稀疏就停了，本讲从平滑技术开始，一路讲到 Seq2Seq 和注意力开头。这是整个「语言模型」章（教材第四章）的主体内容，也是连接传统统计方法和深度学习方法的桥梁。</p>
+<p>一句话主线：<strong>N-gram 的稀疏问题催生平滑，平滑的局限催生神经语言模型，神经语言模型的序列能力催生 Seq2Seq，Seq2Seq 的瓶颈催生注意力——每一步都在解决前一步的&quot;天花板&quot;。</strong></p>
+<table><tr><th>PPT</th><th>讲到的页</th><th>讲了什么</th><th>留给下次</th></tr><tr><td>04-1 N-gram</td><td>P22–P41</td><td>平滑技术：折扣（Laplace/Lidstone/Good-Turing/KN）、回退、差值</td><td>—</td></tr><tr><td>04-1 N-gram</td><td>P42–P51</td><td>语言模型评估：外部/内部评估、PPL、熵、分支因子</td><td>—</td></tr><tr><td>04-2 神经语言模型</td><td>P1–P62</td><td>FNN（Bengio 2003）、RNN（Mikolov 2010）、LSTM、GRU</td><td>—</td></tr><tr><td>04-2 神经语言模型</td><td>P63–P110</td><td>Seq2Seq、序列标注（BiLSTM-CRF）、自编码器、注意力开头</td><td>注意力详细展开</td></tr></table>
+<p>三节课在同一堂连课内讲完，第 1 节用 04-1，第 2、3 节用 04-2，转写稿 L193 有切换提示（&quot;4-2 ppt&quot;）。</p>
+<hr>
+<h2>一、平滑技术：给零概率一个出路</h2>
+<h3>1.1 为什么要平滑</h3>
+<p>N-gram 语言模型的核心假设是：用前面 N-1 个词预测下一个词的概率。但语料是有限的，随着 N 增大，组合数呈指数爆炸（V^N），大量 N-gram 在语料中出现次数为 0。如果直接用最大似然估计（MLE），这些零概率会导致整句概率为 0——模型根本无法工作。</p>
+<p>老师用了一个很直观的比喻：这就像&quot;数学跟不上了&quot;，不是理论不行，而是&quot;实际实现的不行&quot;（【师】seg1 L167-168）。数据稀疏是 N-gram 的硬伤。</p>
+<h3>1.2 三类平滑思路</h3>
+<p>老师把平滑技术分成三大类（【师】seg1 L19-20，【PPT】04-1 P23）：</p>
+<table><tr><th>类别</th><th>思想</th><th>代表方法</th></tr><tr><td><strong>折扣（Discount）</strong></td><td>对高频 N-gram 的出现次数打折，把折扣出的概率分给零频/低频 N-gram</td><td>Laplace（加1）、Lidstone（加δ）、Good-Turing、Kneser-Ney</td></tr><tr><td><strong>回退（Back-off）</strong></td><td>高阶 N-gram 找不到时，退到低阶（trigram→bigram→unigram）</td><td>Katz 回退</td></tr><tr><td><strong>差值/插值（Interpolation）</strong></td><td>把不同阶的 N-gram 加权混合，而非硬切换</td><td>Jelinek-Mercer</td></tr></table>
+<h3>1.3 Laplace（加1）平滑：最简单也最粗暴</h3>
+<p><strong>核心思想</strong>：假设词表中每个词都至少出现 1 次，在计数时硬加 1。</p>
+<p>公式：P_Laplace(w) = (c(w) + 1) / (N + V)</p>
+<p>其中 c(w) 是词 w 的原始计数，N 是总词数，V 是词表大小（【PPT】04-1 P24-P27）。</p>
+<p>老师推导了一个关键结论：加 1 平滑后，<strong>高频词的概率会下降，低频词的概率会上升</strong>（【师】seg1 L31-44）。具体来说：</p>
+<ul><li>当词频 c &gt; N/V（平均词频）时，加 1 后概率变小</li><li>当词频 c &lt; N/V 时，加 1 后概率变大</li><li>零频词从 0 变成 1/(N+V)，虽然很小但非零</li></ul>
+<p><strong>问题</strong>：加 1 平滑对概率分布影响太大。老师举了 Berkeley Restaurant 语料的例子（【PPT】04-1 P28-P32）：&quot;want to&quot; 的原始条件概率是 0.66，加 1 后变成 0.26——&quot;打折打得太厉害了&quot;（【师】seg1 L66-71）。Church &amp; Gale (1991) 发现 46.5% 的概率被转移给了零频 N-gram（【PPT】04-1 P32）。</p>
+<h3>1.4 Lidstone（加δ）平滑：缓和一点</h3>
+<p>既然加 1 太狠，那就加一个 0~1 之间的小数 δ（【师】seg1 L72-73）。δ=1 时就是 Laplace，δ&lt;1 时就是 Lidstone。这是折扣思想的直接延续。</p>
+<h3>1.5 Good-Turing 平滑：按频次分级折扣</h3>
+<p>Good-Turing 的思想更细：不看词本身，而看<strong>出现次数相同的词之间的数量关系</strong>（【师】seg1 L75-80）。</p>
+<p>核心观察：出现 c 次的词，大约有 N_c 个；出现 c+1 次的词，大约有 N_{c+1} 个。Good-Turing 用 N_{c+1}/N_c 的比值来重新估计出现 c 次的词的概率。</p>
+<p>老师提到 Good-Turing 只做到了 60 万左右的规模（【师】seg1 L81），说明这个方法在超大规模语料上有局限。</p>
+<h3>1.6 Kneser-Ney（KN）平滑：考虑&quot;词的活性&quot;</h3>
+<p>这是折扣类平滑的巅峰。核心洞察来自对语料的观察：<strong>相同词频的词，应该有不同的平滑方式</strong>（【师】seg1 L82-90）。</p>
+<p>经典例子：&quot;San Francisco&quot; 中的 Francisco。它几乎只出现在 San 之后，很少单独出现。如果按统一词频处理，&quot;Francisco&quot; 和 &quot;table&quot;（假设词频相同）会被同等对待——但直觉上这不对，因为 Francisco 的&quot;上下文活性&quot;很低。</p>
+<p>KN 平滑的思想：<strong>出现在较多上下文中的词，更可能出现在新的上下文中</strong>（【师】seg1 L87，【PPT】04-1 P37）。</p>
+<p>老师总结了折扣技术的发展线索（【师】seg1 L97-100）：</p>
+<ol><li>所有 N-gram 统一处理</li><li>相同频率的 N-gram 用同样方式处理</li><li>相同频率下，具有相同&quot;活性&quot;的词用同样方式处理</li><li>基于类的语言模型：相似的词用相似的语言模型</li></ol>
+<p>但老师指出了一个根本问题：这不又变成&quot;知识工厂&quot;了吗？人工找现象、总结规则、改模型——&quot;长久不了&quot;（【师】seg1 L100）。这暗示了数据驱动方法（神经网络）的必然性。</p>
+<h3>1.7 回退（Back-off）：不行就退一步</h3>
+<p>回退的思想特别简单：trigram 找不到 → 退到 bigram → 再找不到 → 退到 unigram（【师】seg1 L102，【PPT】04-1 P23）。</p>
+<h3>1.8 差值/插值（Interpolation）：别退太狠，揉一揉</h3>
+<p>回退太&quot;硬&quot;了——从 trigram 直接跳到 bigram，信息损失太大。差值的思想是：<strong>把 unigram、bigram、trigram 加权混合</strong>（【师】seg1 L104-107）。</p>
+<p>老师用了一个很生动的比喻：&quot;和事佬&quot;——&quot;那个你也退一步，你也有不对的，你也让一下，大家都让让就是妥协&quot;（【师】seg1 L106-107）。加权平均是&quot;万金油&quot;思想。</p>
+<hr>
+<h2>二、语言模型评估：PPL 与熵</h2>
+<h3>2.1 外部评估 vs 内部评估</h3>
+<table><tr><th>类型</th><th>思想</th><th>例子</th></tr><tr><td><strong>外部评估（Extrinsic）</strong></td><td>放到下游任务上看效果</td><td>机器翻译、语音识别</td></tr><tr><td><strong>内部评估（Intrinsic）</strong></td><td>不看任务，直接衡量模型本身</td><td>Perplexity（PPL）</td></tr></table>
+<p>老师用&quot;寄居蟹&quot;比喻外部评估：自己不建房，找别人的房（任务）住（【师】seg1 L111）。</p>
+<h3>2.2 Perplexity（PPL）：困惑度</h3>
+<p>PPL 的定义：对测试语料中所有句子的概率做几何平均，再取倒数（【师】seg1 L117，【PPT】04-1 P43-P44）。</p>
+<p><strong>PPL 越小越好</strong>——因为测试语料都是合法句子，模型给它们的概率越大越好，取倒数后就变成越小越好。</p>
+<p>老师给了一个直观解释：<strong>分支因子（branching factor）</strong>——看到一堆词后，下一个词可能接的不同词的数目。如果模型确定下一个词只有几种可能，PPL 就小；如果&quot;看谁都有可能&quot;，PPL 就大（【师】seg1 L140-147，【PPT】04-1 P47）。</p>
+<h3>2.3 PPL 与熵的关系</h3>
+<p>PPL 和信息熵（Shannon entropy）正相关（【师】seg1 L124-139，【PPT】04-1 P45-P46）。</p>
+<ul><li>熵 = 不确定性</li><li>熵越小 → 模型对语言越确定 → PPL 越小</li><li>理想状态：模型像人一样&quot;心里门儿清&quot;，一看就知道句子对不对（【师】seg1 L133）</li></ul>
+<p>Shannon-McMillan-Breiman theorem 把语言的熵和 PPL 联系起来（【PPT】04-1 P45）。</p>
+<h3>2.4 N-gram 的&quot;天花板&quot;</h3>
+<p>理论上 N 越大，PPL 应该越小（更多上下文 = 更多约束）。但实际上：</p>
+<ul><li>N=1,2,3 时 PPL 下降</li><li>N 更大时 PPL 反而上升——<strong>数据稀疏严重了，参数得不到足够支撑</strong>（【师】seg1 L149-166，【PPT】04-1 P48）</li></ul>
+<p>老师用了一个类比：就像 OSI 七层模型理论上漂亮，但实际落地的是 TCP/IP（【师】seg1 L168-171）。科学问题不能&quot;在真空中出现&quot;，要落地。</p>
+<p>这就是 N-gram 的瓶颈，也是神经语言模型的动机。</p>
+<hr>
+<h2>三、神经概率语言模型（FNN 时代）</h2>
+<h3>3.1 从 N-gram 到神经网络的动机</h3>
+<p>N-gram 的根本问题：数据稀疏 + 参数爆炸。神经网络的思路：</p>
+<ol><li>把词映射为实值连续向量（分布式表示）</li><li>用连续函数建模条件概率（【师】seg2 L14-29）</li></ol>
+<p>这两件事正好对应之前词向量章节的内容——所以神经语言模型和词向量研究是&quot;交叉在一起&quot;的（【师】seg2 L42-44）。</p>
+<h3>3.2 Bengio 2003：NNLM 的开山之作</h3>
+<p>Bengio 2003 JMLR 的 Neural Probabilistic Language Model（NPLM）是最早的神经语言模型（【PPT】04-2 P8）。</p>
+<p>结构：</p>
+<ul><li>输入层：(n-1) 个历史词，每个词用 m 维向量表示</li><li>隐层：h 个神经元，tanh 激活</li><li>输出层：|V| 个神经元，softmax</li><li><strong>直连</strong>：输入层直接连到输出层（残差思想的雏形）</li></ul>
+<p>参数：</p>
+<ul><li>词表示层：C = |V| × m 矩阵</li><li>表示层→隐层：H，h × (n-1)m</li><li>隐层→输出层：W，|V| × h</li><li>直连：U，|V| × (n-1)m</li></ul>
+<p>前向计算：y = b + W·C(x) + U·tanh(H·C(x) + d)（【PPT】04-2 P18）</p>
+<p>老师特别提到直连（skip connection）的思想后来演变成了 ResNet 的残差连接（【师】seg2 L68-70, L138-144）。</p>
+<h3>3.3 实验结果：神经模型 &gt; 传统 N-gram</h3>
+<p>Brown 语料上的对比（【PPT】04-2 P22-P24）：</p>
+<ul><li>传统 trigram（KN 平滑）：PPL ≈ 312</li><li>神经语言模型：PPL ≈ 252</li></ul>
+<p>AP 语料（更大）：神经模型 PPL 降到 100 多（【师】seg2 L145）。</p>
+<p>关键结论：</p>
+<ul><li>高阶时神经模型性能提升，N-gram 反而下降</li><li>隐层单元数量有影响</li><li>神经模型 + N-gram 混合有帮助（插值 trigram）</li><li>直连在小语料提供泛化，在大语料加速收敛</li></ul>
+<p>老师提醒：看论文要关注多个变量（阶数、隐层数、词向量维度、直连有无），&quot;别人看你的论文和成果，就会觉得你对这个问题的考察会全面并且深入&quot;（【师】seg2 L126-127）。</p>
+<h3>3.4 其他 FNN 模型</h3>
+<ul><li>Mnih &amp; Hinton 2007：Log-bilinear 模型（LBL）</li><li>Mnih &amp; Teh 2012：快速训练方法</li></ul>
+<p>老师提到&quot;各种各样的模型&quot;就不一一展开了（【师】seg2 L148）。</p>
+<hr>
+<h2>四、循环神经网络（RNN）语言模型</h2>
+<h3>4.1 从 FNN 到 RNN</h3>
+<p>FNN 的问题：</p>
+<ul><li>需要固定输入长度</li><li>不能反映语言的时序关系</li></ul>
+<p>RNN 的引入：隐层不仅接收当前输入，还接收上一时刻的隐层状态（【师】seg2 L152-164）。这就是&quot;循环&quot;的含义。</p>
+<p>RNN 展开后在时间上一个词一个词地进，一个词一个词地出。共享的是层间权重矩阵（【师】seg2 L173-175）。</p>
+<h3>4.2 Mikolov 2010：RNN LM</h3>
+<p>Mikolov 2010 Interspeech 的 RNN LM 是循环神经网络语言模型的开端（【PPT】04-2 P35-P39）。</p>
+<p>结构：输入层 → 隐层（带自循环）→ 输出层（softmax）。训练用 BPTT（Backpropagation Through Time）（【师】seg2 L175-200）。</p>
+<h3>4.3 自回归生成与因果语言模型</h3>
+<p>RNN LM 的一个重要用途是生成。训练时能看到标准答案，测试时只能用自己的预测作为下一步输入——这就是<strong>自回归（autoregressive）</strong>（【师】seg2 L207-230）。</p>
+<p>关键概念：</p>
+<ul><li><strong>Causal Language Model</strong>：生成当前词时不能看后面（因果性）</li><li><strong>Teacher Forcing</strong>：训练时用标准答案作为下一步输入，纠正&quot;一条道走到黑&quot;</li><li>Transformer 的 masked self-attention 就是模拟这个过程（【师】seg2 L226-227）</li></ul>
+<h3>4.4 梯度消失/爆炸</h3>
+<p>RNN 的致命问题：反向传播时，梯度连乘会导致：</p>
+<ul><li>梯度 &gt; 1：爆炸（1.1 × 1.1 × ... → ∞）</li><li>梯度 &lt; 1：消失（0.9 × 0.9 × ... → 0）（【师】seg2 L234-246）</li></ul>
+<p>这就像&quot;蝴蝶效应&quot;——初始状态的一点偏差会越来越大（【师】seg2 L255）。</p>
+<hr>
+<h2>五、LSTM 与 GRU：给 RNN 装上&quot;门&quot;</h2>
+<h3>5.1 LSTM：长短期记忆网络</h3>
+<p>LSTM（Hochreiter &amp; Schmidhuber 1997）的核心思想：引入<strong>记忆单元（cell state）</strong>和<strong>门控机制</strong>，让信息可以选择性地保留或遗忘（【师】seg2 L248-294，【PPT】04-2 P43-P58）。</p>
+<p>三个门：</p>
+<table><tr><th>门</th><th>作用</th><th>类比</th></tr><tr><td><strong>遗忘门（Forget Gate）</strong></td><td>决定丢弃多少旧记忆</td><td>&quot;学会遗忘是一种境界&quot;（【师】seg2 L271）</td></tr><tr><td><strong>输入门（Input Gate）</strong></td><td>决定写入多少新信息</td><td>控制当前输入</td></tr><tr><td><strong>输出门（Output Gate）</strong></td><td>决定输出多少信息</td><td>综合输入和记忆</td></tr></table>
+<p>老师提到 PPT 制作者（王老师）很用心，用高亮标出了 LSTM 中与 RNN 对应的部分（【师】seg2 L257-259）。</p>
+<h3>5.2 门控机制的本质</h3>
+<p>门控不是事先固定的，而是<strong>动态计算的</strong>：用 sigmoid 函数输出 0~1 之间的值，控制信息通过的程度（【师】seg2 L285-290）。</p>
+<p>两种控制方式：</p>
+<ul><li><strong>硬控制</strong>：二值化（0 或 1），要么全过要么不过</li><li><strong>软控制（逐位控制）</strong>：sigmoid 输出连续值，每个维度独立控制——更精准</li></ul>
+<p>老师指出：门控机制后来被广泛用于注意力、MoE（Mixture of Experts）路由等（【师】seg2 L291，seg3 L5-7）。</p>
+<h3>5.3 GRU：LSTM 的简化版</h3>
+<p>GRU（Gated Recurrent Unit）把 LSTM 的三个门简化为两个（更新门和重置门），计算量更小（【师】seg3 L3-4）。</p>
+<h3>5.4 双向 RNN 与多层 RNN</h3>
+<ul><li><strong>双向 RNN</strong>：一个前向，一个反向，拼接使用。前提是任务允许看全文（如阅读），生成任务不能用（【师】seg3 L8-12, L35-41）</li><li><strong>多层 RNN</strong>：低层到高层是&quot;重新整合梳理&quot;的过程（【师】seg3 L13-14）</li></ul>
+<h3>5.5 探针（Probing）：理解各层学到了什么</h3>
+<p>老师提到了 probing 研究：通过扰动某一层，观察任务表现变化，来理解各层的功能。结论：底层更多获取句法信息，比例比较偏多（【师】seg3 L15-20）。</p>
+<hr>
+<h2>六、Seq2Seq：序列到序列的转换</h2>
+<h3>6.1 从序列标注到 Seq2Seq</h3>
+<p>序列标注（如汉语切分）是严格一对一的：输入一个字，输出一个标签（【师】seg3 L51-57）。</p>
+<p>但很多任务不是一对一：</p>
+<ul><li>机器翻译：英语 → 中文（长度不同）</li><li>问答：一句话 → 回答</li><li>摘要：一篇文章 → 几句话</li></ul>
+<p>这就是<strong>序列到序列（Sequence-to-Sequence, Seq2Seq）</strong>——实现任意序列到序列的转换（【师】seg3 L58-62）。</p>
+<h3>6.2 编码器-解码器架构</h3>
+<ul><li><strong>编码器（Encoder）</strong>：把输入序列压缩成一个固定长度的向量（最后一个隐层状态）</li><li><strong>解码器（Decoder）</strong>：基于这个向量生成输出序列</li></ul>
+<p>老师强调：Seq2Seq 的重要性在于<strong>统一了大量 NLP 任务</strong>——机器翻译、问答、摘要、对话，全都变成同一个架构（【师】seg3 L137-148）。这也是 Transformer 名字的由来：&quot;Transformer 来自于这个转换&quot;（【师】seg3 L62）。</p>
+<h3>6.3 序列标注的深入讨论</h3>
+<p>以汉语切分为例：</p>
+<ul><li>输入字序列，输出 BIO 标签</li><li>每个时刻 softmax 输出标签概率，取最大</li><li>问题 1：只用上文信息 → <strong>双向 RNN</strong></li><li>问题 2：标签之间有依赖（如 B 后不能直接接 B）→ <strong>加 CRF 层</strong></li></ul>
+<p>BiLSTM-CRF 成为序列标注的标准架构（【PPT】04-2 P69-P81）。</p>
+<p>老师提到：随着大模型能力增强，CRF 层&quot;可能也就不多说了&quot;（【师】seg3 L86）——更强的编码器可以替代 BiLSTM 甚至 CRF。</p>
+<h3>6.4 自编码器（Autoencoder）</h3>
+<p>自编码器：输入是自己，输出也是自己，中间压缩。隐藏层学到了输入的压缩表示（【师】seg3 L101-136）。</p>
+<p>关键洞察：</p>
+<ul><li>自监督：不需要标注，让模型恢复自己</li><li>适用于新领域、未处理过的数据（医学图像、脑电信号等）</li><li>&quot;懒人的方法&quot;——不懂也没关系，让模型自己训（【师】seg3 L126-131）</li></ul>
+<h3>6.5 注意力机制：Seq2Seq 的改进</h3>
+<p>Seq2Seq 的问题：编码器把所有信息压成一个固定向量，解码时每次都用同一个向量——但翻译时，生成&quot;我&quot;应该更关注&quot;I&quot;，生成&quot;有&quot;应该更关注&quot;have&quot;（【师】seg3 L151-167）。</p>
+<p>注意力机制的思想：<strong>每个解码时刻，动态地关注编码器中最相关的部分</strong>。</p>
+<p>早期注意力：</p>
+<ol><li>计算相似度（打分函数）</li><li>归一化（softmax）</li><li>加权求和</li><li>调整当前隐层状态</li></ol>
+<p>老师提到：注意力可视化可以发现<strong>软对齐（soft alignment）</strong>——英译法时，注意力权重大致对应词的对齐关系（【师】seg3 L177-180）。</p>
+<p>下节课将详细展开注意力的发展。</p>
+<hr>
+<h2>七、本讲小结</h2>
+<h3>7.1 技术演进脉络</h3>
+<pre><code>N-gram 数据稀疏
+    ↓
+平滑技术（折扣/回退/差值）
+    ↓
+PPL 评估 → 发现 N-gram 天花板
+    ↓
+神经语言模型（FNN: Bengio 2003）
+    ↓
+RNN（Mikolov 2010）→ 梯度消失/爆炸
+    ↓
+LSTM/GRU（门控机制）
+    ↓
+Seq2Seq（编码器-解码器）
+    ↓
+注意力机制（动态关注）
+    ↓
+Transformer（下节课）</code></pre>
+<h3>7.2 关键概念清单</h3>
+<table><tr><th>概念</th><th>一句话解释</th><th>出处</th></tr><tr><td>平滑</td><td>给零概率词一个非零先验</td><td>seg1 L16-24</td></tr><tr><td>Laplace 加1</td><td>每个词计数硬加 1</td><td>seg1 L21-27</td></tr><tr><td>Lidstone 加δ</td><td>加一个小于 1 的数，缓和 Laplace</td><td>seg1 L72-73</td></tr><tr><td>Good-Turing</td><td>按频次分级折扣</td><td>seg1 L75-81</td></tr><tr><td>Kneser-Ney</td><td>考虑词的&quot;上下文活性&quot;</td><td>seg1 L82-90</td></tr><tr><td>回退</td><td>高阶找不到退到低阶</td><td>seg1 L102</td></tr><tr><td>差值/插值</td><td>多阶加权混合</td><td>seg1 L104-107</td></tr><tr><td>PPL</td><td>困惑度，几何平均的倒数，越小越好</td><td>seg1 L112-122</td></tr><tr><td>分支因子</td><td>下一个词可能的选择数</td><td>seg1 L140-147</td></tr><tr><td>NNLM</td><td>Bengio 2003 的前馈神经语言模型</td><td>seg2 L47-70</td></tr><tr><td>直连/残差</td><td>输入直接连到输出，加速收敛</td><td>seg2 L68-70</td></tr><tr><td>RNN</td><td>隐层带自循环，建模时序</td><td>seg2 L152-175</td></tr><tr><td>BPTT</td><td>随时间反向传播</td><td>seg2 L175-200</td></tr><tr><td>自回归</td><td>用自己的预测作为下一步输入</td><td>seg2 L207-230</td></tr><tr><td>Teacher Forcing</td><td>训练时用标准答案纠正</td><td>seg2 L230</td></tr><tr><td>梯度消失/爆炸</td><td>连乘导致梯度趋近 0 或 ∞</td><td>seg2 L234-246</td></tr><tr><td>LSTM</td><td>记忆单元 + 三门控</td><td>seg2 L248-294</td></tr><tr><td>GRU</td><td>LSTM 的简化版</td><td>seg3 L3-4</td></tr><tr><td>双向 RNN</td><td>前向+反向拼接</td><td>seg3 L8-12</td></tr><tr><td>Seq2Seq</td><td>任意序列到序列的转换</td><td>seg3 L58-62</td></tr><tr><td>BiLSTM-CRF</td><td>序列标注标准架构</td><td>seg3 L74-91</td></tr><tr><td>自编码器</td><td>输入=输出，中间压缩</td><td>seg3 L101-136</td></tr><tr><td>注意力</td><td>动态关注最相关的部分</td><td>seg3 L151-180</td></tr><tr><td>软对齐</td><td>注意力权重对应词对齐</td><td>seg3 L177-180</td></tr></table>
+<h3>7.3 金句摘录</h3>
+<blockquote><p>&quot;数学跟不上了，就像现在大模型能力不行吗？数据不行了，没了。&quot;（【师】seg1 L167-168）</p></blockquote>
+<blockquote><p>&quot;任何科学问题，它不能在真空中出现，它还要落地。落地之后就有一些现实的约束，就导致有些方法就具有生命力，有些方法就不行。&quot;（【师】seg1 L171-172）</p></blockquote>
+<blockquote><p>&quot;学会遗忘，可能也真是一种很高的一种境界吧。呃，难就难在忘不了。&quot;（【师】seg2 L271-272）</p></blockquote>
+<blockquote><p>&quot; sequence to sequence 的结构非常的重要……大量的自然语言任务全都统一到这一个架构上。&quot;（【师】seg3 L140-148）</p></blockquote>
+<blockquote><p>&quot;一个好的思想出来了之后，实际上就有很多新的那个思想被激发出来。&quot;（【师】seg3 L184-185）</p></blockquote></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
