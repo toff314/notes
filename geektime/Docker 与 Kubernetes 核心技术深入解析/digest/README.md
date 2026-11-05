@@ -17,6 +17,8 @@
 | `course_review.json` | 课程评论文素材（四幕结构+ROI 评估） | 机读 |
 | `theme_articles/theme-001.json` | 主题文①：etcd 高可用与 Raft 生产落地（跨 L13/L14/L16/L17） | 机读 |
 | `theme_articles/theme-002.json` | 主题文②：Pod 优雅终止与 SIGTERM 信号穿透链（跨 L06/L28/L33） | 机读 |
+| `digest.md` | 课程一页纸（六节固定结构：地图/SNR/精华清单/概念依赖/金句/略读） | 人读（唯一必读） |
+| `cards/` | 6 张金矿讲深读卡（L16/L17/L26/L30/L33/L39，每张≤300字） | 人读（选读） |
 | `study_guide.md` | 完整学习指南（6 主题重组+1 张 Mermaid 图+3 条阅读路线） | 人读 |
 | `study_guide_slim.md` | 5 分钟速览（1 件事/3 框架/5 方法/1 反直觉） | 人读 |
 | `survey_notes.md` | 课程通览（Adler 两问+模块地图+39 讲标题矩阵） | 人读 |

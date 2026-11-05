@@ -6,6 +6,7 @@
 
 ## 写作前必读（按优先级）
 
+0. **`digest.md`** — 课程一页纸（v2 唯一必读，≤1500 字）：课程地图、值不值得读、金矿清单、金句、略读清单。人类入口。
 1. **`course_review.json`** — 课程判决、三幕逐幕评价（方法论地基 / 实战闭环 / 方法论迁移）。任何写作任务先读它定位基调。
 2. **`content_triage.json`** — 37 讲逐讲评分、四层分拣、Adler 四问、数据审计。引用任何课程数据前必查 verification 状态。
 3. **`theme_articles/`**（3 篇）— 可直接成文的主题深挖素材包（含 verification_gate 数据闸门）。
@@ -14,6 +15,8 @@
 
 | 文件 | 内容 | 消费方式 |
 |------|------|---------|
+| `digest.md` | 课程一页纸（v2 必读：地图+判决+金矿清单+金句） | 人读 |
+| `cards/` | 5 张金矿讲深读卡（15/17/20/22/25，各 ≤300 字） | 人读（选读） |
 | `course_review.json` | 课程评论文素材（三幕结构+数据可信度+ROI） | 机读 |
 | `theme_articles/theme-001.json` | 主题文：Characterization Test 安全网（跨 05/14/15/19） | 机读 |
 | `theme_articles/theme-002.json` | 主题文：人是最后的兜底员翻车复盘（跨 17/20/22） | 机读 |
@@ -25,6 +28,9 @@
 | `content_triage.json` | 37 讲逐讲分拣+数据审计（Phase 2 核心产物） | 机读 |
 
 ## 写作任务指引
+
+### 了解这门课（人）
+1. 读 `digest.md`（一页纸）；要深挖某讲再点 `cards/card-lecXX-*.md`
 
 ### 写课程评论文
 1. 读 `course_review.json` 的 narrative_structure.acts / overall_assessment / writing_direction

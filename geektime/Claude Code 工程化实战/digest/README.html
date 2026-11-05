@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《Claude Code 工程化实战》消化索引（digest README） · Notes</title>
+<title>《Claude Code 工程化实战》消化索引（digest v2） · Notes</title>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -70,27 +70,30 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">极客时间</a> <span>/</span> <span class="cur">《Claude Code 工程化实战》消化索引（digest README）</span></nav>
-<article class="prose"><h1>《Claude Code 工程化实战》消化索引（digest README）</h1>
-<blockquote><p>本目录是《Claude Code 工程化实战》（讲师：黄佳）的结构化消化产物，生成于 2026-08-31。</p><p><strong>本目录绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 工程化实战/digest/</code></p><p><strong>课程原文绝对路径</strong>：<code>/home/yuanwu/geektime/output/Claude Code 工程化实战/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
-<h2>写作前必读（按优先级）</h2>
-<ol><li><strong><code>course_review.json</code></strong> — 课程判决、四幕逐幕评价。任何写作任务先读它定位基调：高价值但需批判性消费的教程课，金矿藏在水份之下。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、数据审计。引用任何课程数据前必查：✅ 可引 / ⚠️ 标注语境 / ❓ / 🚩 禁用。</li><li><strong><code>theme_articles/theme-001.json</code></strong> — 可直接成文的主题深挖素材包（多 Agent 选型）。</li></ol>
-<h2>产出物总表</h2>
-<table><tr><th>文件</th><th>内容</th><th>消费方式</th></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕结构）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题深挖文素材（多 Agent 选型，跨 5 讲）</td><td>机读</td></tr><tr><td><code>study_guide.md</code> / <code>study_guide_slim.md</code></td><td>学习指南 / 5 分钟速览</td><td>人读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记（Adler 两问）</td><td>人读</td></tr><tr><td><code>lecture_summaries.json</code></td><td>逐讲摘要（34 讲，含扫描数据）</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲分拣+数据审计（金2/银17/铜10/铁5）</td><td>机读</td></tr></table>
-<h2>写作任务指引</h2>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">极客时间</a> <span>/</span> <span class="cur">《Claude Code 工程化实战》消化索引（digest v2）</span></nav>
+<article class="prose"><h1>《Claude Code 工程化实战》消化索引（digest v2）</h1>
+<blockquote><p>课程：极客时间《Claude Code 工程化实战》，讲师黄佳，34 讲 / 约 9.9 小时。</p><p>本目录：<code>/home/yuanwu/notes/geektime/Claude Code 工程化实战/digest/</code></p><p>课程原文：<code>/home/yuanwu/geektime/output/Claude Code 工程化实战/&lt;模块&gt;/&lt;讲&gt;/</code></p></blockquote>
+<h2>一、写作前必读（按优先级）</h2>
+<ol><li><strong><code>digest.md</code></strong> — 课程一页纸，唯一必读。10 分钟建立全局判断。</li><li><strong><code>course_review.json</code></strong> — 课程判决、四幕评价、写作方向。写评论文先读它定基调。</li><li><strong><code>content_triage.json</code></strong> — 逐讲评分、四层分拣、47 条数据审计。引用任何数字前必查可信度标签。</li><li><strong><code>theme_articles/theme-001.json</code></strong> — 多 Agent 选型的主题深挖素材包，含 <code>verification_gate.avoid_claims</code>。</li><li><strong><code>cards/</code></strong> — 6 张金/银讲深读卡，写具体章节时按需点开。</li></ol>
+<h2>二、产出物总表</h2>
+<table><tr><th>文件</th><th>用途</th><th>人读/机读</th></tr><tr><td><code>digest.md</code></td><td>课程一页纸（≤1500 字）</td><td>人读·必读</td></tr><tr><td><code>cards/card-lec-hot03-source-leak.md</code></td><td>源码泄露十点实证</td><td>人读·选读</td></tr><tr><td><code>cards/card-lec04-multi-agent.md</code></td><td>多 Agent 决策框架</td><td>人读·选读</td></tr><tr><td><code>cards/card-lec16-stop-hook.md</code></td><td>Stop Hook 质量门控</td><td>人读·选读</td></tr><tr><td><code>cards/card-lec20-rules.md</code></td><td>指令规则 vs 权限规则</td><td>人读·选读</td></tr><tr><td><code>cards/card-lec11-progressive-disclosure.md</code></td><td>Skill 三层披露架构</td><td>人读·选读</td></tr><tr><td><code>cards/card-lec-hot05-workflow.md</code></td><td>控制流位置判据</td><td>人读·选读</td></tr><tr><td><code>survey_notes.md</code></td><td>通览笔记 + Adler 两问</td><td>人读·可选</td></tr><tr><td><code>lecture_summaries.json</code></td><td>34 讲逐讲摘要</td><td>机读</td></tr><tr><td><code>content_triage.json</code></td><td>逐讲评分 / 分拣 / 数据审计</td><td>机读</td></tr><tr><td><code>course_review.json</code></td><td>课程评论文素材（四幕）</td><td>机读</td></tr><tr><td><code>theme_articles/theme-001.json</code></td><td>主题深挖文素材（跨 5 讲）</td><td>机读</td></tr><tr><td><code>concept_map.mermaid</code></td><td>课程模块与概念依赖图源文件</td><td>机读/可渲染</td></tr></table>
+<blockquote><p><code>study_guide*.md/.html</code>、<code>survey_notes.html</code>、<code>README.html</code> 是 v1 遗留的扩展阅读，<strong>不属于 v2 必读集</strong>；与 v2 冲突时以本表为准。</p></blockquote>
+<h2>三、写作任务指引</h2>
 <h3>写课程评论文</h3>
-<ol><li>读 <code>course_review.json</code> 的 acts / overall_assessment</li><li>读 <code>content_triage.json</code> 的 data_audit（47 条声明：✅33 ⚠️10 ❓2 🚩2）</li><li>叙事方向已给出：反差开场 → 四幕评价 → 数据边界诚实交代</li></ol>
+<ol><li>读 <code>course_review.json</code> 的 <code>narrative_structure.acts</code> 与 <code>overall_assessment</code>。</li><li>读 <code>content_triage.json</code> 的 <code>data_audit</code>：47 条 = ✅33 / ⚠️10 / ❓2 / 🚩2。</li><li>叙事线：反差开场（工具课为何敢谈工程化）→ 四幕评价 → 诚实交代数据边界。</li></ol>
 <h3>写主题深挖文</h3>
-<ol><li>读 <code>theme_articles/theme-001.json</code> 的 narrative_arc / verification_gate</li><li><strong>verification_gate.avoid_claims 中的内容绝对禁止写进文章</strong>（决策树阈值 50K tokens、Agent Teams 无量化成本）</li><li>按其 source_lectures（04/03/07/08/hot-05）对应路径读讲课原文核对引文</li></ol>
-<h3>写学习指南文</h3>
-<ol><li>读 <code>study_guide.md</code>（可直接作为文章骨架，含 Mermaid 概念图）</li><li>读 <code>content_triage.json</code> 的 entries 获取逐讲分级</li></ol>
-<h2>金矿讲课导航（可逐字引用）</h2>
+<ol><li>读 <code>theme_articles/theme-001.json</code> 的 <code>narrative_arc</code> / <code>verification_gate</code>。</li><li><strong><code>avoid_claims</code> 中的内容绝对禁止写成事实</strong>：50K tokens 阈值、Agent Teams 无量化成本。</li><li>按 <code>source_lectures</code>（04/03/07/08/hot-05）回原文核对引文。</li></ol>
+<h3>了解课程 / 深挖某讲</h3>
+<p>先读 <code>digest.md</code>；需要细节时点 <code>cards/</code>；再不够按下方路径回原文。</p>
+<h2>四、金矿讲课导航（可逐字引用）</h2>
 <table><tr><th>讲</th><th>标题</th><th>原文绝对路径</th></tr><tr><td>hot-03</td><td>真相大白：源码泄露事故带来的架构验证与工程启示</td><td><code>/home/yuanwu/geektime/output/Claude Code 工程化实战/热点加餐（随技术趋势动态更新）/真相大白：源码泄露事故带来的架构验证与工程启示/真相大白：源码泄露事故带来的架构验证与工程启示.md</code></td></tr><tr><td>04</td><td>量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南</td><td><code>/home/yuanwu/geektime/output/Claude Code 工程化实战/子代理（Sub-Agents）/04｜量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南/04｜量体裁衣：从 Sub-Agents 到 Multi-Agent 的工程指南.md</code></td></tr></table>
-<h2>数据可信度警示</h2>
-<p>以下声明<strong>禁止</strong>作为事实引用（🚩 可疑 / ❓ 无法验证）：</p>
-<ul><li>token 利用率提升 98%（11 讲释题，🚩 无出处夸大，正文自认&quot;大概估算&quot;）</li><li>功能代码:安全代码≈1:3（hot-03，🚩 讲师经验估算）</li><li>27+ 平台 / 52,000+ Skills / Top Skills 安装量 180,000（14 讲，❓ 课程出版时点生态数据）</li><li>Claude Code 81K stars / OpenCode 119K stars 月活 65 万+ / 10 亿美元年化收入（hot-02，❓ 无法独立验证）</li><li>Claw-Code 2 小时 50K stars / Sigrid Jin 250 亿 token（hot-03，❓ 网络转述）</li><li>信噪比 50 行法则（06 讲，❓ 讲师经验值）</li><li>升级决策树阈值&quot;工具&lt;5、上下文&lt;50K tokens&quot;（04 讲，❓ 讲师经验值）</li></ul>
-<h2>元信息</h2>
-<ul><li>消化评分：2.92/5（🥇2 🥈17 🥉10 ⛏️5）</li><li>主题深挖文：1 篇（金矿 2 按决策表 0-1 篇取上限；金+银=19≥5 达标；overall SNR 2.92≥2.5 不减半）</li><li>数据审计：47 条声明 = ✅33（70%）/ ⚠️10（21%）/ ❓2（4%）/ 🚩2（4%）</li></ul></article>
+<p>高价值银矿原文：16（Hooks 高级）、20（Rules）、11（渐进式披露）、hot-05（Workflow）、09（SKILL.md）、18（Tools）、19（Headless）、22（Agent SDK），路径同构：<code>&lt;模块&gt;/&lt;讲目录&gt;/&lt;讲目录&gt;.md</code>。</p>
+<h2>五、数据可信度警示（写作禁用）</h2>
+<p>以下内容<strong>不得作为事实</strong>引用：</p>
+<ul><li>🚩 token 利用率提升 98%（11 讲释题，正文自认&quot;大概估算&quot;）</li><li>🚩 功能代码 : 安全代码 ≈ 1:3（hot-03，讲师经验估算）</li><li>❓ 27+ 平台 / 52,000+ Skills / Top Skills 安装量 180,000（14 讲，出版时点生态数据）</li><li>❓ Claude Code 81K stars / OpenCode 119K stars / 月活 65 万+ / 10 亿美元年化（hot-02，无法独立验证）</li><li>❓ Claw-Code 2 小时 50K stars / Sigrid Jin 250 亿 token（hot-03，网络转述）</li><li>❓ 信噪比 50 行法则（06 讲，讲师经验值）</li><li>❓ 升级决策树&quot;工具 &lt; 5、上下文 &lt; 50K tokens&quot;（04 讲，讲师经验值）</li></ul>
+<p><strong>可引但需标注语境</strong>：90.2% 性能提升、15 倍 token 成本（Anthropic 官方博客 ✅）；40% token 节省（LangChain 图表转述 ⚠️）；源码泄露的 512K 行 / 1,900 文件 / 41K fork（事件分析转述 ⚠️）。</p>
+<h2>六、元信息</h2>
+<ul><li>消化版本：v2（digest + cards + JSON 简报）</li><li>消化日期：2026-10-26</li><li>评分：SNR 2.92/5（🥇2 🥈17 🥉10 ⛏️5）</li><li>主题深挖文：1 篇（金矿 2 → 按决策表取 0-1 篇上限；金+银 19 ≥ 5；overall SNR 2.92 ≥ 2.5 不减半）</li><li>数据审计：47 条 = ✅33（70%）/ ⚠️10（21%）/ ❓2（4%）/ 🚩2（4%）</li><li>本次开渠成品（课程评论文）：<code>/home/yuanwu/zhihu-wiki/web-system/data/local/articles/20261026/294/article.md</code></li></ul></article>
 <footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
 </div>
 </body>

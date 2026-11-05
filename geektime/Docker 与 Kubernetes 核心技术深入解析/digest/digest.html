@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Docker 与 Kubernetes 核心技术深入解析》一页纸 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">极客时间</a> <span>/</span> <span class="cur">《Docker 与 Kubernetes 核心技术深入解析》消化索引（digest README） · 《Docker 与 Kubernetes 核心技术深入解析》一页纸</span></nav>
+<article class="prose"><h1>《Docker 与 Kubernetes 核心技术深入解析》一页纸</h1>
+<blockquote><p>39 讲、约 21.6 小时的 K8s 控制平面原理课，以&quot;为什么这样设计&quot;为主线，6 讲金矿全是生产故障叙事。别顺序刷，按金矿地图策略性精读。</p></blockquote>
+<h2>课程地图</h2>
+<pre class="mermaid">graph LR
+  A[Docker 核心技术&lt;br/&gt;L01-06] --&gt; B[K8s 架构原则&lt;br/&gt;L07-11]
+  B --&gt; C[etcd 与 Raft&lt;br/&gt;L12-17]
+  C --&gt; D[API Server&lt;br/&gt;L18-25]
+  D --&gt; E[调度器与控制器&lt;br/&gt;L26-32]
+  E --&gt; F[生命周期与服务发现&lt;br/&gt;L33-39]</pre>
+<h2>值不值得读</h2>
+<ul><li>SNR 3.42/5.0（金 6 / 银 23 / 铜 10 / 铁 0）</li><li>适合：1 年以上容器/K8s 经验的运维与研发、平台建设者。价值不在&quot;怎么用&quot;而在&quot;为什么这样设计&quot;，故障案例可直接迁移到排障与架构决策。</li><li>不适合：零基础入门者（需先自备集群）、只要操作手册的纯用户。注意：过半量化数据为讲师内部经验（❓），引用须标注&quot;据讲师称&quot;。</li></ul>
+<h2>精华讲清单</h2>
+<table><tr><th>讲</th><th>讲题</th><th>一句话结论</th><th>级别</th></tr><tr><td>16</td><td>高可用集群管理</td><td>list 不带 resourceVersion 会穿透堵死 gRPC；横向扩容反而降写性能</td><td>金 4.2</td></tr><tr><td>17</td><td>etcd 常见问题</td><td>假健康检查（只看端口）引发大规模误驱逐；FMA 故障注入方法论</td><td>金 4.1</td></tr><tr><td>26</td><td>调度器 kube-scheduler</td><td>request≠limit=超售；Taint 是门禁；应用炸弹可循环摧毁集群</td><td>金 4.1</td></tr><tr><td>30</td><td>容器网络接口 CNI</td><td>Calico 全 1 MAC 虚拟网关；BGP mesh 指数膨胀→RR 星状化</td><td>金 4.0</td></tr><tr><td>33</td><td>Pod 生命周期</td><td>bash 吞 SIGTERM 破坏优雅终止；Liveness 乐观/Readiness 悲观</td><td>金 4.2</td></tr><tr><td>39</td><td>Ingress+Service 案例</td><td>切流靠 LB 不靠 DNS；ECMP/DSR 做横向扩展与回程优化</td><td>金 4.0</td></tr><tr><td>03/04</td><td>Docker 核心技术一二</td><td>Namespace/cgroups/CFS 与 OverlayFS 写时复制机制</td><td>银</td></tr><tr><td>05/06</td><td>容器网络/Dockerfile</td><td>veth/VXLAN 实验；缓存、多段构建、tini 踩坑</td><td>银</td></tr><tr><td>07/08/09</td><td>架构基础+ kubectl</td><td>Borg 混布数据可溯源；声明式四原则提炼出色</td><td>银</td></tr><tr><td>13/14</td><td>Raft 协议及实现</td><td>选主+日志复制原理；WAL/MVCC/match index</td><td>银</td></tr><tr><td>20/21/22/23/24</td><td>API Server 四道门</td><td>重试风暴复盘；RBAC 权限坑；APF Shuffle Sharding</td><td>银</td></tr><tr><td>27/28/29/31</td><td>控制器/kubelet/CRI/CSI</td><td>队列只放 key 的最终一致性；pause Sandbox；接口标准之争</td><td>银</td></tr><tr><td>34/35/36/37/38</td><td>服务发现全家桶</td><td>iptables 概率链 vs IPVS；enableServiceLinks 踩坑</td><td>银</td></tr></table>
+<h2>核心概念依赖</h2>
+<ul><li>声明式 API（Spec/Status）→ 控制器模式（watch-队列-worker）→ 调度器/kubelet/kube-proxy/operator 全是同一骨架的变体</li><li>Namespace/cgroups/OverlayFS → 容器 → Pod → CRI/CNI/CSI 标准接口 → Service/Ingress 服务发现</li></ul>
+<h2>金句与方法论</h2>
+<ol><li>&quot;list 务必带 resourceVersion 信任缓存，否则穿透 etcd 堵死共享 gRPC 连接&quot;（L16）</li><li>&quot;健康检查只看端口可达=假健康；关键组件故障时宁可自杀，也不伪健康拖垮业务&quot;（L17）</li><li>&quot;无指数退避的重试会把自愈变成 DDoS&quot;（L20）</li><li>&quot;bash/sh 会吞掉 SIGTERM，优雅终止就此失效；日志走 stdout&quot;（L33）</li><li>&quot;Taint 是门禁、Label 只是邀请；强隔离用 Taint&quot;（L26）</li><li>&quot;request 锁定调度、limit 限制 cgroup，差值即超售空间&quot;（L26）</li><li>&quot;切流要依赖流量必经的 LB，不能依赖 DNS——TTL 缓存滞后&quot;（L39）</li><li>&quot;etcd 遇瓶颈先查慢查询/磁盘/网络，不要默认加节点&quot;（L16）</li><li>&quot;Pod 定义 1 个容器，节点跑 2 个进程——pause Sandbox 保住网络身份&quot;（L28）</li><li>&quot;生产 kube-proxy 用 IPVS：iptables 是概率链，后端一多规则爆炸&quot;（L36）</li></ol>
+<h2>略读清单</h2>
+<ul><li>讲 01/02：架构演进常识与 docker 命令演示，信息密度低</li><li>讲 10/11：对象模型与对象概览，官方文档复述</li><li>讲 12/15：etcd 概要入门与集群构建实验，教程内容</li><li>讲 18/19：API Server 概念与认证 demo，教程性内容</li><li>讲 25：apimachinery 源码走读，非研发受众性价比低</li><li>讲 32：Rook 第三方项目演示，与主线相关性弱</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
