@@ -8,6 +8,7 @@
 
 | # | 课 | 笔记 | 大纲 | 自测 | 勘误 | 衍生选题 |
 |---|---|---|---|---|---|---|
+| 04 | 频谱管理 | ✅ [notes](04-spectrum-management/notes.html) | ✅ [outline](04-spectrum-management/outline.html) | ✅ [questions](04-spectrum-management/questions.html) | ✅ [corrections](04-spectrum-management/corrections.html) | ✅ [spinoffs](04-spectrum-management/spinoffs.html) |
 | 03 | 可重配置智能表面（RIS）与可移动天线 | ✅ [notes](03-ris-movable-antenna/notes.html) | ✅ [outline](03-ris-movable-antenna/outline.html) | ✅ [questions](03-ris-movable-antenna/questions.html) | ✅ [corrections](03-ris-movable-antenna/corrections.html) | ✅ [spinoffs](03-ris-movable-antenna/spinoffs.html) |
 | 01 | 课程介绍 + 智能空口技术 | ✅ [notes](01-course-intro-smart-air-interface/notes.html) | ✅ [outline](01-course-intro-smart-air-interface/outline.html) | ✅ [questions](01-course-intro-smart-air-interface/questions.html) | ✅ [corrections](01-course-intro-smart-air-interface/corrections.html) | ✅ [spinoffs](01-course-intro-smart-air-interface/spinoffs.html) |
 | 02 | 电波传播与信道建模 | ✅ [notes](02-propagation-channel-model/notes.html) | ✅ [outline](02-propagation-channel-model/outline.html) | ✅ [questions](02-propagation-channel-model/questions.html) | ✅ [corrections](02-propagation-channel-model/corrections.html) | ✅ [spinoffs](02-propagation-channel-model/spinoffs.html) |

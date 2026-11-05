@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第 4 讲：频谱管理 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 4 讲 频谱管理</span> <span>/</span> <span class="cur">移动通信技术前沿 · 第 4 讲：频谱管理</span></nav>
+<article class="prose"><h1>移动通信技术前沿 · 第 4 讲：频谱管理</h1>
+<blockquote><p>课程：移动通信技术前沿（2026 秋，北京邮电大学 信息与通信工程学院）</p><p>本讲一句话：频谱不是&quot;带宽&quot;，是被国家切好、标好价、写进条约的稀缺土地；会看频谱的人，能从一条曲线上读出对方的设备、参数甚至来意。</p></blockquote>
+<p><strong>导读（四问）</strong></p>
+<ul><li><strong>讲了什么</strong>：先用手里的频谱仪建立&quot;看图&quot;能力，再从频谱反推信号参数，最后落到管理侧——国家怎么分、ITU 怎么协调、FCC 怎么打官司。</li><li><strong>怎么讲的</strong>：全程&quot;先看图再讲理&quot;。每个概念都配一张当场采到的真实频谱，理论只在解释图的时候出现。</li><li><strong>最硬的一句</strong>：6G 提高频谱效率的三条路里，只有第三条（往高频走）是&quot;找没人争的地方&quot;，前两条都是把已有的地种得更密。</li><li><strong>与我何干</strong>：手机直连、车载雷达、低轨星座三件事，本质都是同一场频率协调谈判。</li></ul>
+<h3>§1 频谱是什么：从&quot;有没有负频率&quot;开始</h3>
+<p><strong>线索</strong>：频谱仪为什么从 0 Hz 开始扫，而课本里到处是负频率？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>课堂开场的问题</strong>【师】：空中传输的信号是实信号，实信号的功率谱左右对称，所以只要知道正频率半边即可；频谱仪从 0 Hz 起扫不是漏了信息，是省了重复（L31–L54、L106–L114）。</li><li><strong>负频率只在算法里</strong>【师】：复数调制表示（复包络、I/Q）必然带出负频率，但空中没有复数——&quot;复数只存在你的 MATLAB 里&quot;（L111）。</li><li><strong>定义</strong>【PPT】P22】：频谱是信号频域结构的描述；工程语境下说的频谱就是<strong>功率谱密度</strong>，单位 dBm/Hz（L407–L415）。</li><li><strong>两个公式</strong>【师】：功率谱密度 = 截断信号模平方 / T；经截断函数推导后等于自相关函数的傅里叶变换，即维纳–辛钦定理（L414–L416）。</li></ul>
+<p><strong>一句话总结</strong>：频谱仪给的是功率谱密度曲线，负频率是数学表示副产品，不是物理存在。</p>
+<h3>§2 一台频谱仪上有四张图</h3>
+<p><strong>线索</strong>：同一段空中信号，为什么要用四种画法看？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>四图分工</strong>【师】：右下是频谱图（横轴频率、纵轴功率），右上是瀑布图（每行一个时刻），左上是荧光谱图，左下是实例图（L60–L86）。</li><li><strong>频谱图的核心价值</strong>【师】：颜色代表信号出现概率，因此能看见被大信号盖住的小信号——&quot;大信号把我盖住了，但可以按概率用颜色区分开&quot;（L80–L84）。</li><li><strong>纵轴与积分</strong>【师】：dBm = 10log(毫瓦)；若纵轴是 dBm/Hz，则对 RBW 积分才回到 dBm（L88–L99）。</li><li><strong>RBW 决定分辨力</strong>【PPT】P11–P14】：RBW 带宽内所有功率被视为单一频率的功率；两载波间隔 1 kHz 时，RBW 必须小于 1 kHz 才能分开。</li><li><strong>两种接收架构</strong>【师】：示波器是 ADC 直采，从 0 看到 fs/2；频谱仪是超外差，多次下变频把本振搬到想看的频点再看（L335–L405，【PPT】P25）。代价是示波器&quot;暴力&quot;——1.25 GSa/s 就看 250 MHz，110 GHz 带宽的机器采样率四百多 GSa/s（L362–L384）。</li></ul>
+<p><strong>一句话总结</strong>：频谱图给概率维度，瀑布图给时间维度，超外差给&quot;只看想看的那一段&quot;的自由。</p>
+<h3>§3 频谱为什么贵：从拍卖价说到傅里叶</h3>
+<p><strong>线索</strong>：一段看不见的电磁波，凭什么卖到上千亿？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>定性</strong>【PPT】P48】：无线电频谱是有限、不可再生的自然资源，也是国家战略资源（L913）。</li><li><strong>两个价格</strong>【师】：欧洲 3G 频谱拍卖约 1000 亿欧元；美国 5G 拍卖到 2020 年前后累计约 800 亿美元（L252–L256、L915–L916）。</li><li><strong>拍卖的副作用</strong>【师】：运营商把家底掏空后布站只看盈利，大城市密、农村 sparse——这是美国农村覆盖弱于中国的结构性原因（L258–L261）。</li><li><strong>中国路径</strong>【师】：统一规划、统一管理，运营商按占用缴频率费（转写提到&quot;每兆赫兹 2000 万&quot;，语气不确定，见 corrections）（L918–L921）。</li><li><strong>三个人的接力</strong>【PPT】P167】：麦克斯韦理论证明电磁波存在 → 赫兹用实验证实（并误判&quot;不能通信&quot;，因为天线要跟波长成正比）→ 马可尼做到跨大西洋（L262–L295）。</li><li><strong>傅里叶的公案</strong>【师】：为拿破仑造枪管时研究热传导，论文被泰勒用矩形信号反例驳回；工程上 99.99% 就够，所以傅里叶其实也对（L313–L325）。</li></ul>
+<p><strong>一句话总结</strong>：频谱的价格来自稀缺与不可再生，而看懂它的工具来自一场被驳回过的论文。</p>
+<h3>§4 从一条曲线反推发射机</h3>
+<p><strong>线索</strong>：只有频谱图，没有解调数据，能读出多少参数？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>AM 的真实长相</strong>【师】：中间一个大载波、两侧对称边带——课本图与空中实测一致（L438–L449、L796）。</li><li><strong>调制指数可测</strong>【PPT】P43–P45】：边带与载波的高度差 ΔdB，当 Δ = −6 dB 时 m = 1；−12 dB 时 m = 50%；−26 dB 时 m = 10%（L817–L845）。</li><li><strong>实测验证</strong>【PPT】P46】：发端设 m = 50%、基带 1 kHz、载波 2 GHz，接收端估出 Δ = 12.05 dB → 推出 0.5，基带估为 8.57 kHz（L847–L862）。</li><li><strong>dB 的定义</strong>【师】：10log(P₁/P₂)；换成电压时因为 P = U²/R、R = 50 Ω 约掉，才出现 20log(V₁/V₂)（L899–L905）。</li><li><strong>带宽与符号速率</strong>【师】：B = Rs(1+α)，α 为滚降系数；WCDMA 码片 3.84 Mcps 对 5 MHz 带宽，LTE 10 MHz，5G 100 MHz——两者始终同一量级（L598–L619）。</li><li><strong>等效矩形带宽</strong>【师】：用等面积矩形替代不规则谱形，便于算占用带宽（L587–L597）。</li></ul>
+<p><strong>一句话总结</strong>：频谱的&quot;高度差&quot;和&quot;宽度&quot;分别编码了调制深度与符号速率，看图就能反推发射机设置。</p>
+<h3>§5 频谱形状即信号指纹</h3>
+<p><strong>线索</strong>：老手为什么扫一眼就知道这是什么信号？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>邻道纪律</strong>【师】：不加滤波器时旁瓣外溢，会污染相邻频段；发射机必须测邻道泄漏比，因为&quot;国家只给你 7 兆&quot;（L548–L563）。</li><li><strong>形状对应调制</strong>【PPT】P27–P28】：2FSK 两峰分立、带大载波的是 AM、QPSK 呈平顶；同一信号的荧光图与瀑布图并排看更易判别（L564–L573）。</li><li><strong>经验的可训练性</strong>【师】：长期盯同一波段后，人的判别变成在线比对——&quot;大脑做了神经网络训练&quot;（L574–L577）。</li><li><strong>单一好特征的威力</strong>【师】：频点、带宽、信噪比、平坦度、尖峰数都不如一个<strong>符号速率</strong>——&quot;提一个符号速率就够，提一大堆都没用&quot;（L1096–L1103）。</li><li><strong>高阶案例</strong>【PPT】P28】：德国无线电爱好者收到天问一号信号并判别调制方式（L1152 附近对应 PPT 页）。</li></ul>
+<p><strong>一句话总结</strong>：频谱形状是发射机留下的指纹，特征工程的全部功夫在于找到那一两个真正分辨性的量。</p>
+<h3>§6 无线电史的另一半：密码战</h3>
+<p><strong>线索</strong>：为什么红军能破译对手，对手破不了红军？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>明码的边界</strong>【PPT】P33】：莫尔斯码是公开编码，北邮西门地面刻着校训「厚德载物」的摩尔斯码；明码在战争里等于没有加密（L678–L690）。</li><li><strong>字典密码的死穴</strong>【师】：用康熙字典做码本，一人被俘全系统即刻失效，不具备时效性（L641–L648）。</li><li><strong>周恩来「豪密」三条机制</strong>【师】：①一次一密、纸条用完即毁；②收报与解密分离，只有高级人员持码本；③紧急时另派人送新纸条（L650–L671）。</li><li><strong>理论背书</strong>【师】：香农 1949 年证明一次一密是最优密码；豪密 1930 年提出，已接近这一极限（L657–L661）。</li><li><strong>战术运用</strong>【师】：红军曾模拟蒋介石口吻给周浑元部发电报，把围堵部队调开，才有四渡赤水的空间（L692–L695）。</li><li><strong>李白烈士</strong>【PPT】P30】：上海与延安上千公里通联，仅用 7 W 功率（L703）。</li></ul>
+<p><strong>一句话总结</strong>：保密的上限不在编码技巧，而在密钥是否一次性——这条 1930 年的工程直觉比香农的证明还早十九年。</p>
+<h3>§7 更丰富的看法与四个工程案例</h3>
+<p><strong>线索</strong>：频谱图之外，还有哪些&quot;看见&quot;的手段？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>三种进阶视图</strong>【PPT】P34】：时频图、瀑布图、荧光谱图；频谱仪开「最大保持」会出现两条包络线（L715–L724）。</li><li><strong>荧光谱图抓小信号</strong>【师】：只有实时模式才有，能把大信号底下的小信号显出来（L722–L726）。</li><li><strong>案例一：偷转发器</strong>【师】：透明转发不管来的是什么，于是在大信号下面藏一个小信号盗用；识别只能靠频谱（L727–L742）。</li><li><strong>案例二：鑫诺卫星被攻击</strong>【师】：技术定位确定攻击来自台湾地区，才有外交动作（L743–L753）。</li><li><strong>案例三：CP16 救灾通信</strong>【PPT】P36】：把汉字直接打在瀑布图的像素上，不懂通信的人用眼睛就能解码（L757–L766）。</li><li><strong>案例四：机场电磁环境</strong>【PPT】P38】：测塔台与干扰源的信扰比；另有 Starlink 信标 9 个单音，采到 18 个即两颗星（L770–L788，【PPT】P39–P41）。</li></ul>
+<p><strong>一句话总结</strong>：频谱的价值不只在指标测量，更在于它能把&quot;看不见的占用与干扰&quot;变成可以举证的图像。</p>
+<h3>§8 管理的抓手：审计、重耕与往高处走</h3>
+<p><strong>线索</strong>：频谱&quot;不够用&quot;是真的不够，还是没用满？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>谁在管</strong>【师】：工信部无线电管理局（俗称无委）；所谓发牌照就是发频率——&quot;频率定了，华为才能定滤波器和手机&quot;（L1189–L1197）。</li><li><strong>审计逻辑</strong>【师】：基站铺满不等于用户占满，要看每个 RB 的实际利用率；运营商申报站址数量历来偏少，管理局会开车沿路核（L932–L941）。</li><li><strong>6G 三条路</strong>【师】：①管好现有频谱（重耕、复用，NB-IoT 取代 GSM 就是一次重耕）；②先进技术（MIMO、高阶调制编码、新星座整形）；③开拓更高频段（L946–L1002）。</li><li><strong>高频的真正原因</strong>【师】：不是频率高带宽就大，而是高处没人跟你争——左右各腾 10 GHz 就有 20 GHz 带宽；1 GHz 处左右都是运营商，腾不出来（L986–L993）。马路类比：太赫兹是双向八车道，11 GHz 是双向两车道，10 兆是一车道（L995–L1001）。</li><li><strong>太赫兹的想象场景</strong>【师】：演唱会闸机两秒把几百 G 的球员集锦传进手机（L975–L979）。</li><li><strong>调制阶数的现实</strong>【师】：商用 5G 最高 256QAM，标准里已写 1024/2048 但没人做，卡在器件性价比；WiFi 6 已到 4096QAM（L949–L964）。</li></ul>
+<p><strong>一句话总结</strong>：频谱效率的提升，短期靠审计与重耕把地种密，长期只能往人少的高处迁移。</p>
+<h3>§9 频谱模式识别：三步流水线到端到端</h3>
+<p><strong>线索</strong>：把&quot;看频谱&quot;这件事交给机器，需要拆成几步？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>经典三步</strong>【师】：数据预处理（清洗、归一化）→ 特征提取（峰、带宽、信噪比、平坦度）→ 分类器设计（决策树、Fisher、SVM、浅层神经网络）（L1080–L1088）。</li><li><strong>深度学习的改动</strong>【师】：把特征提取与分类器合并为端到端，人不再手工提特征；&quot;深度学习就是因为有深度神经网络&quot;（L1089–L1093）。</li><li><strong>为什么必须省掉特征工程</strong>【师】：手工特征一年做到 90%，深度学习一天做到 89%——那 1% 不值得一年（L1105–L1110）。</li><li><strong>演示</strong>【PPT】P61】：MATLAB 分类器 APP 以鸢尾花数据为例，留 10% 作测试集、其余做交叉验证，特征选择 + 决策树/集成树，验证集准确率 90.8%，可看混淆矩阵与 ROC，并可导出模型与生成代码（L1143–L1181）。</li><li><strong>本讲的目标系统</strong>【PPT】P62】：在 40 MHz–6 GHz 范围内识别 10 种信号；难点在于频谱分辨率直接限制形状可分性（L1184，【PPT】P57–P59）。</li></ul>
+<p><strong>一句话总结</strong>：机器识谱的胜负手从&quot;设计特征&quot;转移到&quot;喂够数据&quot;，人的工作变成定义标签与评估口径。</p>
+<h3>§10 法规、国际协调与两场频谱战争</h3>
+<p><strong>线索</strong>：频率怎么被写进法律和条约，争不下来的又怎么办？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>62 号令四成果</strong>【PPT】P66】：新增 IMT 划分、支持卫星通信、保障重大航天工程、引导汽车产业（L1199–L1201）。</li><li><strong>划分表与三区</strong>【PPT】P67】：中国内地/香港/澳门分别列示，整体参照 ITU 三区划分；中国属第三区（亚太），一区为欧洲非洲及前苏联地区，二区为美洲（L1212–L1221）。</li><li><strong>频谱模板</strong>【PPT】P69】：必要带宽 + 信道间隔 + 邻带构成模板（spectrum mask），发射谱形不得越界（L1227–L1230）。</li><li><strong>车载雷达的带宽账</strong>【PPT】P71】：79–81 GHz、2 GHz 带宽，中国合计预留 4 GHz；距离分辨率 ΔR = c/(2B)，所以 4 GHz 带宽才能分开相距 10 cm 的两块石头（L1237–L1259）。</li><li><strong>FCC 与 NTIA</strong>【师】：FCC 管民用、NTIA 管政府与军用；中国由无线电管理局统一管（L1260–L1261，【PPT】P76）。</li><li><strong>12.2–12.7 GHz 之争</strong>【PPT】P72–P81】：Dish/MDS 一方要部署 5G，委托 RKF 做全国蒙特卡洛仿真（模拟 49,997 个宏基站），主张可与 NGSO FSS 共存；SpaceX 反驳称 74% 时间受扰；争点集中在是否假设天线零陷、天线架设高度、集总干扰算法；FCC 最终以频谱效率与技术论证优先，站在 SpaceX 一侧（L1263–L1377）。</li><li><strong>I/N = −12.2 dB 不奇怪</strong>【师】：这是<strong>积分带宽内</strong>的干扰噪声比，单频点上 I 仍可高于 N——&quot;因为你是用积分功率算的&quot;（L1314–L1341）。</li><li><strong>WRC-23 与 WRC-27</strong>【PPT】P88、P111】：WRC-23 在迪拜，批准 43 项新决议、修订 56 项、删除 33 项；IMT 新增 3.3–3.4 GHz 等频段，6 GHz 首次在全球多数国家划分约 700 MHz 中频段；WRC-27 于 2027 年 10 月 11 日至 11 月 12 日在上海举行，两大热点是 6 GHz 与低轨（L1392–L1435）。</li><li><strong>手机直连的管理难点</strong>【PPT】P91】：存量手机直连（不改终端，提高星上处理能力）与专用芯片两条路线；真正的问题是卫星要用地面运营商的频率，而地理覆盖重合部分如何协调（L1438–L1461）。</li></ul>
+<p><strong>一句话总结</strong>：频率的归属由法规、条约和仿真报告共同决定，而每一份报告的假设就是谈判的战场。</p>
+<h2>拿走这五条</h2>
+<ol><li><strong>看图先看半边</strong>：实信号功率谱左右对称，频谱仪从 0 Hz 起扫就够了；负频率是复表示的副产品。</li><li><strong>两个量定一台发射机</strong>：谱线高度差 → 调制指数，谱宽 → 符号速率，B = Rs(1+α)。</li><li><strong>频谱是稀缺土地</strong>：欧洲 3G 卖了约 1000 亿欧元，美国 5G 约 800 亿美元，中国走统一规划 + 占用付费。</li><li><strong>提效只有三条路</strong>：审计重耕、先进技术、往高频走；高频的真正好处是&quot;没人跟你争&quot;。</li><li><strong>6 GHz 是下一战</strong>：WRC-23 已给约 700 MHz 中频段，WRC-27（2027 上海）要定 6 GHz 与低轨的规则。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

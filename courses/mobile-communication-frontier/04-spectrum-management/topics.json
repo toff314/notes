@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "schema": "lecture-spinoffs/1",
+  "lecture": "04-spectrum-management",
+  "lectureTitle": "频谱管理",
+  "course": "mobile-communication-frontier",
+  "topics": [
+    {
+      "id": "mobile-communication-frontier-lec04-t1",
+      "title": "从一条曲线读出发射机：频谱反演的工程学",
+      "angle": "观点：频谱形状是可逆的参数编码（工程测量角度）",
+      "status": "pending",
+      "anchor": "notes §4 §5；转写 L817–L862、L1096–L1103；PPT P43–P46"
+    },
+    {
+      "id": "mobile-communication-frontier-lec04-t2",
+      "title": "频谱为什么卖到千亿：无线电频率的定价与分配制度",
+      "angle": "观点：频谱的稀缺是被制度制造的，不只是物理限制（制度经济学角度）",
+      "status": "pending",
+      "anchor": "notes §3 §8；转写 L252–L261、L913–L941；PPT P48–P49"
+    },
+    {
+      "id": "mobile-communication-frontier-lec04-t3",
+      "title": "豪密与香农：一次一密的十九年时差",
+      "angle": "观点：工程直觉可以领先理论证明近二十年（技术史角度）",
+      "status": "pending",
+      "anchor": "notes §6；转写 L650–L695"
+    },
+    {
+      "id": "mobile-communication-frontier-lec04-t4",
+      "title": "6 GHz 争夺战：从 WRC-23 到 WRC-27 上海",
+      "angle": "观点：6 GHz 的归属将决定 6G 产业链的地理分布（产业政策角度）",
+      "status": "pending",
+      "anchor": "notes §10；转写 L1392–L1437；PPT P88、P111、P166"
+    },
+    {
+      "id": "mobile-communication-frontier-lec04-t5",
+      "title": "12.2–12.7 GHz 论战：一份仿真报告如何决定一项产业",
+      "angle": "观点：频谱裁决的实质是对仿真假设的裁决（技术治理角度）",
+      "status": "pending",
+      "anchor": "notes §10；转写 L1263–L1377；PPT P72–P81"
+    },
+    {
+      "id": "mobile-communication-frontier-lec04-t6",
+      "title": "机器识谱：从手工特征到端到端，输了什么赢了什么",
+      "angle": "观点：端到端替代特征工程，代价是可解释性与小样本能力（方法论角度）",
+      "status": "pending",
+      "anchor": "notes §9；转写 L1080–L1181；PPT P54–P62"
+    }
+  ]
+}

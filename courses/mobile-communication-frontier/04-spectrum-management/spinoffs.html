@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 4 讲 · 衍生选题 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 4 讲 频谱管理</span> <span>/</span> <span class="cur">第 4 讲 · 衍生选题</span></nav>
+<article class="prose"><h1>第 4 讲 · 衍生选题</h1>
+<table><tr><th>#</th><th>选题</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>从一条曲线读出发射机：频谱反演的工程学</td><td>待开题</td><td>—</td></tr><tr><td>2</td><td>频谱为什么卖到千亿：无线电频率的定价与分配制度</td><td>待开题</td><td>—</td></tr><tr><td>3</td><td>豪密与香农：一次一密的十九年时差</td><td>待开题</td><td>—</td></tr><tr><td>4</td><td>6 GHz 争夺战：从 WRC-23 到 WRC-27 上海</td><td>待开题</td><td>—</td></tr><tr><td>5</td><td>12.2–12.7 GHz 论战：一份仿真报告如何决定一项产业</td><td>待开题</td><td>—</td></tr><tr><td>6</td><td>机器识谱：从手工特征到端到端，输了什么赢了什么</td><td>待开题</td><td>—</td></tr></table>
+<h3>1. 从一条曲线读出发射机：频谱反演的工程学</h3>
+<ul><li><strong>主题串</strong>：<code>观点：频谱形状是可逆的参数编码（工程测量角度）</code></li><li><strong>锚点</strong>：notes §4（调制指数）、§5（符号速率与 B = Rs(1+α)）；转写 L817–L862、L1096–L1103；PPT P43–P46。</li><li><strong>为什么</strong>：多数教材把&quot;调制&quot;和&quot;测量&quot;分成两门课，本讲用一条真实 AM 频谱把二者缝在一起——高度差给 m、宽度给 Rs。这个&quot;反问题&quot;视角在 6G 频谱监管（非协作信号识别、干扰溯源）里是刚需。</li><li><strong>增益</strong>：给读者一套可复用的读图方法：先看对称性判实信号，再看载波判调幅族，再看峰形判频移族，最后量宽高反推参数。配一张从频谱到参数表的流程图。</li><li><strong>更新建议</strong>：补测 FM 与 QPSK 的调制指数/码速率反演实测，形成三种调制的对照表；再补&quot;多径与相位噪声如何破坏反演精度&quot;一节。</li><li><strong>素材种子</strong>：PPT P43–P46 的实验设置（发 m=50%、1 kHz 基带、2 GHz 载波），转写 L847–L862 的实测结果（Δ=12.05 dB → 0.5，基带 8.57 kHz）。</li><li><strong>发布</strong>：待开题</li></ul>
+<h3>2. 频谱为什么卖到千亿：无线电频率的定价与分配制度</h3>
+<ul><li><strong>主题串</strong>：<code>观点：频谱的稀缺是被制度制造的，不只是物理限制（制度经济学角度）</code></li><li><strong>锚点</strong>：notes §3（价格）、§8（管理与审计）；转写 L252–L261、L913–L921、L932–L941；PPT P48–P49。</li><li><strong>为什么</strong>：同样是 5G，中国农村覆盖优于美国农村，根源不在技术而在频谱获取成本——拍卖把运营商的家底掏空，布站就只看盈利。这是一个&quot;制度决定网络形态&quot;的干净案例。</li><li><strong>增益</strong>：横向对比拍卖制与统一规划制在覆盖、资费、建设节奏上的可观测差异，给出可查证的数据窗口（欧洲 3G、美国 C 波段、中国占用费）。</li><li><strong>更新建议</strong>：核实并更新欧洲 3G 拍卖总额、美国 5G 各次拍卖累计额、中国现行频率占用费标准；补一节&quot;频谱审计（RB 利用率）如何倒逼运营商&quot;。</li><li><strong>素材种子</strong>：转写 L252–L261 的&quot;拍卖后没钱布站&quot;逻辑链；L932–L941 的管理局开车数基站的现场细节。</li><li><strong>发布</strong>：待开题</li></ul>
+<h3>3. 豪密与香农：一次一密的十九年时差</h3>
+<ul><li><strong>主题串</strong>：<code>观点：工程直觉可以领先理论证明近二十年（技术史角度）</code></li><li><strong>锚点</strong>：notes §6；转写 L650–L671；PPT 本讲无对应页（老师口述史料）。</li><li><strong>为什么</strong>：周恩来 1930 年设计的&quot;纸条用完即毁 + 收发分离&quot;已逼近一次一密极限，而香农 1949 年才给出最优性证明。这个故事说明密码学的可靠性来自密钥管理而非编码复杂度。</li><li><strong>增益</strong>：把&quot;一次一密&quot;从公式拉回到组织设计——为什么&quot;收报的人与解密的人不是一拨人&quot;是同等重要的技术决策。</li><li><strong>更新建议</strong>：核对豪密提出的确切年份与史料来源；补充&quot;若纸条耗尽&quot;的应急机制如何影响战役级通信节奏。</li><li><strong>素材种子</strong>：转写 L653–L665 的三条机制描述；L692–L695 模拟敌方口吻调兵的战术案例。</li><li><strong>发布</strong>：待开题</li></ul>
+<h3>4. 6 GHz 争夺战：从 WRC-23 到 WRC-27 上海</h3>
+<ul><li><strong>主题串</strong>：<code>观点：6 GHz 的归属将决定 6G 产业链的地理分布（产业政策角度）</code></li><li><strong>锚点</strong>：notes §10；转写 L1392–L1437；PPT P88、P111、P166。</li><li><strong>为什么</strong>：WRC-23 已为 IMT 在全球多数国家划分约 700 MHz 的 6 GHz 中频段，而 WRC-27（2027 年 10 月 11 日–11 月 12 日，上海）要定具体使用条件。频率一旦定错，整条产业链要切换——&quot;手机生产出来只能在中国用&quot;。</li><li><strong>增益</strong>：把一场看起来遥远的外交会议，翻译成对设备商、运营商、终端厂商的具体约束清单。</li><li><strong>更新建议</strong>：跟踪 WRC-27 议题 1.2/1.6 的进展与各国提交文稿；补 6 GHz 与 WiFi 6E/7 共享的冲突面。</li><li><strong>素材种子</strong>：转写 L1409–L1418（新增频段与 700 MHz 中频段）；L1435–L1436（产业切换代价）。</li><li><strong>发布</strong>：待开题</li></ul>
+<h3>5. 12.2–12.7 GHz 论战：一份仿真报告如何决定一项产业</h3>
+<ul><li><strong>主题串</strong>：<code>观点：频谱裁决的实质是对仿真假设的裁决（技术治理角度）</code></li><li><strong>锚点</strong>：notes §10；转写 L1263–L1377；PPT P72–P81。</li><li><strong>为什么</strong>：Dish 一方委托 RKF 做全国蒙特卡洛仿真主张可共存，SpaceX 反驳称 74% 时间受扰，分歧全落在四个假设上：是否假设天线零陷、天线架设高度、宏基站数量、集总干扰算法。FCC 最终以技术论证与效率优先站在 SpaceX 一侧。</li><li><strong>增益</strong>：给出一套&quot;读频谱政策文件&quot;的方法：先找假设，再看仿真规模，最后看谁承担举证责任。</li><li><strong>更新建议</strong>：把 RKF 报告与 SpaceX 反驳报告的公开版本对照逐条列出分歧点；补 I/N = −12.2 dB 为何是积分带宽口径的完整推导。</li><li><strong>素材种子</strong>：转写 L1303–L1313（四个分歧点）；L1330–L1341（I/N 负值解释）；PPT P77–P80。</li><li><strong>发布</strong>：待开题</li></ul>
+<h3>6. 机器识谱：从手工特征到端到端，输了什么赢了什么</h3>
+<ul><li><strong>主题串</strong>：<code>观点：端到端替代特征工程，代价是可解释性与小样本能力（方法论角度）</code></li><li><strong>锚点</strong>：notes §9；转写 L1080–L1110、L1143–L1181；PPT P54–P62。</li><li><strong>为什么</strong>：老师的算术很直白——手工特征一年做到 90%，深度学习一天做到 89%，那 1% 不值得一年。但被牺牲的是&quot;为什么这个信号是这个信号&quot;的可解释性，而这恰是监管场景（干扰溯源、非法占用取证）最需要的。</li><li><strong>增益</strong>：给出&quot;何时该手搓特征、何时该端到端&quot;的判据：标注量、可解释性要求、样本获取成本、上线后漂移监测能力。</li><li><strong>更新建议</strong>：补一个 40 MHz–6 GHz、10 类信号的小型复现实验（可用开源频谱数据集），对比决策树与 CNN 的准确率/可解释性/训练成本。</li><li><strong>素材种子</strong>：转写 L1096–L1103（一个符号速率胜过一堆特征）；PPT P62（10 种信号识别的目标系统）。</li><li><strong>发布</strong>：待开题</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

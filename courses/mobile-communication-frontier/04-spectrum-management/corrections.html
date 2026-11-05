@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 4 讲 · 勘误与存疑 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 4 讲 频谱管理</span> <span>/</span> <span class="cur">第 4 讲 · 勘误与存疑</span></nav>
+<article class="prose"><h1>第 4 讲 · 勘误与存疑</h1>
+<p>本讲转写由课堂录音自动识别，术语误识较多。下表逐条给两侧依据；<strong>未能在转写与课件两侧同时验证的内容一律标「待核」，不补全为事实</strong>。</p>
+<table><tr><th>#</th><th>原写（转写/口头）</th><th>应为</th><th>依据</th></tr><tr><td>1</td><td>「泰克36B」「TD 306B」「TD306B」</td><td>泰克（Tektronix）RSA306B 频谱仪</td><td>转写 L59、L196、L245 三种写法自相矛盾；PPT：P4 标注「泰克306B频谱仪+天线@北邮」</td></tr><tr><td>2</td><td>「拉萨斯平法」类口误（本讲「6级」）</td><td>6G</td><td>转写 L14「6级中的频谱管理」；PPT：P52「6G研究方向」</td></tr><tr><td>3</td><td>「NBLT」「NBLP」「互联网NG」「VT」</td><td>NB-IoT</td><td>转写 L127–L143 反复混写；PPT：P39 附近信号示例</td></tr><tr><td>4</td><td>「万科271」「瓦科二三」「瓦二三」「哇凡尔 3」「挖二期」</td><td>WRC-23 / WRC-27</td><td>转写 L169、L1392–L1437 多种音写；PPT：P82「WRC2023大会总结」、P111「WRC-27」</td></tr><tr><td>5</td><td>「爱因斯坦」类误写「RS」「李氏」「历史」「斯拉内克」「专牙利」「斯Starlink」</td><td>Dish / SpaceX</td><td>转写 L1263–L1376 同一主体多种音写；PPT：P75「Dish」、P74「请求允许…12.2-12.7GHz」</td></tr><tr><td>6</td><td>「高思率」「高斯率」「包速率」「傅里叶律」「傅里叶分量」</td><td>符号速率 / 码片速率</td><td>转写 L581–L621 混用；PPT：P25 附近频谱带宽与速率关系</td></tr><tr><td>7</td><td>「EP、MD」「EIRP」「IPFD」「EIRP」</td><td>EPFD（等效功率通量密度）</td><td>转写 L1421–L1430「EP、MD」「EIRP」混写；PPT：P159–P160「EPFD」</td></tr><tr><td>8</td><td>「APIA」「npiia」「FC」</td><td>NTIA / FCC</td><td>转写 L1260–L1263；PPT：P76「FCC于1934年建立」</td></tr><tr><td>9</td><td>「美团总理」「中央总理」「周严总理」「五毫」「毫米」</td><td>周恩来 / 豪密</td><td>转写 L650–L671 反复音误；PPT：本节无对应页（属老师口述史料）</td></tr><tr><td>10</td><td>「维纳辛钦定理」写作「维纳定理」</td><td>维纳–辛钦定理（Wiener–Khinchin）</td><td>转写 L96「维纳定理」、L416「维纳辛钦定理」同讲并存；PPT：P22 功率谱密度定义</td></tr><tr><td>11</td><td>「Chirp Chinese」</td><td>应为 CHIRP（啁啾）类应急通信演示</td><td>转写 L757「叫Chirp Chinese」；PPT：P36「工程案例—CP16救灾通信」</td></tr><tr><td>12</td><td>「鑫诺卫星」段中「法轮功」攻击表述</td><td>保留原始指称，属老师课堂叙述的历史事件</td><td>转写 L743–L753；PPT：本讲无对应页</td></tr><tr><td>13</td><td>「万里扬」「万里也」「是德多少器」</td><td>应为国产高带宽示波器厂商（口述不确定，待核）</td><td>转写 L371–L381 三处不一致；PPT：本讲无对应页</td></tr><tr><td>14</td><td>「GPS」类误写「G」 「NB」 等零散口误</td><td>不逐一改，见下「未采用内容」</td><td>转写通篇；PPT：无对应页</td></tr></table>
+<h2>未采用内容</h2>
+<ul><li><strong>点名与课堂管理</strong>（L15–L27、L426–L433）：涉及具体单位与出勤，属隐私噪声，不写入笔记。</li><li><strong>学生对答的来回过程</strong>（L37–L54、L1032–L1052、L869–L909 的多人作答）：保留&quot;答案聚类&quot;（课堂表决半对半、DB 定义由某同学答出&quot;10log 测量值/基准值&quot;），不复述逐个对话。</li><li><strong>读博与论文发表的劝勉</strong>（L1006–L1028）：属个人经验建议，与频谱管理知识点无关，未纳入。</li><li><strong>大模型工具闲聊</strong>（L338–L350、L1025–L1028）：同上，未纳入。</li><li><strong>Starlink 在华合规性讨论</strong>（L770–L788）：涉及监管现状的口头叙述，未作为技术结论写入；仅保留&quot;信标 9 个单音、采到 18 个即两颗星&quot;这一可验证观测。</li></ul>
+<h2>覆盖对照</h2>
+<ul><li><strong>第 1 节（转写 L9–L423）</strong>：负频率、频谱仪四图、频谱定义与价格、历史、示波器 vs 频谱仪、功率谱密度 → notes §1 §2 §3；PPT P1–P26、P167。</li><li><strong>第 2 节（转写 L424–L791）</strong>：AM/FM/DSB 谱形、邻道、调制识别、密码战、进阶视图、工程案例 → notes §4 §5 §6 §7；PPT P27–P46。</li><li><strong>第 3 节（转写 L792–L1136）</strong>：AM 实测与调制指数、dB 定义、频谱效率三路、机器学习三步、MATLAB 演示 → notes §4 §8 §9；PPT P43–P62。</li><li><strong>第 4 节（转写 L1137–L1466）</strong>：MATLAB 实操、62 号令、划分表、频谱模板、车载雷达、FCC 论战、WRC-23/27、手机直连 → notes §9 §10；PPT P60–P91、P166。</li></ul>
+<h2>待核（不补全为事实）</h2>
+<ul><li><strong>中国运营商频率占用费「每兆赫兹 2000 万」</strong>：转写 L918–L919 语气为&quot;好像是&quot;，属口语估计，正文已标注未确认。</li><li><strong>「美国 5G 频谱拍卖累计 800 亿美元」</strong>：转写 L915–L916「2020 年左右已经花了 800 亿美元」，年份与口径未明确。</li><li><strong>5G 商用调制最高 256QAM、标准已写 1024/2048</strong>：转写 L949–L958 为师生对话推断，未给协议版本号。</li><li><strong>「万里扬」示波器厂商名与 110 GHz / 四百多 GSa/s 指标</strong>：转写 L371–L384 口述含混，PPT 无对应页。</li><li><strong>赫兹生卒年</strong>：转写 L278「475757~973457~97 才 40」为明显识别噪声，正文只写&quot;不到 40 岁&quot;，不给具体年份。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
