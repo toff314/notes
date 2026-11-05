@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 第 15 章 · 行动清单（5 条） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 15 章　语音学与语音特征提取（Phonetics and Speech Features）· 读书笔记包</span> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 第 15 章 · 行动清单（5 条）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 3 版 · 第 15 章 · 行动清单（5 条）</h1>
+<blockquote><p>从各节行动区提炼的本章级 A2；每条 = 动词 + 对象 + 时间/验收。</p><p>教材型含错题归因条目。每条行动由 <code>labs/</code> 下对应脚本执行，结果见 <code>labs/index.md</code>。</p></blockquote>
+<h2>学习行动（教材型）</h2>
+<ol><li><strong>建 ARPAbet/IPA 对照表并核对窄式转写</strong>：从 §15.1 正文解析出 40 行符号对照（24 辅音 + 16 元音），并对书中 TIMIT 窄式表逐词比对宽窄差异，在 2026-10-28 前完成（验收：<code>labs/lab-01/out/arpabet_ipa.csv</code> 40 行齐备；<code>timit_narrow.csv</code> 中宽窄不一致词 10 个，且图注点名的 d 腭化、末尾不除阻、喉化、闪音 4 项现象全部核验为 true）。——来自 §15.1</li><li><strong>实测矩形窗与汉明窗的泄漏代价</strong>：以 240 Hz 与 250 Hz 两个纯音为例做 400 点加窗 FFT（nfft=512），比较主瓣宽度、最坏旁瓣与主瓣外能量占比，在 2026-10-29 前完成（验收：<code>labs/lab-02/out/summary.json</code> 给出两组窗的四个指标；结论里写出「旁瓣 −18 dB → −43 dB，主瓣 31.25 Hz → 62.5 Hz」这一 trade-off）。——来自 §15.4.6、§15.5.2、§15.5.3</li><li><strong>搭一条 80 通道梅尔滤波器组流水线</strong>：实现 mel = 1127·ln(1+f/700) 的刻度、三角滤波器组与对数压缩，并在 0/−5 dB 信噪比下比较对数梅尔 80 维、线性 80 维、线性 40 维的元音分类准确率，在 2026-10-30 前完成（验收：<code>labs/lab-03/out/summary.json</code> 中 mel_100Hz_step 显示低频每 100 Hz 得 150.5 mel、7 kHz 处只增 14.5 mel；−5 dB 时对数梅尔 0.889 与线性 80 维持平、高于线性 40 维 0.844）。——来自 §15.4.3、§15.5.4</li><li><strong>从倒谱估计 F0 并验证源-滤波器可分</strong>：对 100/120/150/200 Hz 四个合成元音求倒谱、取 c1–c12 做 MFCC，比较「同一滤波器换 F0」与「同一 F0 换元音」两组距离，在 2026-10-31 前完成（验收：<code>labs/lab-04/out/cepstrum_f0.csv</code> 四组 F0 最大绝对误差 ≤ 0.5 Hz；<code>source_filter.csv</code> 显示倒谱距离比 3.076/16.205 的比值 5.3 大于对数梅尔的 3.2，说明倒谱更抗 F0 变化）。——来自 §15.6</li><li><strong>从波形量出韵律并做升/降调判定</strong>：合成 fall/rise 两条双音节轮廓，逐帧算 F0 与强度，用末段斜率做二分类，并验证振幅减半的 dB 关系，在 2026-10-31 前完成（验收：<code>labs/lab-05/out/summary.json</code> 给出两条轮廓的末段斜率 −98.8 / +33.6 Hz·s⁻¹、强度动态 36.6/36.7 dB、振幅减半 6.02 dB 与理论值一致；分类准确率 0.50 需如实报告并写出失败原因）。——来自 §15.3、§15.4.3</li></ol>
+<h2>错题归因（教材型，来自 self-test）</h2>
+<table><tr><th>错题</th><th>类型</th><th>归因</th><th>补救动作</th><th>截止</th></tr><tr><td>振幅减半的 dB 变化</td><td>知识性</td><td>功率比用 10log、振幅比用 20log 记混</td><td>从「功率 ∝ 振幅²」重推一遍，用 lab-05 的 <code>scale_half</code> 核对</td><td>2026-10-31</td></tr><tr><td>39 维的构成</td><td>记忆性</td><td>只记住 13+13，漏二阶差分</td><td>回 §15.6 抄写构成式，并在 cards 卡 14 默写</td><td>2026-10-31</td></tr><tr><td>[ae] 与 [iy] 的 F1/F2 方向</td><td>理解性</td><td>把「舌前→F2 高」记反</td><td>用 lab-02 的 <code>vowel_ae_spectrum.png</code> 标峰核对</td><td>2026-10-30</td></tr><tr><td>升/降调判定为何全判 fall</td><td>理解性</td><td>只看斜率符号未校准阈值，rise 的 +33.6 Hz/s 被阈值判成 fall</td><td>用 lab-05 的 <code>detections</code> 逐条看斜率分布，写出阈值应落在 (+33.6, −96.7) 之间</td><td>2026-10-31</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

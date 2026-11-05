@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 13 章 机器翻译 · 自测 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation）</span> <span>/</span> <span class="cur">第 13 章 机器翻译 · 自测</span></nav>
+<article class="prose"><h1>第 13 章 机器翻译 · 自测</h1>
+<h2>提取自测协议（每次复习先读这一段）</h2>
+<ol><li><strong>遮住</strong>：合上 <code>book-notes.md</code> 与 <code>cards.md</code>，浏览器也不许开着本章原文。只留一张白纸。</li><li><strong>先写后看</strong>：每题先写出答案再翻笔记，写不出就写「卡在第几步」——卡点比答案更值钱。</li><li><strong>限时</strong>：概念题每题 3 分钟，计算题每题 8 分钟。超时即记「未通过」，不要延长。</li><li><strong>出声</strong>：第 4、9 题必须口头讲一遍（费曼检验），讲的时候不许看稿。</li><li><strong>判分</strong>：能写出<strong>机制</strong>（为什么必然如此）记 ✅；只写出<strong>结论</strong>（是什么）记 ◐；写错或写不出记 ✗。</li><li><strong>回填</strong>：✗ 的题把对应节号写进 <code>actions.md</code> 的下轮待办，不许只写「再复习」。</li></ol>
+<p>判定线：10 题里 ✅ ≥8 且计算题（5–7）全对，才算本章过关；否则重读 ⭐ 块。</p>
+<hr>
+<h2>一、概念复述（遮住笔记，3 分钟/题）</h2>
+<ol><li>为什么说 SVO/SOV/VSO 与前置词/后置词是「成套」出现的？这对「结构重排」意味着什么？</li></ol>
+<ul><li>答案指向：§13.1.1 + 卡 2。要点须包含「统一句法参数」与「只需学少数几种变换」两层。</li></ul>
+<ol><li>bass→lubina/bajo、wall→Wand/Mauer、brother→哥哥/弟弟，这三种一对多的难度为什么递增？最后一种为什么不能算「消歧」？</li></ol>
+<ul><li>答案指向：§13.1.2 + 卡 3。关键句意：第三种是目标语言强制要求源文未编码的维度。</li></ul>
+<ol><li>汉语译英语时，主语为什么经常是「凭空生成」的？为什么用 chrF 单独衡量这件事不公平？</li></ol>
+<ul><li>答案指向：§13.1.3 + 卡 5、卡 18。必须提到参考译文的单一性：源文没写性别，两种代词都对，指标只有一个标准答案。</li></ul>
+<ol><li><strong>（出声讲）</strong> 用一分钟向一个没学过 NLP 的人解释：为什么贪心解码会输给束搜索，而束搜索又不是最优解？</li></ol>
+<ul><li>答案指向：§13.4 + 卡 13。要求同时讲清「局部最优」与「k 有限仍然近似」两面。</li></ul>
+<hr>
+<h2>二、计算题（限时 8 分钟/题，必须写出中间量）</h2>
+<ol><li>书中搜索树：首步 P(yes)=0.5、P(ok)=0.4；第二步 ok→ok 为 0.7、yes→yes 为 0.4；EOS 概率均为 1.0。</li></ol>
+<ul><li>(a) 贪心输出的序列与概率是多少？</li><li>(b) 两步内全局概率最高的序列与概率是多少？</li><li>(c) 若按「对数概率 ÷ 词数」归一化，两者排序会变吗？</li><li>答案指向：§13.4 + <code>labs/lab-03/out/beam_trace.csv</code>。验收：(a) <code>yes yes EOS</code> 0.2；(b) <code>ok ok EOS</code> 0.28；(c) 顺序不变——按 lab-03 口径（除以不含 EOS 的词数 2）为 −0.6365 与 −0.8047，后者仍占优；但书中警告的是长短候选混排时会翻盘，而不是等长比较。</li></ul>
+<ol><li>参考译文 <code>witness for the past,</code>（去空格 18 字符），候选 <code>past witness</code>。用字符 2 元、β=2 手算 chrF。</li></ol>
+<ul><li>(a) 候选的 2 元集合有几个？其中命中参考的有几个？</li><li>(b) chrP、chrR、chrF2 各是多少？</li><li>答案指向：§13.6.2 + 卡 18 + <code>labs/lab-02/out/chrf_terms.csv</code>。验收：与书中 .86/.62 同量级，lab-02 手算得 .8644/.6198。</li></ul>
+<ol><li>同一个 lab-01 语料，EM 收敛后 t(the→das)=0.7160、t(the→hund)=0.1040。请回答：</li></ol>
+<ul><li>(a) 为什么 the 的概率会分给 hund 这种明显错配？</li><li>(b) 如果语料从 8 对扩到 800 对，这个「错配泄漏」会变大还是变小？为什么？</li><li>答案指向：§历史注记（IBM 模型 1 的均匀对齐假设）+ <code>labs/lab-01/out/t_table.csv</code>。要点：IBM-1 对每个目标词均匀分摊所有源词，错配只能靠频次压制。</li></ul>
+<hr>
+<h2>三、辨析与迁移（3 分钟/题）</h2>
+<ol><li>「chrF 得 0.72 但读起来别扭」和「BLEU 得 0 但译文基本正确」，哪一个是指标缺陷，哪一个是数据问题？分别怎么处理？</li></ol>
+<ul><li>答案指向：§13.6.2 + 卡 18、卡 19。前者是 chrF 的局部性（实测指标缺陷）；后者多半是句级 BLEU 的短句塌零（用法错误，改语料级）。</li></ul>
+<ol><li><strong>（出声讲）</strong> 向同事解释：为什么「模型放大性别偏见」比「模型继承性别偏见」更值得警惕？请指出它发生在解码的哪一步。</li></ol>
+<ul><li>答案指向：§13.7 + 卡 20。要求点出「语法强制 + 原文缺失 → 退回训练分布众数」，以及 argmax 把统计差异变成确定性选择。</li></ul>
+<ol><li>你要给一个中→英的医疗翻译系统加「不确定就不翻」的能力。按本章的框架，这个能力缺的是模型、数据，还是指标？给出一个可落地的改法。</li></ol>
+<ul><li>答案指向：§13.7 结尾的开放问题 + §13.4（候选分数）+ §13.4.1（MBR 的候选池）。参考方向：用束内候选的分数离散度做置信度，设阈值拒译，并用「拒译率 vs 错译率」曲线评估——现有指标没有这一维。</li></ul>
+<hr>
+<h2>费曼检验（每周一次，5 分钟）</h2>
+<p>对着空气讲这三句，讲不顺就说明没懂：</p>
+<ul><li>「交叉注意力只是把 K/V 的来源换了，所以整块能复用」——要能顺手画出 Q 从哪来、K/V 从哪来。</li><li>「长度归一化修的是乘法的算术，不是模型的偏好」——要能说出「每多一个词就多乘一个 &lt;1 的数」。</li><li>「偏见的落点是语法强制 + 原文缺失」——要能立刻举出代词性别和汉语零形式两个例子。</li></ul>
+<hr>
+<h2>例题重做表（原书例题，先做后对）</h2>
+<table><tr><th>#</th><th>例题</th><th>出处</th><th>我的答案</th><th>书中/实测</th><th>状态</th></tr><tr><td>1</td><td>贪心 vs 束搜索：<code>yes yes EOS</code> 对 <code>ok ok EOS</code></td><td>§13.4 图 13.7</td><td></td><td>贪心 0.2 / 全局最优 0.28</td><td>⬜</td></tr><tr><td>2</td><td>HYP1 &quot;the cat sat on the mat&quot; 的 chrF2</td><td>§13.6.2</td><td></td><td>.86（书中）/ .8644（lab-02 手算）</td><td>⬜</td></tr><tr><td>3</td><td>HYP2 &quot;past witness&quot; 的 chrF2</td><td>§13.6.2</td><td></td><td>.62（书中）/ .6198（lab-02 手算）</td><td>⬜</td></tr><tr><td>4</td><td>长度为 5 的候选 chrF 的 β 加权</td><td>§13.6.2 式 13.9</td><td></td><td>β=2 时召回权重为精确率两倍</td><td>⬜</td></tr><tr><td>5</td><td>IBM-1 在 8 对句上的 15 轮 EM 对数似然</td><td>§历史注记</td><td></td><td>−33.1838 → −1.7107，单调</td><td>⬜</td></tr><tr><td>6</td><td>束宽 k=2 在长度归一化下的排序</td><td>§13.4</td><td></td><td>GNMT 归一化分数 −1.0911 / −1.3795</td><td>⬜</td></tr><tr><td>7</td><td>职业代词的 he 占比</td><td>§13.7 图 13.12</td><td></td><td>需按图逐条核对，见 lab 反思</td><td>⬜</td></tr></table>
+<blockquote><p>状态栏：⬜ 未做 / ◐ 做对一半 / ✅ 完全对且能解释为什么 / ✗ 做错（把节号抄进 <code>actions.md</code> 待办）</p></blockquote></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

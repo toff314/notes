@@ -70,7 +70,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</span> <span>/</span> <span class="cur">《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型 · 读书笔记</span></nav>
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型</span> <span>/</span> <span class="cur">《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型 · 读书笔记</span></nav>
 <article class="prose"><h1>《Speech and Language Processing》第三版 · 第 3 章 N-gram 语言模型 · 读书笔记</h1>
 <blockquote><p><strong>本章一句话</strong>：语言模型就是给下一个符号打分并归一成概率的函数，n-gram 用&quot;只看最近几个词&quot;把这个函数变成可计数的东西。</p><p><strong>结构</strong>：先立定义与链式法则 → 用马尔可夫假设把长历史截断 → 用计数与归一化估参 → 讲工程上的对数与规模 → 转到评测（训练/开发/测试、困惑度）→ 用采样暴露模型学到了什么 → 指出稀疏与体裁失配 → 用平滑、插值、回退补救 → 最后把困惑度接回熵与交叉熵。</p><p><strong>可疑处</strong>：中文译本的公式排版有多处断裂（根号、求和号、上下标被拆到不同行），本笔记只摘录完整句子，公式一律用文字重述，不照抄乱码。</p><p><strong>与我何干</strong>：我做过检索与日志分析，n-gram 的&quot;计数 + 归一化 + 回退&quot;是我熟悉的老套路；这一章值得学的是它如何把&quot;评测&quot;和&quot;看不见的组合&quot;变成可计算的问题。</p></blockquote>
 <hr>

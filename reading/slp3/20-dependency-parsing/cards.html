@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 20 章 依存句法分析 · 永久卡片 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 20 章 依存句法分析 · 读书笔记包</span> <span>/</span> <span class="cur">第 20 章 依存句法分析 · 永久卡片</span></nav>
+<article class="prose"><h1>第 20 章 依存句法分析 · 永久卡片</h1>
+<blockquote><p>用法：每张卡独立可读，正面是问题，背面是主张与要点；复习时只看「问」，答不出再看「答」。</p><p>全部出处为中文译文节号（本书无印刷页码）。</p></blockquote>
+<h2>卡 01　什么叫依存结构</h2>
+<p><strong>类型</strong>：概念卡<strong>问</strong>：依存句法分析用什么表示句子结构？它不表示什么？<strong>答</strong>：用词与词之间的有向二元关系表示；每条弧从一个中心词指向一个依存词，并带一个语法关系标签。它不编码短语成分，也不给词以外的短语设节点，因此「更大的成分」这个概念在依存树里是隐含的（要靠子树重建）。<strong>出处</strong>：§20 <strong>链接</strong>：<code>book-notes.md</code>「第 20 章导论」</p>
+<h2>卡 02　为什么 NLP 更偏爱依存</h2>
+<p><strong>类型</strong>：概念卡<strong>问</strong>：相比成分树，依存树的两个主要优势是什么？<strong>答</strong>：一是中心词—依存词直连，谓语的论元直接挂在谓语上，语义关系不必穿过层层短语节点；二是对语序不敏感，语序自由的语言不必为状语的每个位置单独写规则。<strong>出处</strong>：§20 <strong>链接</strong>：<code>book-notes.md</code>「第 20 章导论」</p>
+<h2>卡 03　UD 的关系清单规模</h2>
+<p><strong>类型</strong>：事实卡<strong>问</strong>：Universal Dependencies 提供多少种依存关系？覆盖多少语言？<strong>答</strong>：37 种依存关系；覆盖 100 多种语言、近 200 个依存树库。关系分两大类：从句关系（相对谓语的角色，如 NSUBJ、OBJ）与修饰语关系（修饰方式，如 NMOD、DET、CASE）。<strong>出处</strong>：§20.1 <strong>链接</strong>：<code>cards.md</code> 卡 04</p>
+<h2>卡 04　合法依存树的三条约束</h2>
+<p><strong>类型</strong>：定义卡<strong>问</strong>：一棵有向图要成为合法的依存树，必须满足哪三条？<strong>答</strong>：① 有且仅有一个根节点，它没有入弧；② 除根外每个顶点恰好有一条入弧；③ 全图连通，从根出发沿有向路径可达每个词。合起来即「每词一个中心词 + 唯一根 + 无孤立点」。<strong>出处</strong>：§20.1.1 <strong>链接</strong>：lab-01 的 <code>valid_tree()</code> 检查</p>
+<h2>卡 05　投射性的操作定义</h2>
+<p><strong>类型</strong>：定义卡<strong>问</strong>：怎么判断一棵依存树是不是投射的？<strong>答</strong>：把词按线性顺序排开、弧画在上方，若所有弧都不相交，则是投射的；等价说法是任何依存词与其中心词之间的词都挂在中心词的下方（在子树内）。出现交叉弧即非投射。<strong>出处</strong>：§20.1.2 <strong>链接</strong>：lab-02 的交叉检测</p>
+<h2>卡 06　投射性为什么是选型分水岭</h2>
+<p><strong>类型</strong>：结论卡<strong>问</strong>：投射性对算法选型有什么硬约束？<strong>答</strong>：基于转移的方法只能生成投射树，因此含非投射结构的句子必然出错，这是准确率的结构性上限，调参救不回来；基于图的方法可以生成非投射树。英语里非投射罕见，语序自由的语言里常见。<strong>出处</strong>：§20.1.2、§20.3 <strong>链接</strong>：<code>book-notes.md</code>「第 20.1.2 节」</p>
+<h2>卡 07　arc-standard 的三个操作</h2>
+<p><strong>类型</strong>：机制卡<strong>问</strong>：arc-standard 系统的三个操作各做什么？前提是什么？<strong>答</strong>：SHIFT 把缓冲区首个词压栈；LEFTARC 让栈顶词成为第二个词的依存词（标签 r），并把第二个词弹出；RIGHTARC 让第二个词成为栈顶词的中心词，并弹出栈顶。两个建弧操作都要求栈上至少两个元素，且 ROOT 不能作依存词。<strong>出处</strong>：§20.2 <strong>链接</strong>：lab-01 的 <code>parse_standard()</code></p>
+<h2>卡 08　神谕为什么要等孩子到齐</h2>
+<p><strong>类型</strong>：机制卡<strong>问</strong>：训练神谕在选 RIGHTARC 时，为什么要求栈顶词的所有依存词都已分配？<strong>答</strong>：因为 RIGHTARC 会把栈顶词弹出，一旦弹出它就不能再当中心词。若提前弹出，金标树里它尚未挂上的孩子就永远挂不上，模拟会生成「金标中走不通」的训练样本。<strong>出处</strong>：§20.2.1 <strong>链接</strong>：lab-01 的 <code>oracle_standard()</code></p>
+<h2>卡 09　arc-eager 改了什么</h2>
+<p><strong>类型</strong>：对比卡<strong>问</strong>：arc-eager 相对 arc-standard 的三处改动是什么？<strong>答</strong>：① 建弧对象从「栈顶两个词」改为「栈顶词 + 缓冲区首词」；② RIGHTARC 把缓冲区首词压栈而非丢弃，使它仍可当中心词；③ 新增 REDUCE 弹出已完成任务的栈顶词。收益是弧可以更早建立。<strong>出处</strong>：§20.2.4 <strong>链接</strong>：lab-02 的 <code>delay.csv</code></p>
+<h2>卡 10　贪心的两处病</h2>
+<p><strong>类型</strong>：结论卡<strong>问</strong>：转移式解析器的贪心带来哪两个问题？束搜索能治哪个？<strong>答</strong>：一是错误不可撤销，一步走错全树受累；二是后建的弧要等更久，出错机会更多。束搜索用宽度为 k 的前沿保留多个候选、按路径累计分排序，缓解「不回溯」；但它仍在模型自己走过的格局里搜索，不解决训练/推理分布不一致。<strong>出处</strong>：§20.2.4 <strong>链接</strong>：<code>book-notes.md</code>「第 20.2.4 节」</p>
+<h2>卡 11　边因子化</h2>
+<p><strong>类型</strong>：公式卡<strong>问</strong>：基于图的方法做了什么简化假设？<strong>答</strong>：整棵树的分数等于树中各条弧的分数之和，即 Score(t,S)=Σ_{e∈t} Score(e)。有了它，「找最优树」才等价于在带权有向图上找最大生成树；打分只需保序，不必校准成概率。<strong>出处</strong>：§20.3 <strong>链接</strong>：lab-03 的 <code>mst_solve()</code></p>
+<h2>卡 12　CLE 的三段式</h2>
+<p><strong>类型</strong>：算法卡<strong>问</strong>：Chu-Liu-Edmonds 怎么在有环的情况下求最大生成树？<strong>答</strong>：① 每个非根顶点贪心选一条最高分入弧；② 若成环，把环收缩成一个新节点，进入环的边权减去被替换边权，其余保留，递归求解；③ 递归返回后展开收缩节点，按选中入弧删掉环中对应的那条边。复杂度对完全图是 O(n³)。<strong>出处</strong>：§20.3.1 <strong>链接</strong>：lab-03 的 <code>cle()</code> 与穷举对拍</p>
+<h2>卡 13　双仿射边打分</h2>
+<p><strong>类型</strong>：公式卡<strong>问</strong>：Dozat &amp; Manning 式解析器怎么给一条弧打分？<strong>答</strong>：编码器给出每个词的上下文表示，再分别经两个前馈网得到「作中心词」与「作依存词」的表示；弧 i→j 的分数为 Biaff(x,y)=xᵀUy+W(x⊕y)+b。U 学乘性交互，W 学加性偏置；对每个 j 在所有候选中心词上做 softmax 后交给 MST。<strong>出处</strong>：§20.3.3 <strong>链接</strong>：lab-04 的双仿射形状校验</p>
+<h2>卡 14　LAS / UAS / LS</h2>
+<p><strong>类型</strong>：指标卡<strong>问</strong>：三个附着指标分别怎么算？差值是诊断什么？<strong>答</strong>：LAS = 中心词与标签都正确的词占比；UAS = 只看中心词是否正确；LS = 只看标签是否正确、不管弧挂哪。LAS 与 UAS 差值大 → 结构基本对、标签错；两者都低 → 中心词就找错了。EM 是整句全对的比例，太粗，不宜作开发指标。<strong>出处</strong>：§20.4 <strong>链接</strong>：lab-05 的 <code>metrics.csv</code></p>
+<h2>卡 15　两族算法的性格对照</h2>
+<p><strong>类型</strong>：对比卡<strong>问</strong>：转移式与图式解析器各自的强项与代价是什么？<strong>答</strong>：转移式：线性时间、贪心、只出投射树、长距离依存易错；图式：全局最优、可非投射、长句更准，代价是 O(n³) 级搜索与更重的打分器。选型取决于语料的投射比例与句长分布。<strong>出处</strong>：§20.3、§20.5 <strong>链接</strong>：<code>spinoffs.md</code> 选题 5</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

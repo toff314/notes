@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · lab-05　中文内涵框架手工构建 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span> <span>/</span> <a href="../../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 23 章 情感、态度与内涵词表</a> <span>/</span> <a href="../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · labs · 行动执行闭环（lab-01 ~ lab-05）</a> <span>/</span> <span class="cur">lab-05　中文内涵框架手工构建</span></nav>
+<h1 class="title">《Speech and Language Processing》第 3 版 · 读书笔记 · lab-05　中文内涵框架手工构建</h1><div class="prose"><h1>lab-05　中文内涵框架手工构建</h1>
+<p>对应行动：<code>actions.md</code> 第 5 条。对应书中 §23.9（内涵框架）。</p>
+<h2>怎么跑</h2>
+<pre><code>cd labs/lab-05
+python3 lab05_connotation_frames.py</code></pre>
+<p>依赖：标准库 csv（无需 numpy）。</p>
+<h2>输入</h2>
+<p>手工选择 5 个中文动词：侵犯、幸存、批评、感谢、等待。选择依据：</p>
+<ul><li>侵犯、幸存：直接对应书中 violate/survive 两个例子，可对照验证方向。</li><li>批评：情感方向高度依赖语境（建设性 vs 恶意），用于测试框架的表达能力。</li><li>感谢：主宾双正面，测试非对立结构。</li><li>等待：低能动性，对应书中 Sap et al. 2017 对 waited 的标注。</li></ul>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/connotation_frames.csv</code></td><td>5 个动词的内涵框架表（Role1/Role2 情感、权力关系、能动性、例句、分析）</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<pre><code>动词     Role1情感      Role2情感      权力关系            Role1能动性    
+---------------------------------------------------------------------- 
+侵犯     负面           正面           Role1 &gt; Role2   高           
+幸存     正面           负面           Role1 &lt; Role2   低           
+批评     中性偏负面        中性偏负面        Role1 ≥ Role2   高           
+感谢     正面           正面           Role1 &lt; Role2   高           
+等待     中性           中性           Role1 &lt; Role2   低           
+
+======================================================================
+与书中方向对照
+======================================================================
+survive（幸存）: Role1（主语）正面 ✓, Role2（宾语/灾难）负面 ✓ — 与书中一致
+violate（侵犯）: Role1（施事）负面 ✓, Role2（受事）正面 ✓ — 与书中一致
+等待: Role1 能动性低 ✓ — 与书中 Sap et al. 2017 对 waited 的标注一致</code></pre>
+<h2>结论</h2>
+<ol><li><strong>survive/violate 方向与书中一致</strong>：手工标注的侵犯（施事负面/受事正面）和幸存（主语正面/宾语负面）与书中图 23.14 完全对应，验证了中文动词在论元情感方向上可以与英文平行。</li><li><strong>「批评」展示了语境依赖</strong>：批评者的情感方向取决于语境——建设性批评中主语是正面（监督者），恶意批评中主语是负面（攻击者）。这说明内涵框架对多义动词需要更细的义项区分（类似 SentiWordNet 对同义词集的处理）。</li><li><strong>「感谢」是非对立结构</strong>：主宾双正面，权力关系上被感谢者高于感谢者。这说明内涵框架不只是「谁好谁坏」，还包括「谁强谁弱」的权力维度。</li><li><strong>「等待」的能动性标注</strong>：低能动性对应书中 Sap et al. 2017 对 waited 的标注，验证中文动词也能套用这一维度。</li></ol>
+<h2>反思</h2>
+<p>手工构建 5 个动词比预期更花时间，因为每个动词的论元角色和情感方向都要仔细斟酌。最难的是「批评」——它不像 survive/violate 那样有明确的受害者/幸存者结构，而是高度依赖语境。这让我意识到：<strong>内涵框架的自动构建（Rashkin 2016 的有监督方法）必须先把动词按义项细分，否则分类器会学到混合信号</strong>。书中没有展开这一点，但手工构建时立刻暴露出来。</p></div><div class="grid"><a class="card" href="out/index.html"><h2>out</h2><div class="meta">0 份文档</div></a></div>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

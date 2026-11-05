@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span> <span>/</span> <span class="cur">SLP3 第 13 章　机器翻译（Machine Translation）</span></nav>
+<h1 class="title">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation）</h1><div class="prose"><h1>SLP3 第 13 章　机器翻译（Machine Translation）</h1>
+<ul><li><strong>书目</strong>：《Speech and Language Processing》（第 3 版，Daniel Jurafsky &amp; James H. Martin），第 13 章。</li><li><strong>实际输入</strong>：<code>raw/13/13-machine-translation.md</code>（中译正文，约 1.1k 行）+ <code>raw/13/meta.json</code>（<code>chapter_source=13</code>，<code>goal=理解</code>）。</li><li><strong>书型判定</strong>：<strong>教材型</strong>。因此采用「章 — 节 — 知识点」三级分块，每块给定义框摘录、例题复算、章末小结与练习覆盖，而不是按论点自由组织结构。</li><li><strong>定位口径</strong>：中文译文无印刷页码，全包引用一律用节号 <code>§x.y</code>（含 <code>§历史注记</code>），不写 <code>P.123</code>。</li><li><strong>处理范围</strong>：正文全文（§13.1–§13.8 及历史注记），不外扩到第 14 章或评估章。</li></ul>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th><th>规模</th></tr><tr><td><code>book-notes.md</code></td><td>12 个知识块，每块「摘录 / 思考 / 行动」三区，末尾全章 takeaway 与复习优先级</td><td>31 KB</td></tr><tr><td><code>cards.md</code></td><td>21 张原子卡，一卡一主张，均带 § 出处</td><td>10.7 KB</td></tr><tr><td><code>self-test.md</code></td><td>遮住作答协议 + 10 题（4 概念、3 计算、3 辨析）+ 费曼检验 + 例题重做表</td><td>6.3 KB</td></tr><tr><td><code>actions.md</code></td><td>3 条行动，一条对一个 lab，含验收标准与真实结果</td><td>5.1 KB</td></tr><tr><td><code>spinoffs.md</code></td><td>5 个衍生选题（4 送 write-zhihu-tech，1 送 write-tech-tutorial），含主题串/锚点/为什么/增益/发布</td><td>5.7 KB</td></tr><tr><td><code>glossary.md</code></td><td>43 条术语 + 6 组易混对照</td><td>7.0 KB</td></tr><tr><td><code>labs/</code></td><td>lab-01/02/03 脚本 + <code>out/</code> 真实产物 + 各自 README</td><td>见下</td></tr><tr><td><code>topics.json</code></td><td>5 个衍生选题的结构化登记（与 <code>spinoffs.md</code> 同源）</td><td>5 条</td></tr></table>
+<h2>摘录忠实度</h2>
+<ul><li><code>book-notes.md</code> 摘录区共 <strong>63 条</strong>原文照抄，逐条用脚本回溯 <code>raw/13/13-machine-translation.md</code>：<strong>63/63 命中，0 条改写</strong>（去空白后做子串匹配）。</li><li>跨行断句的片段一律不拼接，只保留单行内完整句；公式如长度归一化 <code>(5+|y|)^α/6^α</code> 在抽取文本里上下标丢失，故<strong>不进摘录区</strong>，改由 lab-03 数值复算反证（k=2 找回 <code>ok ok EOS</code>，翻转率 .1135 vs .2280）。</li><li>思考区与摘录区无连续 12 汉字重合（门禁 G4 自动校验）。</li></ul>
+<h2>labs 一览（全部真实运行，未重跑改写）</h2>
+<table><tr><th>lab</th><th>主题</th><th>对应行动</th><th>关键输出</th></tr><tr><td>lab-01</td><td>IBM Model 1 的 EM 词对齐</td><td>行动 1</td><td>对数似然 −33.183845 → −1.710718（15 轮单调）；<code>t(is→ist)=.9752</code>、<code>t(a→ein)=.9573</code>；对齐 <code>P=.7917 / R=.5375 / F1=.631</code>；反例 <code>t(the→hund)=.1040</code></td></tr><tr><td>lab-02</td><td>chrF 与 BLEU 手算复现</td><td>行动 2</td><td>n≤6：<code>chrF2</code> HYP1 <code>.6552</code> / HYP2 <code>.4162</code>；书中手算口径（只 1–2 元）：<code>.8644 / .6198</code> ≈ 书中 §13.6.2 的 .86/.62；BLEU-4 HYP1 <code>.8091</code>（平滑）<code>.7598</code>（不平滑）、HYP2 <code>0.0000</code>；语料级 BLEU-4 <code>.5528</code>、平均 chrF2 <code>.7254</code></td></tr><tr><td>lab-03</td><td>贪心 vs 束搜索 vs 长度归一化</td><td>行动 3</td><td>贪心 <code>yes yes EOS</code>（0.2）；束搜索 k=2 选 <code>ok ok EOS</code>（logP −1.2730，优于贪心 −1.6094）；2000 次试验 × 6 候选，翻转率 GNMT <code>.1135</code> vs 平均归一化 <code>.2280</code></td></tr></table>
+<p>复现命令：</p>
+<pre><code>cd labs
+python3 lab-01/ibm1_em.py
+python3 lab-02/chrf_bleu.py
+python3 lab-03/beam_search.py</code></pre>
+<p>依赖：Python 3 标准库；lab-02 额外需要 numpy 与 matplotlib。lab-03 使用 <code>default_rng(0)</code>，结果确定。</p>
+<h2>未产出说明</h2>
+<ul><li><code>cross-check.md</code>：<strong>未产出</strong>。<code>raw/13/</code> 下无 <code>lecture-notes/</code>，没有第二来源可做交叉核对。</li><li>划线去向表：<strong>未产出</strong>。<code>raw/13/</code> 下无 highlights 文件，无划线可映射。</li></ul>
+<h2>六维自评</h2>
+<table><tr><th>维度</th><th>分</th><th>理由</th></tr><tr><td>理解深度</td><td>9</td><td>每块都写到机制层（为何必然如此）而非结论层；用 lab 数据反证了三处原文未讲透的地方（chrF 双口径、长度归一化翻转率、IBM-1 错配泄漏）。扣 1 分：§13.5.3 的数据审计部分只做了定性归纳，没做定量复算。</td></tr><tr><td>结构完整</td><td>10</td><td>教材型三级分块全覆盖 §13.1–§13.8 + 历史注记，12 块与节次一一对应，无遗漏小节。</td></tr><tr><td>摘录忠实</td><td>10</td><td>63 条摘录 100% 回溯命中；跨行片段不拼接；乱码公式不进摘录区。</td></tr><tr><td>行动闭环</td><td>8</td><td>3 条行动全部有真实产物与验收数字，且与三个 lab 一一对应。扣 2 分：行动只覆盖了对齐、指标、解码三块，§13.5 低资源与 §13.7 偏见只到「读」的层面，没落成 lab。</td></tr><tr><td>迁移衍生</td><td>8</td><td>5 个选题都有明确锚点与可复用增益，其中 2 个直接用 lab 数字当论据。扣 2 分：尚未追踪外部文献，锚点全部来自本章。</td></tr><tr><td>可复习性</td><td>8</td><td>21 张卡 + 10 题 + 费曼检验 + 例题重做表 + 术语易混对照，形成「读—测—补」闭环。扣 2 分：计算题只有 3 道，偏少。</td></tr><tr><td><strong>合计</strong></td><td><strong>53/60</strong></td><td>单项均 ≥8，达到 ≥42 且单项 ≥7 的门槛。</td></tr></table>
+<h2>自检</h2>
+<pre><code>cd /home/yuanwu/notes/reading/slp3
+python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  13-machine-translation --raw raw/13</code></pre>
+<p>摘录回溯（自建）：</p>
+<pre><code>python3 - &lt;&lt;&#x27;EOF&#x27;
+import re
+n=re.sub(r&#x27;\s+&#x27;,&#x27;&#x27;,open(&#x27;raw/13/13-machine-translation.md&#x27;,encoding=&#x27;utf-8&#x27;).read())
+notes=open(&#x27;13-machine-translation/book-notes.md&#x27;,encoding=&#x27;utf-8&#x27;).read()
+qs=re.findall(r&#x27;「([^」]+)」&#x27;,notes.split(&#x27;### 摘录区&#x27;)[1])  # 逐块跑时替换索引
+print(sum(re.sub(r&#x27;\s+&#x27;,&#x27;&#x27;,q) in n for q in qs),&#x27;/&#x27;,len(qs))
+EOF</code></pre></div><div class="grid"><a class="card" href="labs/index.html"><h2>第 13 章 labs 索引</h2><div class="meta">1 份文档</div></a></div><ul class="docs"><li><a class="doc-link" href="actions.html">第 13 章 机器翻译 · 行动清单<span class="arrow">→</span></a></li><li><a class="doc-link" href="book-notes.html">《Speech and Language Processing》（第 3 版）· 第 13 章 机器翻译 · 读书笔记<span class="arrow">→</span></a></li><li><a class="doc-link" href="cards.html">第 13 章 机器翻译 · 原子卡片<span class="arrow">→</span></a></li><li><a class="doc-link" href="glossary.html">第 13 章 机器翻译 · 术语表<span class="arrow">→</span></a></li><li><a class="doc-link" href="self-test.html">第 13 章 机器翻译 · 自测<span class="arrow">→</span></a></li><li><a class="doc-link" href="spinoffs.html">第 13 章 机器翻译 · 衍生选题<span class="arrow">→</span></a></li></ul>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

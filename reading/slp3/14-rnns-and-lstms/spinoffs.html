@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>衍生选题 · 第 14 章 RNN 与 LSTM · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span> <span>/</span> <span class="cur">衍生选题 · 第 14 章 RNN 与 LSTM</span></nav>
+<article class="prose"><h1>衍生选题 · 第 14 章 RNN 与 LSTM</h1>
+<blockquote><p>每条候选都从本章的一处「说得太顺」的地方长出来，附主题串、锚点、为什么值得写、增益、状态与链接。状态只有两种：⬜ 未发布 / ✅ 已发布（后填 URL）。</p></blockquote>
+<h2>候选索引</h2>
+<table><tr><th>#</th><th>候选</th><th>主题串</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>上下文容量的实测边界</td><td>RNN → 记忆长度 → 扰动衰减 → 延迟断层</td><td>⬜ 未发布</td><td>⬜ 待补</td></tr><tr><td>2</td><td>教师强制的三个数量级</td><td>教师强制 → 暴露偏差 → 自由运行 → 比值可迁移</td><td>⬜ 未发布</td><td>⬜ 待补</td></tr><tr><td>3</td><td>门控修好了哪一半</td><td>LSTM → 表示问题 vs 优化问题 → 分离实验</td><td>⬜ 未发布</td><td>⬜ 待补</td></tr><tr><td>4</td><td>瓶颈的形状</td><td>编码器-解码器 → 注意力 → 失败对照实验</td><td>⬜ 未发布</td><td>⬜ 待补</td></tr></table>
+<p>（以上为索引；每条候选的完整字段见下。）</p>
+<h3>1. 「理论上能记住全部历史」这句话，实际能撑多远？——RNN 上下文容量的实测边界</h3>
+<ul><li><strong>主题串</strong>：RNN → 隐状态记忆 → 扰动衰减 → 延迟回忆断层 → 上下文长度当超参</li><li><strong>锚点</strong>：§14.1「原则上可以表示一直到序列开头为止的所有前文词的信息」；<code>labs/lab-01/out/influence_decay.csv</code>；<code>labs/lab-03/out/accuracy_by_lag.csv</code></li><li><strong>为什么</strong>：几乎所有 RNN 教程都从这句「原则上」开始，但没人给出「可用记忆」的量化定义。我这边的实测是 6 步内扰动衰减 96%（0.1056 → 0.0041），延迟到 12 步准确率就掉到 71.9%，20 步掉到 32.8%——理论承诺与工程现实之间有一条很陡的坡，值得写清楚坡在哪里。</li><li><strong>增益</strong>：把「原则上」翻译成可测量的量（扰动影响降到 5% 以下的步数），读者拿到的是一个可以套到自己任务上的测法与阈值，而不是一句口号。</li><li><strong>状态</strong>：⬜ 未发布</li><li><strong>链接</strong>：⬜ 待补（发布后回填专栏 URL）</li><li><strong>发布</strong>：⬜ 未发布</li><li><strong>大纲</strong>：① 从原文「原则上」三字切入，说明理论承诺与工程现实的落差；② 给出可测定义：记忆长度 = 扰动影响降到 5% 以下的步数；③ 用 lab-01 的注入扰动法扫 T；④ 用延迟回忆任务给行为侧证据（lag=12 崩到 71.9%，lag=20 到 32.8%）；⑤ 讨论边界为何随任务变化；⑥ 结论：把上下文长度当超参而不是承诺。</li><li><strong>推翻条件</strong>：若 T=30 上衰减曲线明显变平，说明 6 步陡降是小样本假象，核心论点要改写成「衰减速度依赖任务」。</li></ul>
+<h3>2. 教师强制的三个数量级：暴露偏差在小模型上到底有多贵</h3>
+<ul><li><strong>主题串</strong>：教师强制 → 暴露偏差 → 自由运行 → 语料规模归因 → 比值可迁移、绝对值不可迁移</li><li><strong>锚点</strong>：§14.2.2、§14.7.1；<code>labs/lab-02/out/teacher_forcing.json</code>；<code>labs/lab-02/out/loss_curve.csv</code></li><li><strong>为什么</strong>：同权重、同模型，只换输入来源，ppl 从 1.0777 跳到 9787.49，差三个多数量级。这个数字夸张到不适合当结论直接引用，反而适合当解剖对象：多少来自结构性错配，多少来自 164 字符语料的过拟合。</li><li><strong>增益</strong>：给出「两次评估、只换输入来源」的干净协议，并明确哪部分可以外推（同模型比值）、哪部分不能（绝对 ppl），避免读者拿 9787 去吓人。</li><li><strong>状态</strong>：⬜ 未发布</li><li><strong>链接</strong>：⬜ 待补（发布后回填专栏 URL）</li><li><strong>发布</strong>：⬜ 未发布</li><li><strong>大纲</strong>：① 复述教师强制定义；② 给测量协议：固定权重只换输入来源；③ 报 lab-02 真实数字与 120 epoch 损失曲线；④ 归因：语料规模、模型容量、序列长度各占多少（缩短序列、加大语料两组对照）；⑤ 讨论 scheduled sampling 为何没成主流；⑥ 结论：比值可迁移，绝对值不可迁移。</li><li><strong>推翻条件</strong>：若语料扩到 10 万字符后自由运行 ppl 与教师强制同量级，则「三个数量级」纯属小样本产物。</li></ul>
+<h3>3. 门控到底修好了哪一半？——把「表示问题」和「优化问题」分开测</h3>
+<ul><li><strong>主题串</strong>：LSTM → 单状态身兼两职 → 梯度连乘 → 分离实验 → 表示侧 vs 优化侧</li><li><strong>锚点</strong>：§14.5；<code>labs/lab-03/lab03_lstm_vs_rnn.py</code>；<code>labs/lab-03/out/grad_norm_by_step.csv</code></li><li><strong>为什么</strong>：§14.5 给了两个失败原因（一个隐状态同时承担记忆与输出、反向传播的反复相乘），科普文章常把两者压成一句「LSTM 解决了梯度消失」。我这边的数字显示两者可以分开量：lag=20 时 RNN 32.8% / LSTM 88.3%，首步梯度保留率 5.8e-5 vs 0.203。</li><li><strong>增益</strong>：设计三个变体（纯 RNN、只加细胞状态但门恒为 1、完整 LSTM），把「表示侧」与「优化侧」的收益拆开报，读者能判断自己在什么情况下需要门、什么时候只要加一条加法通路。</li><li><strong>状态</strong>：⬜ 未发布</li><li><strong>链接</strong>：⬜ 待补（发布后回填专栏 URL）</li><li><strong>发布</strong>：⬜ 未发布</li><li><strong>大纲</strong>：① 拆开两个原因并给可测代理（探针解码远处信息 / 首步梯度保留率）；② 用 lab-03 框架实现三个变体；③ 报 lag=12 与 20 的准确率及梯度保留率；④ 分析两者收益是否可加；⑤ 结论：门控收益主要落在优化侧还是表示侧。</li><li><strong>推翻条件</strong>：若「只加细胞状态不加门」已达 LSTM 水平，说明门控非必要条件，分离结论要重写。</li></ul>
+<h3>4. 瓶颈的形状：从「一个向量」到「一组权重」，注意力到底改变了什么</h3>
+<ul><li><strong>主题串</strong>：编码器-解码器 → 定长瓶颈 → 点积注意力 → 评估口径失败 → 热图能证明什么</li><li><strong>锚点</strong>：§14.7、§14.8；<code>labs/lab-05/out/fig_attention_heatmap.png</code>；<code>labs/lab-05/out/summary.json</code></li><li><strong>为什么</strong>：lab-05 想复现「注意力优于固定上下文」，结果评估口径出错、准确率全 0，而注意力热图给出了漂亮的一对一角峰（第 0 步 α=0.9995 落在末位，第 1 步 0.9995 落在倒数第二位）。这个半成品比成功案例更有教学价值：它暴露了「训练收敛 ≠ 任务成功」。</li><li><strong>增益</strong>：明确区分热图证明了什么（对齐是学出来的）、没证明什么（注意力是否优于瓶颈），并给出可复现的修复清单（截断到首个 EOS 再比长度、早停、梯度裁剪）。</li><li><strong>状态</strong>：⬜ 未发布</li><li><strong>链接</strong>：⬜ 待补（发布后回填专栏 URL）</li><li><strong>发布</strong>：⬜ 未发布</li><li><strong>大纲</strong>：① 复述瓶颈与两种架构差别；② 展示训练曲线（fixed 从 1.48 降到 0.48（step 500）、step 600 回升到 0.79，attn 最低 0.014 后反弹到 0.42）；③ 展示热图与单样例预测正确的事实；④ 指出评估失败疑似原因：greedy 输出含 EOS/PAD 尾位、与目标长度不对齐；⑤ 给修复方案与预期；⑥ 结论：注意力解除的是定长约束，对齐是学出来的副产品。</li><li><strong>推翻条件</strong>：若修好评估后 fixed 与 attn 在长度 3–8 上无差异（都接近 100%），说明任务太简单、瓶颈未被触发，需换更长序列重做。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

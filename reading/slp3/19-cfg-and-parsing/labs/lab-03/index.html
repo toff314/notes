@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · lab-03　CKY 复杂度实测（n=4→39） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span> <span>/</span> <a href="../../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 19 章 上下文无关文法与成分句法分析</a> <span>/</span> <a href="../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · labs · 行动执行闭环（lab-01 ~ lab-03）</a> <span>/</span> <span class="cur">lab-03　CKY 复杂度实测（n=4→39）</span></nav>
+<h1 class="title">《Speech and Language Processing》第 3 版 · 读书笔记 · lab-03　CKY 复杂度实测（n=4→39）</h1><div class="prose"><h1>lab-03　CKY 复杂度实测（n=4→39）</h1>
+<p>对应行动：<code>actions.md</code> 第 3 条。对应书中 §19.6（CKY 的时间与空间复杂度）。</p>
+<h2>怎么跑</h2>
+<pre><code>cd labs/lab-03
+python3 scaling.py</code></pre>
+<p>依赖：<code>../cfgkit.py</code> + numpy + matplotlib（Agg 后端）。约 2 秒。</p>
+<h2>输入</h2>
+<ul><li>文法：L1X 文法（同 lab-02，多开一条 <code>NP → NP PP</code>），让表内容更满，计时差异更明显。</li><li>句族：固定句式 <code>i shot an elephant</code> + 逐步追加 13 个 PP（<code>in my pajamas</code>、<code>near houston</code>、<code>on united</code> 等），n 从 4 到 39。</li></ul>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/scaling.csv</code></td><td>每个 n 的计时、cell 数、分裂次数、分析数</td></tr><tr><td><code>out/scaling.png</code></td><td>双对数图（时间 vs n）+ 线性图（cells/splits vs n）</td></tr><tr><td><code>out/summary.json</code></td><td>拟合斜率与结论数字</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<p>拟合结果（n≥10）：</p>
+<pre><code>{
+  &quot;fit_points&quot;: &quot;n &gt;= 10&quot;,
+  &quot;slope_time_vs_n&quot;: 2.412,
+  &quot;slope_cells_vs_n&quot;: 1.923,
+  &quot;slope_splits_vs_n&quot;: 3.021,
+  &quot;max_n&quot;: 39,
+  &quot;max_parses&quot;: 588374417
+}</code></pre>
+<p>增长表（节选）：</p>
+<table><tr><th>n</th><th>n_pp</th><th>cells</th><th>splits</th><th>table_entries</th><th>n_parses</th><th>t_cky_s</th></tr><tr><td>4</td><td>0</td><td>10</td><td>10</td><td>15</td><td>1</td><td>0.000036</td></tr><tr><td>9</td><td>2</td><td>45</td><td>120</td><td>46</td><td>17</td><td>0.000105</td></tr><tr><td>14</td><td>4</td><td>105</td><td>455</td><td>94</td><td>226</td><td>0.000248</td></tr><tr><td>20</td><td>6</td><td>210</td><td>1330</td><td>166</td><td>5,159</td><td>0.000521</td></tr><tr><td>28</td><td>9</td><td>406</td><td>3654</td><td>311</td><td>838,960</td><td>0.001285</td></tr><tr><td>36</td><td>12</td><td>666</td><td>7770</td><td>498</td><td>122,395,915</td><td>0.002541</td></tr><tr><td>39</td><td>13</td><td>780</td><td>9880</td><td>570</td><td>588,374,417</td><td>0.003168</td></tr></table>
+<h2>结论</h2>
+<ol><li><strong>空间 O(n²) 得到验证</strong>：cell 数 = n(n+1)/2，斜率 1.92（接近 2）；n=39 时只有 780 个 cell。</li><li><strong>时间主项 O(n³) 得到验证</strong>：分裂次数（Σ (span-1)(n-span+1)）的斜率 3.02，精确复现 n³ 主项。</li><li><strong>实测时间斜率只有 2.41</strong>，低于理论值 3.0。原因是本句族的表格密度只有 O(n)：每个跨度只塞得下常数个非终结符（平均 table_entries/cells ≈ 0.73），所以真实耗时 ≈ entries × splits ≈ O(n) × O(n²) = O(n³)，但常数因子比稠密表小得多。</li><li><strong>DP 填表 vs 枚举的本质差距</strong>：n=39 时分析数 5.88 亿（枚举不可行），但 CKY 填表只要 0.003 秒。这验证了 §19.6.3 的核心价值——「紧凑地表示句子的所有可能分析」不是夸张，而是 CKY 相对于暴力枚举的本质优势。</li></ol>
+<h2>反思</h2>
+<p>我原以为时间斜率会直接给出 3.0，实测只有 2.41。原因是本句族的表格密度只有 O(n)（每个跨度只塞得下常数个非终结符），真实耗时约等于 entries × splits，而 entries 在本例中远低于理论最大值 n²。这说明「O(n³) 是上界」不是「每个实例都达到」——上界要求表格稠密，而自然语言的文法往往让表很稀疏。</p>
+<p>另一个收获是：n=39 的句子在自然语言里已经算长了，但分析数已经到 5.88 亿——这还只是玩具文法。真实 PTB 文法在真实句子上，歧义数只会更夸张。这就是为什么工业级 parser 必须用 CKY 或近似算法，不能用暴力枚举。</p></div><div class="grid"><a class="card" href="out/index.html"><h2>out</h2><div class="meta">0 份文档</div></a></div>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

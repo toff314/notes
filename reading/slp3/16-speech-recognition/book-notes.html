@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 16 章 自动语音识别 · 读书笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 16 章 自动语音识别</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 16 章 自动语音识别 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 16 章 自动语音识别 · 读书笔记</h1>
+<blockquote><p><strong>本章一句话</strong>：把 10ms 一帧的声学波形变成字串，本质上是在两个长度差一到两个数量级的序列之间找对应；本章的四种解法（AED、HuBERT+CTC、RNN-T、以及它们的混合）都是在回答「这个对应从哪来、要花多少延迟」。</p><p><strong>结构</strong>：先画 ASR 的难度地形（词表/说话人/信道/口音）→ 补 CNN 这个前端工具 → 注意力编解码器（推理、外挂 LM、训练）→ 自监督 HuBERT 与它依赖的 k-means → CTC 的折叠与求和 → 流式 RNN-T → 用 WER 结账。</p><p><strong>可疑处</strong>：§16.3.1 说 HuBERT 前端把 16kHz 降到「每 .0625 ms 一个表示」，按 16kHz 采样间隔应为 62.5 微秒即 .0625 ms，这里单位写法可疑但数值恰好对得上；§16.3.2 的「90% 标准答案 / 0.1 概率用解码器输出」两个数字不自洽（比例与概率混用），我按「小概率混入模型输出」理解。公式区多处被 OCR 拆行（16.2、16.3、16.12、16.13、16.21），我一律按上下文重建后在 lab 里做数值校验，不把乱码当原文。</p><p><strong>与我何干</strong>：我做过语音转写的调用方，一直把 WER 当唯一指标、把「识别不准」当模型问题。这一章让我看到错误率的一半来自语料与场景设定，另一半来自解码端的长度与 LM 权重——这两处都是可以在不换模型的情况下调的。</p></blockquote>
+<hr>
+<h2>第 16 章引言与 16.1 节　ASR 的难度地形　⭐</h2>
+<p><strong>本节问题</strong>：ASR 的难度由哪几个变量决定？为什么同一套技术，朗读语音能到 1.4%，晚餐聚会语音却是 25.5%？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「由任意说话人在任意环境中进行的语音自动转写仍远未解决，但 ASR 技术已经成熟到足以胜任许多实际任务。」（§16 引言）</li><li>「看来，当人对着机器说话，或在没有听众在场的情况下朗读时，他们会把话说得简化不少，讲得更慢也更清楚。」（§16.1）</li><li>「如果系统只用标准方言的说话人、或只用成年说话人训练，那么地区方言或族群方言说话人的语音，以及儿童的语音，识别起来可能相当困难。」（§16.1）</li><li>「它的转写在句子层面进行了对齐。」（§16.1）</li><li>「英语朗读语音（如 LibriSpeech 干净有声书语料库）的错误率约为 2%；用英语朗读语音的转写准确率非常高。」（§16.1）</li><li>「而对于 4 名说话人晚餐聚会语音的转写这类困难的对话任务，错误率则进一步升高，可高达 25.5%。」（§16.1）</li><li>「Common Voice 收录了来自 133 种语言的 33,150 小时语音。」（§16.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这一节没给算法，先画了一张难度地形图：词表多大、谁对谁说、信道多脏、口音见没见过。四个旋钮各自独立地推高错误，图 16.1 那张表就是它们的取值组合。</li><li>【我】1.4% 与 25.5% 差近二十倍，差距主要不在模型而在录音条件。以后看到论文报错误率，我第一件事该问语料与场景，否则数字没法横向比。</li><li>【我】LibriSpeech 的 clean/other 是拿旧识别器算出的错误率切出来的，等于把「对老系统友好」写进了数据定义；后来的模型在这个划分上比较，会继承这层偏差。</li><li>【我】中文那两个数（朗读 3.9%、电话 18.5%）用的是字符错误率，因为分词边界本身有争议。跨语言比数字之前，得先把度量单位对齐。</li><li>【我】引言里那只 1920 年代的玩具狗只认 500Hz 能量，却已经是「模式匹配」的雏形；一百年后的问题结构没变，变的是模板从手工变成了学出来的。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天把图 16.1 的 12 行抄进 lab-01 的 <code>out/task_axes.csv</code>，按「词表／说话人／信道／口音」四列给每个任务打偏离标记（验收：12 行齐全，每行至少一个标记，无空列）。</li><li>本周用 15 分钟查 AISHELL-1 与 HKUST 的录制条件（麦克风、场景、说话人数），写 3 行对照贴进该 CSV 的备注列（验收：3 行都写明「朗读/对话」与「近场/电话」两个属性）。</li></ul>
+<hr>
+<h2>第 16.2 节　卷积神经网络　⭐</h2>
+<p><strong>本节问题</strong>：卷积到底在算什么？为什么语音用一维、还要填充和步长？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「标准前馈层是全连接的；每个输入都与每个输出相连。」（§16.2）</li><li>「对于语音，我们让卷积核在时间维度上滑过信号以提取语音特征，因此用于语音的 CNN 是 1d 卷积网络。」（§16.2）</li><li>「这一差别无关紧要，因为卷积核的参数会在训练中学习得到，因此模型很容易学会以任意一种顺序排列参数的卷积核。」（§16.2）</li><li>「在 Whisper 中每 10 ms 有一帧，而每一帧代表 25 ms 语音信息的窗口。」（§16.2）</li><li>「这意味着每个卷积核从约 45 ms 的语音中提取信息（10 + 10 + 12.5 + 12.5）。」（§16.2）</li><li>「步长越大，输出序列越短；步长为 2 意味着输出序列 z 的长度将是输入序列 x 的一半。」（§16.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】卷积被讲成「拿一个小模板在信号上滑、看哪段点积大」，这个说法把权重解释成了模板匹配器，比「自动提取特征」这种空话有用得多。</li><li>【我】翻转与否在数学上是卷积与相关函数的区别，但权重是学出来的，翻转只等于给核换了个下标顺序；真正的坑在实现里把填充位置搞错。</li><li>【我】45ms 是这么凑的：三帧跨度 20ms，加上两端各半帧 12.5ms。也就是说感受野不等于「3 帧 = 30ms」，边缘那半帧也得算进去。</li><li>【我】步长在这里干了两件事：省算力，以及把 10ms 的帧率往字符/词的尺度上拉。Whisper 那个 stride=2 就是干第二件事。</li><li>【我】多通道那步容易被略过：128 个输入通道各配一个核，最后求和，等于在通道维上做了一次加权投票，而不是简单拼接。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>手算一个长度 5、核宽 3、两侧各填 1 个零的卷积（自定 x 与 w），再用 8 行 numpy 复算，两组数贴进 cards.md 卡 3 的例题位（验收：5 个输出值逐位相同，且写出 45ms 感受野的算式）。</li><li>今天用 10 行 python 算 HuBERT 那 7 层卷积的步长连乘与累计感受野（验算 320 倍压缩与 20ms 帧率），把结果写进同一张卡的备注（验收：乘积 = 320，末级帧率 = 50Hz）。</li></ul>
+<hr>
+<h2>第 16.3 节　用于 ASR 的编码器-解码器架构　⭐</h2>
+<p><strong>本节问题</strong>：把翻译那套编解码器搬到语音，需要改什么？Whisper 与 OWSM 的差别在哪一层？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「我们要介绍的第一个 ASR 架构是编码器-解码器架构，与第 13 章为机器翻译（MT）引入的架构相同。」（§16.3）</li><li>「该架构的输入 x 是 t 个声学特征向量构成的序列」（§16.3）</li><li>「解码器本质上是一个条件语言模型，它关注编码器的表示并逐个生成目标文本（字母或标记）」（§16.3）</li><li>「Whisper 的模型和推理代码已公开发布，但训练代码和训练数据并未公开。」（§16.3）</li><li>「它复现了 Whisper 风格的训练，但提供了完全开源的工具箱和公开可用的数据（Peng et al., 2023）。」（§16.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】语音版几乎照搬翻译那套，真正的新东西只有一条：输入比输出长一到两个数量级。后面所有设计（下采样、CTC、流式）都在给这个失配打补丁。</li><li>【我】把解码器看成条件语言模型，立刻能推出两件事：它自带一个学出来的语言先验，而且天然偏好高频与短句——所以才有外挂 LM 与长度因子来纠偏。</li><li>【我】Whisper 只放权重、不放数据与训练脚本，复现性只到「能跑起来」这一层；OWSM 的价值不在效果更好，而在于把训练流程变成可审计、可重跑。</li><li>【我】输出单位选字母还是 BPE，直接决定输出序列长度：字母让序列变长 4 倍左右，BPE 更短但词表更大。书里为讲解方便选字母，工程上常反过来。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>画一张 AED 数据流图（波形 → log-mel → conv×2 → Transformer 编码器 → 交叉注意力解码器 → 字符），每个节点标出序列长度，贴进 labs/index.md（验收：≥6 个节点，每节点带长度数字）。</li></ul>
+<hr>
+<h2>第 16.3.1 节　输入与卷积层　⭐</h2>
+<p><strong>本节问题</strong>：为什么必须先压缩再进 Transformer？Whisper 与 HuBERT 的前端各压了多少倍？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「当输入序列与输出序列的长度差异极大时，编码器-解码器架构尤为适用」（§16.3.1）</li><li>「因此以 10ms 帧表示的语音信号，比以词或标记表示的文本信号长约 5（25/5）到 19（25/1.3）倍。」（§16.3.1）</li><li>「把声学特征向量 fi 与其前两个向量 fi−1 和 fi−2 堆叠（拼接）成一个长度为其三倍的新向量。」（§16.3.1）</li><li>「这 3000 帧被送入两个卷积层，每个卷积层之后都接一个非线性（Whisper 使用 GELU（高斯误差线性单元），它是 ReLU 的更平滑版本）。」（§16.3.1）</li><li>「第二个卷积层中的步长 2 使输出序列长度为输入序列的一半，把输出窗口长度降至 1500，并每 20 ms 产生一个音频标记。」（§16.3.1）</li><li>「这些层既学习提取频谱信息，又把输入序列缩短 320 倍，从 16kHz（= 每 .0625 ms 一个表示）降到 20 ms 的帧率。」（§16.3.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】5 到 19 倍来自「词均 5 字母 / 1.3 个子词」：同样 250ms 的发音，按字母切只占 5 个位置，按子词切只占 1.3 个。序列越长，注意力的二次代价越难扛，压缩不是优化而是必需。</li><li>【我】低帧率那种「拼三帧、跳两帧」很土，但等价于 stride=3 的卷积配一个常数核，说明早期工程技巧与后来的网络设计是同一件事的两种说法。</li><li>【我】Whisper 只压 2 倍、HuBERT 压 320 倍，差别在于后者直接从 16kHz 波形吃进去，连频谱都交给卷积学，压缩比自然要大得多。</li><li>【我】书中「每 .0625 ms 一个表示」按数值读是对的（62.5 微秒），但写成了毫秒；这种单位串行在公式密集的段落里常见，抄进卡片时要自己核一遍量纲。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-03 的 README 加一张「前端核算表」：Whisper（3000 → 1500，20ms/帧）与 HuBERT（16000/320 = 50Hz，20ms/帧），逐项写出算式并标注上述单位笔误（验收：两行数字与算式自洽，笔误有说明）。</li></ul>
+<hr>
+<h2>第 16.3.2 节　推理　🔴</h2>
+<p><strong>本节问题</strong>：解码时交叉注意力在读什么？为什么还要外挂语言模型和长度因子？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「只是查询照常来自解码器的上一层，而键和值则来自编码器的输出。」（§16.3.2）</li><li>「由于编码器-解码器模型本质上是一个条件语言模型，编码器-解码器会从训练数据中隐式地学习一个针对字母输出域的语言模型。」（§16.3.2）</li><li>「毕竟，找到海量纯文本训练数据比找到与语音配对的文本要容易。」（§16.3.2）</li><li>「由于大多数模型偏好较短的句子，ASR 系统通常有某种加入长度因子的方式。」（§16.3.2）</li><li>「打分方式是将语言模型给出的分数与用于生成该束的编码器-解码器分数进行插值，权重 λ 在留出集上调优。」（§16.3.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】交叉注意力与自注意力只差 K、V 的来源：一个读自己，一个读编码器。想通这点，图 16.7 里那两条跨层连线就不神秘了。</li><li>【我】声学模型见过的文本远少于纯文本语料，它内部的先验是「窄而浅」的；外挂大模型等于用便宜数据补它的短板，两边分数尺度不同，λ 才必须在留出集上调。</li><li>【我】长度惩罚治的是一个数学事实：每多一个字符就多乘一个小于 1 的数，短句概率天然占便宜。不归一化，解码器会系统性地吞字。</li><li>【我】n-best 重打分是两阶段架构的雏形：声学模型出候选，语言模型当裁判。致命弱点是候选一旦不在束里，重打分也救不回来。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-02 的玩具模型上比较「按长度归一化」与「不归一化」两种打分下选出的输出串，记录被截短的例子（验收：给出 ≥1 个两设置输出长度不同的实例）。</li></ul>
+<hr>
+<h2>第 16.3.3 节　学习　🔵</h2>
+<p><strong>本节问题</strong>：端到端训练的损失很普通，那效果差距从哪来？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「用于语音的编码器-解码器使用条件语言模型通常采用的普通交叉熵损失进行训练。」（§16.3.3）</li><li>「然后该损失通过整个端到端模型反向传播，以训练整个编码器-解码器。」（§16.3.3）</li><li>「现代数据规模相当大。」（§16.3.3）</li><li>「数据质量很重要，因此从网络抓取训练数据的系统会实现一些方法，从训练语料中移除由 ASR 生成的转写，例如过滤全大写或全小写的数据。」（§16.3.3）</li><li>「开放的 OWSM 系统在 180k 小时数据上训练，主要是人工转写的公开可用数据，包括 LibriSpeech 和 Multilingual LibriSpeech、Common Voice、FLEURS、Switchboard、AMI 等数据集；详见（Peng 等，2023）。」（§16.3.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】损失函数毫无新意，真正的门槛是数据量：68 万小时对 18 万小时，这两个数比任何架构细节都更能解释效果差距。</li><li>【我】教师强制把上一时刻喂成金标，训练与推理的输入分布因此不一致；那句「90% 金标 / 0.1 概率用模型输出」两个数字不自洽（比例与概率混着写），我按「小概率混入预测」理解。</li><li>【我】「过滤掉机器生成的转写」这条工程细节值得记：网上大量字幕本身就是识别产物，拿它们训练等于让学生抄另一个学生的作业，错误会被固化。</li><li>【我】68 万小时里只有 11.8 万小时是非英语，这个配比决定了模型的多语能力是「够用」而不是「均衡」，低资源语言的高错误率由此而来。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>用 lab-01 已有的对齐结果，对同一句再算一遍字符级错误数，比较字符口径与词口径的差异，写进 README 的「口径」一节（验收：两组数字都算出，并给出一句差异归因）。</li></ul>
+<hr>
+<h2>第 16.4–16.4.1 节　自监督与 HuBERT 前向　⭐</h2>
+<p><strong>本节问题</strong>：不用转写怎么训？「自监督」的监督信号究竟从哪来？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「这些模型并不直接学习将声学输入映射为字母和词元组成的字符串。」（§16.4）</li><li>「这个预训练阶段不需要转写，只需要无标注的语音文件。」（§16.4）</li><li>「这些模型的优势在于，它们能在训练的大部分阶段利用大量未转写的音频。」（§16.4）</li><li>「我们遮蔽输入的一部分，并训练模型去猜测被掩码遮住的内容。」（§16.4）</li><li>「部分选定的词元被替换为一个掩码词元，这是一个训练得到的嵌入，被所有被掩码的帧共享。」（§16.4.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这里的「自监督」含义很具体：标签不是人给的，是从数据里聚出来的。所以它并不等于无监督——聚类那一步仍然要人定簇数 k。</li><li>【我】掩码预测把 BERT 的思路搬到波形上，但补的目标不是原词而是离散簇编号；这一步替换让连续回归变成分类，训练稳定得多。</li><li>【我】一个共享的 MASK 向量被所有被遮帧复用，等于告诉模型「这里信息缺失」，而不是「这里是某个特定音」，与 BERT 的 [MASK] 同理。</li><li>【我】HuBERT 只产表示、不做识别；识别能力来自后面接的那层 CTC 微调。把它理解成「语音的 BERT」比理解成识别器准确。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-03 里跑 k=8 与 k=24 两档码本（对应两阶段的目标粒度），比较纯度与 ARI（验收：两档数字都写入 README，并说明粒度变细后纯度是否还能保持）。</li></ul>
+<hr>
+<h2>第 16.4.2–16.4.3 节　HuBERT 的学习与 k-means　🔴</h2>
+<p><strong>本节问题</strong>：训练目标怎么从零造出来？两阶段为什么要换一次标签？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「为了启动这些单元，HuBERT 从梅尔频率倒谱系数（mel frequency cepstral coefficients，MFCC）向量入手，这是一种 39 维特征向量，强调信号中与检测语音单元相关的方面。」（§16.4.2）</li><li>「原始 HuBERT 实现使用了 960 小时的 LibriSpeech 数据，得到 1.72 亿个向量」（§16.4.2）</li><li>「其直觉是：初始的 MFCC 聚类会使模型偏向语音表示，但经过足够的训练后，模型会学到更准确、更细粒度的表示。」（§16.4.2）</li><li>「在第二阶段，通过在第一阶段训练之后将训练数据的一个子样本送入 HuBERT 模型，取中间某一层 Transformer（第 6 层）的输出并用 k-means 对其聚类，创建出 500 个单元。」（§16.4.2）</li><li>「在分配步骤中，给定一组 k 个当前质心和一组向量数据集，它把每个向量分配到码字与其最接近（以平方欧氏距离衡量）的簇。」（§16.4.3）</li><li>「注意，得到的均值向量不必是数据集中的实际点。」（§16.4.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】两阶段其实是个 bootstrap 循环：用粗糙标签训出稍好的表示，再用稍好的表示造更细的标签。第一阶段的 100 类只是点火用的火柴。</li><li>【我】1.72 亿个 39 维向量意味着这一步的内存与聚类开销都不小；书里没说的是，这个规模上通常只跑子采样或 mini-batch 版本。</li><li>【我】质心不必是真实样本，这点很关键：它让码本成为「平均音」而不是「挑出来的代表帧」，也因此对噪声更稳。</li><li>【我】k-means 的两个失败模式是初始化与簇数选择，书中略过了；初始质心若挤在一起，分配步骤会退化成一个巨簇加一堆空簇。</li><li>【我】用 39 维倒谱而不是原始的 80 维 log-mel，是因为倒谱做了去相关，欧氏距离才更有意义；这一点决定了后面能不能直接用平方距离。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>手算 4 个一维点、k=2 的一次分配与一次重估（自定初始质心），再与 lab-03 脚本的首轮输出对照（验收：两个新质心数值一致，且写出各自的簇成员）。</li></ul>
+<hr>
+<h2>第 16.5 节　CTC 与折叠函数　⭐</h2>
+<p><strong>本节问题</strong>：没有对齐标注，怎么让「每帧一个符号」变成正确的字串？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「CTC 的直观想法是：为输入的每一帧输出单个字符，使输出与输入长度相同，然后应用一个折叠函数把相同的字母序列合并，从而得到更短的序列。」（§16.5）</li><li>「折叠无法处理重复的字母。」（§16.5）</li><li>「我们可不想把静音转写成随机的字母！」（§16.5）</li><li>「CTC 折叠函数是多对一的」（§16.5）</li><li>「例如，图 16.13 所示的对齐并不是唯一能产生字符串 dinner 的对齐。」（§16.5）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】它的妙处在于绕开了逐帧标注：训练时不需要知道哪个音落在哪一帧，只要最后折出来的串对得上就行。</li><li>【我】dinner 变 diner 说明光删重复不够，必须有空白符把两个相同字母隔开；否则双写在折叠后必然塌成一个。</li><li>【我】空白符一符两用：既是静音占位，又是重复分隔。这是 CTC 里最容易被忽略、也最容易在实现时写错的细节。</li><li>【我】一对多意味着同一字串对应指数多条路径，于是「这个输出的概率」只能靠求和定义；后面所有的动态规划都是为这个求和服务的。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-02 里为 &quot;dinner&quot; 构造 6 帧对齐，分别做「无空白符」与「有空白符」两次折叠（验收：输出两张对齐表，折叠结果分别为 diner 与 dinner）。</li></ul>
+<hr>
+<h2>第 16.5.1–16.5.3 节　CTC 的推断、训练与混合　🔴</h2>
+<p><strong>本节问题</strong>：为什么「逐帧取最大」不是最优？那个指数级的求和怎么算？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「CTC 做了一个很强的条件独立性假设：它假设在给定输入 X 的条件下，CTC 模型在时刻 t 的输出与任何其他时刻 ai 的输出标签相互独立。」（§16.5.1）</li><li>「问题在于，我们选择了最可能对齐 A，但最可能的对齐未必对应于最可能的最终合并输出串 Y。」（§16.5.1）</li><li>「可惜的是，对所有对齐求和代价极高（对齐数量非常庞大），因此我们通过一种 Viterbi 束搜索的变体来近似这个求和：它巧妙地在束中保留那些映射到同一输出串的高概率对齐，并将它们求和作为 (式 16.18) 的近似。」（§16.5.1）</li><li>「CTC 并不会在数据上隐式地学习一个语言模型（不同于基于注意力的编码器-解码器架构）」（§16.5.1）</li><li>「朴素地对所有可能对齐求和并不可行（对齐数量太多）。」（§16.5.2）</li><li>「不过，我们可以用动态规划来合并对齐，从而高效地计算这个求和，所用的是一种同样用于训练 HMM（附录 A）和 CRF 的前向-后向算法。」（§16.5.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】逐帧取最大错在哪，书里说得干净：它最大化的是单条路径，而我们要最大化的是路径集合的总质量。两个目标只在极端情形下重合。</li><li>【我】那条独立性假设是双刃剑：它让似然能按帧相乘、从而可用前向后向算，同时把输出间的依赖抹平，所以必须外挂语言模型。</li><li>【我】前向-后向在此不是求边际，而是把等价路径折叠进同一个格子，复杂度从指数降到 T 乘标签数。</li><li>【我】两项损失按 λ 加权，本质是让两个目标互相正则：一个盯对齐，一个盯流畅度。λ 在开发集上调，说明这仍是工程配平而非原则推导。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-02 里用暴力枚举与前向 DP 两条路算同一个输出串的概率，比较两者（验收：最大绝对差 &lt;1e-12，并附上对齐总数与标签数）。</li></ul>
+<hr>
+<h2>第 16.5.4 节　流式与 RNN-T　🔴</h2>
+<p><strong>本节问题</strong>：为什么注意力模型难做流式？RNN-T 用什么换来了低延迟？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「使用注意力机制的算法必须先在整个输入上计算隐状态序列，以便为注意力分布提供上下文，之后解码器才能开始解码。」（§16.5.4）</li><li>「相比之下，CTC 算法可以立即从左到右输入字母。」（§16.5.4）</li><li>「流式处理对许多应用都至关重要，从命令到听写，我们都希望在用户仍在说话时就开始识别。」（§16.5.4）</li><li>「RNN-T 有两个主要组成部分：一个 CTC 声学模型，以及一个称为预测器的独立语言模型组件，它以输出标记历史为条件。」（§16.5.4）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】流式的真门槛是因果性：任何要看完整句才能算的步骤都得改。注意力天然要全局，CTC 天然局部，这就是二者在工程上的分水岭。</li><li>【我】RNN-T 把「每帧发射」换成「编码器状态乘预测器状态」的联合网络，等于把只看历史的语言模型塞进局部模型里，不外挂也能吃到上下文。</li><li>【我】预测器只看已输出的标记，因此仍是因果的；代价是无法用后文纠正前文，这正是它与 AED 的准确率差距所在。</li><li>【我】延迟与准确率在这里是硬取舍，不存在两头都赢的设计；选型时该先问场景允许多少毫秒的滞后。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-02 的玩具分布上做「只允许看前 t 帧」的增量解码，与全句解码对比（验收：t=1,2,3 三档的部分输出都列出，并标出第一处不同）。</li></ul>
+<hr>
+<h2>第 16.6 节　ASR 评估：词错误率　⭐</h2>
+<p><strong>本节问题</strong>：WER 怎么算、为什么会超 100%、两个系统的差距怎样才算显著？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「词错误率基于识别器返回的词串（假设词串）与参考转写之间的差异程度。」（§16.6）</li><li>「计算假设词串与正确词串之间的词级最小编辑距离，即把正确词串映射为假设词串所需的最少词替换、词插入和词删除次数。」（§16.6）</li><li>「由于公式中包含插入，错误率可能超过 100%」（§16.6）</li><li>「这句话语有六处替换、三处插入和一处删除：」（§16.6）</li><li>「除了执行对齐并计算词错误率，sclite 还完成许多其他有用的任务。」（§16.6）</li><li>「错误率，即至少含有一个词错误的句子所占的百分比。」（§16.6）</li><li>「该检验要求一个片段中的错误与另一个片段中的错误在统计上相互独立。」（§16.6）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】分母是参考词数而非假设词数，所以插入会让比值突破 100%；这个不对称常被误读成「模型多说了话」。</li><li>【我】76.9% 那种数字来自一段只有 13 个词的口语转写，样本小、填充词多，单句波动极大；报均值必须带上句数与置信区间。</li><li>【我】编辑距离的最优对齐不唯一，具体拆成几个替换几个插入取决于回溯规则，两个工具对同一对句子可能给出不同拆分而总数相同。</li><li>【我】规范化会在算分前改动参考文本，这一步不透明，不同论文的数字就没法比；我以后复现别人的 WER，先对齐规范化脚本。</li><li>【我】MAPSSWE 用片段内错误数之差做检验，前提是片段间独立；用「两侧都识别正确的词」切片段，正是在制造这种近似独立。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-01 里对同一组句子分别用「原始」与「去填充词」两版参考算 WER，差值写进 <code>out/wer.csv</code>（验收：两版数字都在表里，差值有一句文字解释）。</li><li>用 lab-01 的 DP 复算书中 6 替换 + 3 插入 + 1 删除、参考 13 词的例子，核对是否等于 76.9%（验收：复算值与之差 &lt;0.05 个百分点）。</li></ul>
+<hr>
+<h3>全章 takeaway（5 条）</h3>
+<ol><li>ASR 的错误率主要由四个场景旋钮决定（词表、说话人、信道、口音），跨任务比数字前必须先对齐语料与度量单位（词 vs 字符）。</li><li>语音与文本的长度失配是本章的主线：前端压缩（stride、低帧率）、CTC 折叠、流式架构，都是对同一个失配的不同回答。</li><li>注意力编解码器自带语言先验但偏短句，需要外挂 LM 与长度归一化；CTC 因独立性假设干脆没有先验，必须外挂——两者的解码端配置逻辑一致。</li><li>HuBERT 的「自监督」是把标签从数据里聚出来（MFCC 100 类 → 第 6 层 500 类），预训练只学表示，识别能力来自后面的 CTC 微调。</li><li>WER 是编辑距离除以参考词数，插入可使其超 100%；比较系统差异要用 MAPSSWE 这类按片段配对的检验，而不是直接比两个百分数。</li></ol>
+<hr>
+<h3>复习优先级依据</h3>
+<ul><li>⭐（16.1、16.2、16.3、16.3.1、16.4、16.5、16.6）：章末小结逐条覆盖，且 16.2/16.6 有可手算的例子、16.5 有可枚举的折叠过程，属必掌握。</li><li>🔴（16.3.2、16.4.2、16.5.1–16.5.3、16.5.4）：跨节反复引用（长度因子、聚类目标、路径求和、流式取舍），是理解系统边界的关键。</li><li>🔵（16.3.3、16.4.3）：训练细节与聚类算法本身，本章小结一句带过，了解即可。</li><li>⚪：无。历史注记（HMM/GMM → 混合系统 → 端到端、ARPA 评测竞赛）按 🔵 处理，不单列块，其主线已并入 takeaway 第 2 条与卡 14。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

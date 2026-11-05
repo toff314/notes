@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 16 章 · 术语表（40 条） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 16 章 自动语音识别</span> <span>/</span> <span class="cur">第 16 章 · 术语表（40 条）</span></nav>
+<article class="prose"><h1>第 16 章 · 术语表（40 条）</h1>
+<blockquote><p>只收本章正文出现、或理解本章必需的概念。英文按书中首次出现的形式保留；§ 指节号。</p></blockquote>
+<h2>A. 任务与数据</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>自动语音识别</td><td>automatic speech recognition, ASR</td><td>把声学波形转写为词串的任务；输入是帧序列，输出是符号序列</td><td>§16.1</td></tr><tr><td>词表受限识别</td><td>vocabulary-limited ASR</td><td>词表只有几个到几十个词（yes/no、数字）的任务，错误率极低</td><td>§16.1</td></tr><tr><td>开放词表识别</td><td>open vocabulary ASR</td><td>词表达数万至数十万词，需处理未登录词与专名</td><td>§16.1</td></tr><tr><td>朗读语音</td><td>read speech</td><td>照稿朗读，语速较慢、发音清晰、少填充词</td><td>§16.1</td></tr><tr><td>自发语音</td><td>spontaneous speech</td><td>即兴说话，含停顿、改口、填充词，识别难度显著更高</td><td>§16.1</td></tr><tr><td>远场</td><td>far-field</td><td>麦克风距说话人较远，混响与噪声显著</td><td>§16.1</td></tr><tr><td>说话人自适应</td><td>speaker adaptation</td><td>用目标说话人的少量数据调整模型，缓解口音/音色失配</td><td>§16.1</td></tr><tr><td>词错误率</td><td>word error rate, WER</td><td>(S+I+D)/N×100%，N 为参考词数</td><td>§16.6</td></tr><tr><td>句错误率</td><td>sentence error rate, SER</td><td>至少含一个词错误的句子占比</td><td>§16.6</td></tr><tr><td>文本规范化</td><td>text normalization</td><td>算分前统一大小写、数字、缩写、填充词的处理</td><td>§16.6</td></tr></table>
+<h2>B. 声学特征与前端</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>帧</td><td>frame</td><td>按固定帧移切出的短时窗，Whisper 为 10ms 帧移、25ms 窗长</td><td>§16.2</td></tr><tr><td>对数梅尔滤波器组</td><td>log-mel filterbank</td><td>按梅尔刻度分带的能量对数，常作 CNN 输入（Whisper 用 128 通道）</td><td>§16.3.1</td></tr><tr><td>梅尔频率倒谱系数</td><td>MFCC</td><td>对 log-mel 做 DCT 得到的去相关特征，常用 39 维（13 静态 + Δ + ΔΔ）</td><td>§16.4.2</td></tr><tr><td>倒谱</td><td>cepstrum</td><td>对对数频谱再做一次变换所得的「频谱的频谱」，用于分离声道与激励</td><td>§16.4.2、§16 历史注记</td></tr><tr><td>感受野</td><td>receptive field</td><td>一个输出位置所覆盖的输入时间跨度，(k−1)×帧移+帧长</td><td>§16.2</td></tr><tr><td>步长</td><td>stride</td><td>卷积核每次移动的帧数；&gt;1 时输出变短</td><td>§16.2</td></tr><tr><td>填充</td><td>padding</td><td>在序列两端补零以控制输出长度与边缘信息</td><td>§16.2</td></tr><tr><td>低帧率</td><td>low frame rate</td><td>把相邻帧拼接后跳帧输入，降低序列长度的工程做法</td><td>§16.3.1</td></tr><tr><td>一维卷积</td><td>1d convolution</td><td>只在时间轴上滑动的卷积，语音 CNN 的基本算子</td><td>§16.2</td></tr></table>
+<h2>C. 建模与解码</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>编码器</td><td>encoder</td><td>把声学帧序列映射为隐状态序列的网络部分</td><td>§16.3</td></tr><tr><td>解码器</td><td>decoder</td><td>以编码器输出为条件、逐符号生成文本的自回归部分</td><td>§16.3</td></tr><tr><td>交叉注意力</td><td>cross-attention</td><td>Q 来自解码器、K/V 来自编码器输出的注意力层</td><td>§16.3.2</td></tr><tr><td>束搜索</td><td>beam search</td><td>每步保留得分最高的 k 条前缀，近似搜索最优输出</td><td>§16.3.2</td></tr><tr><td>n-best 重打分</td><td>n-best rescoring</td><td>用更强的语言模型对候选列表重新排序</td><td>§16.3.2</td></tr><tr><td>长度归一化</td><td>length normalization</td><td>打分除以输出长度，抵消短句天然占优的偏差</td><td>§16.3.2</td></tr><tr><td>插值权重</td><td>interpolation weight λ</td><td>声学分数与语言模型分数的加权系数，在留出集上调</td><td>§16.3.2</td></tr><tr><td>教师强制</td><td>teacher forcing</td><td>训练时用金标历史作为解码器输入</td><td>§16.3.3</td></tr><tr><td>暴露偏差</td><td>exposure bias</td><td>训练见金标、推理见自身输出所造成的分布不一致</td><td>§16.3.3</td></tr><tr><td>条件语言模型</td><td>conditional language model</td><td>以输入为条件建模输出序列概率的模型，AED 即属此类</td><td>§16.3.2</td></tr></table>
+<h2>D. 自监督</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>自监督预训练</td><td>self-supervised pretraining</td><td>用数据自身构造监督信号（如掩码预测）先训表示</td><td>§16.4</td></tr><tr><td>掩码预测</td><td>masked prediction</td><td>遮住部分输入，让模型预测被遮处对应的目标</td><td>§16.4</td></tr><tr><td>掩码词元</td><td>mask token</td><td>被遮帧共享的可学习嵌入，表示「此处信息缺失」</td><td>§16.4.1</td></tr><tr><td>离散声学单元</td><td>discrete acoustic unit</td><td>聚类得到的音素式类别，用作预训练目标</td><td>§16.4.2</td></tr><tr><td>码本</td><td>codebook</td><td>k-means 得到的 k 个质心集合，决定单元粒度</td><td>§16.4.2</td></tr><tr><td>k-means</td><td>k-means</td><td>交替做「分配」与「重估」的聚类算法，收敛到局部最优</td><td>§16.4.3</td></tr><tr><td>质心</td><td>centroid</td><td>簇内向量的均值；不必是数据中的真实点</td><td>§16.4.3</td></tr></table>
+<h2>E. CTC 与流式</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>连接主义时间分类</td><td>connectionist temporal classification, CTC</td><td>每帧发射一个符号、再用折叠函数得到变长输出</td><td>§16.5</td></tr><tr><td>空白符</td><td>blank symbol ε</td><td>表示该帧无输出，兼作重复字母的分隔符</td><td>§16.5</td></tr><tr><td>折叠函数</td><td>collapsing function B</td><td>先合并连续重复、再删空白的多对一映射</td><td>§16.5</td></tr><tr><td>对齐</td><td>alignment</td><td>一条逐帧的符号路径；同一输出对应多条路径</td><td>§16.5</td></tr><tr><td>前向-后向算法</td><td>forward-backward</td><td>用 DP 汇总所有对齐路径概率的算法，同构于 HMM/CRF</td><td>§16.5.2</td></tr><tr><td>条件独立假设</td><td>conditional independence</td><td>CTC 假设各帧输出在给定输入后相互独立</td><td>§16.5.1</td></tr><tr><td>RNN 转录器</td><td>RNN transducer, RNN-T</td><td>CTC 编码器 + 预测器的联合网络，支持流式</td><td>§16.5.4</td></tr><tr><td>预测器</td><td>predictor</td><td>以已输出标记为输入的小型语言模型组件</td><td>§16.5.4</td></tr><tr><td>流式识别</td><td>streaming ASR</td><td>用户仍在说话时即开始输出，要求因果、低延迟</td><td>§16.5.4</td></tr></table>
+<h2>F. 评估与历史</h2>
+<table><tr><th>术语</th><th>英文</th><th>一句话定义</th><th>出处</th></tr><tr><td>最小编辑距离</td><td>minimum edit distance</td><td>把参考串变为假设串所需的最少替换/插入/删除次数</td><td>§16.6</td></tr><tr><td>对齐歧义</td><td>alignment ambiguity</td><td>编辑距离最优路径不唯一，导致 S/I/D 拆分不同而总数相同</td><td>§16.6</td></tr><tr><td>MAPSSWE</td><td>matched-pairs sentence-segment word error</td><td>按片段配对比较两系统错误数之差的自适应检验</td><td>§16.6</td></tr><tr><td>动态时间规整</td><td>dynamic time warping, DTW</td><td>允许时间轴非线性伸缩的模板匹配，端到端之前的对齐手段</td><td>§16 历史注记</td></tr><tr><td>混合系统</td><td>hybrid HMM-DNN</td><td>用 HMM 管对齐、神经网络估帧级后验的架构</td><td>§16 历史注记</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

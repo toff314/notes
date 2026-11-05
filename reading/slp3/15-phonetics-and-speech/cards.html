@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 15 章 · 永久卡片（14 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 15 章　语音学与语音特征提取（Phonetics and Speech Features）· 读书笔记包</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 15 章 · 永久卡片（14 张）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 15 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　音子不是字母</h2>
+<ul><li><strong>Q（正面）</strong>：为什么语音系统不能直接拿拼写当输入单位？</li><li><strong>A（背面）</strong>：音子（phone）是一次具体发音动作的单位，字母是历史形成的拼写习惯，二者多对多：c 在 cougar/cell 里是两个音，而 k/ck/cc/x 都可能记成同一个 [k]。所以要先换一套符号（ARPAbet 或 IPA）再谈「两个音是否相同」。音位（phoneme）则更进一步，只保留能区别词义的对立。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §15.1</li><li><strong>链接</strong>：卡 2（宽窄转写是「保留多少细节」的选择）｜lab-01 的 <code>out/arpabet_ipa.csv</code></li></ul>
+<h2>卡 2　宽式与窄式转写</h2>
+<ul><li><strong>Q（正面）</strong>：宽式转写与窄式转写差在哪里，各自适合什么场合？</li><li><strong>A（背面）</strong>：宽式只标能区别词义的对立音位，忽略送气、闪音等细节；窄式（如 TIMIT 标注）把发音细节也写出来，例如 had 记成 hv ae dcl。宽式适合词典与语言模型，窄式适合研究发音变异与训练声学模型。</li><li><strong>出处</strong>：§15.1</li><li><strong>链接</strong>：卡 1（同一个「音子」概念的两个粒度）｜lab-01 的 <code>out/timit_narrow.csv</code></li></ul>
+<h2>卡 3　辅音的三根坐标</h2>
+<ul><li><strong>Q（正面）</strong>：描述一个辅音最少需要哪三个参数？</li><li><strong>A（背面）</strong>：发音部位（双唇、齿龈、软腭……）、发音方式（塞、擦、近音、鼻……）、清浊（声带是否振动）。三者组合基本能唯一确定一个辅音；鼻音还多一个「鼻腔通路」参数。语言实际使用的组合只是全部格子里的稀疏子集。</li><li><strong>出处</strong>：§15.2</li><li><strong>链接</strong>：卡 4（元音用另一套坐标）｜卡 11（清浊对应「源」的有无）</li></ul>
+<h2>卡 4　元音的坐标与共振峰</h2>
+<ul><li><strong>Q（正面）</strong>：元音靠什么参数区分？这些参数怎么体现在频谱上？</li><li><strong>A（背面）</strong>：舌位高低、舌位前后、圆唇与否，双元音再加滑动路径。声学上体现为共振峰：F1 随舌位升高而降低，F2 随舌位前移而升高。书中 [ae] 约 930/1860/3020 Hz，[iy] 约 540/2581 Hz，正好对应「低而前」与「高而前」。</li><li><strong>出处</strong>：§15.2、§15.4.5</li><li><strong>链接</strong>：卡 11（共振峰就是滤波器的峰）｜卡 14（MFCC 保留的正是这条包络）</li></ul>
+<h2>卡 5　音节结构与音位配列</h2>
+<ul><li><strong>Q（正面）</strong>：音节由哪几部分组成？为什么有些音子串在某种语言里「不可能出现」？</li><li><strong>A（背面）</strong>：音节 = 首音（onset）+ 韵（rime），韵再分核（nucleus，通常为元音）与尾（coda）。哪种音子能出现在哪个位置由音位配列（phonotactics）约束，例如英语允许 [str] 开头而不允许 [zdr]。这种约束是统计性的，可用音子 n-gram 或有限状态模型刻画。</li><li><strong>出处</strong>：§15.2</li><li><strong>链接</strong>：卡 3（辅音坐标决定谁能当 onset）｜卡 8（韵律结构是音节的上一层）</li></ul>
+<h2>卡 6　突显是一条连续带</h2>
+<ul><li><strong>Q（正面）</strong>：重音是「有或无」，还是程度问题？它的声学线索有哪些？</li><li><strong>A（背面）</strong>：突显是感知上的显著度，连续可分：重读 &gt; 次重读 &gt; 非重读但元音完整 &gt; 弱化 &gt; 中央元音。至少四条线索同时作用：F0 更高、时长更长、振幅更大、元音不弱化。单看能量会误判，因为重读音节可以能量不高但音高很高。</li><li><strong>出处</strong>：§15.3.1</li><li><strong>链接</strong>：卡 7（弱化是最低那一档）｜lab-05 的 F0/强度轨迹</li></ul>
+<h2>卡 7　弱化不是换音素</h2>
+<ul><li><strong>Q（正面）</strong>：非重读元音「变成 schwa」到底发生了什么？</li><li><strong>A（背面）</strong>：不是替换成一个叫 schwa 的音素，而是发音目标没到位：舌位向中央靠拢、时长缩短、频谱向中性元音靠拢。书中同时提醒并非所有非重读元音都会弱化——弱化是强倾向而非绝对规则。</li><li><strong>出处</strong>：§15.3.1</li><li><strong>链接</strong>：卡 6（突显带的最弱端）｜卡 2（窄式转写才记这类细节）</li></ul>
+<h2>卡 8　韵律结构与调型是两个自由度</h2>
+<ul><li><strong>Q（正面）</strong>：重音模式相同、切分也相同的两句话，还能靠什么不同？</li><li><strong>A（背面）</strong>：调型。韵律结构分语调短语 &gt; 中间短语 &gt; 词三层，边界处有停顿、音高重置、边界前延长等线索；调型则是边界与重音处的音高走向（如英语陈述 L-L%、yes/no 疑问 H-H%）。ToBI 就是把连续音高离散成 H<em>/L</em> 与边界调事件的标注体系。</li><li><strong>出处</strong>：§15.3.2、§15.3.3</li><li><strong>链接</strong>：卡 6（H* 标的是突显位置）｜lab-05（末段斜率判升降）</li></ul>
+<h2>卡 9　采样与量化</h2>
+<ul><li><strong>Q（正面）</strong>：采样率 8 kHz 为什么只能表示 4 kHz 以下的频率？位深影响什么？</li><li><strong>A（背面）</strong>：一个周期至少需要两个采样点，故可表示上限为采样率一半（Nyquist）。电话按 8 kHz 采样，所以只传 4 kHz 以下——这是设计而非巧合。位深决定动态范围：每比特约 6 dB，16 bit ≈ 96 dB，8 bit ≈ 48 dB，后者会把弱音压进量化噪声。</li><li><strong>出处</strong>：§15.5.1</li><li><strong>链接</strong>：卡 12（分帧发生在采样之后）｜卡 14（MFCC 的频带边界依赖采样率）</li></ul>
+<h2>卡 10　音高≠频率，响度≠振幅</h2>
+<ul><li><strong>Q（正面）</strong>：F0、音高、RMS、分贝之间是什么关系？</li><li><strong>A（背面）</strong>：F0 是声带振动的基频（物理量，Hz）；音高是它的感知对应，只在 100–1000 Hz 近似线性，超出后需用梅尔刻度校正。振幅取 RMS 才有意义（平方→平均→开方）；响度对应功率，故 dB = 10·log10(P/P0)，换成振幅比时才是 20·log10。</li><li><strong>出处</strong>：§15.4.3</li><li><strong>链接</strong>：卡 14（梅尔刻度是音高非线性的公式化）｜lab-05（振幅减半 = 6.02 dB）</li></ul>
+<h2>卡 11　源-滤波器模型</h2>
+<ul><li><strong>Q（正面）</strong>：为什么同一个人可以用同一个音高唱出不同元音？</li><li><strong>A（背面）</strong>：语音频谱 = 声门源 × 声道滤波器。源给出间隔为 F0 的谐波梳，滤波器给出缓慢起伏的共振峰包络；改变 F0 只改梳齿间距，改变元音只移动包络。二者相乘，所以独立可控。对数域中相乘变相加，这正是倒谱能分离二者的前提。</li><li><strong>出处</strong>：§15.4.6</li><li><strong>链接</strong>：卡 14（倒谱就是把这个乘法拆开）｜卡 4（共振峰 = 包络的峰）</li></ul>
+<h2>卡 12　分帧、加窗与 DFT</h2>
+<ul><li><strong>Q（正面）</strong>：为什么要把语音切成 25 ms 的帧、乘一个窗、再做 DFT？</li><li><strong>A（背面）</strong>：语音只在短窗内近似平稳，故按 25 ms 帧长、10 ms 帧移切分（重叠以防边界丢信息）。直接截断等于乘矩形窗，其旁瓣衰减慢、强频点会泄漏到远处，故改用汉明窗等渐变窗。DFT 把每帧的 N 个采样点变成 N 个频率分量的复振幅，取模平方得功率谱。</li><li><strong>出处</strong>：§15.5.2、§15.5.3</li><li><strong>链接</strong>：卡 13（功率谱接着进滤波器组）｜lab-02 的泄漏对比图</li></ul>
+<h2>卡 13　梅尔滤波器组与对数</h2>
+<ul><li><strong>Q（正面）</strong>：梅尔滤波器组做了哪两件事？为什么要取对数？</li><li><strong>A（背面）</strong>：①把线性频率轴按人耳敏感度重排（低频密、高频疏），用一组三角滤波器对功率谱加权求和，把几百维压到几十维；②对每个滤波器输出取对数，压缩动态范围，并把通道增益变成可减去的加性偏置。梅尔刻度常用 mel = 1127·ln(1+f/700)。</li><li><strong>出处</strong>：§15.5.4</li><li><strong>链接</strong>：卡 10（音高感知的非线性）｜卡 14（对数梅尔是 MFCC 的输入）</li></ul>
+<h2>卡 14　MFCC 与 39 维</h2>
+<ul><li><strong>Q（正面）</strong>：MFCC 为什么要对对数梅尔再做 DCT？39 维怎么构成？</li><li><strong>A（背面）</strong>：倒谱是「对数谱的谱」：对对数梅尔做 DCT，缓慢的包络变成低阶系数，等间隔谐波（音高）变成高阶尖峰，取前 12–13 阶即只留声道包络、丢掉 F0。DCT 还使各维近似不相关，满足对角协方差假设。39 = 13 静态 + 13 一阶差分 + 13 二阶差分，差分补上「怎么变」这条音子线索。</li><li><strong>出处</strong>：§15.6</li><li><strong>链接</strong>：卡 11（分离源与滤波器的数学实现）｜lab-04 的倒谱 F0 与 Δ 特征</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

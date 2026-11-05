@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 24 章 · 永久卡片（14 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 24 章 共指消解与实体链接</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 24 章 · 永久卡片（14 张）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 24 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　共指消解的任务定义</h2>
+<ul><li><strong>Q（正面）</strong>：共指消解到底在做什么？输入输出是什么？</li><li><strong>A（背面）</strong>：输入一段文本 T，输出其中所有实体及它们之间的共指链接。具体分两步：先检测提及（mention detection），再把提及聚类成共指链/簇。提及是指称表达式（如 her、Victoria Chen），所指对象是话语模型中的实体。共指链是互相共指的提及集合，单例是仅出现一次的实体。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §24.1、§24.2</li><li><strong>链接</strong>：卡 2（提及检测是第一步）｜卡 4（三种架构做聚类）</li></ul>
+<h2>卡 2　话语模型与唤起—访问机制</h2>
+<ul><li><strong>Q（正面）</strong>：人类如何跟踪文本中的实体？计算模型如何模拟？</li><li><strong>A（背面）</strong>：理解者逐步构建话语模型（mental model），首次提及时实体的表示被唤起进入模型，后续提及时从模型中被访问。回指语指向先前已引入的实体，先行语是与回指语共指的那个先前提及。新实体用不定 NP/全称引入，旧实体用定 NP/代词回指，显著性越高用越短形式。</li><li><strong>出处</strong>：§24.1、§24.1.2</li><li><strong>链接</strong>：卡 3（非指称表达式不进入模型）｜卡 6（信息状态区分新旧）</li></ul>
+<h2>卡 3　四种非指称表达式</h2>
+<ul><li><strong>Q（正面）</strong>：哪些表面像指称的 NP 其实不是提及？</li><li><strong>A（背面）</strong>：①同位语（Victoria Chen, CFO of Megabucks Banking）——补充描述中心 NP；②谓语性 NP（Shanghai is China&#x27;s biggest city 中的表语）——描述属性而非指称实体；③虚指 it（It is raining / 分裂句）——句法占位成分；④类指（I like mangoes. They are delicious.）——泛指类别而非特定实体。这四种使提及检测复杂化。</li><li><strong>出处</strong>：§24.1.3</li><li><strong>链接</strong>：卡 2｜lab-01 的过滤规则实现</li></ul>
+<h2>卡 4　三种共指架构的递进</h2>
+<ul><li><strong>Q（正面）</strong>：提及对、提及排序、基于实体各解决什么问题？各有什么缺陷？</li><li><strong>A（背面）</strong>：提及对：逐对判是否共指，简单但不直接比较候选先行语，且忽略话语模型。提及排序：对所有候选先行语 softmax 选最高，引入虚拟先行语 ϵ 表示「无先行语」，但训练时最佳先行语是隐变量。基于实体：链接到簇（实体）而非单个提及，可用簇特征（大小、形状 P-Pr-D），但实践性能提升有限，提及排序仍更常用。</li><li><strong>出处</strong>：§24.4.1–24.4.3</li><li><strong>链接</strong>：卡 7（e2e-coref 是提及排序的端到端版）｜卡 8（特征工程可服务各架构）</li></ul>
+<h2>卡 5　Soon 启发式训练采样</h2>
+<ul><li><strong>Q（正面）</strong>：如何为提及对模型选择训练样本？</li><li><strong>A（背面）</strong>：对每个回指语 mi，选最近的先行语 mj 为正例，mj 与 mi 之间的所有 mk 为负例。测试时用最近优先聚类（从右向左找第一个概率 &gt;0.5 的）或最佳优先聚类（选概率最高的）。问题是中间那些提及可能也共指，只是不是最近的，会引入噪声。</li><li><strong>出处</strong>：§24.4.1</li><li><strong>链接</strong>：卡 4｜lab-02 的实现</li></ul>
+<h2>卡 6　信息状态三分法 + 桥接推理</h2>
+<ul><li><strong>Q（正面）</strong>：Prince 如何划分 NP 的信息状态？什么是桥接推理？</li><li><strong>A（背面）</strong>：全新 NP（新引入话语 + 听者新知）、未使用 NP（新引入话语 + 听者已知）、旧 NP（已引入话语 + 听者已知）、可推断 NP（既非听者已知也非已引入话语，但可由世界知识推断，如由餐厅想到厨师）。桥接推理是听者借助世界知识推断出未明说但由已有实体关联出的实体。</li><li><strong>出处</strong>：§24.1.2</li><li><strong>链接</strong>：卡 2｜卡 3（可推断 NP 不是新实体）</li></ul>
+<h2>卡 7　e2e-coref 的端到端打分</h2>
+<ul><li><strong>Q（正面）</strong>：e2e-coref 如何统一提及检测与共指消解？得分函数怎么设计？</li><li><strong>A（背面）</strong>：对所有文本跨度 i，先行语 yi 取值范围是 {1,...,i−1,ϵ}。得分 s(i,j) = m(i) + m(j) + c(i,j)，其中 m 是跨度为提及的得分，c 是 j 为 i 先行语的得分。s(i,ϵ)=0，任何非哑元得分为正则预测最高者，全负则弃权。损失让任一合法先行语的概率之和最大化：L = −Σ_i log Σ_{ŷ∈Y(i)∩GOLD(i)} P(ŷ)。</li><li><strong>出处</strong>：§24.6</li><li><strong>链接</strong>：卡 4（提及排序的端到端实现）｜lab-02 的简化实现</li></ul>
+<h2>卡 8　特征工程：最有效的五类特征</h2>
+<ul><li><strong>Q（正面）</strong>：基于特征的共指系统用哪些特征？哪些最有效？</li><li><strong>A（背面）</strong>：三类特征：回指语特征（首末词、中心词、属性、长度、类型）、先行语特征（同上）、对特征（句子距离、提及距离、i-within-i、余弦）。实体模型加簇特征（大小、形状）。最有效：精确字符串匹配、中心词一致、提及距离；代词用属性匹配和 i-within-i；名词用词语包含和余弦。特征组合比单独特征 F1 高 4 点。</li><li><strong>出处</strong>：§24.5</li><li><strong>链接</strong>：卡 4｜lab-02 的特征实现</li></ul>
+<h2>卡 9　TAGME 实体链接两阶段</h2>
+<ul><li><strong>Q（正面）</strong>：TAGME 如何做实体链接？先验概率和关联度各是什么？</li><li><strong>A（背面）</strong>：①建锚词典：每个 Wikipedia 页面的标题 + 所有指向它的锚文本；统计 freq(a)、link(a)、linkprob(a)=link(a)/freq(a)。②提及检测：查询锚词典，剪枝低 linkprob 的跨度。③消歧：先验 prior(a→e)=count(a→e)/link(a)；关联度 rel(A,B) 基于 Wikipedia 入链集合的 Jaccard 式度量；其他锚对候选实体投票，选 relatedness 最高且先验最高的实体。</li><li><strong>出处</strong>：§24.7.1</li><li><strong>链接</strong>：卡 10（ELQ 是神经替代）｜lab-04 的 TAGME 实现</li></ul>
+<h2>卡 10　ELQ 双编码器实体链接</h2>
+<ul><li><strong>Q（正面）</strong>：ELQ 如何用神经方法做实体链接？与 TAGME 有何不同？</li><li><strong>A（背面）</strong>：双编码器：问题送入 BERT 得词元嵌入，计算每个跨度 [i,j] 的提及概率 p([i,j])=σ(s_start(i)+s_end(j)+Σ s_mention(t))；实体用标题+前128词元送 BERT 取 CLS 得实体嵌入；跨度嵌入与实体嵌入点积 + softmax 得 p(e|[i,j])。与 TAGME 不同：ELQ 需全监督训练数据（WebQSPEL、GraphQEL），实体嵌入可预计算缓存，速度快。</li><li><strong>出处</strong>：§24.7.2</li><li><strong>链接</strong>：卡 9｜lab-04 的 ELQ 简化实现</li></ul>
+<h2>卡 11　CoNLL F1：MUC + B³ + CEAFe</h2>
+<ul><li><strong>Q（正面）</strong>：共指消解如何评价？MUC、B³、CEAFe 各有什么偏好？</li><li><strong>A（背面）</strong>：MUC 基于链接（共有提及对/假设链接数），偏好大链、忽略单例；B³ 基于提及，对每个提及算 P/R 再加权，更细粒度；CEAFe 基于实体对齐（ Hungarian 算法对齐假设链与参考链）。CoNLL F1 = 三者的平均。应使用参考实现（如官方脚本），不要从零写。</li><li><strong>出处</strong>：§24.8</li><li><strong>链接</strong>：lab-03 的指标复算</li></ul>
+<h2>卡 12　Winograd 模式：需要世界知识的共指</h2>
+<ul><li><strong>Q（正面）</strong>：Winograd 模式为什么难？预训练模型能解决吗？</li><li><strong>A（背面）</strong>：两个句子仅差一个词，但代词所指相反（奖杯装不进手提箱，因为它太大/太小了）。需要物理/社会常识。Levesque 2011 提出 Winograd Schema Challenge。原始问题集中很大一部分可被微调的预训练语言模型解决，但基于知识的模型过拟合更少。说明大型预训练模型编码了大量世界知识，但「解决」和「真推理」仍有争议。</li><li><strong>出处</strong>：§24.9</li><li><strong>链接</strong>：卡 13（WinoBias 是 Winograd 的性别偏见变体）</li></ul>
+<h2>卡 13　共指中的性别偏见：WinoBias 与 GAP</h2>
+<ul><li><strong>Q（正面）</strong>：共指模型如何表现出性别偏见？如何缓解？</li><li><strong>A（背面）</strong>：WinoBias：两个职业（一个刻板印象男性、一个女性）+ 一个性别代词，代词性别无法消解歧义。所有架构的共指系统在反刻板印象情形中平均差 21 F1 点。偏见来源之一：OntoNotes 训练集中女性实体不足。缓解：性别互换数据增强 + 去偏 GloVe 嵌入，可消除 WinoBias 偏见且不伤 OntoNotes 准确率。GAP：性别平衡的 Wikipedia 难例集，现代系统消解女性代词明显差于男性。</li><li><strong>出处</strong>：§24.10</li><li><strong>链接</strong>：卡 12｜lab-05 的偏见审计</li></ul>
+<h2>卡 14　实体链接与共指的相互增强</h2>
+<ul><li><strong>Q（正面）</strong>：实体链接和共指消解能互相帮助吗？</li><li><strong>A（背面）</strong>：共指可为实体链接提供更多表层形式（如 Eisner、Michael Eisner、he 都指向同一 Wikipedia 页面）；实体链接可引入百科知识帮助共指（如 Donald Tsang 是总统 → the President 指 Donald Tsang）。Hajishirzi 2013、Zheng 2013 展示了联合进行链接与共指消解，甚至可与 NER 联合。</li><li><strong>出处</strong>：§24.7、历史注记</li><li><strong>链接</strong>：卡 9｜卡 10</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

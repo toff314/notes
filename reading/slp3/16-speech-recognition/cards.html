@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 16 章 · 永久卡片（20 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 16 章 自动语音识别</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 16 章 · 永久卡片（20 张）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 16 章 · 永久卡片（20 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　ASR 难度的四个旋钮</h2>
+<ul><li><strong>Q（正面）</strong>：判断一个语音识别任务难不难，先看哪四件事？</li><li><strong>A（背面）</strong>：词表大小（yes/no 两词 → 数字 11 词 → 开放域 6 万词以上）、说话人配对（对机器说 &lt; 朗读 &lt; 人对人对话）、信道与噪声（近场安静房间 &lt; 远场街道/车内）、口音与说话人类别（训练分布内 &lt; 方言/儿童）。四者可叠加，叠加越多错误率越高。</li><li><strong>出处</strong>：§16.1</li><li><strong>链接</strong>：卡 2（语料库如何把这些旋钮固化）｜lab-01 的 out/task_axes.csv</li></ul>
+<h2>卡 2　LibriSpeech 的 clean/other 是怎么切的</h2>
+<ul><li><strong>Q（正面）</strong>：LibriSpeech 的两个子集为什么不能当成「录音质量」的干净对照？</li><li><strong>A（背面）</strong>：发布时用《华尔街日报》上训练的识别器跑全部音频，按金标算每位说话人的 WER，再把说话人按错误率对半分：低的一半叫 clean，高的一半叫 other。因此划分编码的是「对当年那套系统是否友好」，不只是信噪比。</li><li><strong>出处</strong>：§16.1</li><li><strong>链接</strong>：卡 1（口音旋钮的具体化）｜卡 18（用 WER 反过来定义数据集）</li></ul>
+<h2>卡 3　一维卷积在算什么</h2>
+<ul><li><strong>Q（正面）</strong>：语音 CNN 的一层卷积，对每一帧做的运算是什么？</li><li><strong>A（背面）</strong>：把一个宽度 k=2p+1 的权重向量（核）沿时间轴滑动，在每一帧取核与窗口内输入的点积，得到同长度（padding=p、stride=1 时）的输出序列。多通道输入时，每个通道各配一个核，分别卷积后求和。实现上不翻转核，严格说是互相关。</li><li><strong>出处</strong>：§16.2</li><li><strong>链接</strong>：卡 4（核宽决定看多长）｜卡 5（stride 决定输出多短）</li></ul>
+<h2>卡 4　45ms 感受野是怎么算出来的</h2>
+<ul><li><strong>Q（正面）</strong>：Whisper 卷积核宽度 3 帧、帧移 10ms、帧长 25ms，感受野为什么是 45ms 而不是 30ms？</li><li><strong>A（背面）</strong>：三帧的帧移跨度只有 20ms（10+10），但首帧向前覆盖 12.5ms、末帧向后覆盖 12.5ms，两端各加半帧窗长，合计 20+12.5+12.5=45ms。即感受野 = (k−1)×帧移 + 帧长。</li><li><strong>出处</strong>：§16.2</li><li><strong>链接</strong>：卡 3｜卡 7（前端压缩的另一种算法）</li></ul>
+<h2>卡 5　stride 与序列长度</h2>
+<ul><li><strong>Q（正面）</strong>：步长 2 的卷积层对序列长度做了什么？为什么 ASR 需要它？</li><li><strong>A（背面）</strong>：输出长度约为输入的一半（padding 配合下精确为 ceil(n/2)）。作用有二：减少内存与计算；把 10ms 的帧率往字符/词的尺度上拉，缓解声学帧与文本单位的长度失配。</li><li><strong>出处</strong>：§16.2</li><li><strong>链接</strong>：卡 6（失配的量化）｜卡 7（Whisper 用它把 3000 帧压到 1500）</li></ul>
+<h2>卡 6　声学序列与文本序列差多少倍</h2>
+<ul><li><strong>Q（正面）</strong>：为什么说语音输入比文本输出长一到两个数量级？</li><li><strong>A（背面）</strong>：自然对话中一个词平均约 250ms = 25 帧（10ms/帧）；一个词平均 5 个字母或 1.3 个 BPE 标记。故按字母计长约 25/5=5 倍，按子词计长约 25/1.3≈19 倍。这是前端必须下采样的根本原因。</li><li><strong>出处</strong>：§16.3.1</li><li><strong>链接</strong>：卡 5｜卡 14（CTC 用折叠而非下采样解决同一问题）</li></ul>
+<h2>卡 7　两个前端的压缩账</h2>
+<ul><li><strong>Q（正面）</strong>：Whisper 与 HuBERT 的前端各把序列压了多少、输出帧率是多少？</li><li><strong>A（背面）</strong>：Whisper：30s 窗口 → 128 通道 log-mel，10ms 帧移 → 3000 帧；conv1 stride 1、conv2 stride 2 → 1500 帧，即 20ms/帧（压 2 倍）。HuBERT：16kHz 原始波形，7 层 512 通道卷积，stride 连乘 5×2×2×2×2×2×2=320 → 16000/320=50Hz，即 20ms/帧（压 320 倍）。</li><li><strong>出处</strong>：§16.3.1</li><li><strong>链接</strong>：卡 5｜lab-03 的 README 核算表</li></ul>
+<h2>卡 8　交叉注意力只换了 K、V 的来源</h2>
+<ul><li><strong>Q（正面）</strong>：解码器里的交叉注意力层与自注意力有何不同？</li><li><strong>A（背面）</strong>：Query 仍来自解码器上一层（H_dec[ℓ−1]），Key 与 Value 改由编码器最终输出 H_enc 投影得到：Q=H_dec W^Q，K=H_enc W^K，V=H_enc W^V。于是每个解码步都能「查看」整段声学表示；解码器自身的自注意力仍是因果掩码的。</li><li><strong>出处</strong>：§16.3.2</li><li><strong>链接</strong>：卡 9（打分时如何使用它）｜卡 14（CTC 没有这一层）</li></ul>
+<h2>卡 9　解码打分：LM 插值 + 长度归一化</h2>
+<ul><li><strong>Q（正面）</strong>：束搜索选出 n-best 之后，如何用外部语言模型重打分？</li><li><strong>A（背面）</strong>：score(Y|X) = (1/|Y|_c)·[log P(Y|X) + λ·log P_LM(Y)]，其中 |Y|_c 是假设的字符数，λ 在留出集上调。除以长度是因为每多一个字符就多乘一个小于 1 的概率，短句会系统性占优。</li><li><strong>出处</strong>：§16.3.2</li><li><strong>链接</strong>：卡 8｜卡 18（最终仍用 WER 验收）</li></ul>
+<h2>卡 10　教师强制与暴露偏差</h2>
+<ul><li><strong>Q（正面）</strong>：训练时解码器的输入是什么？会带来什么问题？</li><li><strong>A（背面）</strong>：用金标历史 y_1..y_{i−1} 代替模型自己的预测（teacher forcing），使每步损失可并行计算、训练更稳；但推理时输入变成模型自己的输出，分布不一致（暴露偏差）。缓解办法是依概率混入模型预测，或使用 scheduled sampling。</li><li><strong>出处</strong>：§16.3.3</li><li><strong>链接</strong>：卡 9（推理阶段的对策）｜卡 15（CTC 用独立性假设绕开自回归）</li></ul>
+<h2>卡 11　HuBERT 前向的五步</h2>
+<ul><li><strong>Q（正面）</strong>：一次 HuBERT 前向要经过哪些部件？</li><li><strong>A（背面）</strong>：①16kHz 波形经 7 层卷积 + 位置编码 + GELU + LayerNorm，降到 20ms/帧；②部分帧被替换为共享的 MASK 嵌入；③过 Transformer 堆栈得 h^L_t；④乘投影矩阵 A 到类别空间；⑤与 C 个类别嵌入算余弦、除温度 τ=0.1 后 softmax，得该帧在各类上的分布。</li><li><strong>出处</strong>：§16.4.1</li><li><strong>链接</strong>：卡 12（类别 C 从哪来）｜卡 13（聚类怎么算）</li></ul>
+<h2>卡 12　HuBERT 的两阶段训练目标</h2>
+<ul><li><strong>Q（正面）</strong>：100 类与 500 类两次聚类分别在什么时候做、用什么特征？</li><li><strong>A（背面）</strong>：第一阶段：对全部训练语音提 39 维 MFCC（960 小时 LibriSpeech → 1.72 亿向量），k-means 聚成 100 类，作为掩码预测的目标。第二阶段：用第一阶段训好的模型跑一个数据子集，取第 6 层 Transformer 输出再聚成 500 类，换成更细的目标继续训。直觉是先粗后细，让表示自我改进。</li><li><strong>出处</strong>：§16.4.2</li><li><strong>链接</strong>：卡 11｜卡 13｜lab-03 的 k=8/k=24 对照</li></ul>
+<h2>卡 13　k-means 的两步</h2>
+<ul><li><strong>Q（正面）</strong>：k-means 每次迭代做哪两件事？</li><li><strong>A（背面）</strong>：分配：每个向量分到平方欧氏距离最近的质心簇，cluster(i)=argmin_j ‖v(i)−μ_j‖²。重估：每个簇的质心改为簇内向量均值，μ_i=(1/|S_i|)Σ_{v∈S_i} v。两步交替至收敛；均值不必是数据中的真实点。</li><li><strong>出处</strong>：§16.4.3</li><li><strong>链接</strong>：卡 12（在 HuBERT 中的用途）｜lab-03 的首轮手算校验</li></ul>
+<h2>卡 14　CTC 的折叠函数与空白符</h2>
+<ul><li><strong>Q（正面）</strong>：CTC 如何把「与输入等长的符号串」变成转写？</li><li><strong>A（背面）</strong>：先合并连续重复的符号，再删去空白符 ε，得到输出。空白符有两个作用：给静音/无字处占位（否则静音会被写成随机字母），以及在两个相同字母之间充当分隔（否则 dinner 会折叠成 diner）。折叠是多对一的，同一输出对应多条对齐路径。</li><li><strong>出处</strong>：§16.5</li><li><strong>链接</strong>：卡 15（多条路径为何必须求和）｜lab-02 的 dinner 对齐表</li></ul>
+<h2>卡 15　为什么逐帧取最大不是最优</h2>
+<ul><li><strong>Q（正面）</strong>：既然每帧都能算 argmax，为什么还要对所有对齐求和？</li><li><strong>A（背面）</strong>：逐帧 argmax 得到的是概率最大的单条对齐 A<em>，而解码目标是概率最大的输出串 Y</em>；由于 B 是多对一，Y<em> 的概率是它名下所有对齐概率之和，可能超过 A</em> 所属的那个 Y。因此正确目标是 argmax_Y Σ_{A∈B⁻¹(Y)} P(A|X)。</li><li><strong>出处</strong>：§16.5.1</li><li><strong>链接</strong>：卡 16（这个求和怎么算得动）｜lab-02 的 argmax 对齐 vs argmax Y 对照</li></ul>
+<h2>卡 16　用前向-后向合并对齐</h2>
+<ul><li><strong>Q（正面）</strong>：对齐数量随帧数指数增长，怎么在多项式时间内求和？</li><li><strong>A（背面）</strong>：把「输出前缀 + 是否刚发过该符号」作为状态，做动态规划：α(t,s) 汇总所有在时刻 t 走到标签序列第 s 个位置的路径概率，β 反向同理，二者相乘即该状态被所有路径经过的总概率。这与 HMM 的前向-后向、CRF 的配分函数计算同构；推理时用保留同串路径并求和的束搜索近似。</li><li><strong>出处</strong>：§16.5.2</li><li><strong>链接</strong>：卡 15｜lab-02 的暴力枚举 vs DP 校验</li></ul>
+<h2>卡 17　RNN-T 用预测器换低延迟</h2>
+<ul><li><strong>Q（正面）</strong>：RNN-T 由哪两部分组成，为什么能流式？</li><li><strong>A（背面）</strong>：一部分是 CTC 式声学编码器（逐帧输出 h_enc），另一部分是预测器——以已输出标记（不计空白）为输入的小型语言模型（输出 h_pred）；两者拼接后过网络与 softmax 预测下一个符号。因为每步只依赖当前及历史帧、以及已输出标记，故可边说边出字。</li><li><strong>出处</strong>：§16.5.4</li><li><strong>链接</strong>：卡 14（CTC 的基础）｜卡 8（注意力模型为何难流式）</li></ul>
+<h2>卡 18　WER 的公式与三个陷阱</h2>
+<ul><li><strong>Q（正面）</strong>：WER 怎么算？什么情况下会超过 100%？</li><li><strong>A（背面）</strong>：WER = 100×(S+I+D)/N，N 为参考转写的词数，S/I/D 为用最小编辑距离对齐后得到的替换/插入/删除数。分母是参考词数而非假设词数，所以插入多时比值可超 100%。另两个陷阱：对齐不唯一导致 S/I/D 拆分不同而总数相同；算分前要做文本规范化（去填充词、统一缩写与数字）。</li><li><strong>出处</strong>：§16.6</li><li><strong>链接</strong>：卡 19（差异是否显著）｜lab-01 的 76.9% 复算与规范化对照</li></ul>
+<h2>卡 19　MAPSSWE：配对片段显著性检验</h2>
+<ul><li><strong>Q（正面）</strong>：怎么判断两个系统的 WER 差异不是噪声？</li><li><strong>A（背面）</strong>：把话语切成若干片段（用两侧都被两个系统识别正确的词、或话轮边界来切，近似保证片段间独立）；令 Z_i = N_i^A − N_i^B 为两系统在片段 i 上的错误数之差，检验 H0: μ_z=0。统计量 W = μ̂_z/(σ_z/√n) 在 n&gt;50 时近似标准正态，双尾 2P(Z≥|w|)≤0.05 即拒绝。McNemar 检验要求错误彼此独立，在连续语音中不成立，故不适用。</li><li><strong>出处</strong>：§16.6</li><li><strong>链接</strong>：卡 18｜lab-01 的 wer.csv（可在此表上做片段化）</li></ul>
+<h2>卡 20　历史主线：从模板匹配到端到端</h2>
+<ul><li><strong>Q（正面）</strong>：ASR 的技术路线大致经历了哪几代？</li><li><strong>A（背面）</strong>：1950s 模式匹配（贝尔实验室 10 数字、Fry/Denes 音素识别，首次引入音素转移概率）→ 1960s–70s FFT/倒谱/LPC + 动态时间规整（DTW）+ HMM 兴起（Baker 的 DRAGON 用 Viterbi 解码，IBM 用栈解码）→ 1990s HMM/GMM 主导，ARPA 年度评测竞赛促成技术扩散 → 1990s 起 TDNN/RNN/混合 HMM-MLP 探索，受算力限制 → 2010s GPU + 大数据使深层网络超过 GMM，CTC（2006）与 RNN-T（2012）、LAS（2016）、Transformer（2018）相继成熟 → 2020s Whisper/OWSM 的大规模弱监督与自监督（wav2vec 2.0、HuBERT）。</li><li><strong>出处</strong>：§16 历史注记</li><li><strong>链接</strong>：卡 1（每一代都在扩旋钮的适用范围）｜卡 7｜卡 17</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

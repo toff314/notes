@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 17 章 文本转语音 · 永久卡片（18 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 17 章 文本转语音 · 读书笔记包</span> <span>/</span> <span class="cur">第 17 章 文本转语音 · 永久卡片（18 张）</span></nav>
+<article class="prose"><h1>第 17 章 文本转语音 · 永久卡片（18 张）</h1>
+<blockquote><p>一张卡只主张一件事。<code>§</code> 后的号码指向 book-notes.md 的对应块；引号内的片段逐字取自 raw 正文。</p></blockquote>
+<h2>卡 1　零样本 TTS 把「音色」从权重搬到了提示里</h2>
+<ul><li><strong>出处</strong>：§17.1「因此，现代 TTS 系统的输入是一段文本提示」</li><li><strong>主张</strong>：传统 TTS 一个系统一种嗓音，换人就得重收数据重训；现代系统训练成与说话人无关，用几秒参考语音当条件，音色成为推理期的输入而非训练期的产物。</li><li><strong>用法</strong>：评估任何「定制音色」类产品时，先问它属于「重训型」还是「提示型」——两者的交付周期差两个数量级。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 2　编解码器 = 编码器 + 量化器 + 解码器</h2>
+<ul><li><strong>出处</strong>：§17.1「编解码器有三个部分：编码器（把语音变为嵌入向量）」</li><li><strong>主张</strong>：编码器把波形压成嵌入序列，量化器把嵌入换成离散词元，解码器把词元还原成有损波形；三段各自可替换，是本章全部系统的公共骨架。</li><li><strong>用法</strong>：读任何音频词元化论文时按这三段找对应模块，能立刻定位它改的是压缩率、词表还是重建质量。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 3　词元率由注意力复杂度定，不由存储定</h2>
+<ul><li><strong>出处</strong>：§17.2「我们需要的是代表更长语音片段的符号」</li><li><strong>主张</strong>：16 kHz 采样每秒 16000 个符号，序列太长使平方复杂度的注意力不可行，因此必须压到每秒数百的量级。</li><li><strong>用法</strong>：设计或评审语音生成系统时，先算目标序列长度与上下文窗口的乘积，判断是否需要分段或流式。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 4　320 倍下采样等价于「一帧 13.3 毫秒」</h2>
+<ul><li><strong>出处</strong>：§17.2.1「由于原始信号以 24kHz 表示」</li><li><strong>主张</strong>：24 kHz 到 75 Hz 是 320 倍，倒过来就是每帧 13.3 ms，这个尺度刚好覆盖一个音素转换的时间窗。</li><li><strong>用法</strong>：看到任何「xx Hz 帧率」的语音模型，先换成毫秒，才能判断它是否可能丢掉辅音瞬态。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 5　编码器是带残差的下采样卷积栈</h2>
+<ul><li><strong>出处</strong>：§17.2.1「其中包含一长串卷积」</li><li><strong>主张</strong>：下采样靠步长大于 1 的卷积逐级实现，残差连接让网络可以跳过细节，把细节留给后续量化级补。</li><li><strong>用法</strong>：怀疑模型「细节糊」时，先查下采样层数与残差位置，而不是先怪声码器。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 6　解码器就是声码器</h2>
+<ul><li><strong>出处</strong>：§17.2.1「最后，解码器接收量化器输出的嵌入 zqt」</li><li><strong>主张</strong>：上采样与波形重建在架构里是同一个模块，传统流水线里独立的声码器被并进了解码器。</li><li><strong>用法</strong>：把「声码器质量」与「码本分辨率」分开归因时，先确认这两件事在现代架构里是否已被合并追责。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 7　VQ 在压缩与生成里是同一套算法、两种目的</h2>
+<ul><li><strong>出处</strong>：§17.2.2「因为 VQ 能方便地产生离散词元」</li><li><strong>主张</strong>：压缩场景要的是低比特率，生成场景要的是「可被语言模型预测的离散符号」；k-means 的代码可以完全不变。</li><li><strong>用法</strong>：复用聚类代码做离散化时，明确写出优化目标，避免照搬压缩场景的码本大小经验。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 8　码本 = 索引列表 + 码字矢量</h2>
+<ul><li><strong>出处</strong>：§17.2.2「我们把聚类 id（词元）的列表连同其码字一起称为码本」</li><li><strong>主张</strong>：索引是给语言模型的符号，码字是给解码器的向量，两者一一对应但用途完全不同。</li><li><strong>用法</strong>：排查「词元能生成但声音糊」时，分别检查索引是否合理、码字是否退化。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 9　簇数是分辨率与词表大小的交换</h2>
+<ul><li><strong>出处</strong>：§17.2.2「然后把这 N 个向量聚成 k 个簇」</li><li><strong>主张</strong>：k 越大单符号信息越细，但语言模型的分类数变大、长尾符号样本变少；k 远小于样本数 N。</li><li><strong>用法</strong>：定码本大小时同时报「未使用码字比例」与「重构误差」，只看误差会一路把 k 推大。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 10　单码本 1024 个码字表示不了全部语音嵌入</h2>
+<ul><li><strong>出处</strong>：§17.2.3「1024 个码字矢量根本不足以表示」</li><li><strong>主张</strong>：简单 VQ 在 k=1024 时重建质量不足，这不是训练不充分，而是表示能力的天花板。</li><li><strong>用法</strong>：遇到「码本已经很大还是糊」的情形，直接换层级量化，不要再加 k。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 11　残差是矢量化后的舍入误差</h2>
+<ul><li><strong>出处</strong>：§17.2.3「残差有点像舍入误差」</li><li><strong>主张</strong>：把矢量舍入到最近码字产生的偏差，正是下一级量化器要量化的对象；逐级补残差等于逐位增加精度。</li><li><strong>用法</strong>：解释「为什么多级比单级好」时用舍入类比，比讲信息论更快让人懂。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 12　RVQ 重建只是把码字相加</h2>
+<ul><li><strong>出处</strong>：§17.2.3「在 ENCODEC RVQ 中同样简单」</li><li><strong>主张</strong>：编码是逐级取残差，解码是把 8 个码字求和后送进解码器，这一步没有任何可学习参数。</li><li><strong>用法</strong>：做可复算实验时，这一点让 RVQ 极易实现：只需 k-means 加向量加法。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 13　直通估计器：梯度原样搬回去</h2>
+<ul><li><strong>出处</strong>：§17.2.4「首先，在反向传播中忽略量化步骤」</li><li><strong>主张</strong>：量化不可微，于是反传时跳过它，把输出端梯度直接复制到输入端；这是一个有偏但可用的估计。</li><li><strong>用法</strong>：读训练代码时看到 <code>.detach()</code> 加减法，基本就是直通；要判断它是否被正确实现，看梯度是否恰好相等。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 14　词元化器的总损失是三项加权和</h2>
+<ul><li><strong>出处</strong>：§17.2.4「于是，总损失函数可以简单地为这些损失的加权和」</li><li><strong>主张</strong>：重构项对齐波形、对抗项管听感、量化项防码字塌缩；书里只给了权重符号，没给数值。</li><li><strong>用法</strong>：复现失败时优先怀疑权重而非架构，因为权重是论文里最常被省略的部分。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 15　VALL-E 用「一自回归 + 七非自回归」拆分生成</h2>
+<ul><li><strong>出处</strong>：§17.3「VALL-E 没有用单个自回归语言模型」</li><li><strong>主张</strong>：第一级编码决定时序与内容，用自回归逐帧生成；其余七级条件于整段，用非自回归并行补全。</li><li><strong>用法</strong>：设计生成式系统时，把「必须串行的部分」压到最小，是降延迟最有效的一刀。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 16　第一级量化器承载最多信息</h2>
+<ul><li><strong>出处</strong>：§17.3「第一个 RVQ 量化器的输出是对最终语音最重要的词元」</li><li><strong>主张</strong>：后续量化器贡献的残差信息逐级递减，因此层级结构天然适配「串行 + 并行」的两段式生成。</li><li><strong>用法</strong>：做码本裁剪或低延迟降级时，砍后几级而不是砍第一级，损失最小。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 17　CMOS 是 -3 到 3 的成对偏好分</h2>
+<ul><li><strong>出处</strong>：§17.4「CMOS 得分的范围从 -3」</li><li><strong>主张</strong>：同一句话由两个系统各合成一次，听者选更喜欢哪个，聚合成 -3～3 的分数，用于比较单点改动的收益。</li><li><strong>用法</strong>：A/B 一个声学改动时用偏好分；对外报绝对水平时仍要平均意见分。</li><li><strong>链接</strong>：⬜ 待补</li></ul>
+<h2>卡 18　说话人日志 = VAD + 嵌入 + 聚类</h2>
+<ul><li><strong>出处</strong>：§17.5「说话人日志系统常常使用语音活动检测（VAD）」</li><li><strong>主张</strong>：先用语音活动检测切出连续语音段，再提说话人嵌入，最后聚类把同人片段归组；顺序不能颠倒。</li><li><strong>用法</strong>：自己搭会议转写时，先把切段做保守，再调聚类，否则一句话会被拆给两个人。</li><li><strong>链接</strong>：⬜ 待补</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>永久卡片 · 第 14 章 RNN 与 LSTM · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span> <span>/</span> <span class="cur">永久卡片 · 第 14 章 RNN 与 LSTM</span></nav>
+<article class="prose"><h1>永久卡片 · 第 14 章 RNN 与 LSTM</h1>
+<blockquote><p>一卡一主张，独立可读。出处用节号（中文版无印刷页码）。链接指向真实卡片（<code>C14-xx</code>）或已落盘的 lab 产物。</p></blockquote>
+<h2>概念类</h2>
+<h2>卡 C14-01｜RNN 的定义只看「有没有环」</h2>
+<ul><li><strong>出处</strong>：§14.1</li><li><strong>主张</strong>：判断一个网络是不是循环网络，不看它长什么样，只看信息有没有从某一步流回自己更早的步；只要有这种直接或间接的回路，它就是 RNN。</li><li><strong>用法</strong>：评审模型结构时，先问「当前步是否依赖它自己以前的输出」，依赖即为循环，随之而来的是一整套训练/推断约束（不能并行、需展开）。</li><li><strong>边界</strong>：递归神经网络（树结构）与图神经网络也含回路但处理的是结构而非时间；本章限定在按时间展开的链式循环。</li><li><strong>链接</strong>：C14-02、C14-05</li></ul>
+<h2>卡 C14-02｜隐状态是「被覆盖的定长记忆」</h2>
+<ul><li><strong>出处</strong>：§14.1（&quot;上一隐藏层所体现的上下文可以包含一直追溯到序列开头的信息&quot;）</li><li><strong>主张</strong>：循环网络的上下文不占额外参数，它占用的是一个固定维度的向量，每步被整个重写；容量固定、内容可变。</li><li><strong>用法</strong>：估模型能不能吃长文时，别数参数量，数「信息要被压进 d_h 维多少次」——步数越多，早期信息被覆盖的次数越多。</li><li><strong>边界</strong>：这句话只保证「理论上可达」，不保证「实际记得住」；能否留住由梯度与容量共同决定（见 C14-16）。</li><li><strong>链接</strong>：C14-01、C14-16、<code>labs/lab-01/out/influence_decay.csv</code></li></ul>
+<h2>卡 C14-03｜三个矩阵，时间上共用</h2>
+<ul><li><strong>出处</strong>：§14.1.1（&quot;各个权重矩阵在所有时间上是共享的&quot;）</li><li><strong>主张</strong>：W、U、V 在所有时间步是同一组参数，所以序列长度不影响参数量，只影响前向/反向的步数。</li><li><strong>用法</strong>：核对实现时盯形状——W∈R^{dh×din}、U∈R^{dh×dh}、V∈R^{dout×dh}；任何随 t 变化的权重都是 bug。</li><li><strong>边界</strong>：共享带来位置不变性，也意味着模型无法为「句首」「句尾」学不同规则；需要位置差异时要靠额外输入或架构改造。</li><li><strong>链接</strong>：C14-04、<code>labs/lab-01/out/summary.json</code></li></ul>
+<h2>卡 C14-04｜公式卡：一步前向</h2>
+<ul><li><strong>出处</strong>：§14.1.1（式 14.4 前后）</li><li><strong>主张</strong>：h_t = g(U·h_{t−1} + W·x_t)，y_t = softmax(V·h_t)。两项相加：U 项搬运过去，W 项注入现在。</li><li><strong>用法</strong>：手推时先算 z = U h + W x（维度 dh），再过 tanh；输出层用 V 投到 dout 再做 softmax。</li><li><strong>边界</strong>：g 常取 tanh（值域 −1..1，零中心），也可用 ReLU；换成 sigmoid 会让隐状态全正，收敛更慢。</li><li><strong>链接</strong>：C14-03、C14-19</li></ul>
+<h2>卡 C14-05｜推断必须从头走到尾</h2>
+<ul><li><strong>出处</strong>：§14.1.1（&quot;时刻 t 的计算需要时刻 t −1 的隐藏层值&quot;）</li><li><strong>主张</strong>：第 t 步依赖第 t−1 步的隐状态，因此推断是严格的顺序过程，无法像前馈网络那样把一个 batch 的所有位置一次算完。</li><li><strong>用法</strong>：估算推理延迟时按「步数 × 单步耗时」算，而不是按 FLOPs 算；批处理只能跨样本并行，不能跨时间并行。</li><li><strong>边界</strong>：训练时可以靠「教师强制 + 整段并行」绕开一部分串行（因为输入已知），但推断时无真值可用，串行不可避免。</li><li><strong>链接</strong>：C14-09、C14-17</li></ul>
+<h2>卡 C14-06｜公式卡：BPTT 的误差要分摊给未来</h2>
+<ul><li><strong>出处</strong>：§14.1.2（&quot;时刻 t 的隐藏层既影响时刻 t 的输出，也影响时刻 t +1 的隐藏层&quot;）</li><li><strong>主张</strong>：∂L/∂h_t = (本步输出的直接贡献) + (下一步传回来的贡献)，后者要沿时间一路累加，这就是「随时间反向传播」多出来的那一项。</li><li><strong>用法</strong>：手写 BPTT 时反向循环体内先累加 dh_next，再由 dh 算 dW、dU、dV；漏掉 dh_next 是最常见的 bug。</li><li><strong>边界</strong>：累加链条长度等于序列长度，梯度会连乘 ∂h_t/∂h_{t−1}（含 U 与 tanh 导数），这是消失/爆炸的入口。</li><li><strong>链接</strong>：C14-16、<code>labs/lab-02/out/grad_check.json</code></li></ul>
+<h2>卡 C14-07｜长序列靠切片近似</h2>
+<ul><li><strong>出处</strong>：§14.1.2（&quot;我们可以把输入展开成可处理的固定长度片段&quot;）</li><li><strong>主张</strong>：整条序列放不下时，切成长度固定的片段各自当独立训练项，梯度只在片段内回传。</li><li><strong>用法</strong>：设片段长度时权衡显存与「最远能学到的依赖距离」；片段之间不传隐状态时，跨片段依赖恒学不到。</li><li><strong>边界</strong>：这是近似，不是等价；流式/语音场景常用，但需要显式设计状态接力，否则边界即失忆点。</li><li><strong>链接</strong>：C14-06</li></ul>
+<h2>卡 C14-08｜语言模型是自监督的</h2>
+<ul><li><strong>出处</strong>：§14.2.2（&quot;词的自然序列本身就是它的监督信号&quot;）</li><li><strong>主张</strong>：不需要人工标注，把文本错开一位就得到 (输入, 目标) 对，监督信号随语料无限增长。</li><li><strong>用法</strong>：构造训练集时只需切词 + 左移一位；评估时用困惑度而非准确率（每步都是 V 类分类）。</li><li><strong>边界</strong>：「自监督」说的是标签来源，不是说不需要清洗；语料噪声会直接变成标签噪声。</li><li><strong>链接</strong>：C14-09、<code>labs/lab-02/out/teacher_forcing.json</code></li></ul>
+<h2>卡 C14-09｜教师强制：训练喂真值，推断喂自己</h2>
+<ul><li><strong>出处</strong>：§14.2.2（&quot;这种始终把正确的历史序列交给模型来预测下一个词…的做法，称为教师强制&quot;）</li><li><strong>主张</strong>：训练时第 t 步的输入用标准答案 ŷ，推断时只能用模型自己上一步的输出，两者输入分布不同。</li><li><strong>用法</strong>：训练早期必须用教师强制（否则模型从随机输出里学不到东西）；上线前要用自由运行评估一次真实表现。</li><li><strong>边界</strong>：差距（暴露偏差）随序列长度放大，且不会因训练更久而消失；缓解手段有 scheduled sampling、加强推理时纠错。</li><li><strong>链接</strong>：C14-08、<code>labs/lab-02/out/teacher_forcing.json</code></li></ul>
+<h2>卡 C14-10｜权重绑定：输入表与输出表共用</h2>
+<ul><li><strong>出处</strong>：§14.2.3（&quot;在两处使用同一个矩阵（的转置）称为权重绑定&quot;）</li><li><strong>主张</strong>：E 与 V 描述的是同一批词的同一套几何，让 V = Eᵀ 可以省参数并通常降低困惑度。</li><li><strong>用法</strong>：词表大、语料小时优先尝试；实现上就是把输出层的前向改成与嵌入矩阵转置相乘。</li><li><strong>边界</strong>：收益依赖任务；输出分布与输入分布差异大（如输出是标签集而非词表）时不适用。小规模复现见 lab-04：参数 −16.4%，ppl 3.41→2.65。</li><li><strong>链接</strong>：C14-03、<code>labs/lab-04/out/weight_tying.json</code></li></ul>
+<h2>卡 C14-11｜端到端：一个损失管到底</h2>
+<ul><li><strong>出处</strong>：§14.3.2（&quot;网络中全部权重的这种训练方式，称为端到端训练&quot;）</li><li><strong>主张</strong>：只有最终任务给损失，中间所有层（含嵌入）都靠反传更新，没有分阶段预训练。</li><li><strong>用法</strong>：数据足够时端到端通常更强；数据少时先用语言模型预训练嵌入再微调，是折中路线。</li><li><strong>边界</strong>：端到端不等于可解释；出错时没有干净的中间监督可查，调试要靠探针与消融。</li><li><strong>链接</strong>：C14-12</li></ul>
+<h2>卡 C14-12｜整句表示：取末状态 or 池化</h2>
+<ul><li><strong>出处</strong>：§14.3.2</li><li><strong>主张</strong>：分类可以把最后一个隐状态当句子向量，也可以对全部隐状态做平均/最大池化；选择取决于关键信息落在哪。</li><li><strong>用法</strong>：信息集中在句首或分散在全程时，池化明显更稳；lab-04 实测线索在句首、长度 12：末状态 67.5%、平均 100%。</li><li><strong>边界</strong>：池化丢掉了顺序，做需要语序区分的任务（否定、倒装）时不宜单独使用。</li><li><strong>链接</strong>：C14-02、<code>labs/lab-04/out/pooling_compare.csv</code></li></ul>
+<h2>卡 C14-13｜自回归生成 = 把自己的输出当前缀</h2>
+<ul><li><strong>出处</strong>：§14.3.3</li><li><strong>主张</strong>：生成是循环调用：采样一个词 → 追加到输入 → 再预测下一个，直到结束符或长度上限。</li><li><strong>用法</strong>：控制生成长度必须有硬上限；温度/束宽决定多样性与稳定性的取舍。</li><li><strong>边界</strong>：一次采样错误会被后续所有步继承，误差单调累积；因此长文本生成需要外部约束（重排、校验、检索）。</li><li><strong>链接</strong>：C14-09</li></ul>
+<h2>卡 C14-14｜双向：两个方向的末状态拼接</h2>
+<ul><li><strong>出处</strong>：§14.4.2</li><li><strong>主张</strong>：左到右与右到左各跑一个独立 RNN，把同一时刻的两个表示拼起来，就同时含左右上下文。</li><li><strong>用法</strong>：分类/标注任务首选双向；流式、实时场景不能用（需要先看到整句）。</li><li><strong>边界</strong>：参数量与显存约翻倍；拼接不是融合，两个方向之间没有交互。</li><li><strong>链接</strong>：C14-12</li></ul>
+<h2>卡 C14-15｜公式卡：LSTM 的四个门（据 §14.5.1 重建）</h2>
+<ul><li><strong>出处</strong>：§14.5.1（原文公式在抽取文本中上下标错位，此处按上下文重建，并由 <code>labs/lab-03</code> 的梯度校验间接验证）</li><li><strong>主张</strong>：遗忘门 f 决定旧细胞状态留多少，输入门 i 与候选 g 决定写什么，输出门 o 决定读出什么：c_t = f⊙c_{t−1} + i⊙g，h_t = o⊙tanh(c_t)。</li><li><strong>用法</strong>：实现时四个门都是「线性变换 + sigmoid」，只有候选 g 用 tanh；门控变量与隐状态同维。</li><li><strong>边界</strong>：重建版本不含 peephole 连接（原书也未采用）；不同框架的门排列顺序不同，抄代码时以形状和语义核对，别按名字对位。</li><li><strong>链接</strong>：C14-16、C14-06</li></ul>
+<h2>卡 C14-16｜梯度消失是连乘，不是玄学</h2>
+<ul><li><strong>出处</strong>：§14.5（&quot;隐藏层会经历反复相乘，相乘次数由序列长度决定&quot;）</li><li><strong>主张</strong>：每回溯一步都要乘一次 ∂h_t/∂h_{t−1}，若其谱半径小于 1，梯度按指数衰减；步数越多，早期信号越接近 0。</li><li><strong>用法</strong>：诊断时打印各步梯度范数，看它随回溯步数掉多少；lab-02 实测每步约掉一个数量级。</li><li><strong>边界</strong>：梯度爆炸可用裁剪缓解，梯度消失不能靠裁剪；结构上的解法是加法通路（LSTM 细胞状态）或换掉循环（注意力）。</li><li><strong>链接</strong>：C14-06、C14-15、<code>labs/lab-03/out/grad_norm_by_step.csv</code></li></ul>
+<h2>卡 C14-17｜编码器-解码器的瓶颈是一个向量</h2>
+<ul><li><strong>出处</strong>：§14.8（&quot;这个最终的隐状态起到了瓶颈的作用&quot;）</li><li><strong>主张</strong>：源句全部信息必须挤进编码器最后一个隐状态，解码器对源文的唯一了解就是它；句子越长，挤压损失越大。</li><li><strong>用法</strong>：翻译/摘要任务里若长句质量明显掉档，先怀疑瓶颈，而不是先调学习率。</li><li><strong>边界</strong>：把 c 注入解码器每一步（而非只做初始化）能减缓衰减，但不改变「定长」这个根本限制。</li><li><strong>链接</strong>：C14-18、<code>labs/lab-05/out/fig_encdec.png</code></li></ul>
+<h2>卡 C14-18｜公式卡：点积注意力三步</h2>
+<ul><li><strong>出处</strong>：§14.8</li><li><strong>主张</strong>：score = s_t·h_i → α = softmax(score) → c_t = Σ α_i h_i。查询来自解码器当前状态，键值都来自编码器各步状态。</li><li><strong>用法</strong>：算之前先确认维度一致（点积要求同维，否则先用 W_s 投影，即双线性打分）。</li><li><strong>边界</strong>：点积把模长混进相似度，长向量天然得分高；softmax 在分数差距大时接近 one-hot，梯度变稀。</li><li><strong>链接</strong>：C14-17、C14-20、<code>labs/lab-05/out/attention_weights.csv</code></li></ul>
+<h2>例题类</h2>
+<h2>卡 C14-19｜手算：一步 RNN 前向</h2>
+<ul><li><strong>出处</strong>：§14.1.1（配合 <code>labs/lab-01</code> 的 d_in=6, d_h=4, d_out=5 设置）</li><li><strong>题目</strong>：给定 U（4×4）、W（4×6）、V（5×4）、h_{t−1}（4 维）与 x_t（6 维），求 h_t 与 y_t 的形状及计算顺序。</li><li><strong>解法要点</strong>：① U h 得 4 维，W x 得 4 维，相加过 tanh 得 h_t（4 维）；② V h_t 得 5 维 logits，softmax 归一化得 y_t；③ 全程不出现 T，说明参数量与序列长度无关。</li><li><strong>易错</strong>：把 U 与 W 的乘法顺序写反（形状会立刻报错，是最好的自检）；softmax 前忘记减最大值（数值溢出）。</li><li><strong>验证</strong>：<code>labs/lab-01/out/summary.json</code> 的 shapes 字段逐项可对；参数量 4×6+4×4+5×4=60。</li><li><strong>链接</strong>：<code>labs/lab-01/out/hidden_states.csv</code>、<code>labs/lab-01/out/output_probs.csv</code>；关联 C14-04、C14-05。</li></ul>
+<h2>卡 C14-20｜手算：三个位置的注意力权重</h2>
+<ul><li><strong>出处</strong>：§14.8</li><li><strong>题目</strong>：解码器状态 s 与三个编码器状态 h_1..h_3 的点积得分为 [2, 1, 0]，求 α 与上下文 c。</li><li><strong>解法要点</strong>：① 减最大值 2 得 [0, −1, −2]；② 取指数 [1, 0.368, 0.135]，和为 1.503；③ α = [0.665, 0.245, 0.090]；④ c = 0.665h_1 + 0.245h_2 + 0.090h_3。</li><li><strong>易错</strong>：直接用原始得分做 softmax 而不减最大值（结果相同但数值不稳）；把「查询」错当成编码器状态。</li><li><strong>验证</strong>：α 之和应为 1；若某一项 α &gt; 0.99，说明该步几乎完全对齐到单一位置（lab-05 热图中常见）。</li><li><strong>链接</strong>：<code>labs/lab-05/out/attention_weights.csv</code>、<code>labs/lab-05/out/fig_attention_heatmap.png</code>；关联 C14-18、C14-17。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

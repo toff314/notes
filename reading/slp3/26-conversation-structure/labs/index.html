@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>labs · 行动执行闭环（lab-01 ~ lab-05） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 26 章 会话及其结构</span> <span>/</span> <a href="index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · labs · 行动执行闭环（lab-01 ~ lab-05）</a> <span>/</span> <span class="cur">labs · 行动执行闭环（lab-01 ~ lab-05）</span></nav>
+<article class="prose"><h1>labs · 行动执行闭环（lab-01 ~ lab-05）</h1>
+<blockquote><p><code>actions.md</code> 是「我要做什么」，这里是「我真的做了，并看到了什么」。</p><p>全部脚本只依赖 Python 3 标准库，已在 /home/yuanwu 本机实际运行，产物为真实输出。</p></blockquote>
+<h2>行动 → lab 对照（5/5 覆盖）</h2>
+<table><tr><th>#</th><th>actions.md 行动</th><th>lab</th><th>脚本</th><th>关键产物</th><th>结论一句话</th></tr><tr><td>1</td><td>模拟话轮切分与断点检测</td><td>lab-01</td><td><code>lab01_turn_endpointing.py</code></td><td><code>lab-01/out/turn_metrics.json</code></td><td>规则在 20 轮上 F1=0.9756，1 处失败（C19 填充停顿被误切）</td></tr><tr><td>2</td><td>实现言语行为四分类规则分类器</td><td>lab-02</td><td><code>lab02_speech_act_classifier.py</code></td><td><code>lab-02/out/confusion_matrix.csv</code></td><td>14 句测试准确率 13/14=0.9286，1 句失败（&quot;我需要在五月出行&quot;被误判为承诺）</td></tr><tr><td>3</td><td>构建邻接对解析器</td><td>lab-03</td><td><code>lab03_adjacency_pair_parser.py</code></td><td><code>lab-03/out/parse_tree.txt</code></td><td>栈式解析器正确处理图 26.1 的纠正子对话（C17–A20），返回点准确，0 错误</td></tr><tr><td>4</td><td>做 DAMSL 对话行为标注实验</td><td>lab-04</td><td><code>lab04_damsl_annotator.py</code></td><td><code>lab-04/out/damsl_agreement.csv</code></td><td>与书中图 26.5 对照一致率 24/24=1.0000（前 12 个话轮）</td></tr><tr><td>5</td><td>模拟会话含义推理链</td><td>lab-05</td><td><code>lab05_implicature_reasoning.py</code></td><td><code>lab-05/out/reasoning_chain.txt</code></td><td>4 步推理链完整复现「会议 12–15 号 → 订 11 号航班」</td></tr></table>
+<h2>复现命令</h2>
+<pre><code>cd labs/lab-01 &amp;&amp; python3 lab01_turn_endpointing.py
+cd ../lab-02 &amp;&amp; python3 lab02_speech_act_classifier.py
+cd ../lab-03 &amp;&amp; python3 lab03_adjacency_pair_parser.py
+cd ../lab-04 &amp;&amp; python3 lab04_damsl_annotator.py
+cd ../lab-05 &amp;&amp; python3 lab05_implicature_reasoning.py</code></pre>
+<p>运行环境与耗时（实测）：lab-01 约 1 秒；lab-02 约 1 秒；lab-03 约 1 秒；lab-04 约 1 秒；lab-05 约 1 秒。</p>
+<h2>每条行动的结论与反思</h2>
+<h3>行动 1（lab-01）：话轮切分与断点检测</h3>
+<ul><li><strong>结论</strong>：规则在图 26.1 的 20 轮上 precision=0.9524、recall=1.0000、F1=0.9756；1 处失败是 C19（「呃，嗯。我会考虑在那里多待一天」）——以填充词开头且包含多句，规则在首个句末误切。</li><li><strong>反思</strong>：我原以为断点检测只是「等多久」的问题，实际跑出来才发现「话轮中间的填充停顿」（呃、嗯）是最大干扰源。人类能区分「思考中的停顿」和「说完了的停顿」，靠的是语义和语调的联合判断，而我的简单规则只看时间。</li></ul>
+<h3>行动 2（lab-02）：言语行为四分类</h3>
+<ul><li><strong>结论</strong>：规则分类器在 14 句手工标注上准确率 13/14=0.9286；1 句失败是「我需要在五月出行。」被误判为承诺（因为包含「要」字），实际是断言。</li><li><strong>反思</strong>：关键词匹配的局限在于同一个词在不同语境中功能不同。「要」在「我要订一张票」中是承诺，在「我需要在五月出行」中只是需求陈述。这让我意识到书中说「言语行为表达了说话者意图中的一个重要组成部分」——意图需要语境，不只是文字。</li></ul>
+<h3>行动 3（lab-03）：邻接对解析器</h3>
+<ul><li><strong>结论</strong>：栈式解析器正确处理了图 26.1 的纠正子对话（C17–A20）：C17 的提问作为子对话压栈，A18 回答，C19 表示新意图，A20 弹出栈并返回主任务（改查 17 日航班）。解析过程 0 错误。</li><li><strong>反思</strong>：我原以为子对话只是「插入一段话」，实际实现才发现需要跟踪「子对话结束后该回到哪个上下文」。A20 的「好的……好的。周日我有……」表明代理不仅返回了主任务，还更新了日期（从 15 日改为 17 日），这需要对话状态跟踪而不仅是栈结构。</li></ul>
+<h3>行动 4（lab-04）：DAMSL 标注实验</h3>
+<ul><li><strong>结论</strong>：我的简易标注器对图 26.1 前 12 个话轮的标注与书中图 26.5 完全一致（24/24=100%）。前向功能（STATEMENT、INFO-REQUEST、CHECK、ACCEPT）和后向功能（ACK、ANSWER、HOLD）均匹配。</li><li><strong>反思</strong>：一致率 100% 反而让我警惕——可能是因为前 12 个话轮的模式比较典型（问-答-确认）。如果扩展到更复杂的对话（如多人对话、多轮纠正），标注一致性可能会下降。DAMSL 的标注指南本身也需要培训才能达到高一致性。</li></ul>
+<h3>行动 5（lab-05）：会话含义推理链</h3>
+<ul><li><strong>结论</strong>：基于关联准则的推理链成功复现了书中例子：输入「我有个会议从 12 号到 15 号」，输出「建议订 11 号的航班」，共 4 步推理（提到会议 → 会议需要到场 → 人们喜欢提前一天 → 订 11 号）。</li><li><strong>反思</strong>：我原以为推理链的关键是「逻辑」，实际跑出来才发现关键是「世界知识」。每一步推理都需要常识（开会要在场、提前一天到），而这些常识在书里没有明说，是我手工编码的。这让我理解为什么书中说「这些挑战中的许多正是对话系统研究的活跃领域」——把常识变成可计算的推理规则是核心难题。</li></ul>
+<h2>已知局限</h2>
+<ul><li>所有实验基于图 26.1 的 20 轮对话（或 12 句手工标注），规模极小，结论只能作方向性参考。</li><li>lab-01 的规则只考虑时间和标点，未考虑语调、语义等真实语音特征。</li><li>lab-02 的规则分类器只有 12 句测试集，未覆盖反语、隐喻等复杂情况。</li><li>lab-04 的 DAMSL 标注是简易版，未覆盖所有前向/后向功能变体。</li><li>lab-05 的推理链是手工编码的规则，不能覆盖所有会话含义场景。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

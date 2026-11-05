@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 22 章 语义角色标注 · 读书笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 22 章 语义角色标注</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 22 章 语义角色标注 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 22 章 语义角色标注 · 读书笔记</h1>
+<blockquote><p><strong>本章一句话</strong>：语义角色标注把「谁对谁做了什么」从表层句法中抽离出来，用一套有限的角色标签（PropBank 的 Arg0/Arg1、FrameNet 的框架元素）为谓词论元贴上语义标签，从而让计算机能跨句法变化、跨词形变化地推理事件结构。</p><p><strong>结构</strong>：先给题元角色的语言学根基（§22.1–22.3）→ 介绍两大标注资源 PropBank 与 FrameNet（§22.4–22.5）→ 讲 SRL 的特征方法与神经方法（§22.6）→ 转向选择限制与选择偏好（§22.7）→ 最后谈谓词的基元分解（§22.8）。</p><p><strong>可疑处</strong>：§22.7.2 的 KL 散度与选择关联公式在抽取文本中分式与上下标错乱，我按上下文重建后在 lab-03 用数值复算校验，见 ❓ 记录。</p><p><strong>与我何干</strong>：我平时做事件抽取和关系抽取时，常把「主语」「宾语」当成语义本身，这一章让我意识到主语/宾语只是表层实现，真正的语义是「施事」「受事」「工具」这类角色——不理解这一层，跨句式的推理和问答就会出错。</p></blockquote>
+<hr>
+<h2>第 22.1 节　语义角色　⭐</h2>
+<p><strong>本节问题</strong>：为什么「Sasha 打破了窗户」和「Pat 打开了门」的主语在语义上是同一类东西？这种共性怎么刻画？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「主语 Sasha 和 Pat，我们可以称之为打破窗户事件的打破者和开门事件的开启者，二者有某些共同之处。它们都是意愿性的施动者，通常是有生命的，并且对其所涉事件负有直接的因果责任。」（§22.1）</li><li>「题元角色是捕捉打破者与开启者之间这种语义共性的一种方式。我们说这两个动词的主语都是施事。」（§22.1）</li><li>「施事是表示诸如意愿性致使这类抽象概念的题元角色。」（§22.1）</li><li>「这些参与者的语义角色是主题。」（§22.1）</li><li>「尽管题元角色是最古老的语言学模型之一，但正如上文所见，它们的现代表述归功于 Fillmore (1968) 和 Gruber (1965)。」（§22.1）</li><li>「大多数题元角色集合包含十几个角色，但我们会看到角色数量更少、含义更加抽象的集合，以及角色数量非常多、针对具体情境的集合。」（§22.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这一节最核心的洞察是：句法位置（主语、宾语）和语义角色（施事、主题）不是一一对应的。Sasha 和 Pat 分别是「打破者」和「开启者」，但抽象一层都是「施事」——这说明人脑在理解句子时自动做了一层语义归并，而计算机需要显式建模这层归并。</li><li>【我】题元角色的定义很「人本」：施事要求「有意愿、有生命、负因果责任」，这些特征在真实语料中很少全部满足。我做过一版日志事件抽取，当时直接拿句法主语当「操作者」，结果大量被动句和工具主语句被标错——正是没做这层语义抽象。</li><li>【我】Fillmore 和 Gruber 在 1965–1968 年重新引入题元角色，这呼应了历史注记里 Pāṇini 的 kārakas——「谁对谁做了什么」这个问题跨越 2500 年没变，变的只是形式化工具。</li><li>【我】作者提到「并不存在普遍公认的角色集合」，这让我警惕：不要试图设计一套「终极角色表」，而要根据任务（问答、翻译、信息抽取）选择合适的粒度。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 30 分钟，给「施事、受事、工具、经历者、受益者、来源、目标」各写 2 个中文例句，标注句法位置和语义角色（验收：7 类角色 × 2 例，且至少 3 例的句法位置与默认不一致）。</li></ul>
+<hr>
+<h2>第 22.2 节　语态交替　⭐</h2>
+<p><strong>本节问题</strong>：同一个动词为什么能有多种论元实现方式？这种变化对语义推理有什么影响？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「计算系统使用语义角色的主要原因是，它可以充当一种浅层意义表示，使我们能够做出仅凭词语表面字符串、甚至句法分析树都无法做出的简单推理。」（§22.2）</li><li>「因此，语义角色有助于对谓词论元的不同表层实现方式加以概括。」（§22.2）</li><li>「一个动词所带的题元角色论元集合通常称为题元网格、θ-grid 或格框架。」（§22.2）</li><li>「这些多重的论元结构实现（即 break 可以带施事、工具或主题作主语，而 give 可以把其主题和目标实现于任意顺序）称为动词交替或语态交替。」（§22.2）</li><li>「Levin (1993) 列出了 3100 个英语动词所属的语义类别（47 个高层类别，又细分为 193 个更具体的类别）以及它们所参与的各种交替。」（§22.2）</li><li>「这些动词类别列表已被纳入在线资源 VerbNet (Kipper et al., 2000)，该资源把每个动词同时链接到 WordNet 和 FrameNet 条目。」（§22.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这一节的存在理由，是同一个事件可以换好几种「包装」：break 可以让施事、工具或主题轮流坐主语位置，give 可以互换两个宾语的顺序。只看句法，这些句子长得完全不同；但语义角色一层，它们共享同一个事件结构。</li><li>【我】与格交替（dative alternation）的限制很有说服力：不是随便什么动词都能双宾语/介词短语互换，只有「将来拥有」「发送」「投掷」等语义类才可以。这说明交替不是句法现象，而是语义现象——动词的语义类决定了它能参与哪些交替。</li><li>【我】Levin 的 3100 个动词分类是手工构建的，这在今天看很「重」，但它揭示了动词语义和句法行为之间的系统联系。VerbNet 把它链接到 WordNet 和 FrameNet，等于给动词建了一张跨资源的语义地图。</li><li>【我】我在做问答系统时见过类似问题：「Company A 收购了 Company B」和「Company B 被 Company A 收购」在句法上差别很大，但用户问「Company B 是否被收购？」时，系统必须识别两者语义等价——这正是语义角色要解决的浅层推理。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-01 中对 break、give、open 三个动词，各写出其全部可能的题元网格和语态交替形式，与书中 (22.3)–(22.8) 对照（验收：每个动词至少 3 种实现方式，且标注每种实现的句法位置）。</li></ul>
+<hr>
+<h2>第 22.3 节　语义角色：题元角色的问题　⭐</h2>
+<p><strong>本节问题</strong>：为什么经典的题元角色（施事、主题、工具）在实际使用中会遇到困难？有哪些替代方案？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「然而事实证明，提出一套标准角色集相当困难，为施事、主题或工具这类角色给出形式化定义也同样困难。」（§22.3）</li><li>「例如，试图定义角色集的研究者常常发现，他们需要把施事或主题这样的角色拆分成许多具体角色。」（§22.3）</li><li>「除了碎片化问题之外，还有一些情形，我们希望对语义角色进行推理并跨角色泛化，但有限的离散角色列表让我们无法做到这一点。」（§22.3）</li><li>「大多数施事都是有生命的、有意志的、有感知的、有致使性的，但任何一个具体名词短语未必表现出所有这些性质。」（§22.3）</li><li>「第一种选择是定义概括性的语义角色，这些角色抽象于具体的题元角色之上。」（§22.3）</li><li>「第二种方向则是定义特定于某一个动词、或某一组语义相关的动词或名词的语义角色。」（§22.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这一节本质在讲「分类学困境」：角色太粗（只有施事/受事）会丢失信息，太细（每个动词一套角色）又无法泛化。这种粗粒度和细粒度的张力，在 NLP 的很多任务里都存在（词性标注、命名实体、情感分析）。</li><li>【我】工具角色的碎片化例子（knife 可以作主语，fork 不可以）让我想到中文的「筷子」和「勺子」：可以说「筷子夹起了肉」，但「*勺子吃了饭」就不行。这种差异不是句法能预测的，必须追溯到动词的语义类。</li><li>【我】原型施事/原型受事（proto-agent/proto-patient）用一组启发式特征代替充分必要条件，这实际上是放弃了「硬分类」转向「软匹配」。Dowty 的这个思路后来被 PropBank 继承——Arg0 大致对应原型施事，Arg1 对应原型受事。</li><li>【我】两种替代方案（更抽象的原型角色 vs 更具体的动词特定角色）分别催生了 PropBank 和 FrameNet。这一节是承上启下的：它解释了为什么后面会分成两派资源。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>用 20 分钟对比「施事」和「原型施事」的定义差异，各写 1 个典型例句和 1 个边缘例句（验收：边缘例句必须体现「部分满足特征」的情况）。</li></ul>
+<hr>
+<h2>第 22.4 节　命题库（PropBank）　⭐</h2>
+<p><strong>本节问题</strong>：PropBank 怎么解决「通用角色集难以定义」的问题？它的标注体系长什么样？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「由于定义一套通用的题元角色十分困难，PropBank 中的语义角色是相对于单个动词义项来定义的。」（§22.4）</li><li>「因此每个动词的每个义项都有一组特定的角色，这些角色只用数字而非名称表示：Arg0、Arg1、Arg2 等等。」（§22.4）</li><li>「一般而言，Arg0 表示原型施事，Arg1 表示原型受事。」（§22.4）</li><li>「尽管如此，仍存在一些概括：Arg2 常为受益者、工具、属性或结束状态，Arg3 为起始点、受益者、工具或属性，Arg4 为终点。」（§22.4）</li><li>「这类 PropBank 条目称为框架文件；请注意，框架文件中每个角色的定义（&quot;Other entity agreeing&quot;&quot;Extent, amount fallen&quot;）是供人阅读的非正式释义，而非形式化定义。」（§22.4）</li><li>「PropBank 语义角色有助于恢复关于动词论元的浅层语义信息。」（§22.4）</li><li>「PropBank 还有一些不带编号的论元，称为 ArgM（ArgM-TMP、ArgM-LOC 等），它们表示修饰或附加语意义。」（§22.4）</li><li>「PropBank 关注动词，而一个相关项目 NomBank（Meyers et al., 2004）则为名词谓词添加标注。」（§22.4）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】PropBank 的解决方案很务实：既然定义不了通用角色集，那就每个动词自己定义一套，用 Arg0/Arg1/Arg2 编号避免命名争议。代价是跨动词的泛化能力弱了（Arg0 在 agree 里是「同意者」，在 fall 里根本不存在），但换来了标注的一致性和可操作性。</li><li>【我】框架文件里的角色定义只是给人看的非正式释义，这一点很重要：它意味着 PropBank 的语义不是形式化的，而是词典式的。这和 FrameNet 的框架定义形成对比——后者试图给出更结构化的语义描述。</li><li>【我】ArgM（修饰语）的设计很聪明：时间、地点、方式、原因这些修饰语跨动词相对稳定，单独列出可以避免在每个框架文件里重复定义。这相当于把「核心论元」和「附属信息」分开管理。</li><li>【我】NomBank 把标注扩展到名词谓词（如 agreement），这解决了「动词性事件名词化后论元怎么标」的问题。在中文里，「购买」「销售」这类名词化动词非常常见，NomBank 的思路对中文事件抽取很有参考价值。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-02 中解析 agree.01、fall.01、increase.01 三个框架文件，用程序自动标注 6 个测试句子（验收：每个句子的 Arg0/Arg1/Arg2/ArgM 标注与书中示例一致）。</li></ul>
+<hr>
+<h2>第 22.5 节　FrameNet　⭐</h2>
+<p><strong>本节问题</strong>：FrameNet 和 PropBank 有什么本质区别？「框架」这个概念如何解决跨词形的语义推理？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「PropBank 项目中的角色特定于单个动词，而 FrameNet 项目中的角色特定于框架。」（§22.5）</li><li>「我们把将这些词联结在一起的整体背景知识称为框架（frame）(Fillmore, 1985)。」（§22.5）</li><li>「词群是相对于某种背景信息而定义的这个思想，在人工智能和认知科学中十分普遍；在这些领域里，除了框架之外，我们还能看到与之相关的工作，例如模型（model）(Johnson-Laird, 1983)，或者甚至还有脚本（script）(Schank and Abelson, 1977)。」（§22.5）</li><li>「FrameNet 中的框架是一种背景知识结构，它定义了一组特定于该框架的语义角色，称为框架元素，并且包含一组使用这些角色的谓词。」（§22.5）</li><li>「请注意，这些角色被分为核心角色，即特定于具体框架的角色，以及非核心角色，它们更像是 PropBank 中的 Arg-M 论元，表达时间、地点等更为一般的属性。」（§22.5）</li><li>「FrameNet 还对框架之间的关系进行编码，使框架能够继承彼此，或表示框架之间的关系，如因果关系（不同框架中框架元素之间的概括同样可以用继承来表示）。」（§22.5）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】FrameNet 的核心创新是「框架」这个中间层：不是直接绑定到动词，而是绑定到一组共享背景知识的词（reservation、flight、travel、buy、price……）。这样，increase（动词）、rise（动词）、rise（名词）虽然词形不同，但都唤起同一个「change position on a scale」框架，共享同一套框架元素。</li><li>【我】框架的灵感来自 Fillmore 对日常情境的理解：人说「航班」「价格」「餐食」时，背后预设了一个「航空旅行」的完整情境。这和 Schank 的脚本、Minsky 的框架是同一思想的不同名字——认知科学里「情境知识」的传统。</li><li>【我】核心角色 vs 非核心角色的区分很实用：核心角色（属性、差值、初始值、最终值）是框架特有的，非核心角色（时间、地点、方式）是通用的。这和 PropBank 的 Arg0/ArgM 二分异曲同工。</li><li>【我】框架之间的继承关系（如 Cause change of position on a scale 继承 Change of position on a scale，但增加了一个施事角色）让 FrameNet 不是 flat 的标签集合，而是有结构的语义网络。这比 PropBank 的纯编号体系更有表达力，但也更复杂。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>用 30 分钟，为「商业交易」场景设计一个简易框架，定义 3 个核心角色和 2 个非核心角色，并列出至少 5 个能唤起该框架的词（验收：框架定义 + 角色说明 + 词汇单元清单，写在 lab-02 的框架设计文档中）。</li></ul>
+<hr>
+<h2>第 22.6 节　语义角色标注（SRL）任务与特征方法　⭐</h2>
+<p><strong>本节问题</strong>：怎么自动给句子中的每个成分指派语义角色？基于特征的方法需要哪些步骤和特征？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「语义角色标注（有时缩写为 SRL）是一项自动找出句子中每个谓词的每个论元的语义角色的任务。」（§22.6）</li><li>「当前的语义角色标注方法基于监督机器学习，通常使用 FrameNet 和 PropBank 资源来规定什么算作谓词、定义任务中使用的角色集合，并提供训练集和测试集。」（§22.6）</li><li>「基于特征的算法——从 (Simmons, 1973) 这类最早的系统开始——先进行句法分析，用覆盖广泛的句法分析器为输入字符串指派句法分析结果。」（§22.6.1）</li><li>「对于这些谓词中的每一个，算法检查句法分析树中的每个节点，并使用监督分类来判定它对该谓词所扮演的语义角色（如果有的话）。」（§22.6.1）</li><li>「把识别与分类分开，可能带来更好的特征利用（不同特征可能对这两项任务有用），也可能带来计算效率上的好处。」（§22.6.1）</li><li>「这一假设是错误的；论元之间存在相互作用，需要对成分进行更&#x27;全局&#x27;的标签指派。」（§22.6.1）</li><li>「例如，局部分类器可以为每个成分返回一个带有概率的可能标签列表，再用第二遍 Viterbi 解码或重排序方法来选出最佳的共识标签。」（§22.6.1）</li><li>「大多数系统使用 Gildea and Jurafsky (2000) 提出的那组核心特征的一些推广。」（§22.6.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】基于特征的 SRL 是一个典型的「句法驱动」pipeline：先句法分析，再遍历树节点，对每个节点做分类。这和人类理解句子的方式不同——人不需要先画出完整的句法树就能理解「谁做了什么」，但计算机在缺乏端到端能力时，句法树提供了一个有用的中间表示。</li><li>【我】剪枝（pruning）这一步很实际：句法树中大多数成分都不是任何谓词的论元，先 heuristic 地剪掉明显不可能的成分，可以大幅减少分类器的计算量。这和信息检索中的倒排索引一样，是用廉价规则先做粗筛。</li><li>【我】识别与分类分开的两阶段设计，让我想到目标检测中的「区域提议 + 分类」两阶段（R-CNN 系列）。把「是不是目标」和「是什么目标」分开，确实可以让每个阶段用不同的特征，也可能带来效率提升。</li><li>【我】全局优化（Viterbi 解码、ILP）是为了解决局部分类的冲突——比如 PropBank 不允许两个成分都标为 ARG0。这说明 SRL 不是独立的逐点分类，而是结构预测问题。CRF、ILP 这类全局推断工具正是为此而生。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-04 中实现 Gildea &amp; Jurafsky 2000 的特征抽取器，对书中图 22.5 的句子（The San Francisco Examiner issued a special edition yesterday）抽取特征向量（验收：输出与书中 §22.6.1 所列特征一致的特征表）。</li></ul>
+<hr>
+<h2>第 22.6.2–22.6.3 节　神经方法与评估　🔴</h2>
+<p><strong>本节问题</strong>：神经方法怎么把 SRL 变成序列标注问题？和基于特征的方法相比有什么优势？SRL 怎么评估？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「一种简单的 SRL 神经方法把它视为与命名实体识别类似的序列标注任务，采用 BIO 方法。」（§22.6.2）</li><li>「假设已经给定谓词，任务只是检测并标注片段。」（§22.6.2）</li><li>「图 22.6 展示了 He et al. (2017) 中一个标准算法的示意图。这里每个输入词被映射为预训练嵌入，然后每个词元与谓词嵌入拼接，再通过一个带 softmax 的前馈网络，输出每个 SRL 标签上的分布。」（§22.6.2）</li><li>「解码时，可以用 CRF 层代替 biLSTM 输出之上的 MLP 层来做全局推断，但在实践中这似乎并没有带来多少好处。」（§22.6.2）</li><li>「语义角色标注的标准评估要求每个论元标签必须被指派到完全正确的词序列或句法分析成分上，然后计算精确率、召回率和 F 值。」（§22.6.3）</li><li>「用于评估的两个常用数据集是 CoNLL-2005（Carreras and M`arquez, 2005）和 CoNLL-2012（Pradhan et al., 2013）。」（§22.6.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】神经方法把 SRL 从「句法树节点分类」变成「序列标注」，这是一个范式转换：不再需要显式的句法分析作为中间步骤，直接从词序列端到端地预测标签。He et al. 2017 的关键设计是把谓词信息注入每个位置（通过拼接谓词嵌入），让模型知道「当前在为哪个谓词标注」。</li><li>【我】BIO 标注是序列标注的标准做法：B-ARG0 表示 ARG0 的开始，I-ARG0 表示延续，O 表示无关。这和 NER 的 B-PER/I-PER 完全一样，说明 SRL 和 NER 在模型层面可以共享大量代码。</li><li>【我】「CRF 没有带来多少好处」这个观察很有意思：在 NER 里 CRF 通常有稳定提升，但在 SRL 里提升不明显。可能是因为 SRL 的标签依赖主要体现为「不重叠」这种硬约束，而不是标签之间的转移概率。</li><li>【我】评估的「完全匹配」标准很严格：论元必须精确覆盖正确的词序列才算对，部分重叠不算。这意味着边界误差和标签误差同等惩罚，对模型的边界检测能力要求很高。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-05 中实现一个简化的 BIO 标注 + Viterbi 解码器，对 5 个测试句子输出标签序列并计算 F1（验收：输出标签序列和 F1 值，与基线 BIO 对照）。</li></ul>
+<hr>
+<h2>第 22.7 节　选择限制与选择偏好　🔴</h2>
+<p><strong>本节问题</strong>：动词对论元的语义约束怎么表示和计算？为什么用「偏好」而不是「硬限制」？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「选择限制是一种语义类型约束，即动词对其论元角色所允许填充的概念种类施加的约束。」（§22.7）</li><li>「一个有用的线索是一个语义事实：EATING 事件的主题往往是可以食用的东西。动词 eat 对其主题论元的填充项所施加的这一限制就是选择限制。」（§22.7）</li><li>「选择限制在具体程度上差异很大。」（§22.7）</li><li>「这使选择限制区别于表示词汇知识的其他特征，例如词性，后者的数量相当有限。」（§22.7）</li><li>「尽管这一方法充分捕捉到了选择限制的语义，但直接使用它存在两个问题。」（§22.7.1）</li><li>「一种更实用的做法是用 WordNet 的义项集来表述选择限制，而不是用逻辑概念。」（§22.7.1）</li><li>「在最早的实现中，选择限制被视为对谓词所能携带的论元种类的严格约束（Katz and Fodor 1963, Hirst 1987）。」（§22.7.2）</li><li>「然而，人们很快就清楚地认识到，这些选择限制用偏好来表述比用严格约束更合适（Wilks 1975b, Wilks 1975a）。」（§22.7.2）</li><li>「因此，现代的选择偏好系统用某种软约束来刻画谓词与其可能论元之间的关系。」（§22.7.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】选择限制是「语义合法性」的约束：eat 的主题必须是可食用的，diagonalize 的主题必须是矩阵。这种约束在消歧中很关键——「我在附近吃点东西」 vs 「*我想吃附近的地方」，前者 eat 是不及物动词，后者是及物动词，选择限制帮我们排除荒谬解读。</li><li>【我】用 FOL（一阶逻辑）表示选择限制虽然严谨，但「杀鸡用牛刀」：需要庞大的逻辑知识库，而且计算代价高。用 WordNet 义项集更实用——hamburger 的上位词链最终到 food，所以「吃汉堡包」合法。这是「用现有的词汇资源代替形式化的逻辑知识库」的典型案例。</li><li>【我】从「硬限制」到「软偏好」的转变很重要：真实语料中充满了违反选择限制的合法句子（「你不能吃金子当午餐」「空着肚子吃下了玻璃」）。Wilks 1975 年就认识到了这一点，但直到 Resnik 的选择关联模型才有了可计算的软约束。</li><li>【我】选择限制和选择偏好的关系，让我想到语义角色和语义角色的概率标注：前者是离散的、绝对的，后者是连续的、可度量的。现代 NLP 的趋势是把一切硬约束变成软概率，这更符合语言的真实分布。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>在 lab-03 中复算 Resnik 的选择偏好强度 SR(v) 和选择关联 A_R(v,c)，用书中的 read/write/see 与 WRITING/ACTIVITY 等类别对照（验收：数值与书中表 22.1 一致，误差 &lt;0.01）。</li></ul>
+<hr>
+<h2>第 22.8 节　谓词的基元分解　🔵</h2>
+<p><strong>本节问题</strong>：能不能把动词的意义分解成更基本的语义基元？这样做有什么好处和局限？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「这种把意义分解为若干基元语义元素或特征的做法被称为基元分解或成分分析，这一做法已被推进得更远，并特别聚焦于谓词。」（§22.8）</li><li>「假设这种等价性成立，我们就可以把 kill 的意义表示为：KILL(x,y) ⇔ CAUSE(x, BECOME(NOT(ALIVE(y))))，这样就使用了 do、cause、become not 和 alive 之类的语义基元。」（§22.8）</li><li>「虽然这种基元分解方法能够解释状态与动作之间、或使役与非使役谓词之间的相似性，但它仍然依赖于拥有大量像 open 这样的谓词。」（§22.8）</li><li>「更激进的做法则选择把这些谓词也进一步拆解。其中一种在早期自然语言系统中发挥过作用的动词谓词分解方法，叫作概念依存（CD），它由十个基元谓词组成，如图 22.8 所示。」（§22.8）</li><li>「注意，CD 还为每个基元关联一组固定的题元角色，以表示动作中的各个参与者。」（§22.8）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】基元分解是「语义还原论」的尝试：kill = CAUSE + BECOME + NOT + ALIVE，open = CAUSE + BECOME + OPEN。这种分解能解释语态交替（John opened the door / The door opened / The door is open 共享同一个状态谓词 open，差异只在 CAUSE 和 BECOME 的组合）。</li><li>【我】概念依存（CD）的十个基元（ATRANS、PTRANS、MTRANS、MBUILD、PROPEL、MOVE、INGEST、EXPEL、SPEAK、ATTEND）很像化学元素周期表：用少量基本元素组合出复杂化合物的意义。Schank 的 CD 在 1970 年代的 AI 系统中确实发挥过作用，但后来被统计方法取代。</li><li>【我】基元分解的致命问题是「基元本身怎么定义」：CAUSE、BECOME、ALIVE 这些概念并不比 kill、open 更简单。如果不能把基元映射到可观测的分布特征，分解就只是换了一套名字。</li><li>【我】现代 NLP 里，这种「分解」思想以另一种形式复活了：词向量、语义角色、选择限制、框架——每一种都是从不同角度对意义做分解，只是不再追求「终极基元」，而是任务驱动的实用分解。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>用 20 分钟，把「write」「read」「eat」三个动词各做一次概念依存分解，写出 CD 表示（验收：每个动词至少用 2 个基元，且标注固定的题元角色）。</li></ul>
+<hr>
+<h3>全章 takeaway（5 条）</h3>
+<ol><li>语义角色是连接句法和语义的中间层：同一事件结构可以有不同的表层实现（语态交替），语义角色让计算机能跨这些变化做推理。</li><li>PropBank 用动词特定的编号角色（Arg0/Arg1/ArgM）换取标注一致性，FrameNet 用框架特定的框架元素换取跨词形的泛化能力——两者是「粗粒度泛化」与「细粒度表达」的两种取舍。</li><li>SRL 从基于特征的句法树节点分类，发展到神经端到端序列标注；关键设计是把谓词信息注入模型，并用全局推断（Viterbi/ILP）保证标签一致性。</li><li>选择限制经历了从「硬约束」到「软偏好」的转变：真实语言充满了违反约束的合法句子，Resnik 的选择关联用 KL 散度给出了可计算的偏好强度。</li><li>基元分解（成分分析、概念依存）试图用少量语义基元组合出动词意义，能解释语态交替，但基元本身难以定义——现代 NLP 放弃了「终极基元」，转向任务驱动的实用分解。</li></ol>
+<hr>
+<h3>复习优先级依据</h3>
+<ul><li>⭐（22.1–22.6）：章末小结逐条覆盖，且 §22.2/§22.4/§22.5 有可手算例题（语态交替、框架文件解析）、§22.6.1 有完整特征模板，属必掌握。</li><li>🔴（22.6.2–22.6.3、22.7）：跨节反复引用（神经方法是当前主流、选择偏好与 SRL 集成），是理解模型边界和实际应用的关键。</li><li>🔵（22.8）：拓展与历史背景，本章小结仅一句带过，了解即可。</li><li>⚪：无（本章无纯背景章节，历史注记按 🔵 处理，不单列）。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

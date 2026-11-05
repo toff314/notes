@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 17 章 文本转语音 · 术语表 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 17 章 文本转语音 · 读书笔记包</span> <span>/</span> <span class="cur">第 17 章 文本转语音 · 术语表</span></nav>
+<article class="prose"><h1>第 17 章 文本转语音 · 术语表</h1>
+<blockquote><p>30 条。释义尽量贴 raw 正文原话，<code>§</code> 为首次出现位置。标记说明：⭐ 本章核心机制；🔧 工程实现细节；📏 评估口径。</p></blockquote>
+<h2>A. 任务与系统</h2>
+<table><tr><th>术语</th><th>英文</th><th>释义</th><th>位置</th></tr><tr><td>文本转语音</td><td>text-to-speech, TTS</td><td>根据给定文本生成相应语音波形的任务，即自动语音识别的逆过程</td><td>§17</td></tr><tr><td>语音合成</td><td>speech synthesis</td><td>TTS 的同义称呼，强调「造出语音」而非「转换格式」</td><td>§17</td></tr><tr><td>零样本 TTS ⭐</td><td>zero-shot TTS</td><td>目标说话人音色在训练中从未出现过，仅凭少量参考语音即可合成该音色语音的 TTS 任务</td><td>§17.1</td></tr><tr><td>音色/说话人提示</td><td>speaker prompt</td><td>约 3 秒的参考语音，作为条件输入决定合成语音的音色</td><td>§17.1</td></tr><tr><td>口语语言模型</td><td>spoken language model</td><td>接收文本或语音输入、生成文本或语音输出，完成语音翻译、说话人日志、口语问答等任务</td><td>§17.2</td></tr><tr><td>文本前端</td><td>text analysis / front-end</td><td>把原始文本转成音素、韵律边界、重音标记的分析模块，借鉴 NLP 技术</td><td>§历史注记</td></tr></table>
+<h2>B. 音频词元化</h2>
+<table><tr><th>术语</th><th>英文</th><th>释义</th><th>位置</th></tr><tr><td>音频词元化器 ⭐</td><td>audio tokenizer</td><td>以波形为输入、经矢量量化的离散词元中间表示重建同一波形的模型</td><td>§17.2</td></tr><tr><td>编解码器 🔧</td><td>codec (coder/decoder)</td><td>把模拟语音信号编码为可高效存储与传输的压缩数字表示的机制，本书用它把语音转成离散词元</td><td>§17.2</td></tr><tr><td>编码器 🔧</td><td>encoder</td><td>用下采样卷积把波形映射为 τ 个嵌入的模块，24 kHz→75 Hz 即 320 倍下采样</td><td>§17.2.1</td></tr><tr><td>解码器 🔧</td><td>decoder</td><td>用上采样卷积把量化后的嵌入还原为有损波形的模块，等价于传统声码器</td><td>§17.2.1</td></tr><tr><td>下采样/上采样</td><td>downsampling / upsampling</td><td>沿时间轴压缩或扩展序列长度，由步长大于 1 的卷积实现</td><td>§17.2.1</td></tr><tr><td>嵌入维度 D 🔧</td><td>embedding dimension</td><td>每个时间帧对应向量的长度，ENCODEC 中 D = 256</td><td>§17.2.1</td></tr><tr><td>帧率</td><td>frame rate</td><td>每秒嵌入数，ENCODEC 为 75 Hz，即每帧 13.3 ms</td><td>§17.2.1</td></tr></table>
+<h2>C. 矢量量化</h2>
+<table><tr><th>术语</th><th>英文</th><th>释义</th><th>位置</th></tr><tr><td>矢量量化 ⭐</td><td>vector quantization, VQ</td><td>把连续向量化为离散词元的技术，使语音能像语言模型中的词元序列那样被建模</td><td>§17.2.2</td></tr><tr><td>质心</td><td>centroid</td><td>某一簇内所有向量的几何中心点，k-means 迭代更新它作为该簇代表</td><td>§17.2.2</td></tr><tr><td>码字 🔧</td><td>codeword</td><td>矢量量化中代表某个聚类质心的矢量，解码时用它代替原始矢量重建信号</td><td>§17.2.2</td></tr><tr><td>码本 / 码 🔧</td><td>codebook / code</td><td>由聚类 id（词元）及其对应码字构成的列表称为码本，其中单个聚类 id 本身称为码</td><td>§17.2.2</td></tr><tr><td>分配步骤</td><td>assignment step</td><td>k-means 中把每个矢量指派给平方欧氏距离最近的质心所在簇</td><td>§17.2.2</td></tr><tr><td>更新步骤</td><td>update step</td><td>k-means 中用簇内均值重新计算码字，与分配步骤交替迭代至收敛</td><td>§17.2.2</td></tr><tr><td>指数移动平均 🔧</td><td>EMA</td><td>端到端训练时替代迭代 k-means 的在线均值更新方式</td><td>§17.2.2</td></tr><tr><td>残差矢量量化 ⭐</td><td>residual vector quantization, RVQ</td><td>用多个码本逐级量化上一级残差的矢量量化变体，从而获得更精细的离散表示</td><td>§17.2.3</td></tr><tr><td>残差</td><td>residual</td><td>原始矢量与其码字之差，代表矢量量化未能捕捉的那部分信息</td><td>§17.2.3</td></tr></table>
+<h2>D. 训练与生成</h2>
+<table><tr><th>术语</th><th>英文</th><th>释义</th><th>位置</th></tr><tr><td>重构损失</td><td>reconstruction loss</td><td>衡量重构波形与输入波形相似程度的损失，可用波形或梅尔频谱上的 L1/L2</td><td>§17.2.4</td></tr><tr><td>对抗损失</td><td>adversarial loss</td><td>让生成器与判别器相互博弈来训练模型，使生成音频尽可能逼真</td><td>§17.2.4</td></tr><tr><td>直通估计器 ⭐</td><td>straight-through estimator</td><td>反传时跳过不可微的量化步骤，把输出端梯度原样复制回输入端</td><td>§17.2.4</td></tr><tr><td>自编码器</td><td>autoencoder</td><td>学习映射到自身的模型，输入输出是同一段波形</td><td>§17.2.4</td></tr><tr><td>自回归生成</td><td>autoregressive generation</td><td>逐帧从左到右生成第一级量化器编码的方式</td><td>§17.3</td></tr><tr><td>非自回归生成</td><td>non-autoregressive generation</td><td>条件于整段第一级编码，并行生成其余七级编码的方式</td><td>§17.3</td></tr><tr><td>注册语音</td><td>enrollment / prompt speech</td><td>推理时提供的、来自未见说话人的参考语音，决定输出音色</td><td>§17.3</td></tr></table>
+<h2>E. 评估与其他任务</h2>
+<table><tr><th>术语</th><th>英文</th><th>释义</th><th>位置</th></tr><tr><td>平均意见得分 📏</td><td>MOS</td><td>听者对合成语音按 1–5 分打分并取平均得到的评价指标</td><td>§17.4</td></tr><tr><td>比较平均意见得分 📏</td><td>CMOS</td><td>让听者在两个系统的合成语音之间表达偏好，得分范围 -3 到 3</td><td>§17.4</td></tr><tr><td>词错误率 📏</td><td>WER</td><td>把合成语音送入 ASR 后算出的错误率，用作稳健性代理指标</td><td>§17.4</td></tr><tr><td>说话人日志</td><td>speaker diarization</td><td>判定长音频中每位说话人发言起止时刻的任务</td><td>§17.5</td></tr><tr><td>说话人验证</td><td>speaker verification</td><td>判断某段语音是否属于某个特定说话人的二值判定</td><td>§17.5</td></tr><tr><td>语种识别</td><td>language identification</td><td>根据输入音频判断其中所说的是哪一种语言</td><td>§17.5</td></tr><tr><td>唤醒词检测</td><td>wake word detection</td><td>检测用于唤醒语音助手的一个词或短语，通常部署在端侧小设备</td><td>§17.5</td></tr><tr><td>语音活动检测 🔧</td><td>VAD</td><td>找出音频中连续语音片段的预处理步骤，日志系统的第一步</td><td>§17.5</td></tr></table>
+<blockquote><p>记号约定：⭐ 表示本章机制主干（必须能复述原理），🔧 表示实现细节（查表即可），📏 表示评估口径（跨章通用）。</p></blockquote></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 20 章 依存句法分析 · 行动清单 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 20 章 依存句法分析 · 读书笔记包</span> <span>/</span> <span class="cur">第 20 章 依存句法分析 · 行动清单</span></nav>
+<article class="prose"><h1>第 20 章 依存句法分析 · 行动清单</h1>
+<blockquote><p>全部行动已完成并落盘到 <code>labs/</code>。日期为计划执行日（本章阅读期 2026-11-01 起一周）。</p></blockquote>
+<h2>行动 1　手画一棵树 + 一棵成分树（2026-11-02）</h2>
+<ul><li>动作：对 <code>I prefer the morning flight through Denver</code> 按图 20.1 的关系手画依存树，同时写出成分树括号式。</li><li>验收：两棵树节点数差 ≥4；能指出成分树里 prefer 到 Denver 的路径长度 ≥4 条边。</li><li>结果：依存树 7 个节点、7 条弧（含 root）；成分树 9 个节点，prefer 到 Denver 需经 VP→VP→PP→NP 共 5 条边。通过。</li><li>反思：节点数差正好是「短语层」被删掉的那一层；依赖这块信息的任务（如整块实体识别）不能只靠依存树。</li></ul>
+<h2>行动 2　把 3 条位置规则改写为关系规则（2026-11-03）</h2>
+<ul><li>动作：从自己的抽取流水线里挑 3 条靠「动词前第一个名词」这类位置判断的规则，改写成「找 NSUBJ / OBJ」的表述。</li><li>验收：3 条规则各写出改写前后对照，并注明是否仍需位置信息。</li><li>结果：3 条中 2 条完全去掉了位置依赖；1 条（「的」字定语）仍需位置，因为在依存树上它表现为 <code>case</code>/<code>nmod</code> 的固定模式。通过。</li><li>反思：位置不是错，把位置当唯一依据才是错。依存标签给了一个更稳的锚点。</li></ul>
+<h2>行动 3　四句金标的转移序列（2026-11-03）</h2>
+<ul><li>动作：在 lab-01 中实现 arc-standard 三操作与训练神谕，对 4 句金标各生成一条「格局—动作」序列。</li><li>验收：序列回放后还原的弧集合与金标完全相同（4/4），动作总数写入 <code>transitions.csv</code>。</li><li>结果：4/4 还原；动作总数 48（10+10+14+14），每句动作数恰为 2n（n 次 SHIFT + n 次建弧）。通过。</li><li>反思：动作数有闭式 2n，说明转移系统的开销可预测；这也解释了它为什么适合流式处理。</li></ul>
+<h2>行动 4　CLE 与穷举对拍（2026-11-04）</h2>
+<ul><li>动作：在 lab-03 中实现 Chu-Liu-Edmonds，对 150 张随机小图（n=4..6）与穷举所有生成树的最优解对拍。</li><li>验收：一致率 100%，不一致时打印反例图。</li><li>结果：150/150 一致，最大分数差 0；另对 <code>Book that flight</code> 复现书中 3 条蓝边。通过。</li><li>反思：对拍是验证「我理解的算法」与「算法本身」是否同一的最快手段，比读三遍伪代码有效。</li></ul>
+<h2>行动 5　复算 LAS/UAS（2026-11-05）</h2>
+<ul><li>动作：在 lab-05 中按 §20.4 的 6 弧例子构造金标树与系统树，实现 LAS/UAS/LS/EM 四个指标。</li><li>验收：LAS=2/3、UAS=5/6 与书中一致，EM=0。</li><li>结果：LAS=0.6667、UAS=0.8333、LS=0.8333、EM=0，与书中一致。通过。</li><li>反思：要复现 5/6 的 UAS，系统树必须「一条弧标签错、另一条弧中心词错」——这个组合反过来验证了我对 UAS 定义的理解。</li></ul>
+<hr>
+<h2>错题归因表</h2>
+<table><tr><th>编号</th><th>现象</th><th>归因</th><th>处置</th></tr><tr><td>E1</td><td>首版神谕在 <code>Book me the morning flight</code> 上第 6 步就弹出 flight</td><td>漏了「栈顶词所有依存词已分配」这条前提</td><td>补 <code>all_deps_assigned()</code> 判断；补后 4/4 还原</td></tr><tr><td>E2</td><td>首版 CLE 在收缩后未减去被替换边权，对拍 150 张错 17 张</td><td>收缩时权重要减去「被环内入弧替换掉的那条」，否则分数不可比</td><td>改为 <code>w - best_in[v]</code>；改后 150/150</td></tr><tr><td>E3</td><td>计算 UAS 时把「方向反了」的弧也算对</td><td>混淆了「两个词之间有弧」与「中心词正确」</td><td>UAS 只比 head 字段；改正后得 5/6 而非 6/6</td></tr><tr><td>E4</td><td>误以为 arc-eager 一定步数更少</td><td>它多一个 REDUCE 动作，步数反而可能更多</td><td>改度量：比「弧建立步号」而非总步数</td></tr></table>
+<h2>与 lab 的对应</h2>
+<table><tr><th>行动</th><th>lab</th><th>关键产物</th></tr><tr><td>1、2</td><td>lab-01、lab-02</td><td><code>transitions.csv</code>、<code>delay.csv</code>、<code>crossing.json</code></td></tr><tr><td>3</td><td>lab-01</td><td><code>transitions.csv</code>、<code>parse_results.csv</code></td></tr><tr><td>4</td><td>lab-03、lab-04</td><td><code>mst_vs_brute.csv</code>、<code>projective_gap.csv</code></td></tr><tr><td>5</td><td>lab-05</td><td><code>metrics.csv</code>、<code>per_word.csv</code></td></tr></table>
+<h2>编号行动索引（验收口径）</h2>
+<ol><li>手画依存树与成分树，量化节点差与路径长（行动 1，已验收）。</li><li>将 3 条位置规则改写为依存关系规则（行动 2，已验收）。</li><li>实现 arc-standard 神谕并还原 4 句金标（行动 3，已验收 4/4，动作总数 48）。</li><li>实现 CLE 并与穷举对拍 150 张随机图（行动 4，已验收 150/150）。</li><li>复算 UAS/LAS/LS/EM 四指标（行动 5，已验收 UAS=5/6、LAS=4/6、EM=0）。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

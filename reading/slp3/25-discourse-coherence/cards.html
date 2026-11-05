@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 25 章 · 永久卡片（14 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 25 章 篇章连贯</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 25 章 · 永久卡片（14 张）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 25 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　篇章连贯的三条局部机制</h2>
+<ul><li><strong>Q（正面）</strong>：什么是篇章连贯？局部连贯有哪三种方式？</li><li><strong>A（背面）</strong>：篇章连贯指使真实篇章区别于随机句子堆砌的句间关联性质，包含局部连贯（相邻句子间）与全局连贯（整篇层面）。局部连贯的三种方式：①句子间的连贯关系（如 REASON）；②基于实体的连贯（篇章围绕同一显著实体展开）；③话题连贯（邻近句子谈同一话题，表现为词汇衔接）。</li><li><strong>出处</strong>：《Speech and Language Processing》第 3 版 §引言</li><li><strong>链接</strong>：卡 2（关系机制）｜卡 6（实体机制）｜卡 10（话题机制）</li></ul>
+<h2>卡 2　RST 的核心-卫星不对称</h2>
+<ul><li><strong>Q（正面）</strong>：RST 中 nucleus 与 satellite 有什么区别？这种不对称有什么应用价值？</li><li><strong>A（背面）</strong>：nucleus 是作者意图的中心、可独立解读；satellite 依附于 nucleus、只有相对 nucleus 才能解读。不对称关系的应用价值：摘要时保留 nucleus、删除 satellite；信息抽取时 nucleus 的信息更重要。RST 关系用从 satellite 指向 nucleus 的箭头表示。</li><li><strong>出处</strong>：§25.1.1</li><li><strong>链接</strong>：卡 3（RST 树库）｜卡 4（PDTB 对比）</li></ul>
+<h2>卡 3　RST 树库的规模与类别</h2>
+<ul><li><strong>Q（正面）</strong>：RST Discourse Treebank 有多大？包含多少种关系？</li><li><strong>A（背面）</strong>：由 385 篇选自宾州树库的英语文档组成，每篇带完整 RST 分析，使用多达 78 种不同关系，归为 16 个类别。西班牙语、德语、巴斯克语、荷兰语和巴西葡萄牙语也有 RST 树库。</li><li><strong>出处</strong>：§25.1.1</li><li><strong>链接</strong>：卡 2｜lab-01 的 RST 标注练习</li></ul>
+<h2>卡 4　PDTB 与 RST 的本质区别</h2>
+<ul><li><strong>Q（正面）</strong>：PDTB 和 RST 在标注策略上有什么本质区别？</li><li><strong>A（背面）</strong>：RST 构建覆盖全篇的完整树结构；PDTB 只标注相邻文本片段对之间的关系，不建完整树、不承诺更高层级结构。PDTB 从篇章连接词（because、although 等）出发标注，也标注无显式信号的隐式关系（约 18,000 显式 + 16,000 隐式）。汉语显式连接词比例仅 22%（英语 47%），中文篇章分析更依赖隐式关系推理。</li><li><strong>出处</strong>：§25.1.2</li><li><strong>链接</strong>：卡 2｜卡 5（PDTB 四任务）</li></ul>
+<h2>卡 5　PDTB 篇章分析的四个子任务</h2>
+<ul><li><strong>Q（正面）</strong>：PDTB 篇章分析（浅层篇章分析）包含哪四个子任务？</li><li><strong>A（背面）</strong>：①找出篇章连接词（区分篇章用法 vs 非篇章用法）；②找出每个连接词对应的两个文本片段（Arg1、Arg2）；③为片段对关系打标签；④为每一对相邻句子指派关系（隐式关系分类，最难）。任务 4 常用 BERT [CLS] + tanh + softmax 做 11 类分类。</li><li><strong>出处</strong>：§25.2.3</li><li><strong>链接</strong>：卡 4｜lab-05 的连接词消歧</li></ul>
+<h2>卡 6　中心理论的 Cb/Cf/Cp</h2>
+<ul><li><strong>Q（正面）</strong>：中心理论中 backward-looking center、forward-looking center、preferred center 分别是什么？</li><li><strong>A（背面）</strong>：Cb(Un) 是当前话语被解读后篇章所聚焦的显著实体；Cf(Un) 是该话语唤起的潜在显著实体集合，任一都可能成为下一话语的 Cb；Cp 是 Cf 中排序最高的实体（按语法角色：主语 &gt; 宾语 &gt; 其他），是对下一话语将谈谁的预测。规则 1：若 Cf(Un) 有元素由代词实现，则 Cb(Un+1) 也必须代词化。规则 2：转移状态有序 Continue &gt; Retain &gt; Smooth-Shift &gt; Rough-Shift。</li><li><strong>出处</strong>：§25.3.1</li><li><strong>链接</strong>：卡 7（四种转移状态）｜卡 8（实体网格对比）｜lab-02 的走查</li></ul>
+<h2>卡 7　中心理论的四种转移状态</h2>
+<ul><li><strong>Q（正面）</strong>：Continue、Retain、Smooth-Shift、Rough-Shift 怎么判定？</li><li><strong>A（背面）</strong>：看两个因素：①Cb 从 Un 到 Un+1 是否保持不变；②Cb(Un+1) 是否等于 Cp(Un+1)。两者都成立 = Continue（继续谈同一实体）；Cb 不变但 Cb ≠ Cp = Retain（保持当前实体但准备转移）；Cb 变了但新 Cb = 新 Cp = Smooth-Shift（平滑转移到新实体）；Cb 变了且新 Cb ≠ 新 Cp = Rough-Shift（粗糙转移）。Continue 最连贯，Rough-Shift 最不连贯。</li><li><strong>出处</strong>：§25.3.1</li><li><strong>链接</strong>：卡 6｜lab-02 的 (25.30) 走查</li></ul>
+<h2>卡 8　实体网格模型的构建与转移概率</h2>
+<ul><li><strong>Q（正面）</strong>：实体网格怎么构建？转移概率怎么计算？和中心理论有什么关系？</li><li><strong>A（背面）</strong>：实体网格是二维数组：行 = 句子，列 = 篇章实体，单元格 = 实体在该句的语法角色（S 主语 / O 宾语 / X 两者皆非 / – 缺失）。从每列抽取相邻单元格对得到转移（如 [S –]），统计其概率作为特征（如 [S –] 概率 = 0.08）。与中心理论的关系：中心理论是自上而下的显著性理论，实体网格是自底向上的数据驱动方法，用机器学习归纳什么转移模式带来连贯。</li><li><strong>出处</strong>：§25.3.2</li><li><strong>链接</strong>：卡 6｜卡 7｜lab-03 的网格构建</li></ul>
+<h2>卡 9　自监督评估的三种任务</h2>
+<ul><li><strong>Q（正面）</strong>：连贯模型的自监督评估有哪三种实现方式？难度如何排序？</li><li><strong>A（背面）</strong>：①句子顺序判别（Barzilay &amp; Lapata 2005）：原始文档 vs 随机排列，判断哪个更连贯；②句子插入（Chen et al. 2007）：去掉一个句子，插入到 n 个位置，判断哪个是原始位置；③句子顺序重构（Lapata 2003）：把句子打乱，训练模型放回正确顺序。难度：判别 &lt; 插入 &lt; 重构。自监督依据：自然顺序比随机顺序更连贯。</li><li><strong>出处</strong>：§25.3.3</li><li><strong>链接</strong>：卡 10（LCD 用判别式训练）｜lab-04 的判别基线</li></ul>
+<h2>卡 10　LCD 模型的四个特征与损失</h2>
+<ul><li><strong>Q（正面）</strong>：LCD（Local Coherence Discriminator）怎么计算句子对连贯得分？训练目标是什么？</li><li><strong>A（背面）</strong>：输入句子对 (s,t)，用任意句子嵌入算法得到向量 s、t，拼接四个特征：①[s;t] 拼接；②s−t 差；③|s−t| 绝对差；④s⊙t 逐元素乘积。经单层前馈网络输出连贯得分。训练目标：margin loss l(f+, f−) = max(0, η − f+ + f−)，让真实相邻对 (si, si+1) 的得分 f+ 高于同文档采样的负例对 (si, s′) 的得分 f−。文本连贯 = 相邻对得分的平均值。</li><li><strong>出处</strong>：§25.4</li><li><strong>链接</strong>：卡 9（自监督思想来源）｜lab-04 的判别基线</li></ul>
+<h2>卡 11　论证挖掘的核心概念</h2>
+<ul><li><strong>Q（正面）</strong>：论证挖掘与 RST/PDTB 有什么区别？主张和前提怎么定义？</li><li><strong>A（背面）</strong>：论证挖掘研究「作者怎么说服读者」，与 RST（文本怎么组织）和 PDTB（片段对关系）不同。核心成分：主张 claims（最有争议、需支持的中心成分）与前提 premises（支持或攻击主张的理由）。关系：SUPPORT 和 ATTACK。亚里士多德三分法：pathos（情感）、ethos（人格）、logos（逻辑），计算工作主要聚焦 logos。</li><li><strong>出处</strong>：§25.5.1</li><li><strong>链接</strong>：卡 12（科学篇章的 AZ）｜⬜ 待补：论证挖掘综述 Stede &amp; Schneider 2018</li></ul>
+<h2>卡 12　论证分区（AZ）的 15 个标签</h2>
+<ul><li><strong>Q（正面）</strong>：科学论文的论证分区（Argumentative Zoning）是什么？常见标签有哪些？</li><li><strong>A（背面）</strong>：AZ 按修辞功能为科学论文句子打标签，基于「每篇论文都提出知识主张」的观点。15 个标签包括：AIM（研究目标）、OWN_METHOD（自己的方法）、OWN RESULTS（自己的结果）、USE（使用他人工作）、GAP（领域空白）、WEAK（他人方案问题）、SUPPORT（他人工作支持自己）、ANTISUPPORT（与自己冲突）等。可用作监督信号训练句子分类器。</li><li><strong>出处</strong>：§25.5.2</li><li><strong>链接</strong>：卡 11｜⬜ 待补：Teufel et al. 2009 标注手册</li></ul>
+<h2>卡 13　EDU 切分与移进-归约分析</h2>
+<ul><li><strong>Q（正面）</strong>：RST 分析的两个阶段是什么？移进-归约分析器怎么做？</li><li><strong>A（背面）</strong>：两阶段：①EDU 切分（基本篇章单元切分），现代用神经序列模型（编码器 + 线性层 + softmax 预测每个词元是否为 EDU 起点）；②树构建，用移进-归约分析器：shift 把队列首个 EDU 压栈创建单节点子树；reduce(l,d) 合并栈顶两子树，l 是关系标签，d 是核性方向（NN/NS/SN）。神经版本用分层 biLSTM 编码 EDU，解码器基于栈顶三子树与队列首 EDU 的拼接预测动作，交叉熵损失训练。</li><li><strong>出处</strong>：§25.2.1、§25.2.2</li><li><strong>链接</strong>：卡 2（RST 关系）｜卡 3（树库）</li></ul>
+<h2>卡 14　汉语篇章连接词的比例差异</h2>
+<ul><li><strong>Q（正面）</strong>：汉语和英语在显式篇章连接词比例上有什么差异？对中文篇章分析有什么影响？</li><li><strong>A（背面）</strong>：汉语显式篇章连接词比例仅 22%（所有篇章关系中），英语为 47%。影响：中文篇章分析不能依赖「抓连接词」的浅层策略，必须更依赖隐式关系推理（语义理解）和实体/话题连贯；英语篇章分析可以先做连接词检测再做关系分类，中文则需要端到端的隐式关系模型。</li><li><strong>出处</strong>：§25.1.2</li><li><strong>链接</strong>：卡 4（PDTB）｜卡 5（四任务）</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

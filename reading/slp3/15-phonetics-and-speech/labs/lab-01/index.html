@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · lab-01　字母与音子：从 §15.1 解析 40 行对照表并核对窄式转写 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span> <span>/</span> <a href="../../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 15 章　语音学与语音特征提取（Phonetics and Speech Features）· 读书笔记包</a> <span>/</span> <a href="../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 15 章 labs 索引</a> <span>/</span> <span class="cur">lab-01　字母与音子：从 §15.1 解析 40 行对照表并核对窄式转写</span></nav>
+<h1 class="title">《Speech and Language Processing》第 3 版 · 读书笔记 · lab-01　字母与音子：从 §15.1 解析 40 行对照表并核对窄式转写</h1><div class="prose"><h1>lab-01　字母与音子：从 §15.1 解析 40 行对照表并核对窄式转写</h1>
+<p>对应 <code>actions.md</code> 第 1 条；对应书中 §15.1（音子、音标转写、宽式/窄式）。</p>
+<h2>怎么跑</h2>
+<pre><code>cd labs/lab-01
+python3 transcribe.py</code></pre>
+<p>无参数；脚本硬编码读取 <code>raw/15/15-phonetics-and-speech.md</code>（<code>RAW</code> 常量），需要 numpy 之外无第三方依赖。</p>
+<h2>输入</h2>
+<ul><li><code>raw/15/15-phonetics-and-speech.md</code> 中「parsley / honey」那一行，即书中图 15.1 的 ARPAbet–IPA–例词–转写四栏对照表（正则解析，断言必须正好解析出 40 行）。</li><li>同节 TIMIT 窄式转写例词（<code>had your dark suit in greasy wash water all year</code>）由脚本内置转录。</li></ul>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/arpabet_ipa.csv</code></td><td>40 行：arpabet / ipa / 类别 / 例词 / 例词转写</td></tr><tr><td><code>out/timit_narrow.csv</code></td><td>10 个例词的宽式与窄式转写对照</td></tr><tr><td><code>out/summary.json</code></td><td>统计汇总（行数、歧义、特殊符号计数）</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<ul><li>对照表 40 行 = 24 辅音 + 16 元音；IPA 栏非 ASCII 字符仅 2 个。</li><li><strong>例词平均音子/字母比 0.825</strong>，只有 <strong>12/40</strong> 个例词的音子数等于字母数。</li><li>首字母歧义：<code>t</code> → {dh, t, th}，<code>c</code> → {ch, k}——同一个字母开头，可能是三个完全不同的音子。</li><li>宽窄不一致的词 <strong>10</strong> 个：had、your、dark、suit、in、greasy、wash、water、all、year。</li><li>窄式特殊符号共 36 个音子，其中 <code>axr</code>×3、<code>q</code>×3、<code>dcl</code>×2、<code>ix</code>×2，另有 <code>hv</code>/<code>kcl</code>/<code>ux</code>/<code>en</code>/<code>gcl</code>/<code>dx</code> 各 1。</li><li>图注点名的 4 个现象全部核验为 true：had your 中 d 腭化为 <code>jh</code>、dark 末尾不除阻、suit 末尾喉化、water 中闪音。</li></ul>
+<h2>结论</h2>
+<ol><li>「英语拼写能大致提示发音」在数据上站不住：近 3/5 的例词音子数与字母数不等，同一字母可对应多个音子（<code>t</code>、<code>c</code>），所以语音系统的第一道工序必然是转写而非直接读字符。</li><li>宽式与窄式的差别不是「精确度」这一句话能概括的：窄式多出来的 <code>dcl</code>（不除阻）、<code>hv</code>（浊化 h）、<code>dx</code>（闪音）、<code>q</code>（喉化）分别对应<strong>除阻与否、清浊实现、发音方式变化、声门状态</strong>四类不同的语音学信息。</li><li>40 行表里只有 2 个非 ASCII 符号，说明 ARPAbet 之所以在工程里流行，是因为它在保留音子区分度的同时把符号压进了 ASCII——这是「表示层妥协」而非语音学优劣。</li></ol>
+<h2>反思</h2>
+<ul><li><strong>能复现的</strong>：40 行解析有 <code>assert</code> 兜底，任何一个词条格式变化都会立刻报错，不会静默漏行；比率 0.825 与 12/40 是同一份数据的两面，互相校验。</li><li><strong>不能外推的</strong>：这 40 个例词是作者为覆盖音子表而挑的，不是随机抽样，因此 0.825 只能说明「这 40 个词里」，不能当成英语整体的音子-字母对应率——spinoffs 选题 3 必须标明这个限定。</li><li><strong>没做的</strong>：没有统计「多字母一音」（<code>sh</code>、<code>ch</code>、<code>th</code>）与「有字母无音」（<code>gh</code>）的分布，因为脚本只按首字母聚类；这部分适合做下一轮补充。</li><li><strong>一个意外</strong>：<code>q</code>（喉化）在 10 个词里出现了 3 次，比 <code>dx</code>（闪音）还多，说明书中这段窄式标注对声门状态的关注度高于我的预期。</li></ul></div><div class="grid"><a class="card" href="out/index.html"><h2>out</h2><div class="meta">0 份文档</div></a></div>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span> <span>/</span> <span class="cur">读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span></nav>
+<article class="prose"><h1>读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</h1>
+<h2>书目元信息</h2>
+<ul><li>书名：Speech and Language Processing (3rd ed.)｜作者：Daniel Jurafsky &amp; James H. Martin</li><li>本章：第 14 章 Recurrent Neural Networks and LSTMs（RNN 与 LSTM）｜中文译文</li><li>来源：<code>/home/yuanwu/books/slp3/zh/md/14-rnns-and-lstms.md</code></li><li>页码口径：<strong>中文版无印刷页码，统一用节号 §x.y 定位</strong>（<code>raw/14/meta.json</code> 明确要求）</li><li>阅读目标：理解（meta.json <code>goal=理解</code>；非应试，但按教材型做分拣、公式重建与梯度复算）</li><li><strong>书型判定：教材型</strong>。依据：章-节-知识点三级编号（§14.1–§14.8 + 历史注记）；密集给出术语释义框（<code>&gt; 释义</code>）；§14.1–§14.5 给出可直接实现的方程（隐状态更新、BPTT、四门公式）；§14.8 有可手算的注意力打分例题；章末有小结与历史注记。</li><li>交叉对照：<code>raw/</code> 下无 <code>lecture-notes/</code>，故不产出 <code>cross-check.md</code>。</li></ul>
+<h2>处理范围与进度</h2>
+<table><tr><th>章</th><th>覆盖小节</th><th>状态</th><th>说明</th></tr><tr><td>第 14 章</td><td>§14.1–§14.1.2、§14.2–§14.2.3、§14.3.1–§14.3.3、§14.4、§14.5–§14.5.1、§14.6、§14.7–§14.7.1、§14.8、小结、历史注记</td><td>✅ 本次完成</td><td><code>book-notes.md</code> 拆为 12 个知识块（14.1 的「推断/训练」分列、14.2 的「建模/权重绑定」分列、14.3 的「标注-分类/生成」分列）</td></tr><tr><td>第 15 章 序列处理的深度学习</td><td>—</td><td>⬜ 未处理</td><td>建议下次；本章 §14.8 结尾已指向注意力之后的路线</td></tr></table>
+<h2>实际输入（G1 依据）</h2>
+<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>/home/yuanwu/notes/reading/slp3/14-rnns-and-lstms/raw/14/14-rnns-and-lstms.md</code></td><td>731 行 / 58,136 字节，中文译文全文（符号链接指向 <code>/home/yuanwu/books/slp3/zh/md/14-rnns-and-lstms.md</code>）；本次<strong>全文读完</strong>，含 22 张图的图注</td></tr><tr><td>元信息</td><td><code>raw/14/meta.json</code></td><td>151 字节；<code>goal=理解</code>，注明「中文译文，无印刷页码，引用用 §节号」</td></tr><tr><td>划线/摘录（可选）</td><td>未提供</td><td><code>raw/14/</code> 下无 <code>highlight*</code> / 划线文件，故不产出「划线去向表」</td></tr><tr><td>课堂笔记（可选）</td><td>未提供</td><td>无 <code>lecture-notes/</code>，故不产出 <code>cross-check.md</code></td></tr></table>
+<h2>产物清单</h2>
+<table><tr><th>文件</th><th>内容</th><th>规模</th></tr><tr><td><code>book-notes.md</code></td><td>逐节三区（摘录/思考/行动），12 个知识块 + 全章 takeaway + 优先级依据</td><td>12 块，每块 600–1100 汉字（均 ≤1500）</td></tr><tr><td><code>cards.md</code></td><td>永久卡片（概念卡/公式卡/例题卡）</td><td>16 张</td></tr><tr><td><code>self-test.md</code></td><td>提取自测协议 + 10 题 + 答案要点 + 错题记录位</td><td>10 题</td></tr><tr><td><code>actions.md</code></td><td>5 条行动（含日期、验收、真实结果）+ 错题归因表</td><td>5 条</td></tr><tr><td><code>spinoffs.md</code></td><td>衍生选题</td><td>4 条</td></tr><tr><td><code>glossary.md</code></td><td>教材术语表</td><td>30 条</td></tr><tr><td><code>topics.json</code></td><td>与 <code>spinoffs.md</code> 同源的机读选题</td><td>4 条</td></tr><tr><td><code>labs/index.md</code> + <code>labs/lab-01…05/</code></td><td>行动执行闭环：脚本 + 真实产物 + 结论 + 反思</td><td>5 个 lab</td></tr></table>
+<h2>摘录忠实度说明</h2>
+<ul><li>全部摘录按抽取文本逐条回溯校验（<code>q in 原文</code>，空白已归一），结果见文末「自检」一节的命中率。</li><li>抽取文本存在硬换行，凡跨行的句子一律改选<strong>单行内可完整引用</strong>的片段，未做拼接或改写。</li><li>公式区（式 14.4–14.14、14.26–14.27、§14.8 的 softmax 分母）在抽取文本中上下标错位、被拆成多行；摘录区不引用这些残句，改在思考区说明「按上下文重建」，并由 <code>labs/lab-02</code>（BPTT 梯度校验，最大相对误差 4.3e-9）与 <code>labs/lab-04</code>（池化/绑定梯度校验）反向验证重建是否正确。</li><li>术语沿用译文的说法（如「教师强制」「权重绑定」「随时间反向传播」），与英文原词在 <code>glossary.md</code> 中并列。</li></ul>
+<h2>labs 一览（真实运行，数字取自 <code>out/</code>，非编造）</h2>
+<table><tr><th>lab</th><th>主题</th><th>关键结果</th></tr><tr><td>lab-01</td><td>简单 RNN 前向推断：形状、参数共享、上下文影响衰减</td><td>d_in=6/d_h=4/d_out=5/T=6，参数量 60；循环实现与矩阵化实现最大差 0.0；第 6 步扰动对输出的影响仅为第 1 步的 7.0%</td></tr><tr><td>lab-02</td><td>BPTT 解析梯度 vs 有限差分 + 教师强制</td><td>36 个分量，最大相对误差 4.27e-9；教师强制 ppl 1.08 vs 自由运行 ppl 9787</td></tr><tr><td>lab-03</td><td>简单 RNN vs LSTM 的长延迟回忆</td><td>lag=12：RNN 71.9% / LSTM 100%；lag=20：32.8% / 88.3%；对首步梯度的保留率 RNN 5.8e-5 vs LSTM 0.203</td></tr><tr><td>lab-04</td><td>池化方式对比 + 权重绑定</td><td>线索在句首、长度 12：last 67.5% / mean 100% / max 70.5%；绑定后参数 3120→2608（−16.4%），ppl 3.41→2.65</td></tr><tr><td>lab-05</td><td>编码器-解码器 + 点积注意力</td><td>训练损失 fixed 从 1.483（step 25）降到 0.4836（step 500）、step 600 回升到 0.7929，attn 最低 0.0141 后反弹至 0.4163；逐位完全正确率两模式<strong>均为 0.000</strong>（评估口径与训练口径不一致，属未跑通，见该 lab README）</td></tr></table>
+<h2>自评分（六维，门槛 ≥42/60 且单项 ≥7）</h2>
+<table><tr><th>维度</th><th>得分</th><th>理由</th></tr><tr><td>① 摘录忠实度</td><td>9/10</td><td>全部摘录脚本回溯命中，均带 §；扣 1 分因中文版无印刷页码，节号定位精度低于页码</td></tr><tr><td>② 消化深度</td><td>8/10</td><td>每块 3–5 条【我】，含具体经验（流式 ASR 只能用单向、推荐召回的内积偏置）与真质疑（「原则上可表示全部历史」与实际容量的落差、注意力可解释性的条件）；部分块仍偏转述机理</td></tr><tr><td>③ 行动可执行性</td><td>9/10</td><td>5 条均有日期 + 可检验验收，且已全部执行、产物落盘；扣 1 分因第 5 条受 lab-05 未跑通影响，验收只完成一半</td></tr><tr><td>④ 卡片复用性</td><td>8/10</td><td>16 张一卡一主张、独立可读、带 § 出处、链接指向真实卡片或 lab；2 张链接为「⬜ 待补」</td></tr><tr><td>⑤ 覆盖完整性</td><td>9/10</td><td>12 块覆盖全部小节 + 小结 + 历史注记；无划线可丢；未覆盖的是图 14.1–14.22 的图像内容（抽取文本只有图注）</td></tr><tr><td>⑥ 可复习性</td><td>8/10</td><td>10 题覆盖全部 ⭐ 与 🔴；含遮住作答协议、费曼检验、答案指向；缺一类限时计算题</td></tr><tr><td><strong>合计</strong></td><td><strong>51/60</strong></td><td>过门槛（≥42，单项均 ≥7）</td></tr></table>
+<h2>自检</h2>
+<pre><code>cd /home/yuanwu/notes/reading/slp3
+python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
+  14-rnns-and-lstms --raw raw/14</code></pre>
+<p>结果：<strong>FAIL=0，WARN=0</strong>（退出码 0）。机器无法判定的项（摘录回溯、同义改写、假行动语义、卡片独立可读、六维评分）已在上面逐项说明。</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

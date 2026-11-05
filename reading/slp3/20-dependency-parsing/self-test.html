@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 20 章 依存句法分析 · 自测 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 20 章 依存句法分析 · 读书笔记包</span> <span>/</span> <span class="cur">第 20 章 依存句法分析 · 自测</span></nav>
+<article class="prose"><h1>第 20 章 依存句法分析 · 自测</h1>
+<h2>提取自测协议</h2>
+<ul><li><strong>时机</strong>：读完 <code>book-notes.md</code> 后 24 小时内做第一遍；第 3 天、第 7 天各复测一次。</li><li><strong>方式</strong>：遮住「答案要点」区，先口述、再写关键词，最后对照。禁止边看答案边「嗯我懂」。</li><li><strong>判分</strong>：每题 3 档——A 能完整说出机制与前提；B 只能说出结论、说不出为什么；C 想不起来。B/C 记为未掌握。</li><li><strong>记录</strong>：把 B/C 的题号填进「未掌握清单」，并按 §20 小节回原文定位。</li><li><strong>合格线</strong>：10 题中 A ≥ 8，且 Q4、Q7、Q9 必须是 A（这三题是全章骨架）。</li></ul>
+<h2>题目（先遮住答案）</h2>
+<p><strong>Q1</strong> 依存结构不编码什么？为什么这对信息抽取既是损失也是便利？</p>
+<p><strong>Q2</strong> 用一句话说出「合法依存树」的三条约束，并各举一个违反它的错误例子。</p>
+<p><strong>Q3</strong> 投射性的几何判据是什么？为什么英语树库里几乎看不到非投射？</p>
+<p><strong>Q4</strong> arc-standard 的 LEFTARC 与 RIGHTARC 分别把谁弹出栈？为什么必须弹出？</p>
+<p><strong>Q5</strong> 训练神谕时，为什么 RIGHTARC 需要「栈顶词所有依存词已分配」这个额外条件？</p>
+<p><strong>Q6</strong> arc-eager 相比 arc-standard 的三处改动，各自解决了什么问题？</p>
+<p><strong>Q7</strong> 边因子化假设是什么？没有它，MST 这一整套工具为什么用不上？</p>
+<p><strong>Q8</strong> CLE 遇到环时做了什么？为什么收缩后的边权要减去被替换的那条？</p>
+<p><strong>Q9</strong> LAS、UAS、LS 三者的差别在哪一个字段上？给出「UAS 高、LAS 低」的一种典型错误模式。</p>
+<p><strong>Q10</strong> 束搜索缓解了转移式解析器的哪个问题？又没有解决哪个问题？</p>
+<p><strong>Q11</strong> 给定语料 8% 的句子是非投射的，选转移式解析器的准确率上限大约受什么限制？</p>
+<h2>答案要点</h2>
+<p><strong>A1</strong> 不编码短语成分，也不给短语设节点。损失：需要整块实体边界时要自己在树上划子树。便利：论元直连谓语，语序变化不影响关系表达。</p>
+<p><strong>A2</strong> ① 唯一根、无入弧（反例：两个词都标 root）；② 非根词恰有一条入弧（反例：一个词挂两个中心词）；③ 全连通（反例：某词谁也不挂，成为孤岛）。</p>
+<p><strong>A3</strong> 判据：把词排成一行、弧画在上方，所有弧互不交叉即为投射。英语树库多为成分树自动转换而来，而转换过程按成分嵌套生成，产物必然投射；加上英语非投射本身罕见。</p>
+<p><strong>A4</strong> LEFTARC 弹出第二个词（它成了栈顶词的依存词，不再需要当中心词）；RIGHTARC 弹出栈顶词（同理）。若不弹出，栈无法前进，且已定中心的词会被反复当作候选中心词。</p>
+<p><strong>A5</strong> 因为该操作会把栈顶词弹出，弹出后它不能再接新的依存词。若它还有未挂上的金标孩子，提前弹出会造成「金标中走不通」的样本，训练出的分类器学到错误动作。</p>
+<p><strong>A6</strong> ① 建弧对象改为栈顶 + 缓冲区首：让缓冲区里的词也能立刻挂弧；② RIGHTARC 改为压栈：使依存词仍可继续当中心词；③ 新增 REDUCE：弹出已完成任务的栈顶词，回收栈空间。合起来实现「早挂弧」。</p>
+<p><strong>A7</strong> 假设整棵树的分数 = 各弧分数之和。没有它，树的分数就不能拆成边的和，「最大生成树」这个图论问题无从定义，只能退化成指数级枚举。</p>
+<p><strong>A8</strong> 把环收缩成一个新节点，进入环的边权减去「被替换掉的那条环内入弧权」，再递归求解；返回后展开、按选中入弧删掉环内对应边。减权重是为了让「换一条入弧」的增益可比——不减会把环内那条边的分数重复计算。</p>
+<p><strong>A9</strong> 差别在「标签」这个字段：UAS 只看 head 对不对，LAS 要求 head 与 label 都对，LS 只看 label。UAS 高 LAS 低 = 树结构基本对但关系标签系统性选错（如把 <code>obj</code> 一律标成 <code>nmod</code>）。</p>
+<p><strong>A10</strong> 缓解「决策不可撤销」：保留宽度 k 的多个候选前沿，按路径累计分排序，避免一步走错全盘皆输。未解决：搜索仍发生在模型自己生成的格局里，训练时见的是金标格局，推理时见的是自己走过的格局，分布不一致依旧。</p>
+<p><strong>A11</strong> 上限由投射性卡住：非投射句必错，8% 的句子直接判错，整句 EM 上限 ≤92%；弧级指标的上限损失略小但同样存在，且长距离依存会更差。</p>
+<h2>未掌握清单</h2>
+<table><tr><th>题号</th><th>档位</th><th>缺的是什么</th><th>回看位置</th><th>复测日</th></tr><tr><td>Q5</td><td>B（首轮）</td><td>只会说「要等孩子到齐」，说不出「弹出后不能再当中心词」</td><td>§20.2.1</td><td>11-03 已转 A</td></tr><tr><td>Q8</td><td>B（首轮）</td><td>说不清减权重的理由</td><td>§20.3.1</td><td>11-04 已转 A</td></tr><tr><td>Q11</td><td>C（首轮）</td><td>没把投射性换算成准确率上限</td><td>§20.1.2 + lab-02</td><td>11-05 已转 A</td></tr></table>
+<h2>例题重做记录</h2>
+<ul><li><strong>重做 1</strong>（11-03）：<code>Book me the morning flight</code> 的 10 步转移，首轮在第 6 步错选 SHIFT（应为 RIGHTARC(me←book)）。重做时先写出「me 没有孩子，可立即弹出」，一次通过。</li><li><strong>重做 2</strong>（11-05）：§20.4 的 LAS/UAS 复算，首轮把方向反了的弧算进 UAS。重做时逐词列 <code>(gold_head, sys_head, gold_label, sys_label)</code> 四列再统计，得 5/6 与 2/3，与书中一致。</li><li><strong>重做 3</strong>（11-06）：CLE 的 <code>Book that flight</code> 轨迹，首轮漏了收缩后减权，重做后与书中 3 条选中边一致。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

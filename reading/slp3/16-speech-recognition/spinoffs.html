@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》第 3 版 · 第 16 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 16 章 自动语音识别</span> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 第 16 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 3 版 · 第 16 章 · 衍生选题（送 write-tech-tutorial / write-zhihu-tech）</h1>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>送哪个技能</th><th>命中标准</th><th>优先级</th><th>可支撑体量</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>语音识别为什么比机器翻译难：一条「长度失配」的主线</td><td>write-zhihu-tech（Mode A）</td><td>S1+S3+S5</td><td>P0</td><td>标准长文（6000–8000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>2</td><td>从 CTC 到 RNN-T：流式识别到底牺牲了什么</td><td>write-tech-tutorial（Mode A）</td><td>S3+S5+S6</td><td>P0</td><td>教程（5000–7000 字 + 代码）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>3</td><td>HuBERT 的标签是自己造的：自监督语音里的 k-means 工程</td><td>write-tech-tutorial（Mode A）</td><td>S1+S3+S6</td><td>P1</td><td>教程（5000–7000 字 + 代码）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>4</td><td>两个 5% 不能直接比：WER 的四个隐藏陷阱</td><td>write-zhihu-tech（Mode A）</td><td>S4+S5+S6</td><td>P1</td><td>中篇（4000–5000 字）</td><td>⬜ 未发布</td><td>待填</td></tr><tr><td>5</td><td>从 HMM-GMM 到 Whisper：一条被算力改写的历史</td><td>write-zhihu-tech（Mode A）</td><td>S2+S4+S6</td><td>P2</td><td>中篇（3500–5000 字）</td><td>⬜ 未发布</td><td>待填</td></tr></table>
+<blockquote><p>筛选纪律：本章可延展点很多（卷积细节、Viterbi、GMM 混合、语料库版权），最终只留 5 条——标准是「书中讲而未透 + 有外部权威源可查 + 我有可运行证据」。卷积与 Viterbi 属通用教科书内容，缺本章特异性，不入候选。</p><p>标准编号：S1 书中讲而未透｜S2 可溯源的史·人｜S3 有技术纵深｜S4 有争议反差｜S5 有现实落点｜S6 有权威外部源可查（准入门槛）。</p></blockquote>
+<hr>
+<h3>1. 语音识别为什么比机器翻译难：一条「长度失配」的主线</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：语音识别的所有设计，都在收拾「输入比输出长二十倍」这个烂摊子</code></li><li><strong>书籍锚点</strong>：《Speech and Language Processing》第 3 版 §16.3.1 给出 5（25/5）到 19（25/1.3）倍的量化；§16.3.1 的低帧率拼接与 Whisper 的 stride=2（3000→1500 帧）；§16.5 的折叠函数；§16.5.4 的流式约束。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S5</strong> —— ①S1：书里把这四套机制分散在四节，从未点明它们是同一个问题的四种答案；②S3：涉及注意力二次代价、下采样与感受野、CTC 多对一、因果性约束，纵深足够；③S5：所有做语音产品的团队都要面对延迟与准确率的取舍。</li><li><strong>增益</strong>：① 相对本书：用一张「同一个失配 → 四种对策」的对照表把四节串起来，并给出各自代价（信息损失 / 对齐假设 / 延迟 / 训练复杂度）；② 对读者：给一张选型决策树（离线转写 / 实时字幕 / 语音助手），每支都落到具体架构。</li><li><strong>素材种子</strong>：历史溯源 {DTW 时代的手工对齐}｜人物 {Graves（CTC）、Sak（RNN-T）、Chan（LAS）}｜原理 {长度失配、感受野、单调对齐}｜争议 {流式是否必然牺牲准确率}</li><li><strong>缺口（下游必须自己搜）</strong>：Whisper 与 RNN-T 系在公开榜单上的延迟-准确率曲线；各家产品的实际首字延迟指标。</li><li><strong>体量建议</strong>：标准长文（现象 → 失配的量化 → 四种对策 → 代价对照 → 选型树）</li><li><strong>待核</strong>：❓ 5–19 倍是书里按英文词长估的，中文按字计约 25/1.5≈17 倍，需自算后标注口径。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>2. 从 CTC 到 RNN-T：流式识别到底牺牲了什么</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>教程：用 100 行 numpy 从 CTC 折叠写到 RNN-T 的联合网络，量出延迟的代价</code></li><li><strong>书籍锚点</strong>：§16.5.1 指出最可能的对齐未必对应最可能的输出串；§16.5.2 用前向-后向合并对齐；§16.5.4 说明注意力必须先看完整输入，而 CTC 可立即从左到右输出，RNN-T 由 CTC 声学模型 + 预测器组成。</li><li><strong>为什么</strong>：命中 <strong>S3 + S5 + S6</strong> —— ①S3：涉及路径枚举、DP 状态设计、预测器的条件依赖；②S5：流式是语音产品的硬需求，延迟可量化；③S6：Graves 2006、Graves 2012、Sak 2017 均可查。</li><li><strong>增益</strong>：① 相对本书：书中只给结构图，本文给可运行实现——枚举 27 条对齐验证折叠，再把同一玩具模型改成「只看前 t 帧」的增量解码，量出准确率损失；② 对读者：一个能直接改参数复现的实验台，而不是伪代码。</li><li><strong>素材种子</strong>：历史溯源 {2006 CTC 论文的空白符设计}｜人物 {Graves、Sak、Rao}｜原理 {多对一折叠、前向-后向、联合网络}｜争议 {RNN-T 是否已被注意力模型取代}</li><li><strong>缺口（下游必须自己搜）</strong>：RNN-T 的 lattice-free 训练细节；生产系统中 RNN-T 的剪枝策略。</li><li><strong>体量建议</strong>：教程（问题 → 折叠 → 求和 → 增量解码 → 延迟测量 → RNN-T 改造）</li><li><strong>待核</strong>：❓ 「只看前 t 帧」的玩具实验与真实流式系统的差距需在文中说明，不能夸大外部效度。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>3. HuBERT 的标签是自己造的：自监督语音里的 k-means 工程</h3>
+<ul><li><strong>交付给</strong>：<code>write-tech-tutorial</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>教程：没有转写也能训语音模型——HuBERT 两阶段聚类目标的完整拆解</code></li><li><strong>书籍锚点</strong>：§16.4.2 记载第一阶段用 39 维 MFCC 在 1.72 亿向量上聚 100 类，第二阶段取第 6 层 Transformer 输出聚 500 类；§16.4.3 给出分配与重估两步。</li><li><strong>为什么</strong>：命中 <strong>S1 + S3 + S6</strong> —— ①S1：书里只说「直觉是先粗后细」，没解释为什么换标签能提升、也没说 k 怎么选；②S3：涉及倒谱去相关、欧氏距离的前提、聚类规模与显存、码本坍缩；③S6：Hsu 2021、Baevski 2020、Chung 2021 均可查。</li><li><strong>增益</strong>：① 相对本书：用合成元音做可控实验，扫 k 与初始化，量出「粒度变细后纯度是否还保得住」，把「先粗后细」从断言变成有数字的机制；② 对读者：一套可复用的自监督标签流水线（特征 → 聚类 → 掩码目标 → 微调），并点明哪些环节会静默失败。</li><li><strong>素材种子</strong>：历史溯源 {wav2vec 2.0 的量化码本}｜人物 {Hsu、Baevski、Mohamed}｜原理 {掩码预测、码本粒度、bootstrap}｜争议 {离散目标是否必要}</li><li><strong>缺口（下游必须自己搜）</strong>：HuBERT 论文里各层聚类的消融数字；码本利用率（perplexity）的实际报告。</li><li><strong>体量建议</strong>：教程（动机 → 前向结构 → 两阶段标签 → 我的 k 扫描实验 → 微调 → 失败模式）</li><li><strong>待核</strong>：❓ 合成数据上的纯度结论不能外推到真实语音，正文必须标注这是机制演示而非效果复现。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>4. 两个 5% 不能直接比：WER 的四个隐藏陷阱</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：WER 差 1 个百分点可能是噪声——规范化、对齐歧义、分母与显著性</code></li><li><strong>书籍锚点</strong>：§16.6 指出 WER 分母为参考词数、含插入故可超 100%、sclite 负责对齐与统计、MAPSSWE 要求片段间独立；§16.1 的 1.4% 与 25.5% 展示了场景对数字的支配。</li><li><strong>为什么</strong>：命中 <strong>S4 + S5 + S6</strong> —— ①S4：大众（包括不少论文）把 WER 当绝对刻度，而它依赖规范化与对齐回溯规则，反差强；②S5：直接决定产品验收与论文结论是否成立；③S6：sclite/NIST 文档、MAPSSWE 原始文献、Gillick &amp; Cox 的评分批评均可查。</li><li><strong>增益</strong>：① 相对本书：用 lab-01 实测「去填充词前后」的错误率差，把「规范化影响多大」变成数字；并演示同一对句子因回溯规则不同而拆出不同 S/I/D；② 对读者：一份报 WER 的检查清单（语料、口径、规范化脚本、句数、显著性）。</li><li><strong>素材种子</strong>：历史溯源 {ARPA 评测竞赛与 sclite}｜人物 {Gillick、Cox、Pallett}｜原理 {编辑距离、片段配对检验}｜争议 {WER 是否该被语义指标取代}</li><li><strong>缺口（下游必须自己搜）</strong>：不同工具（sclite / jiwer / Whisper 自带 normalizer）在同一数据上的分数差异实测。</li><li><strong>体量建议</strong>：中篇（一个反直觉例子 → 四个陷阱 → 我的实测 → 检查清单）</li><li><strong>待核</strong>：❓ 需要至少两组真实工具对比数据，不能只用手写例子。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<hr>
+<h3>5. 从 HMM-GMM 到 Whisper：一条被算力改写的历史</h3>
+<ul><li><strong>交付给</strong>：<code>write-zhihu-tech</code>（Mode A）</li><li><strong>主题串（可直接复制）</strong>：<code>观点：语音识别不是被算法革命掉的，是被 GPU 和数据改写掉的</code></li><li><strong>书籍锚点</strong>：§16 历史注记记载 1950s 贝尔实验室的数字识别与音素转移概率、1970s 的 DTW 与 DRAGON 的 Viterbi 解码、1990s 的 HMM-GMM 主导与 ARPA 年度评测、2010s 深层网络超越 GMM、以及 CTC/RNN-T/LAS/Transformer 的相继出现。</li><li><strong>为什么</strong>：命中 <strong>S2 + S4 + S6</strong> —— ①S2：Davis/HMM 与 Baker/DRAGON 两条独立起源线有明确一手文献；②S4：主流叙事是「深度学习端到端推翻了 HMM」，而书中强调混合系统在数据与算力到位前一直更强，反差可用；③S6：Juvela 2021 的历史综述、Bourlard &amp; Morgan 的混合系统专著均可查。</li><li><strong>增益</strong>：① 相对本书：把历史注记的时间线补成「算力/数据/算法」三条并行曲线，指出每次跃迁由哪条曲线先到位；② 对读者：一个判断「新架构是否真新」的框架——看它改的是表示、目标函数还是搜索。</li><li><strong>素材种子</strong>：历史溯源 {1952 贝尔实验室数字识别、1970s ARPA SUR 计划}｜人物 {Davis、Baker、Jelinek、Hinton、Graves}｜原理 {HMM 解码、判别式训练、端到端}｜争议 {端到端是否真的端到端}</li><li><strong>缺口（下游必须自己搜）</strong>：各年代错误率下降的原始表格；ARPA 评测的历年参评系统清单。</li><li><strong>体量建议</strong>：中篇（三条曲线 → 四次跃迁 → 混合系统的回潮 → 判断框架）</li><li><strong>待核</strong>：❓ 历史年份与机构归属必须以一手文献核对，书中注记为二手转述。</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

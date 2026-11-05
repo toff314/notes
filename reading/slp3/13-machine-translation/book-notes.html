@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 13 章 机器翻译 · 读书笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation）</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 13 章 机器翻译 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 13 章 机器翻译 · 读书笔记</h1>
+<blockquote><p><strong>本章一句话</strong>：机器翻译把「一句话到另一句话」的映射问题，做成了「条件语言模型 + 有限宽度搜索 + 表层重叠打分」这三件可计算的事。</p><p><strong>结构</strong>：先看语言之间到底差在哪（类型学）→ 编码器-解码器怎么把差异吸收进参数 → 训练数据从哪来（平行语料与句对齐）→ 生成时怎么搜（束搜索、MBR）→ 数据不够怎么办（回译、多语言）→ 怎么量好坏（人工、chrF、BERTScore）→ 偏见落在哪里。</p><p><strong>可疑处</strong>：§13.4 的长度归一化公式与 §13.2 的符号在抽取文本里被拆行、上下标丢失，摘录区不引用这些公式；改用 lab-03 的数值复算（k=2 找回 ok ok EOS）与翻转率实验反证。</p><p><strong>与我何干</strong>：我平时用翻译 API 只看结果对不对，这一章解释了三个我从未检查的旋钮：词表是不是共享的（决定人名能不能原样过去）、束宽多少（决定长句会不会中途押错注）、长度归一化怎么开（决定模型是不是系统性偏爱短句）。</p></blockquote>
+<hr>
+<h2>第 13.1.1 节　语序类型学　⭐</h2>
+<p><strong>本节问题</strong>：如果翻译只是逐词替换，会在哪一步崩掉？语言之间的差异里，哪些是可系统建模的，哪些只能逐项记？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「我们常常把必须逐一处理的特异差异和词汇差异（“狗”这个词在不同语言中差别极大），与能够以一般方式建模的系统性差异（许多语言把动词放在语法宾语之前；另一些语言把动词放在语法宾语之后）区分开来。」（§13.1）</li><li>「德语、法语、英语和汉语普通话都属于 SVO」（§13.1.1）</li><li>「印地语和日语是 SOV 语言，意思是动词倾向于出现在基本从句的末尾，而爱尔兰语和阿拉伯语是 VSO 语言」（§13.1.1）</li><li>「VO 语言一般使用前置词，而 OV 语言一般使用后置词」（§13.1.1）</li><li>「所有这些语言之间的语序差异都会给翻译带来问题，要求系统在生成输出时进行大规模的结构重排。」（§13.1.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】作者先把差异切成两类：只能逐项处理的特异/词汇差异，和可以一般化建模的系统性差异。这个切法其实是给模型分工——前者必须靠词表或数据记住，后者可以靠共享参数学出来。判断一个翻译错误属于哪一类，直接决定修法是补词典还是补结构。</li><li>【我】SVO/SOV/VSO 配上前置词/后置词的联动说明语序不是孤立旋钮，而是成组出现的。所以「重排」不是任意置换，模型真正该学的是少数几种成套变换，这也解释了为什么小数据也能学到一部分语序。</li><li>【我】日语那个例句表面上只是「动词在句末」，实际同时踩中语序、代词可省、后置词三条线。我以前把「语序不同」当唯一难点，是把最容易看见的那一层误当成了全部。</li><li>【我】「大规模的结构重排」这个说法值得警惕：它意味着解码器在生成前几个词时就得押注一个远距离的语序决定，而这个决定一旦错了无法回退。束搜索保留 k 条路径，本质是在为这类早期不可逆决策买保险。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 30 分钟：把（13.2）那句联合国例句逐词对照英文译文，分别数出「语序」「冠词增补」「复数标记」「连接词增补」四类改动各几处（验收：四类计数成表，且四类之和等于逐词对照中所有非一一对应的格子数）。</li><li>本周内：在 lab-01 的 8 组句对上专项检查「形容词+名词」这一项，德语 große haus 与英语 big house 顺序是否一致，把观察写进 <code>labs/lab-01/README.md</code> 的反思段（验收：≥1 条具体观察并注明句对编号）。</li></ul>
+<hr>
+<h2>第 13.1.2 节　词汇差异　🔴</h2>
+<p><strong>本节问题</strong>：一个词对多个词时，凭什么选？「原文没有的信息、译文必须给」这种情况该怎么算？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「英语源语言词 bass 在西班牙语中可以是表示鱼的 lubina，也可以是表示乐器的 bajo。」（§13.1.2）</li><li>「对于英语中称为 wall 的东西，德语使用两个不同的词：建筑物内部的墙用 Wand，建筑物外部的墙用 Mauer。」（§13.1.2）</li><li>「在所有这些情况下，把英语的 bass、wall 或 brother 翻译过去都需要某种专门化处理，即消除一个词不同用法的歧义。」（§13.1.2）</li><li>「语言可以按其运动方向和运动方式是标示在动词上还是标示在“卫星成分”（satellites）上来刻画：卫星成分即小品词、介词短语或副词短语。」（§13.1.2）</li><li>「动词框架型语言把运动方向标示在动词上」（§13.1.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】bass / wall / brother 三个例子的难度是递增的：bass 靠邻词（鱼还是乐器）就能分；wall 要靠「室内/室外」这种物理常识；brother 则要求目标语言强制的「长幼」信息，而英文原句里根本没有这条信息。最后一种已经不是消歧，是「原文缺失、译文必需」。</li><li>【我】所以翻译有时做的是信息补全而不是信息搬运。这解释了我读译文时偶尔觉得「比原文说得更细」的违和感——那不是译者加戏，是目标语言的语法在强制补齐。</li><li>【我】leg/foot/paw 那张图我以前当成同义词表看，其实是两种语言对同一片概念空间的不同切法，映射是多对多的，不存在「正确词典」这种东西，只有「在某个语境下更可接受」。</li><li>【我】动词框架/卫星框架的区分能预测错误形态的方向性：英译西要把 out 折进动词，西译英要把方向拆出来放到小品词上。两个方向错得不一样，调模型时不能指望一个修法同时管两个方向。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：挑 3 个中文一对多词（看/见/瞧、拿/取、走/去），各写 3 句英文对应，逐句标出英文用了哪个动词、丢了哪一维信息（验收：9 个句子，每句附一句「丢失维度」说明）。</li><li>本周：在 <code>glossary.md</code> 给 leg / foot / paw 各加一条「一对多」备注（验收：3 条齐全，每条含 §13.1.2 与至少 2 个法语译法）。</li></ul>
+<hr>
+<h2>第 13.1.3 节　指称密度　🔵</h2>
+<p><strong>本节问题</strong>：源文里不存在的代词，译文凭什么补出来？补错和补不出，哪个更常见？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「像英语这样的语言，在谈论语篇中已经给出的指称对象时，要求我们使用显式代词。」（§13.1.3）</li><li>「能够省略代词的语言称为代词脱落语言。」（§13.1.3）</li><li>「例如，日语和汉语的省略倾向要远强于西班牙语。」（§13.1.3）</li><li>「语言之间的这一变异维度称为指称密度维度。」（§13.1.3）</li><li>「从汉语或日语这类代词脱落现象广泛的语言翻译到英语这类非代词脱落语言可能很困难，因为模型必须以某种方式识别出每个零形式，并恢复出所谈论的是谁或是什么，才能插入恰当的代词。」（§13.1.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】零形式是「输入里不存在、输出里必须有」的东西。这跟一般的翻译转换不同：模型不是在被要求搬运，而是在被要求凭空生成一个源文没有的符号，而且还得生成对。</li><li>【我】指称密度是连续量而不是二分。代词脱落/非脱落只是两端，所以同一个模型在中译英里频繁丢主语，在西译英里却大体正常——西班牙语的零形式更少也更规整，模型见得多就学得会。</li><li>【我】cold/hot 这组借自麦克卢汉的比喻其实很准：冷语言把补全工作外包给听者，热语言替听者做完。冷译热等于把读者该做的推理显式化，而这条推理链在原文里根本没写出来，模型只能猜。</li><li>【我】这节还埋了一个评估问题：源文没写性别时，任何代词选择都是「加了信息」，那么用 chrF 对着唯一参考译文打分，就会惩罚另一种同样正确的选择。指标和任务在这里天然错位。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：找一段中文新闻（≥5 句），标出所有零形式主语并写出英文应补的代词，统计「必须补」与「可省」的比例（验收：≥5 处标注 + 一个比例数字）。</li><li>本周：在 <code>self-test.md</code> 第 3 题答案里补一句说明「为什么零形式恢复难以用 chrF 单独衡量」（验收：该题答案 ≥120 字且明确提到参考译文的单一性）。</li></ul>
+<hr>
+<h2>第 13.2.1 节　子词分词　⭐</h2>
+<p><strong>本节问题</strong>：为什么源语言和目标语言要共用一个词表？BPE 和 unigram 到底差在哪一步？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「机器翻译系统使用一个事先固定的词表，而且这个词表不是由按空格分隔的词构成的，而是用子词分词算法生成的，比如第 2 章简述的 BPE 算法。」（§13.2.1）</li><li>「源语言和目标语言共用一个词表，这使得把词元（如人名）从源语言复制到目标语言变得容易。」（§13.2.1）</li><li>「常用的词表规模是 8K 到 32K 个词片。」（§13.2.1）</li><li>「在一元分词中，我们不是通过合并词元来逐步建立词表」（§13.2.1）</li><li>「BPE 倾向于产生大量非常小的、没有意义的词元（因为 BPE 只能通过一次合并一个字符来造出更大的单词或语素）」（§13.2.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】共享词表比我原先以为的重要得多：它让「原样复制」成为一种近乎零成本的操作，人名、型号、URL 这些本来就不该翻的东西，天生就有对应词元。我以前以为多语言模型的收益只来自参数共享。</li><li>【我】词表规模的定义从「合并多少次」改成「最终多少个」，是个接口层面的进步：合并次数依赖语料体量，换语料就得重调；词表大小可以跨语料比较，调起来也更直观。</li><li>【我】BPE 与 unigram 的差别不在优雅程度，而在合并判据与可逆性：前者看频次，只能单调增长；后者看概率增益，并且允许删掉低价值词元。允许删除这一点很关键——切错了能回头。</li><li>【我】书上那组对照（cor rupted 对 corrupt ed）说明子词边界本身就是模型看到的形态线索。对形态丰富的语言，把词根和词缀切散，等于把最该共享的部分拆开了。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：用 <code>labs/lab-02</code> 的字符切分函数把 HYP1 按 2 元切开，手工数出匹配的二元组个数，核对 13/16 这个分子（验收：列出 13 个匹配二元组，数量与 <code>chrf_terms.csv</code> 中 chrP 一致）。</li><li>本周：在 <code>glossary.md</code> 补 wordpiece / unigram / SentencePiece 三条，每条加一句「与 BPE 的差别」（验收：3 条齐全，差别句 ≤30 字且不与原文连续重合）。</li></ul>
+<hr>
+<h2>第 13.2.2 节　训练数据与句对齐　🔴</h2>
+<p><strong>本节问题</strong>：平行语料从哪来？两篇互为译文的文档，怎么切成句对？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「已有大量平行语料库可供使用。」（§13.2.2）</li><li>「提取自欧洲议会会议记录，包含 21 种欧洲语言各 40 万到 200 万句。」（§13.2.2）</li><li>「联合国平行语料库包含约 1000 万句联合国六种官方语言（阿拉伯语、汉语、英语、法语、俄语、西班牙语）的句子」（§13.2.2）</li><li>「给定两篇互为译文的文档，我们通常需要两个步骤来生成句对齐」（§13.2.2）</li><li>「通常使用动态规划作为对齐算法」（§13.2.2）</li><li>「这可以包括用手写规则移除低精度的句对（例如移除过长、过短、URL 不同的句子，甚至移除过于相似的句对，因为这意味着它们是复制而非翻译）。」（§13.2.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】句对齐被拆成「代价函数 + 对齐算法」两件独立的事，这个拆法很工程化：换嵌入空间只动前半，换搜索策略只动后半，两边能各自迭代，也各自能出错。</li><li>【我】清洗规则里那一条「太像也要删」最反直觉：直觉认为译文与原文越接近越可信，但工程上过度相似往往意味着抓取时把同一段文本复制了两遍。我做数据集去重时踩过的坑正好相反——只顾删重复，没想过「重复」本身是质量信号。</li><li>【我】代价函数里那个句子数因子把分数往「多句对多句」上拉，而不是「大段对大段」。这本质是防止一个错误对齐吞掉整篇文档，属于结构性保险，不是精度优化。</li><li>【我】如果公开语料里相当比例的句对质量并不可靠（13.5.3 有更狠的数字），那么任何在这类数据上得到的分数提升，都要先怀疑是不是学到了噪声。评估之前先评数据。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：用 20 分钟给 lab-01 的 8 组句对做一张「对齐代价」手算表，按 1−cos 的形式给出每对的直觉分数与长度比（验收：8 行，含每对的长度比与一句「为什么该分高/低」）。</li><li>本周：在 <code>actions.md</code> 把「语料清洗」单列成一条可执行检查（验收：写出 3 条可脚本化的过滤规则与各自的假阳性风险）。</li></ul>
+<hr>
+<h2>第 13.3 节　交叉注意力与教师强制　⭐</h2>
+<p><strong>本节问题</strong>：解码器凭什么能看源文？训练时喂正确答案，推理时会付出什么代价？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「解码器本质上是一个条件语言模型，它关注编码器的表示并逐个生成目标词」（§13.3）</li><li>「交叉注意力与普通 transformer 块中的多头注意力形式相同，区别在于：query 照常来自解码器的上一层，而 key 和 value 则来自编码器的输出。」（§13.3）</li><li>「编码器中的多头注意力被允许向前查看整个源语言文本，因此它没有被掩码。」（§13.3）</li><li>「与那种情况一样，我们在解码器中使用教师强制。」（§13.3）</li><li>「在教师强制中，解码的每个时间步我们都强制系统使用训练中的标准答案目标词元作为下一个输入」（§13.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】交叉注意力只是把 K/V 的来源换掉，公式一个字没改。这说明 Transformer 真正可复用的单元是「注意力这层接口」，而不是整个块；理解接口比背块结构有用。</li><li>【我】编码器不掩码、解码器掩码，这个不对称是整套架构的硬约束：源文全可见，译文只能看左边。任何让解码器瞥见未来目标词的实现，训练都会作废，而且损失曲线还很好看。</li><li>【我】教师强制是训练/推理不一致的经典来源：训练时永远喂标准答案，推理时喂自己的输出，早期一步错就滚雪球。这解释了为什么训练损失很低、生成质量却一般。</li><li>【我】把解码器看成「以源文为条件的语言模型」，就顺带解释了两件事：为什么第 7 章的所有解码算法都能直接用；为什么它继承了语言模型的长度偏好——那正是后面长度归一化要修的东西。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：在纸上画出 Henc 与 W^Q/W^K/W^V 的相乘链，标出每个中间张量的维度（验收：≥5 个张量维度全部写出，且 Q/K 的 d_k 与 V 的 d_v 分别标注清楚）。</li><li>本周：把「训练用教师强制、推理不用」这条不一致写成一张新卡放进 <code>cards.md</code>（验收：卡片含 §13.3 出处、一个具体后果、一条缓解手段）。</li></ul>
+<hr>
+<h2>第 13.4 节　束搜索　⭐</h2>
+<p><strong>本节问题</strong>：贪心解码为什么会在第一步就押错？长度归一化到底修的是什么？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「贪心解码的一个问题是：在词 t 处看起来概率很高的选择，到了词 t +1 时可能被证明是错误的选择。」（§13.4）</li><li>「概率最高的序列是 ok ok EOS（其概率为 .4× .7× 1.0）。」（§13.4）</li><li>「但贪心搜索找不到它，而是错误地选择 yes 作为第一个词，因为它具有最高的局部概率（0.5）。」（§13.4）</li><li>「我们并非在每个时间步只选择要生成的最佳词元，而是在每一步保留 k 个可能的词元。」（§13.4）</li><li>「因此，我们常常采用长度归一化方法，例如将对数概率除以词数」（§13.4）</li><li>「对于机器翻译，我们通常使用 5 到 10 之间的束宽 k，最终得到 k 个候选假设。」（§13.4）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】「贪心会陷入局部最优」是老话，但书上这两个数字让它变具体：0.5 对 0.4，只差 0.1，第二步就把总概率 0.28 的全局最优让给了 0.2 的次优。差额小、后果大，这就是早决策不可逆的代价。</li><li>【我】束搜索不是重排，而是把决策推迟一步；但 k 有限，所以它仍会在更长的依赖上翻车。书上明说只有穷举才保证最优，所以它始终是启发式，别把它当正确答案生成器。</li><li>【我】束宽取 5–10 说明收益很快饱和：k 翻倍带来的命中提升，抵不过解码成本翻倍。lab-03 里 k=2 就已经把 ok ok EOS 找回来了，是个很便宜的例证。</li><li>【我】长度归一化是我以前完全忽略的一步。没有它，模型系统性偏好短句，因为每多一个词就多乘一个小于 1 的概率。这不是模型「喜欢简短」，是打分方式的算术后果——两者的修法完全不同。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：手算图 13.7 搜索树上 k=2 两步内的全部候选分数，与 <code>labs/lab-03/out/beam_trace.csv</code> 对照（验收：候选表 ≥6 行，数值与 csv 一致到 3 位小数）。</li><li>本周：另写一个独立小脚本，把 lab-03 的翻转率实验改成 k=1 与 k=5 两组对照（验收：两组翻转率各一个数字 + 一句结论；不改动 lab-03 主脚本）。</li></ul>
+<hr>
+<h2>第 13.4.1 节　最小贝叶斯风险解码　🔵</h2>
+<p><strong>本节问题</strong>：不选概率最大的译文，那选什么？候选池要多大才够？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「最小贝叶斯风险的直观思想是：我们不去尝试选择概率最大的译文，而是选择很可能错误最少的那个译文。」（§13.4.1）</li><li>「转而选择与某组候选译文最相似（按某种拟合优度度量）的那个候选译文。」（§13.4.1）</li><li>「我们本质上是用一个较小的可能候选译文集合 Y 来近似所有可能译文的巨大空间 U。」（§13.4.1）</li><li>「即使候选只有 32 或 64 个，也能获得不错的结果。」（§13.4.1）</li><li>「最小贝叶斯风险解码也可用于其他 NLP 任务」（§13.4.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】MBR 换掉的是目标函数：不再是「最可能」，而是「期望损失最小」。这一步把解码从概率问题变成决策问题，概率模型退居为候选池的供给方。</li><li>【我】用一个小集合近似全空间，等于承认真期望算不出来，只能在采样池里估。所以 MBR 的效果上限由采样器多样性决定，而不是由模型概率决定——这跟束搜索的瓶颈完全不是一回事。</li><li>【我】32 或 64 个候选就够，这个数字小得意外。它说明 MBR 的主要收益来自「躲开概率孤峰上的极端错译」，而不是「把期望估得很准」。</li><li>【我】书上说它先用于语音识别再进机器翻译。这条迁移路径说明「在所有可能输出里挑一个整体最不坏的」是生成任务的通用需求，不是翻译特有，所以它也适合摘要和对话。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：拿 5 个候选句手算一遍 MBR 的 argmax，用字符 2 元重叠当 util 函数，看结果是否与「概率最高」不同（验收：写出 5×5 相似度矩阵与最终选择，并注明两者是否一致）。</li><li>本周：在 <code>spinoffs.md</code> 加一条「MBR 用于检索式问答重排」的候选（验收：含主题串/锚点/为什么/增益四段，且带发布登记行）。</li></ul>
+<hr>
+<h2>第 13.5 节　低资源情境下的翻译　🔴</h2>
+<p><strong>本节问题</strong>：没有平行语料时，怎么凭空造出训练信号？造出来的东西值多少？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「该算法通过构造合成双语文本，来利用目标语中的单语语料库。」（§13.5.1）</li><li>「一项估计表明，用回译文本训练的系统所获得的增益约为用同等数量自然双语文本训练的 2/3」（§13.5.1）</li><li>「这意味着我们需要告诉系统从哪种语言翻译、翻译到哪种语言！」（§13.5.2）</li><li>「我们通过向编码器添加一个特殊词元 ls 来指定我们翻译所用的源语言，并向解码器添加一个特殊词元 lt 来告诉它我们想翻译成的目标语言。」（§13.5.2）</li><li>「一项著名的研究手动审计了大量平行语料库和其他主要多语言数据集，发现对许多语料库而言，不到 50% 的句子质量可接受」（§13.5.3）</li><li>「他们的结论之一是通过译后编辑而非直接评估来进行机器翻译评估」（§13.5.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】回译的要点不是「造数据」，而是「用单语换平行」这个交换比。2/3 这个数字给了它一个可比价格：合成数据不免费，只是便宜，而且便宜得有限。</li><li>【我】三步里有两次训练（先训反向系统、再重训正向系统），成本并不低。所以它适合单语多、平行少的极端不平衡场景；平行数据本来就够时，回译是净亏。</li><li>【我】多语言模型加 ls/lt 两个特殊词元，本质是把「任务」编码进输入序列。这跟我现在用 prompt 前缀指定任务，是同一件事的两个时代版本，连失败模式都像：前缀没给对，输出就跑偏。</li><li>【我】「不到 50% 可接受」和「母语者没进入数据流程」是同一件事的两面：质量问题不是技术噪声，是流程里缺人。这条比任何模型改进都更该记住，因为它决定了你评估的基线是不是幻觉。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：用 lab-01 的英语-德语小语料模拟一次方向反转（4 对训练、4 对当单语），记录能产出多少合成对、其中正确多少（验收：合成对数量 + 正确数 + 一句结论）。</li><li>本周：把「译后编辑而非直接评估」写成一份 1 页评估协议草案（验收：含 3 个步骤 + 1 个可量化指标 + 1 条已知局限）。</li></ul>
+<hr>
+<h2>第 13.6.2 节　chrF 与 BLEU　⭐</h2>
+<p><strong>本节问题</strong>：自动指标凭什么能替代人？为什么 chrF 用字符而 BLEU 用词，后果差在哪？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「使用人工进行评估最为准确，但为了便利也会使用自动指标。」（§13.6）</li><li>「好的机器翻译往往会包含与同一句子的人工译文相同的字符和词。」（§13.6.2）</li><li>「通常设 β = 2，从而使召回率的权重是精确率的两倍」（§13.6.2）</li><li>「由于 BLEU 是基于词的度量，它对词的分词非常敏感」（§13.6.2）</li><li>「chrF 非常局部：一个被移动位置的大型短语可能几乎完全不改变 chrF 分数」（§13.6.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】chrF 去空格、按字符 n 元算，这个设计对形态丰富的语言友好：词形变化只影响少数 n 元。代价是它分不清「字符碰巧一样」和「意思一样」，同音异义在它眼里是满分。</li><li>【我】β=2 让召回权重是精确率两倍，这个偏向有道理：漏译通常比多译几个无害词更严重。但这也意味着一个啰嗦但覆盖全的译文会占便宜，正好和人类偏好相反。</li><li>【我】BLEU 纯精确率加长度惩罚，在短句上极易塌成 0（lab-02 里 HYP2 就是 0.0000）。这解释了为什么 BLEU 必须语料级计算：单句 BLEU 几乎没有解释力，只能当噪声看。</li><li>【我】「chrF 非常局部」这条限制比它听起来严重：一个短语整体挪了位置，字符重叠几乎不变，但译文可能已经不通顺了。所以它能测「词对不对」，测不了「句子顺不顺」，而后者恰恰是流畅性维度。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：手算 HYP2=&quot;past witness&quot; 的 chrF2,2，与书中 .62、lab-02 的 .6198 对照（验收：写出 chrP/chrR/最终值，四舍五入后等于 .62）。</li><li>本周：在 <code>labs/lab-02/out/chrf_k_sweep.csv</code> 里挑 k=1 与 k=6 两组，解释分数为何随 k 下降（验收：一段 ≤120 字说明，必须提到长 n 元的匹配概率随长度衰减）。</li></ul>
+<hr>
+<h2>第 13.6.3 节 + 第 13.7 节　嵌入评估与偏见　🔴</h2>
+<p><strong>本节问题</strong>：允许「换个说法」的指标怎么算？偏见为什么总在代词上爆出来？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「这类模型的输出与人工标注高度相关。」（§13.6.3）</li><li>「例如，图 13.11 所示的 BERTSCORE 算法（Zhang et al., 2020）把参考译文 x 和候选译文 ˜x 通过 BERT，为每个词元 xi 和 ˜xj 计算一个 BERT 嵌入。」（§13.6.3）</li><li>「当翻译对一个人的指代且未指明性别时，机器翻译系统常常默认为男性性别」（§13.7）</li><li>「因为机器翻译系统放大了这些偏见，代词被映射为男性或女性性别的概率高于基于实际劳动就业统计进行映射时的概率。」（§13.7）</li><li>「当要求机器翻译系统翻译那些描述不符合刻板性别角色的人的句子时，它们的表现会更差」（§13.7）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】BERTScore 用贪心一对一匹配算精确率与召回率，这个「贪心」是为了防止一个词被反复计入。它把相似性从词形挪到嵌入层，代价是把编码器自身的偏见也一起引进来了。</li><li>【我】「模型放大偏见」比「模型继承偏见」严重得多：数据里的统计差异，被解码时的 argmax 放大成了系统性偏差。这意味着只清洗数据不够，解码规则本身也得审计。</li><li>【我】匈牙利语那种性别中立的源文，译成英语必须选一个代词，模型就在「必须选」的地方暴露了先验。凡是语法强制、原文缺失的位置，都是偏见最容易落地的地方——这跟 13.1.3 的零形式是同一个结构。</li><li>【我】置信度那个开放问题很实际：医疗、法律场景里「拒绝翻译」比「译错」安全，但现有指标全是「译得多好」，没有「知不知道自己不会」。缺的不是模型能力，是指标维度。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：把 §13.7 那 7 个职业按书中给出的 she/he 归类抄成表，统计 he 的占比（验收：7 行表 + 一个比例，且与图 13.12 逐条一致）。</li><li>本周：在 <code>cards.md</code> 补一张「语法强制 + 原文缺失 = 偏见落地口」的卡（验收：卡含 §13.7 出处、一个具体例子、一条可操作应对）。</li></ul>
+<hr>
+<h2>第 13.8 节　小结与历史注记　⚪</h2>
+<p><strong>本节问题</strong>：把这一章放回六十年里看，神经方法到底替代了什么、继承了什么？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「机器翻译是自然语言处理中应用最广泛的方向之一」（§13.8）</li><li>「编码器-解码器网络由一个编码器网络和一个解码器组成」（§13.8）</li><li>「直接翻译使用一部大型双语词典，其中每个词条都是一个负责翻译一个词的小程序。」（§历史注记）</li><li>「我们可以把编码器-解码器网络视为一种中间语言方法，其中注意力起到整合直接方法与转换方法的作用」（§历史注记）</li><li>「该报告在 20 世纪 60 年代中期导致美国对机器翻译的资助急剧削减。」（§历史注记）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】Vauquois 三角把「分析深度」和「转换知识量」做成方向相反的两轴，这解释了神经方法为什么能赢：转换知识被隐式塞进参数，三角上方那段不再需要人写规则。</li><li>【我】「编码器-解码器 = 中间语言方法 + 注意力把直接访问带回来」这个说法很精辟。它不是纯粹的中间语言，因为解码器仍能直接看源词，所以它同时吃到了两端的便宜。</li><li>【我】ALPAC 之后资助被砍，说明评估能力决定领域生死：当年不是技术完全不行，是没法证明它行。这跟今天自动指标的地位是同一件事——谁定义了「好」，谁就决定了资源往哪流。</li><li>【我】IBM 模型当年公开得那么彻底（政府资助要求），直接换来统计机器翻译十年繁荣。开放程度与领域发展速度的关系，比任何单点算法都更持久。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天：画一张 Vauquois 三角的简化版，在三个顶点各写一个现代对应物（验收：三角 + 3 个标注，且「转换知识量」的递减方向标注正确）。</li><li>本周：在 <code>README.md</code> 自评表的「覆盖完整性」一行补上历史脉络这条证据（验收：该项 ≥8 分并写出理由，理由里点名 Vauquois 三角或 IBM 模型）。</li></ul>
+<hr>
+<h3>全章 takeaway（5 条）</h3>
+<ol><li>翻译之难分两层：可系统建模的（语序、框架类型）与必须逐项记的（词汇切分、词汇空缺）。前者靠结构，后者靠数据，修错了层就白费力气。</li><li>编码器-解码器的全部技巧可以压成一句：把源文压成上下文，再以它为条件做自回归生成；相对第 7 章只多了一个交叉注意力接口。</li><li>束搜索是「延迟决策」的工程实现；长度归一化修的是打分方式的算术偏置，不是模型偏好。两者都别当成质量保证。</li><li>评估的核心矛盾是人工准但贵、自动便宜但局部。chrF 在字符层、BERTScore 在嵌入层，二者都测不了篇章连贯。</li><li>伦理问题的落点很具体：凡是「语法强制 + 原文缺失」的位置（代词、性别、复数），偏见就在那里显形。</li></ol>
+<h3>复习优先级依据</h3>
+<ul><li>⭐ 必须能复述并手算：13.1.1 语序、13.2.1 分词、13.3 交叉注意力、13.4 束搜索、13.6.2 chrF——这五处是后续章节反复复用的公共知识。</li><li>🔴 易错、需重做：13.1.2 词汇多对多、13.2.2 句对齐、13.5 回译、13.6.3+13.7 嵌入评估与偏见——概念不难但细节密，容易记混。</li><li>🔵 知道即可：13.1.3 指称密度、13.4.1 MBR——能说清定义、用途与一个例子就够。</li><li>⚪ 背景：13.8 小结与历史注记——用于串联全书，不单独出题。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

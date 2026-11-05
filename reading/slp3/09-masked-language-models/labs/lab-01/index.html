@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>读书笔记：Speech and Language Processing（第 1–11 章） · lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账 · Notes</title>
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账 · Notes</title>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -70,8 +70,8 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章）</span> <span>/</span> <a href="../../index.html">读书笔记：Speech and Language Processing（第 1–11 章） · 读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <a href="../index.html">读书笔记：Speech and Language Processing（第 1–11 章） · 第 9 章 · 行动执行闭环（labs/index）</a> <span>/</span> <span class="cur">lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</span></nav>
-<h1 class="title">读书笔记：Speech and Language Processing（第 1–11 章） · lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</h1><div class="prose"><h1>lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</h1>
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span> <span>/</span> <a href="../../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》（第 3 版）第 9 章 掩码语言模型</a> <span>/</span> <a href="../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 9 章 · 行动执行闭环（labs/index）</a> <span>/</span> <span class="cur">lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</span></nav>
+<h1 class="title">《Speech and Language Processing》第 3 版 · 读书笔记 · lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</h1><div class="prose"><h1>lab-01 · BERT 掩码策略模拟：15% / 80 / 10 / 10 的账</h1>
 <h2>目的</h2>
 <p>对应 <code>actions.md</code> 第 1 条。验证三件事：</p>
 <ol><li>「15% 选中、其中 80% 换 <code>[MASK]</code>、10% 随机词、10% 原样」换算到整篇语料后，<code>[MASK]</code> 率是否约为 12%、随机词率与原样率是否各约 1.5%；</li><li>「原样保留」是否真的意味着目标词没有泄漏进输入；</li><li>在不同策略下，仅统计「目标已移出输入」的位置时，双向 bigram 上下文的可预测性是否稳定。</li></ol>

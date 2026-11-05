@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 13 章 机器翻译 · 衍生选题 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation）</span> <span>/</span> <span class="cur">第 13 章 机器翻译 · 衍生选题</span></nav>
+<article class="prose"><h1>第 13 章 机器翻译 · 衍生选题</h1>
+<blockquote><p>从本章能长出去的文章。索引表先给状态，后文每条给「主题串 / 锚点 / 为什么 / 增益」四段。</p><p>状态：<code>open</code> 未动笔 / <code>drafting</code> 写作中 / <code>published</code> 已发布（填链接）。</p></blockquote>
+<h2>索引</h2>
+<table><tr><th>#</th><th>选题</th><th>目标技能</th><th>优先级</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>为什么机器翻译会在「它必须表态」的地方翻车</td><td>write-zhihu-tech</td><td>P0</td><td>open</td><td>⬜ 待补</td></tr><tr><td>2</td><td>手算 chrF：一个「86 分」的译文为什么读起来像机翻</td><td>write-zhihu-tech</td><td>P0</td><td>open</td><td>⬜ 待补</td></tr><tr><td>3</td><td>从零实现 IBM Model 1：EM 十五轮能学到什么</td><td>write-tech-tutorial</td><td>P1</td><td>open</td><td>⬜ 待补</td></tr><tr><td>4</td><td>束搜索不是最优解，为什么所有人还在用</td><td>write-zhihu-tech</td><td>P1</td><td>open</td><td>⬜ 待补</td></tr><tr><td>5</td><td>回译值不值：合成语料的价格是真实的 2/3</td><td>write-zhihu-tech</td><td>P2</td><td>open</td><td>⬜ 待补</td></tr></table>
+<hr>
+<h3>1. 为什么机器翻译会在「它必须表态」的地方翻车</h3>
+<ul><li><strong>主题串</strong>：语法强制 × 原文缺失 → 偏见与错误的同一个落点（代词性别、汉语零形式、单复数、长幼称谓）。</li><li><strong>锚点</strong>：§13.1.3 代词脱落与零形式；§13.1.2 brother→哥哥/弟弟；§13.7 匈牙利语性别中立句译成英语被强行指派性别，以及「模型放大偏见」的表述。</li><li><strong>为什么</strong>：大众叙事是「模型不懂语义所以译错」，而这一章给出的机制完全不同——错在这些位置恰恰是模型<strong>看懂了的</strong>，只是源文没有那个信息，目标语言的语法又逼它给一个答案，它只能吐出训练分布里的众数。把「理解失败」和「信息不存在」分开，是读者认知上的一次真正升级。</li><li><strong>增益</strong>：给读者一把可操作的审计尺子——扫「必须表态」的位置比通读全文找茬效率高一个量级；顺带解释为什么去偏要动解码规则而不只是洗数据。</li></ul>
+<p><strong>发布</strong>：状态 open ｜ 链接 ⬜ 待补</p>
+<h3>2. 手算 chrF：一个「86 分」的译文为什么读起来像机翻</h3>
+<ul><li><strong>主题串</strong>：字符 n 元指标的局部性——它能测词对不对，测不了句子顺不顺。</li><li><strong>锚点</strong>：§13.6.2 的 chrF 定义与 .86/.62 两个数；「chrF 非常局部：一个被移动位置的大型短语可能几乎完全不改变 chrF 分数」；lab-02 实测 .8644/.6198（n≤2）对比 .6552/.4162（n≤6）。</li><li><strong>为什么</strong>：很多人把 chrF/BLEU 当成「翻译质量的分数」，而这两个数字的差异（同一句 .86 与 .66）说明分数高度依赖你选了哪一档 n，指标本身没有唯一解。用一组可复算的手算把「指标是约定，不是真理」讲透，比空谈「指标有局限」有力得多。</li><li><strong>增益</strong>：读者拿到一份可以自己跑的手算流程（含 k 扫描表），并学会在报告分数时强制注明 n 与口径；同时理解为什么短语整体挪位不会被扣分。</li></ul>
+<p><strong>发布</strong>：状态 open ｜ 链接 ⬜ 待补</p>
+<h3>3. 从零实现 IBM Model 1：EM 十五轮能学到什么</h3>
+<ul><li><strong>主题串</strong>：不训练神经网络，80 行代码也能跑出词对齐表——以及它必然犯的错。</li><li><strong>锚点</strong>：§历史注记（IBM 模型 1–5、噪声信道）；lab-01 的 −33.1838→−1.7107 单调曲线、F1=.631、<code>t(the→hund)=.1040</code> 这个错配。</li><li><strong>为什么</strong>：教程类内容大多直接上 Transformer，跳过了「对齐」这一步，导致读者不知道注意力在替代什么。IBM-1 的均匀分摊假设简单到可以在纸上算，却已经能产出可用的对齐，是理解「隐变量 + EM」最便宜的入口。</li><li><strong>增益</strong>：完整可运行脚本 + 逐轮数字 + 对错配泄漏的定量解释；读者能自己把 8 对扩到 80 对，观察 t 表如何变干净。</li></ul>
+<p><strong>发布</strong>：状态 open ｜ 链接 ⬜ 待补</p>
+<h3>4. 束搜索不是最优解，为什么所有人还在用</h3>
+<ul><li><strong>主题串</strong>：解码策略的工程学——延迟决策、束宽的经济学、长度归一化的算术偏置。</li><li><strong>锚点</strong>：§13.4 图 13.7（0.5 与 0.4 那 0.1 的差距）；「束宽 5–10」；长度归一化；lab-03 的 k=2 找回 <code>ok ok EOS</code>（−1.2730 vs −1.6094）与翻转率 .1135/.2280。</li><li><strong>为什么</strong>：常见误解是「束搜索是更聪明的贪心」，实际它是用 k 倍算力买「晚一步下注」。而长度归一化更反直觉——它不是模型偏好短句，是概率连乘的算术后果。这两点都能用几十行代码验证，适合做成「反直觉 + 可复现」的科普。</li><li><strong>增益</strong>：读者能自己调束宽看收益拐点，并理解为什么生产系统常配 5 而不是 50；顺带把 MBR 作为「换目标函数」的另一条路引出来。</li></ul>
+<p><strong>发布</strong>：状态 open ｜ 链接 ⬜ 待补</p>
+<h3>5. 回译值不值：合成语料的价格是真实的 2/3</h3>
+<ul><li><strong>主题串</strong>：低资源翻译的数据经济学——单语换平行的汇率、两次训练的成本、合成噪声的复利。</li><li><strong>锚点</strong>：§13.5.1 回译流程与「增益约为用同等数量自然双语文本训练的 2/3」；§13.5.3「不到 50% 的句子质量可接受」与「通过译后编辑而非直接评估」。</li><li><strong>为什么</strong>：做低资源的人常在「多标 10 万句」与「回译 30 万句」之间凭感觉选。2/3 这个数字给了一个粗糙但可用的汇率，而「不到 50% 可接受」提醒你：分母本身可能是脏的。两个数字放一起，就是一篇有判断力的文章。</li><li><strong>增益</strong>：给出一个可套用的成本估算式（合成句数 × 2/3 ≈ 等效真实句数），并附三条数据审计清单；读者能把它直接用在项目立项上。</li></ul>
+<p><strong>发布</strong>：状态 open ｜ 链接 ⬜ 待补</p></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

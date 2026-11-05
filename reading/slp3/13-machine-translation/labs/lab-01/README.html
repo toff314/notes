@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab-01　IBM Model 1 的 EM 词对齐 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../../../index.html">笔记架首页</a> <span>/</span> <a href="../../../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · SLP3 第 13 章　机器翻译（Machine Translation）</span> <span>/</span> <a href="../index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 13 章 labs 索引</a> <span>/</span> <a href="index.html">《Speech and Language Processing》第 3 版 · 读书笔记 · lab-01　IBM Model 1 的 EM 词对齐</a> <span>/</span> <span class="cur">lab-01　IBM Model 1 的 EM 词对齐</span></nav>
+<article class="prose"><h1>lab-01　IBM Model 1 的 EM 词对齐</h1>
+<p>对应 <code>../../actions.md</code> 第 1 条；对应书中 §历史注记（IBM 模型 1–5）与 §13.2.2 的「句对齐」。目的：不借助任何框架，把「均匀对齐假设 + EM 重估」跑到收敛，看它到底能学出什么、又必然漏掉什么。</p>
+<h2>怎么跑</h2>
+<pre><code>cd /home/yuanwu/notes/reading/slp3/13-machine-translation/labs
+python3 lab-01/ibm1_em.py</code></pre>
+<ul><li>依赖：<code>numpy</code> + 标准库，无网络。</li><li>运行时间 &lt;1 秒；确定性（无随机初始化，<code>t</code> 初值全为 <code>1/|F|</code>）。</li><li>会覆盖写 <code>out/</code> 下的四个文件。</li></ul>
+<h2>输入</h2>
+<p>脚本内写死 8 组英语-德语句对与人工金对齐（<code>CORPUS</code>）：</p>
+<table><tr><th>#</th><th>英语</th><th>德语</th></tr><tr><td>1</td><td>the house is big</td><td>das haus ist groß</td></tr><tr><td>2</td><td>the house is small</td><td>das haus ist klein</td></tr><tr><td>3</td><td>i see the house</td><td>ich sehe das haus</td></tr><tr><td>4</td><td>i see the big house</td><td>ich sehe das große haus</td></tr><tr><td>5</td><td>the dog is small</td><td>der hund ist klein</td></tr><tr><td>6</td><td>i see the dog</td><td>ich sehe den hund</td></tr><tr><td>7</td><td>the dog sees the house</td><td>der hund sieht das haus</td></tr><tr><td>8</td><td>i see a house</td><td>ich sehe ein haus</td></tr></table>
+<p>设计意图：让 <code>the</code> 在四个不同德语冠词（das / der / den）之间摇摆，让 <code>big</code> 与 <code>große</code> 形成一对只在第 4 句出现的词——这正是 IBM-1 最容易翻车的地方。英语侧统一在前面插入 <code>&lt;NULL&gt;</code> 位置 0。</p>
+<h2>产物</h2>
+<table><tr><th>文件</th><th>内容</th></tr><tr><td><code>out/loglik.csv</code></td><td>每轮的对数似然（15 行）</td></tr><tr><td><code>out/t_table.csv</code></td><td>每个英语词取概率最高的 2 个德语词及 t 值</td></tr><tr><td><code>out/alignments.json</code></td><td>逐句 Viterbi 对齐 + 逐句 P/R/F1 + 宏平均</td></tr><tr><td><code>out/t_heatmap.png</code></td><td>t 表热力图（英语 × 德语）</td></tr></table>
+<h2>关键输出（真实运行）</h2>
+<p>对数似然单调上升，15 轮：</p>
+<pre><code>1,-33.183845   5,-4.431262    10,-2.074294   15,-1.710718
+2,-12.090210   6,-3.471455    11,-1.952857
+3,-8.506506    7,-2.877344    12,-1.864714
+4,-6.004255    8,-2.497664    13,-1.799133   14,-1.749287
+9,-2.246331</code></pre>
+<p>前 4 轮就吃掉了 −33.18 → −6.00 的绝大部分，之后收益递减并趋近 0——典型的 EM 收敛曲线。</p>
+<p>t 表（每词 top-2）：</p>
+<table><tr><th>英语</th><th>德语</th><th>t</th></tr><tr><td>is</td><td>ist</td><td>0.9752</td></tr><tr><td>a</td><td>ein</td><td>0.9573</td></tr><tr><td>small</td><td>klein</td><td>0.8495</td></tr><tr><td>house</td><td>haus</td><td>0.7479</td></tr><tr><td>the</td><td>das</td><td>0.7160</td></tr><tr><td>sees</td><td>sieht</td><td>0.6808</td></tr><tr><td>dog</td><td>hund</td><td>0.6113</td></tr><tr><td>big</td><td>große</td><td>0.4922</td></tr><tr><td>big</td><td>groß</td><td>0.4878</td></tr><tr><td>i / see</td><td>ich / sehe</td><td>0.4744 / 0.4744</td></tr><tr><td>dog</td><td>der</td><td>0.2611</td></tr><tr><td>house</td><td>das</td><td>0.2504</td></tr><tr><td>small</td><td>der</td><td>0.1051</td></tr><tr><td>the</td><td>hund</td><td>0.1040</td></tr></table>
+<p>对齐质量（8 句宏平均）：<code>mean_P = 0.7917</code>、<code>mean_R = 0.5375</code>、<code>mean_F1 = 0.6310</code>。</p>
+<p>逐句：s1 1.0/0.75、s2 1.0/0.75、s3 1.0/0.5、s4 0.3333/0.2、s5 0.75/0.75、s6 0.5/0.25、s7 0.75/0.6、s8 1.0/0.5。</p>
+<h2>结论</h2>
+<ol><li><strong>EM 真的能从零学出词对齐</strong>，不需要任何词典或词性信息。教科书里那句「IBM-1 只靠共现就能对齐」在 8 对句、15 轮内成立：<code>is→ist</code> 0.9752 这种一对一映射几乎满分。</li><li><strong>精确率明显高于召回率（.79 vs .54）</strong>，因为 Viterbi 只给每个德语词连一条最可能的英语词，连不上就不连。IBM-1 的对齐是「每个目标词独立取 argmax」，天生不会多连，也不会补第二条。</li><li><strong><code>big</code> 的概率被劈成两半</strong>（große .4922 / groß .4878）。德语形容词要根据格变位，而英语 big 不变，一个英语词被迫对应两个形态——这正好是 §13.1.2「一对多」在统计层面的可视化。</li><li><strong>均匀分摊的代价很清楚</strong>：<code>the</code> 有 0.1040 分给了 hund、<code>small</code> 有 0.1051 分给了 der。因为 E 步把 <code>t(the|·)</code> 平摊给句内所有英语词，词序信息完全没用，只能靠频次把它压下去。语料只有 8 对，压不干净。</li><li>最差的两句（s4 F1=0.25、s6 F1=0.33）都含形态变化或冠词换形：<code>das große haus</code> 与 <code>den hund</code>。语料小的时候，形态变化直接表现为「同一个英语词出现在多种德语形式下」，稀释了证据。</li></ol>
+<h2>反思</h2>
+<ul><li><strong>发现一处显示 Bug（不是算法 Bug）</strong>：<code>alignments.json</code> 里 <code>pred</code> 的名字是用全局词表下标取的（<code>E_VOCAB[i]</code> / <code>F_VOCAB[j]</code>），而不是句中词（应为 <code>e[i]</code> / <code>f[j]</code>）。于是第 1 句明明连对了 <code>the-das / house-haus / is-ist</code>（P=1.0 可证），打印出来却是 <code>a-das / big-den / dog-der</code>。<strong>链路 <code>(i,j)</code> 本身是对的</strong>，只有标签串位。下一轮修 <code>pred</code> 的命名即可，不必重跑 EM。这也是个教训：对齐 F1 是数值，看名字容易被误导，判断前先对一遍 P 值。</li><li>IBM-1 的模型假设是「目标词独立、位置无关」，这解释了为什么它连不出语序信息，也解释了为什么模型 2 之后要引入对齐概率 a(i|j,le,lf)。下一步若扩做 lab，最小改动是加位置参数、看 F1 能否从 .63 上到 .8。</li><li>8 对句太少，<code>the→das</code> 0.7160 并不稳。把语料扩到 80 对重跑，预期 <code>the</code> 的分布会更平（多个冠词均分）但错误泄漏（the→hund）会被压到 0.01 以下——这是可以量化验证的预测，留给下一轮。</li><li>数据上的一个观察：s4 与 s6 的失败都发生在「德语冠词变格」处，这说明对形态丰富语言做对齐，瓶颈不在共现统计，而在形态归一化。这条跟 §13.2.1 的子词分词是同一件事的两端——分词切得好，词形变化就只影响最后一个词片。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

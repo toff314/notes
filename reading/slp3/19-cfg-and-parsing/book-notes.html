@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 19 章 上下文无关文法与成分句法分析 · 读书笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 19 章 上下文无关文法与成分句法分析</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 19 章 上下文无关文法与成分句法分析 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 19 章 上下文无关文法与成分句法分析 · 读书笔记</h1>
+<blockquote><p><strong>本章一句话</strong>：句子不是词的平铺序列，而是层层嵌套的「成分」；上下文无关文法（CFG）用一组 A → β 的重写规则把这种嵌套写成可计算的代数，CKY 再用填表把这套代数的所有可能解一次算完，最后由神经打分器在解集里挑出唯一正确的那一棵。</p><p><strong>结构</strong>：先给「成分」的直觉证据（替换测试）→ 把直觉写成 CFG 的规则、推导、解析树与形式四元组 → 树库把这种结构变成可训练的数据 → 弱/强等价与两种范式（CNF、乔姆斯基附加）说明「换一种写法不损失语言」→ 结构歧义暴露「有解集但不知选哪个」→ CKY 用 (n+1)×(n+1) 上三角表枚举全部解 → 跨度神经分析器给每个成分打分，再用改版 CKY 求最大得分树 → PARSEVAL 三指标（带标注精确率/召回率/交叉括号）度量 → 中心词把成分结构接到依存句法。</p><p><strong>可疑处</strong>：① §19.3 图 19.5 的 LISP 括号在抽取文本中被压成两行、括号明显不配对（<code>(NP-SBJ (DT That) ((S(JJ cold)...</code>），我按图 19.6 的树形重画而未照抄；② §19.7.2 的树得分公式 (19.8) 在抽取文本中只剩 <code>\sum_{, j , l ) \in}</code>，分母与求和域丢失，我按「对树中所有带标注跨度求和」重建，并在 lab-04 用代码验证该式与逐跨度相加等价；③ 本章中文版把 PCFG 与 Charniak 解析器放进附录 E，正文没有独立小节，凡涉及概率处我标注「附录 E」而不假装本章讲过。</p><p><strong>与我何干</strong>：我平时用句法分析只当「调个 parser 拿树」，这一章让我看清两件事：歧义不是模型缺陷而是文法本身的组合爆炸（一个 5 词句就有 3 棵合法树），以及评估分数对「括号怎么切」极其敏感——以后读 parser 的 F1 必须同时看交叉括号数，否则会把「切错结构但词性对」的模型当成好模型。</p></blockquote>
+<hr>
+<h2>第 19.1 节　成分　⭐</h2>
+<p><strong>本节问题</strong>：凭什么说「一串词」是一个单位？这个判断有可操作的检验吗？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「句法成分这一观念指的是：若干词的组合可以像单个单位一样起作用，这样的单位称为成分。」（§19.1）</li><li>「一个证据是：它们都能出现在相似的句法环境中，例如出现在动词之前。」（§19.1）</li><li>「虽然整个名词短语可以出现在动词之前，对其中组成名词短语的每一个词来说却并非如此。」（§19.1）</li><li>「因此，要正确描述英语中这些词排列顺序的事实，我们必须能够说出诸如「名词短语可以出现在动词之前」这样的话。」（§19.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这一节的说服方式很像数学里的「必要性论证」：先承认整串能进主语位，再指出其中任一词单独进主语位都失败，于是「整串是一个单位」不是描述上的方便，而是不引入成分概念就写不出这条分布事实。</li><li>【我】作者用的检验本质是替换：把可疑片段换成一个单词，看句子是否仍然合法。这跟正则表达式里的「子模式」直觉相通——能整体替换的东西才配拥有自己的名字。</li><li>【我】我注意到书里刻意不谈语义。「the reason he comes into the Hot Box」这种又长又绕的串仍是成分，因为判据是分布而非意思。这一点对我很重要：句法分析器不该在切分阶段就调用世界知识。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 15 分钟从中英各取 5 句，对每句做一次「整串替换单词」的检验，记录 10 个判定（是/否成分）及替换词（验收：10 条判定全部写明被替换片段与替换词）。</li><li>本周内把这 10 条判定与 lab-01 的 CKY 表对照，看文法给出的成分跨度是否与人工判定一致（验收：不一致处逐条写出原因，≥1 条）。</li></ul>
+<hr>
+<h2>第 19.2 节　上下文无关文法　⭐</h2>
+<p><strong>本节问题</strong>：一套 A → β 的规则，怎么同时充当「生成句子的机器」和「给句子指派结构的机器」？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「一个上下文无关文法由一组规则或产生式构成」（§19.2）</li><li>「箭头左侧则是一个单一的非终结符符号，表达某种聚类或概括。」（§19.2）</li><li>「CFG 可以从两个角度来理解：一是作为生成句子的装置」（§19.2）</li><li>「把 CFG 看作生成器时，我们可以把箭头 → 读作“用右侧的符号串改写左侧的符号”。」（§19.2）</li><li>「每个文法都必须有一个指定的起始符号，它通常被称为 S。」（§19.2）</li><li>「树（通常倒置绘制，根位于顶部）」（§19.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】「左部只能是单个非终结符」这一条就是「上下文无关」的全部含义：不管 NP 左边是介词还是动词，NP 都能改写为 Det Nominal。规则不认识邻居，所以可以独立施用——这既是它的表达力上限，也是它能用动态规划的前提。</li><li>【我】生成与解析是同一组规则的两种读法：正向把 S 展开成词串，反向把词串折叠回 S。这种对称性让我想到语法和解析器其实共享一个数据结构，只是遍历方向不同。</li><li>【我】L0 那种玩具文法最大的价值不是覆盖英语，而是把「规则数 vs 覆盖度」的矛盾摆到台面上：加一条 VP → Verb NP PP 就多一种语序，但规则之间开始互相竞争，歧义随之而来。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天把 L0 的 9 条规则手抄成一张表，并给每条规则标出「它增加哪一种语序」（验收：9 条规则全部有标注，且能指出哪两条规则组合会产生 PP 附着歧义）。</li><li>本周内用 lab-01 的 CNF 转换脚本处理这份手抄文法，确认转换前后接受的句子集合一致（验收：3 个正例句、2 个负例句判定结果完全相同）。</li></ul>
+<hr>
+<h2>第 19.2.1 节　形式定义　🔵</h2>
+<p><strong>本节问题</strong>：把 CFG 写成四元组之后，多出来了什么以前说不清的东西？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「一个上下文无关文法 G 由四个参数定义：N、Σ、R、S（严格说，它是一个“四元组”）。」（§19.2.1）</li><li>「若 A →β 是 R 的一条产生式，且 α 与 γ 是集合 (Σ∪N)∗ 中的任意串，则我们说 αAγ 直接推导出 αβγ」（§19.2.1）</li><li>「由终结符组成、且可由指定的起始符号 S 推导出的串的集合。」（§19.2.1）</li><li>「从词串映射到其解析树的问题称为句法分析，我们将在 19.6 节中看到。」（§19.2.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】那个 αAγ ⇒ αβγ 的写法把「上下文无关」讲清楚了：α 和 γ 原封不动被搬过去，规则只改 A 这一处。这正是后面 CKY 能只查两张子表就拼出一个成分的形式依据。</li><li>【我】L_G 的定义用「S 推导出 w 且 w 全由终结符组成」两个条件，第二个条件容易被忽略。少了它，S ⇒ NP VP 这种中间串也会被算进语言里。</li><li>【我】这一节内容不多，但它是后面所有证明的地基：CNF 转换之所以「不损失语言」，说的就是 L_G 不变；弱等价说的也是 L_G 相同而树不同。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 20 分钟对 L1 文法逐条验证：随机取 5 条产生式，写出一次直接推导的 αAγ ⇒ αβγ 实例（验收：5 条全部写全 α、β、γ 三段）。</li><li>本周内把「L_G 不变」写成一句可检验的断言，并用 lab-01 的转换脚本对 20 个随机串做转换前后成员判定（验收：20/20 判定一致，结果写入 lab README）。</li></ul>
+<hr>
+<h2>第 19.3 节　树库　⭐</h2>
+<p><strong>本节问题</strong>：文法规则该由 linguist 手写，还是从标注语料里数出来？树库选了后者，代价是什么？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「其中每个句子都标注了解析树的语料库称为树库。」（§19.3）</li><li>「树库通常是这样制作的：先用分析器处理每个句子」（§19.3）</li><li>「树库中的句子隐含地构成了该语言的一部文法。」（§19.3）</li><li>「用于分析宾州树库的文法非常扁平，导致规则数量极多。」（§19.3）</li><li>「在约 4,500 条用于展开 VP 的不同规则中，有分别针对任意长度的 PP 序列以及动词论元各种可能排列方式的规则」（§19.3）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】4,500 条 VP 规则这个数字比任何论证都有力：它说明「从树库读文法」等于放弃概括，把每种论元排列都背一遍。好处是覆盖真实文本，坏处是规则之间不再有语言学关系。</li><li>【我】「先用分析器、再人工校正」这条流水线意味着树库带着分析器的系统性偏好。标注者是在改错，不是在从零画树，所以某些切分惯例会被继承下来。</li><li>【我】扁平文法对 CKY 其实是好事：规则多但每条都很短，二元化之后表格填得快；真正的代价在泛化——没见过的一种 PP 串接就无规则可用。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天从本章图 19.7 摘出 8 条规则，按「扁平/概括」二分类，并写出每条的概括版本（验收：8 条全部有分类与改写，其中 ≥2 条能合并为一条递归规则）。</li><li>本周内用 lab-02 的歧义枚举脚本统计：同一句子在扁平文法与递归文法下的分析数是否相同（验收：给出两个数字并解释差异来源）。</li></ul>
+<hr>
+<h2>第 19.4 节　文法等价与范式　⭐</h2>
+<p><strong>本节问题</strong>：两部文法「一样」是什么意思？为什么可以为了算法方便把文法改写成 CNF 而不丢语言？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「我们说两部文法是强等价的」（§19.4）</li><li>「它们生成相同的字符串集合，并且为每个句子赋予相同的短语结构（仅允许对非终结符符号重新命名）。」（§19.4）</li><li>「为每个句子赋予相同的短语结构，则它们是弱等价的。」（§19.4）</li><li>「每条规则的右部要么有两个非终结符符号，要么有一个终结符符号。」（§19.4）</li><li>「任何上下文无关文法都可以转换为一个弱等价的乔姆斯基范式文法。」（§19.4）</li><li>「有时使用二叉分支实际上能产生更小的文法。」（§19.4）</li><li>「形如 A →A B 的规则称为乔姆斯基附加（Chomsky-adjunction）。」（§19.4）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】强/弱等价的区分是本章最容易被略过、却最影响工程的一句：CNF 转换只保证语言不变，树会变（多了哑节点、单元产生式被抹平）。所以解析出来的树必须做后处理才能跟人写的文法对齐。</li><li>【我】「二叉化有时让文法更小」这个反直觉结论，本质是递归打败了枚举：VP → VP PP 用一条规则覆盖任意长 PP 串，而扁平写法要写无穷多条。这跟编程里用循环替代展开是同一个道理。</li><li>【我】乔姆斯基附加 A → A B 是「同一个符号可以反复套自己」，这解释了为什么中右递归能生成无界长串，也解释了为什么这类文法用 CKY 时需要小心单元产生式。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天手算 L1 中 S → Aux NP VP 的二元化结果，并写出引入的新非终结符（验收：结果与 §19.6.1 的 X1 → Aux NP 一致）。</li><li>本周内在 lab-01 里对同一文法做「先二元化再 CKY」与「扁平规则直接匹配」两种实现，比较一张 6 词句的分析数（验收：两数相同，或写出不同的具体原因）。</li></ul>
+<hr>
+<h2>第 19.5 节　歧义　⭐</h2>
+<p><strong>本节问题</strong>：一个 7 词句为什么会合法地拥有多棵树？为什么这不是 bug？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「歧义是句法分析器面临的最严重的问题。」（§19.5）</li><li>「这里我们介绍一种新的歧义，称为结构歧义」（§19.5）</li><li>「介词短语既可以附着在 NP 内、也可以附着在 VP 内等不同归属所造成的歧义。」（§19.5）</li><li>「这些歧义在真实句子中以复杂的方式交织在一起」（§19.5）</li><li>「对于自然出现的句子存在许多语法正确但语义不合理的分析，这是一个困扰所有分析器的烦人问题。」（§19.5）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】Groucho 那句「穿着睡衣射中大象」之所以好笑，是因为两个结构都合法，只有语义常识能排除一个。这正好把「句法给候选、语义做筛选」的分工演示了一遍。</li><li>【我】附着歧义的数量随 PP 个数指数增长：每个 PP 都能挂到前面任意一个 VP/NP 上，所以真实新闻句里歧义不是偶发，而是常态，只是多数被语义不合理悄悄滤掉。</li><li>【我】并列歧义（old men and women）提醒我括号化不是纯技术细节：切法不同，谈论的对象就不同。这类句子在需求文档和法律条文里是会出事的。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 L1 文法手推「I shot an elephant in my pajamas」的全部合法分析数，写出每棵树的括号串（验收：数目与 lab-02 脚本输出一致，且能指出哪棵对应幽默解读）。</li><li>本周内为一个 PP 串（3 个 PP）写出附着方案数公式并验证（验收：公式给出 Catalan 型计数，脚本枚举结果与之相符）。</li></ul>
+<hr>
+<h2>第 19.6.1 节　转换为乔姆斯基范式　⭐</h2>
+<p><strong>本节问题</strong>：把任意 CFG 塞进「右部只能是两个非终结符或一个终结符」的模子，三步各处理什么？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「CKY 算法要求文法首先处于乔姆斯基范式（CNF）。」（§19.6.1）</li><li>「把文法限制为 CNF 不会造成任何表达能力的损失」（§19.6.1）</li><li>「对于混合了终结符和非终结符的规则，补救办法就是简单地引入」（§19.6.1）</li><li>「右侧只有一个非终结符的规则称为单元产生式。」（§19.6.1）</li><li>「选择替换最左边的一对非终结符纯粹是任意的；任何能得到二元规则的系统性方案都可以。」（§19.6.1）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】三类修补对应三种「不合规形状」：混排（引入哑符号）、单符号（消除单元产生式）、过长（引入新符号做二元切分）。三者都不改语言，只改写法，所以这是纯粹的工程变换。</li><li>【我】单元产生式那一步最危险：它会把词性一路「提升」到 S，于是同一个词在表里同时是 Verb、VP 和 S。这不是冗余，而是 CKY 表必须允许同一非终结符多版本的原因。</li><li>【我】「替换最左边一对是任意的」这句话解释了我 lab-01 里一个困惑：不同的二元化方案会得到不同的哑节点名，树看起来不同，但语言相同——变的是树，不是语言。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天把 L1 的 12 条规则逐条过一遍 CNF 三步，标出每条属于哪一类（验收：12 条全部归类，且写出 S → Aux NP VP 的替换结果）。</li><li>本周内在 lab-01 里加一个断言：转换后不存在右部长度 &gt;2 的规则，也不存在单元产生式（验收：断言通过，输出 <code>cnf_ok=True</code>）。</li></ul>
+<hr>
+<h2>第 19.6.2–19.6.3 节　CKY 识别与分析　⭐</h2>
+<p><strong>本节问题</strong>：一张 (n+1)×(n+1) 的上三角表，怎么装下「所有」分析？识别器与分析器的差别只有两处改动？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「在句法分析中，这些子问题表示输入中检测到的所有成分的解析树。」（§19.6）</li><li>「由于我们的索引方案从 0 开始，自然可以把这些索引看作指向输入词之间的空隙」（§19.6.2）</li><li>「表示整个输入的单元格位于矩阵中的位置 [0,n]。」（§19.6.2）</li><li>「CKY 识别就是按正确的顺序填充分析表。」（§19.6.2）</li><li>「图 19.12 给出的算法是一个识别器，而不是一个分析器。」（§19.6.3）</li><li>「第一处改动是扩充表中的条目，使每个非终结符都配以指向其来源表条目的指针」（§19.6.3）</li><li>「注意，单元格 [0,5] 中的动作表明该输入存在三种不同的分析」（§19.6.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】填表顺序（按列从左到右、列内自底向上）不是随便定的：它保证算 [i,j] 时左边的列与下方的格已经就绪，而且恰好对应「从左往右读词」的在线处理。这个细节让我明白为什么 CKY 能流式跑。</li><li>【我】把识别器变成分析器只加指针与多版本，本质是把「是否存在」升级成「怎样得到」。这是动态规划里常见的一步：值加上回溯信息就成了搜索。</li><li>【我】cell [0,5] 里三个 S 对应三种 PP 归属，这跟我手推的歧义数对上了。CKY 的强项正是把指数级的树压成表里的多项式条指针。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用纸笔填完「Book the flight through Houston」的 15 个上三角格，与图 19.11 逐格比对（验收：15 格全对，错格写明原因）。</li><li>本周内让 lab-01 用回溯指针枚举该句全部树，与图 19.14 描述的三种分析对照（验收：枚举数=3，且三棵树的括号串各不相同）。</li></ul>
+<hr>
+<h2>第 19.6.4 节　CKY 的实践　🔵</h2>
+<p><strong>本节问题</strong>：CNF 在理论上免费，为什么工程上还要额外记账？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「虽然限定为 CNF 在理论上并不成为问题，在实践中却会带来一些不小的麻烦。」（§19.6.4）</li><li>「返回的 CNF 树可能与文法开发者构建的原始文法不一致」（§19.6.4）</li><li>「只要删去新增的哑非终结符并提升它们的女儿结点，就能恢复原来的树。」（§19.6.4）</li><li>「对于一元产生式，直接修改基本的 CKY 算法来处理它们，比存储恢复正确树所需的信息更为方便。」（§19.6.4）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这节讲的是「可逆性」税：为了让算法简单，树被加了哑节点；如果下游还要用树做语义分析，就必须把哑节点擦掉，否则语义规则的左部会对不上。</li><li>【我】两种恢复策略对应两种成本：长规则用后处理删节点（信息可恢复），单元产生式干脆改算法（信息不可恢复）。后者更难但更稳，这种取舍在编译器前端里也常见。</li><li>【我】这段提醒我评估时的一个陷阱：如果拿 CNF 树直接跟人标的树比 PARSEVAL，哑节点会凭空多出成分，精确率被冤枉地拉低。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-01 里加一个 <code>unbinarize</code> 函数，把 CKY 输出树中的哑节点折叠掉（验收：折叠后树中不再出现 X1/X2 这类名字）。</li><li>本周内对比折叠前后的成分数（验收：给出两个数字，并说明差值是哑节点数）。</li></ul>
+<hr>
+<h2>第 19.7 节　基于跨度的神经成分句法分析　🔴</h2>
+<p><strong>本节问题</strong>：CKY 已经能枚举所有树，为什么还需要神经打分？没有文法约束，怎么保证组合出来的仍是一棵树？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「它有一个大问题：它并不告诉我们哪一种分析才是正确的！」（§19.7）</li><li>「训练一个神经分类器为每个成分赋予一个得分，然后用 CKY 的修改版本把这些成分得分组合起来，以找出得分最高的解析树。」（§19.7）</li><li>「但与经典 CKY 不同，该分析器不使用手工编写的文法来约束哪些成分可以被组合」（§19.7）</li><li>「一种标准的做法是直接用第一个子词单元作为整个词的表示」（§19.7.1）</li><li>「这种贪心方法不保证能产生一棵树」（§19.7.2）</li><li>「Gaddy et al. (2018) 在实验中发现，95% 的预测括号结构能形成有效的树。」（§19.7.2）</li><li>「神经模型似乎在从跨度到非终结符的映射过程中学到了这类上下文约束。」（§19.7.2）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】这里的分工变了：文法不再管「哪些组合合法」，只管「怎么组合」的递归骨架；合法性判断被一个 MLP 从数据里学走。等于把语言学约束换成了统计先验。</li><li>【我】跨度表示用「终点减起点」的向量差，而不是把整段词喂进模型，这一点很省：它让任意长度跨度的打分都是 O(1) 次拼接，不必为每个候选跑一遍编码器。</li><li>【我】95% 那个数字说的是「贪心解码也能凑出树」，但剩下 5% 就是硬伤——所以生产系统仍用 CKY 版递推，贪心只当快速基线。这个差距我在 lab-04 里想亲手测一次。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天把 (19.6) 的跨度向量式与 (19.7) 的 MLP 打分式手抄一遍，标出每个矩阵的形状（验收：两个公式的维度全部写对，且能说明为何输出维等于标号数）。</li><li>本周内在 lab-04 里比较贪心解码与 CKY 递推的合法树比例（验收：两个比例都有数字，且与书中 95% 对照写出差异）。</li></ul>
+<hr>
+<h2>第 19.8 节　分析器的评估　⭐</h2>
+<p><strong>本节问题</strong>：两棵「看起来差不多」的树，怎么用一个数字说清谁更好？为什么还要单独数交叉括号？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「评估为句子分配单个解析树的分析器的标准工具是 PARSEVAL 指标（Black et al., 1991）。」（§19.8）</li><li>「PARSEVAL 需要为测试集中的每个句子提供人工标注的参考（或“金标准”）解析树」（§19.8）</li><li>「为了比较使用不同文法的分析器，PARSEVAL 指标包含一个规范化算法，用于去除可能因文法而异的信息」（§19.8）</li><li>「PARSEVAL 指标的规范实现称为 evalb（Sekine and Collins, 1997）。」（§19.8）</li><li>「而假设分析中括号结构为 (A (B C)) 的成分的数目。」（§19.8）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】PARSEVAL 把一个成分记成三元组（起点、终点、标号），三者全同才算对。这等于说「切对了但标错了」和「标对了但切错了」都是零分，比词级 F1 严格得多。</li><li>【我】交叉括号单独统计很有道理：它捕捉的是「结构关系被搞反」这类错误，而这种错误在只看成分集合时可能被高分掩盖——成分大多对，但层级关系全错。</li><li>【我】规范化那一步是跨系统比较的前提，也是最容易被做手脚的地方：删不删虚词、是否折叠单元产生式，能让同一个 parser 的 F1 差好几个点。读论文时必须确认用了哪套设置。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天手算一个 5 成分树与一个只差一处的假设树的带标注精确率/召回率/F1（验收：三个数都写出，且 F1 用 2PR/(P+R) 复算一致）。</li><li>本周内在 lab-05 里实现 PARSEVAL 并按「折叠哑节点前/后」各算一次（验收：两组分数都落盘，差值写进 README）。</li></ul>
+<hr>
+<h2>第 19.9 节　中心词与中心词查找　🔵</h2>
+<p><strong>本节问题</strong>：成分是「一串词」，那这一串的「头」是哪个词？为什么这件事既能手写规则又能算出来？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「句法成分可以与一个词汇中心词相关联；N 是 NP 的中心词，V 是 VP 的中心词。」（§19.9）</li><li>「中心词沿着解析树向上传递；因此，解析树中的每个非终结符都标注有一个单词，即其词汇中心词。」（§19.9）</li><li>「不是在文法本身中规定中心词规则，而是在具体句子的解析树上下文中动态识别中心词。」（§19.9）</li><li>「当前大多数系统依赖一套简单的手写规则」（§19.9）</li></ul>
+<h3>思考区（必须自己的话；【我】开头）</h3>
+<ul><li>【我】中心词是把成分树翻译成依存树的接口：一旦每个短语都知道自己的头，成分与依存两种表示就能互转，第 20 章的路由此接上。</li><li>【我】NP 的中心词规则里那条「否则从左到右找第一个 NP」暴露了英语的右分支偏好，也暴露了这套规则是经验性的——它不解释为什么，只保证在宾州树库上跑得通。</li><li>【我】「规则写在文法里」与「分析完再遍历标注」的差别是声明式与过程式：前者要求文法设计者预先想清每种短语的头，后者把判断推迟到有整棵树的时候，工程上更容易改。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天对图 19.4 的树手工执行 Collins 的 NP 中心词规则，标出每个 NP 的头词（验收：3 个 NP 全部标注，且写出每步命中的是哪条规则）。</li><li>本周内把 lab-02 输出的树全量跑一遍中心词查找，统计有多少节点落到「否则返回最后一个词」这条兜底（验收：给出比例，并解释兜底为何偏高或偏低）。</li></ul>
+<hr>
+<h3>全章 takeaway（6 条）</h3>
+<ol><li>「成分」不是描述上的方便，而是不引入它就无法陈述分布事实——替换测试是这条论证的操作版本。</li><li>CFG 的全部表达力与全部局限都来自「左部单个非终结符」：规则看不见邻居，因此可独立施用，也因此必须靠组合爆炸承担歧义。</li><li>强等价管树、弱等价只管串。CNF 转换是弱等价，所以算法拿到的树不是人写的树，必须做可逆性记账。</li><li>CKY 的价值不是「找到一棵树」，而是用多项式大小的表压住指数多的树；识别器与分析器只差指针与多版本。</li><li>神经跨度分析器把「哪些组合合法」从文法移交给学习到的打分，CKY 只保留组合骨架；贪心解码 95% 能成树，但剩下 5% 是硬伤。</li><li>PARSEVAL 的三元组判等 + 交叉括号，是对「结构对不对」而非「词对不对」的度量；规范化设置决定分数能不能跨系统比。</li></ol>
+<hr>
+<h3>复习优先级依据</h3>
+<ul><li>⭐（19.1、19.2、19.3、19.4、19.5、19.6.1、19.6.2–19.6.3、19.8）：章末小结逐条覆盖，且 §19.6 有可手填的 15 格表、§19.8 有可手算的 P/R/F1，属必掌握。</li><li>🔴（19.7）：全章论证的落点（CKY 枚举但不选择），且与第 7 章 Transformer 直接相连，是理解现代 parser 的关键。</li><li>🔵（19.2.1、19.6.4、19.9）：形式定义、工程记账与通往第 20 章的接口，本章小结仅一句带过，了解即可。</li><li>⚪：无（历史注记按 🔵 处理，不单列）。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

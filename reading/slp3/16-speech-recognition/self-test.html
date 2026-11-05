@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 16 章 · 提取自测（11 题 + 协议） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 16 章 自动语音识别</span> <span>/</span> <span class="cur">第 16 章 · 提取自测（11 题 + 协议）</span></nav>
+<article class="prose"><h1>第 16 章 · 提取自测（11 题 + 协议）</h1>
+<h2>提取自测协议（怎么做才算数）</h2>
+<ol><li><strong>合上书、遮住 book-notes.md 与 cards.md</strong>，只留一张白纸和笔；手机计时，每题限 90 秒。</li><li>先写答案再翻笔记；不会的题先在纸上画个「·」，不许边看边补。</li><li>判分只认三档：<strong>对（能写出关键量）/ 半对（方向对但数字或条件错）/ 错</strong>。半对按 0.5 记。</li><li>错题当天写进 <code>actions.md</code> 的「错题归因」区，第二天只重做错题。</li><li>11 题满分 11 分；≥9 分算过，≤7 分重读对应节块。</li></ol>
+<hr>
+<h2>一、概念题（4 题）</h2>
+<p><strong>1.</strong> 判断一个语音识别任务难不难，先看哪四个旋钮？各举一个极端例子。</p>
+<blockquote><p>要点：词表（yes/no 两词 vs 开放域 6 万词以上）、说话人（对机器说/朗读 vs 4 人晚餐聚会）、信道（近场安静 vs 电话/街道远场）、口音与类别（标准成年 vs 方言/儿童）。全章图 16.1 的 12 行就是取值组合；朗读英语可到 1.4%，晚餐聚会可到 25.5%。</p></blockquote>
+<p><strong>2.</strong> 为什么「逐帧取最大概率符号再折叠」不等于最优解码？</p>
+<blockquote><p>要点：逐帧 argmax 最大化的是单条对齐路径的概率；解码目标是输出串的概率，而折叠函数多对一，一个输出串的概率是其名下所有路径概率之和。两者的 argmax 可能落在不同输出上（lab-02 已构造出实例）。</p></blockquote>
+<p><strong>3.</strong> 空白符在 CTC 里承担哪两个职责？去掉它会分别出什么问题？</p>
+<blockquote><p>要点：①占位静音/无字帧，否则静音段会被强行写成某个字母；②分隔相邻的相同字母，否则 dinner 折叠成 diner。二者缺一即错。</p></blockquote>
+<p><strong>4.</strong> HuBERT 的「自监督」监督信号从哪来？为什么说它并非完全无监督？</p>
+<blockquote><p>要点：信号来自对数据自身做 k-means 得到的离散簇编号：第一阶段用 39 维 MFCC 聚 100 类，第二阶段用第 6 层 Transformer 输出聚 500 类，训练目标是掩码帧的簇分类。簇数 k 由人设定，且第二阶段依赖第一阶段的模型，故仍有人工介入。</p></blockquote>
+<h2>二、公式与计算题（4 题）</h2>
+<p><strong>5.</strong> 卷积核宽 3、帧移 10ms、帧长 25ms，感受野是多少？写出通式。</p>
+<blockquote><p>要点：(k−1)×帧移 + 帧长 = 2×10 + 25 = 45ms。书中写作 10+10+12.5+12.5。</p></blockquote>
+<p><strong>6.</strong> Whisper 前端：30s 音频、10ms 帧移、conv1 stride 1、conv2 stride 2。写出帧数变化与输出帧率。</p>
+<blockquote><p>要点：3000 帧 → 1500 帧；1500 帧覆盖 30s，即 20ms/帧，压缩 2 倍。HuBERT 对照：stride 连乘 320，16000/320=50Hz，也是 20ms/帧。</p></blockquote>
+<p><strong>7.</strong> 参考转写 13 词，对齐得 S=6、I=3、D=1，WER 是多少？若某系统插入极多，WER 能否超 100%？</p>
+<blockquote><p>要点：(6+3+1)/13 = 76.92%；能，因分母是参考词数，插入不受分母约束。</p></blockquote>
+<p><strong>8.</strong> 解码打分 score = (1/|Y|_c)[log P(Y|X) + λ log P_LM(Y)]。去掉 1/|Y|_c 会发生什么？λ 怎么定？</p>
+<blockquote><p>要点：每多一个字符就多乘一个 &lt;1 的概率，长句得分被系统性压低，解码偏向短输出（吞字）；λ 在留出集上调优，因为声学与语言模型两路分数的尺度不同。</p></blockquote>
+<h2>三、辨析题（3 题）</h2>
+<p><strong>9.</strong> CTC 与注意力编解码器在「语言模型」上的差别是什么？各自后果？</p>
+<blockquote><p>要点：CTC 假设各帧输出条件独立，等于没有输出间依赖建模，因此不在数据上隐式学到 LM，必须外挂；AED 的每一步都以历史输出为条件，隐式学到面向输出域（字母/标记）的 LM，但仍偏短句，需要长度归一化与外部 LM 补足。</p></blockquote>
+<p><strong>10.</strong> 为什么注意力模型难做流式，而 CTC / RNN-T 可以？</p>
+<blockquote><p>要点：注意力要为整段输入算隐状态、且解码每一步都要对全序列做注意力，必须等输入结束；CTC 逐帧局部发射，可立即从左到右输出；RNN-T 的预测器只看已输出标记、编码器只看当前及历史帧，故因果、可增量。</p></blockquote>
+<p><strong>11.</strong> MAPSSWE 与 McNemar 的适用条件差在哪？连续语音里为什么常用前者？</p>
+<blockquote><p>要点：McNemar 要求错误彼此独立，而连续语音中相邻词的错误高度相关，前提不成立；MAPSSWE 按片段配对，用「两侧都正确」的词或话轮边界切分，使片段间近似独立，再对差值做单样本 z 检验。</p></blockquote>
+<hr>
+<h2>四、例题重做记录（对应卡 4 / 卡 7 / 卡 18）</h2>
+<table><tr><th>例题</th><th>首次结果</th><th>用到的工具</th><th>复核结论</th></tr><tr><td>45ms 感受野</td><td>算成 30ms（漏了两端半帧）</td><td>卡 4 通式</td><td>已改正，通式记住：(k−1)×帧移+帧长</td></tr><tr><td>Whisper 3000→1500</td><td>对，但帧率写成 10ms</td><td>lab-03 核算表</td><td>已改正为 20ms/帧</td></tr><tr><td>WER 76.9%</td><td>对</td><td>lab-01 DP 复算</td><td>与书中一致（76.92%）</td></tr></table>
+<h2>五、判分与下一步</h2>
+<ul><li>得分 = 对题数 + 0.5×半对数；≥9 分：进入 <code>actions.md</code> 的第 2、3 条（把 WER 与 CTC 落到代码）。</li><li>≤7 分：重读 §16.5.1–16.5.3 与 §16.6，并先做 lab-02 的折叠练习再重测。</li><li>所有错题在 <code>actions.md</code> 的「错题归因」区留一行：题号 / 错因（概念混 / 公式记错 / 条件漏）/ 补救动作。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

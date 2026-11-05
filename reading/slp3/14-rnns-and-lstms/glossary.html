@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>术语表 · 第 14 章 RNN 与 LSTM · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span> <span>/</span> <span class="cur">术语表 · 第 14 章 RNN 与 LSTM</span></nav>
+<article class="prose"><h1>术语表 · 第 14 章 RNN 与 LSTM</h1>
+<blockquote><p>释义用我自己的话写，英文并列原文用词，出处给节号。共 30 条，按阅读顺序排列。</p></blockquote>
+<table><tr><th>#</th><th>术语</th><th>English</th><th>释义（我的说法）</th><th>出处</th></tr><tr><td>1</td><td>循环神经网络</td><td>recurrent neural network (RNN)</td><td>连接里存在回路的网络：某一步的取值直接或间接用到自己更早的输出</td><td>§14.1</td></tr><tr><td>2</td><td>Elman 网络</td><td>Elman network</td><td>在前馈网络的隐藏层上加一条「上一步隐状态」输入的早期循环结构</td><td>§14.1</td></tr><tr><td>3</td><td>隐藏层 / 隐状态</td><td>hidden layer / hidden state</td><td>每步被整体重写的定长向量，充当整段历史的压缩记忆</td><td>§14.1</td></tr><tr><td>4</td><td>循环连接</td><td>recurrent connection</td><td>把 t−1 步隐状态送回 t 步的那条边，进图时画成虚线</td><td>§14.1</td></tr><tr><td>5</td><td>时间共享权重</td><td>weight sharing across time</td><td>W/U/V 在所有步是同一组参数，长度不改变参数量</td><td>§14.1.1</td></tr><tr><td>6</td><td>前向推断</td><td>forward inference</td><td>从序列开头逐步推进到结尾，每步产出一个输出分布</td><td>§14.1.1</td></tr><tr><td>7</td><td>展开（沿时间）</td><td>unfolding</td><td>把循环结构按步摊开成一张深前馈图，从而可用常规反传训练</td><td>§14.1.2</td></tr><tr><td>8</td><td>随时间反向传播</td><td>backpropagation through time (BPTT)</td><td>在展开图上倒着走，误差沿时间累加回传</td><td>§14.1.2</td></tr><tr><td>9</td><td>截断 BPTT</td><td>truncated BPTT</td><td>把长序列切成定长片段分别训练，跨片段依赖不再回传</td><td>§14.1.2</td></tr><tr><td>10</td><td>语言模型</td><td>language model</td><td>给定前文，输出词表上下一个词的概率分布</td><td>§14.2</td></tr><tr><td>11</td><td>自监督</td><td>self-supervised</td><td>标签由数据自身错位产生，不需要人工标注</td><td>§14.2.2</td></tr><tr><td>12</td><td>教师强制</td><td>teacher forcing</td><td>训练时把标准答案当下一步输入，而非模型自己的输出</td><td>§14.2.2</td></tr><tr><td>13</td><td>暴露偏差</td><td>exposure bias</td><td>训练输入全为真值、推断输入含自估错误，两者分布不一致</td><td>§14.2.2</td></tr><tr><td>14</td><td>困惑度</td><td>perplexity (ppl)</td><td>每词平均分支数的指数形式，越低越好；等价于交叉熵取 exp</td><td>§14.2.2</td></tr><tr><td>15</td><td>权重绑定</td><td>weight tying</td><td>输出层矩阵与输入嵌入矩阵共用一套参数（V = Eᵀ）</td><td>§14.2.3</td></tr><tr><td>16</td><td>序列标注</td><td>sequence labeling</td><td>为序列每个位置各给一个标签，逐位置算交叉熵</td><td>§14.3.1</td></tr><tr><td>17</td><td>序列分类</td><td>sequence classification</td><td>整段序列给一个标签，常用末尾隐状态或池化表示</td><td>§14.3.2</td></tr><tr><td>18</td><td>池化</td><td>pooling</td><td>对多步隐状态做平均或取最大，合成一个定长向量</td><td>§14.3.2</td></tr><tr><td>19</td><td>端到端训练</td><td>end-to-end training</td><td>只有最终任务给损失，全部中间层（含嵌入）一起更新</td><td>§14.3.2</td></tr><tr><td>20</td><td>自回归生成</td><td>autoregressive generation</td><td>把上一步采样结果追加为输入，循环预测下一个词元</td><td>§14.3.3</td></tr><tr><td>21</td><td>堆叠 RNN</td><td>stacked RNN</td><td>把一层的整段输出作为下一层的整段输入，逐层抽象</td><td>§14.4.1</td></tr><tr><td>22</td><td>双向 RNN</td><td>bidirectional RNN</td><td>左右各跑一个独立 RNN，同一时刻两个表示拼接使用</td><td>§14.4.2</td></tr><tr><td>23</td><td>梯度消失</td><td>vanishing gradient</td><td>误差沿时间连乘、谱半径小于 1 时按指数衰减到 0 附近</td><td>§14.5</td></tr><tr><td>24</td><td>梯度爆炸</td><td>exploding gradient</td><td>连乘因子大于 1 导致梯度指数增长，可用范数裁剪压制</td><td>§14.5</td></tr><tr><td>25</td><td>门 / 掩码</td><td>gate / mask</td><td>取值 0–1 的向量，逐点乘用来软性放行或抹除信息</td><td>§14.5</td></tr><tr><td>26</td><td>细胞状态</td><td>cell state</td><td>LSTM 中独立于隐状态的长期记忆通道，走加法更新</td><td>§14.5.1</td></tr><tr><td>27</td><td>遗忘门 / 输入门 / 输出门</td><td>forget / input / output gate</td><td>分别控制旧记忆留多少、新内容写多少、当前读出多少</td><td>§14.5.1</td></tr><tr><td>28</td><td>编码器-解码器</td><td>encoder-decoder</td><td>编码器把源序列压成表示，解码器据此自回归生成目标序列</td><td>§14.7</td></tr><tr><td>29</td><td>上下文向量</td><td>context vector</td><td>解码时可用的源侧信息载体；固定版为编码器末状态，注意力版为加权和</td><td>§14.7、§14.8</td></tr><tr><td>30</td><td>注意力 / 点积注意力</td><td>attention / dot-product attention</td><td>用解码器状态与各编码器状态打分并 softmax 归一，再对编码器状态加权求和；打分取内积即点积版</td><td>§14.8</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

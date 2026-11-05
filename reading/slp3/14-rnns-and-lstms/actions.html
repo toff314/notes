@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>行动清单 · 第 14 章 RNN 与 LSTM · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 14 章 RNN 与 LSTM</span> <span>/</span> <span class="cur">行动清单 · 第 14 章 RNN 与 LSTM</span></nav>
+<article class="prose"><h1>行动清单 · 第 14 章 RNN 与 LSTM</h1>
+<blockquote><p>5 条行动，每条已执行并留有真实产物。产物路径相对于 <code>labs/</code>。执行日期见各行。</p></blockquote>
+<ol><li><strong>核对简单 RNN 的形状、参数共享与上下文衰减</strong></li></ol>
+<ul><li><strong>日期</strong>：2026-11-02</li><li><strong>对应</strong>：§14.1、§14.1.1（C14-01、C14-03、C14-04）</li><li><strong>动作</strong>：在 <code>lab-01/lab01_rnn_forward.py</code> 中固定 W/U/V（d_in=6, d_h=4, d_out=5, T=6），先用逐步 for 循环实现前向，再用矩阵化实现一次，逐元素比对；随后在第 1 步注入 δ，观察它对第 t 步隐状态与输出概率的影响。</li><li><strong>验收</strong>：① <code>out/summary.json</code> 中 <code>loop_vs_vectorized_max_abs_diff</code> 为 0；② 三个权重矩阵形状与 <code>shapes</code> 字段一致；③ <code>out/influence_decay.csv</code> 六行齐全。</li><li><strong>真实结果</strong>：参数量 60（4×6 + 4×4 + 5×4），与 T 无关；两种实现差 0.0；softmax 行和偏差 2.2e-16；第 6 步扰动对输出的影响为第 1 步的 <strong>7.0%</strong>（0.005393 → 0.000379），隐状态范数影响从 0.1056 掉到 0.0041；隐状态绝对值均值 0.623，tanh 饱和比例 29.2%。</li><li><strong>结论</strong>：参数确实跨时间共享；单步扰动的影响随距离单调衰减，6 步就已掉到 7%——「记忆」在简单 RNN 里衰减得比直觉快得多。</li><li><strong>反思</strong>：T=6 太短，衰减曲线只有 6 个点，看不出是指数还是线性。想确认「指数衰减」需要把 T 拉到 30 以上，这次没做。</li></ul>
+<ol><li><strong>手写 BPTT 并用有限差分校验，再量化教师强制的代价</strong></li></ol>
+<ul><li><strong>日期</strong>：2026-11-04</li><li><strong>对应</strong>：§14.1.2、§14.2.2（C14-06、C14-08、C14-09）</li><li><strong>动作</strong>：在 <code>lab-02/lab02_bptt_gradcheck.py</code> 中不用自动微分框架，手写反向循环（含 dh_next 累加），对 W/U/V 的 36 个分量做中心差分核对；训练一个字符级 RNN 语言模型（V=22, d_h=24, d_e=16），分别用教师强制与自由运行评估。</li><li><strong>验收</strong>：① <code>out/grad_check.json</code> 的 <code>max_relative_error_on_nontrivial</code> &lt; 1e-6；② <code>out/teacher_forcing.json</code> 两个 ppl 字段都已填；③ <code>out/loss_curve.csv</code> 的损失单调下降（允许小幅抖动）。</li><li><strong>真实结果</strong>：损失 3.1409；36 个分量中 28 个梯度绝对值 &gt; 1e-3；最大绝对误差 2.55e-11，非平凡项最大相对误差 <strong>4.27e-9</strong>；反向误差范数从 1.732 逐回溯步降到 1.48e-5（每步约 ×0.37–0.05）；教师强制 ppl <strong>1.078</strong> vs 自由运行 ppl <strong>9787.5</strong>；首轮损失 2.440 → 末轮 0.122。</li><li><strong>结论</strong>：手写 BPTT 与数值梯度一致到 1e-9，可以信任；训练/推断的输入分布差异造成三个数量级以上的困惑度落差，暴露偏差是结构性的。</li><li><strong>反思</strong>：9787 这个数被小语料 + 过拟合严重放大（只 8 句模板句重复 4 次），不能当作「真实模型也会差这么多」的证据。另外我漏了一次实验：scheduled sampling，本该验证它能否缩小这个缺口。</li></ul>
+<ol><li><strong>用延迟回忆任务对比简单 RNN 与 LSTM 的长距离能力</strong></li></ol>
+<ul><li><strong>日期</strong>：2026-11-07</li><li><strong>对应</strong>：§14.5、§14.5.1（C14-15、C14-16）</li><li><strong>动作</strong>：在 <code>lab-03/lab03_lstm_vs_rnn.py</code> 中用自写的小型自动微分引擎实现两种单元（K=4, d_h=32, 2 个种子, 800 步），任务为「标记 → 目标 → lag−2 个干扰 → 输出目标」；先在 lag=8 上扫 lr ∈ {0.005, 0.01, 0.02} 选参，再把 lag 从 4 扫到 20；训练后测损失对第 0 步隐状态的梯度范数。</li><li><strong>验收</strong>：① <code>out/accuracy_by_lag.csv</code> 八行齐全；② <code>out/grad_check.json</code> 两种单元的梯度相对误差 &lt; 1e-4；③ <code>out/grad_norm_by_step.csv</code> 可从第 0 步读到末步。</li><li><strong>真实结果</strong>：lag=4/8 两者均 100%；<strong>lag=12：RNN 71.9%（种子 1.000/0.438）vs LSTM 100%</strong>；<strong>lag=20：RNN 32.8% vs LSTM 88.3%</strong>；对首步梯度的保留率 RNN 5.77e-5、LSTM 0.203，差约 3500 倍；LSTM 梯度校验误差 7.8e-6（RNN 1.9e-9，LSTM 的手推反向更难写对）。</li><li><strong>结论</strong>：在纯记忆任务上，LSTM 的优势随延迟增长而扩大，且与「首步梯度保留率」的差异同向——支持 §14.5 的机理解释，而不只是「LSTM 就是好」。</li><li><strong>反思</strong>：RNN 在 lag=12 上两个种子差到 1.000 vs 0.438，说明结论对初始化很敏感，单种子实验不可信。我没有跑到 lag=40，也没测「梯度裁剪能否救 RNN」——这是遗留的空白。</li></ul>
+<ol><li><strong>比较池化方式，并检验权重绑定的收益</strong></li></ol>
+<ul><li><strong>日期</strong>：2026-11-10</li><li><strong>对应</strong>：§14.2.3、§14.3.2（C14-10、C14-12）</li><li><strong>动作</strong>：在 <code>lab-04/lab04_pooling_tying.py</code> 中做两件事：A. 线索固定在位置 0、后接 11 个噪声词的分类任务，比较「取末状态 / 平均池化 / 最大池化」在长度 12 与 40 下的准确率；B. 字符级语言模型（V=16, d=32），比较输出层绑定与不绑定的参数量与困惑度，并对绑定版扫 3 个学习率；三条反向路径全部用有限差分核对。</li><li><strong>验收</strong>：① <code>out/pooling_compare.csv</code> 六行齐全；② <code>out/weight_tying.json</code> 含 runs 与 lr_sweep；③ <code>out/grad_check.json</code> 三项相对误差 &lt; 1e-6。</li><li><strong>真实结果</strong>：长度 12：last 67.5% / <strong>mean 100%</strong> / max 70.5%；长度 40：last 52.0% / <strong>mean 69.5%</strong> / max 51.5%；绑定后参数 3120 → 2608（<strong>−16.4%</strong>，省 512），验证 ppl <strong>3.413 → 2.654</strong>；但 lr 升到 0.05 后两者都崩（未绑定 6.15、绑定 8.61），lr=0.1 时 241 / 297；梯度校验最大相对误差 5.95e-8。</li><li><strong>结论</strong>：末状态确实不擅长跨远距离搬运信息，池化在两类长度上都更好，且平均池化对长度最不敏感；权重绑定在小字符表上同时省参数和降困惑度，方向与书中一致。</li><li><strong>反思</strong>：绑定版在高学习率下比不绑定更不稳（8.61 vs 6.15），书中只说「更好」，没说稳定性代价——这一条是我的增量发现。另外 164 字符的语料太小，ppl 的绝对数值没有参考价值，只能看相对关系。</li></ul>
+<ol><li><strong>搭编码器-解码器，加注意力，并检验固定瓶颈的代价</strong></li></ol>
+<ul><li><strong>日期</strong>：2026-11-13</li><li><strong>对应</strong>：§14.7、§14.8（C14-17、C14-18、C14-20）</li><li><strong>动作</strong>：在 <code>lab-05/</code> 中先写 156 行的迷你自动微分引擎 <code>minigrad.py</code>（支持 matmul/tanh/softmax-CE 等），再实现编码器-解码器处理「输入序列倒序输出」任务（长度 3–8 训练，10/12 为未见长度）；两种模式：<code>fixed</code> 只用编码器末状态当上下文，<code>attn</code> 每步用点积注意力加权全部编码器隐状态；输出注意力热图与逐长度完全正确率。</li><li><strong>验收</strong>：① <code>out/training_curve.csv</code> 两个 mode 各 ≥10 个点；② <code>out/attention_weights.csv</code> 与 <code>fig_attention_heatmap.png</code> 存在且行数对齐；③ <code>out/accuracy_by_length.csv</code> 五行齐全。</li><li><strong>真实结果</strong>：<code>fixed</code> 损失从 1.483（step 25）降到 <strong>0.4836</strong>（step 500），step 600 回升到 0.7929；<code>attn</code> 从高位降到 <strong>0.0141</strong>（step 550），但随后反弹到 0.416（step 600），训练不稳；<strong>逐位完全正确率：两模式在所有长度上均为 0.000</strong>；唯一可查样例 src=[2,4,1,2,2,2] → tgt=[2,2,2,1,4,2] 的 pred 与该 tgt <strong>完全一致</strong>，注意力呈近似一对一角峰（最大 α 常 &gt; 0.99）。</li><li><strong>结论</strong>：<strong>未跑通</strong>。训练损失下降到 0.014 说明模型确实学到了倒序映射（样例预测正确也印证），但评估口径把所有样本判为错误，最可能是 greedy 输出带了 EOS/PAD 尾位、与 tgt 长度对齐不上。因此「注意力优于固定瓶颈」这个对照<strong>在本 lab 里没有得到可用数据</strong>，不能当作已验证结论。</li><li><strong>反思</strong>：这是我这一轮最该修的地方——损失与准确率的矛盾在跑完时没被识别，说明我把「训练收敛」当成了「任务成功」。修法：评估时截断到第一个 EOS 再比长度，并把 attn 的最后 100 步做早停。已记录为未完成项，不在本次笔记里伪造成「已复现」。</li></ul>
+<hr>
+<h2>错题/薄弱点归因表</h2>
+<table><tr><th>#</th><th>现象</th><th>归因类型</th><th>具体原因</th><th>修补动作</th></tr><tr><td>1</td><td>行动 1 只看到 6 步衰减，无法判断是指数还是线性</td><td>知识缺口</td><td>不知道 RNN 隐状态雅可比谱半径决定衰减速率（§14.5 才讲）</td><td>读完 §14.5 后重跑 T=30，拟合 log‖δh_t‖ 对 t 的斜率</td></tr><tr><td>2</td><td>行动 2 的 9787 ppl 一开始被当成真实模型的表现</td><td>概念混淆</td><td>把小语料过拟合下的自由运行结果外推为普遍结论</td><td>记住：暴露偏差看的是「同模型两种跑法的比值」，不是绝对值</td></tr><tr><td>3</td><td>行动 3 LSTM 的梯度校验误差 7.8e-6，比 RNN 的 1.9e-9 差三个数量级</td><td>操作失误</td><td>四门手推反向时把遗忘门对 c_{t−1} 的偏导漏了一项，靠数值核对才发现</td><td>重推四门反向，逐项对照 c_t = f⊙c_{t−1} + i⊙g</td></tr><tr><td>4</td><td>行动 3 只看两个种子就下「LSTM 更强」的结论</td><td>方法缺陷</td><td>未做种子间方差分析，lag=12 的 RNN 两 seed 相差 0.56</td><td>每个配置至少 5 个种子，报均值±标准差</td></tr><tr><td>5</td><td>行动 5 训练损失 0.014 却报出 0% 准确率，没在当场发现</td><td>流程缺陷</td><td>缺少「训练指标 vs 评估指标」一致性断言</td><td>在评估后加断言：若 loss &lt; 0.1 而 acc = 0，直接报错停下</td></tr><tr><td>6</td><td>行动 5 attn 损失在 step 550 后反弹到 0.416</td><td>优化不稳</td><td>未做梯度裁剪/早停，学习率对小模型偏大</td><td>加 grad-clip 与「连续 3 次验证不降即停」</td></tr><tr><td>7</td><td>§14.7 解码器方程在抽取文本中断行，我一开始读错了 c 的注入位置</td><td>材料缺陷</td><td>中文 PDF 转文本导致上下标错位</td><td>以编码器-解码器经典式重建，并用 lab-05 的 fixed 模式行为反证</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 20 章 依存句法分析 · 衍生选题 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 20 章 依存句法分析 · 读书笔记包</span> <span>/</span> <span class="cur">第 20 章 依存句法分析 · 衍生选题</span></nav>
+<article class="prose"><h1>第 20 章 依存句法分析 · 衍生选题</h1>
+<blockquote><p>选题不是小节复述，而是「这一章能撑起哪篇独立文章」。每条给出主题串、书籍锚点、为什么值得写、与已有内容的增益、素材种子、缺口、体量建议。</p><p>状态：<code>open</code>（未写）/ <code>drafting</code>（在写）/ <code>published</code>（已发布）。</p></blockquote>
+<h3>选题 1　为什么中文信息抽取该用依存树而不是正则</h3>
+<ul><li><strong>主题串</strong>：<code>中文 NLP</code> × <code>信息抽取</code> × <code>句法结构</code></li><li><strong>书籍锚点</strong>：§20（论元直连谓语、免于为语序写规则）、§20.1（NSUBJ/OBJ/NMOD 五类核心关系）</li><li><strong>为什么值得写</strong>：中文抽取教程几乎都从正则和分句讲起，读者上手快但很快撞墙（语序一变全废、定语套定语）。把「中心词—依存词」当作替代锚点讲清楚，能直接解决一批人的真实痛点。</li><li><strong>与已有内容的增益</strong>：现有文章多讲「依存分析是什么」，少讲「什么时候它比规则更划算」。本文补的是选型判断，不是概念科普。</li><li><strong>素材种子</strong>：自己流水线里 3 条位置规则的失败案例（被动句、存现句、「把」字句）；改写前后的召回对比。</li><li><strong>缺口</strong>：需要中文 UD 树库上 NSUBJ/OBJ 的实际覆盖率数字；需要至少一个反例说明依存也会错（分词边界导致的错误传播）。</li><li><strong>体量建议</strong>：3500–4500 字，含 2 个改写前后对照表、1 段代码。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>选题 2　LAS 与 UAS 的差值在说什么</h3>
+<ul><li><strong>主题串</strong>：<code>评估指标</code> × <code>错误归因</code> × <code>NLP 工程</code></li><li><strong>书籍锚点</strong>：§20.4（EM 太粗、LAS/UAS/LS 定义、6 弧例子）</li><li><strong>为什么值得写</strong>：大多数团队只报一个「准确率」，出了错不知道是结构错还是标签错。两个数的差值本身就是一个免费的诊断器，这个视角很少被写成文章。</li><li><strong>与已有内容的增益</strong>：把「指标」从排行榜数字变成调试工具，读者能立刻在自己项目里用。</li><li><strong>素材种子</strong>：lab-05 的逐词四列表（gold_head, sys_head, gold_label, sys_label）；一个「UAS 0.83 / LAS 0.67」的构造例子。</li><li><strong>缺口</strong>：需要多语言/多领域的 LAS−UAS 差值经验区间，否则读者无法判断自己的差值算不算大。</li><li><strong>体量建议</strong>：2500–3500 字，含 1 个 confusion 表、1 个诊断流程图。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>选题 3　贪心解析器的原罪：exposure bias 与束搜索的边界</h3>
+<ul><li><strong>主题串</strong>：<code>结构化预测</code> × <code>贪心解码</code> × <code>序列决策</code></li><li><strong>书籍锚点</strong>：§20.2（贪心、不回溯）、§20.2.4（束搜索按路径累计分排序）</li><li><strong>为什么值得写</strong>：「贪心有偏、束搜索能救」是常识，但「束搜索救不了什么」很少有人说清。这个边界对做解码的人价值很高。</li><li><strong>与已有内容的增益</strong>：把 beam search 从「调参旋钮」还原成「在模型自己分布里搜」，解释为什么宽度加到 16 也救不回训练/推理不一致。</li><li><strong>素材种子</strong>：lab-02 的步号延迟数据；束宽 1/2/4 的匹配率对比（待补）。</li><li><strong>缺口</strong>：需要一个小实验证明「束宽增大后收益迅速饱和」；需要引用动态神谕的原始工作，本次未核。</li><li><strong>体量建议</strong>：3000–4000 字，含 1 张束宽-准确率曲线。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>选题 4　MST 求依存树：收缩—展开为什么是对的</h3>
+<ul><li><strong>主题串</strong>：<code>图算法</code> × <code>组合优化</code> × <code>依存分析</code></li><li><strong>书籍锚点</strong>：§20.3.1（生成树、两个直觉、CLE）</li><li><strong>为什么值得写</strong>：CLE 的伪代码到处都是，讲清「为什么减权重」「为什么递归」的中文材料很少。这是一篇能让人真正会用而不是会背的文章。</li><li><strong>与已有内容的增益</strong>：用「换一条入弧的增益」这个经济学式解释替代纯形式证明，降低理解门槛。</li><li><strong>素材种子</strong>：lab-03 的收缩轨迹、300 张随机图对拍结果、一个手算两轮收缩的小例子。</li><li><strong>缺口</strong>：需要补一个含多重环的反例，证明必须递归；需要核对原始论文的复杂度表述。</li><li><strong>体量建议</strong>：4000–5000 字，含 3 张手绘图 + 1 份可运行代码。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>选题 5　投射性：一条被英语掩盖、被中文暴露的约束</h3>
+<ul><li><strong>主题串</strong>：<code>交叉语言</code> × <code>句法约束</code> × <code>算法选型</code></li><li><strong>书籍锚点</strong>：§20.1.2（非投射定义与转移式局限）、§20.3（图式可非投射）</li><li><strong>为什么值得写</strong>：几乎所有依存分析教程都用英语举例，读者会误以为「非投射是边角问题」。中文的长定语、「把」字句、话题化会把这个假设打穿。</li><li><strong>与已有内容的增益</strong>：把一条被忽略的约束还原成选型依据，并给出「先统计语料投射比例再选算法」的操作顺序。</li><li><strong>素材种子</strong>：lab-02 中 JetBlue 句的交叉弧定位；中文 3 个非投射例句（待收集）。</li><li><strong>缺口</strong>：缺中文语料的非投射比例实测；缺不同树库标注约定对投射性的影响讨论。</li><li><strong>体量建议</strong>：3000 字，含 2 张弧交叉示意图、1 个统计脚本。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h3>选题 6　从 37 个 UD 标签看跨语言标注的取舍</h3>
+<ul><li><strong>主题串</strong>：<code>标注体系</code> × <code>多语言</code> × <code>数据工程</code></li><li><strong>书籍锚点</strong>：§20.1（37 种关系、从句/修饰语二分）、§20.1.3（100 多种语言、近 200 树库）</li><li><strong>为什么值得写</strong>：标注体系设计是数据工程里最容易被低估的一环。37 个标签如何兼顾 100 多种语言，是一份极好的「抽象层次」案例。</li><li><strong>与已有内容的增益</strong>：从「标签越细越好」的直觉里跳出来，讨论细分的代价（一致性、跨语言对齐）。</li><li><strong>素材种子</strong>：NSUBJ/OBJ/NMOD/DET/CASE 五类在英中两种语言上的对应差异表。</li><li><strong>缺口</strong>：需要至少两种语言的标注指南原文对照；需要一致性数据（κ 值）。</li><li><strong>体量建议</strong>：3500 字，含 1 张跨语言标签映射表。</li><li><strong>状态</strong>：open</li><li><strong>发布</strong>：⬜ 未发布 ｜ 链接：待填</li></ul>
+<h2>候选一览</h2>
+<table><tr><th>#</th><th>选题</th><th>优先级</th><th>体量建议</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>为什么中文信息抽取该用依存树而不是正则</td><td>P0</td><td>3500–4500 字</td><td>open</td><td>待填</td></tr><tr><td>2</td><td>LAS 与 UAS 的差值在说什么</td><td>P0</td><td>2500–3500 字</td><td>open</td><td>待填</td></tr><tr><td>3</td><td>贪心解析器的原罪：exposure bias 与束搜索的边界</td><td>P2</td><td>3000–4000 字</td><td>open</td><td>待填</td></tr><tr><td>4</td><td>MST 求依存树：收缩—展开为什么是对的</td><td>P1</td><td>4000–5000 字</td><td>open</td><td>待填</td></tr><tr><td>5</td><td>投射性：一条被英语掩盖、被中文暴露的约束</td><td>P1</td><td>3000 字</td><td>open</td><td>待填</td></tr><tr><td>6</td><td>从 37 个 UD 标签看跨语言标注的取舍</td><td>P2</td><td>3500 字</td><td>open</td><td>待填</td></tr></table>
+<h2>优先级</h2>
+<table><tr><th>选题</th><th>优先级</th><th>理由</th></tr><tr><td>1</td><td>P0</td><td>直接对接自己的抽取流水线，素材现成</td></tr><tr><td>2</td><td>P0</td><td>篇幅小、可立即复用，读者面广</td></tr><tr><td>5</td><td>P1</td><td>中文视角独特，但需先做语料统计</td></tr><tr><td>4</td><td>P1</td><td>深度好，但绘图与证明成本高</td></tr><tr><td>3</td><td>P2</td><td>需要补实验，周期长</td></tr><tr><td>6</td><td>P2</td><td>需要外部标注指南，依赖资料获取</td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

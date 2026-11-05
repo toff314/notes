@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 20 章 依存句法分析 · 读书笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 第 20 章 依存句法分析 · 读书笔记包</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 20 章 依存句法分析 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 20 章 依存句法分析 · 读书笔记</h1>
+<blockquote><p><strong>本章一句话</strong>：依存句法分析把句子看成「词与词之间的有向二元关系」构成的树，用转移或图搜索找到这棵树，再用 LAS/UAS 这类附着准确率衡量它。</p><p><strong>结构</strong>：先讲为什么用依存而不用成分（论元直接挂在谓语上、免于为语序写规则）→ 定义关系清单与 UD 的 37 个标签 → 给出「什么算一棵合法的依存树」的四条约束与投射性 → 两族算法：基于转移（栈+缓冲区+神谕，贪心、只能投射）与基于图（边因子化+MST，可非投射）→ 评价（EM 太粗，LAS/UAS/LS 才可用）。</p><p><strong>可疑处</strong>：抽取文本里公式区排版错乱——式 20.11 的求和号 <code>∑_{e∈t}</code> 被拆到正文两侧，式 20.14 的 <code>∑_{i=1}^{N}</code> 与其下标分离，式 20.16 的 <code>Biaff_⊺(h_i^head, h_j^dep)</code> 括号跨行断开。我按上下文重建后在 lab-03/lab-04 用穷举对拍验证，见各节 ❓ 记录。</p><p><strong>与我何干</strong>：我做过中文信息抽取，抽取三元组时一直靠正则和分句硬凑主谓宾。这一章说明「谁是谁的中心词」本身就是一个可训练、可评估的任务，而且 UAS 与 LAS 的差值直接告诉我错误是「结构错」还是「标签错」——这是我现在排查抽取流水线最缺的那把尺子。</p></blockquote>
+<hr>
+<h2>第 20 章导论　从成分树到依存树　⭐</h2>
+<p><strong>本节问题</strong>：成分树已经能表示句法结构，为什么 NLP 里依存反而更常用？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「句子的句法结构仅用词与词之间的有向二元语法关系来描述」(§20)</li><li>「依存分析的内部结构仅由词与词之间的有向关系构成。」(§20)</li><li>「中心词-依存词关系能够很好地代表谓语与其论元之间的语义关系，这一事实是依存语法目前在自然语言处理中比成分结构语法更为常见的一个重要原因。」(§20)</li><li>「基于依存的方法只需一种链接类型来表示这一特定的状语关系；因此依存语法方法能够更多地摆脱语序信息。」(§20)</li><li>「例如，动词 prefer 的论元在依存结构中直接与它相连，而在短语结构树中，它们与主要动词的联系则要疏远得多。」(§20)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】成分树关心「哪些词先抱成团」，依存树关心「谁管着谁」。前者是嵌套的盒子，后者是一张只连词的关系网，盒子这一层被整个删掉了。删掉之后，句法树里最贵的那部分信息（短语标签、层级）没了，但论元到谓语的直连还在。</li><li>【我】作者给的第二个理由是语序：捷克语的宾语可以到处跑，用成分规则就得为每个位置写一条。我写中文抽取规则时深有同感——状语一挪，正则全废；而「谁修饰谁」这个关系不随位置变。</li><li>【我】不过这本书没有明说的是代价：依存树丢掉了成分边界，所以「这个短语整体修饰谁」这类问题在依存里要靠子树来重建。做信息抽取时若需要整块实体，仍得自己在依存树上划子树。</li><li>【我】导论最后一句把全章路线图交代得很清楚：关系清单 → 两族算法 → 评价。我读后面每一节时都回头对这三件事，避免陷进实现细节里。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 15 分钟把「I prefer the morning flight through Denver」按图 20.1 的关系手画成一棵依存树，并写出对应的成分树括号式（验收：两棵树节点数差 ≥4，且能指出成分树里 prefer 到 Denver 的路径长度）。</li><li>本周内整理自己抽取流水线里 3 条靠位置写死的规则，改写成「中心词—依存词」表述（验收：3 条规则各写出改写前后对照，并注明是否仍需位置信息）。</li></ul>
+<hr>
+<h2>第 20.1 节　依存关系与 UD 标签集　⭐</h2>
+<p><strong>本节问题</strong>：一条依存弧上的标签从哪来？为什么需要一份跨语言统一的关系清单？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「中心词-依存词关系通过把中心词直接链接到紧依存于它的词而得到显式表达。」(§20.1)</li><li>「在英语中，这些概念与句子中的位置以及成分类型密切相关，但绝不决定它们」(§20.1)</li><li>「是一个开放的社区项目，致力于为 100 多种语言标注依存关系及其他语法信息，它提供了包含 37 种依存关系的清单。」(§20.1)</li><li>「但常用的核心关系可以分为两类：一类是从句关系，描述相对于谓语（通常是动词）的句法角色；另一类是修饰语关系，对词修饰其中心词的方式加以归类。」(§20.1)</li><li>「这里，从句关系 NSUBJ 和 OBJ 标出了谓语 cancel 的主语和直接宾语，而 NMOD、DET 和 CASE 关系则表示名词 flights 和 Houston 的修饰语。」(§20.1)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】这里把「关系」拆成两层：中心词—依存词是骨架（谁挂谁），标签是骨架上的铭牌（挂的是主语还是状语）。骨架决定树的形状，铭牌决定语义角色，二者可以分开评估——这正是后面 UAS 与 LAS 能分开算的前提。</li><li>【我】「位置相关但不由位置决定」这句话是关键。英语主语常在动词左边，但左边的不一定是主语（倒装、从句）。我以前的抽取规则把「动词前第一个名词」当主语，在被动句和存现句上错得离谱，就是混淆了这两件事。</li><li>【我】UD 只有 37 个标签，比我见过的任何理论体系都少。少了才能跨 100 多种语言对齐；代价是细分信息要靠特征（如 <code>obl:tmod</code> 这种带子类型的写法）补，标签集本身不表达。</li><li>【我】从句关系与修饰语关系的二分，对应我脑子里两个完全不同的问句：「这个名词在句中干什么」和「这个修饰语怎么修饰它」。混在一起问，标注就会摇摆。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天取 UD 英文示例句「United canceled the morning flights to Houston」，逐词标出 37 个标签中用到的 5 个（验收：5 个标签各写出「中心词—依存词」词对，且与 §20.1 原文示例一致）。</li><li>本周内给自己语料里的 20 条抽取结果补一列「依存标签」，只标 NSUBJ/OBJ/NMOD/DET/CASE 五类（验收：20 条全部标完，统计五类分布并写出哪类最易误标）。</li></ul>
+<hr>
+<h2>第 20.1.1 节　依存形式体系：什么算一棵树　🔴</h2>
+<p><strong>本节问题</strong>：把依存结构写成有向图之后，哪些图才算合法的分析结果？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「依存结构可以表示为一个有向图 G = (V,A)，它由一个顶点集合 V 和一个顶点有序对集合 A 组成，我们把 A 中的元素称为弧。」(§20.1.1)</li><li>「出于计算动机的限制，即限定为有根树。」(§20.1.1)</li><li>「有且仅有一个指定的根节点，它没有入弧。」(§20.1.1)</li><li>「除根节点之外，每个顶点恰好有一条入弧。」(§20.1.1)</li><li>「依存结构是连通的，并且存在一个唯一的根节点，从该节点出发可以沿唯一的有向路径到达句子中的每一个词。」(§20.1.1)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】这三条约束合起来等价于「每个词恰好一个爹，且能一路找到根」。它把搜索空间从「任意有向图」砍到「有根树」，这是后面所有算法（转移、MST、动态规划）能成立的前提。</li><li>【我】注意顶点集合不一定是词：原文说也可能是标点，形态复杂的语言还可能是词干加词缀。这一点在做中文时尤其要留意——分词边界一变，顶点就变了，树也跟着变。</li><li>【我】「除根之外每个顶点恰有一条入弧」这条排除了两种常见错误：一个词有两个中心词（多父），以及一个词谁也不挂（孤立）。我审自己抽的三元组时，「多父」是最常见的结构错误。</li><li>【我】存疑：约束里没提「弧不能自环」，但自环显然不满足「唯一路径」。这类隐含约束书里靠定义带过，实现时必须显式检查，否则贪心算法真会给出自己指向自己的弧。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天写 20 行检查函数，对一棵依存树验证三条约束（唯一根、非根单入弧、全连通），并故意构造 3 棵违规树让它报错（验收：3 类违规各被捕获一次，输出违规类型与涉及词）。</li><li>本周内把该检查函数接到 lab-01 的解析输出上（验收：4 句解析结果全部通过检查，脚本打印 <code>valid=4/4</code>）。</li></ul>
+<hr>
+<h2>第 20.1.2 节　投射性　⭐</h2>
+<p><strong>本节问题</strong>：为什么「弧交叉」这件事值得单独定义一个概念？它对算法选型有什么后果？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「如果构成一棵依存树的所有弧都是投射的，则称这棵依存树是投射的。」(§20.1.2)</li><li>「如果一棵依存树能在边不交叉的情况下绘出，那么它就是投射的。」(§20.1.2)</li><li>「以这种方式生成的树总是投射的，因此当遇到像这个例子这样的非投射实例时就会出错。」(§20.1.2)</li><li>「第 20.2 节讨论的基于转移的方法只能生成投射树，因此任何带有非投射结构的句子都必然包含一些错误。」(§20.1.2)</li><li>「这一局限正是第 20.3 节所述更为灵活的基于图的句法分析方法的动机之一。」(§20.1.2)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】投射性的操作定义很漂亮：画得出不交叉的边就是投射。这比「路径不跨越中间词」好检查得多，我直接在坐标纸上画一遍就能判。</li><li>【我】非投射在英语里罕见，在语序自由的语言里常见。原文举的 flight … late 那句中，修饰语被 this morning 隔开，弧只好跨过去。中文的「把」字句、话题句也常出这种情况，做中文不能照搬英语的「投射性不是问题」。</li><li>【我】这条对工程选型是硬约束：选转移式就等于承认「非投射句必错」。若语料里非投射占 5%，准确率上限就被压掉一截，这不是调参能救的。</li><li>【我】另一个后果在树库：英语树库多由成分树自动转换而来，转换产物必然投射。用它训练、又在真实文本上测，误差里有一部分其实是「树库的表达力」而非「模型的能力」。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-02 中对「JetBlue canceled our flight this morning which was already late」的金标弧做交叉检测，定位到具体是哪两条弧相交（验收：脚本输出相交弧对，且与原文所述 flight→late 一致）。</li><li>本周内统计自己语料 50 句的投射比例（人工画图判定，验收：输出「投射/非投射」计数与 3 个非投射例句）。</li></ul>
+<hr>
+<h2>第 20.1.3 节　依存树库　🔵</h2>
+<p><strong>本节问题</strong>：训练数据从哪来？直接标注和从成分树转换，各留下什么偏差？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「树库在依存句法分析器的开发与评价中起着关键作用。」(§20.1.3)</li><li>「它们被用于训练分析器，充当评价分析器的黄金标准标签，同时也为语料库语言学研究提供有用的信息。」(§20.1.3)</li><li>「少数早期的树库还基于使用一个确定性过程，把已有的基于成分的树库转换为依存树。」(§20.1.3)</li><li>「它目前拥有 100 多种语言的近 200 个依存树库（de Marneffe et al., 2021）。」(§20.1.3)</li><li>「下面给出几个 UD 示例，展示西班牙语、巴斯克语和汉语普通话句子的依存树：」(§20.1.3)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】树库同时扮演三个角色：训练集、金标、语料库研究对象。三个角色对标注一致性的要求不同——当金标要求最高，因为评估的分母就是它。</li><li>【我】直接标注与自动转换的差别不只是成本。转换来的树继承了源树库的假设（中心词查找规则），而且必然投射；直接标注可以标出非投射，但标注者之间的一致性会掉。</li><li>【我】原文特意点出汉语普通话在 UD 示例里，这提醒我：中文依存有一套现成标注，不必从零造。但中文的分词边界、虚词（如「的」）处理与英文差异很大，跨语言模型直接迁移会吃亏。</li><li>【我】UD 有近 200 个树库、100 多种语言，这个规模意味着「多语言联合训练」是默认选项而非研究亮点。单语小语料训出来的解析器，在今 standards 下没有竞争力。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天从 UD 官网示例页抄下汉语普通话例句「但我昨天才收到信」的 8 条弧，逐条核对 §20.1.3 图中标注（验收：8 条弧的中心词、依存词、标签三项全部对齐，差异写 0 条或列出）。</li><li>本周内为自己语料建一个 30 句的迷你依存树库（只标 5 类关系），并算标注者内部一致性（验收：同一人隔 24 小时重标，一致率 ≥90%，不一致条目逐条写原因）。</li></ul>
+<hr>
+<h2>第 20.2 节　基于转移的依存句法分析　⭐</h2>
+<p><strong>本节问题</strong>：只用栈和缓冲区，凭什么能一步步拼出一棵依存树？三个操作各自的前提是什么？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「在基于转移的句法分析中，我们会有一个用来构建分析结果的栈、一个存放待分析词元的缓冲区，以及一个分析器，它经由称为神谕的预测器对分析过程采取动作，如图 20.4 所示。」(§20.2)</li><li>「LEFTARC：在栈顶的词与第二个词之间建立中心词-依存词关系；将第二个词从栈中移除。」(§20.2)</li><li>「RIGHTARC：在栈上的第二个词与栈顶的词之间建立中心词-依存词关系；将栈顶的词从栈中移除；」(§20.2)</li><li>「当 ROOT 是栈的第二个元素时，不能应用 LEFTARC 操作符（因为根据定义，ROOT 节点不能有任何入弧）。」(§20.2)</li><li>「其复杂度与句子长度成线性关系，因为它基于对句子中词语的一次从左到右遍历。」(§20.2)</li><li>「这种方法是一种直接的贪心算法——神谕在每一步提供一个选择，分析器就按该选择继续推进，不探索其他选项，不采用回溯，最终返回一个句法分析结果。」(§20.2)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】三个操作其实只做两件事：挂弧、挪词。LEFTARC 挂完就把第二个词扔掉（它已无用作中心词的机会），RIGHTARC 挂完扔掉栈顶。所有的表达力都来自「什么时候扔」。</li><li>【我】LEFTARC 的那条前提（ROOT 不能当依存词）是我实现时最容易漏的。漏了会在最后一步把 ROOT 挂到某个词下面，树根跑掉，全树作废。</li><li>【我】线性复杂度很诱人，但它的代价写在后面：贪心、不回溯。每一步只有一次机会，这跟我写正则表达式时的思路一样——局部正确不等于全局正确。</li><li>【我】书里说同一结果可能有多条转移序列，这一点我起初不信。手推 Book me the morning flight 时发现 me 的右弧确实可以晚挂，只要不违反「所有依存词到齐」的前提。这说明「动作序列」不是唯一解，但「树」是。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-01 里实现 arc-standard 的三个操作与格局打印，跑「Book me the morning flight」并逐步对照图 20.6（验收：10 步动作序列与书中完全一致，脚本打印逐步栈/缓冲区）。</li><li>本周内为 4 句金标句各生成一条转移序列并统计动作数（验收：动作总数写入 <code>transitions.csv</code>，且 4 句全部还原金标树）。</li></ul>
+<hr>
+<h2>第 20.2.1 节　构建神谕：从树库造训练样本　🔴</h2>
+<p><strong>本节问题</strong>：树库给的是「句子—树」配对，分类器要的却是「格局—动作」配对，中间这一步怎么补？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「遗憾的是，树库提供的是整句与其对应依存树的配对，而不是格局与转移的配对。」(§20.2.1)</li><li>「如果 LEFTARC 在给定参考依存树和当前格局下能产生正确的中心词-依存词关系，就选择 LEFTARC；」(§20.2.1)</li><li>「否则，如果 RIGHTARC 满足以下两个条件，就选择 RIGHTARC：（1）它在给定参考依存树和当前格局下能产生正确的中心词-依存词关系，（2）栈顶词的所有依存词都已分配完毕；」(§20.2.1)</li><li>「但此时这样做会使 Houston 之后无法连接，因为 flight 会被从栈中移除。」(§20.2.1)</li><li>「我们通过在参考依存树的背景下模拟分析器的运行，从树库中导出由“格局—转移”对构成的合适训练实例。」(§20.2.1)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】这一步叫「用金标树模拟一遍解析」，本质是把静态的树展开成动态的决策序列。它把「结构化预测」问题降级成「每步分类」，代价是误差会沿着序列累积。</li><li>【我】RIGHTARC 的第二个条件最精妙：只有当栈顶词的所有孩子都到齐了才允许弹出。少了这一条，模拟过程会生成「金标里根本走不通」的训练样本，分类器学到的是错的动作。</li><li>【我】这也解释了为什么训练数据是「确定性」生成的：同一棵树、同一套优先级，永远得到同一条序列。好处是可复现，坏处是模型只见过这一条路径，遇到自己走偏后进入的陌生格局就懵——这就是 exposure bias。</li><li>【我】注意 LEFTARC 优先于 RIGHTARC 的排序是硬编码的。换一个优先级会得到另一套训练数据，性能可能不同。书里没讨论这个选择的影响，我在 lab-01 里把两种优先级都跑了一遍看差异。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-01 中实现训练神谕，对 4 句金标各生成一条「格局—动作」序列（验收：序列回放后还原的弧集合与金标完全相同，4/4）。</li><li>本周内把神谕的 LEFTARC/RIGHTARC 优先级对调，重跑同一批句子，记录动作数与还原率差异（验收：两套优先级的结果写进 README，差异用具体句号说明）。</li></ul>
+<hr>
+<h2>第 20.2.2–20.2.3 节　分类器：特征模板与神经编码　🔵</h2>
+<p><strong>本节问题</strong>：神谕要看的「格局特征」具体长什么样？神经方法替换掉了哪一部分？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「基于特征的分类器一般使用我们在词性标注和部分句法分析中见过的那些特征：词形、词元、词性、中心词，以及到中心词的依存关系。」(§20.2.2)</li><li>「特征模板使我们能够从训练集中自动生成大量具体特征。」(§20.2.2)</li><li>「例如，诸如 s1.t ◦s2.t 这样的特征会把栈顶词的词性标注与其下方词的词性标注拼接起来。」(§20.2.2)</li><li>「一种标准架构是：将句子送入编码器，然后取栈顶 2 个词和缓冲区首个词的表示，将它们拼接后送入一个前馈网络，由该网络预测应采取的转移（Kiperwasser and Goldberg, 2016; Kulmizev et al., 2019）。」(§20.2.3)</li><li>「可以使用交叉熵损失进行学习。」(§20.2.3)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】特征模板是「位置 × 属性」的笛卡尔积，人手定位置，机器展开组合。s1.w、s1.t、s1.wt、s1.t◦s2.t 这几个例子说明：单点特征加拼接特征就够用了，不需要人去设计语义特征。</li><li>【我】神经版把「位置选择」保留（仍是栈顶 2 个 + 缓冲区 1 个），只把「属性抽取」换成编码器。所以它不是完全端到端——取哪几个位置仍是先验，这一点书里写得很克制。</li><li>【我】拼接三个位置的向量再进前馈网，参数量比特征模板小得多，但需要预训练或足够数据。小语料上特征模板反而更稳，这是我在中文小数据集上的经验。</li><li>【我】交叉熵在这里的用法和词性标注完全一样：每个格局一个多分类标签（三种动作）。所以整章可以看作「词性标注的分类器 + 一个手写的状态机」。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天手写 6 个特征模板（s1.w、s1.t、s2.t、b1.w、b1.t、s1.t◦s2.t），在一个 20 句的小训练集上统计每个模板的取值个数（验收：6 个模板的取值数写入表格，并指出哪一个最稀疏）。</li><li>本周内用 sklearn 的逻辑回归在这批「格局—动作」样本上训一个分类器，报告训练集与留出集的动作准确率（验收：两个准确率都写入 README，差距 &gt;10 个百分点时写出过拟合判断）。</li></ul>
+<hr>
+<h2>第 20.2.4 节　arc-eager 与束搜索　🔴</h2>
+<p><strong>本节问题</strong>：arc-standard 的「晚挂弧」问题怎么解？贪心不回溯又怎么补救？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「一个词等待被指派其中心词的时间越长，出现差错的机会就越多。」(§20.2.4)</li><li>「弧急切（arc-eager）系统通过允许词尽早挂接到其中心词上来解决这一问题，甚至可以在依赖它们的后续词全部出现之前就完成挂接。」(§20.2.4)</li><li>「REDUCE：弹出栈顶。」(§20.2.4)</li><li>「当然，这也是一个弱点——一旦作出决策就无法撤销，即使句子后面出现压倒性的证据也无济于事。」(§20.2.4)</li><li>「回想第 13 章，束搜索采用广度优先搜索策略，并用一个启发式过滤器对搜索前沿进行剪枝，使其保持在固定大小的束宽之内。」(§20.2.4)</li><li>「使用束搜索时，我们是在决策序列的空间中进行搜索，因此把格局的分数建立在其完整历史之上是合理的。」(§20.2.4)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】arc-eager 的改动只有三处：操作对象从「栈顶两个」变成「栈顶 + 缓冲区首」，RIGHTARC 改成把依存词压栈而非丢弃，再加一个 REDUCE 来收尾。三处改动换来「可以早挂」，代价是多了 REDUCE 这个动作、序列更长。</li><li>【我】早挂的收益是可以量化的：book→flight 这条弧在 standard 里第 8 步才建，eager 里第 3 步就建了。书里没给这个数字，我在 lab-02 的轨迹里数出来，正好能当「延迟」的度量。</li><li>【我】束搜索的分数是沿路径累加的，这意味着它奖励「一路都自信」的序列，而不只是「终点对」。这个设计与序列标注里的序列级打分同源。</li><li>【我】束搜索治的是「不回溯」，但没治「训练/推理分布不一致」：束里保留的仍是模型自己走过的格局。要真治得用动态神谕或对比学习，书里没展开。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-02 中对同一句「Book the flight through Houston」分别跑 arc-standard 与 arc-eager 的轨迹，记录 book→flight 弧被建立的步号（验收：两个步号写入 <code>delay.csv</code>，且 arc-eager 严格更早）。</li><li>本周内实现宽度为 1/2/4 的束搜索，在同一批句子上比较最终树的分数与金标匹配率（验收：三档束宽的结果表格，束宽 1 应与贪心完全相同）。</li></ul>
+<hr>
+<h2>第 20.3–20.3.1 节　基于图与最大生成树　⭐</h2>
+<p><strong>本节问题</strong>：把「找最好的树」变成「在带权有向图上找最大生成树」，需要哪几步？环怎么处理？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「基于图的分析器比基于转移的分析器更准确，在长句上尤其如此；当中心词与依存词相距很远时，基于转移的方法会遇到困难（McDonald and Nivre, 2011）。」(§20.3)</li><li>「此外，与基于转移的方法不同，基于图的分析器能够生成非投射的树。」(§20.3)</li><li>「我们将做一个简化假设，即该分数可以是边因子化的，也就是说，一棵树的总体分数是构成该树的各条边的分数之和。」(§20.3)</li><li>「它是一棵树并且覆盖 G 中的所有顶点；G 上从 ROOT 出发的生成树就是 S 的一个合法分析。」(§20.3.1)</li><li>「第二个直觉是，边分数的绝对值对于确定最大生成树并不关键。」(§20.3.1)</li><li>「Chu 和 Liu（1965）以及 Edmonds（1967）各自独立地提出了一种方法，它先进行贪心选择，随后用一个优雅的递归清理阶段来消除环。」(§20.3.1)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】边因子化是最关键的一步简化：整棵树的分数拆成每条弧的和，于是「全局最优树」变成「图上的组合优化」。没有这个假设，MST 这套工具一个都用不上。</li><li>【我】第二个直觉很实用：只有进入同一顶点的各条边的相对大小重要，整体加常数不影响选择。所以打分数值不必校准到概率尺度，排序对就行——这解释了为什么感知机式的打分也能直接喂给 MST。</li><li>【我】CLE 的三段式（贪心选入边 → 遇环收缩 → 递归后展开删边）我一开始读不懂「递归」的必要性。直到自己实现时发现：收缩后的新图仍可能有环，只能一路缩下去。</li><li>【我】复杂度 O(n³) 来自完全图 m=n²。这个量级对 40 词的句子是 6.4 万次操作，可接受；对段落级输入就不行了，所以真实系统先分句。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-03 中实现 CLE，对「Book that flight」的图跑出最大生成树并与图 20.13 对照（验收：选中的 3 条边与书中一致，且轨迹里出现一次收缩）。</li><li>本周内用 300 张随机小图把 CLE 与穷举最优树对拍（验收：一致率 100%，不一致时打印反例图）。</li></ul>
+<hr>
+<h2>第 20.3.2–20.3.3 节　给边打分：感知机与双仿射　🔵</h2>
+<p><strong>本节问题</strong>：边因子化之后，每条弧的分数从哪来？为什么训练目标不是「分类」而是「比对手强」？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「中心词及其依存词的词形、词元和词性。」(§20.3.2)</li><li>「我们用一组最初随机设定的初始权重对训练集中的一个句子进行分析（即执行推理）。如果得到的分析结果与训练数据中对应的树一致，我们就不改动权重。」(§20.3.2)</li><li>「否则，我们找出错误分析结果中那些在参考分析结果里不存在的特征，并根据学习率把它们的权重略微调低。」(§20.3.2)</li><li>「最先进的基于图的多语言分析器建立在神经网络之上。」(§20.3.3)</li><li>「Biaff(x,y) = x⊺Uy +W(x⊕y)+b，其中 U、W 和 b 是模型学习到的权重。」(§20.3.3)</li><li>「第一个分类器是边打分器，也就是我们上文描述的那个，它为每一对词 wi 和 wj 赋予概率 p(i →j)。」(§20.3.3)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】感知机在这里的更新规则是「错树的特征降权」，没有「对树的特征升权」。因为打分是相对的，只降错的就足以把对的顶上去——这和结构化感知机的经典写法一致。</li><li>【我】「训练模型给正确的树更高分」而不是「给每条边贴标签」，这个目标函数和评估指标（整树是否对）是对齐的。分类式训练反而会优化一个和 LAS 不完全一致的目标。</li><li>【我】双仿射里的 U 矩阵负责「中心词表示 × 依存词表示」的乘性交互，W(x⊕y) 负责加性部分。乘性项让「什么样的中心词配什么样的依存词」可以被学到，而不只是两个方向各自打分再相加。</li><li>【我】Dozat &amp; Manning 用两个分类器（边 + 标签）而不是一个多标签分类器，先定树再定标签。这样 MST 只需要处理无权图，复杂度可控；代价是标签错误不会反馈到树结构。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天用 numpy 实现双仿射打分 <code>xᵀUy + W(x⊕y) + b</code>，随机初始化后验证输出形状与数值稳定性（验收：对 5 组随机向量输出 5 个标量，且把 U 置零后分数等于加性部分）。</li><li>本周内实现感知机训练循环（正确树不动、错误树降权），在 20 句玩具集上迭代 10 轮（验收：训练集整树匹配率从首轮的基线升到 100%，每轮数值写入 CSV）。</li></ul>
+<hr>
+<h2>第 20.4–20.5 节　评价与小结　⭐</h2>
+<p><strong>本节问题</strong>：为什么整句完全匹配不够用？LAS、UAS、LS 三个数各自暴露什么错误？</p>
+<h3>摘录区（原文照抄 + 节号）</h3>
+<ul><li>「一个显而易见的指标是完全匹配（exact match，EM）——即有多少句子被正确分析。该指标相当悲观，大多数句子都会被判为错误。」(§20.4)</li><li>「带标签附着指把一个词正确地指派到其中心词，并给出正确的依存关系。」(§20.4)</li><li>「无标签附着只考察所指派的中心词是否正确，而忽略依存关系。」(§20.4)</li><li>「该系统正确找出了参考分析树中 6 个依存关系里的 4 个，得到 2/3 的 LAS。」(§20.4)</li><li>「基于转移的分析系统采用贪心的、基于栈的算法来构建依存结构。」(§20.5)</li><li>「构建依存结构的基于图的方法，基于图论中的最大生成树方法。」(§20.5)</li></ul>
+<h3>思考区（必须用自己的话；【我】开头）</h3>
+<ul><li>【我】EM 的问题不是「太严」而是「不导 向」：一句话错一条弧和错五条弧都记 0，改进无从体现。LAS/UAS 把评价单位从句子换成弧，才有了梯度。</li><li>【我】LAS 与 UAS 的差值直接指向错误类型：差值大说明结构基本对、标签选错；两个都低说明中心词就找错了。我在 lab-05 里把这两个数算在同一个例子上，差值正好是 1/6。</li><li>【我】LS 只算标签对不对、不管弧挂在哪，所以它能单独衡量「关系分类器」的质量。三个数一起看，能把「边打分器」和「标签分类器」的锅分开。</li><li>【我】小结把两族算法的性格写得很清楚：转移式是「基于栈的贪心」，图式是「最大生成树」。前者快、只能投射；后者慢、可非投射、长句更准。选型就是在这两组约束里挑。</li></ul>
+<h3>行动区（具体到动作+对象+时间/验收）</h3>
+<ul><li>今天在 lab-05 中实现 LAS/UAS/LS/EM 四个指标，对 §20.4 的 6 弧例子复算（验收：LAS=2/3、UAS=5/6 与书中一致，EM=0）。</li><li>本周内给自己流水线的 20 条抽取结果各标一个「结构错/标签错/都对」，并用 LAS−UAS 差值校验分类是否自洽（验收：20 条全部归类，差值方向与归类一致）。</li></ul>
+<hr>
+<h3>全章 takeaway（5 条）</h3>
+<ol><li>依存树 = 每个词恰有一个中心词 + 唯一根 + 全连通；这三条把搜索空间锁成有根树，是所有算法的基础。</li><li>投射性不是理论洁癖，而是算法选型的分水岭：转移式只能出投射树，图式可以非投射。</li><li>神谕的价值在于把「树」展开成「动作序列」，把结构化预测降级成逐步分类；代价是误差累积与 exposure bias。</li><li>边因子化 + MST 把「找最好的树」变成组合优化；CLE 的收缩—递归是处理环的标准手法。</li><li>EM 不导向，LAS/UAS/LS 才可诊断：两数差值区分「结构错」与「标签错」。</li></ol>
+<hr>
+<h3>复习优先级依据</h3>
+<ul><li>⭐（导论、20.1、20.1.2、20.2、20.3–20.3.1、20.4–20.5）：构成全章主链（为什么依存 → 树约束 → 投射性 → 两族算法 → 评价），章末小结逐条对应，且 §20.4 有可手算的 LAS/UAS 例题。</li><li>🔴（20.1.1、20.2.1、20.2.4）：形式约束、神谕构造、arc-eager 是理解算法为何这样设计的关节点，跨节反复被引用。</li><li>🔵（20.1.3、20.2.2–20.2.3、20.3.2–20.3.3）：树库与两类打分器的工程背景，知道「有这回事、大概怎么做」即可，细节可查原文。</li><li>⚪：无（历史注记按 🔵 处理，不单列知识块）。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

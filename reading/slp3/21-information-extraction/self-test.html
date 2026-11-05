@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 21 章 提取自测（16 题） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：Speech and Language Processing（第 3 版）· 第 21 章 信息抽取</span> <span>/</span> <span class="cur">第 21 章 提取自测（16 题）</span></nav>
+<article class="prose"><h1>第 21 章 提取自测（16 题）</h1>
+<h2>提取自测协议</h2>
+<ol><li><strong>遮住</strong> <code>book-notes.md</code> 与 <code>cards.md</code>，只留本文件的「问题」部分。</li><li>每题限时 60 秒，用<strong>口述</strong>或<strong>手写</strong>给出答案；写不出就画一个叉，不要翻笔记。</li><li>全部答完后才回到 <code>book-notes.md</code> 核对，把错题记在文末「错题登记」。</li><li>判定标准：能说出<strong>机制 + 一个例子</strong>才算过；只说结论（如「会漂移」）按半分算。</li><li>间隔重测：答错题在 1 天后、7 天后各重测一次。</li></ol>
+<hr>
+<h2>问题</h2>
+<p><strong>第一组：任务边界（§21）</strong></p>
+<ol><li>信息抽取有哪四种产物？它们之间的依赖顺序是什么？</li><li>为什么 IE 定义里要强调「有限几类」语义内容？这带来什么工程后果？</li></ol>
+<p><strong>第二组：关系抽取（§21.1–§21.2.6）</strong></p>
+<ol><li>ACE 的 17 种关系与 UMLS 的 54 种关系，抽象层级有什么不同？各自适合什么下游任务？</li><li>写出至少三条 Hearst 模式，并解释 <code>such as</code> 为什么在语用上等价于一个关系断言。</li><li>有监督关系抽取为什么要在多类分类器前加一个二值过滤分类器？它的负例是怎么造的？</li><li>关系分类的三类特征分别是什么？哪一类是它区别于「关键词共现」的关键？</li><li>自举的「语义漂移」具体是怎么发生的？举一个书中的例子。</li><li>RlogF 为什么要用命中的<strong>对数</strong>而不是命中次数本身？</li><li>远程监督的标注是从哪来的？它最主要的系统性误差是什么？</li><li>为什么 Open IE 的输出必须做归一化？它的召回率为什么测不了？</li></ol>
+<p><strong>第三组：事件与时间（§21.3–§21.7）</strong></p>
+<ol><li>为什么 <code>took a flight</code> 的事件义不在 <code>took</code> 上？这对事件抽取的词表筛选意味着什么？</li><li>用 Vendler 四类给下面四句归类，并说明每类的判定依据：</li></ol>
+<ul><li>我知道我的登机口</li><li>John 正在飞行</li><li>Sally 预订了她的航班</li><li>她找到了她的登机口</li></ul>
+<ol><li>Reichenbach 的三个时间点分别是什么？它解决了单纯「过去/现在/未来」无法区分的什么现象？</li><li>「上周」归一化成 ISO 8601 需要哪两个东西？缺了锚点会怎样？</li></ol>
+<p><strong>第四组：模板填充（§21.8）</strong></p>
+<ol><li>模板填充被拆成哪两个子任务？这个拆法的代价是什么？</li><li>FASTUS 为什么必须用级联的有限状态转换器，而不能用端到端序列标注一步到位？</li></ol>
+<hr>
+<h2>答案要点（先自己答完再看）</h2>
+<blockquote><p>答 1：关系、事件、时间、模板。依赖是外层靠内层——模板槽靠事件填，事件时刻靠时间归一化，事件论元靠实体与关系识别。</p><p>答 2：IE 不追求理解全文，只填预先定好的格子。后果是换领域就得重做本体与标注，跨域迁移成本高。</p><p>答 3：ACE-17 面向新闻事件角色（PER/ORG/GPE 之间的雇佣、隶属、地理关系）；UMLS-54 面向生物医学实体（解剖、药物、病理功能）。前者适合新闻情报，后者适合临床文本结构化。</p><p>答 4：<code>NP such as NP</code>、<code>such NP as NP</code>、<code>NP, including NP</code>、<code>NP, especially NP</code>、<code>NP, NP, and other NP</code>。<code>such as</code> 在语用上就断言「后者是前者的实例」，抽取只是把该承诺显式化，所以不需要理解词义。</p><p>答 5：句内实体对是平方级且绝大多数无关，二值过滤器先做廉价剪枝。正例取标注语料中所有关系对，负例取句内未被标注任何关系的实体对——这会把「漏标」误当「无关」。</p><p>答 6：①两端论元的词/中心词；②两论元之间的词、实体数、组块；③句法（成分/依存）路径。第三类编码了「谁修饰谁」，是区别于共现的关键。</p><p>答 7：错误模式引入错误元组 → 错误元组又长出更多错误模式，正反馈让关系语义扩张。书中例：从「航空枢纽」滑向「任何交通枢纽」，把悉尼渡轮码头也收进来。</p><p>答 8：命中次数是线性奖励，会让「什么都匹配」的万能模式胜出；取对数把奖励压成温和增长，使精度项（命中正确率）能真正起作用。</p><p>答 9：标注来自已有知识库：拿（实体1, 关系, 实体2）去文本找共现句，默认该句表达该关系。主要误差是把「共现」当「断言」，精度低；且只能覆盖库中已有足够实例的关系。</p><p>答 10：Open IE 的关系是动词串，同义异形极多（has a hub in / is headquartered in），不归一化无法入库查询。召回测不了是因为没有预先标注的完整关系全集，只能抽样估精度。</p><p>答 11：take 是轻动词，自身语义稀薄，事件由宾语 flight 承担；took effect 更进一步，只标事件的开始时刻而非事件本身。因此不能只按动词词表筛候选事件。</p><p>答 12：状态（无变化、可概念化为单点）／活动（有过程、无自然终点）／完结（有过程、有自然终点）／达成（瞬时、导致状态、动词不概念化过程）。</p><p>答 13：S 说话时间、E 事件时间、R 参照点。它区分了「吃饭在起飞时开始」与「吃饭在起飞前已完成」——两句都是过去，差别在 R 与 E 的先后。</p><p>答 14：需要①文档时间锚（通常是文章日期行）②所在年份/周编号规则（第一周 = 含该年第一个星期四的那周）。缺锚点则相对表达式无法落成绝对日期，整条时间线的绝对值全错。</p><p>答 15：模板识别（句子级文本分类）+ 角色填充值抽取（每槽一个分类器/序列模型）。代价是槽间一致性无人负责，同一实体可能在两个槽里以不同名字出现，需额外共指消解与合并。</p><p>答 16：MUC-5 合资企业任务的槽里套模板（TIE-UP 的 ACTIVITY 槽本身是一个带槽模板），是层级结构；端到端序列标注只产平面标签，层级只能靠级联识别 + 合并算法补出来。</p></blockquote>
+<hr>
+<h2>错题登记</h2>
+<table><tr><th>题号</th><th>我的答案错在哪</th><th>重测 1（+1d）</th><th>重测 2（+7d）</th></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

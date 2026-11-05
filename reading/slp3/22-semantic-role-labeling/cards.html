@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Speech and Language Processing》（第 3 版）· 第 22 章 · 永久卡片（14 张） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记 · 读书笔记：《Speech and Language Processing》第 3 版 · 第 22 章 语义角色标注</span> <span>/</span> <span class="cur">《Speech and Language Processing》（第 3 版）· 第 22 章 · 永久卡片（14 张）</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》（第 3 版）· 第 22 章 · 永久卡片（14 张）</h1>
+<blockquote><p>一卡一主张；独立可读；带出处；<code>链接：</code> 留关联位。</p><p>教材型三类：概念卡 / 公式卡 / 例题卡。</p></blockquote>
+<h2>卡 1　题元角色与语义角色的关系</h2>
+<ul><li><strong>Q（正面）</strong>：什么是题元角色？它和语义角色有什么区别？</li><li><strong>A（背面）</strong>：题元角色是刻画谓词论元在事件中角色的语义类别（施事、受事、工具等），是最古老的语言学模型之一。语义角色是统称，涵盖各种规模的题元角色集合——从十几个经典题元角色，到少量原型角色（PropBank），再到大量框架特定角色（FrameNet）。</li><li><strong>出处</strong>：§22.1</li><li><strong>链接</strong>：卡 2（语态交替是语义角色的主要动机）｜卡 3（题元角色的问题催生替代方案）</li></ul>
+<h2>卡 2　语态交替与题元网格</h2>
+<ul><li><strong>Q（正面）</strong>：什么是语态交替？它对语义推理有什么意义？</li><li><strong>A（背面）</strong>：语态交替指同一动词的论元可出现在不同句法位置的现象（如 break 可带施事、工具或主题作主语；give 可互换主题和目标的位置）。题元网格（θ-grid/格框架）是一个动词所能支配的题元角色集合。语义角色让我们能跨这些表层变化推理同一事件结构。</li><li><strong>出处</strong>：§22.2</li><li><strong>链接</strong>：卡 1｜卡 4（PropBank 的 Arg0/Arg1 对应原型施事/受事）</li></ul>
+<h2>卡 3　题元角色的三大困难</h2>
+<ul><li><strong>Q（正面）</strong>：为什么经典的题元角色体系在实际使用中会遇到困难？</li><li><strong>A（背面）</strong>：三大困难：①碎片化——工具等角色需进一步细分（居间工具 vs 使能工具）；②无法跨角色推理和泛化——有限离散角色列表表达能力不足；③形式化定义困难——施事要求有生命、有意志、有感知、有致使性，但具体名词短语未必满足所有特征。</li><li><strong>出处</strong>：§22.3</li><li><strong>链接</strong>：卡 1｜卡 4、卡 6（PropBank 和 FrameNet 是两种替代方案）</li></ul>
+<h2>卡 4　PropBank 的编号角色体系</h2>
+<ul><li><strong>Q（正面）</strong>：PropBank 怎么标注语义角色？Arg0/Arg1/Arg2 分别是什么意思？</li><li><strong>A（背面）</strong>：PropBank 的角色相对于单个动词义项定义，用编号而非名称：Arg0 一般为原型施事，Arg1 为原型受事，Arg2 常为受益者/工具/属性/结束状态，Arg3 为起始点，Arg4 为终点。另有 ArgM（TMP、LOC、DIR、MNR 等）标注修饰语。角色定义是供人阅读的非正式释义，而非形式化定义。</li><li><strong>出处</strong>：§22.4</li><li><strong>链接</strong>：卡 2｜卡 6（FrameNet 的对比）｜lab-02 的框架文件解析</li></ul>
+<h2>卡 5　FrameNet 的框架与框架元素</h2>
+<ul><li><strong>Q（正面）</strong>：FrameNet 和 PropBank 有什么本质区别？什么是框架元素？</li><li><strong>A（背面）</strong>：PropBank 角色特定于单个动词，FrameNet 角色特定于框架——一种背景知识结构，定义了一组特定于该框架的语义角色（框架元素）和使用这些角色的谓词。核心角色是框架特有的（如 change position on a scale 框架的属性、差值、初始值、最终值），非核心角色类似 PropBank 的 ArgM（时间、地点等）。框架之间可继承（如 Cause change of position on a scale 继承 Change 框架并增加施事角色）。</li><li><strong>出处</strong>：§22.5</li><li><strong>链接</strong>：卡 4｜卡 7（SRL 可在 FrameNet 或 PropBank 上训练）</li></ul>
+<h2>卡 6　基于特征的 SRL 算法流程</h2>
+<ul><li><strong>Q（正面）</strong>：基于特征的传统 SRL 系统有哪些步骤？需要哪些核心特征？</li><li><strong>A（背面）</strong>：步骤：①句法分析 → ②遍历树节点找谓词 → ③对每个节点用 1-of-N 分类器预测角色（或 NONE）。可拆分为剪枝（去掉不可能的成分）、识别（二分类：论元 vs NONE）、分类（1-of-N）三阶段，再加全局优化（Viterbi/ILP）保证一致性。核心特征（Gildea &amp; Jurafsky 2000）：支配谓词、短语类型、中心词及其词性、句法路径（如 NP↑S↓VP↓VBD）、语态、线性位置、次范畴化、命名实体类型、成分首尾词。</li><li><strong>出处</strong>：§22.6.1</li><li><strong>链接</strong>：卡 7（神经方法的对比）｜lab-04 的特征抽取器</li></ul>
+<h2>卡 7　神经 SRL：BIO 序列标注</h2>
+<ul><li><strong>Q（正面）</strong>：神经方法怎么把 SRL 变成序列标注？和基于特征的方法有什么关键差异？</li><li><strong>A（背面）</strong>：把 SRL 视为类似 NER 的序列标注任务，用 BIO 标签（B-ARG0、I-ARG0、O 等）。模型把每个词映射为预训练嵌入，与谓词嵌入拼接，通过前馈网络输出每个 SRL 标签的分布。关键差异：不再需要显式句法分析作为中间步骤，端到端从词序列预测标签；可用 CRF 做全局推断但实践中提升不大。</li><li><strong>出处</strong>：§22.6.2</li><li><strong>链接</strong>：卡 6｜lab-05 的 BIO + Viterbi 实现</li></ul>
+<h2>卡 8　SRL 的评估标准</h2>
+<ul><li><strong>Q（正面）</strong>：SRL 怎么评估？常用的数据集有哪些？</li><li><strong>A（背面）</strong>：标准评估要求每个论元标签必须被指派到完全正确的词序列或句法分析成分上，然后计算精确率、召回率和 F 值。识别与分类也可分别评估。常用数据集：CoNLL-2005（Carreras and Màrquez, 2005）和 CoNLL-2012（Pradhan et al., 2013）。</li><li><strong>出处</strong>：§22.6.3</li><li><strong>链接</strong>：卡 6、卡 7｜lab-05 的 F1 计算</li></ul>
+<h2>卡 9　选择限制：从硬约束到软偏好</h2>
+<ul><li><strong>Q（正面）</strong>：什么是选择限制？为什么现代系统用「偏好」而非「限制」？</li><li><strong>A（背面）</strong>：选择限制是动词对其论元角色所允许填充的概念种类施加的语义约束（如 eat 的主题必须是可食用的）。早期系统视为硬约束（Katz &amp; Fodor 1963），但真实语料中充满违反约束的合法句子（否定、隐喻、过度表述），因此现代系统用软偏好（Wilks 1975, Resnik 1993）。可用 FOL 或 WordNet 义项集表示，但前者需要庞大知识库，后者更实用。</li><li><strong>出处</strong>：§22.7、§22.7.1、§22.7.2</li><li><strong>链接</strong>：卡 10（Resnik 的选择关联模型）｜卡 11（用 WordNet 表示选择限制）</li></ul>
+<h2>卡 10　Resnik 的选择关联模型</h2>
+<ul><li><strong>Q（正面）</strong>：选择偏好强度 SR(v) 和选择关联 A_R(v,c) 怎么定义和计算？</li><li><strong>A（背面）</strong>：选择偏好强度 SR(v) = D(P(c|v) || P(c))，即动词 v 的论元类别分布与总体类别分布之间的 KL 散度，度量动词告诉我们多少关于论元类别的信息。选择关联 A_R(v,c) = P(c|v) log[P(c|v)/P(c)] / SR(v)，度量特定类别 c 对动词 v 总体选择偏好的相对贡献。通过对语料句法分析、统计谓词与论元共现次数来估计概率。</li><li><strong>出处</strong>：§22.7.2</li><li><strong>链接</strong>：卡 9｜lab-03 的数值复算</li></ul>
+<h2>卡 11　用 WordNet 义项集表示选择限制</h2>
+<ul><li><strong>Q（正面）</strong>：怎么用 WordNet 表示选择限制？比 FOL 有什么优势？</li><li><strong>A（背面）</strong>：为每个谓词的每个论元指定一个 WordNet 义项集作为选择限制，若角色填充词是该义项集的下位词（下义词），则意义表示合式。如 eat 的 THEME 限制为 {food, nutrient}，hamburger 的上位词链最终到 food，故合法。优势：不需要庞大的逻辑知识库，利用现有的词汇资源即可；且允许部分匹配（填充词不必与限制义项集完全匹配，只需以其为上位词之一）。</li><li><strong>出处</strong>：§22.7.1</li><li><strong>链接</strong>：卡 9｜卡 10</li></ul>
+<h2>卡 12　谓词的基元分解</h2>
+<ul><li><strong>Q（正面）</strong>：什么是基元分解？kill 和 open 怎么分解？</li><li><strong>A（背面）</strong>：基元分解（成分分析）是把词义拆解为若干基元语义特征之集合的方法。kill = CAUSE(x, BECOME(NOT(ALIVE(y))))，open 的状态谓词为 OPEN(door)，与 CAUSE、BECOME 的组合产生不同句式的意义差异。更激进的版本是概念依存（CD），用十个基元谓词（ATRANS、PTRANS、MTRANS 等）表示句子意义，每个基元关联固定的题元角色。</li><li><strong>出处</strong>：§22.8</li><li><strong>链接</strong>：卡 2（基元分解能解释语态交替）｜卡 13（CD 的基元列表）</li></ul>
+<h2>卡 13　概念依存（CD）的十个基元</h2>
+<ul><li><strong>Q（正面）</strong>：概念依存理论有哪十个基元谓词？各自表示什么？</li><li><strong>A（背面）</strong>：ATRANS（占有权/控制权转移）、PTRANS（物理位置转移）、MTRANS（心理概念转移）、MBUILD（创造新信息）、PROPEL（施加物理力）、MOVE（动物自身某部分运动）、INGEST（摄入物质）、EXPEL（排出某物）、SPEAK（发声）、ATTEND（感觉器官聚焦）。每个基元关联固定题元角色表示参与者。</li><li><strong>出处</strong>：§22.8</li><li><strong>链接</strong>：卡 12｜⬜ 待补：Schank &amp; Abelson 1977 的脚本理论</li></ul>
+<h2>卡 14　隐式论元与无监督 SRL</h2>
+<ul><li><strong>Q（正面）</strong>：什么是隐式论元？无监督 SRL 试图解决什么问题？</li><li><strong>A（背面）</strong>：隐式论元指未在谓词所在句中显式出现、只出现在上下文句子中或完全缺失，需要推断的论元。隐式论元检测（iSRL）由 Gerber &amp; Chai (2010) 和 Ruppenhofer et al. (2010) 提出。无监督 SRL 试图通过对论元聚类归纳语义角色集合，避免庞大标注训练集的需求，由 Riloff &amp; Schmelzenbach (1998) 和 Swier &amp; Stevenson (2004) 开创。</li><li><strong>出处</strong>：历史注记（§22 章末历史注记）</li><li><strong>链接</strong>：卡 4、卡 5（有监督 SRL 的两大资源）｜⬜ 待补：Gerber &amp; Chai 2010 的 iSRL 方法</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

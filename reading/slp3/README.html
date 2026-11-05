@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>读书笔记：Speech and Language Processing（第 1–11 章） · Notes</title>
+<title>《Speech and Language Processing》第 3 版 · 读书笔记 · Notes</title>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
 *{box-sizing:border-box}
@@ -70,34 +70,16 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 </head>
 <body>
 <div class="wrap">
-<nav class="crumb"><a href="../../index.html">笔记架首页</a> <span>/</span> <a href="../index.html">读书</a> <span>/</span> <span class="cur">读书笔记：Speech and Language Processing（第 1–11 章）</span></nav>
-<article class="prose"><h1>读书笔记：Speech and Language Processing（第 1–11 章）</h1>
-<h2>书目元信息</h2>
-<ul><li>作者：Daniel Jurafsky、James H. Martin　版次：第三版（2026 年 8 月版）</li><li>中文译本来源：<code>/home/yuanwu/books/slp3/zh/md/</code>（26 章全译）</li><li>页码口径：中文 Markdown 无印刷页码，全部用 <strong>§节号</strong>（如 §3.3.1）定位</li><li>阅读目标：<strong>理解</strong>（非应试）</li><li><strong>书型判定</strong>：<strong>教材型</strong>。依据：章-节-知识点层级完整、定义/公式密集、每章有小结与练习</li></ul>
-<h2>处理范围与进度</h2>
-<table><tr><th>章</th><th>目录</th><th>状态</th><th>摘录</th><th>卡片</th><th>自测</th><th>行动</th><th>实验</th></tr><tr><td>1 引言</td><td><a href="01-introduction/README.html"><code>01-introduction/</code></a></td><td>✅</td><td>65</td><td>16</td><td>10</td><td>4</td><td>4</td></tr><tr><td>2 词与词元</td><td><a href="02-words-and-tokens/README.html"><code>02-words-and-tokens/</code></a></td><td>✅</td><td>62</td><td>14</td><td>9</td><td>3</td><td>3</td></tr><tr><td>3 N-gram 语言模型</td><td><a href="03-ngram-language-models/README.html"><code>03-ngram-language-models/</code></a></td><td>✅</td><td>62</td><td>15</td><td>11</td><td>3</td><td>3</td></tr><tr><td>4 逻辑回归</td><td><a href="04-logistic-regression/README.html"><code>04-logistic-regression/</code></a></td><td>✅</td><td>70</td><td>16</td><td>11</td><td>4</td><td>2</td></tr><tr><td>5 嵌入</td><td><a href="05-embeddings/README.html"><code>05-embeddings/</code></a></td><td>✅</td><td>60</td><td>14</td><td>11</td><td>5</td><td>5</td></tr><tr><td>6 神经网络</td><td><a href="06-neural-networks/README.html"><code>06-neural-networks/</code></a></td><td>✅</td><td>73</td><td>18</td><td>10</td><td>3</td><td>3</td></tr><tr><td>7 Transformer 与预训练</td><td><a href="07-transformers-and-pretraining/README.html"><code>07-transformers-and-pretraining/</code></a></td><td>✅</td><td>122</td><td>16</td><td>12</td><td>4</td><td>4</td></tr><tr><td>8 后训练</td><td><a href="08-post-training/README.html"><code>08-post-training/</code></a></td><td>✅</td><td>78</td><td>15</td><td>12</td><td>3</td><td>3</td></tr><tr><td>9 掩码语言模型</td><td><a href="09-masked-language-models/README.html"><code>09-masked-language-models/</code></a></td><td>✅</td><td>61</td><td>14</td><td>12</td><td>3</td><td>3</td></tr><tr><td>10 可解释性</td><td><a href="10-interpretability/README.html"><code>10-interpretability/</code></a></td><td>✅</td><td>42</td><td>15</td><td>10</td><td>3</td><td>3</td></tr><tr><td>11 基于检索的模型</td><td><a href="11-retrieval-based-models/README.html"><code>11-retrieval-based-models/</code></a></td><td>✅</td><td>75</td><td>20</td><td>12</td><td>4</td><td>4</td></tr><tr><td>12 智能体</td><td>—</td><td>⛔ 原文占位</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>13–26 章</td><td>—</td><td>⬜ 未处理</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></table>
-<p><strong>本次范围</strong>：第 1–11 章（第 12 章中文稿仅 7 行占位符，跳过）。合计 770 条逐字摘录、173 张卡片、120 道自测、39 条行动、55 条衍生选题、37 个可运行实验。</p>
-<h2>实际输入</h2>
-<table><tr><th>角色</th><th>实际文件</th><th>说明</th></tr><tr><td>书稿（必选）</td><td><code>raw/01/01-introduction.md</code> 等 11 份</td><td>中文译本对应章节，逐章全文读完；第 12 章为占位稿未处理</td></tr><tr><td>英文对照（核对用）</td><td><code>zh/md/NN-*.dual.md</code></td><td>核对术语与原句，不单独引用</td></tr><tr><td>划线摘录</td><td>未提供</td><td>无划线去向表</td></tr><tr><td>课堂笔记</td><td>未提供</td><td>不做书 ↔ 课堂交叉对照</td></tr></table>
-<h2>每章产物</h2>
-<p>每个章节目录都是一套独立笔记包：</p>
-<pre><code>&lt;NN-chapter&gt;/
-├── README.md          # 本章索引 + 书型/范围/输入 + 六维自评分
-├── book-notes.md      # 逐节三区（摘录 / 思考 / 行动）
-├── cards.md           # 永久卡片（一卡一主张）
-├── self-test.md       # 提取自测协议 + 题目 + 错题归因
-├── actions.md         # 行动清单（动词 + 对象 + 时间/验收）
-├── spinoffs.md        # 衍生选题（送 write-tech-tutorial / write-zhihu-tech）
-├── glossary.md        # 术语表（选做）
-└── labs/              # 行动执行闭环（脚本 + 真实产物 + 结论 + 反思）</code></pre>
-<h2>自评分</h2>
-<p>各章六维自评：53 / 53 / 51 / 53 / 51 / 52 / 50 / 52 / 53 / 51 / 51（满分 60），平均约 <strong>51.8/60</strong>，单项均 ≥7，全部通过门槛。明细见各章 <code>README.md</code>。</p>
-<h2>机器自检</h2>
-<pre><code>python3 /home/yuanwu/zhihu-wiki/.opencode/skills/write-read-notes/scripts/check_read_notes.py \
-  &lt;章节目录&gt; --raw ../raw/&lt;NN&gt;</code></pre>
-<p>第 1–11 章均为 <code>FAIL=0</code>（第 12 章无正文，未生成笔记）；第 4 章有 1 条 WARN（2 个 lab 覆盖 4 条同类行动，映射见 <code>labs/index.md</code>）。</p>
-<h2>新增后续章节</h2>
-<ol><li>指定下一章书稿路径（<code>books/slp3/zh/md/NN-*.md</code>）；</li><li>用 <code>write-read-notes</code> 在本目录建 <code>&lt;NN-slug&gt;/</code> 并产出六件套 + <code>labs/</code>；</li><li>建 <code>../raw/&lt;NN&gt;/</code> 放入该章文本与 <code>meta.json</code>，跑上面的自检；</li><li>更新本页表格与 <code>reading/index.md</code>；</li><li><code>bash scripts/build-html.sh</code> 重渲染。</li></ol></article>
+<nav class="crumb"><a href="../../index.html">笔记架首页</a> <span>/</span> <a href="../index.html">读书</a> <span>/</span> <span class="cur">《Speech and Language Processing》第 3 版 · 读书笔记</span></nav>
+<article class="prose"><h1>《Speech and Language Processing》第 3 版 · 读书笔记</h1>
+<h2>书目信息</h2>
+<ul><li>书名：Speech and Language Processing (3rd ed., online draft)｜作者：Daniel Jurafsky &amp; James H. Martin</li><li>来源：中文译文 <code>/home/yuanwu/books/slp3/zh/md/</code>（英文对照 <code>.dual.md</code>）</li><li>页码口径：中文版无印刷页码，引用一律用 §节号</li><li>阅读目标：理解（<code>raw/*/meta.json</code>）</li></ul>
+<h2>章节进度（25/25 章成包，共 125 条衍生选题）</h2>
+<table><tr><th>章</th><th>目录</th><th>中文名</th><th>选题数</th><th>状态</th></tr><tr><td>1</td><td><a href="./01-introduction/">01-introduction</a></td><td>引言</td><td>5</td><td>✅</td></tr><tr><td>2</td><td><a href="./02-words-and-tokens/">02-words-and-tokens</a></td><td>词与词元</td><td>5</td><td>✅</td></tr><tr><td>3</td><td><a href="./03-ngram-language-models/">03-ngram-language-models</a></td><td>N-gram 语言模型</td><td>5</td><td>✅</td></tr><tr><td>4</td><td><a href="./04-logistic-regression/">04-logistic-regression</a></td><td>逻辑回归</td><td>5</td><td>✅</td></tr><tr><td>5</td><td><a href="./05-embeddings/">05-embeddings</a></td><td>嵌入</td><td>5</td><td>✅</td></tr><tr><td>6</td><td><a href="./06-neural-networks/">06-neural-networks</a></td><td>神经网络</td><td>5</td><td>✅</td></tr><tr><td>7</td><td><a href="./07-transformers-and-pretraining/">07-transformers-and-pretraining</a></td><td>Transformer 与预训练</td><td>5</td><td>✅</td></tr><tr><td>8</td><td><a href="./08-post-training/">08-post-training</a></td><td>后训练</td><td>5</td><td>✅</td></tr><tr><td>9</td><td><a href="./09-masked-language-models/">09-masked-language-models</a></td><td>掩码语言模型</td><td>5</td><td>✅</td></tr><tr><td>10</td><td><a href="./10-interpretability/">10-interpretability</a></td><td>可解释性</td><td>5</td><td>✅</td></tr><tr><td>11</td><td><a href="./11-retrieval-based-models/">11-retrieval-based-models</a></td><td>基于检索的模型</td><td>5</td><td>✅</td></tr><tr><td>13</td><td><a href="./13-machine-translation/">13-machine-translation</a></td><td>机器翻译</td><td>5</td><td>✅</td></tr><tr><td>14</td><td><a href="./14-rnns-and-lstms/">14-rnns-and-lstms</a></td><td>RNN 与 LSTM</td><td>4</td><td>✅</td></tr><tr><td>15</td><td><a href="./15-phonetics-and-speech/">15-phonetics-and-speech</a></td><td>语音学与语音</td><td>5</td><td>✅</td></tr><tr><td>16</td><td><a href="./16-speech-recognition/">16-speech-recognition</a></td><td>语音识别</td><td>5</td><td>✅</td></tr><tr><td>17</td><td><a href="./17-text-to-speech/">17-text-to-speech</a></td><td>文本转语音</td><td>5</td><td>✅</td></tr><tr><td>19</td><td><a href="./19-cfg-and-parsing/">19-cfg-and-parsing</a></td><td>上下文无关文法与成分句法分析</td><td>5</td><td>✅</td></tr><tr><td>20</td><td><a href="./20-dependency-parsing/">20-dependency-parsing</a></td><td>依存句法分析</td><td>6</td><td>✅</td></tr><tr><td>21</td><td><a href="./21-information-extraction/">21-information-extraction</a></td><td>信息抽取</td><td>5</td><td>✅</td></tr><tr><td>22</td><td><a href="./22-semantic-role-labeling/">22-semantic-role-labeling</a></td><td>语义角色标注</td><td>5</td><td>✅</td></tr><tr><td>23</td><td><a href="./23-lexicons-sentiment/">23-lexicons-sentiment</a></td><td>词汇表与情感分析</td><td>5</td><td>✅</td></tr><tr><td>24</td><td><a href="./24-coreference-entity-linking/">24-coreference-entity-linking</a></td><td>共指消解与实体链接</td><td>5</td><td>✅</td></tr><tr><td>25</td><td><a href="./25-discourse-coherence/">25-discourse-coherence</a></td><td>篇章与连贯</td><td>5</td><td>✅</td></tr><tr><td>26</td><td><a href="./26-conversation-structure/">26-conversation-structure</a></td><td>对话结构</td><td>5</td><td>✅</td></tr></table>
+<h2>缺口</h2>
+<ul><li><strong>第 12 章（Agents / 智能体）</strong>：原稿为占位章（「占位内容，待定」），无中文译文，暂不产出笔记。</li></ul>
+<h2>快速入口</h2>
+<ul><li><a href="./topics.json">根 topics.json</a>：全书衍生选题聚合</li><li><a href="../index.md">reading/index.md</a>：阅读索引</li></ul></article>
 <footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
 </div>
 </body>
