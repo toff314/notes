@@ -35,6 +35,11 @@ def convert(md_path, docx_path):
             p.paragraph_format.space_before = Pt(6 if level > 1 else 0)
             p.paragraph_format.space_after = Pt(6)
             r = p.add_run(text); set_font(r, size, bold=True, name_cn='黑体')
+            if level == 1:
+                info = doc.add_paragraph()
+                info.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                ir = info.add_run('姓名：袁兀，学号：2026080139')
+                set_font(ir, 10.5)
             continue
         if s.startswith('>'):
             s = s.lstrip('> ').strip()
