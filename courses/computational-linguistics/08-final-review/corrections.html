@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>勘误 · 第 8 课（最后一课） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 8 课（最后一课）· 注意力→Transformer→预训练→大模型 + 五章快览</span> <span>/</span> <span class="cur">勘误 · 第 8 课（最后一课）</span></nav>
+<article class="prose"><h1>勘误 · 第 8 课（最后一课）</h1>
+<blockquote><p>本课转写质量一般（大量口误与语音识别噪声）。每条依据列同时给两侧出处：转写侧行号（<code>raw/transcript.md</code>）+ PPT 侧锚点（slides-outline.md 对应文件页码）；无 PPT 锚点的条目标「PPT：无锚点，仅上下文自证」。</p></blockquote>
+<table><tr><th>#</th><th>原写（转写）</th><th>改为</th><th>类型</th><th>依据</th></tr><tr><td>1</td><td>4-3 ppt（L6）</td><td>本节起讲 04-3《预训练语言模型》PPT（注意力/Transformer 部分）</td><td>上下文补全</td><td>PPT：slides-04-3 P2 大纲「注意力网络 Transformer 预训练语言模型」</td></tr><tr><td>2</td><td>鲸鱼的脑子处理容量特别有限（L31）</td><td>大量动物脑容量小/处理容量有限（蜜蜂、金鱼例）；&quot;鲸鱼&quot;系转写噪声（鲸鱼脑并不小）</td><td>听写辨正</td><td>PPT：无锚点；上下文 转写 L32-L36 全是蜜蜂/金鱼小容量例</td></tr><tr><td>3</td><td>VAD决策（L61）</td><td>硬注意可看成 0/1 离散决策（one-hot）；软注意为 0–1 连续</td><td>语音噪声重构</td><td>PPT：slides-04-3 软/硬注意定义页；转写侧行号见原写列</td></tr><tr><td>4</td><td>民1之间的连续性（L61）</td><td>0–1 之间连续</td><td>听写辨正</td><td>同上；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>5</td><td>缩放电机（L82）</td><td>缩放点积（scaled dot-product）</td><td>听写辨正</td><td>PPT：slides-04-3 打分函数页；转写侧行号见原写列</td></tr><tr><td>6</td><td>QTV（L150）</td><td>QKV</td><td>听写辨正</td><td>PPT：slides-04-3 QKV 页；转写侧行号见原写列</td></tr><tr><td>7</td><td>键值对（L150）</td><td>键（K）值（V）二角色（非&quot;键值对&quot;数据结构义）</td><td>语义澄清</td><td>上下文 转写 L152-L156；PPT：见 slides-outline.md 对应页</td></tr><tr><td>8</td><td>在原来纸上求和（L155）</td><td>在原来的 X（值）上求和</td><td>听写辨正</td><td>上下文 转写 L152-L156；PPT：见 slides-outline.md 对应页</td></tr><tr><td>9</td><td>Wo o / Woo（L125、L118）</td><td>W_O（注意力输出映射矩阵）</td><td>规范化</td><td>PPT：slides-04-3 多头输出映射页；转写侧行号见原写列</td></tr><tr><td>10</td><td>全值（多处）</td><td>权重（weight）</td><td>听写辨正</td><td>上下文（如 转写 L87-L100 权值 0.38/0.31/0.29）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>11</td><td>病情这个问题（L211）</td><td>并行这个问题</td><td>听写辨正</td><td>上下文 转写 L207-L212（RNN 不能并行）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>12</td><td>有个OCR（L209）</td><td>转写噪声，不采用（原意应为长程依赖衰减）</td><td>噪声剔除</td><td>上下文 转写 L208-L211；PPT：见 slides-outline.md 对应页</td></tr><tr><td>13</td><td>潇法（L241）</td><td>SOTA（当时的最优方法）</td><td>听写辨正</td><td>上下文 转写 L241（翻译任务超越各种方法）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>14</td><td>见长问题（L249）</td><td>变长问题（变长序列处理）</td><td>听写辨正</td><td>上下文 转写 L249（XLNet 滑窗&quot;越过块&quot;）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>15</td><td>出了门XL（L249）</td><td>出了 Transformer-XL</td><td>听写辨正</td><td>同上；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>16</td><td>定化的问题（L238）</td><td>并行化的问题</td><td>听写辨正</td><td>上下文 转写 L237-L238；PPT：见 slides-outline.md 对应页</td></tr><tr><td>17</td><td>公号里面用到（L239）</td><td>论文（Transformer 原论文）里用到</td><td>听写辨正</td><td>上下文 转写 L239（sin/cos 位置编码）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>18</td><td>RN / RNN 混写（多处）</td><td>RNN</td><td>规范化</td><td>全文；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>19</td><td>碳也少的编码器（L269）</td><td>保留编码器-解码器结构的（编解码两种都有）</td><td>听写辨正</td><td>上下文 转写 L268-L269（三种结构）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>20</td><td>PT 1、2、3（L300）</td><td>GPT-1、2、3</td><td>听写辨正</td><td>上下文 转写 L300；PPT：见 slides-outline.md 对应页</td></tr><tr><td>21</td><td>串到串儿（多处）</td><td>序列到序列（Seq2Seq）</td><td>规范化</td><td>全文；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>22</td><td>AIGC=通用人工智能/通用的生成式的人工智能（L276-L277）</td><td>保留老师口径并标注：通行义为 AI 生成内容（AI Generated Content），老师课堂解释为&quot;通用生成式 AI&quot;，两者不一致</td><td>待核（老师口径 vs 通名）</td><td>转写 L276-L277；PPT：无锚点</td></tr><tr><td>23</td><td>企业law（L340）</td><td>RLHF（人类反馈强化学习，老师下文即讲&quot;人类反馈的强化学习&quot;）</td><td>听写辨正</td><td>上下文 转写 L340；PPT：见 slides-outline.md 对应页</td></tr><tr><td>24</td><td>人么类跳（L340）</td><td>prompt（提示）——老师列举大模型技术要素</td><td>上下文推断（不确定）</td><td>上下文 转写 L340；标注存疑；PPT：见 slides-outline.md 对应页</td></tr><tr><td>25</td><td>病号learning（L340）</td><td>prompting（上下文学习/提示学习，与 in-context learning 相关）</td><td>上下文推断（不确定）</td><td>同上；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>26</td><td>IG（L340）</td><td>RAG（或 InstructGPT 类指令对齐）——不确定，存疑</td><td>待核</td><td>同上；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>27</td><td>early 的句法（L346）</td><td>Earley 算法句法剖析</td><td>专名</td><td>PPT：slides-05-1 成分句法剖析算法页；转写侧行号见原写列</td></tr><tr><td>28</td><td>句法数（L346/L350）</td><td>句法树</td><td>听写辨正</td><td>PPT：slides-05-1；转写侧行号见原写列</td></tr><tr><td>29</td><td>逆写（L350）</td><td>移进-归约（shift-reduce，与自动机相关）——不确定，存疑</td><td>待核</td><td>上下文 转写 L350；PPT：见 slides-outline.md 对应页</td></tr><tr><td>30</td><td>大展就转成去用（L370）</td><td>大模型（深度学习）就转成去用（神经方法做依存分析）</td><td>听写辨正</td><td>上下文 转写 L369-L371；PPT：见 slides-outline.md 对应页</td></tr><tr><td>31</td><td>新语表达（L371）</td><td>标注语料</td><td>听写辨正</td><td>上下文 转写 L370-L371；PPT：见 slides-outline.md 对应页</td></tr><tr><td>32</td><td>正则语言上面，不过首先上层相关语言和上下文无关语言（L373）</td><td>乔姆斯基层级：正则语言 ⊂ 上下文无关语言 ⊂ 上下文相关语言（转写语序错乱）</td><td>重构</td><td>PPT：slides-05-3 语言复杂性/乔姆斯基层级页；转写侧行号见原写列</td></tr><tr><td>33</td><td>泵引理（L379）</td><td>保留（Pumping Lemma，确为正则语言判定工具，老师口径正确）</td><td>确认</td><td>PPT：slides-05-3；转写侧行号见原写列</td></tr><tr><td>34</td><td>容机（L381）</td><td>自动机（图灵机等）</td><td>听写辨正</td><td>上下文 转写 L381；PPT：见 slides-outline.md 对应页</td></tr><tr><td>35</td><td>国标（L383）</td><td>转写噪声，不采用</td><td>噪声剔除</td><td>上下文 转写 L383；PPT：见 slides-outline.md 对应页</td></tr><tr><td>36</td><td>篇章还有 5 板（L387）</td><td>篇章还有五要素/五板快——不确定，存疑（或指&quot;篇章、段落、对话等单元&quot;）</td><td>待核</td><td>上下文 转写 L387；PPT：见 slides-outline.md 对应页</td></tr><tr><td>37</td><td>回执 a number（L394）</td><td>回指 anaphora</td><td>专名</td><td>PPT：slides-06-1 指代/回指页；转写侧行号见原写列</td></tr><tr><td>38</td><td>供指 Co referenceence（L395）</td><td>共指 coreference</td><td>专名</td><td>同上；转写侧行号见原写列；PPT：见 slides-outline.md 对应页</td></tr><tr><td>39</td><td>在这些术语里挣治好了（L398）</td><td>在这些术语里挣扎（&quot;纠缠不清&quot;）</td><td>听写辨正</td><td>上下文 转写 L398；PPT：见 slides-outline.md 对应页</td></tr><tr><td>40</td><td>这个 N 叫它实体链接（L403）</td><td>Entity Linking（实体链接），&quot;N&quot;为转写噪声</td><td>专名+噪声</td><td>上下文 转写 L403-L404；PPT：见 slides-outline.md 对应页</td></tr><tr><td>41</td><td>wenowrad s livever problems（L404）</td><td>Winograd Schema Problems（威诺格拉德模式问题）</td><td>专名</td><td>上下文 转写 L414 老师自证；PPT：见 slides-outline.md 对应页</td></tr><tr><td>42</td><td>事件本质（L418）</td><td>事件共指（event coreference）</td><td>听写辨正</td><td>上下文 转写 L416-L419；PPT：见 slides-outline.md 对应页</td></tr><tr><td>43</td><td>那是妲己的亡周是褒姒的坏（L432）</td><td>转写噪声，不采用具体文本（RST 关系例句以 PPT 原文为准）</td><td>噪声剔除</td><td>PPT：slides-06-1 RST 页；转写侧行号见原写列</td></tr><tr><td>44</td><td>SAD 的分解（L444）</td><td>SVD 分解</td><td>听写辨正</td><td>PPT：slides-06-2 文本表示/SVD 页；转写侧行号见原写列</td></tr><tr><td>45</td><td>新经济学习（L441）</td><td>机器学习</td><td>听写辨正</td><td>上下文 转写 L441（统计→机器→深度三阶段）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>46</td><td>来 words（L442）</td><td>Word2Vec</td><td>专名</td><td>上下文 转写 L442（词向量）；PPT：见 slides-outline.md 对应页</td></tr><tr><td>47</td><td>l SI / p l SI（L448）</td><td>LSI / pLSI（潜在语义索引/概率潜在语义分析）</td><td>专名</td><td>PPT：slides-06-2 主题模型页；转写侧行号见原写列</td></tr><tr><td>48</td><td>迪利克雷（L451/L453）</td><td>Dirichlet（狄利克雷分布）</td><td>专名</td><td>PPT：slides-06-2 LDA 页；转写侧行号见原写列</td></tr><tr><td>49</td><td>用故事就是干嘛就是被拿去的（L451）</td><td>转写噪声，不采用（原意为先验分布参与生成过程）</td><td>噪声剔除</td><td>上下文 转写 L451-L456；PPT：见 slides-outline.md 对应页</td></tr><tr><td>50</td><td>王凯杰老师（L465）</td><td>王小捷老师（本课程 PPT 署名即王小捷、李蕾）</td><td>听写辨正</td><td>PPT：slides-07 P1 作者页</td></tr><tr><td>51</td><td>VLNRT / NRT（L467/L481）</td><td>VGNLP / NLP（视觉接地的自然语言处理 / 自然语言处理）</td><td>听写辨正</td><td>PPT：slides-08 P1</td></tr><tr><td>52</td><td>视觉语言接力（L467）</td><td>视觉接地（Visually Grounded）</td><td>听写辨正</td><td>PPT：slides-08 P1</td></tr><tr><td>53</td><td>一言值千图（L473）</td><td>一图值千言（老师口头对偶，保留并标注为课堂即兴）</td><td>规范化</td><td>转写 L473；PPT：见 slides-outline.md 对应页</td></tr><tr><td>54</td><td>第一点（L475）</td><td>跨模态检索（跨模态任务之一）</td><td>上下文推断</td><td>PPT：slides-08 P16-P24</td></tr><tr><td>55</td><td>智能科学与技术中心（各 PPT 署名）</td><td>保留</td><td>确认</td><td>PPT 各首页；转写侧行号见原写列</td></tr></table>
+<h2>未采用内容（列表）</h2>
+<ul><li>课间闲聊与点名（L7-L11、L22）：课堂事务，不入笔记。</li><li>报告分数政策细节（L15 的完整交涉过程）：notes 只保留&quot;分享者分数有差异&quot;结论。</li><li>蜜蜂/金鱼比喻的完整铺陈（L31-L38）：压缩为&quot;脑容量有限→学会遗忘&quot;要点，保留 LSTM 呼应。</li><li>PPT 页面数值例的完整矩阵（slides-04-3 注意力数值例）：notes 只保留权重 0.38/0.31/0.29 与&quot;偏向 X1&quot;结论。</li><li>Transformer 改进方向的完整论文列举（空洞/XL/MoE 各论文细节）：notes 压缩为方向名。</li><li>五章快览中各 PPT 的算法细节（Earley 表、PCFG 公式、LDA 吉布斯抽样公式等）：老师明言&quot;这些大家了解一下就行&quot;，notes 相应降级。</li><li>结课感言的完整原话（L507-L514）：保留要点。</li></ul>
+<h2>覆盖对照（三课时 + 快览）</h2>
+<ul><li>第 1 节课（L4-L22）→ notes 第 1-2 节：收尾安排 + 鸡尾酒会引入。</li><li>第 2 节课（L24-L258）→ notes 第 3-6 节：软注意 → 多头 → QKV → Transformer（含位置编码/改进/不可能三角）。<strong>本课主体</strong>。</li><li>第 3 节课（L261-L514）→ notes 第 7-9 节：残差/梯度收尾（L263-L265）→ 预训练/大模型 → 五章快览（L341-L490，最后 45 分钟）→ 结课（L491-L514）。</li><li>PPT 覆盖：04-3（老师主讲）→ 04-4（略讲自学）→ 05-1/05-2/05-3/06-1/06-2（快览）→ 07（未课堂展开，PPT 自学）→ 08/09（口头带过）。</li><li>无跨课时内容断裂；第 3 节开头（L263-L265）接续第 2 节末的残差/梯度话题，notes 已在第 6 节合并。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

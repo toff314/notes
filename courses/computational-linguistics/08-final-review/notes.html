@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自然语言处理基础 · 第 8 课（最后一课）· 听课笔记 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">计算语言学基础 · 听课笔记 · 第 8 课（最后一课）· 注意力→Transformer→预训练→大模型 + 五章快览</span> <span>/</span> <span class="cur">自然语言处理基础 · 第 8 课（最后一课）· 听课笔记</span></nav>
+<article class="prose"><h1>自然语言处理基础 · 第 8 课（最后一课）· 听课笔记</h1>
+<blockquote><p><strong>本课一句话</strong>：最后一课是一场&quot;从注意力到大模型&quot;的收束——老师把第 7 课开了头的注意力从认知科学的&quot;鸡尾酒会效应&quot;讲起，沿&quot;Q+X 两要素 → QKV 三要素 → 多头 → 自注意力&quot;的问题驱动路线一路推到 Transformer，再用&quot;Seq2Seq 是通用模型的一扇小窗&quot;解释预训练范式为什么必然出现，最后 45 分钟把剩下没讲的五章（结构/篇章/人机对话/VGNLP/伦理）全部快速过完——并留下一句总结论：<strong>从 Q 到 QKV，每一步都是问题驱动的演化，而不是凭空设计</strong>。</p></blockquote>
+<h3>1. 课程收尾安排（第 1 节课开场）</h3>
+<p><strong>线索</strong>：最后一课讲了什么、考试怎么考？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】课时太紧（32 学时含报告讨论根本不够），剩余内容取舍：<strong>前面早期技术性内容</strong>（体现 NLP 发展脉络的）由老师收束讲掉；<strong>后面的内容</strong>（靠近当下大模型的）定位为<strong>自学</strong>——&quot;需要的时候你就去学看一看&quot;。</li><li>【师】肯定了同学们的报告：沿各自任务梳理，但&quot;大的框架、大的路线基本上都是对的&quot;。</li><li>【师】第 5 章（结构）、第 6 章（篇章）会简单讲&quot;<strong>当时为什么研究这些内容</strong>&quot;。</li><li>【师】作业：全部截止 <strong>11 月 30 日晚</strong>（老师与教务斗争后从最后一次课延后）；做过课堂分享的同学分数会有差异；实践大作业占 40 分，鼓励与本职工作结合。</li><li>【师】课程结束感言：今年第二届；&quot;前几年真没想到大模型发展成这样，现在这样了我们就来接受它&quot;。</li></ul>
+<p><strong>一句话总结</strong>：最后一课 = 老师亲自收束&quot;值得讲的思想&quot; + 其余放自学；作业 11.30 截止，实践占 40 分。</p>
+<h3>2. 注意力从哪来：鸡尾酒会效应（第 1–2 节课）</h3>
+<p><strong>线索</strong>：为什么讲注意力要先讲认知神经科学？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】人工智能的名字就是&quot;借鉴自然智能&quot;：artificial intelligence——&quot;先有人工才有智能&quot;；早期特征工程、今天的人工审核都说明 AI 脱离不开人的因素。</li><li>【师】<strong>鸡尾酒会效应</strong>：嘈杂酒会上你与一人聊天，周围谈话不会打断你——人在强噪声下仍能<strong>自主、有目的地</strong>选择性加工信息。</li><li>【师】为什么要选择性加工？<strong>脑处理容量有限</strong>：蜜蜂记住新路径必须忘掉旧路径——这正是 LSTM <strong>遗忘门</strong>的同类逻辑（呼应第 7 课）；老师引申：&quot;学会遗忘不开心的事，生活得更愉快&quot;（金鱼的比喻）。</li><li>【师】两种注意：<strong>自上而下</strong>（自主注意：目标明确，由大脑引导，如专心聊天）；<strong>自下而上</strong>（反射性注意：刺激驱动，如突然打雷、迪士尼超大花车把所有人注意力吸走）。</li><li>【师】借鉴到计算模型 = <strong>attention mechanism</strong>：模拟自主注意（外部目标驱动）→ 软注意/硬注意；来自自身引导的 = <strong>自注意力</strong>（self-attention，Transformer 里大量使用）。</li></ul>
+<p><strong>一句话总结</strong>：注意力机制不是发明而是借鉴——鸡尾酒会效应（自主注意）+ 处理容量有限（必须遗忘），认知科学早就把原理讲清了。</p>
+<h3>3. 软注意力：从 Q+X 到权重计算（第 2 节课）</h3>
+<p><strong>线索</strong>：最早的注意力怎么算？打分函数有哪些？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】软注意 = 0–1 之间连续决策（硬注意 = 0/1 离散，取最大）。主流用软注意。</li><li>【师】<strong>最早没有 QKV</strong>，只有 <strong>Q 和 X</strong>：decoder 当前状态作为 Q，对 encoder 每个时间步状态（X）算相似度打分 → softmax 得注意力权重 → 加权求和出新表达。</li><li>【师】打分函数：线性（直接点乘）、缩放点积（点积除以维度，后为 Transformer 主用）、双线性（中间加 W，对前后各做一次线性变换）。</li><li>【师】数值样例：Q 与 X1/X2/X3 算出权重 0.38/0.31/0.29（看似差别不大），但加权重算后新向量明显偏向 X1——&quot;不同查询引导，会产生偏向不同词向量的新向量&quot;：<strong>查询修正了表示</strong>。</li><li>【师】机器翻译例（呼应同学报告）：译到 &quot;apple&quot; 时注意力自动偏向源句的&quot;苹果&quot;。</li></ul>
+<p><strong>一句话总结</strong>：注意力第一步不是 QKV 而是 Q+X——用相似度+softmax 把&quot;当前最需要什么&quot;变成对历史状态的加权，查询本身会重塑词向量。</p>
+<h3>4. 多头与&quot;必要性之问&quot;（第 2 节课）</h3>
+<p><strong>线索</strong>：为什么出现多头？为什么后来有人质疑注意力没用？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】一个 Q 不永远是目标 → 查询通常有多个 → <strong>多头注意力</strong>自然出现：多个 Q 各自算注意力再拼接、映射；&quot;不同引导头偏向不同输入&quot;，增加参数规模、提升模型容量。</li><li>【师】关键问题（老师特意展开）：attention 之后还有 Wo 映射（可学习），那&quot;<strong>前面辛辛苦苦算的注意力，会不会被后面的调整破坏掉？既然后面都可学习，前面还有必要吗？</strong>&quot;——研究者认真讨论过。</li><li>【师】问题的根源：Q+X 方案里，注意力完全由输入决定，输出侧的调整可能把它&quot;洗掉&quot;，两段的作用无法区分。</li></ul>
+<p><strong>一句话总结</strong>：多头来自&quot;查询天然多个&quot;；而&quot;注意力会不会被输出映射冲掉&quot;这个必要性之问，正是 QKV 出现的伏笔。</p>
+<h3>5. QKV 三要素：把 X 拆成键和值（第 2 节课）</h3>
+<p><strong>线索</strong>：QKV 从哪来？和 Q+X 差在哪？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】解法：把 X 拆成两个角色——<strong>键 K</strong>（算注意力分布）、<strong>值 V</strong>（在值上求和）：分布用 K 算，但求和保留&quot;原纸上的 X&quot;——之前担心的&quot;被改掉的 X&quot;由此保住。</li><li>【师】QKV 能灵活描述各种情形：K、V 都由 X 得来（常用）；全来自自身 = <strong>self-attention</strong>（Q、K、V 全是 X）。</li><li>【师】维度过高时点积数值差异过大 → <strong>缩放点积</strong>。</li><li>【师】再引入可学习参数：Q/K/V 各自基于 X 用<strong>独立映射矩阵</strong>（WQ/WK/WV）生成——任务反馈从这三个矩阵进来，&quot;整体功能更强大&quot;——这就是 Transformer 主用结构。</li><li>【师】自注意力网络的性质（对称性/封闭性/恒等性）与数学探索，感兴趣自学。</li><li>【师】Transformer 之前注意力已研究很多：Pointer 网络（用注意力选片段）等。</li></ul>
+<p><strong>一句话总结</strong>：QKV = &quot;分布用 K 算、求和在 V 上&quot;的分工设计——保住原始信息 + 引入可学习映射，从 Q+X 到 QKV 是问题驱动的演化。</p>
+<h3>6. Transformer：替换 RNN（第 2 节课）</h3>
+<p><strong>线索</strong>：Transformer 为什么出现？结构里每块是干嘛的？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】RNN 两大死穴：<strong>不能并行</strong>（时刻依赖）+ <strong>长距离衰减</strong>（越扯越远）。注意力恰能跨远距离、可并行 → &quot;<strong>能否用注意力网络替换 RNN</strong>&quot; → Transformer。</li><li>【师】结构：继承 Seq2Seq 的编解码架构，各堆 6 块。编码块 = 多头自注意力 + 残差&amp;层归一化 + <strong>前馈层</strong>；解码块多一层<strong>编解码交叉注意力</strong>，且自注意力加 <strong>mask</strong>（自回归解码不能看未来 = 因果遮蔽）。</li><li>【师】重要洞见：<strong>知识主要存在前馈层</strong>——多头自注意力负责&quot;算&quot;，FFN 负责&quot;存&quot;；后来很多外部知识注入工作都打在 FFN 上。</li><li>【师】残差 = 直连（ResNet 式，梯度直传、收敛快——回应第 3 节开头 sigmoid 梯度问题）；层归一化 = 让深层堆叠的数值分布稳定。</li><li>【师】并行化的代价：位置信息丢了 → <strong>位置编码</strong>（sin/cos；方案有 30 多种，试了一圈发现 sin/cos 够用）。</li><li>【师】后续改进方向：空洞注意力、长文本（XLNet 式滑窗）、非自回归解码、<strong>MoE</strong>（多专家共享结构不同参数，当时已提出）。</li><li>【师】<strong>不可能三角</strong>：训练并行、性能优秀、推理高效——Transformer 占了两头牺牲推理，另有结构试图三全但没成气候。</li><li>【师】时代感：&quot;各种智能体之前是大模型，大模型之前是各种 Transformer&quot;。</li></ul>
+<p><strong>一句话总结</strong>：Transformer = 注意力（可并行、跨距离）替换 RNN + 前馈层存知识 + 残差保梯度 + 位置编码补顺序；它的爆发不是设计巧，而是踩中了 RNN 的两个死穴。</p>
+<h3>7. 预训练范式：通用模型的&quot;小窗户&quot;（第 3 节课）</h3>
+<p><strong>线索</strong>：为什么一定要编码器-解码器？预训练范式怎么形成？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】学生问&quot;为什么一定要编解码架构&quot;→ 回到 Seq2Seq：<strong>串到串的转换让一个模型适配所有 NLP 任务</strong>——对话、翻译、问答、摘要统一成 sequence to sequence，&quot;这才糊弄到一块儿&quot;，是<strong>通用模型的一扇小窗户</strong>。</li><li>【师】老师提醒：AIGC 是&quot;通用的生成式人工智能&quot;（课堂口径）。</li><li>【师】范式迁移：每任务一个模型 → <strong>预训练基座模型 + 微调</strong>（任务头不过是一个 MLP）→ 带出 <strong>transfer learning</strong> 研究方向。</li><li>【师】三种结构分流：<strong>只用编码器</strong>（BERT，曾引领潮流）、<strong>只用解码器</strong>（GPT 1/2/3 起步不显眼，ChatGPT 一出全场目光聚焦解码器）、<strong>编解码</strong>（BART/T5，算力紧张时实用区还很好用）。</li><li>【师】T5 = Text-to-Text Transfer Transformer（5 个 T）：任务前缀让同一架构区分任务——<strong>指令微调的雏形</strong>。</li><li>【师】自监督（不靠标注）让语料不受限 → 越训越大。</li><li>【师】预训练 = 大模型的前一步，是 NLP 的范式革新：&quot;大规模通用语言与世界知识&quot;此前不可想象。</li><li>【师】前沿引申：PLM 与人脑的相似性——老师课题组用<strong>脑电 vs 大模型隐层状态</strong>做比较，已有发现，欢迎交流。</li><li>【师】大模型部分（RLHF、prompt、评测等）同学都熟，<strong>略过自学</strong>。</li></ul>
+<p><strong>一句话总结</strong>：Seq2Seq 把一切任务变成&quot;串到串&quot;，才有了&quot;一个模型解决所有任务&quot;的曙光——预训练+微调范式与迁移学习由此而来，BERT/GPT/T5 是同一扇窗的三个位置。</p>
+<h3>8. 最后 45 分钟：五章快览（第 3 节课）</h3>
+<p><strong>线索</strong>：剩下的结构/篇章/对话/VGNLP/伦理，各章&quot;当时为什么研究&quot;？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】<strong>结构（第 5 章）</strong>：字词 token 之外语言还有&quot;结构&quot;，大模型把研究必要性&quot;遮盖&quot;了但没人敢说不需要。成分句法（上下文无关语法/PCFG/Earley/句法树，NP/VP/PP 短语标注）——&quot;早年多么痛苦&quot;，现在用得少，但句法树对歧义分析仍有帮助；<strong>依存分析</strong>：句法是树，依存更像<strong>图</strong>（词为节点、支配/从属为边，从谓语出发分主语/直接宾语/间接宾语，例句 &quot;I give him a red apple&quot;）；<strong>语言复杂性</strong>：乔姆斯基层级——正则语言规则说得清、越往上越灵活，有人用<strong>泵引理</strong>证明&quot;自然语言不是正则语言&quot;。</li><li>【师】<strong>篇章（第 6 章）</strong>：单元从词到句再到篇章；篇章难、真做的人不多。<strong>衔接 cohesion vs 连贯 coherence</strong> 是两个概念——语言学研究精细至此。词汇衔接例（阿Q 正传）：<strong>指代消解/coreference resolution</strong>（阿Q=&quot;他&quot;）；回指（有先行词）可视为<strong>共指</strong>（同一对象）的特殊情形；mention detection、实体链接等评测任务由此发展；<strong>Winograd Schema</strong>：&quot;city council denied demonstrators a permit because they feared/advocated violence&quot;——同一个 they 指代随从句改变，理解之难可见一斑；事件共指（多文档是否同一事件，新闻聚类用）。句子连贯：<strong>RST 修辞结构理论</strong>（详述/并列/因果等关系构成语篇树，阿Q 段例）；文本表示：TF-IDF → SVD 降维 → 降维结果难解释 → <strong>主题模型</strong>（LSI → pLSI → <strong>LDA</strong>：狄利克雷先验&quot;调色板&quot;式生成 + 吉布斯抽样）——后被词向量替代。</li><li>【师】<strong>人机对话（第 7 章）</strong>：王老师研究多年梳理的发展脉络 + 关键节点，PPT 放自学。</li><li>【师】<strong>VGNLP（第 8 章）</strong>：视觉接地 = 视觉与文本跨模态连接；两张荷花图配不同句子哪张更贴——&quot;一图值千言&quot;；语言解决不了的问题也许多模态能介入；应用如体育赛事自动解说、文生图。</li><li>【师】<strong>伦理（第 9 章）</strong>：大模型越来越快引发担忧——性别/职业偏见、&quot;有毒&quot;内容、GPT 生成虚假信息；&quot;作为科研人员，<strong>要对伦理有一种敬畏</strong>&quot;。</li><li>【师】收尾：&quot;到现在基本上我把所有课的内容都跟大家说了一下&quot;。</li></ul>
+<p><strong>一句话总结</strong>：五章快览的共同视角是&quot;当时为什么研究&quot;——结构是语言的形式骨架（树/图/层级），篇章是超出句子 Unit 的衔接与连贯，而大模型把&quot;必要性遮盖&quot;但没人敢断言不需要。</p>
+<h3>9. 课程总结与结课（第 3 节课末）</h3>
+<p><strong>线索</strong>：这门课最终留下什么？</p>
+<p><strong>内容</strong>：</p>
+<ul><li>【师】课程三诉求（王老师建课时即定）：<strong>主动学习、跟踪最新技术、动手应用</strong>——读论文、做报告、大实践各占一环。</li><li>【师】大实践建议与本职工作结合——&quot;课上到了，工作有体验，可能今后跟工作有关的论文也会有作用&quot;。</li><li>【师】再次确认考试/作业时间：11 月 30 日晚截止，交完约一周内出成绩。</li><li>【师】结课感言：第二届开课；欢迎课后通过群/邮箱继续交流。</li></ul>
+<p><strong>一句话总结</strong>：课程的落点不是知识点而是学习方式——主动学、跟前沿、做应用；最后一课以身示范：把没讲完的坦诚收束，把能自学的交还给你。</p>
+<h2>拿走这五条</h2>
+<ol><li><strong>注意力是借鉴不是发明</strong>：鸡尾酒会效应（自主注意）+ 脑容量有限（必须遗忘，LSTM 遗忘门同源）——认知科学先行。</li><li><strong>从 Q+X 到 QKV 是问题驱动</strong>：多头来自&quot;查询天然多个&quot;；QKV 把 X 拆成 K（算分布）和 V（做求和），保住原始信息；WQ/WK/WV 让任务反馈有入口。</li><li><strong>Transformer 的洞见在前馈层</strong>：注意力管&quot;算&quot;，FFN 管&quot;存&quot;（知识主要存在 FFN）；残差保梯度、位置编码补顺序；不可能三角 = 并行/性能/推理效率。</li><li><strong>Seq2Seq 是通用模型的小窗户</strong>：一切任务统一成&quot;串到串&quot;，才有预训练基座+微调范式与迁移学习；T5 的任务前缀是指令微调的雏形。</li><li><strong>大模型遮盖了结构研究的必要性，但没人敢说不需要</strong>：句法树（图/树/乔姆斯基层级）、篇章衔接连贯、伦理敬畏——旧地图上仍有未探明的领土。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

@@ -5,12 +5,13 @@
 > **课次结构**：每次课 **4 × 45 分钟** —— 前 3 节讲授、**第 4 节讨论**。
 > **第 1 课（绪论）** 的录音转写由 **3 段课堂录音合并**而成（本课即绪论全部内容）。
 
-图例：✅ 已完成 · ⬜ 待整理　　**进度：第 1–7 课已完成**
+图例：✅ 已完成 · ⬜ 待整理　　**进度：第 1–8 课已完成（全书完结）**
 
 ## 课次
 
 | # | 课 | 学时 | 笔记 | 大纲 | 自测 | 勘误 | 衍生选题 |
 |---|---|---|---|---|---|---|---|
+| 08 | 第 8 课：从注意力到大模型（最后一课） | ✅ [notes](08-final-review/notes.html) | ✅ [outline](08-final-review/outline.html) | ✅ [questions](08-final-review/questions.html) | ✅ [corrections](08-final-review/corrections.html) | ✅ [spinoffs](08-final-review/spinoffs.html) |
 | 04 | 序列标注解码与词义之难（HMM/Viterbi · CRF · BPE 子词 · 最小编辑距离 · 词义导论） | 4 × 45′ | ✅ [notes](04-sequence-labeling-and-word-meaning/notes.html) | ✅ [outline](04-sequence-labeling-and-word-meaning/outline.html) | ✅ [questions](04-sequence-labeling-and-word-meaning/questions.html) | ✅ [corrections](04-sequence-labeling-and-word-meaning/corrections.html) | ✅ [spinoffs](04-sequence-labeling-and-word-meaning/spinoffs.html) |
 | 05 | 词义表示与词向量（义素/HowNet · 词间关系 · WSD · 分布假设 · SVD · CBOW+层次 softmax） | 4 × 45′ | ✅ [notes](05-word-meaning-and-word-vectors/notes.html) | ✅ [outline](05-word-meaning-and-word-vectors/outline.html) | ✅ [questions](05-word-meaning-and-word-vectors/questions.html) | ✅ [corrections](05-word-meaning-and-word-vectors/corrections.html) | ✅ [spinoffs](05-word-meaning-and-word-vectors/spinoffs.html) |
 | 06 | 从 Skip-Gram 到 N-Gram（负采样 · GloVe · 词向量评估 · 语言模型开端） | 4 × 45′ | ✅ [notes](06-skipgram-glove-and-ngram/notes.html) | ✅ [outline](06-skipgram-glove-and-ngram/outline.html) | ✅ [questions](06-skipgram-glove-and-ngram/questions.html) | ✅ [corrections](06-skipgram-glove-and-ngram/corrections.html) | ✅ [spinoffs](06-skipgram-glove-and-ngram/spinoffs.html) |

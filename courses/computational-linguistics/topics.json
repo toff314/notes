@@ -381,6 +381,56 @@
       "sourceAnchor": "§七 L681–L693（03-3 P35）",
       "status": "open",
       "link": null
+    },
+    {
+      "id": "cl-lec08-t1",
+      "title": "从 Q 到 QKV：注意力十年演化的必要性之问",
+      "angle": "观点：从 Q 到 QKV——注意力十年演化的\"必要性之问\"",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "问题驱动叙事科普稀缺，老师演化线是现成骨架",
+      "lecture": "第 8 课 · 最后一课",
+      "anchor": "转写 L60-L159"
+    },
+    {
+      "id": "cl-lec08-t2",
+      "title": "鸡尾酒会效应：认知科学如何先于 Transformer 十年给出答案",
+      "angle": "论文：鸡尾酒会效应——认知科学如何先于 Transformer 给出答案",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "纠正'注意力是2017年发明'误解，跨学科趣味叙事",
+      "lecture": "第 8 课 · 最后一课",
+      "anchor": "转写 L18-L58"
+    },
+    {
+      "id": "cl-lec08-t3",
+      "title": "知识存在前馈层：Transformer 里被忽视的硬盘",
+      "angle": "观点：知识存在前馈层——Transformer 里被忽视的\"硬盘\"",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "FFN 知识存储是冷知识，衔接模型编辑前沿",
+      "lecture": "第 8 课 · 最后一课",
+      "anchor": "转写 L217-L219"
+    },
+    {
+      "id": "cl-lec08-t4",
+      "title": "Seq2Seq：一扇通往通用模型的小窗户",
+      "angle": "观点：Seq2Seq——一扇通往通用模型的\"小窗户\"",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "理解 LLM 时代的历史钥匙，比喻现成",
+      "lecture": "第 8 课 · 最后一课",
+      "anchor": "转写 L272-L317"
+    },
+    {
+      "id": "cl-lec08-t5",
+      "title": "不可能三角：并行、性能与推理效率的取舍史",
+      "angle": "观点：不可能三角——并行、性能与推理效率的取舍史",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "理解 Mamba/线性注意力浪潮的最好框架",
+      "lecture": "第 8 课 · 最后一课",
+      "anchor": "转写 L244-L257"
     }
   ]
 }
