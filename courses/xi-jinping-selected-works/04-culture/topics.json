@@ -1,0 +1,58 @@
+{
+  "schema": "lecture-spinoffs/1",
+  "version": 1,
+  "course": "xi-jinping-selected-works",
+  "lecture": "第 4 讲 · 文化专题",
+  "topics": [
+    {
+      "id": "xi-jinping-selected-works-lec04-t1",
+      "title": "苏联解体的思想路线图：从秘密报告到休克疗法",
+      "angle": "观点：苏联解体的思想路线图——从秘密报告到休克疗法",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（去其史与思想失守的因果链、渐进与休克疗法对照皆可独立成文）",
+      "lecture": "第 4 讲 · 文化专题",
+      "anchor": "转写 L311-L333、L412-L419"
+    },
+    {
+      "id": "xi-jinping-selected-works-lec04-t2",
+      "title": "当文化产品成为第一大出口商品：软实力的经济账",
+      "angle": "论文：当文化产品成为第一大出口商品——软实力的经济账",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2（1998 华盛顿邮报数据+美国三片，可做国际传播科普）",
+      "lecture": "第 4 讲 · 文化专题",
+      "anchor": "转写 L445-L480"
+    },
+    {
+      "id": "xi-jinping-selected-works-lec04-t3",
+      "title": "算法投喂时代，和人交流成了稀缺能力",
+      "angle": "观点：算法投喂时代，和人交流成了稀缺能力",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "reason": "命中 S2（老师与 AI 从业学生的对话呈现技术乐观与导向警惕之争）",
+      "lecture": "第 4 讲 · 文化专题",
+      "anchor": "转写 L520-L543"
+    },
+    {
+      "id": "xi-jinping-selected-works-lec04-t4",
+      "title": "比机器更弱，弱人工智能就是强控制",
+      "angle": "观点：比机器更弱，弱人工智能就是强控制",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "reason": "命中 S2（问题反转为'人会不会主动让渡'，与用进废退闭环，共鸣度最高）",
+      "lecture": "第 4 讲 · 文化专题",
+      "anchor": "转写 L799-L823、L184-L195"
+    },
+    {
+      "id": "xi-jinping-selected-works-lec04-t5",
+      "title": "挨打、挨饿、挨骂：话语权的三段论",
+      "angle": "观点：挨打、挨饿、挨骂——话语权的三段论",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "reason": "命中 S2（三句话浓缩百年叙事，宅兹中国作开篇意象）",
+      "lecture": "第 4 讲 · 文化专题",
+      "anchor": "转写 L671-L674"
+    }
+  ]
+}

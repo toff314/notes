@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>勘误 · 第 4 讲（文化专题） · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">习近平著作选读 · 听课笔记 · 第 4 讲 · 文化专题（两创 · 哲社 · 文明特性 · 文化强国）</span> <span>/</span> <span class="cur">勘误 · 第 4 讲（文化专题）</span></nav>
+<article class="prose"><h1>勘误 · 第 4 讲（文化专题）</h1>
+<blockquote><p>本课<strong>无 PPT</strong>，所有勘误只做&quot;转写内部可自证&quot;的修正；每条依据列同时标注&quot;PPT：本课无课件，无法与课件页核对&quot;。行号指 <code>raw/transcript.md</code>。</p></blockquote>
+<table><tr><th>#</th><th>原写（转写）</th><th>改为</th><th>类型</th><th>依据</th></tr><tr><td>1</td><td>苏联是两极啊，俄罗斯是两极（L15）</td><td>苏联是两极之一（冷战两极格局）</td><td>听写辨正</td><td>转写 L15 上下文；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>2</td><td>洪子宫（L24）</td><td>洪堡（大学/洪堡理念）</td><td>专名</td><td>转写 L24&quot;造出来给学生当学校&quot;语境即洪堡教育理念；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>3</td><td>恩格斯当时多大，十几岁（L86）</td><td>恩格斯小马克思 2 岁（写《宣言》时 28 岁）</td><td>史实（老师随后自答）</td><td>转写 L94&quot;他俩只差两岁&quot;、L95&quot;一个二十八一个 30&quot;；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>4</td><td>忘年交……两岁算忘年交吗（L92）</td><td>不算；两人同辈（2 岁之差）</td><td>常识修正（老师自己纠正）</td><td>转写 L92–L94；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>5</td><td>马克思主义诞生=共产党宣言发表（L84）</td><td>《共产党宣言》发表（1848）标志马克思主义诞生——老师原话，录入时补书名号与年份</td><td>规范化</td><td>转写 L84；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>6</td><td>新自由主义三大核心&quot;倡议、自由、市场、私有&quot;（L341）</td><td>自由化、市场化、私有化</td><td>听写辨正（三大主张通行表述）</td><td>转写 L341 语音残缺，按其后的&quot;私有之后国有企业被推翻&quot;（L343）自证私有化；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>7</td><td>物价飞涨 5000 多美元（L351）</td><td>物价飞涨 5000 多<strong>倍</strong></td><td>听写辨正（&quot;美元&quot;不通，老师后文全是倍数论证）</td><td>转写 L351/L389&quot;5000多倍&quot;；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>8</td><td>俄罗什么钱什么卢就不值钱了（L399）</td><td>卢布贬值</td><td>专名</td><td>转写 L399&quot;卢&quot;字可自证；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>9</td><td>他输给加克罗和国了（L402）</td><td>（民众）拿金银首饰换东西——主语是百姓，&quot;加克罗和国&quot;为转写噪声，不采用</td><td>噪声剔除</td><td>转写 L402 上下文；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>10</td><td>东欧八国都巨变了（L444）</td><td>东欧剧变（原&quot;巨变&quot;亦通，规范写&quot;剧变&quot;）</td><td>规范化</td><td>转写 L444；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>11</td><td>B52 服役大约 50 年（L447）</td><td>保留，标注老师口径（B-52 1955 年服役至今，口径基本吻合）</td><td>待核（数字）</td><td>转写 L447；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>12</td><td>美国出口 998 年开始不再是农产品工业品（L462）</td><td>1998 年（《华盛顿邮报》报道，老师口径）</td><td>听写辨正（补&quot;19&quot;）</td><td>转写 L445&quot;九八年华盛顿邮报&quot;自证；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>13</td><td>条文身（L587）</td><td>纹身</td><td>听写辨正</td><td>转写 L587；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>14</td><td>数字帝国主义的文化殖民的逻辑性提案（L589）</td><td>数字帝国主义的文化殖民（研究议题名，后半为转写噪声，不采用）</td><td>噪声剔除</td><td>转写 L589 上下文；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>15</td><td>苏共二十大……赫鲁晓夫发表了一个秘密（L319）</td><td>苏共二十大（1956）赫鲁晓夫作秘密报告</td><td>补全（公开史实通称；老师原话残缺）</td><td>转写 L319–L320&quot;秘密……报告&quot;语境；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>16</td><td>90 年代建成（L663）</td><td>本世纪中叶（整体强国）与 2035（文化强国等先行建成）——老师口误&quot;九零年代&quot;按上下文（L667 明说 2035）校正</td><td>上下文校正</td><td>转写 L663–L667；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>17</td><td>三步走到 20 年……2090 年世界科技强国（L708–L709）</td><td>转写含混，年份表述以读本原文为准（约 2035 进入前列、2050 建成强国口径待核）</td><td>待核</td><td>转写 L708–L709 语音残缺；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>18</td><td>执着出奇团结制胜（L737）</td><td>保留原文并标&quot;老师口径&quot;（通译或为&quot;执着专注、精益求精、团结协作、勇攀高峰&quot;式表述，待核）</td><td>待核</td><td>转写 L737；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>19</td><td>举旗帜聚民心育新人兴文化展形象（L675）</td><td>保留（&quot;一个举旗帜……&quot;通行十五字使命任务，转写完整可自证）</td><td>规范化</td><td>转写 L675；PPT：本课无课件，无法与课件页核对</td></tr><tr><td>20</td><td>一勺池（L288）</td><td>保留（人民大学校园池塘名，老师亲历叙述）</td><td>待核（专名）</td><td>转写 L288；PPT：本课无课件，无法与课件页核对</td></tr></table>
+<h2>未采用内容（列表）</h2>
+<ul><li>老师孩子（初三、期中考、物理数学成绩、用功习惯）的具体对话（L170–L175）：私人家庭细节，与论证&quot;用进废退&quot;无强绑定，notes 只保留论点。</li><li>老师高中文理分科的完整过程与&quot;女生学文科&quot;的家庭对话（L179–L183）：保留一句概括，细节不入。</li><li>雅虎邮箱、美国样式邮件等 2004 年考博细节（L205–L212）：保留梗概，细节不入。</li><li>访美早餐的完整清单与&quot;坐月子&quot;中西体质论证（L240–L255）：老师个人观点（&quot;中国人身体像瓷器&quot;为比喻性说法），notes 标注为&quot;老师观点&quot;并压缩。</li><li>讨论环节各同学的完整原话（L596–L632）：聚类成三段观点转述，不署名、不逐句。</li><li>转写尾部口语（&quot;下课休学了&quot;&quot;我太下了&quot;等）：课堂噪声，不入。</li><li>L528–L530 疫情&quot;发源地&quot;与男友例子：转写残缺且语义不明，无法可靠重构，整段不采用。</li></ul>
+<h2>覆盖对照（四课时）</h2>
+<ul><li>第 1 节课（L4–L78）→ notes 第 1–2 节前半：两创/哲社重要性开场、《大国崛起》之问、非全同学话题（寒暄部分删）。</li><li>第 2 节课（L80–L359）→ notes 第 2–5 节：王字形、人类思维、个人叙事、苏联解体上（思想失守）与下（物价飞涨）。</li><li>第 3 节课（L361–L632）→ notes 第 5–7 节：苏联案例收尾、渗透日常形态（牛肉面/可乐/投喂/教材）、同学讨论三段。</li><li>第 4 节课（L634–L829）→ notes 第 8–10 节：文化强国 2035、五大特性、教育科技人才一体化、张伯苓三问、AI 主体性收尾。</li><li>无跨课时内容断裂；每节课均有明确下课语边界。</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
