@@ -8,6 +8,7 @@
 
 | # | 课 | 笔记 | 大纲 | 自测 | 勘误 | 衍生选题 |
 |---|---|---|---|---|---|---|
+| 05 | EPFD 与低轨卫星频率共存 | ✅ [notes](05-epfd-satellite-coexistence/notes.html) | ✅ [outline](05-epfd-satellite-coexistence/outline.html) | ✅ [questions](05-epfd-satellite-coexistence/questions.html) | ✅ [corrections](05-epfd-satellite-coexistence/corrections.html) | ✅ [spinoffs](05-epfd-satellite-coexistence/spinoffs.html) |
 | 04 | 频谱管理 | ✅ [notes](04-spectrum-management/notes.html) | ✅ [outline](04-spectrum-management/outline.html) | ✅ [questions](04-spectrum-management/questions.html) | ✅ [corrections](04-spectrum-management/corrections.html) | ✅ [spinoffs](04-spectrum-management/spinoffs.html) |
 | 03 | 可重配置智能表面（RIS）与可移动天线 | ✅ [notes](03-ris-movable-antenna/notes.html) | ✅ [outline](03-ris-movable-antenna/outline.html) | ✅ [questions](03-ris-movable-antenna/questions.html) | ✅ [corrections](03-ris-movable-antenna/corrections.html) | ✅ [spinoffs](03-ris-movable-antenna/spinoffs.html) |
 | 01 | 课程介绍 + 智能空口技术 | ✅ [notes](01-course-intro-smart-air-interface/notes.html) | ✅ [outline](01-course-intro-smart-air-interface/outline.html) | ✅ [questions](01-course-intro-smart-air-interface/questions.html) | ✅ [corrections](01-course-intro-smart-air-interface/corrections.html) | ✅ [spinoffs](01-course-intro-smart-air-interface/spinoffs.html) |

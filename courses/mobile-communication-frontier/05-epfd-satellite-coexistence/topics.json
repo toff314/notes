@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "schema": "lecture-spinoffs/1",
+  "topics": [
+    {
+      "id": "mobile-communication-frontier-lec05-t1",
+      "title": "EPFD：一条把中国卫星挡在国境外的公式",
+      "angle": "观点：EPFD 限值是 20 年前高轨运营商写进 ITU 条款的护城河，它拦的不是信号强度，而是一个国家星座的开机权",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P0",
+      "status": "pending",
+      "lecture": "第 5 讲",
+      "chapterLabel": "第 5 讲"
+    },
+    {
+      "id": "mobile-communication-frontier-lec05-t2",
+      "title": "I/N 为什么可以是负数：积分功率的直觉",
+      "angle": "观点：干扰比噪声还低 10 dB 不是荒谬条款，而是积分功率在不同参考带宽下的必然结果",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P1",
+      "status": "pending",
+      "lecture": "第 5 讲",
+      "chapterLabel": "第 5 讲"
+    },
+    {
+      "id": "mobile-communication-frontier-lec05-t3",
+      "title": "从雷达到规则：五个卫星指标的族谱",
+      "angle": "论文：雷达方程→EIRP→G/T→PFD→EPFD→I/N 的派生关系与工程含义（卫星频率协调入门）",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P1",
+      "status": "pending",
+      "lecture": "第 5 讲",
+      "chapterLabel": "第 5 讲"
+    },
+    {
+      "id": "mobile-communication-frontier-lec05-t4",
+      "title": "渐进倾斜 vs 笔形波束：两种抗干扰哲学",
+      "angle": "观点：OneWeb 用躲拿到专利，星链用快绕开限值——波束策略是星座竞争力的分水岭",
+      "suggestedSkill": "write-zhihu-tech",
+      "priority": "P2",
+      "status": "pending",
+      "lecture": "第 5 讲",
+      "chapterLabel": "第 5 讲"
+    },
+    {
+      "id": "mobile-communication-frontier-lec05-t5",
+      "title": "月亮回波实验：用 Excel 做一次星际链路预算",
+      "angle": "论文：432 MHz 打到 38 万公里外的月亮再收回——手算一遍雷达方程的全部工程细节",
+      "suggestedSkill": "write-tech-tutorial",
+      "priority": "P2",
+      "status": "pending",
+      "lecture": "第 5 讲",
+      "chapterLabel": "第 5 讲"
+    }
+  ]
+}

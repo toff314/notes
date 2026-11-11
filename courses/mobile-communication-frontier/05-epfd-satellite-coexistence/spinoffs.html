@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>衍生选题 · 第 5 讲 EPFD 与低轨卫星频率共存 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 5 讲 · EPFD 与低轨卫星频率共存</span> <span>/</span> <span class="cur">衍生选题 · 第 5 讲 EPFD 与低轨卫星频率共存</span></nav>
+<article class="prose"><h1>衍生选题 · 第 5 讲 EPFD 与低轨卫星频率共存</h1>
+<blockquote><p>状态索引</p></blockquote>
+<table><tr><th>#</th><th>选题</th><th>技能</th><th>优先级</th><th>状态</th><th>链接</th></tr><tr><td>1</td><td>EPFD：一条把中国卫星挡在国境外的公式</td><td>write-zhihu-tech</td><td>P0</td><td>未发布</td><td>—</td></tr><tr><td>2</td><td>I/N 为什么可以是负数：积分功率的直觉</td><td>write-zhihu-tech</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>3</td><td>从雷达到规则：五个卫星指标的族谱</td><td>write-tech-tutorial</td><td>P1</td><td>未发布</td><td>—</td></tr><tr><td>4</td><td>渐进倾斜 vs 笔形波束：两种抗干扰哲学</td><td>write-zhihu-tech</td><td>P2</td><td>未发布</td><td>—</td></tr><tr><td>5</td><td>月亮回波实验：用 Excel 做一次星际链路预算</td><td>write-tech-tutorial</td><td>P2</td><td>未发布</td><td>—</td></tr></table>
+<h3>1. EPFD：一条把中国卫星挡在国境外的公式</h3>
+<ul><li><strong>主题串</strong>：<code>观点：EPFD 限值是 20 年前高轨运营商写进 ITU 条款的护城河，它拦的不是信号强度，而是一个国家星座的&quot;开机权&quot;</code></li><li><strong>锚点</strong>：notes §3–§4（转写 L222–L264，EPFD 公式 RR 22.5C）；星网卫星离美 2000 km 关机案例</li><li><strong>为什么</strong>：星链话题热但 EPFD 视角的科普几乎没有；&quot;几百亿投资因一条公式趴窝&quot;是天然爆点</li><li><strong>增益</strong>：读者能理解频谱规则战的真正武器是技术条款而非军事</li><li><strong>更新建议</strong>：跟踪 WRC-27 决议后补一集结局</li><li><strong>素材种子</strong>：EPFD 公式拆解图；限值表 vs 热噪声底对比；关机距离示意</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>2. I/N 为什么可以是负数：积分功率的直觉</h3>
+<ul><li><strong>主题串</strong>：<code>观点：干扰比噪声还低 10 dB 不是荒谬条款，而是积分功率在不同参考带宽下的必然结果</code></li><li><strong>锚点</strong>：notes §7（转写 L530–L575）；老师&quot;想了几个月才明白&quot;的现身说法</li><li><strong>为什么</strong>：这是本讲最反直觉的认知拐点，工程直觉类内容知乎稀缺</li><li><strong>增益</strong>：读者掌握&quot;积分功率按参考带宽算&quot;这一可迁移的工程思维</li><li><strong>更新建议</strong>：配一张同频谱不同带宽积分对比图</li><li><strong>素材种子</strong>：频谱积分示意图；−12.2→−10.5 dB 的规则演变时间线</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>3. 从雷达到规则：五个卫星指标的族谱</h3>
+<ul><li><strong>主题串</strong>：<code>论文：雷达方程→EIRP→G/T→PFD→EPFD→I/N 的派生关系与工程含义（卫星频率协调入门）</code></li><li><strong>锚点</strong>：notes §2–§3、§9（雷达方程推导 + 工具链）</li><li><strong>为什么</strong>：教程型内容，把散在四节课的指标串成一条可操作的线</li><li><strong>增益</strong>：可附 Excel 链路预算模板，实用性强</li><li><strong>更新建议</strong>：可扩展为系列教程首篇</li><li><strong>素材种子</strong>：指标族谱图；月亮回波实验完整参数表；ITU 1503 程序入门</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>4. 渐进倾斜 vs 笔形波束：两种抗干扰哲学</h3>
+<ul><li><strong>主题串</strong>：<code>观点：OneWeb 用&quot;躲&quot;拿到专利，星链用&quot;快&quot;绕开限值——波束策略是星座竞争力的分水岭</code></li><li><strong>锚点</strong>：notes §5（转写 L313–L316、L480–L487、L900–L906）</li><li><strong>为什么</strong>：技术对比类内容自带传播性；俄乌战争抗干扰案例是流量入口</li><li><strong>增益</strong>：读者理解相控阵笔形波束为何是降维打击</li><li><strong>更新建议</strong>：跟踪星网波束规避能力进展</li><li><strong>素材种子</strong>：渐进倾斜四段波束示意；宽波束 vs 笔形波束对比图</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul>
+<h3>5. 月亮回波实验：用 Excel 做一次星际链路预算</h3>
+<ul><li><strong>主题串</strong>：<code>论文：432 MHz 打到 38 万公里外的月亮再收回——手算一遍雷达方程的全部工程细节</code></li><li><strong>锚点</strong>：notes §8（转写 L613–L653、L691–L736）</li><li><strong>为什么</strong>：动手实验类内容完读率高；&quot;路径损耗 −261 dB&quot;本身就有传播力</li><li><strong>增益</strong>：读者可复现，建立链路预算手感</li><li><strong>更新建议</strong>：附可下载 Excel 模板</li><li><strong>素材种子</strong>：完整参数表（432 MHz/2.5 kHz/100K/22 dB×2/0.065/1738 km）；64π² vs 16π² 易错点</li><li><strong>发布</strong>：未发布 · 链接：—</li></ul></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>

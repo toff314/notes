@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移动通信技术前沿 · 第 5 讲：EPFD 与低轨卫星频率共存 · Notes</title>
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--accent:#1a6b5a;--accent-soft:#e6f5f0;--canvas:#f6f7f9;--card:#ffffff;--code-bg:#0e0f11;--code-fg:#d4d4d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.8;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:48px 20px 80px}
+.crumb{font-size:14px;margin:0 0 28px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb a:hover{background:var(--accent-soft);border-radius:4px}
+.crumb .cur{color:var(--ink);font-weight:600}
+h1.title{font-size:30px;line-height:1.3;margin:0 0 .2em}
+p.sub{color:var(--muted);margin:0 0 2em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:8px 0 24px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,90,.10)}
+.card h2{font-size:17px;margin:0 0 .35em;line-height:1.45}
+.card p{font-size:13px;color:#4b5563;margin:0}
+.card .meta{font-size:12px;color:var(--muted);margin-top:.7em;border-top:1px solid var(--line);padding-top:.55em}
+.docs{list-style:none;margin:0 0 24px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.docs li{border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:none}
+.doc-link{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;color:var(--ink);text-decoration:none;font-size:14.5px}
+.doc-link:hover{background:var(--accent-soft);color:var(--accent)}
+.doc-link .arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13px;margin:1em 0}
+.records{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:block;overflow-x:auto;margin:0 0 8px;font-size:14.5px}
+.records table{border-collapse:collapse;width:100%}
+.records th,.records td{border-bottom:1px solid var(--line);padding:8px 14px;text-align:left;vertical-align:top}
+.records th{background:var(--accent-soft);font-weight:600;white-space:nowrap}
+.records tr:last-child td{border-bottom:none}
+.records td.item{white-space:nowrap;font-weight:600;color:var(--ink)}
+.records td.docs a{color:var(--accent);text-decoration:none;margin-right:14px;white-space:nowrap}
+.records td.docs a:hover{background:var(--accent-soft);border-radius:4px}
+.records tr:hover td{background:#fbfdfc}
+.record-block{margin:0 0 28px}
+.record-block h2{font-size:19px;margin:0 0 .15em}
+.record-block .meta{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.assets-table{margin:4px 0 0;background:var(--canvas);border-style:dashed}
+.assets-table td.count{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.assets-table td.names{white-space:normal;word-break:break-all;color:var(--muted);font-size:13px;line-height:1.9}
+.prose .plain,td .plain{color:var(--muted)}
+td.docs .plain{white-space:normal;font-size:13px;line-height:1.9;word-break:break-all}
+.prose{max-width:820px}
+.prose h1{font-size:28px;line-height:1.35;margin:0 0 .6em}
+.prose h2{font-size:21px;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line)}
+.prose h3{font-size:17.5px;margin:1.3em 0 .4em}
+.prose h4{font-size:16px;margin:1.1em 0 .3em}
+.prose p{margin:.7em 0}
+.prose a{color:var(--accent)}
+.prose img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:#fafafa;color:#4b5563}
+.prose pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.prose p code,.prose li code{background:#eef0f2;padding:.1em .35em;border-radius:4px;color:#c7254e}
+.prose table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--line);padding:7px 12px;text-align:left;white-space:nowrap}
+.prose th{background:var(--accent-soft)}
+.prose ul,.prose ol{padding-left:1.5em}
+.prose hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+.prose .mermaid{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;margin:1em 0}
+footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(min-width:640px){.wrap{padding:56px 28px 90px}}
+@media(max-width:639px){body{font-size:15px}h1.title{font-size:26px}.prose h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumb"><a href="../../../index.html">笔记架首页</a> <span>/</span> <a href="../../index.html">课堂</a> <span>/</span> <span class="cur">移动通信技术前沿 · 听课笔记 · 第 5 讲 · EPFD 与低轨卫星频率共存</span> <span>/</span> <span class="cur">移动通信技术前沿 · 第 5 讲：EPFD 与低轨卫星频率共存</span></nav>
+<article class="prose"><h1>移动通信技术前沿 · 第 5 讲：EPFD 与低轨卫星频率共存</h1>
+<blockquote><p>课程：移动通信技术前沿（2026 秋，北京邮电大学 信息与通信工程学院）</p><p>本讲一句话：EPFD 是 20 年前高轨运营商写进规则的&quot;护城河&quot;，马斯克正用&quot;波束更细 + 干扰其实更低&quot;的论证拆墙——这一拆，拆出 2026 年最激烈的一场频谱规则战。</p></blockquote>
+<p><strong>导读（四问）</strong></p>
+<ul><li><strong>讲了什么</strong>：从一台真锅天线讲到雷达方程，推出 ERP/G/T/PFD，落到本讲主角 EPFD——它的公式、限值表、中国的关机困境、OneWeb 渐进倾斜，再到 FCC 2026 新规与 WRC-27 议题。</li><li><strong>怎么讲的</strong>：一半推导一半战场。每个指标都从雷达方程推出来，每个条款都配一个&quot;谁在跟谁打&quot;的现实案例。</li><li><strong>最硬的一句</strong>：中国星网卫星到了离美国 2000 公里就得关机——不是打仗打输的，是 EPFD 指标卡死的。</li><li><strong>与我何干</strong>：做卫星系统的人，第一步是链路预算；懂 EPFD 的人，能算出你的星在天上&quot;能不能开机&quot;。</li></ul>
+<h3>§1 一口真锅开场：卫星电视的三兄弟</h3>
+<p><strong>线索</strong>：老师搬来一口锅是干嘛的？电视到底有几种？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>三种电视</strong>【师】：地面电视（小时候转天线）、卫星电视（本讲的锅）、有线电视/互联网电视（线缆入户）。地面电视约 400–800 MHz，广电已清退做&quot;数字红利&quot;，上面布 5G（转写 L29–L32）。</li><li><strong>锅的来历</strong>【师】：老家的卫星锅网上买不到——要去广电机构买并月租；北京阳台指向赤道上空即可收看，能收 60 多个台。天线是凹面：电磁波汇聚到焦点，馈源放大、下变频到 L 波段送机顶盒（L9–L22、L49–L52）。</li><li><strong>馈源指标</strong>【师】：Ku 波段 LNB，本振 9.75–10.6 GHz，输入 10.7–12.75 GHz，噪声 0.1 dB，输出 950–2150 MHz（L37–L46）。</li><li><strong>关键衔接</strong>【师】：这个输入频段 10.7–12.75 GHz <strong>正是星链（Starlink）、OneWeb、O3b 在用的频段</strong>——同步轨道卫星电视与低轨星座同频，这就是本讲的冲突起点（L53–L72）。</li></ul>
+<p><strong>一句话总结</strong>：一口锅引出 10.7–12.75 GHz 的高轨/低轨同频之争，EPFD 全部故事由此展开。</p>
+<h3>§2 从雷达方程到链路预算：所有指标的祖先</h3>
+<p><strong>线索</strong>：为什么讲 EPFD 要先推雷达方程？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>课堂现场推导</strong>【师】：发射功率 PT、发射增益 GT，球面扩散除以 4πR₁²，目标有效面积 σ₁ 截获，再散射到第二个球，接收天线面积 σ₂ 收到——PR = PT·GT·σ₁·σ₂/(4π)²R₁²R₂²。老师强调&quot;4π 的三次方&quot;来自球面几何，必须自己推一遍才真懂（L81–L155）。</li><li><strong>主任的 2000 块</strong>【师】：老师工作时主任悬赏&quot;合上书推出六大方程&quot;，七八个人没人拿到——&quot;书上有是一回事，你自己理解的是另一回事&quot;（L116–L121）。</li><li><strong>天线增益的本质</strong>【师】：无源天线只有<strong>方向性增益</strong>（气球捏尖类比，一处高处处低），没有功率增益；有源（供电）才有功率增益（L156–L172）。</li><li><strong>两个核心指标</strong>【师】：发射机看 <strong>EIRP</strong>（等效全向辐射功率），接收机看 <strong>G/T</strong>（接收增益/系统噪声温度）。Tsys 把低噪放、混频器、滤波器全部折算成一个等效温度；室温 290K（L173–L189）。</li><li><strong>手机直连的软肋</strong>【师】：手机 G/T 约 0 到 −20 dB（全向小天线无指向性），所以手机直连卫星的最大挑战在终端 G/T 太小——传统方案是背着锅通信（L196–L206）。</li></ul>
+<p><strong>一句话总结</strong>：雷达方程是链路预算的祖师爷，EIRP 与 G/T 分别是发、收两端的&quot;体检报告&quot;。</p>
+<h3>§3 PFD 与 EPFD：从单个信号到集总干扰</h3>
+<p><strong>线索</strong>：EPFD 的 E 到底加了什么？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>概念链</strong>【师】：PT → EIRP → PFD（EIRP 除以 4πR²，功率通量密度）→ EPFD（L212–L218）。</li><li><strong>EPFD 两点改进</strong>【师】：①求和（Σ）——把可见范围内<strong>所有</strong> NGSO 卫星的贡献都算上，卫星越多干扰越重；②加权——按 GSO 地面站接收天线在干扰来向的增益 Gr(φᵢ) 加权（L222–L233）。</li><li><strong>公式与锚点</strong>【PPT】P128（RR 22.5C）】：EPFD = Σᵢ₌₁ᴺᵃ [PTx,i·GTx,i(θᵢ)/(4πlᵢ²)]·Gr(φᵢ)/Gr,max，单位 W/Hz/m²。Nᵃ 是地面站可见的低轨卫星总数（L234–L240）。</li><li><strong>三类 EPFD</strong>【师】：下行（NGSO 卫星对 GSO 地球站）、上行（NGSO 地球站对 GSO 卫星）、星间（NGSO 对 GSO 卫星接收端）——RR 22.14 等条款分别定义（L337–L342）。</li><li><strong>业务区分</strong>【师】：BSS 广播卫星业务（只收电视）、FSS 固定卫星业务（固定锅上+下行）、MSS 移动卫星业务（车载移动，难度最高）（L327–L334）。</li></ul>
+<p><strong>一句话总结</strong>：EPFD = 所有可见 NGSO 卫星按接收增益加权后的集总功率通量密度——&quot;集总&quot;二字是它比 PFD 严酷的根源。</p>
+<h3>§4 限值有多严：一串数字背后的杀伤力</h3>
+<p><strong>线索</strong>：−174 dBW/m²/40kHz 意味着什么？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>限值表结构</strong>【师】：以 10.7–11.7 GHz、60 cm GSO 参考天线、40 kHz 参考带宽为例：90% 时间不超过 −174 dBW/m²/40kHz，99% 不超过 −167.8，100% 不超过 −166（转写数字，限值表见 PPT P137–P140，具体分档进 corrections 待核）（L344–L361）。</li><li><strong>换算成每赫兹</strong>【师】：−166 dBW/m²/40kHz → 加 30 变 dBm、减 10log(40000)≈46 → 约 −176 dBm/m²/Hz 量级——<strong>比室温热噪声底（−174 dBm/Hz）还要低</strong>，即&quot;要求干扰比自然界噪声还低&quot;（L421–L433）。</li><li><strong>底噪怎么来</strong>【师】：N = kTB，k=1.38×10⁻²³，T=290K，B=1Hz → −174 dBm/Hz。老师现场算错一次（−203 忘了 +30），顺势讲&quot;豆包能算对但你要自己会&quot;（L372–L402）。</li><li><strong>耶鲁校长的段子</strong>【师】：毕业寄语——&quot;我做不出那个系统，但我听得懂谁在吹牛&quot;：有人号称接收机 −175 dBm/Hz，当场拆穿，因为自然界底噪就 −174（L369–L370）。</li><li><strong>频谱仪的现实</strong>【师】：普通频谱仪本底约 −160 dBm/Hz，好的（德洲仪器级百万级）到 −172（L404–L406）。</li><li><strong>降到 T 的办法</strong>【师】：把接收机泡液氮（天文台真这么干）、带宽做窄（积分功率对 B 积分，B 越小功率越小）（L409–L412）。</li><li><strong>中国的关机困境</strong>【师】：星网卫星因 EPFD 超标在美国不能开机——&quot;不是在美国上空关机，是离美国 2000 公里就得关机&quot;，且美国援引太空观测业务拒绝协调，几百亿投资趴窝（L255–L264）。</li><li><strong>先到先得与纸面卫星</strong>【师】：ITU 频率先到先得，早年申请即可占频，催生&quot;纸面卫星&quot;倒卖；后立里程碑计划（7 年 50%、10 年 90%，转写口径，具体见 corrections 待核），逼马斯克疯狂发星保优先权（L265–L276）。</li><li><strong>一星为什么没事</strong>【师】：铱星申请早（L 波段第一个申请），全球窄带随便发；中国申请晚，被借口卡住（L260–L264）。</li></ul>
+<p><strong>一句话总结</strong>：EPFD 限值严到&quot;比宇宙噪声还低&quot;，它不拦信号，拦的是一整个国家的星座能不能开机。</p>
+<h3>§5 合规的手段：从关机到渐进倾斜</h3>
+<p><strong>线索</strong>：打不过限值表，卫星怎么活？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>三个基本招</strong>【师】：①降功率/关机（最直接）；②减同频波束数（100 个波束只开 50 个）；③扩大规避角，不让波束指向 GSO 地球站（L438–L441）。</li><li><strong>OneWeb 渐进倾斜专利</strong>【师】：波束从北极往赤道走时先指向星下点，接近赤道开始斜偏，到赤道上空<strong>完全关机</strong>，过了赤道再开机再斜偏——围绕&quot;不指向赤道上空的 GSO 地球站&quot;这一目标（L313–L316，【PPT】P130–P131 有 STK 仿真示意）。</li><li><strong>星链为什么可以不关</strong>【师】：笔形波束像针，相控阵灵活指向，可以从旁瓣进入而不从主瓣贡献干扰，链路预算够就不必关机——固定宽波束的传统星做不到（L480–L487、L900–L906）。</li><li><strong>EPFD 计算程序</strong>【师】：ITU 1503 建议书附带 C++ 程序，银河航天、星网发射前都要跑一遍，超标就不能开机（L436–L437）。</li><li><strong>1527 建议书</strong>【师】：EPFD 限值的权威出处，科一（第 21 研究组？转写含混）阶段采用其计算方法（L293–L295，术语转写含混进 corrections）。</li></ul>
+<p><strong>一句话总结</strong>：合规三部曲——降功率、减波束、躲角度；OneWeb 用&quot;渐进倾斜&quot;把躲角度做成了专利。</p>
+<h3>§6 争议与改革：马斯克拆墙，Viasat 加高墙</h3>
+<p><strong>线索</strong>：为什么 EPFD 是 2026 年最热的频谱战场？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>技术争议一：Gr 不可得</strong>【师】：EPFD 公式里的 GSO 地面站方向图，厂家不公布，协调时各家各报各的形状，&quot;改改 Gr 形状就能满足要求&quot;（L441–L449）。</li><li><strong>技术争议二：链路余量不均</strong>【师】：晴天余量足、雨天雨衰大；自适应编码调制（ACM，如 QPSK/16QAM 切换）可维持连接，FCC 正在考察（L450–L460）。</li><li><strong>微波回传测雨</strong>【师】：运营商微波链路的雨衰数据可做降雨预测，已有 Nature 论文，老师卫星电视&quot;大雨即断&quot;就是活例子（L461–L468）。</li><li><strong>两派立场</strong>【师】：Viasat（GSO 方）认为 EPFD 不能取消还要更严；SpaceX 称波束可精细控制，旧标准限制流量与覆盖，建议按链路预算区别保护（L488–L494）。亚马逊 Kuiper 请求 FCC 继续在 WRC 设议题（L495–L496）。</li><li><strong>WRC-23 结果</strong>【师】：修改 EPFD 的提案未进 WRC-27 正式议程，但成立了工作组继续研究（L497–L498）。</li><li><strong>WRC-27 两大看点</strong>【师】：6G 频率划分 + 手机直连频率；WRC-27 明年在上海开（L750–L754，会址口径进 corrections）。</li></ul>
+<p><strong>一句话总结</strong>：EPFD 之争本质是&quot;旧保护规则 vs 新波束能力&quot;，WRC-27 是下一回合的擂台。</p>
+<h3>§7 FCC 2026 新规：I/N 从 −12.2 放宽到 −10.5 dB</h3>
+<p><strong>线索</strong>：美国单方面改规则，改了什么数字？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>时间线</strong>【师】：2024.8.9 SpaceX 提交规则请愿 → 2025.4.28 FCC 启动正式规则制定评估 Q/V 下行共享 → 2025 星链实测+仿真 → 2026 星链获有条件个案豁免；FCC 26-26 于 2026 年 4 月通过（L499–L504、L581）。</li><li><strong>适用频段</strong>【师】：10.7–12.7、17.8–18.6、19.7–20.2 GHz（美国境内卫星下行）；境外运行仍须遵守 ITU 规则（L581–L591）。</li><li><strong>三种合规路径</strong>【师】：S1 继续守原 EPFD 限值；A 与同频 GSO 网络协调；B 提交兼容性论证材料自证不干扰（L507–L509）。</li><li><strong>保护指标</strong>【师】：长期吞吐量降幅 ≤3%（ACM 参考链路）、链路可用率降幅 ≤0.1%、<strong>I/N ≤ −10.5 dB</strong>（旧 ITU 通用值为 −12.2 dB，见 1432 建议书）（L510–L529、L865–L867）。</li><li><strong>I/N 为负的困惑</strong>【师】：老师让学生想五分钟——&quot;干扰要比噪声还低 10 dB，那还发什么？&quot;答案在<strong>积分功率</strong>：I 与 N 各自按各自参考带宽积分，带宽不同时 I&lt;N 完全可能出现（L530–L575）。</li><li><strong>波束均摊</strong>【师】：功放总功率被 N 个波束分摊，50 波束每人 1/50——FCC 指标整体是对旧规的放松（L577–L579）。</li><li><strong>Q/V 对比</strong>【师】：ITU Q/V 频段（37.5–42.5/47.2–51.4 GHz）雨衰大，适用 WRC-23 干扰工程方法；FCC 用 Ka 下行，两者指标口径不同（L592–L598）。</li></ul>
+<p><strong>一句话总结</strong>：FCC 用&quot;协调/论证替代统一限值&quot;+ I/N 放宽 1.7 dB，在美国境内给 NGSO 开了口子——规则之争已是国力之争。</p>
+<h3>§8 月亮回波实验：把雷达方程亲手算一遍</h3>
+<p><strong>线索</strong>：38 万公里外的月亮，能收到多少功率？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>题目</strong>【师】：432 MHz（转写&quot;432MPa&quot;为口误）、带宽 2.5 kHz，向月亮（距离 38 万公里、半径 1738 km、反射率 0.065）发信号，系统噪声温度 100K，收发天线增益各 22 dB，用 Excel 算路径损耗与接收功率（L613–L629）。</li><li><strong>答案口径</strong>【师】：路径损耗约 −261 dB（含 64π² 因子的雷达方程变形，学生容易算成 16π²，因为目标有效面积是 πR² 而非 4πR²……此处老师现场纠正）；接收功率约 −197 dBW（L645–L653、L703–L718）。</li><li><strong>路径损耗定义</strong>【师】：令 GT=GR=1 时的 PR/PT——&quot;路径损耗不能叫链路预算，把增益都约掉了才叫路径损耗&quot;（L691–L701）。</li><li><strong>为什么必须 Excel</strong>【师】：数太大不能用笔算；改个参数立马出结果才算掌握。链路预算是系统设计第一步：锅多大、功放多大全由它定（L644–L667）。</li><li><strong>班车的故事</strong>【师】：链路预算差一点点，主任让把班车开过来一挡——遮挡物也算链路预算的一部分（L657–L659）。</li><li><strong>100K 的由来</strong>【师】：星链规范写系统温度 100K 而非 290K，因为 Tsys 是全链路器件折算，与频段和设计相关，不同系统不同值（L868–L884）。</li></ul>
+<p><strong>一句话总结</strong>：链路预算不是课本习题，是系统工程师的第一张考卷——Excel 手感比公式记忆更值钱。</p>
+<h3>§9 手机直连（D2D/D2C）：WRC-27 的另一大战场</h3>
+<p><strong>线索</strong>：手机直接连卫星，频率账怎么算？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>别名</strong>【师】：FCC 叫 D2C（direct-to-cell/device），ITU 叫 direct-MSS（长名转写含混）；WRC-23 议项 1.1/1.13 开始研究（L753–L759）。</li><li><strong>中美路径差异</strong>【师】：美国思路是 Starlink 补农村、地面网保城市；城乡边界不清导致频率冲突（L764）。</li><li><strong>四大挑战</strong>【师】：①卫星小区远大于地面小区，辅带间隙下的无缝切换；②跨国界——A 国允许落地 B 国不允许时的分配；③带外/杂散控制——邻道 ±5 MHz 测 ACLR，9 kHz–26.5 GHz 全频段测杂散毛刺（与第 4 讲频谱模板衔接）；④载荷类型——透明转发（弯管直接转发）vs 再生转发（星上解码再发）（L765–L799）。</li><li><strong>功放不改信噪比</strong>【师】：任何放大器同时放大信号与噪声，信噪比只会更差（2.9 dB 例）；功放的意义是把信号抬到接收机灵敏度以上；透明转发必然劣化信噪比，再生转发可真正改善（L831–L844）。</li><li><strong>军备竞赛在天线面积</strong>【师】：存量手机不可改，只能把卫星做大——AST 天线从 64 m² 到 228 m²（2400 平方英尺，2025 年）；星链走另一路：物理面积仅约 6.2 m²，靠信号处理与再生模式补（L808–L830）。</li><li><strong>星链的抗干扰资本</strong>【师】：卫星数量多（一抬头 50 颗可选）、波束可指、单星便宜（几百万美元，导弹反而更贵）——俄乌战争中难被干扰的三个原因（L846–L850）。</li><li><strong>边界功率控制</strong>【师】：PFD 电平随靠近禁区边界逐步降低直至关闭——星网&quot;离美 2000 km 关机&quot;用的同一原理（L854–L858）。</li><li><strong>低轨间共存策略</strong>【师】：角度隔离、频率分配、极化、功率控制、多址、卫星分级/选择、天线调向；波束零点控制（干扰方向打零陷，雷达电子战技术）是最高级的一档，星网目前是开关式规避（L920–L934）。</li><li><strong>仿真工具链</strong>【师】：Visualyse（ITU 协调常用、价格贵）、STK、MATLAB 卫星工具箱（2024 年左右推出）做 C/(N+I) 时间曲线；输出指标 EIRP/PFD/EPFD/I/N 互换（L935–L953）。</li><li><strong>实战报告</strong>【师】：Lynk 干扰报告以 −12.2 dB I/N 画超限时间百分比曲线（红线 73.9% 完全中断、灰线 77.5% 受影响，转写口径进 corrections 待核）；BT 对 Ofcom 的 D2D 回复——支持基于 PFD 的计算方法但要求更严的保护电平（P151–P156）（L955–L993）。</li></ul>
+<p><strong>一句话总结</strong>：手机直连把&quot;地面网 vs 卫星网&quot;的干扰账摆上了 WRC 桌面——算这笔账的工具，就是本讲前八节的所有公式。</p>
+<h3>§10 收束：本讲在课程版图上的位置</h3>
+<p><strong>线索</strong>：这一讲把频谱管理这条线补完了什么？</p>
+<p><strong>内容</strong></p>
+<ul><li><strong>与第 4 讲的关系</strong>【师】：第 4 讲讲&quot;频谱怎么看、怎么管&quot;，本讲讲&quot;频谱怎么抢&quot;——EPFD 是管理条款落到星座头顶的具体形态（L749）。</li><li><strong>三场争端一条线</strong>【师】：12.2–12.7 GHz 的 5G-NGSO 论战（第 4 讲 FCC 部分）→ 10.7–12.75 GHz 的 EPFD 攻防（本讲主战场）→ D2D/D2C 的 WRC-27 议题（本讲 §9），同一个逻辑：谁有更好的波束与论证能力，谁改写规则（【PPT】P72–P79 呼应）。</li><li><strong>核心工具箱</strong>【师】：雷达方程 → EIRP/G/T → PFD/EPFD/I/N，五个指标一脉相承；会 Excel 链路预算 + 会跑 ITU 1503 程序，就是卫星频率协调岗位的入门门槛。</li><li><strong>趋势判断</strong>【师】：老师预计 2027 年 WRC-27 会对 EPFD 做一定让步——技术上&quot;降 0.01 dB 干扰换几万颗星能用&quot;确实划算，且美国影响力在那里（L296–L307）。</li></ul>
+<p><strong>一句话总结</strong>：频谱规则的本质是&quot;技术能力写进条款&quot;——这一讲给了你读懂并参与这场博弈的全部公式。</p>
+<h2>拿走这五条</h2>
+<ol><li><strong>EPFD = Σ(可见 NGSO 卫星) × 接收增益加权的功率通量密度</strong>——&quot;集总&quot;与&quot;加权&quot;是它区别于 PFD 的全部秘密（RR 22.5C）。</li><li><strong>限值严到反直觉</strong>：−166 dBW/m²/40kHz 折合每赫兹比室温热噪声底还低——所以中国星网卫星离美国 2000 公里就得关机。</li><li><strong>合规三招</strong>：降功率、减波束、躲角度；OneWeb 渐进倾斜是&quot;躲角度&quot;的专利化，星链笔形波束让&quot;不关机&quot;成为可能。</li><li><strong>I/N 是负数不荒谬</strong>：积分功率按各自参考带宽算，带宽不同 I&lt;N 完全成立；FCC 把 −12.2 放宽到 −10.5 dB 就是这场规则战的具象数字。</li><li><strong>动手才算学会</strong>：雷达方程推一遍、月亮回波用 Excel 算一遍——链路预算是系统设计的第一张考卷。</li></ol></article>
+<footer>笔记架 Notes · 内容以 Markdown 形式开放 · 样式遵循 <code>DESIGN.md</code></footer>
+</div>
+</body>
+</html>
