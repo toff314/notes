@@ -22,6 +22,7 @@ SECTIONS = [
     ("courses", "课堂", None),
     ("meetings", "会议", None),
     ("geektime", "极客时间", "digest"),
+    ("wenqu", "问渠", None),
 ]
 
 # 产物类型列：[(列名, [文件名关键词])]，按声明顺序排布；无内容的列自动隐藏
@@ -67,6 +68,11 @@ ARTIFACT_COLUMNS = {
         ("主题文", ["theme_articles"]),
         ("概念图", ["concept_map"]),
         ("通览", ["survey_notes"]),
+    ],
+    "wenqu": [
+        ("笔记", ["notes"]),
+        ("选题", ["spinoffs", "topics"]),
+        ("素材", ["__raw__"]),
     ],
 }
 
@@ -593,7 +599,7 @@ def build():
         if f != "README.md":
             root_docs.append((label, f"{f[:-3]}.html"))
 
-    body = '<h1 class="title">笔记架</h1><p class="sub">课程 / 读书 / 会议 / 极客时间 · 个人学习笔记</p>'
+    body = '<h1 class="title">笔记架</h1><p class="sub">课程 / 读书 / 会议 / 极客时间 / 问渠 · 个人学习笔记</p>'
     body += '<div class="grid">' + "".join(
         card(t, d, m, h) for t, d, m, h in section_cards) + "</div>"
     if root_docs:
@@ -610,6 +616,7 @@ def section_blurb(key):
         "courses": "按课程组织的听课笔记：主笔记 / 大纲 / 自测 / 衍生选题",
         "meetings": "按会议组织的纪要：决策 / 行动 / 待定 / 勘误",
         "geektime": "极客时间课程消化产物：一页纸 / 精华讲卡 / 分拣 / 写作简报",
+        "wenqu": "开渠衍生笔记：论文翻译 / 课程消化等渠道产出的题材深挖与读书笔记",
     }.get(key, "")
 
 

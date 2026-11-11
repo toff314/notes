@@ -79,7 +79,7 @@ footer{margin-top:56px;font-size:13px;color:var(--muted);border-top:1px solid va
 <table><tr><th>令牌</th><th>值</th><th>用途</th></tr><tr><td><code>--ink</code></td><td><code>#1f2328</code></td><td>标题、正文主色</td></tr><tr><td><code>--muted</code></td><td><code>#6b7280</code></td><td>次级文字、meta</td></tr><tr><td><code>--line</code></td><td><code>#e5e7eb</code></td><td>边框、分割线</td></tr><tr><td><code>--accent</code></td><td><code>#1a6b5a</code>（青墨）</td><td>链接、hover 边、当前层级</td></tr><tr><td><code>--accent-soft</code></td><td><code>#e6f5f0</code></td><td>链接 hover 底色、tag</td></tr><tr><td><code>--canvas</code></td><td><code>#f6f7f9</code></td><td>页面背景</td></tr><tr><td><code>--card</code></td><td><code>#ffffff</code></td><td>卡片表面</td></tr></table>
 <ul><li>字体：系统栈（PingFang SC / Microsoft YaHei / sans-serif）；正文 <code>16px/1.8</code>；h1 <code>30px/700</code>，h2 <code>20px</code>，正文页 h1 <code>28px</code>。</li><li>圆角：卡片 <code>12px</code>，小元素 <code>8px</code>；卡片阴影仅 hover 时出现（<code>0 8px 24px rgba(26,107,90,.10)</code>）。</li><li>内容宽度：<code>max-width 1020px</code> 居中，页边距 <code>≥20px</code>。</li></ul>
 <h2>三、信息架构（2–3 级，全站统一）</h2>
-<pre><code>L0  index.html            四分区卡片（读书 / 课堂 / 会议 / 极客时间）
+<pre><code>L0  index.html            五分区卡片（读书 / 课堂 / 会议 / 极客时间 / 问渠）
 L1  &lt;分区&gt;/index.html     记录平铺：一门课/一本书/一场会议一个区块，区块内表格直接列出全部产物
 L2  所有 .md 的内容页（统一 .prose 排版）；条目子目录按需保留索引页</code></pre>
 <ul><li><strong>压缩一级</strong>：L1 分区页内，每个记录一个区块（标题 + meta + 产物表格），</li></ul>
